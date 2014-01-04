@@ -6,6 +6,10 @@
   "scripts": {
     "test": "mocha --compilers coffee:coffee-script test/*.coffee lib/*.js"
   },
+  "files": [
+    "lib/",
+    "test/"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/ajoslin/conventional-changelog.git"
