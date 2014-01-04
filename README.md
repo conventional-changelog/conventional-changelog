@@ -22,7 +22,7 @@ require('changelog')({
   repository: 'https://github.com/joyent/node',
   version: require('./package.json').version
 }, function(err, log) {
-  fs.writeFileSync('CHANGELOG.md', log);
+  console.log('Here is your changelog!', log);
 });
 ```
 
