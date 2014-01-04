@@ -18,20 +18,23 @@ Recommended usage: use in your workflow with (TODO: LINKS) grunt-conventional-ch
 Simple usage: 
 
 ```js
-var log = require('changelog')({
+require('changelog')({
   repository: 'https://github.com/joyent/node',
   version: require('./package.json').version
+}, function(err, log) {
+  fs.writeFileSync('CHANGELOG.md', log);
 });
-fs.writeFileSync('CHANGELOG.md', log);
 ```
 
-#### `string` `changelog(options)`
+#### `string` `changelog(options, callback)`
 
-By default, returns a string containing a changelog from the previous tag to HEAD, using pkg.version, prepended to existing CHANGELOG.md (if it exists).
+By default, calls the callback with a string containing a changelog from the previous tag to HEAD, using pkg.version, prepended to existing CHANGELOG.md (if it exists).
 
-`options` is an object which can be passed to the changelog function.  The following fields are available *(all are optional)*:
+`callback` is the second parameter, and takes two parameters: `(err, log)`. `log` is a string containing the newly generated changelog, and `err` is either an error or null.
 
-* `version` `{string}` - The version to be written to the changelog. For example, '{version: require('./package.json').version}`
+`options` is the first parameter, an object.  The following fields are available:
+
+* `version` `{string}` - The version to be written to the changelog. For example, `{version: require('./package.json').version}`
 
 * `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`
 

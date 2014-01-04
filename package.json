@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Generate a markdown changelog from git commit data",
   "main": "lib/changelog.js",
   "scripts": {

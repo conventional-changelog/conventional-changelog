@@ -1,3 +1,10 @@
+<a name="0.0.4"></a>
+### 0.0.4 (2014-01-04)
+
+#### Bug Fixes
+
+* **version:** do not try to figure out version ([5c99b7279b97352a93eca0ee37f198783d64f423](https://github.com/ajoslin/conventional-changelog/commit/5c99b7279b97352a93eca0ee37f198783d64f423))
+
 <a name="0.0.2"></a>
 ### 0.0.2 (2014-01-04)
 
