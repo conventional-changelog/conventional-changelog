@@ -13,6 +13,7 @@
   "keywords": [
     "changelog"
   ],
+  "license": "BSD",
   "contributors": [
     {
       "name": "Brian Ford"
@@ -24,7 +25,6 @@
       "name": "Andy Joslin"
     }
   ],
-  "license": "BSD",
   "dependencies": {
     "event-stream": "~3.0.20"
   },
