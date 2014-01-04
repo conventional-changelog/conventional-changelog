@@ -7,6 +7,6 @@ var changelog = require('./lib/changelog');
 changelog({
   version: pkg.version,
   repository: 'https://github.com/ajoslin/conventional-changelog'
-}, function(log) {
+}, function(err, log) {
   fs.writeFileSync('CHANGELOG.md', log);
 });
