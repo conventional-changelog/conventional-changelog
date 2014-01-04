@@ -1,0 +1,35 @@
+{
+  "name": "conventional-changelog",
+  "version": "0.0.1",
+  "description": "Generate a markdown changelog from git commit data",
+  "main": "lib/changelog.js",
+  "scripts": {
+    "test": "mocha --compilers coffee:coffee-script test/*.coffee lib/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajoslin/conventional-changelog.git"
+  },
+  "keywords": [
+    "changelog"
+  ],
+  "contributors": [
+    {
+      "name": "Brian Ford"
+    },
+    {
+      "name": "Vojta Jína"
+    },
+    {
+      "name": "Andy Joslin"
+    }
+  ],
+  "license": "BSD",
+  "dependencies": {
+    "event-stream": "~3.0.20"
+  },
+  "devDependencies": {
+    "chai": "~1.7.2",
+    "sinon": "~1.7.3"
+  }
+}
