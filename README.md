@@ -1,6 +1,10 @@
 conventional-changelog
 ----------------------
 
+```sh
+$ npm install conventional-changelog
+```
+
 Generate a changelog from git metadata, using [these](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/) conventions.
 
 ## Example output
