@@ -8,7 +8,7 @@ $ npm install conventional-changelog
 Generate a changelog from git metadata, using [these](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/) conventions.
 
 ## Example output
-- https://github.com/btford/conventional-changelog/blob/master/CHANGELOG.md
+- https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
 
 Recommended usage: use in your workflow with (TODO: LINKS) grunt-conventional-changelog and gulp-conventional-changelog.
