@@ -26,7 +26,7 @@ require('changelog')({
 });
 ```
 
-#### `string` `changelog(options, callback)`
+#### `changelog(options, callback)`
 
 By default, calls the callback with a string containing a changelog from the previous tag to HEAD, using pkg.version, prepended to existing CHANGELOG.md (if it exists).
 
