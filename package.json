@@ -2,11 +2,12 @@
   "name": "conventional-changelog",
   "version": "0.0.4",
   "description": "Generate a markdown changelog from git commit data",
-  "main": "lib/changelog.js",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script test/*.coffee lib/*.js"
+    "test": "mocha test/*.js index.js lib/*.js"
   },
   "files": [
+    "index.js",
     "lib/",
     "test/"
   ],
@@ -30,7 +31,9 @@
     }
   ],
   "dependencies": {
-    "event-stream": "~3.0.20"
+    "lodash.assign": "~2.4.1",
+    "event-stream": "~3.1.0",
+    "request": "~2.33.0"
   },
   "devDependencies": {
     "chai": "~1.7.2",
