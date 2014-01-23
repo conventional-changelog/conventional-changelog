@@ -1,3 +1,9 @@
+<a name="0.0.5"></a>
+### 0.0.5 (2014-01-23)
+
+* Code cleanup, smarter options from `from` and `to`
+* More specific errors given through done callback
+
 <a name="0.0.4"></a>
 ### 0.0.4 (2014-01-04)
 

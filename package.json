@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Generate a markdown changelog from git commit data",
   "main": "index.js",
   "scripts": {
@@ -32,8 +32,7 @@
   ],
   "dependencies": {
     "lodash.assign": "~2.4.1",
-    "event-stream": "~3.1.0",
-    "request": "~2.33.0"
+    "event-stream": "~3.1.0"
   },
   "devDependencies": {
     "chai": "~1.7.2",
