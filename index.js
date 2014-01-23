@@ -10,7 +10,8 @@ function generate(options, done) {
   options = extend({
     version: null,
     to: 'HEAD',
-    file: 'CHANGELOG.md'
+    file: 'CHANGELOG.md',
+    log: console.log.bind(console),
   }, options || {});
 
   if (!options.version) {
@@ -36,6 +37,7 @@ function generate(options, done) {
       //if no to, start at the first tag after from, or just use HEAD
       options.to = tags[fromIndex - 1] || 'HEAD';
     }
+    options.log('Generating changelog from %s to %s...', options.from, options.to);
 
     git.getCommits({
       from: options.from, 
@@ -47,6 +49,7 @@ function generate(options, done) {
   }
 
   function writeLog(commits) {
+    options.log('Parsed %d commits.', commits.length);
     writer.writeLog(commits, options, function(err, changelog) {
       if (err) return done('Failed to write changelog.\n'+err);
 
