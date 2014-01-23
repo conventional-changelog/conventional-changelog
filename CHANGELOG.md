@@ -1,8 +1,17 @@
+<a name="0.0.6"></a>
+### 0.0.6 (2014-01-23)
+
+#### Bug Fixes
+
+* **git:** sort tags correctly ([7318bb05](https://github.com/ajoslin/conventional-changelog/commit/7318bb05d335bfa6886e816bec4fc57cd395c2c6))
+
 <a name="0.0.5"></a>
 ### 0.0.5 (2014-01-23)
 
-* Code cleanup, smarter options from `from` and `to`
+#### Miscellaneous
+
 * More specific errors given through done callback
+* Improved logging
 
 <a name="0.0.4"></a>
 ### 0.0.4 (2014-01-04)
