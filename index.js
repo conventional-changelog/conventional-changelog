@@ -18,25 +18,15 @@ function generate(options, done) {
     return done('No version specified');
   }
 
-  git.getTags(function(err, tags) {
-    if (err) return done('Failed to read git tags\n'+err);
-    getChangelogCommits(tags);
+  git.latestTag(function(err, tag) {
+    if (err || !tag) return done('Failed to read git tags.\n'+err);
+    getChangelogCommits(tag);
   });
 
-  function getChangelogCommits(tags) {
-    if (!tags.length) {
-      return done('There exist no commits or tags for this repository!');
-    }
+  function getChangelogCommits(latestTag) {
+    options.from = options.from || latestTag;
+    options.to = options.to || 'HEAD';
 
-    var fromIndex = tags.indexOf(options.from);
-    var toIndex = tags.indexOf(options.to);
-    if (fromIndex === -1) {
-      options.from = tags[0]; //if no from, start at latest tag
-    }
-    if (toIndex === -1) {
-      //if no to, start at the first tag after from, or just use HEAD
-      options.to = tags[fromIndex - 1] || 'HEAD';
-    }
     options.log('Generating changelog from %s to %s...', options.from, options.to);
 
     git.getCommits({
