@@ -44,7 +44,7 @@ Any line of the commit message cannot be longer 100 characters! This allows the 
 to read on github as well as in various git tools.
 
 ### Type
-Is recommended to be one of these (only **feat** and **fix** show up in the changelog:
+Is recommended to be one of these. Only **feat** and **fix** show up in the changelog, in addition to breaking changes (see breaking changes section at bottom).
 
 * **feat**: A new feature
 * **fix**: A bug fix
@@ -68,4 +68,6 @@ The subject contains succinct description of the change:
 * no dot (.) at the end
 
 ### Breaking Changes
-Put any breaking changes with migration instructions in the footer.
+Put any breaking changes with migration instructions in the commit footer.
+
+If there is a breaking change, put **BREAKING CHANGE:** in your commit footer, and it will show up in the changelog.
