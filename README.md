@@ -15,7 +15,7 @@ Adapted from code originally written by @vojtajina, from grunt-conventional-chan
 - https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
 
-Recommended usage: use in your workflow with [https://github.com/btford/grunt-conventional-changelog](grunt-conventional-changelog).
+Recommended usage: use in your workflow with [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog).
 
 ## Documentation
 
