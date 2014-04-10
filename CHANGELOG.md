@@ -1,3 +1,12 @@
+<a name="0.0.7"></a>
+### 0.0.7 "delta" (2014-04-10)
+
+
+#### Features
+
+* **changelog:** add options.codename ([01f40cb6](https://github.com/ajoslin/conventional-changelog/commit/01f40cb6efe2180ede9c1e520da76877eb895759))
+
+
 <a name="0.0.6"></a>
 ### 0.0.6 (2014-01-23)
 
