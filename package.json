@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
-  "codename": "delta",
-  "version": "0.0.7",
+  "codename": "refine",
+  "version": "0.0.8",
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
   "scripts": {
