@@ -40,6 +40,8 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `version` `{string}` - The version to be written to the changelog. For example, `{version: require('./package.json').version}`
 
+* `codename` `{string}` - The codename to display after the version in the changelog. For example, it will show '## 1.0.0 "Super Version"' if codename 'Super Version' is given. By default, it's blank.
+
 * `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`
 
 * `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`

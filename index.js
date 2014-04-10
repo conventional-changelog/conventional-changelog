@@ -11,6 +11,7 @@ function generate(options, done) {
     version: null,
     to: 'HEAD',
     file: 'CHANGELOG.md',
+    codename: '',
     log: console.log.bind(console),
   }, options || {});
 

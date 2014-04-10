@@ -6,6 +6,7 @@ var changelog = require('./index.js');
 var request = require('request');
 
 changelog({
+  codename: "your face",
   version: pkg.version,
   repository: 'https://github.com/ajoslin/conventional-changelog'
 }, function(err, log) {
