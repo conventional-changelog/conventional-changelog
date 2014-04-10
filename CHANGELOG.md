@@ -1,3 +1,12 @@
+<a name="0.0.8"></a>
+### 0.0.8 "refine" (2014-04-10)
+
+
+#### Features
+
+* **changelog:** change options.codename to options.subtitle ([a00fea52](https://github.com/ajoslin/conventional-changelog/commit/a00fea521667533809419af6a66b20ae4ce96e3b))
+
+
 <a name="0.0.7"></a>
 ### 0.0.7 "delta" (2014-04-10)
 
