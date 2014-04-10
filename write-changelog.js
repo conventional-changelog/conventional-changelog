@@ -6,8 +6,8 @@ var changelog = require('./index.js');
 var request = require('request');
 
 changelog({
-  codename: pkg.codename,
   version: pkg.version,
+  subtitle: '"' + pkg.codename + '"',
   repository: 'https://github.com/ajoslin/conventional-changelog'
 }, function(err, log) {
   if (err) throw new Error(err);
