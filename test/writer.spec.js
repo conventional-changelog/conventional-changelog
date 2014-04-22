@@ -18,6 +18,12 @@ describe("Writer", function() {
     log = '';
     var stream = es.through(concat, concat.bind(null,'END'));
     return new writer.Writer(stream, {
+      versionLink: function(version) {
+        return '## ' + version;
+      },
+      patchVersionLink: function(version) {
+        return '### ' + version;
+      },
       issueLink: function(id) {
         return id;
       },
@@ -31,6 +37,7 @@ describe("Writer", function() {
     it('minor version', function() {
       var writer = setup();
       writer.header('0.1.0');
+
       expect(log.indexOf('<a name="0.1.0"></a>\n## 0.1.0')).to.equal(0);
     });
     it('patch version', function() {
