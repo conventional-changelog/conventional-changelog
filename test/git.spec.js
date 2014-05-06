@@ -36,7 +36,7 @@ describe('git', function() {
         'bla bla bla\n\n' +
         'BREAKING CHANGE: some breaking change\n'
       );
-      expect(msg.breaks).to.deep.equal(['some breaking change\n']);
+      expect(msg.breaks).to.deep.equal(['some breaking change\n\n']);
     });
     it('should parse Closes in the subject (and remove it)', function() {
       var msg = git.parseRawCommit(
