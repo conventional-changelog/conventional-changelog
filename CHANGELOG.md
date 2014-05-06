@@ -1,3 +1,17 @@
+<a name="0.0.9"></a>
+### 0.0.9 "change" (2014-05-06)
+
+
+#### Bug Fixes
+
+* **changelog:** make sure breaking changes are separated by two newlines ([85152160](https://github.com/ajoslin/conventional-changelog/commit/8515216093eaa7f997dc506675d729a0e41578d6))
+
+
+#### Features
+
+* **changelog:** also add `Resolves #xx` to closes section ([06ff3ea9](https://github.com/ajoslin/conventional-changelog/commit/06ff3ea9b0c8baf2fae6167a99b6826a44a0c768))
+
+
 <a name="0.0.8"></a>
 ### 0.0.8 "refine" (2014-04-10)
 
