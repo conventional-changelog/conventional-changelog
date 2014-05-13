@@ -24,6 +24,8 @@ fix(protractor): fix 90 degrees counting as 91 degrees
 ```
 refactor(pencil): use graphite instead of lead
 
+Closes #640.
+
 Graphite is a much more available resource than lead, so we use it to lower the price.
 ```
 ```
