@@ -44,6 +44,10 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`
 
+* `versionLink` `{function(version, subtitle)}` - If repository is provided, this function will be used to link to major and minor versions. By default, returns a github version link based on options.repository: `opts.repository + '/releases/tag/' + version`
+
+* `patchVersionLink` `{function(version, subtitle)}` - If repository is provided, this function will be used to link to patch versions. By default, returns a github version link based on options.repository: `opts.repository + '/releases/tag/' + version`
+
 * `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`
 
 * `issueLink` `{function(issueId)}` - If repository is provided, this function will be used to link to issues.  By default, returns a github issue link based on options.repository: `opts.repository + '/issues/' + id`
