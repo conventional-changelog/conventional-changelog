@@ -5,17 +5,24 @@ conventional-changelog
 $ npm install conventional-changelog
 ```
 
-Generate a changelog from git metadata, using [these commit conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/).  
+Generate a changelog from git metadata, using the AngularJS commit conventions.
 
-View [CONVENTIONS.md](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md) for a synposis of the conventions with commit examples.
+- [Synopsis of Conventions in CONVENTIONS.md](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md)
+- [Full Convention Spec on Google Docs](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/).  
 
-Adapted from code originally written by @vojtajina, from grunt-conventional-changelog.
+Adapted from code originally written by @vojtajina and @btford in grunt-conventional-changelog.
 
 ## Example output
+
 - https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
 
-Recommended usage: use in your workflow with [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog).
+Recommended usage: use in your workflow with [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog), or in your gulpfile.
+
+## Roadmap
+
+- Make it return a stream
+- Add a proper command line interface
 
 ## Documentation
 
