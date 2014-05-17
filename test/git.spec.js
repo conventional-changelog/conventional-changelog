@@ -38,44 +38,59 @@ describe('git', function() {
       );
       expect(msg.breaks).to.deep.equal(['some breaking change\n\n']);
     });
-    it('should parse Closes in the subject (and remove it)', function() {
-      var msg = git.parseRawCommit(
-        '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-        'feat(xxx): Whatever Closes #24\n' +
-        'bla bla bla\n\n' +
-        'What not ?\n'
-      );
-      expect(msg.closes).to.deep.equal([24]);
-      expect(msg.subject).to.equal('Whatever');
+    ['Closes', 'Fixes', 'Resolves'].forEach(function(closeWord) {
+      it('should parse ' + closeWord + ' in the subject (and remove it)', function() {
+        var msg = git.parseRawCommit(
+          '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
+          'feat(xxx): Whatever ' + closeWord + ' #24\n' +
+          'bla bla bla\n\n' +
+          'What not ?\n'
+        );
+        expect(msg.closes).to.deep.equal([24]);
+        expect(msg.subject).to.equal('Whatever');
+      });
+      it('should work with lowercase ' + closeWord + ' in the subject', function() {
+        var msg = git.parseRawCommit(
+          '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
+          'feat(xxx): Whatever ' + closeWord.toLowerCase() + ' #24\n' +
+          'bla bla bla\n\n' +
+          'What not ?\n'
+        );
+        expect(msg.closes).to.deep.equal([24]);
+        expect(msg.subject).to.equal('Whatever');
+      });
+      it('should parse multiple comma-separated issues closed with ' + closeWord + ' #1, #2', function() {
+        var msg = git.parseRawCommit(
+          '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
+          'fix(yyy): Very cool commit\n' +
+          'bla bla bla\n\n' + 
+          closeWord + ' #1, #22, #33\n' +
+          'What not ?\n'
+        );
+        expect(msg.closes).to.deep.equal([1, 22, 33]);
+        expect(msg.subject).to.equal('Very cool commit');
+      });
     });
-    it('should parse Fixes in the subject (and remove it)', function() {
+    it('should parse multiple period-separated issues closed with all closed words', function() {
       var msg = git.parseRawCommit(
         '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-        'feat(xxx): Whatever Fixes #25\n' +
-        'bla bla bla\n\n' +
-        'What not ?\n'
-      );
-      expect(msg.closes).to.deep.equal([25]);
-      expect(msg.subject).to.equal('Whatever');
-    });
-    it('should parse multiple issues closed with Closes #1, #2', function() {
-      var msg = git.parseRawCommit(
-        '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-        'feat(xxx): Very cool commit\n' +
+        'fix(zzz): Very cool commit\n' +
         'bla bla bla\n\n' + 
-        'Closes #1, #22, #33\n' +
+        'Closes #2, #3. Resolves #4. Fixes #5. Fixes #6.\n' +
         'What not ?\n'
       );
-      expect(msg.closes).to.deep.equal([1, 22, 33]);
+      expect(msg.closes).to.deep.equal([2,3,4,5,6]);
+      expect(msg.subject).to.equal('Very cool commit');
     });
     it('should parse a msg without scope', function() {
       var msg = git.parseRawCommit(
         '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-        'chore: some chore bullshit\n' +
+        'chore: some chore\n' +
         'bla bla bla\n\n' + 
         'BREAKING CHANGE: some breaking change\n'
       );
       expect(msg.type).to.equal('chore');
+      expect(msg.subject).to.equal('some chore');
     });
     it('should parse a scope with spaces', function() {
       var msg = git.parseRawCommit(
