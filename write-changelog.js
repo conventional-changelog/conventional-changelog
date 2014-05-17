@@ -3,7 +3,6 @@
 var pkg = require('./package.json');
 var fs = require('fs');
 var changelog = require('./index.js');
-var request = require('request');
 
 changelog({
   version: pkg.version,
