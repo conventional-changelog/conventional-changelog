@@ -103,5 +103,14 @@ describe('git', function() {
       expect(msg.subject).to.equal('some chore');
       expect(msg.component).to.equal('scope with spaces');
     });
+    it('should parse a scope with spaces', function() {
+      var msg = git.parseRawCommit(
+        '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
+        'chore(scope with spaces): some chore\n' +
+        'bla bla bla\n\n' +
+        'BREAKING CHANGE: some breaking change\n'
+      );
+      expect(msg).to.not.equal(null);
+    });
   });
 });
