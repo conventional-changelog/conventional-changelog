@@ -44,11 +44,21 @@ By default, calls the callback with a string containing a changelog from the pre
 
 `options` is the first parameter, an object.  The following fields are available:
 
+##### The Most Important Options
+
 * `version` `{string}` - The version to be written to the changelog. For example, `{version: require('./package.json').version}`
 
 * `subtitle` `{string}` - A string to display after the version title in the changelog. For example, it will show '## 1.0.0 "Super Version"' if codename '"Super Version"' is given. By default, it's blank.
 
 * `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`
+
+* `from` `{string}` - Which commit the changelog should start at. By default, uses previous tag, or if no previous tag the first commit.
+
+* `to` `{string}` - Which commit the changelog should end at.  By default, uses HEAD.
+
+* `file` `{string}` - Which file to read the current changelog from and prepend the new changelog's contents to.  By default, uses `'CHANGELOG.md'`
+
+##### The "I really want to get crazy" Options
 
 * `versionLink` `{function(version, subtitle)}` - If repository is provided, this function will be used to link to major and minor versions. By default, returns a github version link based on options.repository: `opts.repository + '/releases/tag/' + version`
 
@@ -57,12 +67,6 @@ By default, calls the callback with a string containing a changelog from the pre
 * `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`
 
 * `issueLink` `{function(issueId)}` - If repository is provided, this function will be used to link to issues.  By default, returns a github issue link based on options.repository: `opts.repository + '/issues/' + id`
-
-* `from` `{string}` - Which commit the changelog should start at. By default, uses previous tag, or if no previous tag the first commit.
-
-* `to` `{string}` - Which commit the changelog should end at.  By default, uses HEAD.
-
-* `file` `{string}` - Which file to read the current changelog from and prepend the new changelog's contents to.  By default, uses `'CHANGELOG.md'`.
 
 * `log` `{function()}` - What logging function to use. For example, `{log: grunt.log.ok}`. By default, uses `console.log`.
 
