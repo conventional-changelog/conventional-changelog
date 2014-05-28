@@ -1,4 +1,4 @@
-[### 0.0.10 "revise"](https://github.com/ajoslin/conventional-changelog/releases/tag/0.0.10) (2014-05-28)
+### [0.0.10 "revise"](https://github.com/ajoslin/conventional-changelog/releases/tag/0.0.10) (2014-05-28)
 
 
 #### Bug Fixes
