@@ -1,3 +1,18 @@
+[### 0.0.10 "revise"](https://github.com/ajoslin/conventional-changelog/releases/tag/0.0.10) (2014-05-28)
+
+
+#### Bug Fixes
+
+* **changelog:** put commit range into quotes so it can fetch commits with special characters ([76e2f185](https://github.com/ajoslin/conventional-changelog/commit/76e2f185b6542e7fe731c4666323fac68b9e2202), closes [#10](https://github.com/ajoslin/conventional-changelog/issues/10))
+
+
+#### Features
+
+* **changelog:** add support for scope with spaces ([b5e43b75](https://github.com/ajoslin/conventional-changelog/commit/b5e43b75c6caabc357e4bce0eb64316fbe153ecf), closes [#9](https://github.com/ajoslin/conventional-changelog/issues/9))
+* **git:** allow period-separated closing and lowercase closing ([6835af55](https://github.com/ajoslin/conventional-changelog/commit/6835af55d57b62ff6dcebf624f3c6108cbc36b8e))
+* **writer:** add tag hyperlink support ([9640cc27](https://github.com/ajoslin/conventional-changelog/commit/9640cc279ca9c513b1378eb55b5a7d576fd78bf5))
+
+
 <a name="0.0.9"></a>
 ### 0.0.9 "change" (2014-05-06)
 
