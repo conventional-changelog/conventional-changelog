@@ -1,3 +1,11 @@
+### [0.0.11 "reorder"](https://github.com/ajoslin/conventional-changelog/releases/tag/0.0.11) (2014-05-28)
+
+
+#### Bug Fixes
+
+* **changelog:** make version link headers work correctly ([4b2de799](https://github.com/ajoslin/conventional-changelog/commit/4b2de79996edf12386e5f2c603340a4b0320e92c))
+
+
 ### [0.0.10 "revise"](https://github.com/ajoslin/conventional-changelog/releases/tag/0.0.10) (2014-05-28)
 
 
