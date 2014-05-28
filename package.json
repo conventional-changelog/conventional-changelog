@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "codename": "change",
+  "codename": "revise",
   "version": "0.0.10",
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
