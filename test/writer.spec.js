@@ -33,12 +33,12 @@ describe("Writer", function() {
     it('minor version', function() {
       var writer = setup();
       writer.header('0.1.0');
-      expect(log).to.contain('## [0.1.0 subby](github.com/user/repo/releases/tag/0.1.0)');
+      expect(log).to.contain('## 0.1.0 subby');
     });
     it('patch version', function() {
       var writer = setup();
       writer.header('0.0.3');
-      expect(log).to.contain('### [0.0.3 subby](github.com/user/repo/releases/tag/0.0.3)');
+      expect(log).to.contain('### 0.0.3 subby');
     });
   });
 

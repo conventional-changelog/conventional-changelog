@@ -1,9 +1,21 @@
 ### 0.0.11 "reorder" (2014-05-28)
 
 
-#### Bug Fixes
+#### Features
 
-* **changelog:** make version link headers work correctly ([4b2de799](https://github.com/ajoslin/conventional-changelog/commit/4b2de79996edf12386e5f2c603340a4b0320e92c))
+* **changelog:** add versionText, patchVersionText options ([9d8e0548](https://github.com/ajoslin/conventional-changelog/commit/9d8e05480771f881c33e535f922401637f11861c))
+
+
+#### Breaking Changes
+
+* 
+Removed versionLink and patchVersionLink options, and went back to the
+default title output from 0.0.9.
+
+If you wish to have a link to your version, simply customize the versionText
+and patchVersionText options.
+
+ ([9d8e0548](https://github.com/ajoslin/conventional-changelog/commit/9d8e05480771f881c33e535f922401637f11861c))
 
 
 ### 0.0.10 "revise" (2014-05-28)

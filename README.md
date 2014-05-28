@@ -60,9 +60,9 @@ By default, calls the callback with a string containing a changelog from the pre
 
 ##### The "I really want to get crazy" Options
 
-* `versionLink` `{function(version, subtitle)}` - If repository is provided, this function will be used to link to major and minor versions. By default, returns a github version link based on options.repository: `opts.repository + '/releases/tag/' + version`
+* `versionText` `{function(version, subtitle)}` - What to use for the title of a major version in the changelog. Defaults to `'## ' + version + ' ' + subtitle`.
 
-* `patchVersionLink` `{function(version, subtitle)}` - If repository is provided, this function will be used to link to patch versions. By default, returns a github version link based on options.repository: `opts.repository + '/releases/tag/' + version`
+* `patchVersionText` `{function(version, subtitle)}` - What to use for the title of a patch version in the changelog. Defaults to `'### ' + version + ' ' + subtitle`.
 
 * `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`
 
