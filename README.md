@@ -28,7 +28,7 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 Simple usage: 
 
 ```js
-require('changelog')({
+require('conventional-changelog')({
   repository: 'https://github.com/joyent/node',
   version: require('./package.json').version
 }, function(err, log) {
