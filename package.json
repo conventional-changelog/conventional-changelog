@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "codename": "reorder",
-  "version": "https://github.com/bennekrouf/conventional-changelog/tarball/9d46529c934b6293bb6c12cc4f2d1e389e339419",
+  "version": "0.0.11",
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
   "scripts": {
