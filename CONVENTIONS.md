@@ -31,6 +31,9 @@ Graphite is a much more available resource than lead, so we use it to lower the 
 ```
 fix(pen): use blue ink instead of red ink
 
+```
+perf(component): Changes the way components are loaded
+
 BREAKING CHANGE: Pen now uses blue ink instead of red.
 
 To migrate, change your code from the following:
@@ -57,6 +60,8 @@ Is recommended to be one of these. Only **feat** and **fix** show up in the chan
 * **test**: Adding missing tests
 * **chore**: Changes to the build process or auxiliary tools and libraries such as documentation
   generation
+* **perf**: A code change for performance enhancements
+  
 
 ### Scope
 The scope could be anything specifying place of the commit change. For example `$location`,
