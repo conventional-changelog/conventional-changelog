@@ -32,8 +32,11 @@ Graphite is a much more available resource than lead, so we use it to lower the 
 fix(pen): use blue ink instead of red ink
 
 ```
+```
 perf(component): Changes the way components are loaded
 
+```
+```
 BREAKING CHANGE: Pen now uses blue ink instead of red.
 
 To migrate, change your code from the following:
