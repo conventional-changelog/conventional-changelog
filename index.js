@@ -31,7 +31,7 @@ function generate(options, done) {
     options.log('Generating changelog from %s to %s...', options.from, options.to);
 
     git.getCommits({
-      from: options.from, 
+      from: options.from,
       to: options.to,
     }, function(err, commits) {
       if (err) return done('Failed to read git log.\n'+err);
