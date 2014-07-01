@@ -20,7 +20,7 @@ function generate(options, done) {
   }
 
   git.latestTag(function(err, tag) {
-    if (err || !tag) return done('Failed to read git tags.\n'+err);
+    if (err || tag === undefined) return done('Failed to read git tags.\n'+err);
     getChangelogCommits(tag);
   });
 
