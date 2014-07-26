@@ -6,16 +6,17 @@ These rules are adopted from [the AngularJS commit conventions](https://docs.goo
 
 Each commit message starts with a **type**, a **scope**, and a **subject**.
 
-You prefix the commit message with the type of commit it is, put the scope inside, and leave the subject at the end.
+Below that, the commit message has a **body**.
 
-Then two lines later, there is the **body** of the commit message, then the **footer**.
+- **type**: what type of change this commit contains.
+- **scope**: what item of code this commit is changing.
+- **subject**: a short description of the changes.
+- **body** (optional): a more in-depth description of the changes
 
 ```
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
-<BLANK LINE>
-<footer>
 ```
 
 Examples:
@@ -46,11 +47,11 @@ To:
 `pen.draw('red')`
 ```
 
-Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
+Any line of the commit message should not be longer 100 characters. This allows the message to be easier
 to read on github as well as in various git tools.
 
 ### Type
-Is recommended to be one of these. Only **feat** and **fix** show up in the changelog, in addition to breaking changes (see breaking changes section at bottom).
+Is recommended to be one of the below items. Only **feat** and **fix** show up in the changelog, in addition to breaking changes (see breaking changes section at bottom).
 
 * **feat**: A new feature
 * **fix**: A bug fix
@@ -74,6 +75,6 @@ The subject contains succinct description of the change:
 * no dot (.) at the end
 
 ### Breaking Changes
-Put any breaking changes with migration instructions in the commit footer.
+Put any breaking changes with migration instructions in the commit body.
 
-If there is a breaking change, put **BREAKING CHANGE:** in your commit footer, and it will show up in the changelog.
+If there is a breaking change, put **BREAKING CHANGE:** in your commit body, and it will show up in the changelog.
