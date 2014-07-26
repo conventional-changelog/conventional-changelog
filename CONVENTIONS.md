@@ -3,8 +3,12 @@
 These rules are adopted from [the AngularJS commit conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/).
 
 ### Commit Message Format
-Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
-format that includes a **type**, a **scope** and a **subject**:
+
+Each commit message starts with a **type**, a **scope**, and a **subject**.
+
+You prefix the commit message with the type of commit it is, put the scope inside, and leave the subject at the end.
+
+Then two lines later, there is the **body** of the commit message, then the **footer**.
 
 ```
 <type>(<scope>): <subject>
