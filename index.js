@@ -10,13 +10,24 @@ function generate(options, done) {
   options = extend({
     version: null,
     to: 'HEAD',
-    file: 'CHANGELOG.md',
+    file: 'CHANGELOG',
     subtitle: '',
     log: console.log.bind(console),
+    dialect: 'markdown'
   }, options || {});
 
   if (!options.version) {
     return done('No version specified');
+  }
+
+  try {
+    options.dialectJSON = require('./dialect/' + options.dialect + '.json');
+  } catch (ex) {
+      return done('Failed to find dialect \''+options.dialect+'\'.\n');
+  }
+
+  if(options.file === 'CHANGELOG') {
+    options.file = options.file+options.dialectJSON.extension;
   }
 
   git.latestTag(function(err, tag) {
@@ -55,4 +66,3 @@ function generate(options, done) {
     });
   }
 }
-

@@ -1,8 +1,10 @@
-describe("Writer", function() {
+describe("Writer Markdown", function() {
 
+  var dialect = 'markdown';
   var es = require('event-stream');
   var writer = require('../lib/writer');
   var extend = require('lodash.assign');
+  var dialectJSON = require('../dialect/'+dialect+'.json');
 
   var log = '';
   function concat(str) {
@@ -25,7 +27,8 @@ describe("Writer", function() {
       },
       commitLink: function(hash) {
         return hash;
-      }
+      },
+      dialectJSON: dialectJSON
     });
   }
 

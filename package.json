@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "codename": "reorder",
-  "version": "0.0.11",
+  "version": "0.0.12-SNAPSHOT",
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
   "scripts": {
@@ -29,11 +29,15 @@
     },
     {
       "name": "Andrew Joslin"
+    },
+    {
+      "name": "Nicolas Geraud"
     }
   ],
   "dependencies": {
     "lodash.assign": "~2.4.1",
-    "event-stream": "~3.1.0"
+    "event-stream": "~3.1.0",
+    "sprintf-js": "0.0.7"
   },
   "devDependencies": {
     "chai": "~1.7.2",
