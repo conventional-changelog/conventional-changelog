@@ -1,0 +1,16 @@
+{
+  "extension":              ".ad",
+  "VERSION":                "\n== %s%s",
+  "PATCH_VERSION":          "\n=== %s%s",
+  "LINK_ISSUE":             "%2$s/issues/%3$s[#%1$s]",
+  "ISSUE":                  "(#%s)",
+  "LINK_COMMIT":            "%2$s/commit/%3$s[%1$s]",
+  "COMMIT":                 "(%s)",
+  "SECTION_TPL":            "\n==== %s\n\n",
+  "LINK_HEADER_TPL":        "%s (%s)\n\n",
+  "PLAIN_HEADER_TPL":       "<a name=\"%s\"></a>\n%s (%s)\n\n",
+  "EMPTY_COMPONENT":        "$$",
+  "EMPTY_COMPONENT_PREFIX": "*",
+  "COMPONENT_PREFIX":       "* *%s:*",
+  "SUB_COMPONENT_PREFIX":   "**"
+}
