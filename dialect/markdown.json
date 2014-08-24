@@ -1,0 +1,16 @@
+{
+  "extension":              ".md",
+  "VERSION":                "## %s%s",
+  "PATCH_VERSION":          "### %s%s",
+  "LINK_ISSUE":             "[#%s](%s/issues/%s)",
+  "ISSUE":                  "(#%s)",
+  "LINK_COMMIT":            "[%s](%s/commit/%s)",
+  "COMMIT":                 "(%s)",
+  "SECTION_TPL":            "\n#### %s\n\n",
+  "LINK_HEADER_TPL":        "%s (%s)\n\n",
+  "PLAIN_HEADER_TPL":       "<a name=\"%s\"></a>\n%s (%s)\n\n",
+  "EMPTY_COMPONENT":        "$$",
+  "EMPTY_COMPONENT_PREFIX": "*",
+  "COMPONENT_PREFIX":       "* **%s:**",
+  "SUB_COMPONENT_PREFIX":   "  *"
+}

@@ -58,6 +58,8 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `file` `{string}` - Which file to read the current changelog from and prepend the new changelog's contents to.  By default, uses `'CHANGELOG.md'`
 
+* `dialect` `{string}` - Which output dialect to use to write changelog.  By default, uses `markdown`.  Available dialects are in the dialect folder.
+
 ##### The "I really want to get crazy" Options
 
 * `versionText` `{function(version, subtitle)}` - What to use for the title of a major version in the changelog. Defaults to `'## ' + version + ' ' + subtitle`.
