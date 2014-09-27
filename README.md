@@ -5,8 +5,6 @@ conventional-changelog
 $ npm install conventional-changelog
 ```
 
-Command line tool: https://github.com/thoughtram/clog.
-
 Generate a changelog from git metadata, using the AngularJS commit conventions.
 
 - [Synopsis of Conventions in CONVENTIONS.md](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md)
