@@ -12,6 +12,7 @@ Generate a changelog from git metadata, using the AngularJS commit conventions.
 
 Adapted from code originally written by @vojtajina and @btford in [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog).
 
+
 ## Example output
 
 - https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
@@ -30,6 +31,7 @@ Simple usage:
 ```js
 require('conventional-changelog')({
   repository: 'https://github.com/joyent/node',
+  bugs: 'https://company.jira.com/browse/', // By default : repository  + '/commit/'
   version: require('./package.json').version
 }, function(err, log) {
   console.log('Here is your changelog!', log);
@@ -64,9 +66,11 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `patchVersionText` `{function(version, subtitle)}` - What to use for the title of a patch version in the changelog. Defaults to `'### ' + version + ' ' + subtitle`.
 
-* `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`
+* `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash` for github
+and `opts.repository + '/commits/' + hash` for bitbucket
 
-* `issueLink` `{function(issueId)}` - If repository is provided, this function will be used to link to issues.  By default, returns a github issue link based on options.repository: `opts.repository + '/issues/' + id`
+
+* `issueLink` `{function(issueId)}` - If "bugs" link is provided, this function will be used to link to issues.  If no "bugs" link is provided, returns the github standard issue link based on options.repository: `opts.repository + '/issues/' + id`
 
 * `log` `{function()}` - What logging function to use. For example, `{log: grunt.log.ok}`. By default, uses `console.log`.
 
