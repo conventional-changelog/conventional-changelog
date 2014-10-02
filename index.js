@@ -7,12 +7,16 @@ var extend = require('lodash.assign');
 module.exports = generate;
 
 function generate(options, done) {
+  var execOptions = {};
+  if(options.cwd)
+    execOptions.cwd = options.cwd;
+
   options = extend({
     version: null,
     to: 'HEAD',
     file: 'CHANGELOG.md',
     subtitle: '',
-    log: console.log.bind(console),
+    log: console.log.bind(console)
   }, options || {});
 
   if (!options.version) {
@@ -22,7 +26,7 @@ function generate(options, done) {
   git.latestTag(function(err, tag) {
     if (err || tag === undefined) return done('Failed to read git tags.\n'+err);
     getChangelogCommits(tag);
-  });
+  }, execOptions);
 
   function getChangelogCommits(latestTag) {
     options.from = options.from || latestTag;
@@ -33,6 +37,7 @@ function generate(options, done) {
     git.getCommits({
       from: options.from,
       to: options.to,
+      execOptions: execOptions
     }, function(err, commits) {
       if (err) return done('Failed to read git log.\n'+err);
       writeLog(commits);

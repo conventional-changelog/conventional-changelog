@@ -72,6 +72,8 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `warn` `{function()}` - What warn function to use. For example, `{warn: grunt.log.writeln}`. By default, uses `console.warn`.
 
+* `cwd` `{string}` - The directory that the target repository is checked out in locally.  By default, uses the directory you are executing node in.
+
 ## License
 
 BSD
