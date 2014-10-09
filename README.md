@@ -72,6 +72,8 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `warn` `{function()}` - What warn function to use. For example, `{warn: grunt.log.writeln}`. By default, uses `console.warn`.
 
+* `includeChores` `{boolean}` - Include chores in the changelog. By default, excludes chores.
+
 ## License
 
 BSD
