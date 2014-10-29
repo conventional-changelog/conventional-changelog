@@ -20,12 +20,12 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 ## Roadmap
 
 - Make it return a stream
-- Add a proper command line interface
+- ~~Add a proper command line interface~~
 - Add configurable subjects & sections
 
 ## Documentation
 
-Simple usage: 
+Simple usage:
 
 ```js
 require('conventional-changelog')({
@@ -34,6 +34,35 @@ require('conventional-changelog')({
 }, function(err, log) {
   console.log('Here is your changelog!', log);
 });
+```
+
+Command line usage:
+
+```
+Specify a version as first argument, or use 'next' as version number if no
+version is specified.
+
+Usage
+  changelog
+  changelog <version>
+  changelog <version> --file <filename>
+  changelog <version> --file <filename> --no-write
+
+Options
+  --subtitle    A string to display after the version title in the changelog.
+                For example, it will show "## 1.0.0 "Super Version" if
+                codename "Super Version" is given.
+  --repository  If this is provided, allows issues and commit hashes to be
+                linked to the actual commit. usually used with github
+                repositories. E.g. http://github.com/joyent/node
+  --from        Which commit the changelog should start at. By default, uses
+                previous tag, or if no previous tag the first commit.
+  --to          Which commit the changelog should end at. By default, uses
+                HEAD.
+  --file        A file to read the current changelog from and prepend the new
+                changelog's contents to.
+  --no-write    Don't write back to the file. Used in combination with --file.
+
 ```
 
 #### `changelog(options, callback)`
