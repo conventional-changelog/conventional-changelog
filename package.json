@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "codename": "reorder",
-  "version": "0.0.11",
+  "version": "0.0.13-rally",
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ajoslin/conventional-changelog.git"
+    "url": "https://github.com/RallySoftware/conventional-changelog.git"
   },
   "keywords": [
     "changelog"
@@ -39,5 +39,8 @@
     "chai": "~1.7.2",
     "sinon": "~1.7.3",
     "shelljs": "~0.2.6"
+  },
+  "publishConfig": {
+    "registry": "http://npm-publish.f4tech.com"
   }
 }
