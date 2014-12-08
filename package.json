@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "codename": "reorder",
-  "version": "0.0.13-rally",
+  "version": "0.1.0-rally",
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
   "scripts": {
