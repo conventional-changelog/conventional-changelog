@@ -3,6 +3,7 @@ var fs = require('fs');
 var git = require('./lib/git');
 var writer = require('./lib/writer');
 var extend = require('lodash.assign');
+var versioner = require('./lib/versioner');
 
 module.exports = generate;
 
@@ -13,10 +14,14 @@ function generate(options, done) {
     file: 'CHANGELOG.md',
     subtitle: '',
     log: console.log.bind(console),
+    currentVersion: null,
+    bump: null
   }, options || {});
 
-  if (!options.version) {
+  if (!options.version && !(options.currentVersion && options.bump)) {
     return done('No version specified');
+  } else if (!options.version) {
+    options.version = versioner.nextVersion(options.currentVersion, options.bump);
   }
 
   git.latestTag(function(err, tag) {
@@ -55,4 +60,3 @@ function generate(options, done) {
     });
   }
 }
-

@@ -72,6 +72,10 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `warn` `{function()}` - What warn function to use. For example, `{warn: grunt.log.writeln}`. By default, uses `console.warn`.
 
+* `currentVersion` `{string}` - Used with `bump` in place of `version` to automatically increment the version number written to the changelog. Should be a string in the form: `1.2.3`.
+
+* `bump` `{string}` - Used with `currentVersion to automatically increment the version number written to the changelog. Passing `major` increments the major version number, `minor` increments the minor number, and `patch` increments the patch number.
+
 ## License
 
 BSD
