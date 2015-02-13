@@ -12,10 +12,6 @@ function generate(options, done) {
     log: console.log.bind(console),
   }, options || {});
 
-  if (!options.version) {
-    return done('No version specified');
-  }
-
   git.latestTag(function(err, tag) {
     if (err || tag === undefined) {
       return done('Failed to read git tags.\n' + err);
