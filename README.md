@@ -46,11 +46,15 @@ By default, calls the callback with a string containing a changelog from the pre
 
 ##### The Most Important Options
 
-* `version` `{string}` - The version to be written to the changelog. For example, `{version: require('./package.json').version}`
+* `version` `{string}` - The version to be written to the changelog. For example, `{version: "1.0.1"}`.
+Defaults to the version found in `package.json`. See `pkg` to configure the path of package.json.
 
 * `subtitle` `{string}` - A string to display after the version title in the changelog. For example, it will show '## 1.0.0 "Super Version"' if codename '"Super Version"' is given. By default, it's blank.
 
-* `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`
+* `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`.
+Defaults to "normalized" `repository.url` found in `package.json`. See `pkg` to configure the path of package.json.
+
+* `pkg` `{string}` - The path of `package.json`. Defaults to `./package.json`.
 
 * `from` `{string}` - Which commit the changelog should start at. By default, uses previous tag, or if no previous tag the first commit.
 
