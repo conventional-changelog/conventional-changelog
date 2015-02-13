@@ -1,8 +1,8 @@
-describe('Writer', function() {
-  var dateFormat = require('dateformat');
-  var es = require('event-stream');
-  var writer = require('../lib/writer');
+var dateFormat = require('dateformat');
+var es = require('event-stream');
+var writer = require('../lib/writer');
 
+describe('Writer', function() {
   var log = '';
 
   function concat(str) {
@@ -15,12 +15,24 @@ describe('Writer', function() {
     });
   }
 
-  function setup() {
+  function setup(mode) {
     log = '';
     var stream = es.through(concat, concat.bind(null, 'END'));
+
+    if (mode === 'repo') {
+      return new writer.Writer(stream, {
+        repository: 'github.com/user/repo',
+      });
+    } else if (mode === 'package.json') {
+      return new writer.Writer(stream, {});
+    } else if (mode === 'pkg') {
+      return new writer.Writer(stream, {
+        pkg: 'test/fixtures/_package.json'
+      });
+    }
+
     return new writer.Writer(stream, {
       subtitle: 'subby',
-      repository: 'github.com/user/repo',
       issueLink: function(id) {
         return id;
       },
@@ -56,35 +68,56 @@ describe('Writer', function() {
   });
 
   describe('#section', function() {
+    var section = {
+      foo: [{
+        subject: 'added foo-ability',
+        hash: '0',
+        closes: ['1']
+      }, {
+        subject: 'made room for bam',
+        hash: '2',
+        closes: []
+      }, ],
+      bam: [{
+        subject: 'removed bar and baz',
+        hash: '3',
+        closes: []
+      }]
+    };
+
     it('should do nothing if no components in section', function() {
       var writer = setup();
+
       writer.section('title', {});
       expect(log.length).to.equal(0);
     });
     it('should make a log out of components', function() {
       var writer = setup();
-      var section = {
-        foo: [{
-          subject: 'added foo-ability',
-          hash: '0',
-          closes: ['1']
-        }, {
-          subject: 'made room for bam',
-          hash: '2',
-          closes: []
-        }, ],
-        bam: [{
-          subject: 'removed bar and baz',
-          hash: '3',
-          closes: []
-        }]
-      };
+
       writer.section('Additions', section);
       expect(lines()[0]).to.equal('#### Additions');
       expect(lines()[1]).to.equal('* **bam:** removed bar and baz (3)');
       expect(lines()[2]).to.equal('* **foo:**');
       expect(lines()[3]).to.equal('  * added foo-ability (0, closes 1)');
       expect(lines()[4]).to.equal('  * made room for bam (2)');
+    });
+    it('should use `options.repository` for hash and closes', function() {
+      var writer = setup('repo');
+
+      writer.section('Additions', section);
+      expect(lines()[3]).to.equal('  * added foo-ability ([0](github.com/user/repo/commit/0), closes [#1](github.com/user/repo/issues/1))');
+    });
+    it('should find `repository` in package.json automatically', function() {
+      var writer = setup('package.json');
+
+      writer.section('Additions', section);
+      expect(lines()[3]).to.equal('  * added foo-ability ([0](https://github.com/ajoslin/conventional-changelog/commit/0), closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1))');
+    });
+    it('should find package.json and parse non github url correctly', function() {
+      var writer = setup('pkg');
+
+      writer.section('Additions', section);
+      expect(lines()[3]).to.equal('  * added foo-ability ([0](http://www.bitbucket.com/user/repo/commit/0), closes [#1](http://www.bitbucket.com/user/repo/issues/1))');
     });
   });
 
@@ -93,6 +126,32 @@ describe('Writer', function() {
       var writer = setup();
       writer.end();
       expect(log).to.equal('END');
+    });
+  });
+});
+
+describe('writeLog', function() {
+  it('should throw if no version number can be found', function(done) {
+    var commits = [];
+    var options = {
+      pkg: 'test/fixtures/_malformation.json'
+    };
+
+    writer.writeLog(commits, options, function(err) {
+      expect(err).to.equal('No version specified');
+      done();
+    });
+  });
+  it('should get the correct version number from package.json', function(done) {
+    var commits = [];
+    var options = {
+      pkg: 'test/fixtures/_package.json'
+    };
+
+    writer.writeLog(commits, options, function(err, changelog) {
+      expect(err).to.be.a('null');
+      expect(changelog).to.contain('1.0.0');
+      done();
     });
   });
 });
