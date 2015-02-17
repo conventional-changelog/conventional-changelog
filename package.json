@@ -37,7 +37,8 @@
   },
   "devDependencies": {
     "chai": "~1.7.2",
-    "sinon": "~1.7.3",
-    "shelljs": "~0.2.6"
+    "mocha": "^2.1.0",
+    "shelljs": "~0.2.6",
+    "sinon": "~1.7.3"
   }
 }
