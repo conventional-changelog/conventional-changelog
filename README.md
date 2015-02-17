@@ -72,6 +72,16 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `warn` `{function()}` - What warn function to use. For example, `{warn: grunt.log.writeln}`. By default, uses `console.warn`.
 
+## Running Tests
+
+To execut all tests with:
+
+    $ npm run tests
+
+You need **mocha** installe globaly:
+
+    $ npm install -g mocha
+
 ## License
 
 BSD
