@@ -32,13 +32,13 @@
     }
   ],
   "dependencies": {
-    "lodash.assign": "~2.4.1",
-    "event-stream": "~3.1.0"
+    "event-stream": "^3.1.7",
+    "lodash.assign": "^2.4.1"
   },
   "devDependencies": {
-    "chai": "~1.7.2",
-    "mocha": "^2.1.0",
-    "shelljs": "~0.2.6",
-    "sinon": "~1.7.3"
+    "chai": "^2.0.0",
+    "mocha": "*",
+    "shelljs": "^0.3.0",
+    "sinon": "^1.12.2"
   }
 }
