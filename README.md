@@ -25,7 +25,7 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 
 ## Documentation
 
-Simple usage: 
+Simple usage:
 
 ```js
 require('conventional-changelog')({

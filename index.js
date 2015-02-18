@@ -1,10 +1,7 @@
-
 var fs = require('fs');
 var git = require('./lib/git');
 var writer = require('./lib/writer');
 var extend = require('lodash.assign');
-
-module.exports = generate;
 
 function generate(options, done) {
   options = extend({
@@ -20,7 +17,9 @@ function generate(options, done) {
   }
 
   git.latestTag(function(err, tag) {
-    if (err || tag === undefined) return done('Failed to read git tags.\n'+err);
+    if (err || tag === undefined) {
+      return done('Failed to read git tags.\n'+err);
+    }
     getChangelogCommits(tag);
   });
 
@@ -34,7 +33,9 @@ function generate(options, done) {
       from: options.from,
       to: options.to,
     }, function(err, commits) {
-      if (err) return done('Failed to read git log.\n'+err);
+      if (err) {
+        return done('Failed to read git log.\n'+err);
+      }
       writeLog(commits);
     });
   }
@@ -42,11 +43,15 @@ function generate(options, done) {
   function writeLog(commits) {
     options.log('Parsed %d commits.', commits.length);
     writer.writeLog(commits, options, function(err, changelog) {
-      if (err) return done('Failed to write changelog.\n'+err);
+      if (err) {
+        return done('Failed to write changelog.\n'+err);
+      }
 
       if (options.file && fs.existsSync(options.file)) {
         fs.readFile(options.file, {encoding:'UTF-8'}, function(err, contents) {
-          if (err) return done('Failed to read ' + options.file + '.\n'+err);
+          if (err) {
+            return done('Failed to read ' + options.file + '.\n'+err);
+          }
           done(null, changelog + '\n' + String(contents));
         });
       } else {
@@ -56,3 +61,4 @@ function generate(options, done) {
   }
 }
 
+module.exports = generate;
