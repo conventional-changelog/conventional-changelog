@@ -1,8 +1,7 @@
-describe("Writer", function() {
+describe('Writer', function() {
 
   var es = require('event-stream');
   var writer = require('../lib/writer');
-  var extend = require('lodash.assign');
 
   var log = '';
   function concat(str) {
@@ -13,7 +12,7 @@ describe("Writer", function() {
       return line.length;
     });
   }
-  
+
   function setup() {
     log = '';
     var stream = es.through(concat, concat.bind(null,'END'));

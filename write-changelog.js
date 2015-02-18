@@ -9,7 +9,8 @@ changelog({
   subtitle: '"' + pkg.codename + '"',
   repository: 'https://github.com/ajoslin/conventional-changelog'
 }, function(err, log) {
-  if (err) throw new Error(err);
+  if (err) {
+    throw new Error(err);
+  }
   fs.writeFileSync('CHANGELOG.md', log);
 });
-
