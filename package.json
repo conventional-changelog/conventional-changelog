@@ -33,6 +33,7 @@
     }
   ],
   "dependencies": {
+    "dateformat": "^1.0.11",
     "event-stream": "^3.1.7",
     "lodash.assign": "^2.4.1"
   },
