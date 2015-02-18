@@ -1,5 +1,5 @@
 describe('Writer', function() {
-
+  var dateFormat = require('dateformat');
   var es = require('event-stream');
   var writer = require('../lib/writer');
 
@@ -31,15 +31,27 @@ describe('Writer', function() {
   }
 
   describe('#header', function() {
-    it('minor version', function() {
+    it('should contain major version', function() {
+      var writer = setup();
+      writer.header('1.1.0');
+      expect(log).to.contain('## 1.1.0 subby');
+    });
+    it('should contain minor version', function() {
       var writer = setup();
       writer.header('0.1.0');
       expect(log).to.contain('## 0.1.0 subby');
     });
-    it('patch version', function() {
+    it('should contain patch version', function() {
       var writer = setup();
       writer.header('0.0.3');
       expect(log).to.contain('### 0.0.3 subby');
+    });
+    it('should contain current date', function() {
+      var now = new Date();
+      var currentDate = dateFormat(now, 'yyyy-mm-dd');
+      var writer = setup();
+      writer.header('1.0.3');
+      expect(log).to.contain(currentDate);
     });
   });
 
@@ -76,9 +88,11 @@ describe('Writer', function() {
     });
   });
 
-  it('#end', function() {
-    var writer = setup();
-    writer.end();
-    expect(log).to.equal('END');
+  describe('#end', function() {
+    it('should equal "END"', function() {
+      var writer = setup();
+      writer.end();
+      expect(log).to.equal('END');
+    });
   });
 });
