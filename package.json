@@ -35,7 +35,9 @@
   "dependencies": {
     "dateformat": "^1.0.11",
     "event-stream": "^3.1.7",
-    "lodash.assign": "^2.4.1"
+    "github-url-from-git": "^1.4.0",
+    "lodash.assign": "^2.4.1",
+    "normalize-package-data": "^1.0.3"
   },
   "devDependencies": {
     "chai": "^2.0.0",
