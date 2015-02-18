@@ -78,7 +78,7 @@ describe('git', function() {
         'Closes #2, #3. Resolves #4. Fixes #5. Fixes #6.\n' +
         'What not ?\n'
       );
-      expect(msg.closes).to.deep.equal([2,3,4,5,6]);
+      expect(msg.closes).to.deep.equal([2, 3, 4, 5, 6]);
       expect(msg.subject).to.equal('Very cool commit');
     });
     it('should parse a msg without scope', function() {

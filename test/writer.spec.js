@@ -4,9 +4,11 @@ describe('Writer', function() {
   var writer = require('../lib/writer');
 
   var log = '';
+
   function concat(str) {
     log += str;
   }
+
   function lines() {
     return log.split('\n').filter(function(line) {
       return line.length;
@@ -15,7 +17,7 @@ describe('Writer', function() {
 
   function setup() {
     log = '';
-    var stream = es.through(concat, concat.bind(null,'END'));
+    var stream = es.through(concat, concat.bind(null, 'END'));
     return new writer.Writer(stream, {
       subtitle: 'subby',
       repository: 'github.com/user/repo',
@@ -50,13 +52,20 @@ describe('Writer', function() {
     it('should make a log out of components', function() {
       var writer = setup();
       var section = {
-        foo: [
-          { subject: 'added foo-ability', hash: '0', closes: ['1'] },
-          { subject: 'made room for bam', hash: '2', closes: [] },
-        ],
-        bam: [
-          { subject: 'removed bar and baz', hash: '3', closes: [] }
-        ]
+        foo: [{
+          subject: 'added foo-ability',
+          hash: '0',
+          closes: ['1']
+        }, {
+          subject: 'made room for bam',
+          hash: '2',
+          closes: []
+        }, ],
+        bam: [{
+          subject: 'removed bar and baz',
+          hash: '3',
+          closes: []
+        }]
       };
       writer.section('Additions', section);
       expect(lines()[0]).to.equal('#### Additions');
