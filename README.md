@@ -46,13 +46,11 @@ By default, calls the callback with a string containing a changelog from the pre
 
 ##### The Most Important Options
 
-* `version` `{string}` - The version to be written to the changelog. For example, `{version: "1.0.1"}`.
-Defaults to the version found in `package.json`. See `pkg` to configure the path of package.json.
+* `version` `{string}` - The version to be written to the changelog. For example, `{version: "1.0.1"}`. Defaults to the version found in `package.json`. See `pkg` to configure the path of package.json.
 
 * `subtitle` `{string}` - A string to display after the version title in the changelog. For example, it will show '## 1.0.0 "Super Version"' if codename '"Super Version"' is given. By default, it's blank.
 
-* `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`.
-Defaults to "normalized" `repository.url` found in `package.json`. See `pkg` to configure the path of package.json.
+* `repository` `{string}` - If this is provided, allows issues and commit hashes to be linked to the actual commit.  Usually used with github repositories.  For example, `{repository: 'http://github.com/joyent/node'}`. Defaults to "normalized" `repository.url` found in `package.json`. See `pkg` to configure the path of package.json.
 
 * `pkg` `{string}` - The path of `package.json`. Defaults to `./package.json`.
 
@@ -60,7 +58,7 @@ Defaults to "normalized" `repository.url` found in `package.json`. See `pkg` to 
 
 * `to` `{string}` - Which commit the changelog should end at.  By default, uses HEAD.
 
-* `file` `{string}` - Which file to read the current changelog from and prepend the new changelog's contents to.  By default, uses `'CHANGELOG.md'`
+* `file` `{string}` - Which file to read the current changelog from and prepend the new changelog's contents to.  By default, uses `'CHANGELOG.md'`.
 
 ##### The "I really want to get crazy" Options
 
@@ -68,9 +66,9 @@ Defaults to "normalized" `repository.url` found in `package.json`. See `pkg` to 
 
 * `patchVersionText` `{function(version, subtitle)}` - What to use for the title of a patch version in the changelog. Defaults to `'### ' + version + ' ' + subtitle`.
 
-* `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`
+* `commitLink` `{function(commitHash)}` - If repository is provided, this function will be used to link to commits. By default, returns a github commit link based on options.repository: `opts.repository + '/commit/' + hash`.
 
-* `issueLink` `{function(issueId)}` - If repository is provided, this function will be used to link to issues.  By default, returns a github issue link based on options.repository: `opts.repository + '/issues/' + id`
+* `issueLink` `{function(issueId)}` - If repository is provided, this function will be used to link to issues.  By default, returns a github issue link based on options.repository: `opts.repository + '/issues/' + id`.
 
 * `log` `{function()}` - What logging function to use. For example, `{log: grunt.log.ok}`. By default, uses `console.log`.
 
