@@ -18,7 +18,7 @@ function generate(options, done) {
 
   git.latestTag(function(err, tag) {
     if (err || tag === undefined) {
-      return done('Failed to read git tags.\n'+err);
+      return done('Failed to read git tags.\n' + err);
     }
     getChangelogCommits(tag);
   });
@@ -34,7 +34,7 @@ function generate(options, done) {
       to: options.to,
     }, function(err, commits) {
       if (err) {
-        return done('Failed to read git log.\n'+err);
+        return done('Failed to read git log.\n' + err);
       }
       writeLog(commits);
     });
@@ -44,13 +44,15 @@ function generate(options, done) {
     options.log('Parsed %d commits.', commits.length);
     writer.writeLog(commits, options, function(err, changelog) {
       if (err) {
-        return done('Failed to write changelog.\n'+err);
+        return done('Failed to write changelog.\n' + err);
       }
 
       if (options.file && fs.existsSync(options.file)) {
-        fs.readFile(options.file, {encoding:'UTF-8'}, function(err, contents) {
+        fs.readFile(options.file, {
+          encoding: 'UTF-8'
+        }, function(err, contents) {
           if (err) {
-            return done('Failed to read ' + options.file + '.\n'+err);
+            return done('Failed to read ' + options.file + '.\n' + err);
           }
           done(null, changelog + '\n' + String(contents));
         });
