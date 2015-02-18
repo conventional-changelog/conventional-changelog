@@ -5,7 +5,8 @@
   "description": "Generate a markdown changelog from git commit metadata",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.js index.js lib/*.js --no-colors"
+    "lint": "jshint lib test index.js --exclude node_modules",
+    "test": "npm run-script lint && mocha test/*.js index.js lib/*.js --no-colors"
   },
   "files": [
     "index.js",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "chai": "^2.0.0",
+    "jshint": "^2.6.0",
     "mocha": "*",
     "shelljs": "^0.3.0",
     "sinon": "^1.12.2"
