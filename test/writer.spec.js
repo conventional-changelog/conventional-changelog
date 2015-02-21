@@ -52,6 +52,11 @@ describe('Writer', function() {
       writer.header();
       expect(log).to.contain('1.1.1');
     });
+    it('should contain subtitle', function() {
+      var writer = setup();
+      writer.header();
+      expect(log).to.contain('subby');
+    });
     it('should contain current date', function() {
       var now = new Date();
       var currentDate = dateFormat(now, 'yyyy-mm-dd');
