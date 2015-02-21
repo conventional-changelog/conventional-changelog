@@ -5,7 +5,6 @@ var extend = require('lodash.assign');
 
 function generate(options, done) {
   options = extend({
-    version: null,
     to: 'HEAD',
     file: 'CHANGELOG.md',
     subtitle: '',
