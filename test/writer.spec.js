@@ -1,6 +1,6 @@
 var dateFormat = require('dateformat');
 var es = require('event-stream');
-var writer = require('../lib/writer');
+var Writer = require('../lib/Writer');
 
 describe('Writer', function() {
   var log = '';
@@ -20,18 +20,18 @@ describe('Writer', function() {
     var stream = es.through(concat, concat.bind(null, 'END'));
 
     if (mode === 'repo') {
-      return new writer.Writer(stream, {
+      return new Writer(stream, {
         repository: 'github.com/user/repo',
       });
     } else if (mode === 'package.json') {
-      return new writer.Writer(stream, {});
+      return new Writer(stream, {});
     } else if (mode === 'pkg') {
-      return new writer.Writer(stream, {
+      return new Writer(stream, {
         pkg: 'test/fixtures/_package.json'
       });
     }
 
-    return new writer.Writer(stream, {
+    return new Writer(stream, {
       subtitle: 'subby',
       issueLink: function(id) {
         return id;
@@ -126,32 +126,6 @@ describe('Writer', function() {
       var writer = setup();
       writer.end();
       expect(log).to.equal('END');
-    });
-  });
-});
-
-describe('writeLog', function() {
-  it('should throw if no version number can be found', function(done) {
-    var commits = [];
-    var options = {
-      pkg: 'test/fixtures/_malformation.json'
-    };
-
-    writer.writeLog(commits, options, function(err) {
-      expect(err).to.equal('No version specified');
-      done();
-    });
-  });
-  it('should get the correct version number from package.json', function(done) {
-    var commits = [];
-    var options = {
-      pkg: 'test/fixtures/_package.json'
-    };
-
-    writer.writeLog(commits, options, function(err, changelog) {
-      expect(err).to.be.a('null');
-      expect(changelog).to.contain('1.0.0');
-      done();
     });
   });
 });

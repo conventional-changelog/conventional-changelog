@@ -1,6 +1,6 @@
 var fs = require('fs');
 var git = require('./lib/git');
-var writer = require('./lib/writer');
+var writeLog = require('./lib/writeLog');
 var extend = require('lodash.assign');
 
 function generate(options, done) {
@@ -32,13 +32,13 @@ function generate(options, done) {
       if (err) {
         return done('Failed to read git log.\n' + err);
       }
-      writeLog(commits);
+      writeChangelog(commits);
     });
   }
 
-  function writeLog(commits) {
+  function writeChangelog(commits) {
     options.log('Parsed %d commits.', commits.length);
-    writer.writeLog(commits, options, function(err, changelog) {
+    writeLog(commits, options, function(err, changelog) {
       if (err) {
         return done('Failed to write changelog.\n' + err);
       }
