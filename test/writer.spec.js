@@ -29,6 +29,10 @@ describe('Writer', function() {
       return new Writer(stream, {
         pkg: 'test/fixtures/_package.json'
       });
+    } else if (mode === 'version') {
+      return new Writer(stream, {
+        version: '1.1.1'
+      });
     }
 
     return new Writer(stream, {
@@ -43,20 +47,10 @@ describe('Writer', function() {
   }
 
   describe('#header', function() {
-    it('should contain major version', function() {
-      var writer = setup();
-      writer.header('1.1.0');
-      expect(log).to.contain('## 1.1.0 subby');
-    });
-    it('should contain minor version', function() {
-      var writer = setup();
-      writer.header('0.1.0');
-      expect(log).to.contain('## 0.1.0 subby');
-    });
-    it('should contain patch version', function() {
-      var writer = setup();
-      writer.header('0.0.3');
-      expect(log).to.contain('### 0.0.3 subby');
+    it('should contain version', function() {
+      var writer = setup('version');
+      writer.header();
+      expect(log).to.contain('1.1.1');
     });
     it('should contain current date', function() {
       var now = new Date();
