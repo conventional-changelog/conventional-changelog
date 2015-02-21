@@ -6,7 +6,7 @@ describe('changelog', function() {
       log: function() {}
     }, function(err, log) {
       expect(err).to.be.a('null');
-      expect(log).not.to.be.a('null');
+      expect(log).to.include('create conventional-changelog module');
       done();
     });
   });
