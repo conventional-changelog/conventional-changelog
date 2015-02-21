@@ -4,28 +4,10 @@ var writeLog = require('./lib/writeLog');
 var extend = require('lodash.assign');
 
 function generate(options, done) {
-  git.latestTag(function(err, latestTag) {
-    if (err || latestTag === undefined) {
-      return done('Failed to read git tags.\n' + err);
-    }
-
-    options = extend({
-      from: latestTag,
-      to: 'HEAD',
-      file: 'CHANGELOG.md',
-      log: console.log.bind(console),
-    }, options || {});
-
-    getChangelogCommits();
-  });
-
   function getChangelogCommits() {
     options.log('Generating changelog from %s to %s...', options.from, options.to);
 
-    git.getCommits({
-      from: options.from,
-      to: options.to,
-    }, function(err, commits) {
+    git.getCommits(options, function(err, commits) {
       if (err) {
         return done('Failed to read git log.\n' + err);
       }
@@ -54,6 +36,14 @@ function generate(options, done) {
       }
     });
   }
+
+  options = extend({
+    file: 'CHANGELOG.md',
+    log: console.log.bind(console),
+    warn: console.warn.bind(console)
+  }, options || {});
+
+  getChangelogCommits();
 }
 
 module.exports = generate;

@@ -1,7 +1,6 @@
+var git = require('../lib/git');
+
 describe('git', function() {
-
-  var git = require('../lib/git');
-
   describe('parseRawCommit', function() {
     it('should parse raw commit', function() {
       var msg;
