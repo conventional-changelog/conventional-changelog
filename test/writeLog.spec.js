@@ -1,7 +1,7 @@
 var writeLog = require('../lib/writeLog');
 
 describe('writeLog', function() {
-  it('should throw if no version number can be found', function(done) {
+  it('should throw if no version can be found', function(done) {
     var commits = [];
     var options = {
       pkg: 'test/fixtures/_malformation.json'
@@ -12,7 +12,7 @@ describe('writeLog', function() {
       done();
     });
   });
-  it('should get the correct version number from package.json', function(done) {
+  it('should get the correct version from package.json', function(done) {
     var commits = [];
     var options = {
       pkg: 'test/fixtures/_package.json'
