@@ -13,11 +13,10 @@ function generate(options, done) {
       from: latestTag,
       to: 'HEAD',
       file: 'CHANGELOG.md',
-      subtitle: '',
       log: console.log.bind(console),
     }, options || {});
 
-    getChangelogCommits(latestTag);
+    getChangelogCommits();
   });
 
   function getChangelogCommits() {
