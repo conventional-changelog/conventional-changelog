@@ -37,6 +37,8 @@
     "event-stream": "^3.1.7",
     "github-url-from-git": "^1.4.0",
     "lodash.assign": "^2.4.1",
+    "lodash.partial": "^3.0.0",
+    "lodash.template": "^3.3.0",
     "normalize-package-data": "^1.0.3"
   },
   "devDependencies": {
