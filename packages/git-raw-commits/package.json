@@ -1,0 +1,44 @@
+{
+  "name": "git-raw-commits",
+  "version": "0.0.0",
+  "description": "Get raw git commits out of your repository using git-log(1)",
+  "homepage": "https://github.com/stevemao/git-latest-tag",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "repository": "stevemao/git-raw-commits",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "git-raw-commits",
+    "raw",
+    "commit",
+    "commits",
+    "git",
+    "log",
+    "git-log"
+  ],
+  "dependencies": {
+    "dargs": "^4.0.0",
+    "event-stream": "^3.2.2",
+    "git-latest-tag": "0.0.6",
+    "lodash": "^3.3.0",
+    "meow": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "mocha": "*",
+    "shelljs": "^0.3.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "bin": {
+    "git-raw-commits": "cli.js"
+  }
+}
