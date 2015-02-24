@@ -32,7 +32,7 @@ Type: `object`
 
 Please check the available options at http://git-scm.com/docs/git-log.
 
-*NOTE*: for `<revision range>` we use also use `<from>..<to>` pattern, where:
+*NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, where:
 
 #### from
 
