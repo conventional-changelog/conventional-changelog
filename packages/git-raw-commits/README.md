@@ -18,13 +18,15 @@ $ npm install --save git-raw-commits
 ```js
 var gitRawCommits = require('git-raw-commits');
 
-gitRawCommits([options], callback);
+gitRawCommits(options, callback);
 ```
 
 
 ## API
 
-### options
+### gitRawCommits([options], callback)
+
+#### options
 
 Type: `object`
 
@@ -43,6 +45,14 @@ If you have no tag it will ignore `to` and get the whole commits
 Type: `string` defaults to 'HEAD'
 
 Only used if `from` is truthy
+
+#### callback(err, commits)
+
+##### commits
+
+Type: `array`
+
+An array of raw commits
 
 
 ## CLI

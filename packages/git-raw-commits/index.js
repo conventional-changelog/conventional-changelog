@@ -34,7 +34,6 @@ function gitRawCommits(options, done) {
   done = done || function() {};
 
   getLatestTag(function(err, latestTag) {
-
     if (err || latestTag === undefined) {
       if (done === true) {
         return console.log(err);
