@@ -36,13 +36,13 @@ Please check the available options at http://git-scm.com/docs/git-log.
 
 #### from
 
-Type: `string` defaults to your latest tag
+Type: `string` Default: your latest tag
 
 If you have no tag it will ignore `to` and get the whole commits
 
 #### to
 
-Type: `string` defaults to 'HEAD'
+Type: `string` Default: `'HEAD'`
 
 Only used if `from` is truthy
 
