@@ -13,7 +13,7 @@ shell.exec('touch test');
 shell.exec('git init && git add --all && git commit -m"First commit"');
 shell.exec('touch test2');
 shell.exec('git add --all && git commit -m"Second commit"');
-shell.exec('rm test2');
+shell.exec('touch test3');
 shell.exec('git add --all && git commit -m"Third commit"');
 
 it('should get commits', function(done) {
