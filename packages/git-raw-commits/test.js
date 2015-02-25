@@ -1,6 +1,7 @@
 /*global it */
 'use strict';
 var expect = require('chai').expect;
+var writeFileSync = require('fs').writeFileSync;
 var getCommits = require('./');
 var shell = require('shelljs');
 var through = require('event-stream').through;
@@ -9,11 +10,11 @@ shell.config.silent = true;
 shell.rm('-rf', 'tmp');
 shell.mkdir('tmp');
 shell.cd('tmp');
-shell.exec('touch test');
+writeFileSync('test1', '');
 shell.exec('git init && git add --all && git commit -m"First commit"');
-shell.exec('touch test2');
+writeFileSync('test2', '');
 shell.exec('git add --all && git commit -m"Second commit"');
-shell.exec('touch test3');
+writeFileSync('test3', '');
 shell.exec('git add --all && git commit -m"Third commit"');
 
 it('should get commits', function(done) {
