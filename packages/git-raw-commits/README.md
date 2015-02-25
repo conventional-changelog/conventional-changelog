@@ -15,16 +15,29 @@ $ npm install --save git-raw-commits
 
 ## Usage
 
+### Use a callback
+
 ```js
 var gitRawCommits = require('git-raw-commits');
 
 gitRawCommits(options, callback);
 ```
 
+### Use as a through stream
+
+```js
+var gitRawCommits = require('git-raw-commits');
+
+gitRawCommits(options)
+  .pipe(...);
+```
+
 
 ## API
 
-### gitRawCommits([options], callback)
+### gitRawCommits([options], [callback])
+
+Returns a through stream.
 
 #### options
 
@@ -38,13 +51,13 @@ Please check the available options at http://git-scm.com/docs/git-log.
 
 Type: `string` Default: your latest tag
 
-If you have no tag it will ignore `to` and get the whole commits
+If you have no tag it will ignore `to` and get the whole commits.
 
 #### to
 
 Type: `string` Default: `'HEAD'`
 
-Only used if `from` is truthy
+Only used if `from` is truthy.
 
 #### callback(err, commits)
 
@@ -52,7 +65,7 @@ Only used if `from` is truthy
 
 Type: `array`
 
-An array of raw commits
+An array of raw commits.
 
 
 ## CLI
@@ -61,7 +74,7 @@ An array of raw commits
 $ npm install --global git-raw-commits
 ```
 
-```
+```sh
 $ git-raw-commits --help
 
   Usage,

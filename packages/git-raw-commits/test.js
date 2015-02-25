@@ -3,6 +3,7 @@
 var expect = require('chai').expect;
 var getCommits = require('./');
 var shell = require('shelljs');
+var through = require('event-stream').through;
 
 shell.config.silent = true;
 shell.rm('-rf', 'tmp');
@@ -55,4 +56,21 @@ it('should auto get `from` if there is no tag', function(done) {
     expect(commits[0]).to.contain('Third commit');
     done();
   });
+});
+
+it('should return a through stream', function(done) {
+  var i = 0;
+  getCommits({
+    from: 'HEAD~2'
+  }).pipe(through(function(chunk) {
+    if (i === 0) {
+      expect(chunk.toString()).to.contain('Third commit');
+    }
+    else {
+      expect(chunk.toString()).to.contain('Second commit');
+    }
+    i++;
+  }, function() {
+    done();
+  }));
 });

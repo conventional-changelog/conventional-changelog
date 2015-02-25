@@ -33,6 +33,8 @@ function gitRawCommits(options, done) {
 
   done = done || function() {};
 
+  var throughStream = es.through();
+
   getLatestTag(function(err, latestTag) {
     if (err || latestTag === undefined) {
       if (done === true) {
@@ -65,11 +67,14 @@ function gitRawCommits(options, done) {
       }));
 
     if (done === true) {
-      return stream.pipe(process.stdout);
+      stream.pipe(process.stdout);
     }
-    return stream
-      .pipe(es.writeArray(done));
+    else {
+      stream.pipe(throughStream).pipe(es.writeArray(done));
+    }
   });
+
+  return throughStream;
 }
 
 module.exports = gitRawCommits;
