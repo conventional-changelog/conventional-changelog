@@ -37,7 +37,7 @@ gitRawCommits(options)
 
 ### gitRawCommits([options], [callback])
 
-Returns a through stream.
+Returns a through stream. Stream is split to break on each commit.
 
 #### options
 
