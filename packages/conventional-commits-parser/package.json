@@ -1,0 +1,40 @@
+{
+  "name": "conventional-commits-parser",
+  "version": "0.0.0",
+  "description": "parse raw conventional commits",
+  "homepage": "https://github.com/stevemao/conventional-commits-parser",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "repository": "stevemao/conventional-commits-parser",
+  "license": "MIT",
+  "keywords": [
+    "conventional-commits-parser",
+    "changelog",
+    "conventional",
+    "parser"
+  ],
+  "dependencies": {
+    "JSONStream": "^0.10.0",
+    "graceful-fs": "^3.0.5",
+    "meow": "^3.1.0",
+    "through2": "^0.6.3"
+  },
+  "devDependencies": {
+    "chai": "^2.1.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.6",
+    "lodash": "^3.3.1",
+    "mocha": "*",
+    "split": "^0.3.3"
+  },
+  "scripts": {
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
+  },
+  "bin": {
+    "conventional-commits-parser": "cli.js"
+  }
+}
