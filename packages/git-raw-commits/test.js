@@ -1,10 +1,11 @@
 /*global it */
 'use strict';
 var expect = require('chai').expect;
-var writeFileSync = require('fs').writeFileSync;
 var getCommits = require('./');
+var intercept = require("intercept-stdout");
 var shell = require('shelljs');
 var through = require('event-stream').through;
+var writeFileSync = require('fs').writeFileSync;
 
 shell.config.silent = true;
 shell.rm('-rf', 'tmp');
@@ -74,4 +75,28 @@ it('should return a through stream', function(done) {
   }, function() {
     done();
   }));
+});
+
+it('has no options', function(done) {
+  getCommits()
+    .pipe(through(function(chunk) {
+      expect(chunk.toString()).to.contain('Third commit');
+    }, function() {
+      done();
+    }));
+});
+
+it('cli should pipe to stdout', function(done) {
+  var text = '';
+
+  intercept(function(txt) {
+    text += txt;
+  });
+
+  getCommits({}, true);
+
+  setTimeout(function() {
+    expect(text).to.contain('Third commit');
+    done();
+  }, 500);
 });
