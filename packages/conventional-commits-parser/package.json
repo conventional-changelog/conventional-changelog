@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-parser",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "parse raw conventional commits",
   "homepage": "https://github.com/stevemao/conventional-commits-parser",
   "author": {
