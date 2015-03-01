@@ -5,7 +5,7 @@ var parser = require('../lib/parser');
 describe('parseRawCommit', function() {
   var options = {
     maxSubjectLength: 80,
-    headerPattern: /^(\w*)(\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+    headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     closeKeywords: [
       'kill',
       'kills',
@@ -21,7 +21,7 @@ describe('parseRawCommit', function() {
 
   var shortSubjectOptions = {
     maxSubjectLength: 10,
-    headerPattern: /^(\w*)(\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+    headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     closeKeywords: [
       'close',
     ],

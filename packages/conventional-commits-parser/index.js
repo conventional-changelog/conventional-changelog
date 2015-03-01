@@ -6,7 +6,7 @@ var through = require('through2');
 function conventionalCommitsParser(options) {
   options = extend({
     maxSubjectLength: 80,
-    headerPattern: /^(\w*)(\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+    headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     closeKeywords: [
       'close',
       'closes',

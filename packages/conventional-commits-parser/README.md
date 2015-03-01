@@ -113,9 +113,9 @@ The maximum subject length.
 
 ##### headerPattern
 
-Type: `regex` Default: `/^(\w*)(\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
+Type: `regex` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
 
-Used to match header pattern.
+Used to match header pattern. The first capturing group captures **type**, second captures **scope** and third captures **subject**
 
 ##### closeKeywords
 

@@ -28,17 +28,17 @@ function parser(raw, options) {
   }
 
   match = msg.header.match(options.headerPattern);
-  if (!match || !match[1] || !match[4]) {
+  if (!match || !match[1] || !match[3]) {
     return null;
   }
 
-  if (match[4].length > options.maxSubjectLength) {
-    match[4] = match[4].substr(0, options.maxSubjectLength);
+  if (match[3].length > options.maxSubjectLength) {
+    match[3] = match[3].substr(0, options.maxSubjectLength);
   }
 
   msg.type = match[1];
-  msg.scope = match[3];
-  msg.subject = match[4];
+  msg.scope = match[2];
+  msg.subject = match[3];
 
   _.forEach(lines, function(line) {
     var issue;
