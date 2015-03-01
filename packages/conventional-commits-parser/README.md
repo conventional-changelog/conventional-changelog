@@ -161,7 +161,7 @@ If you run `conventional-commits-parser` without any arguments
 $ conventional-commits-parser
 ```
 
-You will enter an interactive shell. If you enter "return" three times the result of your commit will be shown.
+You will enter an interactive shell. To show your parsed result enter "return" three times.
 
 ```sh
 > fix(title): a title is fixed
