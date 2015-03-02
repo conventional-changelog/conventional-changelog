@@ -41,7 +41,7 @@ else {
   });
 
   stream.pipe(conventionalCommitsParser(cli.flags))
-    .pipe(JSONStream.stringify(''))
+    .pipe(JSONStream.stringify('', '', ''))
     .pipe(through(function(chunk, enc, cb) {
       cb(null, 'result: ' + chunk + '\n\n');
     }))
