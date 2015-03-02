@@ -1,0 +1,5 @@
+* **{{scope}}:** {{subject}}
+
+{{~!-- commit hash --}} {{#if @root.linkReferences}}([{{hash}}][{{@root.host}}/{{@root.repository}}/{{@root.commit}}/{{hash}}]){{else}}{{hash~}}{{/if}}
+
+{{~!-- commit close --}}{{#if closes}}, closes{{~#each closes}} {{#if @root.linkReferences}}[#{{this}}]({{@root.host}}/{{@root.repository}}/{{@root.issue}}/{{this}}){{else}}#{{this}}{{/if}}{{/each}}{{/if}}
