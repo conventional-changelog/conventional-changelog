@@ -40,7 +40,7 @@ describe('conventionalCommitsParser', function() {
       .pipe(conventionalCommitsParser())
       .pipe(through.obj(function(chunk, enc, cb) {
         expect(chunk.hash).to.equal('13f31602f396bc269076ab4d389cfd8ca94b20ba');
-        if(--length === 0) {
+        if (--length === 0) {
           done();
         }
         cb();
@@ -110,9 +110,7 @@ describe('conventionalCommitsParser', function() {
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
           expect(chunk.closes).to.eql([123, 33]);
-        }
-
-        else {
+        } else {
           expect(chunk.breaks['BREAKING CHANGES']).to.equal('some breaking changes');
           done();
         }

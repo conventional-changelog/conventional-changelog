@@ -22,8 +22,7 @@ function parser(raw, options) {
     msg.header = msg.hash;
     msg.hash = null;
     lines.shift();
-  }
-  else {
+  } else {
     lines.splice(0, 2);
   }
 
@@ -64,7 +63,7 @@ function parser(raw, options) {
       _.forEach(match, function(m) {
         _.forEach(m.split(','), function(i) {
           issue = i.match(reDigit);
-          if(issue) {
+          if (issue) {
             msg.closes.push(parseInt(issue[0], 10));
           }
         });

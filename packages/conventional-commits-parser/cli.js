@@ -26,9 +26,7 @@ if (cli.input.length > 0) {
     .pipe(conventionalCommitsParser(cli.flags))
     .pipe(JSONStream.stringify())
     .pipe(process.stdout);
-}
-
-else {
+} else {
   var commit = '';
   var through = require('through2');
   var readline = require('readline');

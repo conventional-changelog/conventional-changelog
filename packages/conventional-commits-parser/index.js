@@ -36,8 +36,7 @@ function conventionalCommitsParser(options) {
 
     if (commit) {
       cb(null, commit);
-    }
-    else {
+    } else {
       cb();
     }
   });
