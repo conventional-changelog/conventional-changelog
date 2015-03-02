@@ -40,7 +40,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "coverage": "istanbul cover _mocha --report lcovonly -- -R spec && rm -rf ./coverage"
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
   },
   "bin": {
     "git-raw-commits": "cli.js"

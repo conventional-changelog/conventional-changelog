@@ -60,16 +60,14 @@ function gitRawCommits(options, done) {
       .pipe(es.map(function(data, callback) {
         if (data) {
           callback(null, data);
-        }
-        else {
+        } else {
           callback();
         }
       }));
 
     if (done === true) {
       stream.pipe(process.stdout);
-    }
-    else {
+    } else {
       stream.pipe(throughStream).pipe(es.writeArray(done));
     }
   });

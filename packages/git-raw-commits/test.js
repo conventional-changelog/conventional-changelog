@@ -67,8 +67,7 @@ it('should return a through stream', function(done) {
   }).pipe(through(function(chunk) {
     if (i === 0) {
       expect(chunk.toString()).to.contain('Third commit');
-    }
-    else {
+    } else {
       expect(chunk.toString()).to.contain('Second commit');
     }
     i++;
