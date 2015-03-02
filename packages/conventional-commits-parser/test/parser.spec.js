@@ -49,6 +49,8 @@ describe('parseRawCommit', function() {
 
   it('should returns null if nothing to parse', function() {
     expect(parser()).to.equal(null);
+    expect(parser('\n')).to.equal(null);
+    expect(parser(' ')).to.equal(null);
   });
 
   it('should parse hash', function() {
@@ -62,6 +64,10 @@ describe('parseRawCommit', function() {
 
     it('should parse header', function() {
       expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
+    });
+
+    it('should parse header after trimed', function() {
+      expect(parser('\n\n\n\n\nchore: some chore\n\n\n\n', options).header).to.equal('chore: some chore');
     });
 
     it('should parse header without a hash', function() {
