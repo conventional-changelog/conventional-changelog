@@ -22,6 +22,7 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 - Make it return a stream
 - Add a proper command line interface
 - Add configurable subjects & sections
+- Split up this repo into smaller modules [#22](https://github.com/ajoslin/conventional-changelog/issues/22)
 
 ## Documentation
 
