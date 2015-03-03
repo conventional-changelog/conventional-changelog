@@ -33,6 +33,10 @@ describe('Writer', function() {
       return new Writer(stream, {
         version: '1.1.1'
       });
+    } else if (mode === 'pkgNotFound') {
+      return new Writer(stream, {
+        pkg: 'no_such_package.json'
+      });
     }
 
     return new Writer(stream, {
@@ -117,6 +121,12 @@ describe('Writer', function() {
 
       writer.section('Additions', section);
       expect(lines()[3]).to.equal('  * added foo-ability ([0](http://www.bitbucket.com/user/repo/commit/0), closes [#1](http://www.bitbucket.com/user/repo/issues/1))');
+    });
+    it('should handle it properly if package.json cannot be found', function() {
+      var writer = setup('pkgNotFound');
+
+      writer.section('Additions', section);
+      expect(lines()[3]).to.equal('  * added foo-ability (0, closes #1)');
     });
   });
 
