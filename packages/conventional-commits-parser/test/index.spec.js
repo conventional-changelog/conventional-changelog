@@ -33,6 +33,7 @@ describe('conventionalCommitsParser', function() {
     forEach(commits, function(commit) {
       stream.write(commit);
     });
+    stream.end();
 
     var length = commits.length;
 
@@ -65,6 +66,7 @@ describe('conventionalCommitsParser', function() {
     forEach(commits, function(commit) {
       stream.write(commit);
     });
+    stream.end();
 
     var i = 0;
 
@@ -74,12 +76,10 @@ describe('conventionalCommitsParser', function() {
         expect(chunk.hash).to.equal('13f31602f396bc269076ab4d389cfd8ca94b20ba');
         i++;
         cb();
+      }, function() {
+        expect(i).to.equal(2);
+        done();
       }));
-
-    setTimeout(function() {
-      expect(i).to.equal(2);
-      done();
-    }, 500);
   });
 
   it('should take options', function(done) {
@@ -99,6 +99,7 @@ describe('conventionalCommitsParser', function() {
     forEach(commits, function(commit) {
       stream.write(commit);
     });
+    stream.end();
 
     var length = commits.length;
 
