@@ -19,17 +19,6 @@ describe('parseRawCommit', function() {
     ]
   };
 
-  var shortSubjectOptions = {
-    maxSubjectLength: 10,
-    headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-    closeKeywords: [
-      'close',
-    ],
-    breakKeywords: [
-      'BREAKING CHANGE'
-    ]
-  };
-
   var msg = parser(
     '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
     'feat(scope): broadcast $destroy event on scope destruction\n' +
@@ -87,7 +76,10 @@ describe('parseRawCommit', function() {
     });
 
     it('should trim if subject is too long', function() {
-      var msg = parser('feat(ng-list): Allow custom separator', shortSubjectOptions);
+      var msg = parser('feat(ng-list): Allow custom separator', {
+        maxSubjectLength: 10,
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/
+      });
       expect(msg.subject).to.equal('Allow cust');
     });
 
@@ -96,6 +88,13 @@ describe('parseRawCommit', function() {
       expect(simpleMsg.type).to.equal('chore');
       expect(simpleMsg.scope).to.equal(undefined);
       expect(simpleMsg.subject).to.equal('some chore');
+    });
+
+    it('should allow ":" in scope', function() {
+      var msg = parser('feat(ng:list): Allow custom separator', {
+        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
+      });
+      expect(msg.scope).to.equal('ng:list');
     });
   });
 
