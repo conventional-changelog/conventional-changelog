@@ -38,9 +38,13 @@ forEach(cli.input, function(arg) {
 var length = filePaths.length;
 
 function processFile(fileIndex) {
-  fs.createReadStream(filePaths[fileIndex])
+  var filePath = filePaths[fileIndex];
+  fs.createReadStream(filePath)
     .on('error', function(err) {
-      console.log('Failed to read file ' + filePaths[0] + '\n' + err);
+      console.warn('Failed to read file ' + filePath + '\n' + err);
+      if(++fileIndex < length) {
+        processFile(fileIndex);
+      }
     })
     .pipe(split(separator))
     .pipe(conventionalCommitsParser(cli.flags))
