@@ -203,6 +203,38 @@ An array of json will be printed to stdout.
 ]
 ```
 
+Commits should be split by at least three newlines (`\n\n\n`) or you can specify a separator as the second argument.
+
+Eg: in log2.txt
+
+```text
+2d0eda10e43f6b079b531c507282fad082ea0762
+
+docs(ngMessageExp): split ngMessage docs up to show its alias more clearly
+===
+4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5
+
+fix($animate): applyStyles from options on leave
+
+Closes #10068
+```
+
+And you run
+
+```sh
+conventional-commits-parser log2.txt '==='
+```
+
+```sh
+[
+{"hash":"2d0eda10e43f6b079b531c507282fad082ea0762","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","body":"","footer":"","breaks":{},"closes":[],"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"}
+,
+{"hash":"4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5","header":"fix($animate): applyStyles from options on leave","body":"","footer":"Closes #10068","breaks":{},"closes":[10068],"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"}
+]
+```
+
+Will be printed out.
+
 
 ## License
 

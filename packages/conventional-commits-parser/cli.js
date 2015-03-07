@@ -3,6 +3,7 @@
 var conventionalCommitsParser = require('./');
 var JSONStream = require('JSONStream');
 var meow = require('meow');
+var split = require('split');
 
 var cli = meow({
   help: [
@@ -23,6 +24,7 @@ if (cli.input.length > 0) {
     .on('error', function(err) {
       console.log('Failed to read file ' + cli.input[0] + '\n' + err);
     })
+    .pipe(split(cli.input[1] || '\n\n\n'))
     .pipe(conventionalCommitsParser(cli.flags))
     .pipe(JSONStream.stringify())
     .pipe(process.stdout);

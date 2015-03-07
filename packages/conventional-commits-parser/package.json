@@ -20,6 +20,7 @@
     "JSONStream": "^0.10.0",
     "graceful-fs": "^3.0.5",
     "meow": "^3.1.0",
+    "split": "^0.3.3",
     "through2": "^0.6.3"
   },
   "devDependencies": {
