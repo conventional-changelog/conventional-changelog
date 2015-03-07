@@ -1,0 +1,9 @@
+2d0eda10e43f6b079b531c507282fad082ea0762
+
+docs(ngMessageExp): split ngMessage docs up to show its alias more clearly
+===
+4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5
+
+fix($animate): applyStyles from options on leave
+
+Closes #10068

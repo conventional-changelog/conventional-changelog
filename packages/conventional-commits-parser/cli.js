@@ -1,37 +1,63 @@
 #!/usr/bin/env node
 'use strict';
 var conventionalCommitsParser = require('./');
+var forEach = require('lodash').forEach;
+var fs = require('graceful-fs');
+var isTextPath = require('is-text-path');
 var JSONStream = require('JSONStream');
 var meow = require('meow');
+var readline = require('readline');
 var split = require('split');
+var through = require('through2');
+
+var filePaths = [];
+var separator = '\n\n\n';
 
 var cli = meow({
   help: [
     'Usage',
-    '  conventional-commits-parser <file>',
-    '  if used without specifying a file, you can enter an interactive shell',
+    '  conventional-commits-parser [<commit-separator>] [<path>...]',
+    '  If used without specifying a text file path, you will enter an interactive shell',
+    '  By default, commits will be split by three newlines (`\\n\\n\\n`) or you can specify a separator',
     '',
     'Example',
     '  conventional-commits-parser',
-    '  conventional-commits-parser log.txt'
+    '  conventional-commits-parser log.txt',
+    '  conventional-commits-parser log2.txt \'===\''
   ].join('\n')
 });
 
-if (cli.input.length > 0) {
-  var fs = require('graceful-fs');
+forEach(cli.input, function(arg) {
+  if (isTextPath(arg)) {
+    filePaths.push(arg);
+  } else {
+    separator = arg;
+  }
+});
 
-  fs.createReadStream(cli.input[0])
+var length = filePaths.length;
+
+function processFile(fileIndex) {
+  fs.createReadStream(filePaths[fileIndex])
     .on('error', function(err) {
-      console.log('Failed to read file ' + cli.input[0] + '\n' + err);
+      console.log('Failed to read file ' + filePaths[0] + '\n' + err);
     })
-    .pipe(split(cli.input[1] || '\n\n\n'))
+    .pipe(split(separator))
     .pipe(conventionalCommitsParser(cli.flags))
     .pipe(JSONStream.stringify())
+    .on('end', function() {
+      if(++fileIndex < length) {
+        processFile(fileIndex);
+      }
+    })
     .pipe(process.stdout);
+}
+
+if (length > 0) {
+  processFile(0);
 } else {
   var commit = '';
-  var through = require('through2');
-  var readline = require('readline');
+
   var stream = through();
 
   var rl = readline.createInterface({
@@ -49,7 +75,7 @@ if (cli.input.length > 0) {
 
   rl.on('line', function(line) {
     commit += line + '\n';
-    if (commit.indexOf('\n\n\n') === -1) {
+    if (commit.indexOf(separator) === -1) {
       return;
     }
 

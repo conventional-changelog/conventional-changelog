@@ -162,7 +162,7 @@ If you run `conventional-commits-parser` without any arguments
 $ conventional-commits-parser
 ```
 
-You will enter an interactive shell. To show your parsed result enter "return" three times.
+You will enter an interactive shell. To show your parsed result enter "return" three times (or enter your specified separator).
 
 ```sh
 > fix(title): a title is fixed
@@ -234,6 +234,8 @@ $ conventional-commits-parser log2.txt '==='
 ```
 
 Will be printed out.
+
+You can specify one or more files. The output array will be in order of the input file paths. If you specify more than one separator, the last one will be used.
 
 
 ## License
