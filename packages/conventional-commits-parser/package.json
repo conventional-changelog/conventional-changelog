@@ -1,7 +1,7 @@
 {
   "name": "conventional-commits-parser",
   "version": "0.0.4",
-  "description": "parse raw conventional commits",
+  "description": "Parse raw conventional commits",
   "homepage": "https://github.com/stevemao/conventional-commits-parser",
   "author": {
     "name": "Steve Mao",
