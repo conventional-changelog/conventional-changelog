@@ -33,7 +33,7 @@
   "devDependencies": {
     "chai": "^2.1.0",
     "coveralls": "^2.11.2",
-    "intercept-stdout": "0.0.3",
+    "hook-writable-stream": "0.0.0",
     "istanbul": "^0.3.6",
     "mocha": "*",
     "shelljs": "^0.3.0"

@@ -2,7 +2,7 @@
 'use strict';
 var expect = require('chai').expect;
 var getCommits = require('./');
-var intercept = require("intercept-stdout");
+var hookWritableStream = require('hook-writable-stream');
 var shell = require('shelljs');
 var through = require('event-stream').through;
 var writeFileSync = require('fs').writeFileSync;
@@ -32,7 +32,6 @@ it('should honour from', function(done) {
   }, function(err, commits) {
     var length = commits.length;
     expect(length).to.equal(1);
-
     expect(commits[length - 1]).to.contain('Third commit');
     done();
   });
@@ -86,16 +85,11 @@ it('has no options', function(done) {
 });
 
 it('cli should pipe to stdout', function(done) {
-  var text = '';
-
-  intercept(function(txt) {
-    text += txt;
+  var hook = hookWritableStream(process.stdout, false, function(string) {
+    hook.unhook();
+    expect(string).to.contain('Third commit');
+    done();
   });
 
   getCommits({}, true);
-
-  setTimeout(function() {
-    expect(text).to.contain('Third commit');
-    done();
-  }, 500);
 });
