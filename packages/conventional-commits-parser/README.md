@@ -192,7 +192,7 @@ Closes #9338
 And you run
 
 ```sh
-conventional-commits-parser log.txt
+$ conventional-commits-parser log.txt
 ```
 
 An array of json will be printed to stdout.
@@ -222,7 +222,7 @@ Closes #10068
 And you run
 
 ```sh
-conventional-commits-parser log2.txt '==='
+$ conventional-commits-parser log2.txt '==='
 ```
 
 ```sh
