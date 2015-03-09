@@ -26,6 +26,10 @@ function parser(raw, options) {
     lines.splice(0, 2);
   }
 
+  if (!msg.header) {
+    return null;
+  }
+
   match = msg.header.match(options.headerPattern);
   if (!match || !match[1] || !match[3]) {
     return null;

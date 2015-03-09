@@ -51,6 +51,10 @@ describe('parseRawCommit', function() {
       expect(parser('bla bla', options)).to.equal(null);
     });
 
+    it('should returns null if there is no header', function() {
+      expect(parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options)).to.equal(null);
+    });
+
     it('should parse header', function() {
       expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
     });

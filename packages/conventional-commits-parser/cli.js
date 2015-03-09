@@ -42,7 +42,7 @@ function processFile(fileIndex) {
   fs.createReadStream(filePath)
     .on('error', function(err) {
       console.warn('Failed to read file ' + filePath + '\n' + err);
-      if(++fileIndex < length) {
+      if (++fileIndex < length) {
         processFile(fileIndex);
       }
     })
@@ -50,7 +50,7 @@ function processFile(fileIndex) {
     .pipe(conventionalCommitsParser(cli.flags))
     .pipe(JSONStream.stringify())
     .on('end', function() {
-      if(++fileIndex < length) {
+      if (++fileIndex < length) {
         processFile(fileIndex);
       }
     })
