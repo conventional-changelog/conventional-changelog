@@ -73,7 +73,11 @@ if (length > 0) {
   stream.pipe(conventionalCommitsParser(cli.flags))
     .pipe(JSONStream.stringify('', '', ''))
     .pipe(through(function(chunk, enc, cb) {
-      cb(null, 'result: ' + chunk + '\n\n');
+      if (chunk.toString() === '""') {
+        cb(null, 'Commit cannot be parsed\n\n');
+      } else {
+        cb(null, 'Result: ' + chunk + '\n\n');
+      }
     }))
     .pipe(process.stdout);
 

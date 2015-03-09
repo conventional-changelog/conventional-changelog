@@ -100,7 +100,7 @@ stream
 
 ### conventionalCommitsParser([options])
 
-Returns an object stream.
+Returns an object stream. If there is any malformed commits it will be gracefully ignored (an empty data will be emitted so down stream can notice).
 
 #### options
 

@@ -73,11 +73,12 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser())
       .pipe(through.obj(function(chunk, enc, cb) {
-        expect(chunk.hash).to.equal('13f31602f396bc269076ab4d389cfd8ca94b20ba');
-        i++;
+        if (++i !== 2) {
+          expect(chunk.hash).to.equal('13f31602f396bc269076ab4d389cfd8ca94b20ba');
+        }
         cb();
       }, function() {
-        expect(i).to.equal(2);
+        expect(i).to.equal(3);
         done();
       }));
   });
