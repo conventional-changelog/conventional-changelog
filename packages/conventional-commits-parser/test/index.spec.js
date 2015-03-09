@@ -83,36 +83,75 @@ describe('conventionalCommitsParser', function() {
       }));
   });
 
+  var commits = [
+    '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
+    'feat(ng-list) Allow custom separator\n' +
+    'bla bla bla\n\n' +
+    'Fix #123\nCloses #25\nfix #33\n',
+
+    '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
+    'fix(ng-list) Another custom separator\n' +
+    'bla bla bla\n\n' +
+    'BREAKING CHANGES: some breaking changes\n',
+  ];
+
   it('should take options', function(done) {
     var stream = through();
-    var commits = [
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-      'feat(ng-list): Allow custom separator\n' +
-      'bla bla bla\n\n' +
-      'Fix #123\nCloses #25\nfix #33\n',
-
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-      'feat(ng-list): Allow custom separator\n' +
-      'bla bla bla\n\n' +
-      'BREAKING CHANGES: some breaking changes\n',
-    ];
+    var length = commits.length;
 
     forEach(commits, function(commit) {
       stream.write(commit);
     });
     stream.end();
 
+    stream
+      .pipe(conventionalCommitsParser({
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\ (.*)$/,
+        closeKeywords: ['fix'],
+        breakKeywords: ['BREAKING CHANGES']
+      }))
+      .pipe(through.obj(function(chunk, enc, cb) {
+        if (--length === 1) {
+          expect(chunk.type).to.equal('feat');
+          expect(chunk.scope).to.equal('ng-list');
+          expect(chunk.subject).to.equal('Allow custom separator');
+          expect(chunk.closes).to.eql([123, 33]);
+        } else {
+          expect(chunk.type).to.equal('fix');
+          expect(chunk.scope).to.equal('ng-list');
+          expect(chunk.subject).to.equal('Another custom separator');
+          expect(chunk.breaks['BREAKING CHANGES']).to.equal('some breaking changes');
+          done();
+        }
+        cb();
+      }));
+  });
+
+  it('should take string options', function(done) {
+    var stream = through();
     var length = commits.length;
+
+    forEach(commits, function(commit) {
+      stream.write(commit);
+    });
+    stream.end();
 
     stream
       .pipe(conventionalCommitsParser({
+        headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
         closeKeywords: 'fix',
         breakKeywords: 'BREAKING CHANGES'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
+          expect(chunk.type).to.equal('feat');
+          expect(chunk.scope).to.equal('ng-list');
+          expect(chunk.subject).to.equal('Allow custom separator');
           expect(chunk.closes).to.eql([123, 33]);
         } else {
+          expect(chunk.type).to.equal('fix');
+          expect(chunk.scope).to.equal('ng-list');
+          expect(chunk.subject).to.equal('Another custom separator');
           expect(chunk.breaks['BREAKING CHANGES']).to.equal('some breaking changes');
           done();
         }

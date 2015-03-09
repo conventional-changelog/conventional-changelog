@@ -114,9 +114,9 @@ The maximum subject length.
 
 ##### headerPattern
 
-Type: `regex` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
+Type: `regex` or `string` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
 
-Used to match header pattern. The first capturing group captures **type**, second captures **scope** and third captures **subject**
+Used to match header pattern. The first capturing group captures **type**, second captures **scope** and third captures **subject**. If it's a `string` it will be converted to a `regex`.
 
 ##### closeKeywords
 
@@ -133,7 +133,7 @@ Type: `array` or `string` Default:
   'resolved'
 ]`
 
-This value is case **insensitive**.
+This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
 Keywords that used to close issues.
 
@@ -141,7 +141,7 @@ Keywords that used to close issues.
 
 Type: `array` or `string` Default: `['BREAKING CHANGE']`
 
-Keywords for breaking changes.
+Keywords for breaking changes. If it's a `string` it will be converted to an `array` separated by a comma.
 
 
 ## CLI

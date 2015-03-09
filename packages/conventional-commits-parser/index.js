@@ -1,10 +1,25 @@
 'use strict';
-var extend = require('lodash').extend;
+var _ = require('lodash');
 var parser = require('./lib/parser');
 var through = require('through2');
 
 function conventionalCommitsParser(options) {
-  options = extend({
+  if (options && !_.isEmpty(options)) {
+    var headerPattern = options.headerPattern;
+    if (typeof headerPattern === 'string') {
+      options.headerPattern = new RegExp(headerPattern);
+    }
+
+    if (typeof options.closeKeywords === 'string') {
+      options.closeKeywords = options.closeKeywords.split(',');
+    }
+
+    if (typeof options.breakKeywords === 'string') {
+      options.breakKeywords = options.breakKeywords.split(',');
+    }
+  }
+
+  options = _.extend({
     maxSubjectLength: 80,
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     closeKeywords: [
@@ -22,14 +37,6 @@ function conventionalCommitsParser(options) {
       'BREAKING CHANGE'
     ]
   }, options || {});
-
-  if (!Array.isArray(options.closeKeywords)) {
-    options.closeKeywords = [options.closeKeywords];
-  }
-
-  if (!Array.isArray(options.breakKeywords)) {
-    options.breakKeywords = [options.breakKeywords];
-  }
 
   return through.obj(function(data, enc, cb) {
     var commit = parser(data.toString(), options);
