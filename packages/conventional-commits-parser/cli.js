@@ -15,16 +15,32 @@ var separator = '\n\n\n';
 
 var cli = meow({
   help: [
+    'Practice writing commit messages or test from a file.',
+    'If used without specifying a text file path, you will enter an interactive shell.',
+    'Parsed results are printed to stdout',
+    'By default, commits will be split by three newlines (`\\n\\n\\n`) or you can specify a separator.',
+    '',
     'Usage',
     '  conventional-commits-parser [<commit-separator>] [<path>...]',
-    '  If used without specifying a text file path, you will enter an interactive shell',
-    '  By default, commits will be split by three newlines (`\\n\\n\\n`) or you can specify a separator',
     '',
     'Example',
     '  conventional-commits-parser',
     '  conventional-commits-parser log.txt',
-    '  conventional-commits-parser log2.txt \'===\''
+    '  conventional-commits-parser log2.txt \'===\' >> output.txt',
+    '',
+    'Options',
+    '-m, --max-subject-length    Maximum subject length',
+    '-p, --header-pattern        Regex to match header pattern',
+    '-c, --close-keywords        Comma separated keywords that used to close issues',
+    '-b, --break-keywords        Comma separated keywords for breaking changes'
   ].join('\n')
+}, {
+  alias: {
+    m: 'maxSubjectLength',
+    p: 'headerPattern',
+    c: 'closeKeywords',
+    b: 'breakKeywords'
+  }
 });
 
 forEach(cli.input, function(arg) {
