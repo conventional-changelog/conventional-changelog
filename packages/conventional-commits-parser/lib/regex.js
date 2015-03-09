@@ -5,9 +5,11 @@ function getBreaksRegex(breakKeywords) {
   var re = '(';
   var maxIndex = breakKeywords.length - 1;
   forEach(breakKeywords, function(val, index) {
-    re += val;
-    if (index < maxIndex) {
-      re += '|';
+    if (val) {
+      re += val.trim();
+      if (index < maxIndex) {
+        re += '|';
+      }
     }
   });
   re += '):\\s([\\s\\S]*)';
@@ -18,9 +20,11 @@ function getClosesRegex(closeKeywords) {
   var re = '(?:';
   var maxIndex = closeKeywords.length - 1;
   forEach(closeKeywords, function(val, index) {
-    re += val;
-    if (index < maxIndex) {
-      re += '|';
+    if (val) {
+      re += val.trim();
+      if (index < maxIndex) {
+        re += '|';
+      }
     }
   });
   re += ')\\s((?:#\\d+(?:\\,\\s)?)+)';
