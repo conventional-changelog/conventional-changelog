@@ -51,17 +51,17 @@ describe('parseRawCommit', function() {
   it('should warn if nothing to parse', function() {
     parser('', {
       warn: function(warning) {
-        expect(warning).to.equal('Cannot parse raw commit');
+        expect(warning).to.equal('Cannot parse raw commit: ""');
       }
     });
     parser('\n', {
       warn: function(warning) {
-        expect(warning).to.equal('Cannot parse raw commit');
+        expect(warning).to.equal('Cannot parse raw commit: "\n"');
       }
     });
     parser(' ', {
       warn: function(warning) {
-        expect(warning).to.equal('Cannot parse raw commit');
+        expect(warning).to.equal('Cannot parse raw commit: " "');
       }
     });
   });
@@ -78,14 +78,14 @@ describe('parseRawCommit', function() {
     it('should warn if type cannot be parsed', function() {
       parser('bla bla', {
         warn: function(warning) {
-          expect(warning).to.equal('Cannot parse commit type');
+          expect(warning).to.equal('Cannot parse commit type: "bla bla"');
         }
       });
     });
 
     it('should warn if subject cannot be parsed', function() {
       options.warn = function(warning) {
-        expect(warning).to.equal('Cannot parse commit subject');
+        expect(warning).to.equal('Cannot parse commit subject: "fix: "');
       };
       parser('fix: ', options);
     });
@@ -96,7 +96,7 @@ describe('parseRawCommit', function() {
 
     it('should warn if header cannot be parsed', function() {
       options.warn = function(warning) {
-        expect(warning).to.equal('Cannot parse commit header');
+        expect(warning).to.equal('Cannot parse commit header: "056f5827de86cace1f282c8e3f1cccc952fcad2e"');
       };
       parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options);
     });

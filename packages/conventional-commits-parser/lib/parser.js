@@ -11,7 +11,7 @@ function parser(raw, options) {
   }
 
   if (!raw || !raw.trim()) {
-    warn('Cannot parse raw commit');
+    warn('Cannot parse raw commit: "' + raw + '"');
     return null;
   }
 
@@ -35,16 +35,16 @@ function parser(raw, options) {
   }
 
   if (!msg.header) {
-    warn('Cannot parse commit header');
+    warn('Cannot parse commit header: "' + raw + '"');
     return null;
   }
 
   match = msg.header.match(options.headerPattern);
   if (!match || !match[1]) {
-    warn('Cannot parse commit type');
+    warn('Cannot parse commit type: "' + raw + '"');
     return null;
   } else if (!match[3]) {
-    warn('Cannot parse commit subject');
+    warn('Cannot parse commit subject: "' + raw + '"');
     return null;
   }
 
