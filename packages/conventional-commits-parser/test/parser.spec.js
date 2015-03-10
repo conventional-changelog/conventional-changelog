@@ -36,7 +36,7 @@ describe('parseRawCommit', function() {
     options
   );
 
-  it('should returns null if nothing to parse', function() {
+  it('should return null if nothing to parse', function() {
     expect(parser()).to.equal(null);
     expect(parser('\n')).to.equal(null);
     expect(parser(' ')).to.equal(null);
@@ -47,11 +47,11 @@ describe('parseRawCommit', function() {
   });
 
   describe('header', function() {
-    it('should returns null if header cannot be parsed', function() {
+    it('should return null if header cannot be parsed', function() {
       expect(parser('bla bla', options)).to.equal(null);
     });
 
-    it('should returns null if there is no header', function() {
+    it('should return null if there is no header', function() {
       expect(parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options)).to.equal(null);
     });
 
