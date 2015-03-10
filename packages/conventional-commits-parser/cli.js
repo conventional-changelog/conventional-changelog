@@ -77,14 +77,13 @@ if (length > 0) {
   processFile(0);
 } else {
   var commit = '';
-
   var stream = through();
-
   var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     terminal: true
   });
+  cli.flags.warn = console.log.bind(console);
 
   stream.pipe(conventionalCommitsParser(cli.flags))
     .pipe(JSONStream.stringify('', '', ''))
