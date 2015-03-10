@@ -3,7 +3,15 @@ var regex = require('./regex');
 var _ = require('lodash');
 
 function parser(raw, options) {
+  var warn;
+  if (!_.isEmpty(options)) {
+    warn = options.warn || function() {};
+  } else {
+    return null;
+  }
+
   if (!raw || !raw.trim()) {
+    warn('Cannot parse raw commit');
     return null;
   }
 
@@ -27,11 +35,16 @@ function parser(raw, options) {
   }
 
   if (!msg.header) {
+    warn('Cannot parse commit header');
     return null;
   }
 
   match = msg.header.match(options.headerPattern);
-  if (!match || !match[1] || !match[3]) {
+  if (!match || !match[1]) {
+    warn('Cannot parse commit type');
+    return null;
+  } else if (!match[3]) {
+    warn('Cannot parse commit subject');
     return null;
   }
 
