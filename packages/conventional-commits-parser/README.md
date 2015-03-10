@@ -145,7 +145,7 @@ Keywords for breaking changes. If it's a `string` it will be converted to an `ar
 
 ##### warn
 
-Type: `function`
+Type: `function` Default: `function() {}`
 
 What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop.
 
