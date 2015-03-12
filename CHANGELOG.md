@@ -1,13 +1,15 @@
 <a name"0.0.13"></a>
-### 0.0.13 (2015-03-12)
+### 0.0.13 (2015-03-13)
+
 
 #### Bug Fixes
 
-* **pkg**: handle the situation where package.json cannot be found. ([518bc56e](https://github.com/ajoslin/conventional-changelog/commit/518bc56e12947c14e7644c10c455464e74d0e8b7))
-* **errors:** remove an extra error sentence ([2fd3252c](https://github.com/ajoslin/conventional-changelog/commit/2fd3252c))
 * **first commit:** add first commit to changelog ([386cd404](https://github.com/ajoslin/conventional-changelog/commit/386cd404))
 * **git:** use --abbrev=0 to only get tag from same branch ([69cfb5c6](https://github.com/ajoslin/conventional-changelog/commit/69cfb5c6))
 * **header:** fix no `<a>` if options.repository is provided ([7cb5cb56](https://github.com/ajoslin/conventional-changelog/commit/7cb5cb56), closes [#26](https://github.com/ajoslin/conventional-changelog/issues/26))
+* **pkg:** handle the situation where package.json cannot be found ([518bc56e](https://github.com/ajoslin/conventional-changelog/commit/518bc56e))
+* **version:** default version is read from package.json properly ([f684b9be](https://github.com/ajoslin/conventional-changelog/commit/f684b9be))
+
 
 #### Features
 
