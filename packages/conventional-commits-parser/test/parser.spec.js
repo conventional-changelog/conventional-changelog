@@ -19,7 +19,7 @@ describe('parseRawCommit', function() {
         'handles',
         'handled'
       ],
-      breakKeywords: [
+      noteKeywords: [
         'BREAKING AMEND'
       ]
     };
@@ -167,7 +167,7 @@ describe('parseRawCommit', function() {
     });
 
     it('should parse breaking change', function() {
-      expect(msg.breaks['BREAKING AMEND']).to.deep.equal('some breaking change');
+      expect(msg.notes['BREAKING AMEND']).to.deep.equal('some breaking change');
     });
 
     it('should parse closed issues', function() {

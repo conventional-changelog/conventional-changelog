@@ -1,5 +1,5 @@
 [
-{"hash":"2d0eda10e43f6b079b531c507282fad082ea0762","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","body":"","footer":"","breaks":{},"closes":[],"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"}
+{"hash":"2d0eda10e43f6b079b531c507282fad082ea0762","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","body":"","footer":"","notes":{},"closes":[],"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"}
 ,
-{"hash":"4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5","header":"fix($animate): applyStyles from options on leave","body":"","footer":"Closes #10068","breaks":{},"closes":[10068],"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"}
+{"hash":"4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5","header":"fix($animate): applyStyles from options on leave","body":"","footer":"Closes #10068","notes":{},"closes":[10068],"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"}
 ]

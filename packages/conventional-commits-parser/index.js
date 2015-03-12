@@ -14,8 +14,8 @@ function conventionalCommitsParser(options) {
       options.closeKeywords = options.closeKeywords.split(',');
     }
 
-    if (typeof options.breakKeywords === 'string') {
-      options.breakKeywords = options.breakKeywords.split(',');
+    if (typeof options.noteKeywords === 'string') {
+      options.noteKeywords = options.noteKeywords.split(',');
     }
   }
 
@@ -33,7 +33,7 @@ function conventionalCommitsParser(options) {
       'resolves',
       'resolved'
     ],
-    breakKeywords: [
+    noteKeywords: [
       'BREAKING CHANGE'
     ]
   }, options || {});

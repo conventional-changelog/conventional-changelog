@@ -23,7 +23,7 @@ function parser(raw, options) {
   msg.header = lines[1];
   msg.body = '';
   msg.footer = '';
-  msg.breaks = {};
+  msg.notes = {};
   msg.closes = [];
 
   if (!msg.hash.match(/\b[0-9a-f]{5,40}\b/)) {
@@ -61,15 +61,15 @@ function parser(raw, options) {
     var isBody = true;
     var reDigit = /\d+/;
 
-    var reBreaks = regex.getBreaksRegex(options.breakKeywords);
+    var reNotes = regex.getNotesRegex(options.noteKeywords);
     var reCloses = regex.getClosesRegex(options.closeKeywords);
 
-    // this is a breaking change
-    match = line.match(reBreaks);
+    // this is a important note
+    match = line.match(reNotes);
     if (match) {
       isBody = false;
       msg.footer += line + '\n';
-      msg.breaks[match[1]] = match[2];
+      msg.notes[match[1]] = match[2];
     }
 
     // this closes an issue

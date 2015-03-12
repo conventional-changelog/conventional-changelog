@@ -57,7 +57,7 @@ describe('cli', function() {
   });
 
   it('should work with options', function(done) {
-    var cp = spawn(cliPath, ['test/fixtures/log3.txt', '--max-subject-length', '5', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--close-keywords', 'close, fix', '-b', 'BREAKING NEWS']);
+    var cp = spawn(cliPath, ['test/fixtures/log3.txt', '--max-subject-length', '5', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--close-keywords', 'close, fix', '-n', 'BREAKING NEWS']);
     cp.stdout
       .pipe(concat(function(chunk) {
         expect(chunk.toString()).to.equal(output3);

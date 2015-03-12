@@ -32,14 +32,14 @@ var cli = meow({
     '-m, --max-subject-length    Maximum subject length',
     '-p, --header-pattern        Regex to match header pattern',
     '-c, --close-keywords        Comma separated keywords that used to close issues',
-    '-b, --break-keywords        Comma separated keywords for breaking changes'
+    '-n, --note-keywords         Comma separated keywords for important notes'
   ].join('\n')
 }, {
   alias: {
     m: 'maxSubjectLength',
     p: 'headerPattern',
     c: 'closeKeywords',
-    b: 'breakKeywords'
+    n: 'noteKeywords'
   }
 });
 

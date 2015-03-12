@@ -1,10 +1,10 @@
 'use strict';
 var forEach = require('lodash').forEach;
 
-function getBreaksRegex(breakKeywords) {
+function getNotesRegex(noteKeywords) {
   var re = '(';
-  var maxIndex = breakKeywords.length - 1;
-  forEach(breakKeywords, function(val, index) {
+  var maxIndex = noteKeywords.length - 1;
+  forEach(noteKeywords, function(val, index) {
     if (val) {
       re += val.trim();
       if (index < maxIndex) {
@@ -32,6 +32,6 @@ function getClosesRegex(closeKeywords) {
 }
 
 module.exports = {
-  getBreaksRegex: getBreaksRegex,
+  getNotesRegex: getNotesRegex,
   getClosesRegex: getClosesRegex
 };

@@ -108,7 +108,7 @@ describe('conventionalCommitsParser', function() {
       .pipe(conventionalCommitsParser({
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\ (.*)$/,
         closeKeywords: ['fix'],
-        breakKeywords: ['BREAKING CHANGES']
+        noteKeywords: ['BREAKING CHANGES']
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
@@ -120,7 +120,7 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Another custom separator');
-          expect(chunk.breaks['BREAKING CHANGES']).to.equal('some breaking changes');
+          expect(chunk.notes['BREAKING CHANGES']).to.equal('some breaking changes');
           done();
         }
         cb();
@@ -140,7 +140,7 @@ describe('conventionalCommitsParser', function() {
       .pipe(conventionalCommitsParser({
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
         closeKeywords: 'fix',
-        breakKeywords: 'BREAKING CHANGES'
+        noteKeywords: 'BREAKING CHANGES'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
@@ -152,7 +152,7 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Another custom separator');
-          expect(chunk.breaks['BREAKING CHANGES']).to.equal('some breaking changes');
+          expect(chunk.notes['BREAKING CHANGES']).to.equal('some breaking changes');
           done();
         }
         cb();
