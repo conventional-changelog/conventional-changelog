@@ -36,7 +36,7 @@ function conventionalCommitsParser(options) {
     noteKeywords: [
       'BREAKING CHANGE'
     ]
-  }, options || {});
+  }, options);
 
   return through.obj(function(data, enc, cb) {
     var commit = parser(data.toString(), options);
