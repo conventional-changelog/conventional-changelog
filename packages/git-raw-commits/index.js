@@ -46,7 +46,7 @@ function gitRawCommits(options, done) {
     options = _.extend({
       from: latestTag,
       to: 'HEAD'
-    }, options || {});
+    }, options);
     var args = dargs(options, {
       excludes: ['from', 'to']
     });
