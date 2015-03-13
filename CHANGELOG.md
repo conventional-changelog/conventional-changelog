@@ -1,4 +1,13 @@
 <a name"0.0.13"></a>
+### 0.0.13 (2015-03-14)
+
+
+#### Bug Fixes
+
+* **writeLog:** fix require statement for Writer ([a478f806](https://github.com/ajoslin/conventional-changelog/commit/a478f806))
+
+
+<a name"0.0.13"></a>
 ### 0.0.13 (2015-03-13)
 
 
