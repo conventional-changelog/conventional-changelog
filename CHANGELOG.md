@@ -1,3 +1,12 @@
+<a name"0.0.15"></a>
+### 0.0.15 (2015-03-19)
+
+
+#### Bug Fixes
+
+* **log:** correct out put for `options.from` and `options.to` ([31ddb112](https://github.com/ajoslin/conventional-changelog/commit/31ddb112), closes [#47](https://github.com/ajoslin/conventional-changelog/issues/47))
+
+
 <a name"0.0.14"></a>
 ### 0.0.14 (2015-03-14)
 
