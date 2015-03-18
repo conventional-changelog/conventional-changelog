@@ -5,8 +5,6 @@ var extend = require('lodash.assign');
 
 function generate(options, done) {
   function getChangelogCommits() {
-    options.log('Generating changelog from %s to %s...', options.from, options.to);
-
     git.getCommits(options, function(err, commits) {
       if (err) {
         return done('Failed to read git log.\n' + err);
