@@ -1,3 +1,12 @@
+<a name"0.0.16"></a>
+### 0.0.16 (2015-03-19)
+
+
+#### Bug Fixes
+
+* **git:** generate the correct cmd of git log when there is no tags ([dcd7551f](https://github.com/ajoslin/conventional-changelog/commit/dcd7551f), closes [#47](https://github.com/ajoslin/conventional-changelog/issues/47), [#48](https://github.com/ajoslin/conventional-changelog/issues/48))
+
+
 <a name"0.0.15"></a>
 ### 0.0.15 (2015-03-19)
 
