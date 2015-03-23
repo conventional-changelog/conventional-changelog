@@ -83,6 +83,42 @@ describe('conventionalCommitsParser', function() {
       }));
   });
 
+  it('should warn if malformed commits found', function(done) {
+    var stream = through();
+    var commit = 'bla bla bla\n\n';
+
+    stream.write(commit);
+    stream.end();
+
+    stream
+      .pipe(conventionalCommitsParser({
+        warn: function(warning) {
+          expect(warning).to.equal('Error: Cannot parse commit type: "bla bla bla\n\n"');
+          done();
+        }
+      }))
+      .pipe(through.obj(function(chunk, enc, cb) {
+        cb();
+      }));
+  });
+
+  it('should error if malformed commits found and `options.warn === true`', function(done) {
+    var stream = through();
+    var commit = 'bla bla bla\n\n';
+
+    stream.write(commit);
+    stream.end();
+
+    stream
+      .pipe(conventionalCommitsParser({
+        warn: true
+      }))
+      .on('error', function(err) {
+        expect(err.toString()).to.equal('Error: Cannot parse commit type: "bla bla bla\n\n"');
+        done();
+      });
+  });
+
   var commits = [
     '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
     'feat(ng-list) Allow custom separator\n' +
@@ -92,7 +128,7 @@ describe('conventionalCommitsParser', function() {
     '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
     'fix(ng-list) Another custom separator\n' +
     'bla bla bla\n\n' +
-    'BREAKING CHANGES: some breaking changes\n',
+    'BREAKING CHANGES: some breaking changes\n'
   ];
 
   it('should take options', function(done) {

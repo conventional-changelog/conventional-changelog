@@ -42,28 +42,16 @@ describe('parseRawCommit', function() {
     );
   });
 
-  it('should return null if nothing to parse', function() {
-    expect(parser()).to.equal(null);
-    expect(parser('\n')).to.equal(null);
-    expect(parser(' ')).to.equal(null);
-  });
-
-  it('should warn if nothing to parse', function() {
-    parser('', {
-      warn: function(warning) {
-        expect(warning).to.equal('Cannot parse raw commit: ""');
-      }
-    });
-    parser('\n', {
-      warn: function(warning) {
-        expect(warning).to.equal('Cannot parse raw commit: "\n"');
-      }
-    });
-    parser(' ', {
-      warn: function(warning) {
-        expect(warning).to.equal('Cannot parse raw commit: " "');
-      }
-    });
+  it('should throw if nothing to parse', function() {
+    expect(function() {
+      parser();
+    }).to.throw('Cannot parse raw commit: "undefined"');
+    expect(function() {
+      parser('\n');
+    }).to.throw('Cannot parse raw commit: "\n"');
+    expect(function() {
+      parser(' ');
+    }).to.throw('Cannot parse raw commit: " "');
   });
 
   it('should parse hash', function() {
@@ -71,34 +59,34 @@ describe('parseRawCommit', function() {
   });
 
   describe('header', function() {
-    it('should return null if header cannot be parsed', function() {
-      expect(parser('bla bla', options)).to.equal(null);
+    it('should throw if header cannot be parsed', function() {
+      expect(function() {
+        parser('bla bla', options);
+      }).to.throw('Cannot parse commit type: "bla bla"');
     });
 
-    it('should warn if type cannot be parsed', function() {
-      parser('bla bla', {
-        warn: function(warning) {
-          expect(warning).to.equal('Cannot parse commit type: "bla bla"');
-        }
-      });
+    it('should throw if `options` is empty', function() {
+      expect(function() {
+        parser('bla bla');
+      }).to.throw('options must not be empty: "bla bla"');
     });
 
-    it('should warn if subject cannot be parsed', function() {
-      options.warn = function(warning) {
-        expect(warning).to.equal('Cannot parse commit subject: "fix: "');
-      };
-      parser('fix: ', options);
+    it('should throw if subject cannot be found', function() {
+      expect(function() {
+        parser('fix: ', options);
+      }).to.throw('Cannot parse commit subject: "fix: "');
     });
 
-    it('should return null if there is no header', function() {
-      expect(parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options)).to.equal(null);
+    it('should throw if there is no header', function() {
+      expect(function() {
+        parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options);
+      }).to.throw('Cannot parse commit header: "056f5827de86cace1f282c8e3f1cccc952fcad2e"');
     });
 
-    it('should warn if header cannot be parsed', function() {
-      options.warn = function(warning) {
-        expect(warning).to.equal('Cannot parse commit header: "056f5827de86cace1f282c8e3f1cccc952fcad2e"');
-      };
-      parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options);
+    it('should throw if header cannot be found', function() {
+      expect(function() {
+        parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options);
+      }).to.throw('Cannot parse commit header: "056f5827de86cace1f282c8e3f1cccc952fcad2e"');
     });
 
     it('should parse header', function() {
@@ -142,7 +130,7 @@ describe('parseRawCommit', function() {
 
     it('should allow ":" in scope', function() {
       var msg = parser('feat(ng:list): Allow custom separator', {
-        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/
       });
       expect(msg.scope).to.equal('ng:list');
     });

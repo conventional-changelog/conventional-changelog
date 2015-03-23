@@ -21,6 +21,7 @@ function conventionalCommitsParser(options) {
 
   options = _.extend({
     maxSubjectLength: 80,
+    warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     closeKeywords: [
       'close',
@@ -39,12 +40,18 @@ function conventionalCommitsParser(options) {
   }, options);
 
   return through.obj(function(data, enc, cb) {
-    var commit = parser(data.toString(), options);
+    var commit;
 
-    if (commit) {
+    try {
+      commit = parser(data.toString(), options);
       cb(null, commit);
-    } else {
-      cb(null, '');
+    } catch (err) {
+      if (options.warn === true) {
+        cb(err);
+      } else {
+        options.warn(err.toString());
+        cb(null, '');
+      }
     }
   });
 }

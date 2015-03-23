@@ -145,9 +145,9 @@ Keywords for important notes. If it's a `string` it will be converted to an `arr
 
 ##### warn
 
-Type: `function` Default: `function() {}`
+Type: `function` or `boolean` Default: `function() {}`
 
-What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop.
+What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
 
 
 ## CLI
@@ -156,10 +156,6 @@ You can use cli to practice writing commit messages or test from a file.
 
 ```sh
 $ npm install --global conventional-commits-parser
-```
-
-```sh
-$ conventional-commits-parser --help
 ```
 
 If you run `conventional-commits-parser` without any arguments
@@ -199,6 +195,8 @@ And you run
 
 ```sh
 $ conventional-commits-parser log.txt
+# or
+$ cat log.txt | conventional-commits-parser
 ```
 
 An array of json will be printed to stdout.

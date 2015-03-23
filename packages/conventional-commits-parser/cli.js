@@ -26,6 +26,7 @@ var cli = meow({
     'Example',
     '  conventional-commits-parser',
     '  conventional-commits-parser log.txt',
+    '  cat log.txt | conventional-commits-parser',
     '  conventional-commits-parser log2.txt \'===\' >> output.txt',
     '',
     'Options',
@@ -52,6 +53,8 @@ forEach(cli.input, function(arg) {
 });
 
 var length = filePaths.length;
+var options = cli.flags;
+options.warn = console.log.bind(console);
 
 function processFile(fileIndex) {
   var filePath = filePaths[fileIndex];
@@ -63,7 +66,7 @@ function processFile(fileIndex) {
       }
     })
     .pipe(split(separator))
-    .pipe(conventionalCommitsParser(cli.flags))
+    .pipe(conventionalCommitsParser(options))
     .pipe(JSONStream.stringify())
     .on('end', function() {
       if (++fileIndex < length) {
@@ -73,36 +76,47 @@ function processFile(fileIndex) {
     .pipe(process.stdout);
 }
 
-if (length > 0) {
-  processFile(0);
-} else {
-  var commit = '';
-  var stream = through();
-  var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    terminal: true
-  });
-  cli.flags.warn = console.log.bind(console);
+if (process.stdin.isTTY) {
+  if (length > 0) {
+    processFile(0);
+  } else {
+    var commit = '';
+    var stream = through();
+    var rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      terminal: true
+    });
 
-  stream.pipe(conventionalCommitsParser(cli.flags))
-    .pipe(JSONStream.stringify('', '', ''))
-    .pipe(through(function(chunk, enc, cb) {
-      if (chunk.toString() === '""') {
-        cb(null, 'Commit cannot be parsed\n\n');
-      } else {
-        cb(null, 'Result: ' + chunk + '\n\n');
+    stream.pipe(conventionalCommitsParser(options))
+      .pipe(JSONStream.stringify('', '', ''))
+      .pipe(through(function(chunk, enc, cb) {
+        if (chunk.toString() === '""') {
+          cb(null, 'Commit cannot be parsed\n\n');
+        } else {
+          cb(null, 'Result: ' + chunk + '\n\n');
+        }
+      }))
+      .pipe(process.stdout);
+
+    rl.on('line', function(line) {
+      commit += line + '\n';
+      if (commit.indexOf(separator) === -1) {
+        return;
       }
-    }))
+
+      stream.write(commit);
+      commit = '';
+    });
+  }
+} else {
+  options.warn = true;
+  process.stdin
+    .pipe(conventionalCommitsParser(options))
+    .on('error', function(err) {
+      console.error(err.toString());
+      process.exit(1);
+    })
+    .pipe(JSONStream.stringify())
     .pipe(process.stdout);
-
-  rl.on('line', function(line) {
-    commit += line + '\n';
-    if (commit.indexOf(separator) === -1) {
-      return;
-    }
-
-    stream.write(commit);
-    commit = '';
-  });
 }

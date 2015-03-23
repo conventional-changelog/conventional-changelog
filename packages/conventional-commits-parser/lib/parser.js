@@ -3,16 +3,12 @@ var regex = require('./regex');
 var _ = require('lodash');
 
 function parser(raw, options) {
-  var warn;
-  if (!_.isEmpty(options)) {
-    warn = options.warn || function() {};
-  } else {
-    return null;
+  if (!raw || !raw.trim()) {
+    throw new Error('Cannot parse raw commit: "' + raw + '"');
   }
 
-  if (!raw || !raw.trim()) {
-    warn('Cannot parse raw commit: "' + raw + '"');
-    return null;
+  if (_.isEmpty(options)) {
+    throw new Error('options must not be empty: "' + raw + '"');
   }
 
   var match;
@@ -35,17 +31,18 @@ function parser(raw, options) {
   }
 
   if (!msg.header) {
-    warn('Cannot parse commit header: "' + raw + '"');
-    return null;
+    throw new Error('Cannot parse commit header: "' + raw + '"');
   }
 
   match = msg.header.match(options.headerPattern);
   if (!match || !match[1]) {
-    warn('Cannot parse commit type: "' + raw + '"');
-    return null;
+    throw new Error('Cannot parse commit type: "' + raw + '"');
   } else if (!match[3]) {
-    warn('Cannot parse commit subject: "' + raw + '"');
-    return null;
+    throw new Error('Cannot parse commit subject: "' + raw + '"');
+  }
+
+  if (!options.maxSubjectLength) {
+    options.maxSubjectLength = match[3].length;
   }
 
   if (match[3].length > options.maxSubjectLength) {
