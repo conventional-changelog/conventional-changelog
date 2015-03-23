@@ -74,7 +74,7 @@ $ npm install --global git-raw-commits
 $ git-raw-commits --help
 
   Usage,
-    git-raw-commits <git-log options>
+    git-raw-commits [<git-log(1)-options>]
 
   Example
     git-raw-commits --grep unicorn -E --from HEAD~2 --to HEAD^

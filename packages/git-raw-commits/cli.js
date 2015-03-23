@@ -13,4 +13,9 @@ var cli = meow({
   ].join('\n')
 });
 
-gitRawCommits(cli.flags, true);
+gitRawCommits(cli.flags)
+  .on('error', function(err) {
+    console.error(err);
+    process.exit(1);
+  })
+  .pipe(process.stdout);

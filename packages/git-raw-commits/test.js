@@ -2,7 +2,6 @@
 'use strict';
 var expect = require('chai').expect;
 var getCommits = require('./');
-var hookWritableStream = require('hook-writable-stream');
 var shell = require('shelljs');
 var through = require('event-stream').through;
 var writeFileSync = require('fs').writeFileSync;
@@ -11,14 +10,31 @@ shell.config.silent = true;
 shell.rm('-rf', 'tmp');
 shell.mkdir('tmp');
 shell.cd('tmp');
-writeFileSync('test1', '');
-shell.exec('git init && git add --all && git commit -m"First commit"');
-writeFileSync('test2', '');
-shell.exec('git add --all && git commit -m"Second commit"');
-writeFileSync('test3', '');
-shell.exec('git add --all && git commit -m"Third commit"');
+shell.exec('git init');
 
-it('should get commits', function(done) {
+it('should error in the callback if there is no commits', function(done) {
+  getCommits(function(err) {
+    expect(err.toString()).to.include('No commits found');
+    done();
+  });
+});
+
+it('should error as a stream if there is no commits', function(done) {
+  getCommits()
+    .on('error', function(err) {
+      expect(err.toString()).to.include('No commits found');
+      done();
+    });
+});
+
+it('should get commits without `options` using a callback (`options.from` defaults to first commit)', function(done) {
+  writeFileSync('test1', '');
+  shell.exec('git add --all && git commit -m"First commit"');
+  writeFileSync('test2', '');
+  shell.exec('git add --all && git commit -m"Second commit"');
+  writeFileSync('test3', '');
+  shell.exec('git add --all && git commit -m"Third commit"');
+
   getCommits(function(err, commits) {
     var length = commits.length;
     expect(length).to.equal(3);
@@ -81,14 +97,4 @@ it('should get commits without `options` using as a stream (`options.from` defau
     }, function() {
       done();
     }));
-});
-
-it('cli should pipe to stdout', function(done) {
-  var hook = hookWritableStream(process.stdout, false, function(string) {
-    hook.unhook();
-    expect(string).to.contain('Third commit');
-    done();
-  });
-
-  getCommits({}, true);
 });
