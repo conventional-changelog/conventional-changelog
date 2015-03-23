@@ -49,15 +49,11 @@ Please check the available options at http://git-scm.com/docs/git-log.
 
 #### from
 
-Type: `string` Default: your latest tag
-
-If you have no tag it will ignore `to` and get the whole commits.
+Type: `string` Default: your latest tag if any; your first commit if no tags found.
 
 #### to
 
 Type: `string` Default: `'HEAD'`
-
-Only used if `from` is truthy.
 
 #### callback(err, commits)
 

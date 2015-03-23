@@ -26,7 +26,7 @@ it('should get commits', function(done) {
   });
 });
 
-it('should honour from', function(done) {
+it('should honour `options.from`', function(done) {
   getCommits({
     from: 'HEAD~1'
   }, function(err, commits) {
@@ -37,19 +37,18 @@ it('should honour from', function(done) {
   });
 });
 
-it('should honour to', function(done) {
+it('should honour `options.to`', function(done) {
   getCommits({
-    from: 'HEAD~2',
     to: 'HEAD^'
   }, function(err, commits) {
     var length = commits.length;
-    expect(length).to.equal(1);
+    expect(length).to.equal(2);
     expect(commits[0]).to.contain('Second commit');
     done();
   });
 });
 
-it('should auto get `from` if there is no tag', function(done) {
+it('should auto get `options.from` if there is a tag', function(done) {
   shell.exec('git tag testTag HEAD^');
   getCommits({}, function(err, commits) {
     var length = commits.length;
@@ -75,7 +74,7 @@ it('should return a through stream', function(done) {
   }));
 });
 
-it('has no options', function(done) {
+it('should get commits without `options` using as a stream (`options.from` defaults to latest tag)', function(done) {
   getCommits()
     .pipe(through(function(chunk) {
       expect(chunk.toString()).to.contain('Third commit');
