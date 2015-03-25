@@ -1,5 +1,7 @@
 {
-  "name": "test",
-  "version": "1.0.0",
-  "repository": "www.bitbucket.com/user/repo.git"
+  "version": "0.0.17",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ajoslin/conventional-changelog.git"
+  }
 }
