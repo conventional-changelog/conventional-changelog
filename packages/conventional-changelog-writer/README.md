@@ -86,7 +86,7 @@ Returns a transform stream.
 
 Type: `string`
 
-Version number of the up coming release. This value is **mandatory**.
+Version number of the up-coming release. This value is **mandatory**.
 
 #### context
 
@@ -106,19 +106,19 @@ By default, this value is true if `version`'s patch is `0`.
 
 Type: `string`
 
-The hosting website. Eg: https://github.com/ or https://bitbucket.org/
+The hosting website. Eg: `'https://github.com/'` or `'https://bitbucket.org/'`
 
 ##### repository
 
 Type: `string`
 
-The repository name on `host`.
+The repository name on `host`. Eg: `'stevemao/conventional-commits-template'`.
 
 ##### linkReferences
 
 Type: `boolean` Default: `true` if `host`, `repository`, `commit` and `issue` are truthy
 
-Should references are linked?
+Should all references be linked?
 
 ##### commit
 
@@ -130,13 +130,13 @@ Commit keyword in the url if `options.linkReferences === true`.
 
 Type: `string` Default: `'issues'`
 
-Issue keyword in the url if `options.linkReferences === true`.
+Issue or pull request keyword in the url if `options.linkReferences === true`.
 
 ##### date
 
 Type: `string` Default: `dateFormat(new Date(), 'yyyy-mm-dd', true)`
 
-Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting today's date.
+Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date.
 
 #### options
 
@@ -248,7 +248,7 @@ Example
 
 Options
 
--v, --ver        Version number of the up coming release
+-v, --ver        Version number of the up-coming release
 -t, --context    A filepath of a json that is used to define template variables
 -o, --options    A filepath of a javascript object that is used to define options
 ```
@@ -261,7 +261,7 @@ If you have commits.ldjson
 {"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":{"BREAKING CHANGE":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."},"closes":[10036,9338],"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"}
 ```
 
-If you run
+And you run
 
 ```sh
 $ conventional-commits-template commits.ldjson --ver 1.0.0

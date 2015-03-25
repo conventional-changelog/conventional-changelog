@@ -17,7 +17,7 @@ var cli = meow({
     '',
     'Options',
     '',
-    '-v, --ver        Version number of the up coming release',
+    '-v, --ver        Version number of the up-coming release',
     '-t, --context    A filepath of a json that is used to define template variables',
     '-o, --options    A filepath of a javascript object that is used to define options'
   ].join('\n')
