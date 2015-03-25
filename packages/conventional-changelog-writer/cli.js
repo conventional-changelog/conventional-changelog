@@ -88,11 +88,13 @@ if (!version) {
   process.stdin
     .pipe(split(JSON.parse))
     .on('error', function(err) {
-      console.warn('Failed to split commits\n' + err);
+      console.error('Failed to split commits\n' + err);
+      process.exit(1);
     })
     .pipe(conventionalCommitsTemplate(version, templateContext, options))
     .on('error', function(err) {
-      console.warn('Failed to process file\n' + err);
+      console.error('Failed to process file\n' + err);
+      process.exit(1);
     })
     .pipe(process.stdout);
 } else if (length === 0) {
