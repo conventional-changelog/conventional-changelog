@@ -4,6 +4,7 @@ var conventionalCommitsTemplate = require('./');
 var fs = require('fs');
 var meow = require('meow');
 var split = require('split');
+var url = require('url');
 
 var cli = meow({
   help: [
@@ -37,7 +38,7 @@ var templateContext;
 var contextPath = flags.context;
 if (contextPath) {
   try {
-    templateContext = require(contextPath);
+    templateContext = require(url.resolve(process.cwd() + '/', contextPath));
   } catch (err) {
     console.error('Failed to get context from file ' + contextPath + '\n' + err);
     process.exit(1);
@@ -48,7 +49,7 @@ var options;
 var optionsPath = flags.options;
 if (optionsPath) {
   try {
-    options = require(optionsPath);
+    options = require(url.resolve(process.cwd() + '/', optionsPath));
   } catch (err) {
     console.error('Failed to get options from file ' + optionsPath + '\n' + err);
     process.exit(1);
