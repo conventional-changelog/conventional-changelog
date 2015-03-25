@@ -1,24 +1,16 @@
 {
   "name": "conventional-changelog",
   "version": "0.0.17",
-  "description": "Generate a changelog from git metadata, using the AngularJS commit conventions",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
-    "lint": "jshint lib test *.js --exclude node_modules && jscs lib test *.js",
-    "test": "npm run-script lint && mocha --no-colors"
-  },
-  "files": [
-    "index.js",
-    "lib/",
-    "test/"
-  ],
+  "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
     "url": "https://github.com/ajoslin/conventional-changelog.git"
   },
   "keywords": [
-    "changelog"
+    "conventional-changelog",
+    "conventional",
+    "changelog",
+    "log"
   ],
   "license": "BSD",
   "contributors": [
@@ -33,18 +25,34 @@
     }
   ],
   "dependencies": {
+    "add-stream": "^1.0.0",
+    "compare-func": "^1.2.0",
+    "conventional-commits-parser": "0.0.16",
+    "conventional-commits-writer": "0.0.12",
     "dateformat": "^1.0.11",
-    "event-stream": "^3.3.0",
-    "github-url-from-git": "^1.4.0",
-    "lodash": "^3.6.0",
-    "normalize-package-data": "^1.0.3"
+    "get-pkg-repo": "0.0.6",
+    "git-latest-semver-tag": "0.0.0",
+    "git-raw-commits": "0.0.6",
+    "lodash": "^3.9.3",
+    "meow": "^3.1.0",
+    "q": "^1.4.1",
+    "semver": "^4.3.6",
+    "tempfile": "^1.1.1",
+    "through2": "^0.6.5"
   },
   "devDependencies": {
-    "chai": "^2.2.0",
+    "chai": "^3.0.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.13",
+    "istanbul": "^0.3.15",
     "jscs": "^1.13.1",
-    "jshint": "^2.6.3",
-    "mocha": "*"
-  }
+    "jshint": "^2.8.0",
+    "mocha": "*",
+    "shelljs": "^0.5.1"
+  },
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "lint": "jshint presets hosts test *.js --exclude node_modules && jscs presets hosts test *.js",
+    "test": "npm run-script lint && mocha"
+  },
+  "bin": "cli.js"
 }

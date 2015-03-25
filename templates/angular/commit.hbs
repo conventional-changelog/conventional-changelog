@@ -1,0 +1,5 @@
+*{{#if scope}} **{{scope}}:**{{/if}} {{#if subject}}{{subject}}{{else}}{{header}}{{/if}}
+
+{{~!-- commit hash --}} {{#if @root.linkReferences}}([{{hash}}]({{@root.host}}/{{@root.repository}}/{{@root.commit}}/{{hash}})){{else}}{{hash~}}{{/if}}
+
+{{~!-- commit references --}}{{#if references}}, closes{{~#each references}} {{#if @root.linkReferences}}[{{this.repository}}#{{this.issue}}]({{@root.host}}/{{#if this.repository}}{{this.repository}}{{else}}{{@root.repository}}{{/if}}/{{@root.issue}}/{{this.issue}}){{else}}{{this.repository}}#{{this.issue}}{{/if}}{{/each}}{{/if}}
