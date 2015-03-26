@@ -141,7 +141,7 @@ describe('cli', function() {
     });
     cp.stderr
       .pipe(concat(function(err) {
-        expect(err.toString()).to.equal('No version specified\n');
+        expect(err.toString()).to.equal('TypeError: Expected a version number\n');
         done();
       }));
   });
@@ -152,18 +152,18 @@ describe('cli', function() {
     });
     cp.stderr
       .pipe(concat(function(err) {
-        expect(err.toString()).to.equal('Failed to process file test/fixtures/commits.ldjson\nTypeError: Invalid Version: version\n');
+        expect(err.toString()).to.equal('TypeError: Invalid Version: version\n');
         done();
       }));
   });
 
-  it('should error when version is invalid', function(done) {
+  it('should error when version is invalid if it is not tty', function(done) {
     var cp = spawn(cliPath, ['-v', 'version'], {
       stdio: [fs.openSync('test/fixtures/commits.ldjson', 'r'), null, null]
     });
     cp.stderr
       .pipe(concat(function(err) {
-        expect(err.toString()).to.equal('Failed to process file\nTypeError: Invalid Version: version\n');
+        expect(err.toString()).to.equal('TypeError: Invalid Version: version\n');
         done();
       }));
   });

@@ -7,19 +7,14 @@ var util = require('./lib/util');
 var _ = require('lodash');
 
 function conventionalCommitsTemplate(version, context, options) {
+  if (!version) {
+    throw new TypeError('Expected a version number');
+  }
+
   var stream;
   var commits = [];
   var allNotes = [];
-  var isPatch = false;
-  var versionErr;
-
-  if (version) {
-    try {
-      isPatch = semver.patch(version) !== 0;
-    } catch (err) {
-      versionErr = err;
-    }
-  }
+  var isPatch = semver.patch(version) !== 0;
 
   context = _.extend({
     version: version,
@@ -58,16 +53,11 @@ function conventionalCommitsTemplate(version, context, options) {
   }, options);
 
   stream = through.obj(function(chunk, enc, cb) {
-    if (version) {
-      cb(versionErr);
-    } else {
-      return cb('No version specified');
-    }
-
     var commit = util.processCommit(chunk, options.hashLength, options.replacements);
 
     commits.push(commit);
     allNotes.push(commit.notes);
+    cb();
   }, function(cb) {
     var compiled = util.compileTemplates(options);
     context = _.merge(context, util.getExtraContext(commits, allNotes, options));

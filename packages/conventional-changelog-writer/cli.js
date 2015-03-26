@@ -56,6 +56,13 @@ if (optionsPath) {
   }
 }
 
+try {
+  var stream = conventionalCommitsTemplate(version, templateContext, options);
+} catch (err) {
+  console.error(err.toString());
+  process.exit(1);
+}
+
 function processFile(fileIndex) {
   var filePath = filePaths[fileIndex];
   fs.createReadStream(filePath)
@@ -69,9 +76,12 @@ function processFile(fileIndex) {
     .on('error', function(err) {
       console.warn('Failed to split commits in file ' + filePath + '\n' + err);
     })
-    .pipe(conventionalCommitsTemplate(version, templateContext, options))
+    .pipe(stream)
     .on('error', function(err) {
       console.warn('Failed to process file ' + filePath + '\n' + err);
+      if (++fileIndex < length) {
+        processFile(fileIndex);
+      }
     })
     .on('end', function() {
       if (++fileIndex < length) {
@@ -91,7 +101,7 @@ if (!version) {
       console.error('Failed to split commits\n' + err);
       process.exit(1);
     })
-    .pipe(conventionalCommitsTemplate(version, templateContext, options))
+    .pipe(stream)
     .on('error', function(err) {
       console.error('Failed to process file\n' + err);
       process.exit(1);

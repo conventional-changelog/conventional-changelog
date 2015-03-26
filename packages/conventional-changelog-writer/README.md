@@ -86,7 +86,7 @@ Returns a transform stream.
 
 Type: `string`
 
-Version number of the up-coming release. This value is **mandatory**.
+Version number of the up-coming release. This argument is **mandatory**.
 
 #### context
 

@@ -71,28 +71,16 @@ describe('conventionalCommitsTemplate', function() {
         });
     });
 
-    it('should error if no version specified', function(done) {
-      var upstream = getStream();
-
-      upstream
-        .pipe(conventionalCommitsTemplate())
-        .on('error', function(err) {
-          expect(err).to.equal('No version specified');
-          done();
-        });
+    it('should error if no version specified', function() {
+      expect(conventionalCommitsTemplate).to.throw('Expected a version number');
     });
 
-    it('should error if version is invalid', function(done) {
-      var upstream = getStream();
-
-      upstream
-        .pipe(conventionalCommitsTemplate({
+    it('should error if version is invalid', function() {
+      expect(function() {
+        conventionalCommitsTemplate({
           version: 'fake version'
-        }))
-        .on('error', function(err) {
-          expect(err.toString()).to.contain('TypeError: Invalid Version:');
-          done();
         });
+      }).to.throw('Invalid Version');
     });
   });
 });
