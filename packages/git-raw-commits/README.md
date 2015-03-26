@@ -59,7 +59,7 @@ Type: `string` Default: `'HEAD'`
 
 ##### commits
 
-Type: `array`
+Type: `array` of `string`
 
 An array of raw commits.
 
