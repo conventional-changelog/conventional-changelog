@@ -1,34 +1,24 @@
 'use strict';
-var forEach = require('lodash').forEach;
 
-function getNotesRegex(noteKeywords) {
-  var re = '(';
-  var maxIndex = noteKeywords.length - 1;
-  forEach(noteKeywords, function(val, index) {
-    if (val) {
-      re += val.trim();
-      if (index < maxIndex) {
-        re += '|';
-      }
-    }
-  });
-  re += '):\\s([\\s\\S]*)';
-  return new RegExp(re);
+function join(array, joiner) {
+  return array
+    .map(function(val) {
+      return val.trim();
+    })
+    .filter(function(val) {
+      return val.length;
+    })
+    .join(joiner);
 }
 
+// ['alpha', 'beta'] ==> new RegExp('(alpha|beta):\\s([\\s\\S]*)')
+function getNotesRegex(noteKeywords) {
+  return new RegExp('(' + join(noteKeywords, '|') + '):\\s([\\s\\S]*)');
+}
+
+// ['closed', 'closes'] => new RegExp('(closed|closes)\\s((?:#\\d+(?:\\,\\s)?)+)', 'gi')
 function getClosesRegex(closeKeywords) {
-  var re = '(?:';
-  var maxIndex = closeKeywords.length - 1;
-  forEach(closeKeywords, function(val, index) {
-    if (val) {
-      re += val.trim();
-      if (index < maxIndex) {
-        re += '|';
-      }
-    }
-  });
-  re += ')\\s((?:#\\d+(?:\\,\\s)?)+)';
-  return new RegExp(re, 'ig');
+  return new RegExp('(?:' + join(closeKeywords, '|') + ')\\s((?:#\\d+(?:\\,\\s)?)+)', 'gi');
 }
 
 module.exports = {

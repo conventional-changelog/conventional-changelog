@@ -10,7 +10,7 @@ describe('regex', function() {
     });
 
     it('should ignore whitespace', function() {
-      var re = regex.getNotesRegex([' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ']);
+      var re = regex.getNotesRegex([' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  ']);
       expect(re).to.eql(/(Breaking News|Breaking Change|Breaking SOLUTION):\s([\s\S]*)/);
     });
   });
@@ -22,7 +22,7 @@ describe('regex', function() {
     });
 
     it('should ignore whitespace', function() {
-      var re = regex.getClosesRegex([' Closes', 'amends ', '', ' fixes ']);
+      var re = regex.getClosesRegex([' Closes', 'amends ', '', ' fixes ', '   ']);
       expect(re).to.eql(/(?:Closes|amends|fixes)\s((?:#\d+(?:\,\s)?)+)/gi);
     });
   });

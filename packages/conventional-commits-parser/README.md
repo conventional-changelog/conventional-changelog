@@ -120,7 +120,7 @@ Used to match header pattern. The first capturing group captures **type**, secon
 
 ##### closeKeywords
 
-Type: `array` or `string` Default:
+Type: `array` of `string` or `string` Default:
 `[
   'close',
   'closes',
@@ -139,7 +139,7 @@ Keywords that used to close issues.
 
 ##### noteKeywords
 
-Type: `array` or `string` Default: `['BREAKING CHANGE']`
+Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
 
 Keywords for important notes. If it's a `string` it will be converted to an `array` separated by a comma.
 
