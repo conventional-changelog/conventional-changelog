@@ -2,7 +2,7 @@
 var expect = require('chai').expect;
 var parser = require('../lib/parser');
 
-describe('parseRawCommit', function() {
+describe('parser', function() {
   var options;
   var msg;
   var simpleMsg;
@@ -12,7 +12,7 @@ describe('parseRawCommit', function() {
     options = {
       maxSubjectLength: 80,
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-      closeKeywords: [
+      referenceKeywords: [
         'kill',
         'kills',
         'killed',
@@ -33,7 +33,7 @@ describe('parseRawCommit', function() {
       'BREAKING AMEND: some breaking change\n' +
       'Kills #1, #123\n' +
       'killed #25\n' +
-      'handle #33, Closes #100, Handled #3',
+      'handle #33, Closes #100, Handled #3 kills repo#77',
       options
     );
 
@@ -82,7 +82,7 @@ describe('parseRawCommit', function() {
       '\n\n\n\nBREAKING AMEND: some breaking change\n' +
       '\n\nKills #1, #123\n' +
       '\n\n\nkilled #25\n\n\n\n\n' +
-      '\nhandle #33, Closes #100, Handled #3\n',
+      '\nhandle #33, Closes #100, Handled #3 kills repo#77\n',
       options
     ));
   });
@@ -175,7 +175,7 @@ describe('parseRawCommit', function() {
         'BREAKING AMEND: some breaking change\n' +
         'Kills #1, #123\n' +
         'killed #25\n' +
-        'handle #33, Closes #100, Handled #3'
+        'handle #33, Closes #100, Handled #3 kills repo#77'
       );
     });
 
@@ -193,8 +193,60 @@ describe('parseRawCommit', function() {
       });
     });
 
-    it('should parse closed issues', function() {
-      expect(msg.closes).to.eql([1, 123, 25, 33, 3]);
+    it('should parse referenced issues', function() {
+      expect(msg.references).to.eql([{
+        action: 'Kills',
+        issue: '1',
+        raw: '#1',
+        repository: null
+      }, {
+        action: 'Kills',
+        issue: '123',
+        raw: ', #123',
+        repository: null
+      }, {
+        action: 'killed',
+        issue: '25',
+        raw: '#25',
+        repository: null
+      }, {
+        action: 'handle',
+        issue: '33',
+        raw: '#33',
+        repository: null
+      }, {
+        action: 'handle',
+        issue: '100',
+        raw: ', Closes #100',
+        repository: null
+      }, {
+        action: 'Handled',
+        issue: '3',
+        raw: '#3',
+        repository: null
+      }, {
+        action: 'kills',
+        issue: '77',
+        raw: 'repo#77',
+        repository: 'repo'
+      }]);
+    });
+
+    it('should put everything between or after referenced issues input footer', function() {
+      var msg = parser(
+        '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
+        'feat(scope): broadcast $destroy event on scope destruction\n' +
+        'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+        'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
+        'Kills #1, #123\n' +
+        'what\n' +
+        'killed #25\n' +
+        'handle #33, Closes #100, Handled #3\n' +
+        'other',
+        options
+      );
+
+      expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother');
     });
   });
 });

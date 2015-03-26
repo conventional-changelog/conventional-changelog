@@ -143,7 +143,7 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser({
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\ (.*)$/,
-        closeKeywords: ['fix'],
+        referenceKeywords: ['fix'],
         noteKeywords: ['BREAKING CHANGES']
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
@@ -151,7 +151,17 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.type).to.equal('feat');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Allow custom separator');
-          expect(chunk.closes).to.eql([123, 33]);
+          expect(chunk.references).to.eql([{
+            action: 'Fix',
+            issue: '123',
+            raw: '#123',
+            repository: null
+          }, {
+            action: 'fix',
+            issue: '33',
+            raw: '#33',
+            repository: null
+          }]);
         } else {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
@@ -178,7 +188,7 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser({
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
-        closeKeywords: 'fix',
+        referenceKeywords: 'fix',
         noteKeywords: 'BREAKING CHANGES'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
@@ -186,7 +196,17 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.type).to.equal('feat');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Allow custom separator');
-          expect(chunk.closes).to.eql([123, 33]);
+          expect(chunk.references).to.eql([{
+            action: 'Fix',
+            issue: '123',
+            raw: '#123',
+            repository: null
+          }, {
+            action: 'fix',
+            issue: '33',
+            raw: '#33',
+            repository: null
+          }]);
         } else {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');

@@ -1,6 +1,7 @@
 'use strict';
 
 var reHash = /\b[0-9a-f]{5,40}\b/;
+var reReferenceParts = /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi;
 
 function join(array, joiner) {
   return array
@@ -13,18 +14,18 @@ function join(array, joiner) {
     .join(joiner);
 }
 
-// ['alpha', 'beta'] ==> new RegExp('(alpha|beta):\\s([\\s\\S]*)')
 function getNotesRegex(noteKeywords) {
-  return new RegExp('(' + join(noteKeywords, '|') + ')[:\\s]*([\\s\\S]*)');
+  return new RegExp('(' + join(noteKeywords, '|') + ')[:\\s]*(.*)');
 }
 
-// ['closed', 'closes'] => new RegExp('(closed|closes)\\s((?:#\\d+(?:\\,\\s)?)+)', 'gi')
-function getClosesRegex(closeKeywords) {
-  return new RegExp('(?:' + join(closeKeywords, '|') + ')\\s((?:#\\d+(?:\\,\\s)?)+)', 'gi');
+function getReferencesRegex(referenceKeywords) {
+  var joinedKeywords = join(referenceKeywords, '|');
+  return new RegExp('(' + joinedKeywords + ')(?:\\s+(.*?))(?=(?:' + joinedKeywords + ')|$)', 'ig');
 }
 
 module.exports = {
   getNotesRegex: getNotesRegex,
-  getClosesRegex: getClosesRegex,
-  reHash: reHash
+  getReferencesRegex: getReferencesRegex,
+  reHash: reHash,
+  reReferenceParts: reReferenceParts
 };

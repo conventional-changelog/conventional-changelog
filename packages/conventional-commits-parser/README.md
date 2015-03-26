@@ -29,12 +29,12 @@ The header has a special format that includes a **type**, a **scope** (optional)
 
 ### footer
 
-The footer should contain any information about **Important Notes** (optional) and is also the place to reference GitHub issues that this commit **Closes** (optional).
+The footer should contain any information about **Important Notes** (optional) and is also the place to reference GitHub issues that this commit **references** (optional).
 
 ```
 <important note>
 <BLANK LINE>
-<closes>
+<references>
 ```
 
 [More details](CONVENTIONS.md)
@@ -74,12 +74,13 @@ stream
     cb();
   }));
 
-/*=> { hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
+/*=>
+{ hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
   header: 'feat(scope): broadcast $destroy event on scope destruction',
   body: '',
   footer: 'Closes #1',
   notes: [],
-  closes: [ 1 ],
+  references: [ { action: 'Closes', repository: null, issue: '1', raw: '#1' } ],
   type: 'feat',
   scope: 'scope',
   subject: 'broadcast $destroy event on scope destruction' }
@@ -88,7 +89,7 @@ stream
   body: 'bla bla bla',
   footer: 'BREAKING CHANGE: some breaking change',
   notes: [ { title: 'BREAKING CHANGE', text: 'some breaking change' } ],
-  closes: [],
+  references: [],
   type: 'feat',
   scope: 'ng-list',
   subject: 'Allow custom separator' }
@@ -118,7 +119,7 @@ Type: `regex` or `string` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
 
 Used to match header pattern. The first capturing group captures **type**, second captures **scope** and third captures **subject**. If it's a `string` it will be converted to a `regex`.
 
-##### closeKeywords
+##### referenceKeywords
 
 Type: `array` of `string` or `string` Default:
 `[
@@ -133,9 +134,7 @@ Type: `array` of `string` or `string` Default:
   'resolved'
 ]`
 
-This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
-
-Keywords that used to close issues.
+Keywords for references. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
 ##### noteKeywords
 
@@ -170,8 +169,7 @@ You will enter an interactive shell. To show your parsed result enter "return" t
 > fix(title): a title is fixed
 
 
-
-result: {"hash":null,"header":"fix(title): a title is fixed","body":"","footer":"","notes":[],"closes":[],"type":"fix","scope":"title","subject":"a title is fixed"}
+Result: {"hash":null,"header":"fix(title): a title is fixed","body":"","footer":"","notes":[],"references":[],"type":"fix","scope":"title","subject":"a title is fixed"}
 ```
 
 You can also use cli to test commits from a file.
@@ -203,7 +201,7 @@ An array of json will be printed to stdout.
 
 ```sh
 [
-{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"closes":[10036,9338],"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"}
+{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"references":[{"action":"Closes","repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","repository":null,"issue":"9338","raw":"#9338"}],"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"}
 ]
 ```
 
@@ -231,9 +229,9 @@ $ conventional-commits-parser log2.txt '==='
 
 ```sh
 [
-{"hash":"2d0eda10e43f6b079b531c507282fad082ea0762","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","body":"","footer":"","notes":[],"closes":[],"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"}
+{"hash":"2d0eda10e43f6b079b531c507282fad082ea0762","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","body":"","footer":"","notes":[],"references":[],"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"}
 ,
-{"hash":"4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5","header":"fix($animate): applyStyles from options on leave","body":"","footer":"Closes #10068","notes":[],"closes":[10068],"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"}
+{"hash":"4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5","header":"fix($animate): applyStyles from options on leave","body":"","footer":"Closes #10068","notes":[],"references":[{"action":"Closes","repository":null,"issue":"10068","raw":"#10068"}],"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"}
 ]
 ```
 

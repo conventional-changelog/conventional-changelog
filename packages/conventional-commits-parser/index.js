@@ -10,8 +10,8 @@ function conventionalCommitsParser(options) {
       options.headerPattern = new RegExp(headerPattern);
     }
 
-    if (typeof options.closeKeywords === 'string') {
-      options.closeKeywords = options.closeKeywords.split(',');
+    if (typeof options.referenceKeywords === 'string') {
+      options.referenceKeywords = options.referenceKeywords.split(',');
     }
 
     if (typeof options.noteKeywords === 'string') {
@@ -23,7 +23,7 @@ function conventionalCommitsParser(options) {
     maxSubjectLength: 80,
     warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-    closeKeywords: [
+    referenceKeywords: [
       'close',
       'closes',
       'closed',

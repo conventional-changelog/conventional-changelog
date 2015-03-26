@@ -11,18 +11,18 @@ function parser(raw, options) {
     throw new TypeError('Expected options');
   }
 
-  var match;
+  var headerMatch;
   var lines = _.compact(raw.split('\n'));
   var msg = {};
-  var isFooter = false;
   var continueNote = false;
+  var isBody = true;
 
   msg.hash = lines[0];
   msg.header = lines[1];
   msg.body = '';
   msg.footer = '';
   msg.notes = [];
-  msg.closes = [];
+  msg.references = [];
 
   if (!msg.hash.match(regex.reHash)) {
     msg.header = msg.hash;
@@ -36,70 +36,87 @@ function parser(raw, options) {
     throw new Error('Cannot parse commit header: "' + raw + '"');
   }
 
-  match = msg.header.match(options.headerPattern);
-  if (!match || !match[1]) {
+  headerMatch = msg.header.match(options.headerPattern);
+  if (!headerMatch || !headerMatch[1]) {
     throw new Error('Cannot parse commit type: "' + raw + '"');
-  } else if (!match[3]) {
+  } else if (!headerMatch[3]) {
     throw new Error('Cannot parse commit subject: "' + raw + '"');
   }
 
   if (!options.maxSubjectLength) {
-    options.maxSubjectLength = match[3].length;
+    options.maxSubjectLength = headerMatch[3].length;
   }
 
-  if (match[3].length > options.maxSubjectLength) {
-    match[3] = match[3].substr(0, options.maxSubjectLength);
+  if (headerMatch[3].length > options.maxSubjectLength) {
+    headerMatch[3] = headerMatch[3].substr(0, options.maxSubjectLength);
   }
 
-  msg.type = match[1];
-  msg.scope = match[2];
-  msg.subject = match[3];
+  msg.type = headerMatch[1];
+  msg.scope = headerMatch[2];
+  msg.subject = headerMatch[3];
 
+  // body or footer
   _.forEach(lines, function(line) {
-    var issue;
-    var reDigit = /\d+/;
+    var referenceMatch;
+    var referenceMatched;
+    var referenceSentences;
     var notes = msg.notes;
+    var referenceKeywords = options.referenceKeywords;
     var reNotes = regex.getNotesRegex(options.noteKeywords);
-    var reCloses = regex.getClosesRegex(options.closeKeywords);
 
     // this is a new important note
     var notesMatch = line.match(reNotes);
-    var closesMatch = line.match(reCloses);
     if (notesMatch) {
-      isFooter = true;
       continueNote = true;
+      isBody = false;
       msg.footer += line + '\n';
       notes.push({
         title: notesMatch[1],
         text: notesMatch[2]
       });
+
+      return;
     }
 
-    // this closes an issue
-    else if (closesMatch) {
-      isFooter = true;
-      continueNote = false;
+    // this references an issue
+    var reReferences = regex.getReferencesRegex(referenceKeywords);
+    while (referenceSentences = reReferences.exec(line)) {
+      var action = referenceSentences[1];
+      var sentence = referenceSentences[2];
+      while (referenceMatch = regex.reReferenceParts.exec(sentence)) {
+        referenceMatched = true;
+        continueNote = false;
+        isBody = false;
+        var reference = {
+          action: action.trim(),
+          repository: referenceMatch[1] || null,
+          issue: referenceMatch[2],
+          raw: referenceMatch[0]
+        };
+        msg.references.push(reference);
+      }
+    }
+
+    if (referenceMatched) {
       msg.footer += line + '\n';
-      _.forEach(closesMatch, function(m) {
-        _.forEach(m.split(','), function(i) {
-          issue = i.match(reDigit);
-          if (issue) {
-            msg.closes.push(parseInt(issue[0], 10));
-          }
-        });
-      });
+
+      return;
     }
 
     // this is a continued important note
-    else if (continueNote) {
+    if (continueNote) {
       var text = notes[notes.length - 1].text;
       notes[notes.length - 1].text = text + (text ? '\n' : '') + line;
       msg.footer += line + '\n';
+
+      return;
     }
 
     // this is a body
-    else {
+    if (isBody) {
       msg.body += line + '\n';
+    } else {
+      msg.footer += line + '\n';
     }
   });
 
