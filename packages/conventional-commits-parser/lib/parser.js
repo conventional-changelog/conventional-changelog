@@ -4,11 +4,11 @@ var _ = require('lodash');
 
 function parser(raw, options) {
   if (!raw || !raw.trim()) {
-    throw new Error('Cannot parse raw commit: "' + raw + '"');
+    throw new TypeError('Expected a raw commit');
   }
 
   if (_.isEmpty(options)) {
-    throw new Error('options must not be empty: "' + raw + '"');
+    throw new TypeError('Expected options');
   }
 
   var match;

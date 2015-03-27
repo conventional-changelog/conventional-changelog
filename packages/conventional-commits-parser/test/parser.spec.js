@@ -45,13 +45,13 @@ describe('parseRawCommit', function() {
   it('should throw if nothing to parse', function() {
     expect(function() {
       parser();
-    }).to.throw('Cannot parse raw commit: "undefined"');
+    }).to.throw('Expected a raw commit');
     expect(function() {
       parser('\n');
-    }).to.throw('Cannot parse raw commit: "\n"');
+    }).to.throw('Expected a raw commit');
     expect(function() {
       parser(' ');
-    }).to.throw('Cannot parse raw commit: " "');
+    }).to.throw('Expected a raw commit');
   });
 
   it('should parse hash', function() {
@@ -68,7 +68,7 @@ describe('parseRawCommit', function() {
     it('should throw if `options` is empty', function() {
       expect(function() {
         parser('bla bla');
-      }).to.throw('options must not be empty: "bla bla"');
+      }).to.throw('Expected options');
     });
 
     it('should throw if subject cannot be found', function() {
