@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-template",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Generate logs based on conventional commits and templates",
   "homepage": "https://github.com/stevemao/conventional-commits-template",
   "author": {
