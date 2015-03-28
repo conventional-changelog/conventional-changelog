@@ -156,7 +156,10 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Another custom separator');
-          expect(chunk.notes['BREAKING CHANGES']).to.equal('some breaking changes');
+          expect(chunk.notes[0]).to.eql({
+            title: 'BREAKING CHANGES',
+            text: 'some breaking changes'
+          });
           done();
         }
         cb();
@@ -188,7 +191,10 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Another custom separator');
-          expect(chunk.notes['BREAKING CHANGES']).to.equal('some breaking changes');
+          expect(chunk.notes[0]).to.eql({
+            title: 'BREAKING CHANGES',
+            text: 'some breaking changes'
+          });
           done();
         }
         cb();

@@ -14,12 +14,14 @@ function parser(raw, options) {
   var match;
   var lines = _.compact(raw.split('\n'));
   var msg = {};
+  var isFooter = false;
+  var continueNote = false;
 
   msg.hash = lines[0];
   msg.header = lines[1];
   msg.body = '';
   msg.footer = '';
-  msg.notes = {};
+  msg.notes = [];
   msg.closes = [];
 
   if (!msg.hash.match(regex.reHash)) {
@@ -55,26 +57,30 @@ function parser(raw, options) {
 
   _.forEach(lines, function(line) {
     var issue;
-    var isBody = true;
     var reDigit = /\d+/;
-
+    var notes = msg.notes;
     var reNotes = regex.getNotesRegex(options.noteKeywords);
     var reCloses = regex.getClosesRegex(options.closeKeywords);
 
-    // this is a important note
-    match = line.match(reNotes);
-    if (match) {
-      isBody = false;
+    // this is a new important note
+    var notesMatch = line.match(reNotes);
+    var closesMatch = line.match(reCloses);
+    if (notesMatch) {
+      isFooter = true;
+      continueNote = true;
       msg.footer += line + '\n';
-      msg.notes[match[1]] = match[2];
+      notes.push({
+        title: notesMatch[1],
+        text: notesMatch[2]
+      });
     }
 
     // this closes an issue
-    match = line.match(reCloses);
-    if (match) {
-      isBody = false;
+    else if (closesMatch) {
+      isFooter = true;
+      continueNote = false;
       msg.footer += line + '\n';
-      _.forEach(match, function(m) {
+      _.forEach(closesMatch, function(m) {
         _.forEach(m.split(','), function(i) {
           issue = i.match(reDigit);
           if (issue) {
@@ -84,8 +90,15 @@ function parser(raw, options) {
       });
     }
 
+    // this is a continued important note
+    else if (continueNote) {
+      var text = notes[notes.length - 1].text;
+      notes[notes.length - 1].text = text + (text ? '\n' : '') + line;
+      msg.footer += line + '\n';
+    }
+
     // this is a body
-    if (isBody) {
+    else {
       msg.body += line + '\n';
     }
   });

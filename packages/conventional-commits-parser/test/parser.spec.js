@@ -6,6 +6,7 @@ describe('parseRawCommit', function() {
   var options;
   var msg;
   var simpleMsg;
+  var longNoteMsg;
 
   beforeEach(function() {
     options = {
@@ -30,6 +31,20 @@ describe('parseRawCommit', function() {
       'perf testing shows that in chrome this change adds 5-15% overhead\n' +
       'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
       'BREAKING AMEND: some breaking change\n' +
+      'Kills #1, #123\n' +
+      'killed #25\n' +
+      'handle #33, Closes #100, Handled #3',
+      options
+    );
+
+    longNoteMsg = parser(
+      '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
+      'feat(scope): broadcast $destroy event on scope destruction\n' +
+      'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+      'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
+      'BREAKING AMEND:\n' +
+      'some breaking change\n' +
+      'some other breaking change\n' +
       'Kills #1, #123\n' +
       'killed #25\n' +
       'handle #33, Closes #100, Handled #3',
@@ -164,8 +179,18 @@ describe('parseRawCommit', function() {
       );
     });
 
-    it('should parse breaking change', function() {
-      expect(msg.notes['BREAKING AMEND']).to.deep.equal('some breaking change');
+    it('should parse important notes', function() {
+      expect(msg.notes[0]).to.eql({
+        title: 'BREAKING AMEND',
+        text: 'some breaking change'
+      });
+    });
+
+    it('should parse important notes with more than one paragraphs', function() {
+      expect(longNoteMsg.notes[0]).to.eql({
+        title: 'BREAKING AMEND',
+        text: 'some breaking change\nsome other breaking change'
+      });
     });
 
     it('should parse closed issues', function() {

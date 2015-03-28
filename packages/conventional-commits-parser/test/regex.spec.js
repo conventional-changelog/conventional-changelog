@@ -6,12 +6,12 @@ describe('regex', function() {
   describe('getNotesRegex', function() {
     it('should generate correct regex', function() {
       var re = regex.getNotesRegex(['Breaking News', 'Breaking Change']);
-      expect(re).to.eql(/(Breaking News|Breaking Change):\s([\s\S]*)/);
+      expect(re).to.eql(/(Breaking News|Breaking Change)[:\s]*([\s\S]*)/);
     });
 
     it('should ignore whitespace', function() {
       var re = regex.getNotesRegex([' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  ']);
-      expect(re).to.eql(/(Breaking News|Breaking Change|Breaking SOLUTION):\s([\s\S]*)/);
+      expect(re).to.eql(/(Breaking News|Breaking Change|Breaking SOLUTION)[:\s]*([\s\S]*)/);
     });
   });
 

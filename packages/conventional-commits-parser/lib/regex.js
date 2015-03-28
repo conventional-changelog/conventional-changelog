@@ -15,7 +15,7 @@ function join(array, joiner) {
 
 // ['alpha', 'beta'] ==> new RegExp('(alpha|beta):\\s([\\s\\S]*)')
 function getNotesRegex(noteKeywords) {
-  return new RegExp('(' + join(noteKeywords, '|') + '):\\s([\\s\\S]*)');
+  return new RegExp('(' + join(noteKeywords, '|') + ')[:\\s]*([\\s\\S]*)');
 }
 
 // ['closed', 'closes'] => new RegExp('(closed|closes)\\s((?:#\\d+(?:\\,\\s)?)+)', 'gi')
