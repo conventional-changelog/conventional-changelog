@@ -58,6 +58,20 @@ describe('parseRawCommit', function() {
     expect(msg.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd');
   });
 
+  it('should trim extra newlines', function() {
+    expect(msg).to.eql(parser(
+      '\n\n\n\n9b1aff905b638aa274a5fc8f88662df446d374bd\n\n' +
+      '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
+      '\n\n\nperf testing shows that in chrome this change adds 5-15% overhead\n' +
+      '\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener\n\n' +
+      '\n\n\n\nBREAKING AMEND: some breaking change\n' +
+      '\n\nKills #1, #123\n' +
+      '\n\n\nkilled #25\n\n\n\n\n' +
+      '\nhandle #33, Closes #100, Handled #3\n',
+      options
+    ));
+  });
+
   describe('header', function() {
     it('should throw if header cannot be parsed', function() {
       expect(function() {
@@ -91,10 +105,6 @@ describe('parseRawCommit', function() {
 
     it('should parse header', function() {
       expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
-    });
-
-    it('should parse header after trimed', function() {
-      expect(parser('\n\n\n\n\nchore: some chore\n\n\n\n', options).header).to.equal('chore: some chore');
     });
 
     it('should parse header without a hash', function() {
