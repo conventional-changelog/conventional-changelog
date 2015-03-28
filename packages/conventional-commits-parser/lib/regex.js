@@ -1,5 +1,7 @@
 'use strict';
 
+var reHash = /\b[0-9a-f]{5,40}\b/;
+
 function join(array, joiner) {
   return array
     .map(function(val) {
@@ -23,5 +25,6 @@ function getClosesRegex(closeKeywords) {
 
 module.exports = {
   getNotesRegex: getNotesRegex,
-  getClosesRegex: getClosesRegex
+  getClosesRegex: getClosesRegex,
+  reHash: reHash
 };

@@ -22,7 +22,7 @@ function parser(raw, options) {
   msg.notes = {};
   msg.closes = [];
 
-  if (!msg.hash.match(/\b[0-9a-f]{5,40}\b/)) {
+  if (!msg.hash.match(regex.reHash)) {
     msg.header = msg.hash;
     msg.hash = null;
     lines.shift();
