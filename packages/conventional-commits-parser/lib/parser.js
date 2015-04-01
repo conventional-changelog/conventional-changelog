@@ -17,8 +17,19 @@ function parser(raw, options) {
   var continueNote = false;
   var isBody = true;
 
+  function getHeadCorrespondence(correspondence) {
+    return _.indexOf(options.headerCorrespondence, correspondence) + 1;
+  }
+
+  var typeIndex = getHeadCorrespondence('type');
+  var scopeIndex = getHeadCorrespondence('scope');
+  var subjectIndex = getHeadCorrespondence('subject');
+
   msg.hash = lines[0];
   msg.header = lines[1];
+  msg.type = null;
+  msg.scope = null;
+  msg.subject = null;
   msg.body = '';
   msg.footer = '';
   msg.notes = [];
@@ -33,27 +44,26 @@ function parser(raw, options) {
   }
 
   if (!msg.header) {
-    throw new Error('Cannot parse commit header: "' + raw + '"');
+    throw new Error('"' + raw + '" does not contain a header');
   }
 
   headerMatch = msg.header.match(options.headerPattern);
-  if (!headerMatch || !headerMatch[1]) {
-    throw new Error('Cannot parse commit type: "' + raw + '"');
-  } else if (!headerMatch[3]) {
-    throw new Error('Cannot parse commit subject: "' + raw + '"');
+
+  if (headerMatch) {
+    if (headerMatch[typeIndex]) {
+      msg.type = headerMatch[typeIndex];
+    }
+    if (headerMatch[scopeIndex]) {
+      msg.scope = headerMatch[scopeIndex];
+    }
+    if (headerMatch[subjectIndex]) {
+      msg.subject = headerMatch[subjectIndex];
+    }
   }
 
-  if (!options.maxSubjectLength) {
-    options.maxSubjectLength = headerMatch[3].length;
+  if (msg.subject && options.maxSubjectLength) {
+    msg.subject = msg.subject.substr(0, options.maxSubjectLength);
   }
-
-  if (headerMatch[3].length > options.maxSubjectLength) {
-    headerMatch[3] = headerMatch[3].substr(0, options.maxSubjectLength);
-  }
-
-  msg.type = headerMatch[1];
-  msg.scope = headerMatch[2];
-  msg.subject = headerMatch[3];
 
   // body or footer
   _.forEach(lines, function(line) {
@@ -122,6 +132,12 @@ function parser(raw, options) {
 
   msg.body = msg.body.trim();
   msg.footer = msg.footer.trim();
+  if (!msg.body) {
+    msg.body = null;
+  }
+  if (!msg.footer) {
+    msg.footer = null;
+  }
 
   return msg;
 }

@@ -55,8 +55,7 @@ describe('conventionalCommitsParser', function() {
       'chore(scope with spaces): some chore\n',
 
       '\n' +
-      'bla bla bla\n\n' +
-      'Closes #123\nCloses #25\nFixes #33\n',
+      ' \n\n',
 
       '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'fix(zzz): Very cool commit\n' +
@@ -85,7 +84,7 @@ describe('conventionalCommitsParser', function() {
 
   it('should warn if malformed commits found', function(done) {
     var stream = through();
-    var commit = 'bla bla bla\n\n';
+    var commit = ' \n\n';
 
     stream.write(commit);
     stream.end();
@@ -93,7 +92,7 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser({
         warn: function(warning) {
-          expect(warning).to.equal('Error: Cannot parse commit type: "bla bla bla\n\n"');
+          expect(warning).to.equal('TypeError: Expected a raw commit');
           done();
         }
       }))
@@ -104,7 +103,7 @@ describe('conventionalCommitsParser', function() {
 
   it('should error if malformed commits found and `options.warn === true`', function(done) {
     var stream = through();
-    var commit = 'bla bla bla\n\n';
+    var commit = ' \n\n';
 
     stream.write(commit);
     stream.end();
@@ -114,7 +113,7 @@ describe('conventionalCommitsParser', function() {
         warn: true
       }))
       .on('error', function(err) {
-        expect(err.toString()).to.equal('Error: Cannot parse commit type: "bla bla bla\n\n"');
+        expect(err.toString()).to.equal('TypeError: Expected a raw commit');
         done();
       });
   });

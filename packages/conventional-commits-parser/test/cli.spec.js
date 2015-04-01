@@ -93,7 +93,7 @@ describe('cli', function() {
     });
     cp.stderr
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal('Error: Cannot parse commit type: "bla bla\n"\n');
+        expect(chunk.toString()).to.equal('TypeError: Expected a raw commit\n');
         done();
       }));
   });

@@ -23,6 +23,7 @@ function conventionalCommitsParser(options) {
     maxSubjectLength: 80,
     warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+    headerCorrespondence: ['type', 'scope', 'subject'],
     referenceKeywords: [
       'close',
       'closes',

@@ -7,11 +7,13 @@ describe('parser', function() {
   var msg;
   var simpleMsg;
   var longNoteMsg;
+  var headerOnlyMsg;
 
   beforeEach(function() {
     options = {
       maxSubjectLength: 80,
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+      headerCorrespondence: ['type', 'scope', 'subject'],
       referenceKeywords: [
         'kill',
         'kills',
@@ -55,6 +57,8 @@ describe('parser', function() {
       'chore: some chore\n',
       options
     );
+
+    headerOnlyMsg = parser('header', options);
   });
 
   it('should throw if nothing to parse', function() {
@@ -88,10 +92,10 @@ describe('parser', function() {
   });
 
   describe('header', function() {
-    it('should throw if header cannot be parsed', function() {
+    it('should throw if it does not contain a header', function() {
       expect(function() {
-        parser('bla bla', options);
-      }).to.throw('Cannot parse commit type: "bla bla"');
+        parser('9b1aff905b638aa274a5fc8f88662df446d374bd', options);
+      }).to.throw('"9b1aff905b638aa274a5fc8f88662df446d374bd" does not contain a header');
     });
 
     it('should throw if `options` is empty', function() {
@@ -100,22 +104,16 @@ describe('parser', function() {
       }).to.throw('Expected options');
     });
 
-    it('should throw if subject cannot be found', function() {
-      expect(function() {
-        parser('fix: ', options);
-      }).to.throw('Cannot parse commit subject: "fix: "');
+    it('type should be null if not found', function() {
+      expect(headerOnlyMsg.type).to.equal(null);
     });
 
-    it('should throw if there is no header', function() {
-      expect(function() {
-        parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options);
-      }).to.throw('Cannot parse commit header: "056f5827de86cace1f282c8e3f1cccc952fcad2e"');
+    it('scope should be null if not found', function() {
+      expect(headerOnlyMsg.scope).to.equal(null);
     });
 
-    it('should throw if header cannot be found', function() {
-      expect(function() {
-        parser('056f5827de86cace1f282c8e3f1cccc952fcad2e', options);
-      }).to.throw('Cannot parse commit header: "056f5827de86cace1f282c8e3f1cccc952fcad2e"');
+    it('subject should be null if not found', function() {
+      expect(headerOnlyMsg.subject).to.equal(null);
     });
 
     it('should parse header', function() {
@@ -123,6 +121,7 @@ describe('parser', function() {
     });
 
     it('should parse header without a hash', function() {
+      expect(simpleMsg.hash).to.equal(null);
       expect(simpleMsg.header).to.equal('chore: some chore');
     });
 
@@ -141,7 +140,8 @@ describe('parser', function() {
     it('should trim if subject is too long', function() {
       var msg = parser('feat(ng-list): Allow custom separator', {
         maxSubjectLength: 10,
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject']
       });
       expect(msg.subject).to.equal('Allow cust');
     });
@@ -149,15 +149,52 @@ describe('parser', function() {
     it('should parse header without a scope', function() {
       expect(simpleMsg.header).to.equal('chore: some chore');
       expect(simpleMsg.type).to.equal('chore');
-      expect(simpleMsg.scope).to.equal(undefined);
+      expect(simpleMsg.scope).to.equal(null);
       expect(simpleMsg.subject).to.equal('some chore');
     });
 
     it('should allow ":" in scope', function() {
       var msg = parser('feat(ng:list): Allow custom separator', {
-        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/
+        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject']
       });
       expect(msg.scope).to.equal('ng:list');
+    });
+
+    it('should allow type and subject to be null', function() {
+      var msg = parser('(scope): ', {
+        maxSubjectLength: 80,
+        headerPattern: /^(\w*)?(?:\(([\w\$\.\-\* ]*)\))?\: (.*)?$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        referenceKeywords: [
+          'kill'
+        ],
+        noteKeywords: [
+          'BREAKING AMEND'
+        ]
+      });
+
+      expect(msg.type).to.equal(null);
+      expect(msg.scope).to.equal('scope');
+      expect(msg.subject).to.equal(null);
+    });
+
+    it('should allow correspondence to be changed', function() {
+      var msg = parser('scope(my subject): fix this', {
+        maxSubjectLength: 80,
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['scope', 'subject', 'type'],
+        referenceKeywords: [
+          'kill'
+        ],
+        noteKeywords: [
+          'BREAKING AMEND'
+        ]
+      });
+
+      expect(msg.type).to.equal('fix this');
+      expect(msg.scope).to.equal('scope');
+      expect(msg.subject).to.equal('my subject');
     });
   });
 
@@ -167,9 +204,17 @@ describe('parser', function() {
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
         'when destroying 10k nested scopes where each scope has a $destroy listener');
     });
+
+    it('should be null if not found', function() {
+      expect(headerOnlyMsg.body).to.equal(null);
+    });
   });
 
   describe('footer', function() {
+    it('should be null if not found', function() {
+      expect(headerOnlyMsg.footer).to.equal(null);
+    });
+
     it('should parse footer', function() {
       expect(msg.footer).to.equal(
         'BREAKING AMEND: some breaking change\n' +
@@ -177,6 +222,10 @@ describe('parser', function() {
         'killed #25\n' +
         'handle #33, Closes #100, Handled #3 kills repo#77'
       );
+    });
+
+    it('important notes should be an empty string if not found', function() {
+      expect(simpleMsg.notes).to.eql([]);
     });
 
     it('should parse important notes', function() {
@@ -193,7 +242,11 @@ describe('parser', function() {
       });
     });
 
-    it('should parse referenced issues', function() {
+    it('references should be an empty string if not found', function() {
+      expect(simpleMsg.references).to.eql([]);
+    });
+
+    it('should parse references', function() {
       expect(msg.references).to.eql([{
         action: 'Kills',
         issue: '1',
@@ -232,7 +285,7 @@ describe('parser', function() {
       }]);
     });
 
-    it('should put everything between or after referenced issues input footer', function() {
+    it('should put everything between or after references input footer', function() {
       var msg = parser(
         '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
         'feat(scope): broadcast $destroy event on scope destruction\n' +
