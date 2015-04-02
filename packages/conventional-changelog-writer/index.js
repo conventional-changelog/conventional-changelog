@@ -32,6 +32,7 @@ function conventionalCommitsTemplate(version, context, options) {
   options = _.extend({
     groupBy: 'type',
     hashLength: 7,
+    maxSubjectLength: 80,
     replacements: {
       type: {
         fix: 'Bug Fixes',
@@ -53,7 +54,7 @@ function conventionalCommitsTemplate(version, context, options) {
   }, options);
 
   stream = through.obj(function(chunk, enc, cb) {
-    var commit = util.processCommit(chunk, options.hashLength, options.replacements);
+    var commit = util.processCommit(chunk, options.hashLength, options.maxSubjectLength, options.replacements);
 
     commits.push(commit);
     notes = notes.concat(commit.notes);

@@ -247,16 +247,18 @@ describe('util', function() {
     };
     var commit = {
       hash: '456789uhghi',
+      subject: 'my subject!!!',
       replaceThis: 'replacement2',
       replaceThisToo: 'replacement',
       pleaseReplaceThis: 'cantReplaceThis'
     };
 
     it('should process object commit', function() {
-      var processed = util.processCommit(commit, 4, replacements);
+      var processed = util.processCommit(commit, 4, 4, replacements);
 
       expect(processed).to.eql({
         hash: '4567',
+        subject: 'my s',
         replaceThis: 'no',
         replaceThisToo: 'notOK',
         pleaseReplaceThis: 'cantReplaceThis'
@@ -264,21 +266,23 @@ describe('util', function() {
     });
 
     it('should not replace', function() {
-      var processed = util.processCommit(commit, 4);
+      var processed = util.processCommit(commit, 4, 4);
 
       expect(processed).to.eql({
         hash: '4567',
+        subject: 'my s',
         replaceThis: 'replacement2',
         replaceThisToo: 'replacement',
         pleaseReplaceThis: 'cantReplaceThis'
       });
     });
 
-    it('should not shorten hash', function() {
+    it('should not shorten hash and subject', function() {
       var processed = util.processCommit(commit);
 
       expect(processed).to.eql({
         hash: '456789uhghi',
+        subject: 'my subject!!!',
         replaceThis: 'replacement2',
         replaceThisToo: 'replacement',
         pleaseReplaceThis: 'cantReplaceThis'
@@ -286,10 +290,11 @@ describe('util', function() {
     });
 
     it('should process json commit', function() {
-      var processed = util.processCommit(JSON.stringify(commit), 4, replacements);
+      var processed = util.processCommit(JSON.stringify(commit), 4, 4, replacements);
 
       expect(processed).to.eql({
         hash: '4567',
+        subject: 'my s',
         replaceThis: 'no',
         replaceThisToo: 'notOK',
         pleaseReplaceThis: 'cantReplaceThis'

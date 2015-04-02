@@ -154,6 +154,12 @@ Type: `number` Default: `7`
 
 Instead of outputting the full SHA-1 values of the hash, try to abbreviate them to a shorter unique name.
 
+##### maxSubjectLength
+
+Type: `number` Default: `80`
+
+The maximum subject length.
+
 ##### replacements
 
 Type: `object` Default: `type: { fix: 'Bug Fixes', feat: 'Features', perf: 'Performance Improvements' }`

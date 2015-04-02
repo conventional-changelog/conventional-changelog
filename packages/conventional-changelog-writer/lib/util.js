@@ -79,7 +79,7 @@ function getNoteGroups(notes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
   return retGroups;
 }
 
-function processCommit(chunk, hashLength, replacements) {
+function processCommit(chunk, hashLength, maxSubjectLength, replacements) {
   var commit;
 
   try {
@@ -90,6 +90,11 @@ function processCommit(chunk, hashLength, replacements) {
   if (_.isNumber(hashLength)) {
     commit.hash = commit.hash.substring(0, hashLength);
   }
+
+  if (commit.subject && _.isNumber(maxSubjectLength)) {
+    commit.subject = commit.subject.substr(0, maxSubjectLength);
+  }
+
   _.forEach(replacements, function(maps, component) {
     commit[component] = maps[commit[component]] || commit[component];
   });
