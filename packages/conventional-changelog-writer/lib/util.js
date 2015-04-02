@@ -3,7 +3,9 @@ var Handlebars = require('handlebars');
 var _ = require('lodash');
 
 function compileTemplates(templates) {
+  var main = templates.mainTemplate;
   var partials = templates.partials;
+
   if (_.isEmpty(partials)) {
     Handlebars.registerPartial('header', templates.headerPartial);
     Handlebars.registerPartial('commit', templates.commitPartial);
@@ -14,7 +16,6 @@ function compileTemplates(templates) {
     });
   }
 
-  var main = templates.mainTemplate;
   return Handlebars.compile(main);
 }
 
@@ -48,6 +49,7 @@ function getCommitGroups(groupBy, commits, groupsCompareFn, commitsCompareFn) {
 function getNoteGroups(notes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
   noteGroups = noteGroups || {};
   var retGroups = [];
+
   _.forEach(notes, function(note) {
     var title = noteGroups[note.title];
     if (title) {
@@ -79,6 +81,7 @@ function getNoteGroups(notes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
 
 function processCommit(chunk, hashLength, replacements) {
   var commit;
+
   try {
     commit = JSON.parse(chunk);
   } catch (e) {
@@ -96,11 +99,9 @@ function processCommit(chunk, hashLength, replacements) {
 
 function getExtraContext(commits, allNotes, options) {
   var context = {};
-  var groupBy = options.groupBy;
-  var commitGroupsCompareFn = options.commitGroupsCompareFn;
 
   // group `commits` by `options.groupBy`
-  context.commitGroups = getCommitGroups(groupBy, commits, commitGroupsCompareFn, options.commitsCompareFn);
+  context.commitGroups = getCommitGroups(options.groupBy, commits, options.commitGroupsCompareFn, options.commitsCompareFn);
 
   // group `notes` for footer
   context.noteGroups = getNoteGroups(allNotes, options.noteGroups, options.noteGroupsCompareFn, options.notesCompareFn);
