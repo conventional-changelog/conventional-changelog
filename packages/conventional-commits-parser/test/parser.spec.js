@@ -210,7 +210,7 @@ describe('parser', function() {
             'BREAKING AMEND'
           ]
         });
-      }).to.throw('Expected options.headerCorrespondence can only contain "type" "scope" or "subject"');
+      }).to.throw('Expected options.headerCorrespondence to only contain "type" "scope" or "subject"');
     });
   });
 
