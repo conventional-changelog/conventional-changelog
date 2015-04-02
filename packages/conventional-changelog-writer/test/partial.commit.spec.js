@@ -76,4 +76,13 @@ describe('partial.commit', function() {
 
     expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash]), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n');
   });
+
+  it('should generate commit if `scope` is missing', function() {
+    templateContext = {
+      subject: 'my subject'
+    };
+    var log = Handlebars.compile(template)(templateContext);
+
+    expect(log).to.equal('* my subject \n');
+  });
 });
