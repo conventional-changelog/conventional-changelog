@@ -45,7 +45,7 @@ Type: `object`
 
 Please check the available options at http://git-scm.com/docs/git-log.
 
-*NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, where:
+*NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this patter:
 
 #### from
 
