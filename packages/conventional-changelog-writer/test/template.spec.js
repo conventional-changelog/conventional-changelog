@@ -38,7 +38,7 @@ describe('template', function() {
 
   it('should generate template if `commitGroups` is truthy and `name` is truthy', function() {
     templateContext.commitGroups = [{
-      name: 'my name',
+      title: 'my name',
       commits: [1, 2]
     }];
     var log = Handlebars.compile(template)(templateContext);

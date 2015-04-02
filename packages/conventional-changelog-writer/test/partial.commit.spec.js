@@ -39,18 +39,41 @@ describe('partial.commit', function() {
     expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash])\n');
   });
 
-  it('should generate commit if `closes` is truthy and `linkReferences` is falsy', function() {
-    templateContext.closes = [1, 2, 3];
+  it('should generate commit if `references` is truthy and `linkReferences` is falsy', function() {
+    templateContext.references = [{
+      issue: 1
+    }, {
+      issue: 2
+    }, {
+      issue: 3
+    }];
     var log = Handlebars.compile(template)(templateContext);
 
     expect(log).to.equal('* **my scope:** my subject hash, closes #1 #2 #3\n');
   });
 
-  it('should generate commit if `closes` is truthy and `linkReferences` is truthy', function() {
+  it('should generate commit if `references` is truthy and `linkReferences` is truthy', function() {
     templateContext.linkReferences = true;
-    templateContext.closes = [1, 2, 3];
+    templateContext.references = [{
+      issue: 1
+    }, {
+      issue: 2
+    }, {
+      issue: 3
+    }];
     var log = Handlebars.compile(template)(templateContext);
 
     expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash]), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n');
+  });
+
+  it('should reference an issue in a different repository', function() {
+    templateContext.linkReferences = true;
+    templateContext.references = [{
+      repository: 'c/d',
+      issue: 1
+    }];
+    var log = Handlebars.compile(template)(templateContext);
+
+    expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash]), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n');
   });
 });

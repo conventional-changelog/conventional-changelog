@@ -26,12 +26,12 @@ The header has a special format that includes a **type**, a **scope** (optional)
 
 ### footer
 
-The footer should contain any information about **Important Notes** (optional) and is also the place to reference GitHub issues that this commit **Closes** (optional).
+The footer should contain any information about **Important Notes** (optional) and is also the place to reference GitHub issues that this commit **references** (optional).
 
 ```
 <important note>
 <BLANK LINE>
-<closes>
+<references>
 ```
 
 [More details](CONVENTIONS.md)
@@ -56,22 +56,22 @@ It expects an object mode upstream and the object should look something like thi
 
 { hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
   header: 'feat(scope): broadcast $destroy event on scope destruction',
-  body: '',
-  footer: 'Closes #1',
-  notes: {},
-  closes: [ 1 ],
   type: 'feat',
   scope: 'scope',
-  subject: 'broadcast $destroy event on scope destruction' }
+  subject: 'broadcast $destroy event on scope destruction',
+  body: null,
+  footer: 'Closes #1',
+  notes: [],
+  references: [ { action: 'Closes', repository: null, issue: '1', raw: '#1' } ] }
 { hash: '13f31602f396bc269076ab4d389cfd8ca94b20ba',
   header: 'feat(ng-list): Allow custom separator',
-  body: 'bla bla bla',
-  footer: 'BREAKING CHANGE: some breaking change',
-  notes: { 'BREAKING CHANGE': 'some breaking change' },
-  closes: [],
   type: 'feat',
   scope: 'ng-list',
-  subject: 'Allow custom separator' }
+  subject: 'Allow custom separator',
+  body: 'bla bla bla',
+  footer: 'BREAKING CHANGE: some breaking change',
+  notes: [ { title: 'BREAKING CHANGE', text: 'some breaking change' } ],
+  references: [] }
 
 Each chunk should be a commit. Json object is also **valid**.
 
@@ -164,11 +164,11 @@ Replace with new values in each commit.
 
 Type: `object` Default: `{ 'BREAKING CHANGE': 'BREAKING CHANGES' }`
 
-Replace with new group names. If group name is not present here, it will be ignored.
+Replace with new group titles. If a note's title is not in this mapping, the note will be ignored.
 
 ##### commitGroupsCompareFn
 
-Type: `function` Default: lexicographical order on `name` field.
+Type: `function` Default: lexicographical order on `title` field.
 
 A compare function used to sort commit groups.
 
@@ -180,7 +180,7 @@ A compare function used to sort commits.
 
 ##### noteGroupsCompareFn
 
-Type : `function` Default: lexicographical order on `name` field.
+Type : `function` Default: lexicographical order on `title` field.
 
 A compare function used to sort note groups.
 
@@ -258,7 +258,7 @@ It works with [Line Delimited JSON](http://en.wikipedia.org/wiki/Line_Delimited_
 If you have commits.ldjson
 
 ```js
-{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":{"BREAKING CHANGE":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."},"closes":[10036,9338],"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"}
+{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"references":[{"action":"Closes","repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","repository":null,"issue":"9338","raw":"#9338"}]}
 ```
 
 And you run

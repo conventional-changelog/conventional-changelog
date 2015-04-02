@@ -10,28 +10,45 @@ describe('conventionalCommitsTemplate', function() {
     upstream.write({
       hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
       header: 'feat(scope): broadcast $destroy event on scope destruction',
-      body: 'BREAKING NEWS: breaking news',
-      footer: 'Closes #1',
-      notes: {
-        'BREAKING NEWS': 'breaking news'
-      },
-      closes: [1, 2, 3],
       type: 'feat',
       scope: 'scope',
-      subject: 'broadcast $destroy event on scope destruction'
+      subject: 'broadcast $destroy event on scope destruction',
+      body: null,
+      footer: 'Closes #1',
+      notes: [{
+        title: 'BREAKING NEWS',
+        text: 'breaking news'
+      }],
+      references: [{
+        action: 'Closes',
+        repository: null,
+        issue: '1',
+        raw: '#1'
+      }, {
+        action: 'Closes',
+        repository: null,
+        issue: '2',
+        raw: '#2'
+      }, {
+        action: 'Closes',
+        repository: null,
+        issue: '3',
+        raw: '#3'
+      }]
     });
     upstream.write({
       hash: '13f31602f396bc269076ab4d389cfd8ca94b20ba',
       header: 'feat(ng-list): Allow custom separator',
-      body: 'bla bla bla',
-      footer: 'BREAKING CHANGE: some breaking change',
-      notes: {
-        'BREAKING CHANGE': 'some breaking change'
-      },
-      closes: [],
       type: 'feat',
       scope: 'ng-list',
-      subject: 'Allow custom separator'
+      subject: 'Allow custom separator',
+      body: 'bla bla bla',
+      footer: 'BREAKING CHANGE: some breaking change',
+      notes: [{
+        title: 'BREAKING CHANGE',
+        text: 'some breaking change'
+      }],
+      references: []
     });
     upstream.end();
 
@@ -40,9 +57,7 @@ describe('conventionalCommitsTemplate', function() {
 
   describe('link', function() {
     it('should link if host, repository, commit and issue are not truthy', function(done) {
-      var upstream = getStream();
-
-      upstream
+      getStream()
         .pipe(conventionalCommitsTemplate('0.0.1', {
           title: 'this is a title',
           host: 'https://github.com',
@@ -59,9 +74,7 @@ describe('conventionalCommitsTemplate', function() {
 
   describe('version', function() {
     it('should not error with a valid version', function(done) {
-      var upstream = getStream();
-
-      upstream
+      getStream()
         .pipe(conventionalCommitsTemplate('0.0.1'))
         .on('error', function(err) {
           done(err);

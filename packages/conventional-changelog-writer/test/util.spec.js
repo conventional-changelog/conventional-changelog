@@ -47,7 +47,7 @@ describe('util', function() {
       var commitGroups = util.getCommitGroups('groupBy', commits);
 
       expect(commitGroups).to.eql([{
-        name: 'A',
+        title: 'A',
         commits: [{
           groupBy: 'A',
           content: 'this is A'
@@ -56,7 +56,7 @@ describe('util', function() {
           content: 'this is another A'
         }]
       }, {
-        name: 'Big B',
+        title: 'Big B',
         commits: [{
           groupBy: 'Big B',
           content: 'this is B and its a bit longer'
@@ -76,14 +76,14 @@ describe('util', function() {
       var commitGroups = util.getCommitGroups('groupBy', commits);
 
       expect(commitGroups).to.eql([{
-        name: false,
+        title: false,
         commits: [{
           content: 'this is A'
         }, {
           content: 'this is another A'
         }]
       }, {
-        name: 'Big B',
+        title: 'Big B',
         commits: [{
           groupBy: 'Big B',
           content: 'this is B and its a bit longer'
@@ -93,23 +93,23 @@ describe('util', function() {
 
     it('should group and sort groups', function() {
       var commitGroups = util.getCommitGroups('groupBy', commits, function(a, b) {
-        if (a.name.length < b.name.length) {
+        if (a.title.length < b.title.length) {
           return 1;
         }
-        if (a.name.length > b.name.length) {
+        if (a.title.length > b.title.length) {
           return -1;
         }
         return 0;
       });
 
       expect(commitGroups).to.eql([{
-        name: 'Big B',
+        title: 'Big B',
         commits: [{
           groupBy: 'Big B',
           content: 'this is B and its a bit longer'
         }]
       }, {
-        name: 'A',
+        title: 'A',
         commits: [{
           groupBy: 'A',
           content: 'this is A'
@@ -132,7 +132,7 @@ describe('util', function() {
       });
 
       expect(commitGroups).to.eql([{
-        name: 'A',
+        title: 'A',
         commits: [{
           groupBy: 'A',
           content: 'this is another A'
@@ -141,7 +141,7 @@ describe('util', function() {
           content: 'this is A'
         }]
       }, {
-        name: 'Big B',
+        title: 'Big B',
         commits: [{
           groupBy: 'Big B',
           content: 'this is B and its a bit longer'
@@ -152,13 +152,20 @@ describe('util', function() {
 
   describe('getNoteGroups', function() {
     var notes = [{
-      A: 'this is A and its a bit longer',
-      B: 'this is B',
-      C: 'this is C'
+      title: 'A',
+      text: 'this is A and its a bit longer'
     }, {
-      A: 'this is another A'
+      title: 'B',
+      text: 'this is B'
     }, {
-      B: 'this is another B'
+      title: 'C',
+      text: 'this is C'
+    }, {
+      title: 'A',
+      text: 'this is another A'
+    }, {
+      title: 'B',
+      text: 'this is another B'
     }];
     var noteGroupsMapping = {
       A: 'Big A',
@@ -169,10 +176,10 @@ describe('util', function() {
       var noteGroups = util.getNoteGroups(notes, noteGroupsMapping);
 
       expect(noteGroups).to.eql([{
-        name: 'Big A',
+        title: 'Big A',
         notes: ['this is A and its a bit longer', 'this is another A']
       }, {
-        name: 'Big B+',
+        title: 'Big B+',
         notes: ['this is B', 'this is another B']
       }]);
     });
@@ -185,20 +192,20 @@ describe('util', function() {
 
     it('should group and sort groups', function() {
       var noteGroups = util.getNoteGroups(notes, noteGroupsMapping, function(a, b) {
-        if (a.name.length < b.name.length) {
+        if (a.title.length < b.title.length) {
           return 1;
         }
-        if (a.name.length > b.name.length) {
+        if (a.title.length > b.title.length) {
           return -1;
         }
         return 0;
       });
 
       expect(noteGroups).to.eql([{
-        name: 'Big B+',
+        title: 'Big B+',
         notes: ['this is B', 'this is another B']
       }, {
-        name: 'Big A',
+        title: 'Big A',
         notes: ['this is A and its a bit longer', 'this is another A']
       }]);
     });
@@ -215,10 +222,10 @@ describe('util', function() {
       });
 
       expect(noteGroups).to.eql([{
-        name: 'Big A',
+        title: 'Big A',
         notes: ['this is A and its a bit longer', 'this is another A']
       }, {
-        name: 'Big B+',
+        title: 'Big B+',
         notes: ['this is another B', 'this is B']
       }]);
     });
@@ -300,13 +307,20 @@ describe('util', function() {
       content: 'this is B and its a bit longer'
     }];
     var notes = [{
-      A: 'this is A and its a bit longer',
-      B: 'this is B',
-      C: 'this is C'
+      title: 'A',
+      text: 'this is A and its a bit longer'
     }, {
-      A: 'this is another A'
+      title: 'B',
+      text: 'this is B'
     }, {
-      B: 'this is another B'
+      title: 'C',
+      text: 'this is C'
+    }, {
+      title: 'A',
+      text: 'this is another A'
+    }, {
+      title: 'B',
+      text: 'this is another B'
     }];
     var noteGroupsMapping = {
       A: 'Big A',
@@ -320,7 +334,7 @@ describe('util', function() {
 
       expect(extra).to.eql({
         commitGroups: [{
-          name: false,
+          title: false,
           commits: [{
             content: 'this is A'
           }, {
@@ -331,13 +345,13 @@ describe('util', function() {
           }]
         }],
         noteGroups: [{
-          name: 'Big A',
+          title: 'Big A',
           notes: [
             'this is A and its a bit longer',
             'this is another A'
           ]
         }, {
-          name: 'Big B+',
+          title: 'Big B+',
           notes: [
             'this is B',
             'this is another B'
@@ -353,14 +367,14 @@ describe('util', function() {
 
       expect(extra).to.eql({
         commitGroups: [{
-          name: false,
+          title: false,
           commits: [{
             content: 'this is A'
           }, {
             content: 'this is another A'
           }]
         }, {
-          name: 'Big B',
+          title: 'Big B',
           commits: [{
             content: 'this is B and its a bit longer',
             groupBy: 'Big B'
@@ -377,7 +391,7 @@ describe('util', function() {
 
       expect(extra).to.eql({
         commitGroups: [{
-          name: false,
+          title: false,
           commits: [{
             content: 'this is A'
           }, {

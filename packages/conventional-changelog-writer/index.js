@@ -13,7 +13,7 @@ function conventionalCommitsTemplate(version, context, options) {
 
   var stream;
   var commits = [];
-  var allNotes = [];
+  var notes = [];
   var isPatch = semver.patch(version) !== 0;
 
   context = _.extend({
@@ -42,9 +42,9 @@ function conventionalCommitsTemplate(version, context, options) {
     noteGroups: {
       'BREAKING CHANGE': 'BREAKING CHANGES'
     },
-    commitGroupsCompareFn: util.getCompareFunction('name'),
+    commitGroupsCompareFn: util.getCompareFunction('title'),
     commitsCompareFn: util.getCompareFunction('scope'),
-    noteGroupsCompareFn: util.getCompareFunction('name'),
+    noteGroupsCompareFn: util.getCompareFunction('title'),
     notesCompareFn: util.getCompareFunction(),
     mainTemplate: fs.readFileSync(__dirname + '/templates/template.hbs', 'utf-8'),
     headerPartial: fs.readFileSync(__dirname + '/templates/header.hbs', 'utf-8'),
@@ -56,11 +56,14 @@ function conventionalCommitsTemplate(version, context, options) {
     var commit = util.processCommit(chunk, options.hashLength, options.replacements);
 
     commits.push(commit);
-    allNotes.push(commit.notes);
+    notes = notes.concat(commit.notes);
+
     cb();
   }, function(cb) {
     var compiled = util.compileTemplates(options);
-    context = _.merge(context, util.getExtraContext(commits, allNotes, options));
+
+    context = _.merge(context, util.getExtraContext(commits, notes, options));
+
     this.push(compiled(context));
     cb();
   });

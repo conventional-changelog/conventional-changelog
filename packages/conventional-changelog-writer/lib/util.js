@@ -24,16 +24,16 @@ function getCommitGroups(groupBy, commits, groupsCompareFn, commitsCompareFn) {
     return commit[groupBy] || '';
   });
 
-  _.forEach(commitGroupsObj, function(commits, name) {
-    if (name === '') {
-      name = false;
+  _.forEach(commitGroupsObj, function(commits, title) {
+    if (title === '') {
+      title = false;
     }
 
     if (commitsCompareFn) {
       commits.sort(commitsCompareFn);
     }
     commitGroups.push({
-      name: name,
+      title: title,
       commits: commits
     });
   });
@@ -45,38 +45,36 @@ function getCommitGroups(groupBy, commits, groupsCompareFn, commitsCompareFn) {
   return commitGroups;
 }
 
-function getNoteGroups(allNotes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
+function getNoteGroups(notes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
   noteGroups = noteGroups || {};
-  var reGroups = [];
-  _.forEach(allNotes, function(notes) {
-    _.forEach(notes, function(note, name) {
-      name = noteGroups[name];
-      if (name) {
-        var titleExists = false;
-        _.forEach(reGroups, function(group) {
-          if (group.name === name) {
-            titleExists = true;
-            group.notes.push(note);
-            return false;
-          }
-        });
-
-        if (!titleExists) {
-          reGroups.push({
-            name: name,
-            notes: [note]
-          });
+  var retGroups = [];
+  _.forEach(notes, function(note) {
+    var title = noteGroups[note.title];
+    if (title) {
+      var titleExists = false;
+      _.forEach(retGroups, function(group) {
+        if (group.title === title) {
+          titleExists = true;
+          group.notes.push(note.text);
+          return false;
         }
+      });
+
+      if (!titleExists) {
+        retGroups.push({
+          title: title,
+          notes: [note.text]
+        });
       }
-    });
+    }
   });
 
-  reGroups.sort(noteGroupsCompareFn);
-  _.forEach(reGroups, function(group) {
+  retGroups.sort(noteGroupsCompareFn);
+  _.forEach(retGroups, function(group) {
     group.notes.sort(notesCompareFn);
   });
 
-  return reGroups;
+  return retGroups;
 }
 
 function processCommit(chunk, hashLength, replacements) {
