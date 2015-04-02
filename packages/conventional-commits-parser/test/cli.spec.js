@@ -66,7 +66,7 @@ describe('cli', function() {
   });
 
   it('should work with options', function(done) {
-    var cp = spawn(cliPath, ['test/fixtures/log3.txt', '--max-subject-length', '5', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-keywords', 'close, fix', '-n', 'BREAKING NEWS'], {
+    var cp = spawn(cliPath, ['test/fixtures/log3.txt', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-keywords', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout

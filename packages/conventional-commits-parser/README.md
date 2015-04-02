@@ -107,12 +107,6 @@ Returns an object stream. If there is any malformed commits it will be gracefull
 
 Type: `object`
 
-##### maxSubjectLength
-
-Type: `number` Default: `80`
-
-The maximum subject length.
-
 ##### headerPattern
 
 Type: `regex` or `string` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`

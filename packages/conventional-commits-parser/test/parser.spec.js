@@ -11,7 +11,6 @@ describe('parser', function() {
 
   beforeEach(function() {
     options = {
-      maxSubjectLength: 80,
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
       headerCorrespondence: ['type', 'scope', 'subject'],
       referenceKeywords: [
@@ -137,15 +136,6 @@ describe('parser', function() {
       expect(msg.subject).to.equal('broadcast $destroy event on scope destruction');
     });
 
-    it('should trim if subject is too long', function() {
-      var msg = parser('feat(ng-list): Allow custom separator', {
-        maxSubjectLength: 10,
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-        headerCorrespondence: ['type', 'scope', 'subject']
-      });
-      expect(msg.subject).to.equal('Allow cust');
-    });
-
     it('should parse header without a scope', function() {
       expect(simpleMsg.header).to.equal('chore: some chore');
       expect(simpleMsg.type).to.equal('chore');
@@ -163,7 +153,6 @@ describe('parser', function() {
 
     it('should allow type and subject to be null', function() {
       var msg = parser('(scope): ', {
-        maxSubjectLength: 80,
         headerPattern: /^(\w*)?(?:\(([\w\$\.\-\* ]*)\))?\: (.*)?$/,
         headerCorrespondence: ['type', 'scope', 'subject'],
         referenceKeywords: [
@@ -181,7 +170,6 @@ describe('parser', function() {
 
     it('should allow correspondence to be changed', function() {
       var msg = parser('scope(my subject): fix this', {
-        maxSubjectLength: 80,
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
         headerCorrespondence: ['scope', 'subject', 'type'],
         referenceKeywords: [
@@ -200,7 +188,6 @@ describe('parser', function() {
     it('should throw if headerCorrespondence contains illegal value', function() {
       expect(function() {
         parser('scope(my subject): fix this', {
-          maxSubjectLength: 80,
           headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
           headerCorrespondence: ['scop', 'subject', 'type'],
           referenceKeywords: [

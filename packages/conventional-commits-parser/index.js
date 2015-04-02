@@ -24,7 +24,6 @@ function conventionalCommitsParser(options) {
   }
 
   options = _.extend({
-    maxSubjectLength: 80,
     warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],

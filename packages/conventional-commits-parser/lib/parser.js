@@ -73,10 +73,6 @@ function parser(raw, options) {
     }
   }
 
-  if (msg.subject && options.maxSubjectLength) {
-    msg.subject = msg.subject.substr(0, options.maxSubjectLength);
-  }
-
   // body or footer
   _.forEach(lines, function(line) {
     var referenceMatch;
