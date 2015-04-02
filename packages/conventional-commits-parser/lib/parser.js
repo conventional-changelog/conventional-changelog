@@ -17,8 +17,20 @@ function parser(raw, options) {
   var continueNote = false;
   var isBody = true;
 
-  function getHeadCorrespondence(correspondence) {
-    return _.indexOf(options.headerCorrespondence, correspondence) + 1;
+  function getHeadCorrespondence(part) {
+    var headerCorrespondence = options.headerCorrespondence
+      .map(function(val) {
+        return val.trim();
+      })
+      .filter(function(val) {
+        return val.length;
+      });
+    var index = _.indexOf(headerCorrespondence, part) + 1;
+    if (index === 0) {
+      throw new TypeError('Expected options.headerCorrespondence to only contain "type" "scope" or "subject"');
+    }
+
+    return index;
   }
 
   var typeIndex = getHeadCorrespondence('type');

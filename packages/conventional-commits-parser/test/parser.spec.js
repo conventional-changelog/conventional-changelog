@@ -196,6 +196,22 @@ describe('parser', function() {
       expect(msg.scope).to.equal('scope');
       expect(msg.subject).to.equal('my subject');
     });
+
+    it('should throw if headerCorrespondence contains illegal value', function() {
+      expect(function() {
+        parser('scope(my subject): fix this', {
+          maxSubjectLength: 80,
+          headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+          headerCorrespondence: ['scop', 'subject', 'type'],
+          referenceKeywords: [
+            'kill'
+          ],
+          noteKeywords: [
+            'BREAKING AMEND'
+          ]
+        });
+      }).to.throw('Expected options.headerCorrespondence can only contain "type" "scope" or "subject"');
+    });
   });
 
   describe('body', function() {

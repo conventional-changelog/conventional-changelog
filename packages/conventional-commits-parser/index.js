@@ -17,6 +17,10 @@ function conventionalCommitsParser(options) {
     if (typeof options.noteKeywords === 'string') {
       options.noteKeywords = options.noteKeywords.split(',');
     }
+
+    if (typeof options.headerCorrespondence === 'string') {
+      options.headerCorrespondence = options.headerCorrespondence.split(',');
+    }
   }
 
   options = _.extend({

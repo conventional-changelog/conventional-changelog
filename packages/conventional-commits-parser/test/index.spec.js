@@ -188,13 +188,14 @@ describe('conventionalCommitsParser', function() {
       .pipe(conventionalCommitsParser({
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
         referenceKeywords: 'fix',
-        noteKeywords: 'BREAKING CHANGES'
+        noteKeywords: 'BREAKING CHANGES',
+        headerCorrespondence: 'subject,type,  scope,'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
-          expect(chunk.type).to.equal('feat');
-          expect(chunk.scope).to.equal('ng-list');
-          expect(chunk.subject).to.equal('Allow custom separator');
+          expect(chunk.type).to.equal('ng-list');
+          expect(chunk.scope).to.equal('Allow custom separator');
+          expect(chunk.subject).to.equal('feat');
           expect(chunk.references).to.eql([{
             action: 'Fix',
             issue: '123',
@@ -207,9 +208,9 @@ describe('conventionalCommitsParser', function() {
             repository: null
           }]);
         } else {
-          expect(chunk.type).to.equal('fix');
-          expect(chunk.scope).to.equal('ng-list');
-          expect(chunk.subject).to.equal('Another custom separator');
+          expect(chunk.type).to.equal('ng-list');
+          expect(chunk.scope).to.equal('Another custom separator');
+          expect(chunk.subject).to.equal('fix');
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
             text: 'some breaking changes'

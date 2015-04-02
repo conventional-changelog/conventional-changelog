@@ -30,15 +30,17 @@ var cli = meow({
     '  conventional-commits-parser log2.txt \'===\' >> output.txt',
     '',
     'Options',
-    '-m, --max-subject-length    Maximum subject length',
-    '-p, --header-pattern        Regex to match header pattern',
-    '-r, --reference-keywords    Comma separated keywords that used to reference issues',
-    '-n, --note-keywords         Comma separated keywords for important notes'
+    '-m, --max-subject-length       Maximum subject length',
+    '-p, --header-pattern           Regex to match header pattern',
+    '-c, --header-correspondence    Comma separated parts used to define what capturing group of `headerPattern` captures what',
+    '-r, --reference-keywords       Comma separated keywords that used to reference issues',
+    '-n, --note-keywords            Comma separated keywords for important notes'
   ].join('\n')
 }, {
   alias: {
     m: 'maxSubjectLength',
     p: 'headerPattern',
+    c: 'headerCorrespondence',
     r: 'referenceKeywords',
     n: 'noteKeywords'
   }
