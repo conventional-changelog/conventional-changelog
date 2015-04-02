@@ -85,4 +85,13 @@ describe('partial.commit', function() {
 
     expect(log).to.equal('* my subject \n');
   });
+
+  it('should use `header` if `subject` is missing', function() {
+    templateContext = {
+      header: 'my header'
+    };
+    var log = Handlebars.compile(template)(templateContext);
+
+    expect(log).to.equal('* my header \n');
+  });
 });

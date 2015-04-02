@@ -1,4 +1,4 @@
-* {{#if scope}}**{{scope}}:**{{/if}} {{subject}}
+*{{#if scope}} **{{scope}}:**{{/if}} {{#if subject}}{{subject}}{{else}}{{header}}{{/if}}
 
 {{~!-- commit hash --}} {{#if @root.linkReferences}}([{{hash}}][{{@root.host}}/{{@root.repository}}/{{@root.commit}}/{{hash}}]){{else}}{{hash~}}{{/if}}
 
