@@ -1,8 +1,7 @@
 {{> header}}
 
-
-{{#if commitGroups}}
 {{#each commitGroups}}
+
 {{#if title}}
 ### {{title}}
 
@@ -11,11 +10,6 @@
 {{> commit root=@root}}
 {{/each}}
 {{/each}}
-{{else}}
-{{#each commits}}
-{{> commit}}
-{{/each}}
-{{/if}}
-
 
 {{> footer}}
+

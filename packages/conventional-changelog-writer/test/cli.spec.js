@@ -16,7 +16,7 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal('<a name=1.0.0></a>\n## 1.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Features\n\n* **ngMessages:** provide support for dynamic message resolution 9b1aff9, closes #10036 #9338\n\n\n### BREAKING CHANGES\n* The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n\n');
+        expect(chunk.toString()).to.equal('<a name=1.0.0></a>\n# 1.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Features\n\n* **ngMessages:** provide support for dynamic message resolution 9b1aff9, closes #10036 #9338\n\n\n### BREAKING CHANGES\n\n* The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n\n\n');
         done();
       }));
   });

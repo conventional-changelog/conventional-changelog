@@ -102,14 +102,14 @@ function processCommit(chunk, hashLength, maxSubjectLength, replacements) {
   return commit;
 }
 
-function getExtraContext(commits, allNotes, options) {
+function getExtraContext(commits, notes, options) {
   var context = {};
 
   // group `commits` by `options.groupBy`
   context.commitGroups = getCommitGroups(options.groupBy, commits, options.commitGroupsCompareFn, options.commitsCompareFn);
 
   // group `notes` for footer
-  context.noteGroups = getNoteGroups(allNotes, options.noteGroups, options.noteGroupsCompareFn, options.notesCompareFn);
+  context.noteGroups = getNoteGroups(notes, options.noteGroups, options.noteGroupsCompareFn, options.notesCompareFn);
 
   return context;
 }
