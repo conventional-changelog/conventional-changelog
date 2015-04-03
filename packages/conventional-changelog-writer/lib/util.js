@@ -114,34 +114,10 @@ function getExtraContext(commits, notes, options) {
   return context;
 }
 
-function getCompareFunction(field) {
-  if (field) {
-    return function(a, b) {
-      if (a[field] < b[field]) {
-        return -1;
-      }
-      if (a[field] > b[field]) {
-        return 1;
-      }
-      return 0;
-    };
-  }
-  return function(a, b) {
-    if (a < b) {
-      return -1;
-    }
-    if (a > b) {
-      return 1;
-    }
-    return 0;
-  };
-}
-
 module.exports = {
   compileTemplates: compileTemplates,
   getCommitGroups: getCommitGroups,
   getNoteGroups: getNoteGroups,
   processCommit: processCommit,
-  getExtraContext: getExtraContext,
-  getCompareFunction: getCompareFunction
+  getExtraContext: getExtraContext
 };

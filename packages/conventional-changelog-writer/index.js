@@ -1,4 +1,5 @@
 'use strict';
+var compareFunc = require('compare-func');
 var dateFormat = require('dateformat');
 var fs = require('fs');
 var semver = require('semver');
@@ -43,10 +44,10 @@ function conventionalCommitsTemplate(version, context, options) {
     noteGroups: {
       'BREAKING CHANGE': 'BREAKING CHANGES'
     },
-    commitGroupsCompareFn: util.getCompareFunction('title'),
-    commitsCompareFn: util.getCompareFunction('scope'),
-    noteGroupsCompareFn: util.getCompareFunction('title'),
-    notesCompareFn: util.getCompareFunction(),
+    commitGroupsCompareFn: compareFunc('title'),
+    commitsCompareFn: compareFunc(['scope', 'subject']),
+    noteGroupsCompareFn: compareFunc('title'),
+    notesCompareFn: compareFunc(),
     mainTemplate: fs.readFileSync(__dirname + '/templates/template.hbs', 'utf-8'),
     headerPartial: fs.readFileSync(__dirname + '/templates/header.hbs', 'utf-8'),
     commitPartial: fs.readFileSync(__dirname + '/templates/commit.hbs', 'utf-8'),

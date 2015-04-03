@@ -174,25 +174,25 @@ Replace with new group titles. If a note's title is not in this mapping, the not
 
 ##### commitGroupsCompareFn
 
-Type: `function` Default: lexicographical order on `title` field.
+Type: `function` Default: sort on `title` field by `localeCompare`.
 
 A compare function used to sort commit groups.
 
 ##### commitsCompareFn
 
-Type: `function` Default: lexicographical order on `scope` field.
+Type: `function` Default: sort on `scope` then `subject` field by `localeCompare`.
 
 A compare function used to sort commits.
 
 ##### noteGroupsCompareFn
 
-Type : `function` Default: lexicographical order on `title` field.
+Type : `function` Default: sort on `title` field by `localeCompare`.
 
 A compare function used to sort note groups.
 
 ##### notesCompareFn
 
-Type: `function` Default: lexicographical order.
+Type: `function` Default: sort by `localeCompare`.
 
 A compare function used to sort note groups.
 

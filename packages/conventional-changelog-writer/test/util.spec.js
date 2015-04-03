@@ -410,38 +410,4 @@ describe('util', function() {
       });
     });
   });
-
-  describe('getCompareFunction', function() {
-    it('should generate a compare function if field exist', function() {
-      var compareFn = util.getCompareFunction('field');
-      var arr = [{
-        field: 3
-      }, {
-        field: 1
-      }, {
-        field: 1
-      }, {
-        field: 5
-      }];
-      arr.sort(compareFn);
-
-      expect(arr).to.eql([{
-        field: 1
-      }, {
-        field: 1
-      }, {
-        field: 3
-      }, {
-        field: 5
-      }]);
-    });
-
-    it('should generate a compare function if field does not exist', function() {
-      var compareFn = util.getCompareFunction();
-      var arr = [3, 1, 1, 5];
-      arr.sort(compareFn);
-
-      expect(arr).to.eql([1, 1, 3, 5]);
-    });
-  });
 });
