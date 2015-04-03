@@ -1,23 +1,15 @@
 {
-  "bitwise": true,
-  "camelcase": true,
+  "boss": true,
   "curly": true,
   "eqeqeq": true,
-  "esnext": true,
+  "eqnull": true,
   "immed": true,
-  "indent": 2,
   "latedef": true,
+  "mocha" : true,
   "newcap": true,
   "noarg": true,
   "node": true,
-  "quotmark": "single",
+  "sub": true,
   "undef": true,
-  "unused": true,
-  "globals": {
-    "afterEach": false,
-    "beforeEach": false,
-    "describe": false,
-    "expect": false,
-    "it": false
-  }
+  "unused": true
 }
