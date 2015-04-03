@@ -22,16 +22,16 @@
     "concat-stream": "^1.4.7",
     "dateformat": "^1.0.11",
     "handlebars": "^3.0.1",
-    "lodash": "^3.5.0",
+    "lodash": "^3.6.0",
     "meow": "^3.1.0",
-    "semver": "^4.3.1",
+    "semver": "^4.3.3",
     "split": "^0.3.3",
     "through2": "^0.6.3"
   },
   "devDependencies": {
-    "chai": "^2.1.2",
+    "chai": "^2.2.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.11",
+    "istanbul": "^0.3.13",
     "mocha": "*"
   },
   "scripts": {
