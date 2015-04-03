@@ -44,15 +44,20 @@ function conventionalCommitsTemplate(version, context, options) {
     noteGroups: {
       'BREAKING CHANGE': 'BREAKING CHANGES'
     },
-    commitGroupsCompareFn: compareFunc('title'),
-    commitsCompareFn: compareFunc(['scope', 'subject']),
-    noteGroupsCompareFn: compareFunc('title'),
-    notesCompareFn: compareFunc(),
+    commitGroupsSort: 'title',
+    commitsSort: ['scope', 'subject'],
+    noteGroupsSort: 'title',
+    notesSort: compareFunc(),
     mainTemplate: fs.readFileSync(__dirname + '/templates/template.hbs', 'utf-8'),
     headerPartial: fs.readFileSync(__dirname + '/templates/header.hbs', 'utf-8'),
     commitPartial: fs.readFileSync(__dirname + '/templates/commit.hbs', 'utf-8'),
     footerPartial: fs.readFileSync(__dirname + '/templates/footer.hbs', 'utf-8')
   }, options);
+
+  options.commitGroupsSort = util.functionify(options.commitGroupsSort);
+  options.commitsSort = util.functionify(options.commitsSort);
+  options.noteGroupsSort = util.functionify(options.noteGroupsSort);
+  options.notesSort = util.functionify(options.notesSort);
 
   stream = through.obj(function(chunk, enc, cb) {
     var commit = util.processCommit(chunk, options.hashLength, options.maxSubjectLength, options.replacements);

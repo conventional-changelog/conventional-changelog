@@ -11,7 +11,7 @@ module.exports = {
   "noteGroups": {
     "BREAKING CHANGE": "BREAKING CHANGES"
   },
-  "commitGroupsCompareFn": function(a, b) {
+  "commitGroupsSort": function(a, b) {
     if (a.name < b.name) {
       return -1;
     }
@@ -20,7 +20,7 @@ module.exports = {
     }
     return 0;
   },
-  "commitsCompareFn": function(a, b) {
+  "commitsSort": function(a, b) {
     if (a.scope < b.scope) {
       return -1;
     }
@@ -29,7 +29,7 @@ module.exports = {
     }
     return 0;
   },
-  "noteGroupsCompareFn": function(a, b) {
+  "noteGroupsSort": function(a, b) {
     if (a.name < b.name) {
       return -1;
     }
@@ -38,7 +38,7 @@ module.exports = {
     }
     return 0;
   },
-  "notesCompareFn": function(a, b) {
+  "notesSort": function(a, b) {
     if (a < b) {
       return -1;
     }

@@ -1,4 +1,5 @@
 'use strict';
+var compareFunc = require('compare-func');
 var Handlebars = require('handlebars');
 var _ = require('lodash');
 
@@ -19,7 +20,14 @@ function compileTemplates(templates) {
   return Handlebars.compile(main);
 }
 
-function getCommitGroups(groupBy, commits, groupsCompareFn, commitsCompareFn) {
+function functionify(strOrArr) {
+  if (!_.isFunction(strOrArr)) {
+    return compareFunc(strOrArr);
+  }
+  return strOrArr;
+}
+
+function getCommitGroups(groupBy, commits, groupsSort, commitsSort) {
   var commitGroups = [];
   var commitGroupsObj = _.groupBy(commits, function(commit) {
     return commit[groupBy] || '';
@@ -30,23 +38,19 @@ function getCommitGroups(groupBy, commits, groupsCompareFn, commitsCompareFn) {
       title = false;
     }
 
-    if (commitsCompareFn) {
-      commits.sort(commitsCompareFn);
-    }
+    commits.sort(commitsSort);
     commitGroups.push({
       title: title,
       commits: commits
     });
   });
 
-  if (groupsCompareFn) {
-    commitGroups.sort(groupsCompareFn);
-  }
+  commitGroups.sort(groupsSort);
 
   return commitGroups;
 }
 
-function getNoteGroups(notes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
+function getNoteGroups(notes, noteGroups, noteGroupsSort, notesSort) {
   noteGroups = noteGroups || {};
   var retGroups = [];
 
@@ -71,9 +75,9 @@ function getNoteGroups(notes, noteGroups, noteGroupsCompareFn, notesCompareFn) {
     }
   });
 
-  retGroups.sort(noteGroupsCompareFn);
+  retGroups.sort(noteGroupsSort);
   _.forEach(retGroups, function(group) {
-    group.notes.sort(notesCompareFn);
+    group.notes.sort(notesSort);
   });
 
   return retGroups;
@@ -106,16 +110,17 @@ function getExtraContext(commits, notes, options) {
   var context = {};
 
   // group `commits` by `options.groupBy`
-  context.commitGroups = getCommitGroups(options.groupBy, commits, options.commitGroupsCompareFn, options.commitsCompareFn);
+  context.commitGroups = getCommitGroups(options.groupBy, commits, options.commitGroupsSort, options.commitsSort);
 
   // group `notes` for footer
-  context.noteGroups = getNoteGroups(notes, options.noteGroups, options.noteGroupsCompareFn, options.notesCompareFn);
+  context.noteGroups = getNoteGroups(notes, options.noteGroups, options.noteGroupsSort, options.notesSort);
 
   return context;
 }
 
 module.exports = {
   compileTemplates: compileTemplates,
+  functionify: functionify,
   getCommitGroups: getCommitGroups,
   getNoteGroups: getNoteGroups,
   processCommit: processCommit,

@@ -172,29 +172,37 @@ Type: `object` Default: `{ 'BREAKING CHANGE': 'BREAKING CHANGES' }`
 
 Replace with new group titles. If a note's title is not in this mapping, the note will be ignored.
 
-##### commitGroupsCompareFn
+##### commitGroupsSort
 
-Type: `function` Default: sort on `title` field by `localeCompare`.
+Type: `function`, `string` or `array` Default: `'title'`
 
-A compare function used to sort commit groups.
+A compare function used to sort commit groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
 
-##### commitsCompareFn
+The string can be a dot path to a nested object property.
 
-Type: `function` Default: sort on `scope` then `subject` field by `localeCompare`.
+##### commitsSort
 
-A compare function used to sort commits.
+Type: `function`, `string` or `array` Default: `['scope', 'subject']`
 
-##### noteGroupsCompareFn
+A compare function used to sort commits. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
 
-Type : `function` Default: sort on `title` field by `localeCompare`.
+The string can be a dot path to a nested object property.
 
-A compare function used to sort note groups.
+##### noteGroupsSort
 
-##### notesCompareFn
+Type : `function` Default: `'title'`
+
+A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
+
+The string can be a dot path to a nested object property.
+
+##### notesSort
 
 Type: `function` Default: sort by `localeCompare`.
 
-A compare function used to sort note groups.
+A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
+
+The string can be a dot path to a nested object property.
 
 ##### mainTemplate
 

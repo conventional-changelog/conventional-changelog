@@ -31,6 +31,14 @@ describe('util', function() {
     });
   });
 
+  describe('functionify', function() {
+    it('should turn anything into a function', function() {
+      var func = util.functionify('');
+
+      expect(func).to.be.a('function');
+    });
+  });
+
   describe('getCommitGroups', function() {
     var commits = [{
       groupBy: 'A',
@@ -43,7 +51,7 @@ describe('util', function() {
       content: 'this is B and its a bit longer'
     }];
 
-    it('should group but not sort', function() {
+    it('should group but not sort groups', function() {
       var commitGroups = util.getCommitGroups('groupBy', commits);
 
       expect(commitGroups).to.eql([{
@@ -116,6 +124,27 @@ describe('util', function() {
         }, {
           groupBy: 'A',
           content: 'this is another A'
+        }]
+      }]);
+    });
+
+    it('should group and but not sort commits', function() {
+      var commitGroups = util.getCommitGroups('groupBy', commits);
+
+      expect(commitGroups).to.eql([{
+        title: 'A',
+        commits: [{
+          groupBy: 'A',
+          content: 'this is A'
+        }, {
+          groupBy: 'A',
+          content: 'this is another A'
+        }]
+      }, {
+        title: 'Big B',
+        commits: [{
+          groupBy: 'Big B',
+          content: 'this is B and its a bit longer'
         }]
       }]);
     });
