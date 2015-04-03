@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+'use strict';
 var pkg = require('./package.json');
 var fs = require('fs');
 var changelog = require('./index.js');

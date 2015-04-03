@@ -1,3 +1,5 @@
+'use strict';
+var expect = require('chai').expect;
 var writeLog = require('../lib/writeLog');
 
 describe('writeLog', function() {

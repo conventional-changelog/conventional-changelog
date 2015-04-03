@@ -1,7 +1,8 @@
+'use strict';
 var fs = require('fs');
 var git = require('./lib/git');
 var writeLog = require('./lib/writeLog');
-var extend = require('lodash.assign');
+var extend = require('lodash').assign;
 
 function generate(options, done) {
   function getChangelogCommits() {

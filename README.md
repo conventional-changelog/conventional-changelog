@@ -1,21 +1,25 @@
-conventional-changelog
-----------------------
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverall-image]][coverall-url]
+
+> Generate a changelog from git metadata, using the AngularJS commit conventions
+
+
+## Install
 
 ```sh
 $ npm install conventional-changelog
 ```
-
-Generate a changelog from git metadata, using the AngularJS commit conventions.
 
 - [Synopsis of Conventions in CONVENTIONS.md](https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md)
 - [Full Convention Spec on Google Docs](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/)
 
 Adapted from code originally written by @vojtajina and @btford in [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog).
 
+
 ## Example output
 
 - https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
+
 
 ## Roadmap
 
@@ -23,6 +27,7 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 - Add a proper command line interface
 - Add configurable subjects & sections
 - Split up this repo into smaller modules [#22](https://github.com/ajoslin/conventional-changelog/issues/22)
+
 
 ## Documentation
 
@@ -75,6 +80,17 @@ By default, calls the callback with a string containing a changelog from the pre
 
 * `warn` `{function()}` - What warn function to use. For example, `{warn: grunt.log.writeln}`. By default, uses `console.warn`.
 
+
 ## License
 
 BSD
+
+
+[npm-image]: https://badge.fury.io/js/conventional-changelog.svg
+[npm-url]: https://npmjs.org/package/conventional-changelog
+[travis-image]: https://travis-ci.org/ajoslin/conventional-changelog.svg?branch=master
+[travis-url]: https://travis-ci.org/ajoslin/conventional-changelog
+[daviddm-image]: https://david-dm.org/ajoslin/conventional-changelog.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/ajoslin/conventional-changelog
+[coverall-image]: https://coveralls.io/repos/ajoslin/conventional-changelog/badge.svg
+[coverall-url]: https://coveralls.io/r/ajoslin/conventional-changelog

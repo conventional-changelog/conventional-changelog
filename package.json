@@ -1,11 +1,12 @@
 {
   "name": "conventional-changelog",
   "version": "0.0.16",
-  "description": "Generate a markdown changelog from git commit metadata",
+  "description": "Generate a changelog from git metadata, using the AngularJS commit conventions",
   "main": "index.js",
   "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
     "lint": "jshint lib test index.js --exclude node_modules",
-    "test": "npm run-script lint && mocha test/*.js index.js lib/*.js --no-colors"
+    "test": "npm run-script lint && mocha --no-colors"
   },
   "files": [
     "index.js",
@@ -33,18 +34,16 @@
   ],
   "dependencies": {
     "dateformat": "^1.0.11",
-    "event-stream": "^3.1.7",
+    "event-stream": "^3.3.0",
     "github-url-from-git": "^1.4.0",
-    "lodash.assign": "^2.4.1",
-    "lodash.partial": "^3.0.0",
-    "lodash.template": "^3.3.0",
+    "lodash": "^3.6.0",
     "normalize-package-data": "^1.0.3"
   },
   "devDependencies": {
-    "chai": "^2.0.0",
-    "jshint": "^2.6.0",
-    "mocha": "*",
-    "shelljs": "^0.3.0",
-    "sinon": "^1.12.2"
+    "chai": "^2.2.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.13",
+    "jshint": "^2.6.3",
+    "mocha": "*"
   }
 }

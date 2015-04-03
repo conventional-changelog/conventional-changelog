@@ -1,3 +1,5 @@
+'use strict';
+var expect = require('chai').expect;
 var dateFormat = require('dateformat');
 var es = require('event-stream');
 var Writer = require('../lib/Writer');
@@ -21,7 +23,7 @@ describe('Writer', function() {
 
     if (mode === 'repo') {
       return new Writer(stream, {
-        repository: 'github.com/user/repo',
+        repository: 'github.com/user/repo'
       });
     } else if (mode === 'package.json') {
       return new Writer(stream, {});

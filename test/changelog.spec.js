@@ -1,4 +1,6 @@
-var changelog = require('../index');
+'use strict';
+var changelog = require('../');
+var expect = require('chai').expect;
 
 describe('changelog', function() {
   it('should generate a changelog', function(done) {
