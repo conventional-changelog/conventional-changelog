@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Generate a changelog from git metadata, using the AngularJS commit conventions",
   "main": "index.js",
   "scripts": {
