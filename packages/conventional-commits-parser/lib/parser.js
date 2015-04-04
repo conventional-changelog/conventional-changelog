@@ -13,7 +13,7 @@ function parser(raw, options, regex) {
   var headerMatch;
   var referenceSentences;
   var referenceMatch;
-  var referenceMatched;
+  var isFooter;
   var lines = _.compact(raw.split('\n'));
   var continueNote = false;
   var isBody = true;
@@ -114,7 +114,7 @@ function parser(raw, options, regex) {
       var action = referenceSentences[1];
       var sentence = referenceSentences[2];
       while (referenceMatch = reReferenceParts.exec(sentence)) {
-        referenceMatched = true;
+        isFooter = true;
         continueNote = false;
         isBody = false;
         var reference = {
@@ -127,7 +127,7 @@ function parser(raw, options, regex) {
       }
     }
 
-    if (referenceMatched) {
+    if (isFooter) {
       footer += line + '\n';
 
       return;
@@ -143,11 +143,7 @@ function parser(raw, options, regex) {
     }
 
     // this is a body
-    if (isBody) {
-      body += line + '\n';
-    } else {
-      footer += line + '\n';
-    }
+    body += line + '\n';
   });
 
   body = body.trim();
