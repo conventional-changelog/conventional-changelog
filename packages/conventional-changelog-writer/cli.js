@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-var conventionalCommitsTemplate = require('./');
+var conventionalcommitsWriter = require('./');
 var fs = require('fs');
 var meow = require('meow');
 var path = require('path');
@@ -9,11 +9,11 @@ var split = require('split');
 var cli = meow({
   help: [
     'Usage',
-    '  conventional-commits-template [<path>...]',
+    '  conventional-commits-writer [<path>...]',
     '',
     'Example',
-    '  conventional-commits-template commits.ldjson -v 1.0.0',
-    '  cat commits.ldjson | conventional-commits-template -v 1.0.0',
+    '  conventional-commits-writer commits.ldjson -v 1.0.0',
+    '  cat commits.ldjson | conventional-commits-writer -v 1.0.0',
     '',
     'Options',
     '',
@@ -57,7 +57,7 @@ if (optionsPath) {
 }
 
 try {
-  var stream = conventionalCommitsTemplate(version, templateContext, options);
+  var stream = conventionalcommitsWriter(version, templateContext, options);
 } catch (err) {
   console.error(err.toString());
   process.exit(1);

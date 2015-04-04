@@ -7,7 +7,7 @@ var through = require('through2');
 var util = require('./lib/util');
 var _ = require('lodash');
 
-function conventionalCommitsTemplate(version, context, options) {
+function conventionalcommitsWriter(version, context, options) {
   if (!version) {
     throw new TypeError('Expected a version number');
   }
@@ -78,4 +78,4 @@ function conventionalCommitsTemplate(version, context, options) {
   return stream;
 }
 
-module.exports = conventionalCommitsTemplate;
+module.exports = conventionalcommitsWriter;

@@ -1,20 +1,23 @@
 {
-  "name": "conventional-commits-template",
-  "version": "0.0.8",
-  "description": "Generate logs based on conventional commits and templates",
-  "homepage": "https://github.com/stevemao/conventional-commits-template",
+  "name": "conventional-commits-writer",
+  "version": "0.0.0",
+  "description": "Write logs based on conventional commits and templates",
+  "homepage": "https://github.com/stevemao/conventional-commits-writer",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": "stevemao/conventional-commits-template",
+  "repository": "stevemao/conventional-commits-writer",
   "license": "MIT",
   "keywords": [
-    "conventional-commits-template",
+    "conventional-commits-writer",
+    "changelog",
     "conventional",
     "commits",
     "templates",
+    "writer",
+    "writing",
     "logs"
   ],
   "dependencies": {
@@ -39,6 +42,6 @@
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
   },
   "bin": {
-    "conventional-commits-template": "cli.js"
+    "conventional-commits-writer": "cli.js"
   }
 }

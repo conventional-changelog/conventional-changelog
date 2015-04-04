@@ -1,10 +1,10 @@
 'use strict';
-var conventionalCommitsTemplate = require('../');
+var conventionalcommitsWriter = require('../');
 var dateFormat = require('dateformat');
 var expect = require('chai').expect;
 var through = require('through2');
 
-describe('conventionalCommitsTemplate', function() {
+describe('conventionalcommitsWriter', function() {
   function getStream() {
     var upstream = through.obj();
     upstream.write({
@@ -58,7 +58,7 @@ describe('conventionalCommitsTemplate', function() {
   describe('link', function() {
     it('should link if host, repository, commit and issue are not truthy', function(done) {
       getStream()
-        .pipe(conventionalCommitsTemplate('0.0.1', {
+        .pipe(conventionalcommitsWriter('0.0.1', {
           title: 'this is a title',
           host: 'https://github.com',
           repository: 'a/b'
@@ -75,7 +75,7 @@ describe('conventionalCommitsTemplate', function() {
   describe('version', function() {
     it('should not error with a valid version', function(done) {
       getStream()
-        .pipe(conventionalCommitsTemplate('0.0.1'))
+        .pipe(conventionalcommitsWriter('0.0.1'))
         .on('error', function(err) {
           done(err);
         })
@@ -85,12 +85,12 @@ describe('conventionalCommitsTemplate', function() {
     });
 
     it('should error if no version specified', function() {
-      expect(conventionalCommitsTemplate).to.throw('Expected a version number');
+      expect(conventionalcommitsWriter).to.throw('Expected a version number');
     });
 
     it('should error if version is invalid', function() {
       expect(function() {
-        conventionalCommitsTemplate({
+        conventionalcommitsWriter({
           version: 'fake version'
         });
       }).to.throw('Invalid Version');

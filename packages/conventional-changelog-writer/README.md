@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverall-image]][coverall-url]
 
-> Generate logs based on conventional commits and templates
+> Write logs based on conventional commits and templates
 
 
 ## Conventional Commit Message Format
@@ -40,16 +40,16 @@ The footer should contain any information about **Important Notes** (optional) a
 ## Install
 
 ```sh
-$ npm install --save conventional-commits-template
+$ npm install --save conventional-commits-writer
 ```
 
 
 ## Usage
 
 ```js
-var conventionalCommitsTemplate = require('conventional-commits-template');
+var conventionalcommitsWriter = require('conventional-commits-writer');
 
-conventionalCommitsTemplate(version, context, options);
+conventionalcommitsWriter(version, context, options);
 ```
 
 It expects an object mode upstream and the object should look something like this:
@@ -80,7 +80,7 @@ Each chunk should be a commit. Json object is also **valid**.
 
 ## API
 
-### conventionalCommitsTemplate(version, [context, [options]])
+### conventionalcommitsWriter(version, [context, [options]])
 
 Returns a transform stream.
 
@@ -114,7 +114,7 @@ The hosting website. Eg: `'https://github.com/'` or `'https://bitbucket.org/'`
 
 Type: `string`
 
-The repository name on `host`. Eg: `'stevemao/conventional-commits-template'`.
+The repository name on `host`. Eg: `'stevemao/conventional-commits-writer'`.
 
 ##### linkReferences
 
@@ -249,18 +249,18 @@ Basically you can make your own templates and define all your template variables
 ## CLI
 
 ```sh
-$ npm install --global conventional-commits-template
+$ npm install --global conventional-commits-writer
 ```
 
 ```sh
-$ conventional-commits-template --help
+$ conventional-commits-writer --help
 
 Usage
-  conventional-commits-template [<path>...]
+  conventional-commits-writer [<path>...]
 
 Example
-  conventional-commits-template commits.ldjson -v 1.0.0
-  cat commits.ldjson | conventional-commits-template -v 1.0.0
+  conventional-commits-writer commits.ldjson -v 1.0.0
+  cat commits.ldjson | conventional-commits-writer -v 1.0.0
 
 Options
 
@@ -280,7 +280,7 @@ If you have commits.ldjson
 And you run
 
 ```sh
-$ conventional-commits-template commits.ldjson --ver 1.0.0
+$ conventional-commits-writer commits.ldjson --ver 1.0.0
 ```
 
 The results will be
@@ -310,11 +310,11 @@ It is printed to stdout.
 MIT © [Steve Mao](https://github.com/stevemao)
 
 
-[npm-image]: https://badge.fury.io/js/conventional-commits-template.svg
-[npm-url]: https://npmjs.org/package/conventional-commits-template
-[travis-image]: https://travis-ci.org/stevemao/conventional-commits-template.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-commits-template
-[daviddm-image]: https://david-dm.org/stevemao/conventional-commits-template.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-commits-template
-[coverall-image]: https://coveralls.io/repos/stevemao/conventional-commits-template/badge.svg
-[coverall-url]: https://coveralls.io/r/stevemao/conventional-commits-template
+[npm-image]: https://badge.fury.io/js/conventional-commits-writer.svg
+[npm-url]: https://npmjs.org/package/conventional-commits-writer
+[travis-image]: https://travis-ci.org/stevemao/conventional-commits-writer.svg?branch=master
+[travis-url]: https://travis-ci.org/stevemao/conventional-commits-writer
+[daviddm-image]: https://david-dm.org/stevemao/conventional-commits-writer.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/stevemao/conventional-commits-writer
+[coverall-image]: https://coveralls.io/repos/stevemao/conventional-commits-writer/badge.svg
+[coverall-url]: https://coveralls.io/r/stevemao/conventional-commits-writer
