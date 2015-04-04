@@ -4,26 +4,23 @@ var parser = require('../lib/parser');
 
 describe('parser', function() {
   var options;
+  var regex;
   var msg;
   var simpleMsg;
   var longNoteMsg;
   var headerOnlyMsg;
 
   beforeEach(function() {
+    regex = {
+      hash: /\b[0-9a-f]{5,40}\b/,
+      referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
+      notes: /(BREAKING AMEND)[:\s]*(.*)/,
+      references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
+    };
+
     options = {
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-      headerCorrespondence: ['type', 'scope', 'subject'],
-      referenceKeywords: [
-        'kill',
-        'kills',
-        'killed',
-        'handle',
-        'handles',
-        'handled'
-      ],
-      noteKeywords: [
-        'BREAKING AMEND'
-      ]
+      headerCorrespondence: ['type', 'scope', 'subject']
     };
 
     msg = parser(
@@ -35,7 +32,8 @@ describe('parser', function() {
       'Kills #1, #123\n' +
       'killed #25\n' +
       'handle #33, Closes #100, Handled #3 kills repo#77',
-      options
+      options,
+      regex
     );
 
     longNoteMsg = parser(
@@ -49,15 +47,17 @@ describe('parser', function() {
       'Kills #1, #123\n' +
       'killed #25\n' +
       'handle #33, Closes #100, Handled #3',
-      options
+      options,
+      regex
     );
 
     simpleMsg = parser(
       'chore: some chore\n',
-      options
+      options,
+      regex
     );
 
-    headerOnlyMsg = parser('header', options);
+    headerOnlyMsg = parser('header', options, regex);
   });
 
   it('should throw if nothing to parse', function() {
@@ -86,14 +86,15 @@ describe('parser', function() {
       '\n\nKills #1, #123\n' +
       '\n\n\nkilled #25\n\n\n\n\n' +
       '\nhandle #33, Closes #100, Handled #3 kills repo#77\n',
-      options
+      options,
+      regex
     ));
   });
 
   describe('header', function() {
     it('should throw if it does not contain a header', function() {
       expect(function() {
-        parser('9b1aff905b638aa274a5fc8f88662df446d374bd', options);
+        parser('9b1aff905b638aa274a5fc8f88662df446d374bd', options, regex);
       }).to.throw('"9b1aff905b638aa274a5fc8f88662df446d374bd" does not contain a header');
     });
 
@@ -147,21 +148,15 @@ describe('parser', function() {
       var msg = parser('feat(ng:list): Allow custom separator', {
         headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
         headerCorrespondence: ['type', 'scope', 'subject']
-      });
+      }, regex);
       expect(msg.scope).to.equal('ng:list');
     });
 
     it('should allow type and subject to be null', function() {
       var msg = parser('(scope): ', {
         headerPattern: /^(\w*)?(?:\(([\w\$\.\-\* ]*)\))?\: (.*)?$/,
-        headerCorrespondence: ['type', 'scope', 'subject'],
-        referenceKeywords: [
-          'kill'
-        ],
-        noteKeywords: [
-          'BREAKING AMEND'
-        ]
-      });
+        headerCorrespondence: ['type', 'scope', 'subject']
+      }, regex);
 
       expect(msg.type).to.equal(null);
       expect(msg.scope).to.equal('scope');
@@ -171,14 +166,8 @@ describe('parser', function() {
     it('should allow correspondence to be changed', function() {
       var msg = parser('scope(my subject): fix this', {
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-        headerCorrespondence: ['scope', 'subject', 'type'],
-        referenceKeywords: [
-          'kill'
-        ],
-        noteKeywords: [
-          'BREAKING AMEND'
-        ]
-      });
+        headerCorrespondence: ['scope', 'subject', 'type']
+      }, regex);
 
       expect(msg.type).to.equal('fix this');
       expect(msg.scope).to.equal('scope');
@@ -189,14 +178,8 @@ describe('parser', function() {
       expect(function() {
         parser('scope(my subject): fix this', {
           headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-          headerCorrespondence: ['scop', 'subject', 'type'],
-          referenceKeywords: [
-            'kill'
-          ],
-          noteKeywords: [
-            'BREAKING AMEND'
-          ]
-        });
+          headerCorrespondence: ['scop', 'subject', 'type']
+        }, regex);
       }).to.throw('Expected options.headerCorrespondence to only contain "type" "scope" or "subject"');
     });
   });
@@ -299,7 +282,8 @@ describe('parser', function() {
         'killed #25\n' +
         'handle #33, Closes #100, Handled #3\n' +
         'other',
-        options
+        options,
+        regex
       );
 
       expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother');

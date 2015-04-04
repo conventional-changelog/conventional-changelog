@@ -1,8 +1,7 @@
 'use strict';
-var regex = require('./regex');
 var _ = require('lodash');
 
-function parser(raw, options) {
+function parser(raw, options, regex) {
   if (!raw || !raw.trim()) {
     throw new TypeError('Expected a raw commit');
   }
@@ -12,10 +11,16 @@ function parser(raw, options) {
   }
 
   var headerMatch;
+  var referenceSentences;
+  var referenceMatch;
+  var referenceMatched;
   var lines = _.compact(raw.split('\n'));
   var msg = {};
   var continueNote = false;
   var isBody = true;
+  var reNotes = regex.notes;
+  var reReferenceParts = regex.referenceParts;
+  var reReferences = regex.references;
 
   function getHeadCorrespondence(part) {
     var headerCorrespondence = options.headerCorrespondence
@@ -47,7 +52,7 @@ function parser(raw, options) {
   msg.notes = [];
   msg.references = [];
 
-  if (!msg.hash.match(regex.reHash)) {
+  if (!msg.hash.match(regex.hash)) {
     msg.header = msg.hash;
     msg.hash = null;
     lines.shift();
@@ -75,12 +80,7 @@ function parser(raw, options) {
 
   // body or footer
   _.forEach(lines, function(line) {
-    var referenceMatch;
-    var referenceMatched;
-    var referenceSentences;
     var notes = msg.notes;
-    var referenceKeywords = options.referenceKeywords;
-    var reNotes = regex.getNotesRegex(options.noteKeywords);
 
     // this is a new important note
     var notesMatch = line.match(reNotes);
@@ -97,11 +97,10 @@ function parser(raw, options) {
     }
 
     // this references an issue
-    var reReferences = regex.getReferencesRegex(referenceKeywords);
     while (referenceSentences = reReferences.exec(line)) {
       var action = referenceSentences[1];
       var sentence = referenceSentences[2];
-      while (referenceMatch = regex.reReferenceParts.exec(sentence)) {
+      while (referenceMatch = reReferenceParts.exec(sentence)) {
         referenceMatched = true;
         continueNote = false;
         isBody = false;

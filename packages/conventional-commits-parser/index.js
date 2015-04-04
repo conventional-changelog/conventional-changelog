@@ -1,7 +1,8 @@
 'use strict';
-var _ = require('lodash');
 var parser = require('./lib/parser');
+var regex = require('./lib/regex');
 var through = require('through2');
+var _ = require('lodash');
 
 function conventionalCommitsParser(options) {
   if (options && !_.isEmpty(options)) {
@@ -43,11 +44,18 @@ function conventionalCommitsParser(options) {
     ]
   }, options);
 
+  var reg = {
+    hash: regex.reHash,
+    referenceParts: regex.reReferenceParts,
+    notes: regex.getNotesRegex(options.noteKeywords),
+    references: regex.getReferencesRegex(options.referenceKeywords)
+  };
+
   return through.obj(function(data, enc, cb) {
     var commit;
 
     try {
-      commit = parser(data.toString(), options);
+      commit = parser(data.toString(), options, reg);
       cb(null, commit);
     } catch (err) {
       if (options.warn === true) {
