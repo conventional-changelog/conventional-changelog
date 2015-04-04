@@ -14,7 +14,9 @@
     "conventional-commits-parser",
     "changelog",
     "conventional",
-    "parser"
+    "parser",
+    "parsing",
+    "logs"
   ],
   "dependencies": {
     "JSONStream": "^0.10.0",
