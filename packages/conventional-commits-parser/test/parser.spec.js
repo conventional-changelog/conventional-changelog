@@ -328,6 +328,35 @@ describe('parser', function() {
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change');
     });
 
+    it('shoudl parse properly if important notes comes with more than one paragraphs after references', function() {
+      var msg = parser(
+        '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
+        'feat(scope): broadcast $destroy event on scope destruction\n' +
+        'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+        'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
+        'Kills #1, #123\n' +
+        'BREAKING AMEND: some breaking change\nsome other breaking change',
+        options,
+        regex
+      );
+      expect(msg.notes[0]).to.eql({
+        title: 'BREAKING AMEND',
+        text: 'some breaking change\nsome other breaking change'
+      });
+      expect(msg.references).to.eql([{
+        action: 'Kills',
+        issue: '1',
+        raw: '#1',
+        repository: null
+      }, {
+        action: 'Kills',
+        issue: '123',
+        raw: ', #123',
+        repository: null
+      }]);
+      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change');
+    });
+
     it('shoudl parse properly if important notes comes after references with something after references', function() {
       var msg = parser(
         '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
