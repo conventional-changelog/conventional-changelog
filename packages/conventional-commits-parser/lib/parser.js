@@ -15,7 +15,6 @@ function parser(raw, options, regex) {
   var referenceMatch;
   var referenceMatched;
   var lines = _.compact(raw.split('\n'));
-  var msg = {};
   var continueNote = false;
   var isBody = true;
   var reNotes = regex.notes;
@@ -42,44 +41,45 @@ function parser(raw, options, regex) {
   var scopeIndex = getHeadCorrespondence('scope');
   var subjectIndex = getHeadCorrespondence('subject');
 
-  msg.hash = lines[0];
-  msg.header = lines[1];
-  msg.type = null;
-  msg.scope = null;
-  msg.subject = null;
-  msg.body = '';
-  msg.footer = '';
-  msg.notes = [];
-  msg.references = [];
+  // msg parts
+  var hash = lines[0];
+  var header = lines[1];
+  var type = null;
+  var scope = null;
+  var subject = null;
+  var body = '';
+  var footer = '';
+  var notes = [];
+  var references = [];
 
-  if (!msg.hash.match(regex.hash)) {
-    msg.header = msg.hash;
-    msg.hash = null;
+  if (!hash.match(regex.hash)) {
+    header = hash;
+    hash = null;
     lines.shift();
   } else {
     lines.splice(0, 2);
   }
 
-  if (!msg.header) {
+  if (!header) {
     throw new Error('"' + raw + '" does not contain a header');
   }
 
-  headerMatch = msg.header.match(options.headerPattern);
+  headerMatch = header.match(options.headerPattern);
 
   if (headerMatch) {
     if (headerMatch[typeIndex]) {
-      msg.type = headerMatch[typeIndex];
+      type = headerMatch[typeIndex];
     }
     if (headerMatch[scopeIndex]) {
-      msg.scope = headerMatch[scopeIndex];
+      scope = headerMatch[scopeIndex];
     }
     if (headerMatch[subjectIndex]) {
-      msg.subject = headerMatch[subjectIndex];
+      subject = headerMatch[subjectIndex];
     }
   }
 
   // incase people reference an issue in the header
-  while (referenceSentences = reReferences.exec(msg.header)) {
+  while (referenceSentences = reReferences.exec(header)) {
     var action = referenceSentences[1];
     var sentence = referenceSentences[2];
     while (referenceMatch = reReferenceParts.exec(sentence)) {
@@ -89,20 +89,18 @@ function parser(raw, options, regex) {
         issue: referenceMatch[2],
         raw: referenceMatch[0]
       };
-      msg.references.push(reference);
+      references.push(reference);
     }
   }
 
   // body or footer
   _.forEach(lines, function(line) {
-    var notes = msg.notes;
-
     // this is a new important note
     var notesMatch = line.match(reNotes);
     if (notesMatch) {
       continueNote = true;
       isBody = false;
-      msg.footer += line + '\n';
+      footer += line + '\n';
       notes.push({
         title: notesMatch[1],
         text: notesMatch[2]
@@ -125,12 +123,12 @@ function parser(raw, options, regex) {
           issue: referenceMatch[2],
           raw: referenceMatch[0]
         };
-        msg.references.push(reference);
+        references.push(reference);
       }
     }
 
     if (referenceMatched) {
-      msg.footer += line + '\n';
+      footer += line + '\n';
 
       return;
     }
@@ -139,29 +137,39 @@ function parser(raw, options, regex) {
     if (continueNote) {
       var text = notes[notes.length - 1].text;
       notes[notes.length - 1].text = text + (text ? '\n' : '') + line;
-      msg.footer += line + '\n';
+      footer += line + '\n';
 
       return;
     }
 
     // this is a body
     if (isBody) {
-      msg.body += line + '\n';
+      body += line + '\n';
     } else {
-      msg.footer += line + '\n';
+      footer += line + '\n';
     }
   });
 
-  msg.body = msg.body.trim();
-  msg.footer = msg.footer.trim();
-  if (!msg.body) {
-    msg.body = null;
+  body = body.trim();
+  footer = footer.trim();
+  if (!body) {
+    body = null;
   }
-  if (!msg.footer) {
-    msg.footer = null;
+  if (!footer) {
+    footer = null;
   }
 
-  return msg;
+  return {
+    hash: hash,
+    header: header,
+    type: type,
+    scope: scope,
+    subject: subject,
+    body: body,
+    footer: footer,
+    notes: notes,
+    references: references
+  };
 }
 
 module.exports = parser;
