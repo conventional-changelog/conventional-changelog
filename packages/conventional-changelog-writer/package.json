@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-writer",
-  "version": "0.0.0",
+  "version": "0.0.9",
   "description": "Write logs based on conventional commits and templates",
   "homepage": "https://github.com/stevemao/conventional-commits-writer",
   "author": {
