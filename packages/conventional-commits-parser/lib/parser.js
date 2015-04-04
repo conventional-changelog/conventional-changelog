@@ -78,6 +78,21 @@ function parser(raw, options, regex) {
     }
   }
 
+  // incase people reference an issue in the header
+  while (referenceSentences = reReferences.exec(msg.header)) {
+    var action = referenceSentences[1];
+    var sentence = referenceSentences[2];
+    while (referenceMatch = reReferenceParts.exec(sentence)) {
+      var reference = {
+        action: action.trim(),
+        repository: referenceMatch[1] || null,
+        issue: referenceMatch[2],
+        raw: referenceMatch[0]
+      };
+      msg.references.push(reference);
+    }
+  }
+
   // body or footer
   _.forEach(lines, function(line) {
     var notes = msg.notes;

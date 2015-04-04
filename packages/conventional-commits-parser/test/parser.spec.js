@@ -182,6 +182,16 @@ describe('parser', function() {
         }, regex);
       }).to.throw('Expected options.headerCorrespondence to only contain "type" "scope" or "subject"');
     });
+
+    it('should reference an issue', function() {
+      var msg = parser('handled #1', options, regex);
+      expect(msg.references).to.eql([{
+        action: 'handled',
+        issue: '1',
+        raw: '#1',
+        repository: null
+      }]);
+    });
   });
 
   describe('body', function() {
