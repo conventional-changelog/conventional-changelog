@@ -142,8 +142,8 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser({
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\ (.*)$/,
-        referenceKeywords: ['fix'],
-        noteKeywords: ['BREAKING CHANGES']
+        noteKeywords: ['BREAKING CHANGES'],
+        referenceKeywords: ['fix']
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
@@ -187,9 +187,9 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser({
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
-        referenceKeywords: 'fix',
+        headerCorrespondence: 'subject,type,  scope,',
         noteKeywords: 'BREAKING CHANGES',
-        headerCorrespondence: 'subject,type,  scope,'
+        referenceKeywords: 'fix'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {

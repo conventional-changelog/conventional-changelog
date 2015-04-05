@@ -28,6 +28,7 @@ function conventionalCommitsParser(options) {
     warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
+    noteKeywords: ['BREAKING CHANGE'],
     referenceKeywords: [
       'close',
       'closes',
@@ -38,9 +39,6 @@ function conventionalCommitsParser(options) {
       'resolve',
       'resolves',
       'resolved'
-    ],
-    noteKeywords: [
-      'BREAKING CHANGE'
     ]
   }, options);
 

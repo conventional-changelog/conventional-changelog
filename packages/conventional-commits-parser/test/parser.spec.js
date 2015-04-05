@@ -13,8 +13,8 @@ describe('parser', function() {
   beforeEach(function() {
     regex = {
       hash: /\b[0-9a-f]{5,40}\b/,
-      referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
       notes: /(BREAKING AMEND)[:\s]*(.*)/,
+      referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
       references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
     };
 
