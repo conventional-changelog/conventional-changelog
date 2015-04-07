@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverall-image]][coverall-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
 > Generate a changelog from git metadata, using the AngularJS commit conventions
 
@@ -92,5 +92,5 @@ BSD
 [travis-url]: https://travis-ci.org/ajoslin/conventional-changelog
 [daviddm-image]: https://david-dm.org/ajoslin/conventional-changelog.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/ajoslin/conventional-changelog
-[coverall-image]: https://coveralls.io/repos/ajoslin/conventional-changelog/badge.svg
-[coverall-url]: https://coveralls.io/r/ajoslin/conventional-changelog
+[coveralls-image]: https://coveralls.io/repos/ajoslin/conventional-changelog/badge.svg
+[coveralls-url]: https://coveralls.io/r/ajoslin/conventional-changelog
