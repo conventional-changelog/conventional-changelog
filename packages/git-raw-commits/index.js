@@ -42,7 +42,7 @@ function gitRawCommits(options, done) {
     });
     var cmd = _.template(
       'git log --format=%H%n%s%n%b%n==END== ' +
-      '<%= from ? [from, to].join("..") : to %>'
+      '<%= from ? [from, to].join("..") : to %> '
     )(options) + args.join(' ');
 
     var stream = es.child(exec(cmd))
