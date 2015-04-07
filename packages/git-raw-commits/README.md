@@ -44,6 +44,7 @@ Returns a through stream. Stream is split to break on each commit.
 Type: `object`
 
 Please check the available options at http://git-scm.com/docs/git-log.
+**NOTE:** Single dash arguments are not supported because of https://github.com/sindresorhus/dargs/blob/master/index.js#L5.
 
 *NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this patter:
 
