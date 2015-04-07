@@ -24,27 +24,27 @@ describe('partial.header', function() {
     templateContext.isPatch = true;
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('<a name=my version></a>\n## my version\n');
+    expect(log).to.equal('<a name="my version"></a>\n## my version\n');
   });
 
   it('should generate header if `isPatch` is falsy', function() {
     templateContext.isPatch = false;
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('<a name=my version></a>\n# my version\n');
+    expect(log).to.equal('<a name="my version"></a>\n# my version\n');
   });
 
   it('should generate header if `title` is truthy', function() {
     templateContext.title = 'my title';
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('<a name=my version></a>\n# my version "my title"\n');
+    expect(log).to.equal('<a name="my version"></a>\n# my version "my title"\n');
   });
 
   it('should generate header if `date` is truthy', function() {
     templateContext.date = 'my date';
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('<a name=my version></a>\n# my version (my date)\n');
+    expect(log).to.equal('<a name="my version"></a>\n# my version (my date)\n');
   });
 });

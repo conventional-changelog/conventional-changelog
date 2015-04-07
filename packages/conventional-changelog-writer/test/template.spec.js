@@ -27,7 +27,7 @@ describe('template', function() {
     }];
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('my header\n\n\nmy commit\nmy commit\n\nmy footer\n\n');
+    expect(log).to.equal('my header\n\n\nmy commit\nmy commit\n\nmy footer\n\n\n');
   });
 
   it('should generate template if `title` is truthy', function() {
@@ -37,6 +37,6 @@ describe('template', function() {
     }];
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('my header\n\n\n### my title\n\nmy commit\nmy commit\n\nmy footer\n\n');
+    expect(log).to.equal('my header\n\n\n### my title\n\nmy commit\nmy commit\n\nmy footer\n\n\n');
   });
 });
