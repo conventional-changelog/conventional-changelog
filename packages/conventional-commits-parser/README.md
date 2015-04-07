@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverall-image]][coverall-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
 > Parse raw conventional commits
 
@@ -251,5 +251,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/stevemao/conventional-commits-parser
 [daviddm-image]: https://david-dm.org/stevemao/conventional-commits-parser.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/conventional-commits-parser
-[coverall-image]: https://coveralls.io/repos/stevemao/conventional-commits-parser/badge.svg
-[coverall-url]: https://coveralls.io/r/stevemao/conventional-commits-parser
+[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-commits-parser/badge.svg
+[coveralls-url]: https://coveralls.io/r/stevemao/conventional-commits-parser
