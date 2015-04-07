@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverall-image]][coverall-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
 > Write logs based on conventional commits and templates
 
@@ -316,5 +316,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/stevemao/conventional-commits-writer
 [daviddm-image]: https://david-dm.org/stevemao/conventional-commits-writer.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/conventional-commits-writer
-[coverall-image]: https://coveralls.io/repos/stevemao/conventional-commits-writer/badge.svg
-[coverall-url]: https://coveralls.io/r/stevemao/conventional-commits-writer
+[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-commits-writer/badge.svg
+[coveralls-url]: https://coveralls.io/r/stevemao/conventional-commits-writer
