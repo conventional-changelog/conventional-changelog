@@ -25,17 +25,17 @@
   ],
   "dependencies": {
     "dargs": "^4.0.0",
-    "event-stream": "^3.2.2",
+    "event-stream": "^3.3.0",
     "git-latest-tag": "0.0.6",
-    "lodash": "^3.3.1",
+    "lodash": "^3.6.0",
     "meow": "^3.1.0"
   },
   "devDependencies": {
-    "chai": "^2.1.0",
+    "chai": "^2.2.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.6",
+    "istanbul": "^0.3.13",
     "mocha": "*",
-    "shelljs": "^0.3.0"
+    "shelljs": "^0.4.0"
   },
   "scripts": {
     "test": "mocha",

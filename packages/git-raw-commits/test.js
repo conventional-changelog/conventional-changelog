@@ -14,7 +14,7 @@ shell.exec('git init');
 
 it('should error in the callback if there is no commits', function(done) {
   getCommits(function(err) {
-    expect(err.toString()).to.include('No commits found');
+    expect(err.toString()).to.equal('No commits found: git log --format=%H%n%s%n%b%n==END== HEAD ');
     done();
   });
 });
@@ -22,7 +22,7 @@ it('should error in the callback if there is no commits', function(done) {
 it('should error as a stream if there is no commits', function(done) {
   getCommits()
     .on('error', function(err) {
-      expect(err.toString()).to.include('No commits found');
+      expect(err.toString()).to.equal('No commits found: git log --format=%H%n%s%n%b%n==END== HEAD ');
       done();
     });
 });

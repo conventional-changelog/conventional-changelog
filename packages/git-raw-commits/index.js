@@ -12,6 +12,7 @@ function getLatestTag(done) {
 }
 
 function gitRawCommits(options, done) {
+  var cmd;
   var noCommits = true;
   if (typeof options === 'function') {
     done = options;
@@ -25,8 +26,8 @@ function gitRawCommits(options, done) {
     this.queue(data);
   }, function() {
     if (noCommits) {
-      done('No commits found');
-      this.emit('error', 'No commits found');
+      done('No commits found: ' + cmd);
+      this.emit('error', 'No commits found: ' + cmd);
     } else {
       this.emit('end');
     }
@@ -40,7 +41,7 @@ function gitRawCommits(options, done) {
     var args = dargs(options, {
       excludes: ['from', 'to']
     });
-    var cmd = _.template(
+    cmd = _.template(
       'git log --format=%H%n%s%n%b%n==END== ' +
       '<%= from ? [from, to].join("..") : to %> '
     )(options) + args.join(' ');
