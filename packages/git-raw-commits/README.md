@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverall-image]][coverall-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
 > Get raw git commits out of your repository using git-log(1)
 
@@ -93,5 +93,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/stevemao/git-raw-commits
 [daviddm-image]: https://david-dm.org/stevemao/git-raw-commits.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/git-raw-commits
-[coverall-image]: https://coveralls.io/repos/stevemao/git-raw-commits/badge.svg
-[coverall-url]: https://coveralls.io/r/stevemao/git-raw-commits
+[coveralls-image]: https://coveralls.io/repos/stevemao/git-raw-commits/badge.svg
+[coveralls-url]: https://coveralls.io/r/stevemao/git-raw-commits
