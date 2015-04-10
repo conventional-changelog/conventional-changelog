@@ -104,15 +104,17 @@ describe('parser', function() {
       }).to.throw('Expected options');
     });
 
-    it('type should be null if not found', function() {
+    it('should allow ":" in scope', function() {
+      var msg = parser('feat(ng:list): Allow custom separator', {
+        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject']
+      }, regex);
+      expect(msg.scope).to.equal('ng:list');
+    });
+
+    it('header part should be null if not captured', function() {
       expect(headerOnlyMsg.type).to.equal(null);
-    });
-
-    it('scope should be null if not found', function() {
       expect(headerOnlyMsg.scope).to.equal(null);
-    });
-
-    it('subject should be null if not found', function() {
       expect(headerOnlyMsg.subject).to.equal(null);
     });
 
@@ -125,42 +127,10 @@ describe('parser', function() {
       expect(simpleMsg.header).to.equal('chore: some chore');
     });
 
-    it('should parse type', function() {
+    it('should understand header parts', function() {
       expect(msg.type).to.equal('feat');
-    });
-
-    it('should parse scope', function() {
       expect(msg.scope).to.equal('scope');
-    });
-
-    it('should parse subject', function() {
       expect(msg.subject).to.equal('broadcast $destroy event on scope destruction');
-    });
-
-    it('should parse header without a scope', function() {
-      expect(simpleMsg.header).to.equal('chore: some chore');
-      expect(simpleMsg.type).to.equal('chore');
-      expect(simpleMsg.scope).to.equal(null);
-      expect(simpleMsg.subject).to.equal('some chore');
-    });
-
-    it('should allow ":" in scope', function() {
-      var msg = parser('feat(ng:list): Allow custom separator', {
-        headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
-        headerCorrespondence: ['type', 'scope', 'subject']
-      }, regex);
-      expect(msg.scope).to.equal('ng:list');
-    });
-
-    it('should allow type and subject to be null', function() {
-      var msg = parser('(scope): ', {
-        headerPattern: /^(\w*)?(?:\(([\w\$\.\-\* ]*)\))?\: (.*)?$/,
-        headerCorrespondence: ['type', 'scope', 'subject']
-      }, regex);
-
-      expect(msg.type).to.equal(null);
-      expect(msg.scope).to.equal('scope');
-      expect(msg.subject).to.equal(null);
     });
 
     it('should allow correspondence to be changed', function() {
@@ -174,13 +144,13 @@ describe('parser', function() {
       expect(msg.subject).to.equal('my subject');
     });
 
-    it('should throw if headerCorrespondence contains illegal value', function() {
-      expect(function() {
-        parser('scope(my subject): fix this', {
-          headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-          headerCorrespondence: ['scop', 'subject', 'type']
-        }, regex);
-      }).to.throw('Expected options.headerCorrespondence to only contain "type" "scope" or "subject"');
+    it('should be undefined if it is missing in `options.headerCorrespondence`', function() {
+      msg = parser('scope(my subject): fix this', {
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['scop', 'subject']
+      }, regex);
+
+      expect(msg.scope).to.equal(undefined);
     });
 
     it('should reference an issue', function() {

@@ -16,36 +16,17 @@ function parser(raw, options, regex) {
   var lines = _.compact(raw.split('\n'));
   var continueNote = false;
   var isBody = true;
+  var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
+    return part.trim();
+  });
   var reNotes = regex.notes;
   var reReferenceParts = regex.referenceParts;
   var reReferences = regex.references;
 
-  function getHeadCorrespondence(part) {
-    var headerCorrespondence = options.headerCorrespondence
-      .map(function(val) {
-        return val.trim();
-      })
-      .filter(function(val) {
-        return val.length;
-      });
-    var index = _.indexOf(headerCorrespondence, part) + 1;
-    if (index === 0) {
-      throw new TypeError('Expected options.headerCorrespondence to only contain "type" "scope" or "subject"');
-    }
-
-    return index;
-  }
-
-  var typeIndex = getHeadCorrespondence('type');
-  var scopeIndex = getHeadCorrespondence('scope');
-  var subjectIndex = getHeadCorrespondence('subject');
-
   // msg parts
   var hash = lines[0];
   var header = lines[1];
-  var type = null;
-  var scope = null;
-  var subject = null;
+  var headerParts = {};
   var body = '';
   var footer = '';
   var notes = [];
@@ -66,15 +47,14 @@ function parser(raw, options, regex) {
   headerMatch = header.match(options.headerPattern);
 
   if (headerMatch) {
-    if (headerMatch[typeIndex]) {
-      type = headerMatch[typeIndex];
-    }
-    if (headerMatch[scopeIndex]) {
-      scope = headerMatch[scopeIndex];
-    }
-    if (headerMatch[subjectIndex]) {
-      subject = headerMatch[subjectIndex];
-    }
+    _.forEach(headerCorrespondence, function(partName, index) {
+      var partValue = headerMatch[index + 1] || null;
+      headerParts[partName] = partValue;
+    });
+  } else {
+    _.forEach(headerCorrespondence, function(partName) {
+      headerParts[partName] = null;
+    });
   }
 
   // incase people reference an issue in the header
@@ -160,17 +140,19 @@ function parser(raw, options, regex) {
     footer = null;
   }
 
-  return {
+  // don't change the order of fields
+  var msg = {
     hash: hash,
-    header: header,
-    type: type,
-    scope: scope,
-    subject: subject,
+    header: header
+  };
+  msg = _.merge(msg, headerParts, {
     body: body,
     footer: footer,
     notes: notes,
     references: references
-  };
+  });
+
+  return msg;
 }
 
 module.exports = parser;

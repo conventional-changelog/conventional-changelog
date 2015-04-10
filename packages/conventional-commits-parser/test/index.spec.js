@@ -193,9 +193,9 @@ describe('conventionalCommitsParser', function() {
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (--length === 1) {
+          expect(chunk.subject).to.equal('feat');
           expect(chunk.type).to.equal('ng-list');
           expect(chunk.scope).to.equal('Allow custom separator');
-          expect(chunk.subject).to.equal('feat');
           expect(chunk.references).to.eql([{
             action: 'Fix',
             issue: '123',

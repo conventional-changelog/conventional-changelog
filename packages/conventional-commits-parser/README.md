@@ -117,7 +117,7 @@ Used to match header pattern.
 
 Type: `array` of `string` or `string` Default `['type', 'scope', 'subject']`
 
-Used to define what capturing group of `headerPattern` captures what header part. The order of the array should correspond to the order of `headerPattern`'s capturing group. If it's a `string` it will be converted to an `array` separated by a comma.
+Used to define what capturing group of `headerPattern` captures what header part. The order of the array should correspond to the order of `headerPattern`'s capturing group. If the part is not captured it is `null`. If it's a `string` it will be converted to an `array` separated by a comma.
 
 ##### referenceKeywords
 
