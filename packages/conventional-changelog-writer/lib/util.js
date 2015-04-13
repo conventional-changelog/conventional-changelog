@@ -83,7 +83,7 @@ function getNoteGroups(notes, noteGroups, noteGroupsSort, notesSort) {
   return retGroups;
 }
 
-function processCommit(chunk, hashLength, maxSubjectLength, replacements) {
+function processCommit(chunk, hashLength, maxSubjectLength, map) {
   var commit;
 
   try {
@@ -99,8 +99,16 @@ function processCommit(chunk, hashLength, maxSubjectLength, replacements) {
     commit.subject = commit.subject.substr(0, maxSubjectLength);
   }
 
-  _.forEach(replacements, function(maps, component) {
-    commit[component] = maps[commit[component]] || commit[component];
+  _.forEach(map, function(el, component) {
+    var value = commit[component];
+
+    if (typeof el === 'function') {
+      value = el(value) || value;
+    } else {
+      value = el[value] || value;
+    }
+
+    commit[component] = value;
   });
 
   return commit;

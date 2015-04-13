@@ -34,7 +34,7 @@ function conventionalcommitsWriter(version, context, options) {
     groupBy: 'type',
     hashLength: 7,
     maxSubjectLength: 80,
-    replacements: {
+    map: {
       type: {
         fix: 'Bug Fixes',
         feat: 'Features',
@@ -60,7 +60,7 @@ function conventionalcommitsWriter(version, context, options) {
   options.notesSort = util.functionify(options.notesSort);
 
   stream = through.obj(function(chunk, enc, cb) {
-    var commit = util.processCommit(chunk, options.hashLength, options.maxSubjectLength, options.replacements);
+    var commit = util.processCommit(chunk, options.hashLength, options.maxSubjectLength, options.map);
 
     commits.push(commit);
     notes = notes.concat(commit.notes);

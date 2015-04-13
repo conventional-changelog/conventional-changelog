@@ -1,7 +1,7 @@
 module.exports = {
   "groupBy": "type",
   "hashLength": 10,
-  "replacements": {
+  "map": {
     "type": {
       "fix": "Bug Fixes",
       "feat": "Features",

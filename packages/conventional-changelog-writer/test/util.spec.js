@@ -261,7 +261,7 @@ describe('util', function() {
   });
 
   describe('processCommit', function() {
-    var replacements = {
+    var map = {
       replaceThis: {
         replacement1: 'Yes',
         replacement2: 'no',
@@ -283,7 +283,37 @@ describe('util', function() {
     };
 
     it('should process object commit', function() {
-      var processed = util.processCommit(commit, 4, 4, replacements);
+      var processed = util.processCommit(commit, 4, 4, map);
+
+      expect(processed).to.eql({
+        hash: '4567',
+        subject: 'my s',
+        replaceThis: 'no',
+        replaceThisToo: 'notOK',
+        pleaseReplaceThis: 'cantReplaceThis'
+      });
+    });
+
+    it('should map using a function', function() {
+      var processed = util.processCommit(commit, 4, 4, {
+        replaceThis: function(type) {
+          if (type === 'replacement1') {
+            return 'Yes';
+          } else if (type === 'replacement2') {
+            return 'no';
+          } else if (type === 'replacement3') {
+            return 'oK';
+          }
+        },
+        replaceThisToo: {
+          replacement: 'notOK'
+        },
+        pleaseReplaceThis: function(type) {
+          if (type === 'replacement') {
+            return 'sure';
+          }
+        }
+      });
 
       expect(processed).to.eql({
         hash: '4567',
@@ -319,7 +349,7 @@ describe('util', function() {
     });
 
     it('should process json commit', function() {
-      var processed = util.processCommit(JSON.stringify(commit), 4, 4, replacements);
+      var processed = util.processCommit(JSON.stringify(commit), 4, 4, map);
 
       expect(processed).to.eql({
         hash: '4567',

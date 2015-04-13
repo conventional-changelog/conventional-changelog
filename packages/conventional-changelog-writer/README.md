@@ -162,11 +162,22 @@ Type: `number` Default: `80`
 
 The maximum subject length.
 
-##### replacements
+##### map
 
 Type: `object` Default: `type: { fix: 'Bug Fixes', feat: 'Features', perf: 'Performance Improvements' }`
 
-Replace with new values in each commit.
+Replace with new values in each commit. You could also do something like this
+
+```
+type: function(type) {
+  if (type === 'fix') {
+    return 'Bug Fixes';
+  } else if (type === 'feat') {
+    return 'Features';
+  } else if (type === 'perf') {
+    return 'Performance Improvements';
+  }
+```
 
 ##### noteGroups
 
