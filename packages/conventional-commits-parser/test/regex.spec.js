@@ -4,84 +4,100 @@ var expect = require('chai').expect;
 var regex = require('../lib/regex');
 
 describe('regex', function() {
-  describe('getNotesRegex', function() {
+  describe('notes', function() {
     it('should match a simple note', function() {
-      var re = regex.getNotesRegex(['Breaking News', 'Breaking Change']);
-      var match = 'Breaking News: This is so important.'.match(re);
+      var reNotes = regex({
+        noteKeywords: ['Breaking News', 'Breaking Change']
+      }).notes;
+      var match = 'Breaking News: This is so important.'.match(reNotes);
       expect(match[0]).to.equal('Breaking News: This is so important.');
       expect(match[1]).to.equal('Breaking News');
       expect(match[2]).to.equal('This is so important.');
     });
 
     it('should ignore whitespace', function() {
-      var re = regex.getNotesRegex([' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  ']);
-      var match = 'Breaking News: This is so important.'.match(re);
+      var reNotes = regex({
+        noteKeywords: [' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  ']
+      }).notes;
+      var match = 'Breaking News: This is so important.'.match(reNotes);
       expect(match[0]).to.equal('Breaking News: This is so important.');
       expect(match[1]).to.equal('Breaking News');
       expect(match[2]).to.equal('This is so important.');
     });
   });
 
-  describe('getReferencesRegex', function() {
+  describe('references', function() {
     it('should match a simple reference', function() {
-      var re = regex.getReferencesRegex(['Closes']);
-      var match = re.exec('closes #1');
+      var reReferences = regex({
+        referenceKeywords: ['Closes']
+      }).references;
+      var match = reReferences.exec('closes #1');
       expect(match[0]).to.equal('closes #1');
       expect(match[1]).to.equal('closes');
     });
 
     it('should ignore cases', function() {
-      var re = regex.getReferencesRegex(['Closes']);
-      var match = re.exec('ClOsEs #1');
+      var reReferences = regex({
+        referenceKeywords: ['Closes']
+      }).references;
+      var match = reReferences.exec('ClOsEs #1');
       expect(match[0]).to.equal('ClOsEs #1');
       expect(match[1]).to.equal('ClOsEs');
     });
 
     it('should not match if keywords does not present', function() {
-      var re = regex.getReferencesRegex(['Close']);
-      var match = re.exec('Closes #1');
+      var reReferences = regex({
+        referenceKeywords: ['Close']
+      }).references;
+      var match = reReferences.exec('Closes #1');
       expect(match).to.equal(null);
     });
 
     it('should take multiple reference keywords', function() {
-      var re = regex.getReferencesRegex([' Closes', 'amends', 'fixes']);
-      var match = re.exec('amends #1');
+      var reReferences = regex({
+        referenceKeywords: [' Closes', 'amends', 'fixes']
+      }).references;
+      var match = reReferences.exec('amends #1');
       expect(match[0]).to.eql('amends #1');
       expect(match[1]).to.eql('amends');
     });
 
     it('should match multiple references', function() {
-      var re = regex.getReferencesRegex(['Closes', 'amends']);
+      var reReferences = regex({
+        referenceKeywords: ['Closes', 'amends']
+      }).references;
       var string = 'Closes #1 amends #2; closes bug #4';
-      var match = re.exec(string);
+      var match = reReferences.exec(string);
       expect(match[0]).to.equal('Closes #1 ');
       expect(match[1]).to.equal('Closes');
 
-      match = re.exec(string);
+      match = reReferences.exec(string);
       expect(match[0]).to.equal('amends #2; ');
       expect(match[1]).to.equal('amends');
 
-      match = re.exec(string);
+      match = reReferences.exec(string);
       expect(match[0]).to.equal('closes bug #4');
       expect(match[1]).to.equal('closes');
     });
 
     it('should ignore whitespace', function() {
-      var re = regex.getReferencesRegex([' Closes', 'amends ', '', ' fixes ', '   ']);
-      var match = 'closes #1, amends #2, fixes #3'.match(re);
+      var reReferences = regex({
+        referenceKeywords: [' Closes', 'amends ', '', ' fixes ', '   ']
+      }).references;
+      var match = 'closes #1, amends #2, fixes #3'.match(reReferences);
       expect(match).to.eql(['closes #1, ', 'amends #2, ', 'fixes #3']);
     });
   });
 
-  describe('reHash', function() {
+  describe('hash', function() {
     it('should match a hash', function() {
       var hash = crypto.createHash('md5').update(Math.random().toString()).digest('hex');
-      expect(hash).match(regex.reHash).to.eql(hash);
+      expect(hash).match(regex().hash).to.eql(hash);
     });
   });
 
-  describe('reReferenceParts', function() {
-    var reReferenceParts = regex.reReferenceParts;
+  describe('referenceParts', function() {
+    var reReferenceParts = regex().referenceParts;
 
     afterEach(function() {
       reReferenceParts.lastIndex = 0;

@@ -42,12 +42,7 @@ function conventionalCommitsParser(options) {
     ]
   }, options);
 
-  var reg = {
-    hash: regex.reHash,
-    referenceParts: regex.reReferenceParts,
-    notes: regex.getNotesRegex(options.noteKeywords),
-    references: regex.getReferencesRegex(options.referenceKeywords)
-  };
+  var reg = regex(options);
 
   return through.obj(function(data, enc, cb) {
     var commit;
