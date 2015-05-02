@@ -4,7 +4,7 @@ var dateFormat = require('dateformat');
 var expect = require('chai').expect;
 var through = require('through2');
 
-describe('conventionalcommitsWriter', function() {
+describe('conventionalCommitsWriter', function() {
   function getStream() {
     var upstream = through.obj();
     upstream.write({
@@ -38,8 +38,8 @@ describe('conventionalcommitsWriter', function() {
     });
     upstream.write({
       hash: '13f31602f396bc269076ab4d389cfd8ca94b20ba',
-      header: 'feat(ng-list): Allow custom separator',
-      type: 'feat',
+      header: 'fix(ng-list): Allow custom separator',
+      type: 'fix',
       scope: 'ng-list',
       subject: 'Allow custom separator',
       body: 'bla bla bla',
@@ -50,13 +50,35 @@ describe('conventionalcommitsWriter', function() {
       }],
       references: []
     });
+    upstream.write({
+      hash: '2064a9346c550c9b5dbd17eee7f0b7dd2cde9cf7',
+      header: 'perf(template): tweak',
+      type: 'perf',
+      scope: 'template',
+      subject: 'tweak',
+      body: 'My body.',
+      footer: '',
+      notes: [],
+      references: []
+    });
+    upstream.write({
+      hash: '5f241416b79994096527d319395f654a8972591a',
+      header: 'refactor(name): rename this module to conventional-commits-writer',
+      type: 'refactor',
+      scope: 'name',
+      subject: 'rename this module to conventional-commits-writer',
+      body: '',
+      footer: '',
+      notes: [],
+      references: []
+    });
     upstream.end();
 
     return upstream;
   }
 
   describe('link', function() {
-    it('should link if host, repository, commit and issue are not truthy', function(done) {
+    it('should link if host, repository, commit and issue are truthy', function(done) {
       getStream()
         .pipe(conventionalcommitsWriter('0.0.1', {
           title: 'this is a title',
@@ -64,7 +86,18 @@ describe('conventionalcommitsWriter', function() {
           repository: 'a/b'
         }))
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Features\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          cb(null);
+        }, function() {
+          done();
+        }));
+    });
+
+    it ('should not link otherwise', function(done) {
+      getStream()
+        .pipe(conventionalcommitsWriter('0.0.1'))
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator 13f3160\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction 9b1aff9, closes #1 #2 #3\n\n### Performance Improvements\n\n* **template:** tweak 2064a93\n\n* **name:** rename this module to conventional-commits-writer 5f24141\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
           cb(null);
         }, function() {
           done();

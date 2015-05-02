@@ -31,16 +31,24 @@ function conventionalcommitsWriter(version, context, options) {
   }
 
   options = _.extend({
-    groupBy: 'type',
-    hashLength: 7,
-    maxSubjectLength: 80,
-    map: {
-      type: {
-        fix: 'Bug Fixes',
-        feat: 'Features',
-        perf: 'Performance Improvements'
+    transform: {
+      hash: function(hash) {
+        return hash.substring(0, 7);
+      },
+      subject: function(subject) {
+        return subject.substring(0, 80);
+      },
+      type: function(type) {
+        if (type === 'fix') {
+          return 'Bug Fixes';
+        } else if (type === 'feat') {
+          return 'Features';
+        } else if (type === 'perf') {
+          return 'Performance Improvements';
+        }
       }
     },
+    groupBy: 'type',
     noteGroups: {
       'BREAKING CHANGE': 'BREAKING CHANGES'
     },
@@ -60,7 +68,7 @@ function conventionalcommitsWriter(version, context, options) {
   options.notesSort = util.functionify(options.notesSort);
 
   stream = through.obj(function(chunk, enc, cb) {
-    var commit = util.processCommit(chunk, options.hashLength, options.maxSubjectLength, options.map);
+    var commit = util.processCommit(chunk, options.transform);
 
     commits.push(commit);
     notes = notes.concat(commit.notes);

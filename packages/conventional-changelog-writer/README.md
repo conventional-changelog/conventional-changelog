@@ -144,40 +144,33 @@ Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.
 
 Type: `object`
 
+##### transform
+
+Type: `object` or `function` Default: `{
+  hash: function(hash) {
+    return hash.substring(0, 7);
+  },
+  subject: function(subject) {
+    return subject.substring(0, 80);
+  },
+  type: function(type) {
+    if (type === 'fix') {
+      return 'Bug Fixes';
+    } else if (type === 'feat') {
+      return 'Features';
+    } else if (type === 'perf') {
+      return 'Performance Improvements';
+    }
+  }
+}`
+
+Replace with new values in each commit. If this is an object, the keys are paths (can be a [dot path](https://github.com/sindresorhus/dot-prop) to a nested object property) and the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object.
+
 ##### groupBy
 
 Type: `string` Default: `'type'`
 
 How to group the commits. If this value is falsy, commits are not grouped.
-
-##### hashLength
-
-Type: `number` Default: `7`
-
-Instead of outputting the full SHA-1 values of the hash, try to abbreviate them to a shorter unique name.
-
-##### maxSubjectLength
-
-Type: `number` Default: `80`
-
-The maximum subject length.
-
-##### map
-
-Type: `object` Default: `type: { fix: 'Bug Fixes', feat: 'Features', perf: 'Performance Improvements' }`
-
-Replace with new values in each commit. You could also do something like this
-
-```
-type: function(type) {
-  if (type === 'fix') {
-    return 'Bug Fixes';
-  } else if (type === 'feat') {
-    return 'Features';
-  } else if (type === 'perf') {
-    return 'Performance Improvements';
-  }
-```
 
 ##### noteGroups
 

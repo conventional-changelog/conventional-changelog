@@ -6,12 +6,13 @@ var fs = require('fs');
 var spawn = require('child_process').spawn;
 
 var cliPath = './cli.js';
+var commitsPath = 'test/fixtures/commits.ldjson';
 var optionsPath = 'test/fixtures/options.js';
 var contextPath = 'test/fixtures/context.json';
 
 describe('cli', function() {
   it('should work without options and context', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', 'test/fixtures/commits.ldjson'], {
+    var cp = spawn(cliPath, ['-v', '1.0.0', commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -22,7 +23,7 @@ describe('cli', function() {
   });
 
   it('should take context', function(done) {
-    var cp = spawn(cliPath, ['-v', '2.0.0', '-c', contextPath, 'test/fixtures/commits.ldjson'], {
+    var cp = spawn(cliPath, ['-v', '2.0.0', '-c', contextPath, commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -35,7 +36,7 @@ describe('cli', function() {
   });
 
   it('should take options', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, 'test/fixtures/commits.ldjson'], {
+    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -46,7 +47,7 @@ describe('cli', function() {
   });
 
   it('should take both context and options', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, '-c', contextPath, 'test/fixtures/commits.ldjson'], {
+    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, '-c', contextPath, commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -58,7 +59,7 @@ describe('cli', function() {
 
   it('should work if it is not tty', function(done) {
     var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, '-c', contextPath], {
-      stdio: [fs.openSync('test/fixtures/commits.ldjson', 'r'), null, null]
+      stdio: [fs.openSync(commitsPath, 'r'), null, null]
     });
     cp.stdout
       .pipe(concat(function(chunk) {
@@ -136,7 +137,7 @@ describe('cli', function() {
   });
 
   it('should error when there is no version specified', function(done) {
-    var cp = spawn(cliPath, ['test/fixtures/commits.ldjson'], {
+    var cp = spawn(cliPath, [commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -147,7 +148,7 @@ describe('cli', function() {
   });
 
   it('should error when version is invalid', function(done) {
-    var cp = spawn(cliPath, ['-v', 'version', 'test/fixtures/commits.ldjson'], {
+    var cp = spawn(cliPath, ['-v', 'version', commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -159,7 +160,7 @@ describe('cli', function() {
 
   it('should error when version is invalid if it is not tty', function(done) {
     var cp = spawn(cliPath, ['-v', 'version'], {
-      stdio: [fs.openSync('test/fixtures/commits.ldjson', 'r'), null, null]
+      stdio: [fs.openSync(commitsPath, 'r'), null, null]
     });
     cp.stderr
       .pipe(concat(function(err) {

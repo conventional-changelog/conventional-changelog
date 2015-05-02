@@ -261,102 +261,67 @@ describe('util', function() {
   });
 
   describe('processCommit', function() {
-    var map = {
-      replaceThis: {
-        replacement1: 'Yes',
-        replacement2: 'no',
-        replacement3: 'oK'
-      },
-      replaceThisToo: {
-        replacement: 'notOK'
-      },
-      pleaseReplaceThis: {
-        replacement: 'sure'
-      }
-    };
     var commit = {
       hash: '456789uhghi',
       subject: 'my subject!!!',
-      replaceThis: 'replacement2',
-      replaceThisToo: 'replacement',
-      pleaseReplaceThis: 'cantReplaceThis'
+      replaceThis: 'bad',
+      doNothing: 'nothing'
     };
 
     it('should process object commit', function() {
-      var processed = util.processCommit(commit, 4, 4, map);
-
-      expect(processed).to.eql({
-        hash: '4567',
-        subject: 'my s',
-        replaceThis: 'no',
-        replaceThisToo: 'notOK',
-        pleaseReplaceThis: 'cantReplaceThis'
-      });
-    });
-
-    it('should map using a function', function() {
-      var processed = util.processCommit(commit, 4, 4, {
-        replaceThis: function(type) {
-          if (type === 'replacement1') {
-            return 'Yes';
-          } else if (type === 'replacement2') {
-            return 'no';
-          } else if (type === 'replacement3') {
-            return 'oK';
-          }
-        },
-        replaceThisToo: {
-          replacement: 'notOK'
-        },
-        pleaseReplaceThis: function(type) {
-          if (type === 'replacement') {
-            return 'sure';
-          }
-        }
-      });
-
-      expect(processed).to.eql({
-        hash: '4567',
-        subject: 'my s',
-        replaceThis: 'no',
-        replaceThisToo: 'notOK',
-        pleaseReplaceThis: 'cantReplaceThis'
-      });
-    });
-
-    it('should not replace', function() {
-      var processed = util.processCommit(commit, 4, 4);
-
-      expect(processed).to.eql({
-        hash: '4567',
-        subject: 'my s',
-        replaceThis: 'replacement2',
-        replaceThisToo: 'replacement',
-        pleaseReplaceThis: 'cantReplaceThis'
-      });
-    });
-
-    it('should not shorten hash and subject', function() {
       var processed = util.processCommit(commit);
 
       expect(processed).to.eql({
         hash: '456789uhghi',
         subject: 'my subject!!!',
-        replaceThis: 'replacement2',
-        replaceThisToo: 'replacement',
-        pleaseReplaceThis: 'cantReplaceThis'
+        replaceThis: 'bad',
+        doNothing: 'nothing'
       });
     });
 
     it('should process json commit', function() {
-      var processed = util.processCommit(JSON.stringify(commit), 4, 4, map);
+      var processed = util.processCommit(JSON.stringify(commit));
+
+      expect(processed).to.eql({
+        hash: '456789uhghi',
+        subject: 'my subject!!!',
+        replaceThis: 'bad',
+        doNothing: 'nothing'
+      });
+    });
+
+    it('should transform by a function', function() {
+      var processed = util.processCommit(commit, function(commit) {
+        commit.hash = commit.hash.substring(0, 4);
+        commit.subject = commit.subject.substring(0, 5);
+        commit.replaceThis = 'replaced';
+        return commit;
+      });
 
       expect(processed).to.eql({
         hash: '4567',
-        subject: 'my s',
-        replaceThis: 'no',
-        replaceThisToo: 'notOK',
-        pleaseReplaceThis: 'cantReplaceThis'
+        subject: 'my su',
+        replaceThis: 'replaced',
+        doNothing: 'nothing'
+      });
+    });
+
+    it('should transform by an object', function() {
+      var processed = util.processCommit(commit, {
+        hash: function(hash) {
+          return hash.substring(0, 4);
+        },
+        subject: function(subject) {
+          return subject.substring(0, 5);
+        },
+        replaceThis: 'replaced'
+      });
+
+      expect(processed).to.eql({
+        hash: '4567',
+        subject: 'my su',
+        replaceThis: 'replaced',
+        doNothing: 'nothing'
       });
     });
   });

@@ -1,5 +1,6 @@
 'use strict';
 var compareFunc = require('compare-func');
+var dotProp = require('dot-prop');
 var Handlebars = require('handlebars');
 var _ = require('lodash');
 
@@ -83,7 +84,7 @@ function getNoteGroups(notes, noteGroups, noteGroupsSort, notesSort) {
   return retGroups;
 }
 
-function processCommit(chunk, hashLength, maxSubjectLength, map) {
+function processCommit(chunk, transform) {
   var commit;
 
   try {
@@ -91,24 +92,21 @@ function processCommit(chunk, hashLength, maxSubjectLength, map) {
   } catch (e) {
     commit = _.cloneDeep(chunk);
   }
-  if (_.isNumber(hashLength)) {
-    commit.hash = commit.hash.substring(0, hashLength);
+
+  if (_.isFunction(transform)) {
+    return transform(commit);
   }
 
-  if (commit.subject && _.isNumber(maxSubjectLength)) {
-    commit.subject = commit.subject.substr(0, maxSubjectLength);
-  }
-
-  _.forEach(map, function(el, component) {
-    var value = commit[component];
+  _.forEach(transform, function(el, path) {
+    var value = dotProp.get(commit, path);
 
     if (typeof el === 'function') {
-      value = el(value) || value;
+      value = el(value, path);
     } else {
-      value = el[value] || value;
+      value = el;
     }
 
-    commit[component] = value;
+    dotProp.set(commit, path, value);
   });
 
   return commit;
