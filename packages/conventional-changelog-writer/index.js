@@ -15,6 +15,7 @@ function conventionalcommitsWriter(version, context, options) {
   var stream;
   var commits = [];
   var notes = [];
+  var host = context && context.host;
   var isPatch = semver.patch(version) !== 0;
 
   context = _.extend({
@@ -26,8 +27,12 @@ function conventionalcommitsWriter(version, context, options) {
     date: dateFormat(new Date(), 'yyyy-mm-dd', true)
   }, context);
 
-  if (context.host && context.repository && context.commit && context.issue) {
+  if (host && context.repository && context.commit && context.issue) {
     context.linkReferences = context.linkReferences || true;
+  }
+
+  if (host && host[host.length - 1] === '/') {
+    context.host = host.slice(0, -1);
   }
 
   options = _.extend({
