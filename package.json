@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
-    "lint": "jshint lib test index.js --exclude node_modules",
+    "lint": "jshint lib test *.js --exclude node_modules && jscs lib test *.js",
     "test": "npm run-script lint && mocha --no-colors"
   },
   "files": [
@@ -43,6 +43,7 @@
     "chai": "^2.2.0",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.13",
+    "jscs": "^1.13.1",
     "jshint": "^2.6.3",
     "mocha": "*"
   }
