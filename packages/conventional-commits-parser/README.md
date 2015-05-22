@@ -151,7 +151,7 @@ What warn function to use. For example, `console.warn.bind(console)` or `grunt.l
 
 ## CLI
 
-You can use cli to practice writing commit messages or test from a file.
+You can use cli to practice writing commit messages or parse messages from files.
 
 ```sh
 $ npm install --global conventional-commits-parser
@@ -172,7 +172,7 @@ You will enter an interactive shell. To show your parsed result enter "return" t
 Result: {"hash":null,"header":"fix(title): a title is fixed","type":"fix","scope":"title","subject":"a title is fixed","body":null,"footer":null,"notes":[],"references":[]}
 ```
 
-You can also use cli to test commits from a file.
+You can also use cli to parse messages from files.
 
 If you have log.txt
 
