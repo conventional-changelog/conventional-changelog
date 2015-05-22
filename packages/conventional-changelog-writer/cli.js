@@ -1,18 +1,23 @@
 #!/usr/bin/env node
 'use strict';
 var conventionalcommitsWriter = require('./');
+var forEach = require('lodash').forEach;
 var fs = require('fs');
 var meow = require('meow');
 var path = require('path');
+var semverValid = require('semver').valid;
 var split = require('split');
 
 var cli = meow({
   help: [
     'Usage',
-    '  conventional-commits-writer [<path>...]',
+    '  conventional-commits-writer <semver> <path> [<path> ...]',
+    '  conventional-commits-writer -v <semver> <path> [<path> ...]',
+    '  cat <path> | conventional-commits-writer <semver>',
+    '  cat <path> | conventional-commits-writer -v <semver>',
     '',
     'Example',
-    '  conventional-commits-writer commits.ldjson -v 1.0.0',
+    '  conventional-commits-writer commits.ldjson 1.0.0',
     '  cat commits.ldjson | conventional-commits-writer -v 1.0.0',
     '',
     'Options',
@@ -29,10 +34,20 @@ var cli = meow({
   }
 });
 
-var filePaths = cli.input;
-var length = filePaths.length;
+var filePaths = [];
 var flags = cli.flags;
 var version = flags.ver;
+
+forEach(cli.input, function(input) {
+  var validVer = semverValid(input);
+  if (validVer) {
+    version = validVer;
+  } else {
+    filePaths.push(input);
+  }
+});
+
+var length = filePaths.length;
 
 var templateContext;
 var contextPath = flags.context;
