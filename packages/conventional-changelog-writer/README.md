@@ -260,10 +260,13 @@ $ npm install --global conventional-commits-writer
 $ conventional-commits-writer --help
 
 Usage
-  conventional-commits-writer [<path>...]
+  conventional-commits-writer <semver> <path> [<path> ...]
+  conventional-commits-writer -v <semver> <path> [<path> ...]
+  cat <path> | conventional-commits-writer <semver>
+  cat <path> | conventional-commits-writer -v <semver>
 
 Example
-  conventional-commits-writer commits.ldjson -v 1.0.0
+  conventional-commits-writer commits.ldjson 1.0.0
   cat commits.ldjson | conventional-commits-writer -v 1.0.0
 
 Options
