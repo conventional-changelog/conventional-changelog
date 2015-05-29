@@ -2,7 +2,7 @@
 'use strict';
 var conventionalCommitsParser = require('./');
 var forEach = require('lodash').forEach;
-var fs = require('graceful-fs');
+var fs = require('fs');
 var isTextPath = require('is-text-path');
 var JSONStream = require('JSONStream');
 var meow = require('meow');
