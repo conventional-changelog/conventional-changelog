@@ -15,16 +15,6 @@ $ npm install --save git-raw-commits
 
 ## Usage
 
-### Use a callback
-
-```js
-var gitRawCommits = require('git-raw-commits');
-
-gitRawCommits(options, callback);
-```
-
-### Use as a stream
-
 ```js
 var gitRawCommits = require('git-raw-commits');
 
@@ -35,9 +25,9 @@ gitRawCommits(options)
 
 ## API
 
-### gitRawCommits([options], [callback])
+### gitRawCommits([options])
 
-Returns a stream. Stream is split to break on each commit.
+Returns a readable stream. Stream is split to break on each commit.
 
 #### options
 
@@ -50,19 +40,17 @@ Please check the available options at http://git-scm.com/docs/git-log.
 
 #### from
 
-Type: `string` Default: your latest tag if any; your first commit if no tags found.
+Type: `string` Default: `''`
 
 #### to
 
 Type: `string` Default: `'HEAD'`
 
-#### callback(err, commits)
+This module also have the following additions:
 
-##### commits
+#### format
 
-Type: `array` of `string`
-
-An array of raw commits.
+Type: `string` Default: `'%B'`
 
 
 ## CLI
@@ -78,7 +66,7 @@ $ git-raw-commits --help
     git-raw-commits [<git-log(1)-options>]
 
   Example
-    git-raw-commits --grep unicorn -E --from HEAD~2 --to HEAD^
+    git-raw-commits --from HEAD~2 --to HEAD^
 ```
 
 

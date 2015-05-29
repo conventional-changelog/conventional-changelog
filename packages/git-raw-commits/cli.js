@@ -9,7 +9,7 @@ var cli = meow({
     '  git-raw-commits [<git-log(1)-options>]',
     '',
     'Example',
-    '  git-raw-commits --grep unicorn -E --from HEAD~2 --to HEAD^'
+    '  git-raw-commits --from HEAD~2 --to HEAD^'
   ].join('\n')
 });
 

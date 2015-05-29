@@ -1,67 +1,55 @@
 'use strict';
 var dargs = require('dargs');
-var es = require('event-stream');
 var exec = require('child_process').exec;
-var gitLatestTag = require('git-latest-tag');
+var split = require('split2');
+var stream = require('stream');
+var through = require('through2');
 var _ = require('lodash');
 
-function getLatestTag(done) {
-  gitLatestTag(true, function(err, tag) {
-    done(null, tag);
-  });
-}
+function gitRawCommits(options) {
+  options = options || {};
 
-function gitRawCommits(options, done) {
   var cmd;
-  var noCommits = true;
-  if (typeof options === 'function') {
-    done = options;
-    options = {};
-  } else {
-    done = done || function() {};
-  }
 
-  var throughStream = es.through(function(data) {
-    noCommits = false;
-    this.queue(data);
-  }, function() {
-    if (noCommits) {
-      done('No commits found: ' + cmd);
-      this.emit('error', 'No commits found: ' + cmd);
-    } else {
-      this.emit('end');
-    }
+  var readable = new stream.Readable();
+  readable._read = function() {}
+
+  options = _.extend({
+    from: '',
+    to: 'HEAD',
+    format: '%B'
+    //format: '%s%n%b%n%H%n%cn <%ce> (%ci)%n%an <%ae> (%ai)%n%d'
+  }, options);
+
+  var args = dargs(options, {
+    excludes: ['from', 'to', 'format']
   });
 
-  getLatestTag(function(err, latestTag) {
-    options = _.extend({
-      from: latestTag,
-      to: 'HEAD'
-    }, options);
-    var args = dargs(options, {
-      excludes: ['from', 'to']
-    });
-    cmd = _.template(
-      'git log --format=%H%n%s%n%b%n==END== ' +
-      '<%= from ? [from, to].join("..") : to %> '
-    )(options) + args.join(' ');
+  cmd = _.template(
+    'git log --format=\'<%= format %>%n------------------------ >8 ------------------------\' ' +
+    '<%= from ? [from, to].join("..") : to %> '
+  )(options) + args.join(' ');
 
-    var stream = es.child(exec(cmd))
-      .pipe(es.split('\n==END==\n'))
-      .pipe(es.map(function(data, callback) {
-        if (data) {
-          callback(null, data);
-        } else {
-          callback();
-        }
-      }));
+  var child = exec(cmd);
+  child.stdout
+    .pipe(split('------------------------ >8 ------------------------\n'))
+    .pipe(through(function(chunk, enc, cb) {
+      chunk = chunk.toString();
+      readable.push(chunk.toString());
 
-    stream
-      .pipe(throughStream)
-      .pipe(es.writeArray(done));
-  });
+      cb();
+    }, function(cb) {
+      readable.push(null);
+      cb();
+    }));
 
-  return throughStream;
+  child.stderr
+    .pipe(through.obj(function(chunk) {
+      readable.emit('error', chunk.toString());
+      readable.push(null);
+    }));
+
+  return readable;
 }
 
 module.exports = gitRawCommits;

@@ -24,22 +24,23 @@
     "git-log"
   ],
   "dependencies": {
-    "dargs": "^4.0.0",
-    "event-stream": "^3.3.0",
+    "dargs": "^4.0.1",
     "git-latest-tag": "0.0.6",
-    "lodash": "^3.6.0",
-    "meow": "^3.1.0"
+    "lodash": "^3.9.3",
+    "meow": "^3.1.0",
+    "split2": "^0.2.1",
+    "through2": "^0.6.5"
   },
   "devDependencies": {
-    "chai": "^2.2.0",
+    "chai": "^2.3.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.13",
+    "istanbul": "^0.3.14",
     "mocha": "*",
-    "shelljs": "^0.4.0"
+    "shelljs": "^0.5.0"
   },
   "scripts": {
     "test": "mocha",
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
+    "coverage": "istanbul cover -x test.js _mocha -- -R spec && rm -rf ./coverage"
   },
   "bin": {
     "git-raw-commits": "cli.js"
