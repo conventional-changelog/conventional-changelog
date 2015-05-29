@@ -23,7 +23,7 @@ var gitRawCommits = require('git-raw-commits');
 gitRawCommits(options, callback);
 ```
 
-### Use as a through stream
+### Use as a stream
 
 ```js
 var gitRawCommits = require('git-raw-commits');
@@ -37,7 +37,7 @@ gitRawCommits(options)
 
 ### gitRawCommits([options], [callback])
 
-Returns a through stream. Stream is split to break on each commit.
+Returns a stream. Stream is split to break on each commit.
 
 #### options
 
