@@ -22,7 +22,6 @@
   ],
   "dependencies": {
     "compare-func": "^1.1.0",
-    "concat-stream": "^1.4.8",
     "dateformat": "^1.0.11",
     "dot-prop": "^2.0.0",
     "handlebars": "^3.0.3",
@@ -34,6 +33,7 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "concat-stream": "^1.4.8",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.13",
     "mocha": "*"
