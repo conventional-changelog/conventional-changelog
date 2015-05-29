@@ -31,10 +31,13 @@
     "concat-stream": "^1.4.7",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.6",
+    "jscs": "^1.13.1",
+    "jshint": "^2.7.0",
     "mocha": "*"
   },
   "scripts": {
-    "test": "mocha",
+    "lint": "jshint *.js lib test && jscs *.js lib test",
+    "test": "npm run lint && mocha",
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
   },
   "bin": {
