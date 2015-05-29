@@ -52,7 +52,7 @@ var conventionalcommitsWriter = require('conventional-commits-writer');
 conventionalcommitsWriter(version, context, options);
 ```
 
-It expects an object mode upstream and the object should look something like this:
+It returns a transform stream and expects an object mode upstream that looks something like this:
 
 ```js
 { hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
@@ -75,7 +75,28 @@ It expects an object mode upstream and the object should look something like thi
   references: [] }
 ```
 
-Each chunk should be a commit. Json object is also **valid**.
+Each chunk should be a commit. Json object is also **valid**. The downstream will look something like this:
+
+```js
+<a name="0.0.1"></a>
+## 0.0.1 "this is a title" (2015-05-29)
+
+
+### Features
+
+* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])
+* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1)
+
+
+### BREAKING CHANGES
+
+* some breaking change
+
+
+
+
+
+```
 
 
 ## API
