@@ -51,30 +51,20 @@ $ npm install --save conventional-commits-parser
 
 ```js
 var conventionalCommitsParser = require('conventional-commits-parser');
-var through = require('through2');
 
-var rawCommits = [
-  '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
-  'feat(scope): broadcast $destroy event on scope destruction\n' +
-  'Closes #1',
-  '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
-  'feat(ng-list): Allow custom separator\n' +
-  'bla bla bla\n\n' +
-  'BREAKING CHANGE: some breaking change\n'
-];
-var stream = through();
+conventionalCommitsParser(options);
+```
 
-stream.write(rawCommits[0]);
-stream.write(rawCommits[1]);
+It returns a transform stream and expects an upstream that looks something like this:
 
-stream
-  .pipe(conventionalCommitsParser())
-  .pipe(through.obj(function(chunk, enc, cb) {
-    console.log(chunk);
-    cb();
-  }));
+```js
+'9b1aff905b638aa274a5fc8f88662df446d374bd\nfeat(scope): broadcast $destroy event on scope destruction\nCloses #1'
+'13f31602f396bc269076ab4d389cfd8ca94b20ba\nfeat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change\n'
+```
 
-/*=>
+Each chunk should be a commit. The downstream will look something like this:
+
+```js
 { hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
   header: 'feat(scope): broadcast $destroy event on scope destruction',
   type: 'feat',
@@ -93,7 +83,6 @@ stream
   footer: 'BREAKING CHANGE: some breaking change',
   notes: [ { title: 'BREAKING CHANGE', text: 'some breaking change' } ],
   references: [] }
-*/
 ```
 
 
@@ -101,7 +90,7 @@ stream
 
 ### conventionalCommitsParser([options])
 
-Returns an object stream. If there is any malformed commits it will be gracefully ignored (an empty data will be emitted so down stream can notice).
+Returns an transform stream. If there is any malformed commits it will be gracefully ignored (an empty data will be emitted so down stream can notice).
 
 #### options
 
