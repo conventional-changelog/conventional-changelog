@@ -12,7 +12,6 @@ function conventionalcommitsWriter(version, context, options) {
     throw new TypeError('Expected a version number');
   }
 
-  var stream;
   var commits = [];
   var notes = [];
   var host = context && context.host;
@@ -72,7 +71,7 @@ function conventionalcommitsWriter(version, context, options) {
   options.noteGroupsSort = util.functionify(options.noteGroupsSort);
   options.notesSort = util.functionify(options.notesSort);
 
-  stream = through.obj(function(chunk, enc, cb) {
+  return through.obj(function(chunk, enc, cb) {
     var commit = util.processCommit(chunk, options.transform);
 
     commits.push(commit);
@@ -87,8 +86,6 @@ function conventionalcommitsWriter(version, context, options) {
     this.push(compiled(context));
     cb();
   });
-
-  return stream;
 }
 
 module.exports = conventionalcommitsWriter;
