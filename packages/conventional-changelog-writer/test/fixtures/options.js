@@ -1,3 +1,3 @@
 module.exports = {
-  "mainTemplate": "{{date2}}template"
+  mainTemplate: '{{date2}}template'
 };
