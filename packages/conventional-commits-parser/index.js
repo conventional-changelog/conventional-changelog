@@ -6,10 +6,8 @@ var _ = require('lodash');
 
 function conventionalCommitsParser(options) {
   options = _.extend({
-    warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
-    noteKeywords: ['BREAKING CHANGE'],
     referenceKeywords: [
       'close',
       'closes',
@@ -20,7 +18,10 @@ function conventionalCommitsParser(options) {
       'resolve',
       'resolves',
       'resolved'
-    ]
+    ],
+    noteKeywords: ['BREAKING CHANGE'],
+    fieldPattern: /^-(.*?)-$/,
+    warn: function() {}
   }, options);
 
   var headerPattern = options.headerPattern;

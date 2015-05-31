@@ -38,6 +38,18 @@ The footer should contain any information about **Important Notes** (optional) a
 <references>
 ```
 
+This module will just parse the message itself. However, it is possible to include other fields such as hash, committer or date.
+
+```
+My commit message
+-sideNotes-
+It should warn the correct unfound file names.
+Also it should continue if one file cannot be found.
+Tests are added for these
+```
+
+Then `sideNotes` will be `It should warn the correct unfound file names.\nAlso it should continue if one file cannot be found.\nTests are added for these`. You can customize the `fieldPattern`.
+
 [More details](CONVENTIONS.md)
 
 
@@ -58,7 +70,7 @@ conventionalCommitsParser(options);
 
 It returns a transform stream and expects an upstream that looks something like this:
 
-```js
+```
 'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
 'feat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change\n'
 ```
@@ -129,6 +141,12 @@ Keywords for references. This value is case **insensitive**. If it's a `string` 
 Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
 
 Keywords for important notes. If it's a `string` it will be converted to an `array` separated by a comma.
+
+##### fieldPattern
+
+Type: `regex` or `string` Default: `/^-(.*?)-$/`
+
+Pattern to match other fields.
 
 ##### warn
 

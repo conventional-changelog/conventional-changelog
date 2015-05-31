@@ -13,6 +13,8 @@ function parser(raw, options, regex) {
   var headerMatch;
   var referenceSentences;
   var referenceMatch;
+  var currentProcessedField;
+  var otherFields = {};
   var lines = _.compact(raw.split('\n'));
   var continueNote = false;
   var isBody = true;
@@ -61,6 +63,26 @@ function parser(raw, options, regex) {
 
   // body or footer
   _.forEach(lines, function(line) {
+    if (options.fieldPattern) {
+      var fieldMatch = options.fieldPattern.exec(line);
+
+      if (fieldMatch) {
+        currentProcessedField = fieldMatch[1];
+
+        return;
+      }
+
+      if (currentProcessedField) {
+        if (otherFields[currentProcessedField]) {
+          otherFields[currentProcessedField] += line + '\n';
+        } else {
+          otherFields[currentProcessedField] = line + '\n';
+        }
+
+        return;
+      }
+    }
+
     var referenceMatched;
 
     // this is a new important note
@@ -139,7 +161,7 @@ function parser(raw, options, regex) {
     footer: footer,
     notes: notes,
     references: references
-  });
+  }, otherFields);
 
   return msg;
 }

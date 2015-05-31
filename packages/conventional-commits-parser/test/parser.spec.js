@@ -334,4 +334,85 @@ describe('parser', function() {
       expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change\n');
     });
   });
+
+  describe('others', function() {
+    it('should parse hash', function() {
+      regex = {
+        notes: /(BREAKING AMEND)[:\s]*(.*)/,
+        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
+        references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
+      };
+
+      options = {
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        fieldPattern: /^-(.*?)-$/
+      };
+
+      msg = parser(
+        'My commit message\n' +
+        '-hash-\n' +
+        '9b1aff905b638aa274a5fc8f88662df446d374bd',
+        options,
+        regex
+      );
+
+      expect(msg.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd\n');
+    });
+
+    it('should parse sideNotes', function() {
+      regex = {
+        notes: /(BREAKING AMEND)[:\s]*(.*)/,
+        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
+        references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
+      };
+
+      options = {
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        fieldPattern: /^-(.*?)-$/
+      };
+
+      msg = parser(
+        'My commit message\n' +
+        '-sideNotes-\n' +
+        'It should warn the correct unfound file names.\n' +
+        'Also it should continue if one file cannot be found.\n' +
+        'Tests are added for these',
+        options,
+        regex
+      );
+
+      expect(msg.sideNotes).to.equal('It should warn the correct unfound file names.\n' +
+        'Also it should continue if one file cannot be found.\n' +
+        'Tests are added for these\n');
+    });
+
+    it('should parse committer name and email', function() {
+      regex = {
+        notes: /(BREAKING AMEND)[:\s]*(.*)/,
+        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
+        references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
+      };
+
+      options = {
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        fieldPattern: /^-(.*?)-$/
+      };
+
+      msg = parser(
+        'My commit message\n' +
+        '-committerName-\n' +
+        'Steve Mao\n' +
+        '- committerEmail-\n' +
+        'test@github.com',
+        options,
+        regex
+      );
+
+      expect(msg.committerName).to.equal('Steve Mao\n');
+      expect(msg[' committerEmail']).to.equal('test@github.com\n');
+    });
+  });
 });
