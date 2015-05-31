@@ -5,25 +5,6 @@ var through = require('through2');
 var _ = require('lodash');
 
 function conventionalCommitsParser(options) {
-  if (options && !_.isEmpty(options)) {
-    var headerPattern = options.headerPattern;
-    if (typeof headerPattern === 'string') {
-      options.headerPattern = new RegExp(headerPattern);
-    }
-
-    if (typeof options.referenceKeywords === 'string') {
-      options.referenceKeywords = options.referenceKeywords.split(',');
-    }
-
-    if (typeof options.noteKeywords === 'string') {
-      options.noteKeywords = options.noteKeywords.split(',');
-    }
-
-    if (typeof options.headerCorrespondence === 'string') {
-      options.headerCorrespondence = options.headerCorrespondence.split(',');
-    }
-  }
-
   options = _.extend({
     warn: function() {},
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
@@ -41,6 +22,23 @@ function conventionalCommitsParser(options) {
       'resolved'
     ]
   }, options);
+
+  var headerPattern = options.headerPattern;
+  if (typeof headerPattern === 'string') {
+    options.headerPattern = new RegExp(headerPattern);
+  }
+
+  if (typeof options.referenceKeywords === 'string') {
+    options.referenceKeywords = options.referenceKeywords.split(',');
+  }
+
+  if (typeof options.noteKeywords === 'string') {
+    options.noteKeywords = options.noteKeywords.split(',');
+  }
+
+  if (typeof options.headerCorrespondence === 'string') {
+    options.headerCorrespondence = options.headerCorrespondence.split(',');
+  }
 
   var reg = regex(options);
 

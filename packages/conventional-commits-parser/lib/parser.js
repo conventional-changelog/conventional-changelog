@@ -106,7 +106,7 @@ function parser(raw, options, regex) {
       return;
     }
 
-    // this is a continued important note
+    // this is the continued important note
     if (continueNote) {
       notes[notes.length - 1].text += line + '\n';
       footer += line + '\n';
@@ -114,10 +114,13 @@ function parser(raw, options, regex) {
       return;
     }
 
-    // this is a body
+    // this is the body
     if (isBody) {
       body += line + '\n';
-    } else {
+    }
+
+    // this is the continued footer
+    else {
       footer += line + '\n';
     }
   });
