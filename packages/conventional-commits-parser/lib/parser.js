@@ -24,25 +24,12 @@ function parser(raw, options, regex) {
   var reReferences = regex.references;
 
   // msg parts
-  var hash = lines[0];
-  var header = lines[1];
+  var header = lines.shift();
   var headerParts = {};
   var body = '';
   var footer = '';
   var notes = [];
   var references = [];
-
-  if (!hash.match(regex.hash)) {
-    header = hash;
-    hash = null;
-    lines.shift();
-  } else {
-    lines.splice(0, 2);
-  }
-
-  if (!header) {
-    throw new Error('"' + raw + '" does not contain a header');
-  }
 
   headerMatch = header.match(options.headerPattern);
 
@@ -63,7 +50,7 @@ function parser(raw, options, regex) {
     var sentence = referenceSentences[2];
     while (referenceMatch = reReferenceParts.exec(sentence)) {
       var reference = {
-        action: action.trim(),
+        action: action,
         repository: referenceMatch[1] || null,
         issue: referenceMatch[2],
         raw: referenceMatch[0]
@@ -82,10 +69,15 @@ function parser(raw, options, regex) {
       continueNote = true;
       isBody = false;
       footer += line + '\n';
-      notes.push({
+
+      var note = {
         title: notesMatch[1],
         text: notesMatch[2]
-      });
+      };
+      if (note.text.trim()) {
+        note.text += '\n';
+      }
+      notes.push(note);
 
       return;
     }
@@ -99,7 +91,7 @@ function parser(raw, options, regex) {
         continueNote = false;
         isBody = false;
         var reference = {
-          action: action.trim(),
+          action: action,
           repository: referenceMatch[1] || null,
           issue: referenceMatch[2],
           raw: referenceMatch[0]
@@ -116,8 +108,7 @@ function parser(raw, options, regex) {
 
     // this is a continued important note
     if (continueNote) {
-      var text = notes[notes.length - 1].text;
-      notes[notes.length - 1].text = text + (text ? '\n' : '') + line;
+      notes[notes.length - 1].text += line + '\n';
       footer += line + '\n';
 
       return;
@@ -131,8 +122,8 @@ function parser(raw, options, regex) {
     }
   });
 
-  body = body.trim();
-  footer = footer.trim();
+  body = body;
+  footer = footer;
   if (!body) {
     body = null;
   }
@@ -140,12 +131,8 @@ function parser(raw, options, regex) {
     footer = null;
   }
 
-  // don't change the order of fields
-  var msg = {
-    hash: hash,
-    header: header
-  };
-  msg = _.merge(msg, headerParts, {
+  var msg  = _.merge(headerParts, {
+    header: header + '\n',
     body: body,
     footer: footer,
     notes: notes,

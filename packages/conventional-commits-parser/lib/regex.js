@@ -1,6 +1,5 @@
 'use strict';
 
-var reHash = /\b[0-9a-f]{5,40}\b/;
 var reNomatch = /(?!.*)/;
 var reReferenceParts = /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi;
 
@@ -38,7 +37,6 @@ module.exports = function(options) {
   var reReferences = getReferencesRegex(options.referenceKeywords);
 
   return {
-    hash: reHash,
     notes: reNotes,
     referenceParts: reReferenceParts,
     references: reReferences

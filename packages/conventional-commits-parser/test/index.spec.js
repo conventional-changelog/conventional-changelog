@@ -8,23 +8,19 @@ describe('conventionalCommitsParser', function() {
   it('should parse raw commits', function(done) {
     var stream = through();
     var commits = [
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'feat(ng-list): Allow custom separator\n' +
       'bla bla bla\n\n' +
       'Closes #123\nCloses #25\nFixes #33\n',
 
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'feat(ng-list): Allow custom separator\n' +
       'bla bla bla\n\n' +
       'BREAKING CHANGE: some breaking change\n',
 
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'fix(zzz): Very cool commit\n' +
       'bla bla bla\n\n' +
       'Closes #2, #3. Resolves #4. Fixes #5. Fixes #6.\n' +
       'What not ?\n',
 
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'chore(scope with spaces): some chore\n' +
       'bla bla bla\n\n' +
       'BREAKING CHANGE: some breaking change\n'
@@ -40,8 +36,15 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser())
       .pipe(through.obj(function(chunk, enc, cb) {
-        expect(chunk.hash).to.equal('13f31602f396bc269076ab4d389cfd8ca94b20ba');
-        if (--length === 0) {
+        --length;
+        if (length === 3) {
+          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
+        } else if (length === 2) {
+          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
+        } else if (length === 1) {
+          expect(chunk.header).to.equal('fix(zzz): Very cool commit\n');
+        } else {
+          expect(chunk.header).to.equal('chore(scope with spaces): some chore\n');
           done();
         }
         cb();
@@ -51,13 +54,11 @@ describe('conventionalCommitsParser', function() {
   it('should ignore malformed commits', function(done) {
     var stream = through();
     var commits = [
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'chore(scope with spaces): some chore\n',
 
       '\n' +
       ' \n\n',
 
-      '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
       'fix(zzz): Very cool commit\n' +
       'bla bla bla\n\n'
     ];
@@ -72,9 +73,7 @@ describe('conventionalCommitsParser', function() {
     stream
       .pipe(conventionalCommitsParser())
       .pipe(through.obj(function(chunk, enc, cb) {
-        if (++i !== 2) {
-          expect(chunk.hash).to.equal('13f31602f396bc269076ab4d389cfd8ca94b20ba');
-        }
+        ++i;
         cb();
       }, function() {
         expect(i).to.equal(3);
@@ -119,12 +118,10 @@ describe('conventionalCommitsParser', function() {
   });
 
   var commits = [
-    '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
     'feat(ng-list) Allow custom separator\n' +
     'bla bla bla\n\n' +
     'Fix #123\nCloses #25\nfix #33\n',
 
-    '13f31602f396bc269076ab4d389cfd8ca94b20ba\n' +
     'fix(ng-list) Another custom separator\n' +
     'bla bla bla\n\n' +
     'BREAKING CHANGES: some breaking changes\n'
@@ -167,7 +164,7 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.subject).to.equal('Another custom separator');
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
-            text: 'some breaking changes'
+            text: 'some breaking changes\n'
           });
           done();
         }
@@ -213,7 +210,7 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.subject).to.equal('fix');
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
-            text: 'some breaking changes'
+            text: 'some breaking changes\n'
           });
           done();
         }

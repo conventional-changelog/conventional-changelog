@@ -8,10 +8,11 @@ Adapted from code originally written by @ajoslin in [conventional-changelog](htt
 
 ## Conventional Commit Message Format
 
-Each input commit message consists of a **hash** (optional), a **header**, a **body** (optional) and a **footer** (optional).
+A minimum input should contain the raw message.
+
+Each commit message consists of a a **header**, a **body** (optional) and a **footer** (optional).
 
 ```
-<hash>
 <header>
 <BLANK LINE>
 <body>
@@ -58,27 +59,25 @@ conventionalCommitsParser(options);
 It returns a transform stream and expects an upstream that looks something like this:
 
 ```js
-'9b1aff905b638aa274a5fc8f88662df446d374bd\nfeat(scope): broadcast $destroy event on scope destruction\nCloses #1'
-'13f31602f396bc269076ab4d389cfd8ca94b20ba\nfeat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change\n'
+'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
+'feat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change\n'
 ```
 
 Each chunk should be a commit. The downstream will look something like this:
 
 ```js
-{ hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
-  header: 'feat(scope): broadcast $destroy event on scope destruction',
-  type: 'feat',
+{ type: 'feat',
   scope: 'scope',
   subject: 'broadcast $destroy event on scope destruction',
+  header: 'feat(scope): broadcast $destroy event on scope destruction',
   body: null,
   footer: 'Closes #1',
   notes: [],
   references: [ { action: 'Closes', repository: null, issue: '1', raw: '#1' } ] }
-{ hash: '13f31602f396bc269076ab4d389cfd8ca94b20ba',
-  header: 'feat(ng-list): Allow custom separator',
-  type: 'feat',
+{ type: 'feat',
   scope: 'ng-list',
   subject: 'Allow custom separator',
+  header: 'feat(ng-list): Allow custom separator',
   body: 'bla bla bla',
   footer: 'BREAKING CHANGE: some breaking change',
   notes: [ { title: 'BREAKING CHANGE', text: 'some breaking change' } ],
@@ -158,7 +157,7 @@ You will enter an interactive shell. To show your parsed result enter "return" t
 > fix(title): a title is fixed
 
 
-Result: {"hash":null,"header":"fix(title): a title is fixed","type":"fix","scope":"title","subject":"a title is fixed","body":null,"footer":null,"notes":[],"references":[]}
+Result: {"type":"fix","scope":"title","subject":"a title is fixed","header":"fix(title): a title is fixed","body":null,"footer":null,"notes":[],"references":[]}
 ```
 
 You can also use cli to parse messages from files.
@@ -166,8 +165,6 @@ You can also use cli to parse messages from files.
 If you have log.txt
 
 ```text
-9b1aff905b638aa274a5fc8f88662df446d374bd
-
 feat(ngMessages): provide support for dynamic message resolution
 
 Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.
@@ -190,7 +187,7 @@ An array of json will be printed to stdout.
 
 ```sh
 [
-{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"references":[{"action":"Closes","repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","repository":null,"issue":"9338","raw":"#9338"}]}
+{"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","header":"feat(ngMessages): provide support for dynamic message resolution\n","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.\n","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338\n","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n"}],"references":[{"action":"Closes","repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","repository":null,"issue":"9338","raw":"#9338"}]}
 ]
 ```
 
@@ -199,11 +196,9 @@ Commits should be split by at least three newlines (`\n\n\n`) or you can specify
 Eg: in log2.txt
 
 ```text
-2d0eda10e43f6b079b531c507282fad082ea0762
 
 docs(ngMessageExp): split ngMessage docs up to show its alias more clearly
 ===
-4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5
 
 fix($animate): applyStyles from options on leave
 
@@ -218,9 +213,9 @@ $ conventional-commits-parser log2.txt '==='
 
 ```sh
 [
-{"hash":"2d0eda10e43f6b079b531c507282fad082ea0762","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly","body":null,"footer":null,"notes":[],"references":[]}
+{"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly\n","body":null,"footer":null,"notes":[],"references":[]}
 ,
-{"hash":"4374f892c6fa4af6ba1f2ed47c5f888fdb5fadc5","header":"fix($animate): applyStyles from options on leave","type":"fix","scope":"$animate","subject":"applyStyles from options on leave","body":null,"footer":"Closes #10068","notes":[],"references":[{"action":"Closes","repository":null,"issue":"10068","raw":"#10068"}]}
+{"type":"fix","scope":"$animate","subject":"applyStyles from options on leave","header":"fix($animate): applyStyles from options on leave\n","body":null,"footer":"Closes #10068\n","notes":[],"references":[{"action":"Closes","repository":null,"issue":"10068","raw":"#10068"}]}
 ]
 ```
 

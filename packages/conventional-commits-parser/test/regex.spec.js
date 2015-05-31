@@ -1,5 +1,4 @@
 'use strict';
-var crypto = require('crypto');
 var expect = require('chai').expect;
 var regex = require('../lib/regex');
 
@@ -86,13 +85,6 @@ describe('regex', function() {
       }).references;
       var match = 'closes #1, amends #2, fixes #3'.match(reReferences);
       expect(match).to.eql(['closes #1, ', 'amends #2, ', 'fixes #3']);
-    });
-  });
-
-  describe('hash', function() {
-    it('should match a hash', function() {
-      var hash = crypto.createHash('md5').update(Math.random().toString()).digest('hex');
-      expect(hash).match(regex().hash).to.eql(hash);
     });
   });
 

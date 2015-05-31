@@ -12,7 +12,6 @@ describe('parser', function() {
 
   beforeEach(function() {
     regex = {
-      hash: /\b[0-9a-f]{5,40}\b/,
       notes: /(BREAKING AMEND)[:\s]*(.*)/,
       referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
       references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
@@ -24,7 +23,6 @@ describe('parser', function() {
     };
 
     msg = parser(
-      '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
       'feat(scope): broadcast $destroy event on scope destruction\n' +
       'perf testing shows that in chrome this change adds 5-15% overhead\n' +
       'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
@@ -37,7 +35,6 @@ describe('parser', function() {
     );
 
     longNoteMsg = parser(
-      '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
       'feat(scope): broadcast $destroy event on scope destruction\n' +
       'perf testing shows that in chrome this change adds 5-15% overhead\n' +
       'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
@@ -72,13 +69,8 @@ describe('parser', function() {
     }).to.throw('Expected a raw commit');
   });
 
-  it('should parse hash', function() {
-    expect(msg.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd');
-  });
-
   it('should trim extra newlines', function() {
     expect(msg).to.eql(parser(
-      '\n\n\n\n9b1aff905b638aa274a5fc8f88662df446d374bd\n\n' +
       '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
       '\n\n\nperf testing shows that in chrome this change adds 5-15% overhead\n' +
       '\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener\n\n' +
@@ -92,12 +84,6 @@ describe('parser', function() {
   });
 
   describe('header', function() {
-    it('should throw if it does not contain a header', function() {
-      expect(function() {
-        parser('9b1aff905b638aa274a5fc8f88662df446d374bd', options, regex);
-      }).to.throw('"9b1aff905b638aa274a5fc8f88662df446d374bd" does not contain a header');
-    });
-
     it('should throw if `options` is empty', function() {
       expect(function() {
         parser('bla bla');
@@ -119,12 +105,7 @@ describe('parser', function() {
     });
 
     it('should parse header', function() {
-      expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
-    });
-
-    it('should parse header without a hash', function() {
-      expect(simpleMsg.hash).to.equal(null);
-      expect(simpleMsg.header).to.equal('chore: some chore');
+      expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction\n');
     });
 
     it('should understand header parts', function() {
@@ -168,7 +149,7 @@ describe('parser', function() {
     it('should parse body', function() {
       expect(msg.body).to.equal(
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
-        'when destroying 10k nested scopes where each scope has a $destroy listener');
+        'when destroying 10k nested scopes where each scope has a $destroy listener\n');
     });
 
     it('should be null if not found', function() {
@@ -186,7 +167,7 @@ describe('parser', function() {
         'BREAKING AMEND: some breaking change\n' +
         'Kills #1, #123\n' +
         'killed #25\n' +
-        'handle #33, Closes #100, Handled #3 kills repo#77'
+        'handle #33, Closes #100, Handled #3 kills repo#77\n'
       );
     });
 
@@ -197,14 +178,14 @@ describe('parser', function() {
     it('should parse important notes', function() {
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change'
+        text: 'some breaking change\n'
       });
     });
 
     it('should parse important notes with more than one paragraphs', function() {
       expect(longNoteMsg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\nsome other breaking change'
+        text: 'some breaking change\nsome other breaking change\n'
       });
     });
 
@@ -253,7 +234,6 @@ describe('parser', function() {
 
     it('should put everything after references in footer', function() {
       var msg = parser(
-        '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
@@ -266,12 +246,11 @@ describe('parser', function() {
         regex
       );
 
-      expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother');
+      expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother\n');
     });
 
     it('shoudl parse properly if important notes comes after references', function() {
       var msg = parser(
-        '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
@@ -282,7 +261,7 @@ describe('parser', function() {
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change'
+        text: 'some breaking change\n'
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
@@ -295,12 +274,11 @@ describe('parser', function() {
         raw: ', #123',
         repository: null
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change');
+      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\n');
     });
 
     it('shoudl parse properly if important notes comes with more than one paragraphs after references', function() {
       var msg = parser(
-        '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
@@ -311,7 +289,7 @@ describe('parser', function() {
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\nsome other breaking change'
+        text: 'some breaking change\nsome other breaking change\n'
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
@@ -324,12 +302,11 @@ describe('parser', function() {
         raw: ', #123',
         repository: null
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change');
+      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change\n');
     });
 
     it('shoudl parse properly if important notes comes after references with something after references', function() {
       var msg = parser(
-        '9b1aff905b638aa274a5fc8f88662df446d374bd\n' +
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
@@ -341,7 +318,7 @@ describe('parser', function() {
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change'
+        text: 'some breaking change\n'
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
@@ -354,7 +331,7 @@ describe('parser', function() {
         raw: ', #123',
         repository: null
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change');
+      expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change\n');
     });
   });
 });
