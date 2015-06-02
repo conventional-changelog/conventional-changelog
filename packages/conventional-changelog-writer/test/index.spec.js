@@ -123,4 +123,32 @@ describe('conventionalCommitsWriter', function() {
         }));
     });
   });
+
+  describe('transform', function() {
+    it('should ignore the field if it doesn\'t exist', function(done) {
+      var i = 0;
+      var upstream = through.obj();
+      upstream.write({
+        header: 'bla',
+        body: null,
+        footer: null,
+        notes: []
+      });
+      upstream.end();
+      upstream
+        .pipe(conventionalcommitsWriter())
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n* bla \n\n\n\n');
+
+          i++;
+          cb(null);
+        }, function() {
+          if (i === 1) {
+            done();
+          } else {
+            done(new Error('Should generate 1 log'));
+          }
+        }));
+    });
+  });
 });

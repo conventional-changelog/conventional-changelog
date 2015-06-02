@@ -30,12 +30,24 @@ function conventionalcommitsWriter(context, options) {
   options = _.extend({
     transform: {
       hash: function(hash) {
+        if (!hash) {
+          return;
+        }
+
         return hash.substring(0, 7);
       },
       subject: function(subject) {
+        if (!subject) {
+          return;
+        }
+
         return subject.substring(0, 80);
       },
       type: function(type) {
+        if (!type) {
+          return;
+        }
+
         if (type === 'fix') {
           return 'Bug Fixes';
         } else if (type === 'feat') {
