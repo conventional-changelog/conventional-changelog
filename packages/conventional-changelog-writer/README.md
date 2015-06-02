@@ -5,10 +5,9 @@
 
 ## Conventional Commit Message Format
 
-Each input commit message consists of a **hash** (optional), a **header**, a **body** (optional) and a **footer** (optional).
+Each input commit message consists of a **header**, a **body** (optional) and a **footer** (optional).
 
 ```
-<hash>
 <header>
 <BLANK LINE>
 <body>
