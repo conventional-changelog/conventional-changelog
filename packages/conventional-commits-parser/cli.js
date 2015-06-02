@@ -94,9 +94,9 @@ if (process.stdin.isTTY) {
       .pipe(JSONStream.stringify('', '', ''))
       .pipe(through(function(chunk, enc, cb) {
         if (chunk.toString() === '""') {
-          cb(null, 'Commit cannot be parsed\n\n');
+          cb(null, 'Commit cannot be parsed\n');
         } else {
-          cb(null, chunk + '\n\n');
+          cb(null, chunk + '\n');
         }
       }))
       .pipe(process.stdout);
