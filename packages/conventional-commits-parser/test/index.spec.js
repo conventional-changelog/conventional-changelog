@@ -179,17 +179,19 @@ describe('conventionalCommitsParser', function() {
     forEach(commits, function(commit) {
       stream.write(commit);
     });
+    stream.write('blabla\n-hash-\n9b1aff905b638aa274a5fc8f88662df446d374bd');
     stream.end();
 
     stream
       .pipe(conventionalCommitsParser({
+        fieldPattern: '^-(.*?)-$',
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
         headerCorrespondence: 'subject,type,  scope,',
         noteKeywords: 'BREAKING CHANGES',
         referenceKeywords: 'fix'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
-        if (--length === 1) {
+        if (length === 2) {
           expect(chunk.subject).to.equal('feat');
           expect(chunk.type).to.equal('ng-list');
           expect(chunk.scope).to.equal('Allow custom separator');
@@ -204,7 +206,7 @@ describe('conventionalCommitsParser', function() {
             raw: '#33',
             repository: null
           }]);
-        } else {
+        } else if (length === 1) {
           expect(chunk.type).to.equal('ng-list');
           expect(chunk.scope).to.equal('Another custom separator');
           expect(chunk.subject).to.equal('fix');
@@ -212,8 +214,13 @@ describe('conventionalCommitsParser', function() {
             title: 'BREAKING CHANGES',
             text: 'some breaking changes\n'
           });
+        } else {
+          expect(chunk.header).to.equal('blabla\n');
+          expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd\n');
+
           done();
         }
+        --length;
         cb();
       }));
   });

@@ -25,8 +25,14 @@ function conventionalCommitsParser(options) {
   }, options);
 
   var headerPattern = options.headerPattern;
+  var fieldPattern = options.fieldPattern;
+
   if (typeof headerPattern === 'string') {
     options.headerPattern = new RegExp(headerPattern);
+  }
+
+  if (typeof options.headerCorrespondence === 'string') {
+    options.headerCorrespondence = options.headerCorrespondence.split(',');
   }
 
   if (typeof options.referenceKeywords === 'string') {
@@ -37,8 +43,8 @@ function conventionalCommitsParser(options) {
     options.noteKeywords = options.noteKeywords.split(',');
   }
 
-  if (typeof options.headerCorrespondence === 'string') {
-    options.headerCorrespondence = options.headerCorrespondence.split(',');
+  if (typeof fieldPattern === 'string') {
+    options.fieldPattern = new RegExp(fieldPattern);
   }
 
   var reg = regex(options);
