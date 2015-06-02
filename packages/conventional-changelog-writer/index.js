@@ -2,29 +2,22 @@
 var compareFunc = require('compare-func');
 var dateFormat = require('dateformat');
 var fs = require('fs');
-var semver = require('semver');
 var through = require('through2');
 var util = require('./lib/util');
 var _ = require('lodash');
 
-function conventionalcommitsWriter(version, context, options) {
-  if (!version) {
-    throw new TypeError('Expected a version number');
-  }
-
+function conventionalcommitsWriter(context, options) {
   var commits = [];
   var notes = [];
-  var host = context && context.host;
-  var isPatch = semver.patch(version) !== 0;
 
   context = _.extend({
-    version: version,
     title: '',
-    isPatch: isPatch,
     commit: 'commits',
     issue: 'issues',
     date: dateFormat(new Date(), 'yyyy-mm-dd', true)
   }, context);
+
+  var host = context.host;
 
   if (host && context.repository && context.commit && context.issue) {
     context.linkReferences = context.linkReferences || true;

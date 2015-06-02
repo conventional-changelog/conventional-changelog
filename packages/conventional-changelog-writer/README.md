@@ -48,7 +48,7 @@ $ npm install --save conventional-commits-writer
 ```js
 var conventionalcommitsWriter = require('conventional-commits-writer');
 
-conventionalcommitsWriter(version, context, options);
+conventionalcommitsWriter(context, options);
 ```
 
 It returns a transform stream and expects an object mode upstream that looks something like this:
@@ -100,19 +100,19 @@ Each chunk should be a commit. Json object is also **valid**. The downstream wil
 
 ## API
 
-### conventionalcommitsWriter(version, [context, [options]])
+### conventionalcommitsWriter([context, [options]])
 
 Returns a transform stream.
-
-#### version
-
-Type: `string`
-
-Version number of the up-coming release. This argument is **mandatory**.
 
 #### context
 
 Variables that will be interpolated to the template.
+
+##### version
+
+Type: `string`
+
+Version number of the up-coming release. If version is found in the last commit, it will be overwritten.
 
 ##### title
 
@@ -120,7 +120,7 @@ Type: `string` Default: `''`
 
 ##### isPatch
 
-Type: `boolean` Default: `semver.patch(version) === 0`
+Type: `boolean` Default: `semver.patch(context.version) !== 0`
 
 By default, this value is true if `version`'s patch is `0`.
 
@@ -280,18 +280,16 @@ $ npm install --global conventional-commits-writer
 $ conventional-commits-writer --help
 
 Usage
-  conventional-commits-writer <semver> <path> [<path> ...]
-  conventional-commits-writer -v <semver> <path> [<path> ...]
-  cat <path> | conventional-commits-writer <semver>
-  cat <path> | conventional-commits-writer -v <semver>
+  conventional-commits-writer <path> [<path> ...]
+  conventional-commits-writer <path> [<path> ...]
+  cat <path> | conventional-commits-writer
 
 Example
-  conventional-commits-writer commits.ldjson 1.0.0
-  cat commits.ldjson | conventional-commits-writer -v 1.0.0
+  conventional-commits-writer commits.ldjson
+  cat commits.ldjson | conventional-commits-writer
 
 Options
 
--v, --ver        Version number of the up-coming release
 -t, --context    A filepath of a json that is used to define template variables
 -o, --options    A filepath of a javascript object that is used to define options
 ```
@@ -307,10 +305,10 @@ If you have commits.ldjson
 And you run
 
 ```sh
-$ conventional-commits-writer commits.ldjson --ver 1.0.0
+$ conventional-commits-writer commits.ldjson -o options.js
 ```
 
-The results will be
+The output might become
 
 ```md
 <a name="1.0.0"></a>

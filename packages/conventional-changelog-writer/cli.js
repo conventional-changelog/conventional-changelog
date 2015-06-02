@@ -5,30 +5,26 @@ var forEach = require('lodash').forEach;
 var fs = require('fs');
 var meow = require('meow');
 var path = require('path');
-var semverValid = require('semver').valid;
 var split = require('split');
 
 var cli = meow({
   help: [
     'Usage',
-    '  conventional-commits-writer <semver> <path> [<path> ...]',
-    '  conventional-commits-writer -v <semver> <path> [<path> ...]',
-    '  cat <path> | conventional-commits-writer <semver>',
-    '  cat <path> | conventional-commits-writer -v <semver>',
+    '  conventional-commits-writer <path> [<path> ...]',
+    '  conventional-commits-writer <path> [<path> ...]',
+    '  cat <path> | conventional-commits-writer',
     '',
     'Example',
-    '  conventional-commits-writer commits.ldjson 1.0.0',
-    '  cat commits.ldjson | conventional-commits-writer -v 1.0.0',
+    '  conventional-commits-writer commits.ldjson',
+    '  cat commits.ldjson | conventional-commits-writer',
     '',
     'Options',
     '',
-    '-v, --ver        Version number of the up-coming release',
     '-t, --context    A filepath of a json that is used to define template variables',
     '-o, --options    A filepath of a javascript object that is used to define options'
   ].join('\n')
 }, {
   alias: {
-    v: 'ver',
     c: 'context',
     o: 'options'
   }
@@ -36,15 +32,9 @@ var cli = meow({
 
 var filePaths = [];
 var flags = cli.flags;
-var version = flags.ver;
 
 forEach(cli.input, function(input) {
-  var validVer = semverValid(input);
-  if (validVer) {
-    version = validVer;
-  } else {
-    filePaths.push(input);
-  }
+  filePaths.push(input);
 });
 
 var length = filePaths.length;
@@ -72,7 +62,7 @@ if (optionsPath) {
 }
 
 try {
-  var stream = conventionalcommitsWriter(version, templateContext, options);
+  var stream = conventionalcommitsWriter(templateContext, options);
 } catch (err) {
   console.error(err.toString());
   process.exit(1);
@@ -106,10 +96,7 @@ function processFile(fileIndex) {
     .pipe(process.stdout);
 }
 
-if (!version) {
-  console.error('No version specified');
-  process.exit(1);
-} else if (!process.stdin.isTTY) {
+if (!process.stdin.isTTY) {
   process.stdin
     .pipe(split(JSON.parse))
     .on('error', function(err) {

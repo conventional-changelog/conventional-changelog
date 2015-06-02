@@ -80,7 +80,8 @@ describe('conventionalCommitsWriter', function() {
   describe('host', function() {
     it('should work if there is a "/" at the end of host', function(done) {
       getStream()
-        .pipe(conventionalcommitsWriter('0.0.1', {
+        .pipe(conventionalcommitsWriter({
+          version: '0.0.1',
           title: 'this is a title',
           host: 'https://github.com/',
           repository: 'a/b'
@@ -97,13 +98,14 @@ describe('conventionalCommitsWriter', function() {
   describe('link', function() {
     it('should link if host, repository, commit and issue are truthy', function(done) {
       getStream()
-        .pipe(conventionalcommitsWriter('0.0.1', {
+        .pipe(conventionalcommitsWriter({
+          version: '0.5.0',
           title: 'this is a title',
           host: 'https://github.com',
           repository: 'a/b'
         }))
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name="0.5.0"></a>\n# 0.5.0 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
           cb(null);
         }, function() {
           done();
@@ -112,38 +114,13 @@ describe('conventionalCommitsWriter', function() {
 
     it ('should not link otherwise', function(done) {
       getStream()
-        .pipe(conventionalcommitsWriter('0.0.1'))
+        .pipe(conventionalcommitsWriter())
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator 13f3160\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction 9b1aff9, closes #1 #2 #3\n\n### Performance Improvements\n\n* **template:** tweak 2064a93\n\n* **name:** rename this module to conventional-commits-writer 5f24141\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator 13f3160\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction 9b1aff9, closes #1 #2 #3\n\n### Performance Improvements\n\n* **template:** tweak 2064a93\n\n* **name:** rename this module to conventional-commits-writer 5f24141\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
           cb(null);
         }, function() {
           done();
         }));
-    });
-  });
-
-  describe('version', function() {
-    it('should not error with a valid version', function(done) {
-      getStream()
-        .pipe(conventionalcommitsWriter('0.0.1'))
-        .on('error', function(err) {
-          done(err);
-        })
-        .on('finish', function() {
-          done();
-        });
-    });
-
-    it('should error if no version specified', function() {
-      expect(conventionalcommitsWriter).to.throw('Expected a version number');
-    });
-
-    it('should error if version is invalid', function() {
-      expect(function() {
-        conventionalcommitsWriter({
-          version: 'fake version'
-        });
-      }).to.throw('Invalid Version');
     });
   });
 });

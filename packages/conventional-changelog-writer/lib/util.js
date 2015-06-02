@@ -2,6 +2,7 @@
 var compareFunc = require('compare-func');
 var dotProp = require('dot-prop');
 var Handlebars = require('handlebars');
+var semver = require('semver');
 var _ = require('lodash');
 
 function compileTemplates(templates) {

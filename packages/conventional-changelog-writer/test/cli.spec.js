@@ -11,30 +11,19 @@ var optionsPath = 'test/fixtures/options.js';
 var contextPath = 'test/fixtures/context.json';
 
 describe('cli', function() {
-  it('should work without by passing the version directly', function(done) {
-    var cp = spawn(cliPath, ['1.0.0', commitsPath], {
+  it('should work without context and options', function(done) {
+    var cp = spawn(cliPath, [commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal('<a name="1.0.0"></a>\n# 1.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Features\n\n* **ngMessages:** provide support for dynamic message resolution 9b1aff9, closes #10036 #9338\n\n\n### BREAKING CHANGES\n\n* The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n\n\n\n');
-        done();
-      }));
-  });
-
-  it('should work without options and context by passing the version as a flag', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', commitsPath], {
-      stdio: [process.stdin, null, null]
-    });
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal('<a name="1.0.0"></a>\n# 1.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Features\n\n* **ngMessages:** provide support for dynamic message resolution 9b1aff9, closes #10036 #9338\n\n\n### BREAKING CHANGES\n\n* The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n\n\n\n');
+        expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Features\n\n* **ngMessages:** provide support for dynamic message resolution 9b1aff9, closes #10036 #9338\n\n\n### BREAKING CHANGES\n\n* The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n\n\n\n');
         done();
       }));
   });
 
   it('should take context', function(done) {
-    var cp = spawn(cliPath, ['-v', '2.0.0', '-c', contextPath, commitsPath], {
+    var cp = spawn(cliPath, ['-c', contextPath, commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -47,7 +36,7 @@ describe('cli', function() {
   });
 
   it('should take options', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, commitsPath], {
+    var cp = spawn(cliPath, ['-o', optionsPath, commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -58,7 +47,7 @@ describe('cli', function() {
   });
 
   it('should take both context and options', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, '-c', contextPath, commitsPath], {
+    var cp = spawn(cliPath, ['-o', optionsPath, '-c', contextPath, commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout
@@ -69,7 +58,7 @@ describe('cli', function() {
   });
 
   it('should work if it is not tty', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', optionsPath, '-c', contextPath], {
+    var cp = spawn(cliPath, ['-o', optionsPath, '-c', contextPath], {
       stdio: [fs.openSync(commitsPath, 'r'), null, null]
     });
     cp.stdout
@@ -80,7 +69,7 @@ describe('cli', function() {
   });
 
   it('should error when there is no commit input', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0'], {
+    var cp = spawn(cliPath, {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -91,7 +80,7 @@ describe('cli', function() {
   });
 
   it('should error when options file doesnt exist', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '-o', 'nofile'], {
+    var cp = spawn(cliPath, ['-o', 'nofile'], {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -102,7 +91,7 @@ describe('cli', function() {
   });
 
   it('should error when context file doesnt exist', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', '--context', 'nofile'], {
+    var cp = spawn(cliPath, ['--context', 'nofile'], {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -113,7 +102,7 @@ describe('cli', function() {
   });
 
   it('should error when commit input files dont exist', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', 'nofile', 'fakefile'], {
+    var cp = spawn(cliPath, ['nofile', 'fakefile'], {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -126,7 +115,7 @@ describe('cli', function() {
   });
 
   it('should error when commit input file is invalid line delimited json', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0', 'test/fixtures/invalid_line_delimited.json'], {
+    var cp = spawn(cliPath, ['test/fixtures/invalid_line_delimited.json'], {
       stdio: [process.stdin, null, null]
     });
     cp.stderr
@@ -137,45 +126,12 @@ describe('cli', function() {
   });
 
   it('should error when commit input file is invalid line delimited json if it is not tty', function(done) {
-    var cp = spawn(cliPath, ['-v', '1.0.0'], {
+    var cp = spawn(cliPath, [], {
       stdio: [fs.openSync('test/fixtures/invalid_line_delimited.json', 'r'), null, null]
     });
     cp.stderr
       .pipe(concat(function(err) {
         expect(err.toString()).to.contain('Failed to split commits\n');
-        done();
-      }));
-  });
-
-  it('should error when there is no version specified', function(done) {
-    var cp = spawn(cliPath, [commitsPath], {
-      stdio: [process.stdin, null, null]
-    });
-    cp.stderr
-      .pipe(concat(function(err) {
-        expect(err.toString()).to.equal('TypeError: Expected a version number\n');
-        done();
-      }));
-  });
-
-  it('should error when version is invalid', function(done) {
-    var cp = spawn(cliPath, ['-v', 'version', commitsPath], {
-      stdio: [process.stdin, null, null]
-    });
-    cp.stderr
-      .pipe(concat(function(err) {
-        expect(err.toString()).to.equal('TypeError: Invalid Version: version\n');
-        done();
-      }));
-  });
-
-  it('should error when version is invalid if it is not tty', function(done) {
-    var cp = spawn(cliPath, ['-v', 'version'], {
-      stdio: [fs.openSync(commitsPath, 'r'), null, null]
-    });
-    cp.stderr
-      .pipe(concat(function(err) {
-        expect(err.toString()).to.equal('TypeError: Invalid Version: version\n');
         done();
       }));
   });
