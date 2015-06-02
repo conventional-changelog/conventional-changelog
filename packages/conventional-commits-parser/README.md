@@ -169,13 +169,13 @@ If you run `conventional-commits-parser` without any arguments
 $ conventional-commits-parser
 ```
 
-You will enter an interactive shell. To show your parsed result enter "return" three times (or enter your specified separator).
+You will enter an interactive shell. To show your parsed output enter "return" three times (or enter your specified separator).
 
 ```sh
 > fix(title): a title is fixed
 
 
-Result: {"type":"fix","scope":"title","subject":"a title is fixed","header":"fix(title): a title is fixed","body":null,"footer":null,"notes":[],"references":[]}
+{"type":"fix","scope":"title","subject":"a title is fixed","header":"fix(title): a title is fixed\n","body":null,"footer":null,"notes":[],"references":[]}
 ```
 
 You can also use cli to parse messages from files.

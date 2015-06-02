@@ -96,7 +96,7 @@ if (process.stdin.isTTY) {
         if (chunk.toString() === '""') {
           cb(null, 'Commit cannot be parsed\n\n');
         } else {
-          cb(null, 'Result: ' + chunk + '\n\n');
+          cb(null, chunk + '\n\n');
         }
       }))
       .pipe(process.stdout);
