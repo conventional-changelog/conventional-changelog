@@ -112,7 +112,7 @@ Variables that will be interpolated to the template.
 
 Type: `string`
 
-Version number of the up-coming release. If version is found in the last commit, it will be overwritten.
+Version number of the up-coming release. If `version` is found in the last commit, it will be overwritten.
 
 ##### title
 
@@ -158,7 +158,7 @@ Issue or pull request keyword in the url if `options.linkReferences === true`.
 
 Type: `string` Default: `dateFormat(new Date(), 'yyyy-mm-dd', true)`
 
-Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date.
+Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date. If `version` is found in the last commit, `authorDate` will overwrite this.
 
 #### options
 
@@ -166,7 +166,7 @@ Type: `object`
 
 ##### transform
 
-Type: `object` or `function` Default: get the first 7 digits of hash, and change 'fix', 'feat' and 'perf' to 'Bug Fixes', 'Features' and 'Performance Improvements'
+Type: `object` or `function` Default: get the first 7 digits of hash, change 'fix', 'feat' and 'perf' to 'Bug Fixes', 'Features' and 'Performance Improvements', and `authorDate` will be formatted as `'yyyy-mm-dd'`.
 
 Replace with new values in each commit. If this is an object, the keys are paths (can be a [dot path](https://github.com/sindresorhus/dot-prop) to a nested object property) and the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object.
 
@@ -213,6 +213,12 @@ Type: `function` Default: sort by `localeCompare`.
 A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
 
 The string can be a dot path to a nested object property.
+
+##### generateOn
+
+Type: `function` or `string` Default: `'version'`
+
+when it reaches the end of the commit it will generate logs by default. However, it can generate logs according this criteria even it's not the end.
 
 ##### mainTemplate
 

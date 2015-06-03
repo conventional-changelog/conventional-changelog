@@ -125,11 +125,34 @@ function getExtraContext(commits, notes, options) {
   return context;
 }
 
+function generate(options, commits, notes, context) {
+  var lastCommit = commits[commits.length - 1];
+
+  var compiled = compileTemplates(options);
+
+  var mergedContext = _.merge({}, context, getExtraContext(commits, notes, options));
+
+  if (commits.length > 0 && lastCommit.version) {
+    mergedContext.version = lastCommit.version;
+    mergedContext.date = lastCommit.authorDate || context.date;
+  }
+
+  if (mergedContext.version) {
+    mergedContext.isPatch = context.isPatch || semver.patch(mergedContext.version) !== 0;
+  }
+
+  commits.length = 0;
+  notes.length = 0;
+
+  return compiled(mergedContext);
+}
+
 module.exports = {
   compileTemplates: compileTemplates,
   functionify: functionify,
   getCommitGroups: getCommitGroups,
   getNoteGroups: getNoteGroups,
   processCommit: processCommit,
-  getExtraContext: getExtraContext
+  getExtraContext: getExtraContext,
+  generate: generate
 };

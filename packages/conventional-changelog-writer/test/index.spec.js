@@ -184,4 +184,411 @@ describe('conventionalCommitsWriter', function() {
         }));
     });
   });
+
+  describe('generate', function() {
+    it('should generate on `\'version\'` by default', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        type: 'feat',
+        scope: 'scope',
+        subject: 'broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        authorDate: '2015-04-07 14:17:05 +1000'
+      });
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        type: 'fix',
+        scope: 'ng-list',
+        subject: 'Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.1',
+        authorDate: '2015-04-07 15:00:44 +1000'
+      });
+      upstream.write({
+        header: 'perf(template): tweak',
+        type: 'perf',
+        scope: 'template',
+        subject: 'tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: [],
+        authorDate: '2015-04-07 15:01:30 +1000'
+      });
+      upstream.write({
+        header: 'refactor(name): rename this module to conventional-commits-writer',
+        type: 'refactor',
+        scope: 'name',
+        subject: 'rename this module to conventional-commits-writer',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        authorDate: '2015-04-08 09:43:59 +1000'
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalcommitsWriter())
+        .pipe(through(function(chunk, enc, cb) {
+          if (i === 0) {
+            expect(chunk.toString()).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator \n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction \n\n\n\n');
+          } else {
+            expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Performance Improvements\n\n* **template:** tweak \n\n* **name:** rename this module to conventional-commits-writer \n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('`generateOn` could be a function', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        type: 'feat',
+        scope: 'scope',
+        subject: 'broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        type: 'fix',
+        scope: 'ng-list',
+        subject: 'Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.1'
+      });
+      upstream.write({
+        header: 'perf(template): tweak',
+        type: 'perf',
+        scope: 'template',
+        subject: 'tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'refactor(name): rename this module to conventional-commits-writer',
+        type: 'refactor',
+        scope: 'name',
+        subject: 'rename this module to conventional-commits-writer',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalcommitsWriter({}, {
+          generateOn: function(chunk) {
+            return chunk.version;
+          }
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          if (i === 0) {
+            expect(chunk.toString()).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator \n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction \n\n\n\n');
+          } else {
+            expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Performance Improvements\n\n* **template:** tweak \n\n* **name:** rename this module to conventional-commits-writer \n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('version should fall back on `context.version`', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        type: 'feat',
+        scope: 'scope',
+        subject: 'broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        type: 'fix',
+        scope: 'ng-list',
+        subject: 'Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.1'
+      });
+      upstream.write({
+        header: 'perf(template): tweak',
+        type: 'perf',
+        scope: 'template',
+        subject: 'tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'refactor(name): rename this module to conventional-commits-writer',
+        type: 'refactor',
+        scope: 'name',
+        subject: 'rename this module to conventional-commits-writer',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalcommitsWriter({
+          version: '0.0.1'
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          if (i === 0) {
+            expect(chunk.toString()).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator \n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction \n\n\n\n');
+          } else {
+            expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Performance Improvements\n\n* **template:** tweak \n\n* **name:** rename this module to conventional-commits-writer \n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('date should fall back on `context.date`', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        type: 'feat',
+        scope: 'scope',
+        subject: 'broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        type: 'fix',
+        scope: 'ng-list',
+        subject: 'Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.1',
+        authorDate: '2015-04-07 15:01:30 +1000'
+      });
+      upstream.write({
+        header: 'perf(template): tweak',
+        type: 'perf',
+        scope: 'template',
+        subject: 'tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'refactor(name): rename this module to conventional-commits-writer',
+        type: 'refactor',
+        scope: 'name',
+        subject: 'rename this module to conventional-commits-writer',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalcommitsWriter({
+          date: '2015-01-01'
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          if (i === 0) {
+            expect(chunk.toString()).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator \n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction \n\n\n\n');
+          } else {
+            expect(chunk.toString()).to.equal('<a name=""></a>\n#  (2015-01-01)\n\n\n### Performance Improvements\n\n* **template:** tweak \n\n* **name:** rename this module to conventional-commits-writer \n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('`context.version` should be overwritten by `commit.version`', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        type: 'feat',
+        scope: 'scope',
+        subject: 'broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        type: 'fix',
+        scope: 'ng-list',
+        subject: 'Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.1'
+      });
+      upstream.write({
+        header: 'perf(template): tweak',
+        type: 'perf',
+        scope: 'template',
+        subject: 'tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'refactor(name): rename this module to conventional-commits-writer',
+        type: 'refactor',
+        scope: 'name',
+        subject: 'rename this module to conventional-commits-writer',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        version: '2.0.0'
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalcommitsWriter({
+          version: '0.0.1'
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          if (i === 0) {
+            expect(chunk.toString()).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator \n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction \n\n\n\n');
+          } else {
+            expect(chunk.toString()).to.equal('<a name="2.0.0"></a>\n# 2.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Performance Improvements\n\n* **template:** tweak \n\n* **name:** rename this module to conventional-commits-writer \n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('`context.date` should be overwritten by `commit.authorDate`', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        type: 'feat',
+        scope: 'scope',
+        subject: 'broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        type: 'fix',
+        scope: 'ng-list',
+        subject: 'Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.1',
+        authorDate: '2015-04-07 15:01:30 +1000'
+      });
+      upstream.write({
+        header: 'perf(template): tweak',
+        type: 'perf',
+        scope: 'template',
+        subject: 'tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: []
+      });
+      upstream.write({
+        header: 'refactor(name): rename this module to conventional-commits-writer',
+        type: 'refactor',
+        scope: 'name',
+        subject: 'rename this module to conventional-commits-writer',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        version: '2.0.0',
+        authorDate: '2015-02-07 15:01:30 +1000'
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalcommitsWriter({
+          date: '2015-03-07'
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          if (i === 0) {
+            expect(chunk.toString()).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator \n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction \n\n\n\n');
+          } else {
+            expect(chunk.toString()).to.equal('<a name="2.0.0"></a>\n# 2.0.0 (2015-02-07)\n\n\n### Performance Improvements\n\n* **template:** tweak \n\n* **name:** rename this module to conventional-commits-writer \n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+  });
 });

@@ -9,6 +9,7 @@ var _ = require('lodash');
 function conventionalcommitsWriter(context, options) {
   var commits = [];
   var notes = [];
+  var generated = false;
 
   context = _.extend({
     title: '',
@@ -44,10 +45,6 @@ function conventionalcommitsWriter(context, options) {
         return subject.substring(0, 80);
       },
       type: function(type) {
-        if (!type) {
-          return;
-        }
-
         if (type === 'fix') {
           return 'Bug Fixes';
         } else if (type === 'feat') {
@@ -55,6 +52,13 @@ function conventionalcommitsWriter(context, options) {
         } else if (type === 'perf') {
           return 'Performance Improvements';
         }
+      },
+      authorDate: function(date) {
+        if (!date) {
+          return;
+        }
+
+        return dateFormat(date, 'yyyy-mm-dd', true);
       }
     },
     groupBy: 'type',
@@ -65,11 +69,19 @@ function conventionalcommitsWriter(context, options) {
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
     notesSort: compareFunc(),
+    generateOn: 'version',
     mainTemplate: fs.readFileSync(__dirname + '/templates/template.hbs', 'utf-8'),
     headerPartial: fs.readFileSync(__dirname + '/templates/header.hbs', 'utf-8'),
     commitPartial: fs.readFileSync(__dirname + '/templates/commit.hbs', 'utf-8'),
     footerPartial: fs.readFileSync(__dirname + '/templates/footer.hbs', 'utf-8')
   }, options);
+
+  var generateOn = options.generateOn;
+  if (typeof generateOn === 'string') {
+    generateOn = function(chunk) {
+      return chunk[options.generateOn];
+    };
+  }
 
   options.commitGroupsSort = util.functionify(options.commitGroupsSort);
   options.commitsSort = util.functionify(options.commitsSort);
@@ -82,13 +94,17 @@ function conventionalcommitsWriter(context, options) {
     commits.push(commit);
     notes = notes.concat(commit.notes);
 
+    if (generateOn(chunk)) {
+      this.push(util.generate(options, commits, notes, context));
+      generated = true;
+    }
+
     cb();
   }, function(cb) {
-    var compiled = util.compileTemplates(options);
+    if (!generated || commits.length > 0) {
+      this.push(util.generate(options, commits, notes, context));
+    }
 
-    context = _.merge(context, util.getExtraContext(commits, notes, options));
-
-    this.push(compiled(context));
     cb();
   });
 }
