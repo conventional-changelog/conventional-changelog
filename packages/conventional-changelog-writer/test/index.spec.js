@@ -211,7 +211,7 @@ describe('conventionalCommitsWriter', function() {
   });
 
   describe('generate', function() {
-    it('should generate on `\'version\'` by default', function(done) {
+    it('should generate on `\'version\'` if it\'s a valid semver by default', function(done) {
       var i = 0;
 
       var upstream = through.obj();
@@ -279,7 +279,7 @@ describe('conventionalCommitsWriter', function() {
         }));
     });
 
-    it('`generateOn` could be a function', function(done) {
+    it('`generateOn` could be a string', function(done) {
       var i = 0;
 
       var upstream = through.obj();
@@ -328,9 +328,7 @@ describe('conventionalCommitsWriter', function() {
 
       upstream
         .pipe(conventionalcommitsWriter({}, {
-          generateOn: function(chunk) {
-            return chunk.version;
-          }
+          generateOn: 'version'
         }))
         .pipe(through(function(chunk, enc, cb) {
           if (i === 0) {

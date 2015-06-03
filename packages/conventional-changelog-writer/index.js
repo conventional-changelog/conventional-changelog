@@ -2,6 +2,7 @@
 var compareFunc = require('compare-func');
 var dateFormat = require('dateformat');
 var fs = require('fs');
+var semverValid = require('semver').valid;
 var through = require('through2');
 var util = require('./lib/util');
 var _ = require('lodash');
@@ -69,7 +70,9 @@ function conventionalcommitsWriter(context, options) {
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
     notesSort: compareFunc(),
-    generateOn: 'version',
+    generateOn: function(commit) {
+      return semverValid(commit.version);
+    },
     mainTemplate: fs.readFileSync(__dirname + '/templates/template.hbs', 'utf-8'),
     headerPartial: fs.readFileSync(__dirname + '/templates/header.hbs', 'utf-8'),
     commitPartial: fs.readFileSync(__dirname + '/templates/commit.hbs', 'utf-8'),

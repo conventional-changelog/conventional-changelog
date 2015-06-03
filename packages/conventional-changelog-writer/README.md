@@ -216,9 +216,9 @@ The string can be a dot path to a nested object property.
 
 ##### generateOn
 
-Type: `function` or `string` Default: `'version'`
+Type: `function` or `string` Default: if `commit.version` is a valid semver
 
-when it reaches the end of the commit it will generate logs by default. However, it can generate logs according this criteria even it's not the end.
+when it reaches the end of the commit it will generate logs by default. However, it can generate logs according this criteria even it's not the end. **NOTE**: It verifies the original commit chunk instead of the transformed one.
 
 ##### mainTemplate
 
