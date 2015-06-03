@@ -324,6 +324,24 @@ describe('util', function() {
         doNothing: 'nothing'
       });
     });
+
+    it('should transform by an object using dot path', function() {
+      var processed = util.processCommit({
+        header: {
+          subject: 'my subject'
+        }
+      }, {
+        'header.subject': function(subject) {
+          return subject.substring(0, 5);
+        }
+      });
+
+      expect(processed).to.eql({
+        header: {
+          subject: 'my su'
+        }
+      });
+    });
   });
 
   describe('processContext', function() {
