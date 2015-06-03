@@ -52,6 +52,8 @@ This module also have the following additions:
 
 Type: `string` Default: `'%B'`
 
+Please check http://git-scm.com/docs/git-log for format options.
+
 
 ## CLI
 

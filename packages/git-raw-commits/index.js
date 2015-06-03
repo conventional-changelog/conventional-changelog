@@ -18,7 +18,6 @@ function gitRawCommits(options) {
     from: '',
     to: 'HEAD',
     format: '%B'
-    //format: '%s%n%b%n%H%n%cn <%ce> (%ci)%n%an <%ae> (%ai)%n%d'
   }, options);
 
   var args = dargs(options, {
