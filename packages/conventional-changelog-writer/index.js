@@ -12,7 +12,6 @@ function conventionalcommitsWriter(context, options) {
   var generated = false;
 
   context = _.extend({
-    title: '',
     commit: 'commits',
     issue: 'issues',
     date: dateFormat(new Date(), 'yyyy-mm-dd', true)

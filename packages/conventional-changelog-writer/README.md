@@ -112,11 +112,11 @@ Variables that will be interpolated to the template.
 
 Type: `string`
 
-Version number of the up-coming release. If `version` is found in the last commit, it will be overwritten.
+Version number of the up-coming release. If `version` is found in the last commit before generating logs, it will be overwritten.
 
 ##### title
 
-Type: `string` Default: `''`
+Type: `string`
 
 ##### isPatch
 
