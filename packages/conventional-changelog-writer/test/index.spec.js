@@ -77,6 +77,26 @@ describe('conventionalCommitsWriter', function() {
     return upstream;
   }
 
+  describe('no commits', function() {
+    it('should still work if there is no commits', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.end();
+      upstream
+        .pipe(conventionalcommitsWriter())
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n\n\n');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(1);
+          done();
+        }));
+    });
+  });
+
   describe('host', function() {
     it('should work if there is a "/" at the end of host', function(done) {
       var i = 0;
