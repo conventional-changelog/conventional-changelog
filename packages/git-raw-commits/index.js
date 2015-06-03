@@ -12,7 +12,7 @@ function gitRawCommits(options) {
   var cmd;
 
   var readable = new stream.Readable();
-  readable._read = function() {}
+  readable._read = function() {};
 
   options = _.extend({
     from: '',

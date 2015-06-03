@@ -14,10 +14,11 @@ shell.exec('git init');
 it('should emit an error if there is no commits', function(done) {
   gitRawCommits()
     .on('error', function(err) {
+      expect(err).to.be.ok; // jshint ignore:line
       done();
     })
     .pipe(through(function() {
-      /* istanbul ignore next */
+      // istanbul ignore next
       done('should error');
     }));
 });
