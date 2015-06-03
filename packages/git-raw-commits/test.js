@@ -17,6 +17,7 @@ it('should emit an error if there is no commits', function(done) {
       done();
     })
     .pipe(through(function() {
+      /* istanbul ignore next */
       done('should error');
     }));
 });
@@ -36,11 +37,11 @@ it('should get commits without `options` (`options.from` defaults to first commi
       chunk = chunk.toString();
 
       if (i === 0) {
-        expect(chunk).to.contain('Third commit');
+        expect(chunk).to.equal('Third commit\n\n');
       } else if (i === 1) {
-        expect(chunk).to.contain('Second commit');
+        expect(chunk).to.equal('Second commit\n\n');
       } else {
-        expect(chunk).to.contain('First commit');
+        expect(chunk).to.equal('First commit\n\n');
       }
 
       i++;
@@ -60,7 +61,7 @@ it('should honour `options.from`', function(done) {
     .pipe(through(function(chunk, enc, cb) {
       chunk = chunk.toString();
 
-      expect(chunk).to.contain('Third commit');
+      expect(chunk).to.equal('Third commit\n\n');
 
       i++;
       cb();
@@ -80,9 +81,9 @@ it('should honour `options.to`', function(done) {
       chunk = chunk.toString();
 
       if (i === 0) {
-        expect(chunk).to.contain('Second commit');
+        expect(chunk).to.equal('Second commit\n\n');
       } else {
-        expect(chunk).to.contain('First commit');
+        expect(chunk).to.equal('First commit\n\n');
       }
 
       i++;
