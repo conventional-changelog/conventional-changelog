@@ -46,11 +46,8 @@ it('should get commits without `options` (`options.from` defaults to first commi
       i++;
       cb();
     }, function() {
-      if (i === 3) {
-        done();
-      } else {
-        done(new Error('should contain three commits but got ' + i));
-      }
+      expect(i).to.equal(3);
+      done();
     }));
 });
 
@@ -68,11 +65,8 @@ it('should honour `options.from`', function(done) {
       i++;
       cb();
     }, function() {
-      if (i === 1) {
-        done();
-      } else {
-        done(new Error('should contain one commits but got ' + i));
-      }
+      expect(i).to.equal(1);
+      done();
     }));
 });
 
@@ -94,10 +88,7 @@ it('should honour `options.to`', function(done) {
       i++;
       cb();
     }, function() {
-      if (i === 2) {
-        done();
-      } else {
-        done(new Error('should contain two commits but got ' + i));
-      }
+      expect(i).to.equal(2);
+      done();
     }));
 });
