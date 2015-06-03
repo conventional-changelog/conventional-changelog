@@ -183,6 +183,31 @@ describe('conventionalCommitsWriter', function() {
           done();
         }));
     });
+
+    it('should strip the leading v', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'bla',
+        body: null,
+        footer: null,
+        notes: [],
+        version: 'v1.0.0'
+      });
+      upstream.end();
+      upstream
+        .pipe(conventionalcommitsWriter())
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.equal('<a name="1.0.0"></a>\n# 1.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n* bla \n\n\n\n');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(1);
+          done();
+        }));
+    });
   });
 
   describe('generate', function() {
@@ -277,7 +302,7 @@ describe('conventionalCommitsWriter', function() {
         footer: null,
         notes: [],
         references: [],
-        version: '1.0.1'
+        version: 'v1.0.1'
       });
       upstream.write({
         header: 'perf(template): tweak',

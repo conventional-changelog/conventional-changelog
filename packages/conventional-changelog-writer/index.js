@@ -31,18 +31,14 @@ function conventionalcommitsWriter(context, options) {
   options = _.extend({
     transform: {
       hash: function(hash) {
-        if (!hash) {
-          return;
+        if (typeof hash === 'string') {
+          return hash.substring(0, 7);
         }
-
-        return hash.substring(0, 7);
       },
       subject: function(subject) {
-        if (!subject) {
-          return;
+        if (typeof subject === 'string') {
+          return subject.substring(0, 80);
         }
-
-        return subject.substring(0, 80);
       },
       type: function(type) {
         if (type === 'fix') {
@@ -51,6 +47,11 @@ function conventionalcommitsWriter(context, options) {
           return 'Features';
         } else if (type === 'perf') {
           return 'Performance Improvements';
+        }
+      },
+      version: function(version) {
+        if (typeof version === 'string') {
+          return version.replace(/^[v=]/i, '');
         }
       },
       authorDate: function(date) {
