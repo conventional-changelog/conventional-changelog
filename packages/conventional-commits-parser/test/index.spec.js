@@ -31,23 +31,26 @@ describe('conventionalCommitsParser', function() {
     });
     stream.end();
 
-    var length = commits.length;
+    var i = 0;
 
     stream
       .pipe(conventionalCommitsParser())
       .pipe(through.obj(function(chunk, enc, cb) {
-        --length;
-        if (length === 3) {
+        if (i === 0) {
           expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
-        } else if (length === 2) {
+        } else if (i === 1) {
           expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
-        } else if (length === 1) {
+        } else if (i === 2) {
           expect(chunk.header).to.equal('fix(zzz): Very cool commit\n');
-        } else {
+        } else if (i === 3) {
           expect(chunk.header).to.equal('chore(scope with spaces): some chore\n');
-          done();
         }
+
+        i++;
         cb();
+      }, function() {
+        expect(i).to.equal(4);
+        done();
       }));
   });
 
@@ -129,7 +132,7 @@ describe('conventionalCommitsParser', function() {
 
   it('should take options', function(done) {
     var stream = through();
-    var length = commits.length;
+    var i = 0;
 
     forEach(commits, function(commit) {
       stream.write(commit);
@@ -143,7 +146,7 @@ describe('conventionalCommitsParser', function() {
         referenceKeywords: ['fix']
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
-        if (--length === 1) {
+        if (i === 0) {
           expect(chunk.type).to.equal('feat');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Allow custom separator');
@@ -158,7 +161,7 @@ describe('conventionalCommitsParser', function() {
             raw: '#33',
             repository: null
           }]);
-        } else {
+        } else if (i === 1) {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Another custom separator');
@@ -166,9 +169,13 @@ describe('conventionalCommitsParser', function() {
             title: 'BREAKING CHANGES',
             text: 'some breaking changes\n'
           });
-          done();
         }
+
+        i++;
         cb();
+      }, function() {
+        expect(i).to.equal(2);
+        done();
       }));
   });
 
