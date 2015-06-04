@@ -49,6 +49,17 @@ function conventionalcommitsWriter(context, options) {
           return 'Performance Improvements';
         }
       },
+      notes: function(notes) {
+        _.map(notes, function(note) {
+          if (note.title === 'BREAKING CHANGE') {
+            note.title = 'BREAKING CHANGES';
+          }
+
+          return note;
+        });
+
+        return notes;
+      },
       version: function(version) {
         if (typeof version === 'string') {
           return version.replace(/^[v=]/i, '');
@@ -63,9 +74,6 @@ function conventionalcommitsWriter(context, options) {
       }
     },
     groupBy: 'type',
-    noteGroups: {
-      'BREAKING CHANGE': 'BREAKING CHANGES'
-    },
     commitGroupsSort: 'title',
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',

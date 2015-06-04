@@ -109,7 +109,7 @@ describe('conventionalCommitsWriter', function() {
           repository: 'a/b'
         }))
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name="0.0.1"></a>\n## 0.0.1 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n### BREAKING NEWS\n\n* breaking news\n\n\n\n');
 
           i++;
           cb(null);
@@ -132,7 +132,7 @@ describe('conventionalCommitsWriter', function() {
           repository: 'a/b'
         }))
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name="0.5.0"></a>\n# 0.5.0 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name="0.5.0"></a>\n# 0.5.0 "this is a title" (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1) [#2](https://github.com/a/b/issues/2) [#3](https://github.com/a/b/issues/3)\n\n### Performance Improvements\n\n* **template:** tweak ([2064a93][https://github.com/a/b/commits/2064a93])\n\n* **name:** rename this module to conventional-commits-writer ([5f24141][https://github.com/a/b/commits/5f24141])\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n### BREAKING NEWS\n\n* breaking news\n\n\n\n');
 
           i++;
           cb(null);
@@ -148,7 +148,7 @@ describe('conventionalCommitsWriter', function() {
       getStream()
         .pipe(conventionalcommitsWriter())
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator 13f3160\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction 9b1aff9, closes #1 #2 #3\n\n### Performance Improvements\n\n* **template:** tweak 2064a93\n\n* **name:** rename this module to conventional-commits-writer 5f24141\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator 13f3160\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction 9b1aff9, closes #1 #2 #3\n\n### Performance Improvements\n\n* **template:** tweak 2064a93\n\n* **name:** rename this module to conventional-commits-writer 5f24141\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n### BREAKING NEWS\n\n* breaking news\n\n\n\n');
 
           i++;
           cb(null);
@@ -200,6 +200,22 @@ describe('conventionalCommitsWriter', function() {
         .pipe(conventionalcommitsWriter())
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.equal('<a name="1.0.0"></a>\n# 1.0.0 (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n* bla \n\n\n\n');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(1);
+          done();
+        }));
+    });
+
+    it('should change "BREAKING CHANGE" to "BREAKING CHANGES"', function(done) {
+      var i = 0;
+
+      getStream()
+        .pipe(conventionalcommitsWriter())
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (2015-06-04)\n\n\n### Bug Fixes\n\n* **ng-list:** Allow custom separator 13f3160\n\n### Features\n\n* **scope:** broadcast $destroy event on scope destruction 9b1aff9, closes #1 #2 #3\n\n### Performance Improvements\n\n* **template:** tweak 2064a93\n\n* **name:** rename this module to conventional-commits-writer 5f24141\n\n\n### BREAKING CHANGES\n\n* some breaking change\n\n### BREAKING NEWS\n\n* breaking news\n\n\n\n');
 
           i++;
           cb(null);

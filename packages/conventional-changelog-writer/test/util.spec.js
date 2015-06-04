@@ -181,66 +181,62 @@ describe('util', function() {
 
   describe('getNoteGroups', function() {
     var notes = [{
-      title: 'A',
+      title: 'A title',
       text: 'this is A and its a bit longer'
     }, {
-      title: 'B',
+      title: 'B+',
       text: 'this is B'
     }, {
       title: 'C',
       text: 'this is C'
     }, {
-      title: 'A',
+      title: 'A title',
       text: 'this is another A'
     }, {
-      title: 'B',
+      title: 'B+',
       text: 'this is another B'
     }];
-    var noteGroupsMapping = {
-      A: 'Big A',
-      B: 'Big B+'
-    };
 
     it('should group', function() {
-      var noteGroups = util.getNoteGroups(notes, noteGroupsMapping);
+      var noteGroups = util.getNoteGroups(notes);
 
       expect(noteGroups).to.eql([{
-        title: 'Big A',
+        title: 'A title',
         notes: ['this is A and its a bit longer', 'this is another A']
       }, {
-        title: 'Big B+',
+        title: 'B+',
         notes: ['this is B', 'this is another B']
+      }, {
+        title: 'C',
+        notes: ['this is C']
       }]);
     });
 
-    it('should lose all notes', function() {
-      var noteGroups = util.getNoteGroups(notes);
-
-      expect(noteGroups).to.eql([]);
-    });
-
     it('should group and sort groups', function() {
-      var noteGroups = util.getNoteGroups(notes, noteGroupsMapping, function(a, b) {
-        if (a.title.length < b.title.length) {
+      var noteGroups = util.getNoteGroups(notes, function(a, b) {
+        if (a.title.length > b.title.length) {
           return 1;
         }
-        if (a.title.length > b.title.length) {
+        if (a.title.length < b.title.length) {
           return -1;
         }
         return 0;
       });
 
       expect(noteGroups).to.eql([{
-        title: 'Big B+',
+        title: 'C',
+        notes: ['this is C']
+      }, {
+        title: 'B+',
         notes: ['this is B', 'this is another B']
       }, {
-        title: 'Big A',
+        title: 'A title',
         notes: ['this is A and its a bit longer', 'this is another A']
       }]);
     });
 
     it('should group and sort notes', function() {
-      var noteGroups = util.getNoteGroups(notes, noteGroupsMapping, false, function(a, b) {
+      var noteGroups = util.getNoteGroups(notes, false, function(a, b) {
         if (a.length < b.length) {
           return 1;
         }
@@ -251,11 +247,40 @@ describe('util', function() {
       });
 
       expect(noteGroups).to.eql([{
-        title: 'Big A',
+        title: 'A title',
         notes: ['this is A and its a bit longer', 'this is another A']
       }, {
-        title: 'Big B+',
+        title: 'B+',
         notes: ['this is another B', 'this is B']
+      }, {
+        title: 'C',
+        notes: ['this is C']
+      }]);
+    });
+
+    it('should work if title does not exist', function() {
+      var notes = [{
+        title: '',
+        text: 'this is A and its a bit longer'
+      }, {
+        title: 'B+',
+        text: 'this is B'
+      }, {
+        title: '',
+        text: 'this is another A'
+      }, {
+        title: 'B+',
+        text: 'this is another B'
+      }];
+
+      var noteGroups = util.getNoteGroups(notes);
+
+      expect(noteGroups).to.eql([{
+        title: '',
+        notes: ['this is A and its a bit longer', 'this is another A']
+      }, {
+        title: 'B+',
+        notes: ['this is B', 'this is another B']
       }]);
     });
   });
@@ -353,6 +378,7 @@ describe('util', function() {
       groupBy: 'Big B',
       content: 'this is B and its a bit longer'
     }];
+
     var notes = [{
       title: 'A',
       text: 'this is A and its a bit longer'
@@ -360,24 +386,15 @@ describe('util', function() {
       title: 'B',
       text: 'this is B'
     }, {
-      title: 'C',
-      text: 'this is C'
-    }, {
       title: 'A',
       text: 'this is another A'
     }, {
       title: 'B',
       text: 'this is another B'
     }];
-    var noteGroupsMapping = {
-      A: 'Big A',
-      B: 'Big B+'
-    };
 
     it('should process context without `options.groupBy`', function() {
-      var extra = util.getExtraContext(commits, notes, {
-        noteGroups: noteGroupsMapping
-      });
+      var extra = util.getExtraContext(commits, notes, {});
 
       expect(extra).to.eql({
         commitGroups: [{
@@ -392,13 +409,13 @@ describe('util', function() {
           }]
         }],
         noteGroups: [{
-          title: 'Big A',
+          title: 'A',
           notes: [
             'this is A and its a bit longer',
             'this is another A'
           ]
         }, {
-          title: 'Big B+',
+          title: 'B',
           notes: [
             'this is B',
             'this is another B'
@@ -427,7 +444,19 @@ describe('util', function() {
             groupBy: 'Big B'
           }]
         }],
-        noteGroups: []
+        noteGroups: [{
+          title: 'A',
+          notes: [
+            'this is A and its a bit longer',
+            'this is another A'
+          ]
+        }, {
+          title: 'B',
+          notes: [
+            'this is B',
+            'this is another B'
+          ]
+        }]
       });
     });
 
@@ -448,7 +477,19 @@ describe('util', function() {
             groupBy: 'Big B'
           }]
         }],
-        noteGroups: []
+        noteGroups: [{
+          title: 'A',
+          notes: [
+            'this is A and its a bit longer',
+            'this is another A'
+          ]
+        }, {
+          title: 'B',
+          notes: [
+            'this is B',
+            'this is another B'
+          ]
+        }]
       });
     });
   });

@@ -166,7 +166,7 @@ Type: `object`
 
 ##### transform
 
-Type: `object` or `function` Default: get the first 7 digits of hash, change 'fix', 'feat' and 'perf' to 'Bug Fixes', 'Features' and 'Performance Improvements', strip leading `'v'` for `version`, and `authorDate` will be formatted as `'yyyy-mm-dd'`.
+Type: `object` or `function` Default: get the first 7 digits of hash, change `'fix'`, `'feat'` and `'perf'` to `'Bug Fixes'`, `'Features'` and `'Performance Improvements'`, strip leading `'v'` for `version`, change `'BREAKING CHANGE'` to `'BREAKING CHANGES'`, and `authorDate` will be formatted as `'yyyy-mm-dd'`.
 
 Replace with new values in each commit. If this is an object, the keys are paths (can be a [dot path](https://github.com/sindresorhus/dot-prop) to a nested object property) and the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object. This is a handy function if you can't provide a transform stream as an upstream of this one.
 
@@ -175,12 +175,6 @@ Replace with new values in each commit. If this is an object, the keys are paths
 Type: `string` Default: `'type'`
 
 How to group the commits. If this value is falsy, commits are not grouped.
-
-##### noteGroups
-
-Type: `object` Default: `{ 'BREAKING CHANGE': 'BREAKING CHANGES' }`
-
-Replace with new group titles. If a note's title is not in this mapping, the note will be ignored.
 
 ##### commitGroupsSort
 

@@ -52,28 +52,26 @@ function getCommitGroups(groupBy, commits, groupsSort, commitsSort) {
   return commitGroups;
 }
 
-function getNoteGroups(notes, noteGroups, noteGroupsSort, notesSort) {
-  noteGroups = noteGroups || {};
+function getNoteGroups(notes, noteGroupsSort, notesSort) {
   var retGroups = [];
 
   _.forEach(notes, function(note) {
-    var title = noteGroups[note.title];
-    if (title) {
-      var titleExists = false;
-      _.forEach(retGroups, function(group) {
-        if (group.title === title) {
-          titleExists = true;
-          group.notes.push(note.text);
-          return false;
-        }
-      });
+    var title = note.title;
+    var titleExists = false;
 
-      if (!titleExists) {
-        retGroups.push({
-          title: title,
-          notes: [note.text]
-        });
+    _.forEach(retGroups, function(group) {
+      if (group.title === title) {
+        titleExists = true;
+        group.notes.push(note.text);
+        return false;
       }
+    });
+
+    if (!titleExists) {
+      retGroups.push({
+        title: title,
+        notes: [note.text]
+      });
     }
   });
 
@@ -120,7 +118,7 @@ function getExtraContext(commits, notes, options) {
   context.commitGroups = getCommitGroups(options.groupBy, commits, options.commitGroupsSort, options.commitsSort);
 
   // group `notes` for footer
-  context.noteGroups = getNoteGroups(notes, options.noteGroups, options.noteGroupsSort, options.notesSort);
+  context.noteGroups = getNoteGroups(notes, options.noteGroupsSort, options.notesSort);
 
   return context;
 }
