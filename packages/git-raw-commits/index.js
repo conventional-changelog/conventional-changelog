@@ -33,8 +33,7 @@ function gitRawCommits(options) {
   child.stdout
     .pipe(split('------------------------ >8 ------------------------\n'))
     .pipe(through(function(chunk, enc, cb) {
-      chunk = chunk.toString();
-      readable.push(chunk.toString());
+      readable.push(chunk);
 
       cb();
     }, function(cb) {
@@ -44,7 +43,7 @@ function gitRawCommits(options) {
 
   child.stderr
     .pipe(through.obj(function(chunk) {
-      readable.emit('error', chunk.toString());
+      readable.emit('error', chunk);
       readable.push(null);
     }));
 
