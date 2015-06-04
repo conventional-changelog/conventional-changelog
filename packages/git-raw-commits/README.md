@@ -38,17 +38,17 @@ Please check the available options at http://git-scm.com/docs/git-log.
 
 *NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this patter:
 
-#### from
+##### from
 
 Type: `string` Default: `''`
 
-#### to
+##### to
 
 Type: `string` Default: `'HEAD'`
 
 This module also have the following additions:
 
-#### format
+##### format
 
 Type: `string` Default: `'%B'`
 

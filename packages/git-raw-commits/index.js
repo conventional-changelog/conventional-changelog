@@ -1,10 +1,11 @@
 'use strict';
+var assign = require('lodash.assign');
 var dargs = require('dargs');
 var exec = require('child_process').exec;
 var split = require('split2');
 var stream = require('stream');
+var template = require('lodash.template');
 var through = require('through2');
-var _ = require('lodash');
 
 function gitRawCommits(options) {
   options = options || {};
@@ -14,7 +15,7 @@ function gitRawCommits(options) {
   var readable = new stream.Readable();
   readable._read = function() {};
 
-  options = _.extend({
+  options = assign({
     from: '',
     to: 'HEAD',
     format: '%B'
@@ -24,7 +25,7 @@ function gitRawCommits(options) {
     excludes: ['from', 'to', 'format']
   });
 
-  cmd = _.template(
+  cmd = template(
     'git log --format=\'<%= format %>%n------------------------ >8 ------------------------\' ' +
     '<%= from ? [from, to].join("..") : to %> '
   )(options) + args.join(' ');
@@ -38,6 +39,7 @@ function gitRawCommits(options) {
       cb();
     }, function(cb) {
       readable.push(null);
+
       cb();
     }));
 

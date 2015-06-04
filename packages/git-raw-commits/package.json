@@ -25,21 +25,24 @@
   ],
   "dependencies": {
     "dargs": "^4.0.1",
-    "git-latest-tag": "0.0.6",
-    "lodash": "^3.9.3",
+    "lodash.assign": "^3.2.0",
+    "lodash.template": "^3.6.1",
     "meow": "^3.1.0",
     "split2": "^0.2.1",
     "through2": "^0.6.5"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
+    "chai": "^3.0.0",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.14",
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
     "mocha": "*",
     "shelljs": "^0.5.0"
   },
   "scripts": {
-    "test": "mocha",
+    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "test": "npm run-script lint && mocha",
     "coverage": "istanbul cover -x test.js _mocha -- -R spec && rm -rf ./coverage"
   },
   "bin": {
