@@ -245,7 +245,7 @@ It is possible to customize this the changelog to suit your needs. Templates are
 
 ### upstream
 
-Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables.
+Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables. A "raw" (original) commit message is attached to `commit.raw`.
 
 ### context
 

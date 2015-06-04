@@ -300,7 +300,13 @@ describe('util', function() {
         hash: '456789uhghi',
         subject: 'my subject!!!',
         replaceThis: 'bad',
-        doNothing: 'nothing'
+        doNothing: 'nothing',
+        raw: {
+          hash: '456789uhghi',
+          subject: 'my subject!!!',
+          replaceThis: 'bad',
+          doNothing: 'nothing',
+        }
       });
     });
 
@@ -311,7 +317,13 @@ describe('util', function() {
         hash: '456789uhghi',
         subject: 'my subject!!!',
         replaceThis: 'bad',
-        doNothing: 'nothing'
+        doNothing: 'nothing',
+        raw: {
+          hash: '456789uhghi',
+          subject: 'my subject!!!',
+          replaceThis: 'bad',
+          doNothing: 'nothing',
+        }
       });
     });
 
@@ -327,7 +339,13 @@ describe('util', function() {
         hash: '4567',
         subject: 'my su',
         replaceThis: 'replaced',
-        doNothing: 'nothing'
+        doNothing: 'nothing',
+        raw: {
+          hash: '456789uhghi',
+          subject: 'my subject!!!',
+          replaceThis: 'bad',
+          doNothing: 'nothing',
+        }
       });
     });
 
@@ -346,7 +364,13 @@ describe('util', function() {
         hash: '4567',
         subject: 'my su',
         replaceThis: 'replaced',
-        doNothing: 'nothing'
+        doNothing: 'nothing',
+        raw: {
+          hash: '456789uhghi',
+          subject: 'my subject!!!',
+          replaceThis: 'bad',
+          doNothing: 'nothing',
+        }
       });
     });
 
@@ -364,6 +388,11 @@ describe('util', function() {
       expect(processed).to.eql({
         header: {
           subject: 'my su'
+        },
+        raw: {
+          header: {
+            subject: 'my subject'
+          }
         }
       });
     });

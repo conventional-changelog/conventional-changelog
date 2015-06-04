@@ -87,13 +87,15 @@ function processCommit(chunk, transform) {
   var commit;
 
   try {
-    commit = JSON.parse(chunk);
-  } catch (e) {
-    commit = _.cloneDeep(chunk);
-  }
+    chunk = JSON.parse(chunk);
+  } catch (e) {}
+
+  commit = _.cloneDeep(chunk);
 
   if (_.isFunction(transform)) {
-    return transform(commit);
+    commit = transform(commit);
+    commit.raw = chunk;
+    return commit;
   }
 
   _.forEach(transform, function(el, path) {
@@ -107,6 +109,8 @@ function processCommit(chunk, transform) {
 
     dotProp.set(commit, path, value);
   });
+
+  commit.raw = chunk;
 
   return commit;
 }
