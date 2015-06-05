@@ -106,7 +106,7 @@ Returns a transform stream.
 
 #### context
 
-Variables that will be interpolated to the template.
+Variables that will be interpolated to the template. This object contains, but not limits to the following fields.
 
 ##### version
 
