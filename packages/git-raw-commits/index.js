@@ -8,7 +8,6 @@ var template = require('lodash.template');
 var through = require('through2');
 
 function gitRawCommits(options) {
-  var cmd;
   var readable = new stream.Readable();
   readable._read = function() {};
 
@@ -22,7 +21,7 @@ function gitRawCommits(options) {
     excludes: ['from', 'to', 'format']
   });
 
-  cmd = template(
+  var cmd = template(
     'git log --format=\'<%= format %>%n------------------------ >8 ------------------------\' ' +
     '<%= from ? [from, to].join("..") : to %> '
   )(options) + args.join(' ');
