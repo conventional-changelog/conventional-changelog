@@ -8,10 +8,7 @@ var template = require('lodash.template');
 var through = require('through2');
 
 function gitRawCommits(options) {
-  options = options || {};
-
   var cmd;
-
   var readable = new stream.Readable();
   readable._read = function() {};
 
