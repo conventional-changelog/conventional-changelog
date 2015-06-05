@@ -1,7 +1,8 @@
 'use strict';
 var compareFunc = require('compare-func');
 var dateFormat = require('dateformat');
-var fs = require('fs');
+var join = require('path').join;
+var readFileSync = require('fs').readFileSync;
 var semverValid = require('semver').valid;
 var through = require('through2');
 var util = require('./lib/util');
@@ -81,10 +82,10 @@ function conventionalcommitsWriter(context, options) {
     generateOn: function(commit) {
       return semverValid(commit.version);
     },
-    mainTemplate: fs.readFileSync(__dirname + '/templates/template.hbs', 'utf-8'),
-    headerPartial: fs.readFileSync(__dirname + '/templates/header.hbs', 'utf-8'),
-    commitPartial: fs.readFileSync(__dirname + '/templates/commit.hbs', 'utf-8'),
-    footerPartial: fs.readFileSync(__dirname + '/templates/footer.hbs', 'utf-8')
+    mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
+    headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
+    commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
+    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
   }, options);
 
   var generateOn = options.generateOn;
