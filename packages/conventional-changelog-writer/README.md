@@ -83,8 +83,8 @@ Each chunk should be a commit. Json object is also **valid**. The downstream wil
 
 ### Features
 
-* **ng-list:** Allow custom separator ([13f3160][https://github.com/a/b/commits/13f3160])
-* **scope:** broadcast $destroy event on scope destruction ([9b1aff9][https://github.com/a/b/commits/9b1aff9]), closes [#1](https://github.com/a/b/issues/1)
+* **ng-list:** Allow custom separator ([13f3160](https://github.com/a/b/commits/13f3160))
+* **scope:** broadcast $destroy event on scope destruction ([9b1aff9](https://github.com/a/b/commits/9b1aff9)), closes [#1](https://github.com/a/b/issues/1)
 
 
 ### BREAKING CHANGES
