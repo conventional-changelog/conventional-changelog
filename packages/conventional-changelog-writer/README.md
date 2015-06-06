@@ -124,7 +124,7 @@ Issue or pull request keyword in the url if `options.linkReferences === true`.
 
 Type: `string` Default: `dateFormat(new Date(), 'yyyy-mm-dd', true)`
 
-Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date. If `version` is found in the last commit, `authorDate` will overwrite this.
+Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date. If `version` is found in the last commit, `committerDate` will overwrite this.
 
 #### options
 
@@ -132,7 +132,7 @@ Type: `object`
 
 ##### transform
 
-Type: `object` or `function` Default: get the first 7 digits of hash, strip leading `'v'` for `version`, and `authorDate` will be formatted as `'yyyy-mm-dd'`.
+Type: `object` or `function` Default: get the first 7 digits of hash, strip leading `'v'` for `version`, and `committerDate` will be formatted as `'yyyy-mm-dd'`.
 
 Replace with new values in each commit.
 

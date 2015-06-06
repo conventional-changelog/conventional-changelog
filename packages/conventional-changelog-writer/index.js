@@ -39,7 +39,7 @@ function conventionalcommitsWriter(context, options) {
           return version.replace(/^[v=]/i, '');
         }
       },
-      authorDate: function(date) {
+      committerDate: function(date) {
         if (!date) {
           return;
         }

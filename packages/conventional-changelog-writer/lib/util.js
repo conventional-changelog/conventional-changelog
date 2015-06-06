@@ -151,7 +151,7 @@ function generate(options, commits, notes, context) {
 
     if (keyCommit.version) {
       mergedContext.version = keyCommit.version;
-      mergedContext.date = keyCommit.authorDate || context.date;
+      mergedContext.date = keyCommit.committerDate || context.date;
     }
   }
 

@@ -241,7 +241,7 @@ describe('conventionalCommitsWriter', function() {
         footer: null,
         notes: [],
         references: [],
-        authorDate: '2015-04-07 14:17:05 +1000'
+        committerDate: '2015-04-07 14:17:05 +1000'
       });
       upstream.write({
         header: 'fix(ng-list): Allow custom separator',
@@ -250,7 +250,7 @@ describe('conventionalCommitsWriter', function() {
         notes: [],
         references: [],
         version: '1.0.1',
-        authorDate: '2015-04-07 15:00:44 +1000'
+        committerDate: '2015-04-07 15:00:44 +1000'
       });
       upstream.write({
         header: 'perf(template): tweak',
@@ -258,7 +258,7 @@ describe('conventionalCommitsWriter', function() {
         footer: null,
         notes: [],
         references: [],
-        authorDate: '2015-04-07 15:01:30 +1000'
+        committerDate: '2015-04-07 15:01:30 +1000'
       });
       upstream.write({
         header: 'refactor(name): rename this module to conventional-commits-writer',
@@ -266,7 +266,7 @@ describe('conventionalCommitsWriter', function() {
         footer: null,
         notes: [],
         references: [],
-        authorDate: '2015-04-08 09:43:59 +1000'
+        committerDate: '2015-04-08 09:43:59 +1000'
       });
       upstream.end();
 
