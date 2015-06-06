@@ -36,7 +36,7 @@ describe('partial.commit', function() {
     templateContext.linkReferences = true;
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash])\n');
+    expect(log).to.equal('* **my scope:** my subject ([hash](www.myhost.com/a/b/my commits/hash))\n');
   });
 
   it('should generate commit if `references` is truthy and `linkReferences` is falsy', function() {
@@ -63,7 +63,7 @@ describe('partial.commit', function() {
     }];
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash]), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n');
+    expect(log).to.equal('* **my scope:** my subject ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n');
   });
 
   it('should reference an issue in a different repository', function() {
@@ -74,7 +74,7 @@ describe('partial.commit', function() {
     }];
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('* **my scope:** my subject ([hash][www.myhost.com/a/b/my commits/hash]), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n');
+    expect(log).to.equal('* **my scope:** my subject ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n');
   });
 
   it('should generate commit if `scope` is missing', function() {
