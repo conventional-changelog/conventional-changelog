@@ -273,6 +273,29 @@ describe('conventionalCommitsWriter', function() {
       return upstream;
     }
 
+    it('should generate on the transformed commit', function(done) {
+      var i = 0;
+
+      getStream()
+        .pipe(conventionalcommitsWriter({
+          version: '1.0.0'
+        }, {
+          transform: function(commit) {
+            commit.version = '1.0.0';
+            return commit;
+          }
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.contain('# 1.0.0 ');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(5);
+          done();
+        }));
+    });
+
     describe('when commits are reversed', function() {
       it('should generate on `\'version\'` if it\'s a valid semver', function(done) {
         var i = 0;

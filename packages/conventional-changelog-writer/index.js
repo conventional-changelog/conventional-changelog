@@ -83,7 +83,7 @@ function conventionalcommitsWriter(context, options) {
     }
 
     // previous blocks of logs
-    if (generateOn(chunk)) {
+    if (generateOn(commit)) {
       this.push(util.generate(options, commits, notes, context));
     }
 
