@@ -14,15 +14,13 @@ Each commit message consists of a a **header**, a **body** (optional) and a **fo
 
 ```
 <header>
-<BLANK LINE>
 <body>
-<BLANK LINE>
 <footer>
 ```
 
 ### header
 
-The header has a special format that includes a **type**, a **scope** (optional) and a **subject**
+The header may optionally have a special format that includes other parts, such as **type**, **scope** and a **subject**
 
 ```
 <type>(<scope>): <subject>
@@ -34,7 +32,6 @@ The footer should contain any information about **Important Notes** (optional) a
 
 ```
 <important note>
-<BLANK LINE>
 <references>
 ```
 
@@ -49,8 +46,6 @@ Tests are added for these
 ```
 
 Then `sideNotes` will be `It should warn the correct unfound file names.\nAlso it should continue if one file cannot be found.\nTests are added for these`. You can customize the `fieldPattern`.
-
-[More details](CONVENTIONS.md)
 
 
 ## Install
