@@ -7,17 +7,26 @@ var _ = require('lodash');
 
 function compileTemplates(templates) {
   var main = templates.mainTemplate;
+  var headerPartial = templates.headerPartial;
+  var commitPartial = templates.commitPartial;
+  var footerPartial = templates.footerPartial;
   var partials = templates.partials;
 
-  if (_.isEmpty(partials)) {
-    Handlebars.registerPartial('header', templates.headerPartial);
-    Handlebars.registerPartial('commit', templates.commitPartial);
-    Handlebars.registerPartial('footer', templates.footerPartial);
-  } else {
-    _.forEach(partials, function(partial, name) {
-      Handlebars.registerPartial(name, partial);
-    });
+  if (headerPartial) {
+    Handlebars.registerPartial('header', headerPartial);
   }
+
+  if (commitPartial) {
+    Handlebars.registerPartial('commit', commitPartial);
+  }
+
+  if (footerPartial) {
+    Handlebars.registerPartial('footer', footerPartial);
+  }
+
+  _.forEach(partials, function(partial, name) {
+    Handlebars.registerPartial(name, partial);
+  });
 
   return Handlebars.compile(main);
 }

@@ -214,7 +214,7 @@ Type: `string` Default: [footer.hbs](templates/footer.hbs)
 
 Type: `object`
 
-Partials that used in the main template, if any. The key should be the partial name and the value should be handlebars template strings. **NOTE**: This value will overwrite `headerPartial`, `commitPartial` and `footerPartial`. If you are using handlebars template files, read files by yourself.
+Partials that used in the main template, if any. The key should be the partial name and the value should be handlebars template strings. If you are using handlebars template files, read files by yourself.
 
 
 ## Customization Guide
