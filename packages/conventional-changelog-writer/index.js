@@ -103,8 +103,10 @@ function conventionalcommitsWriter(context, options) {
   return through.obj(function(chunk, enc, cb) {
     var commit = util.processCommit(chunk, options.transform);
 
-    commits.push(commit);
-    notes = notes.concat(commit.notes);
+    if (commit) {
+      commits.push(commit);
+      notes = notes.concat(commit.notes);
+    }
 
     if (generateOn(chunk)) {
       this.push(util.generate(options, commits, notes, context));

@@ -224,6 +224,26 @@ describe('conventionalCommitsWriter', function() {
           done();
         }));
     });
+
+    it('should ignore the commit if tranform returns `null`', function(done) {
+      var i = 0;
+
+      getStream()
+        .pipe(conventionalcommitsWriter({}, {
+          transform: function() {
+            return false;
+          }
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.equal('<a name=\"\"></a>\n#  (' + dateFormat(new Date(), 'yyyy-mm-dd', true) + ')\n\n\n\n\n');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(1);
+          done();
+        }));
+    });
   });
 
   describe('generate', function() {

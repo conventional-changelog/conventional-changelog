@@ -94,7 +94,11 @@ function processCommit(chunk, transform) {
 
   if (_.isFunction(transform)) {
     commit = transform(commit);
-    commit.raw = chunk;
+
+    if (commit) {
+      commit.raw = chunk;
+    }
+
     return commit;
   }
 
