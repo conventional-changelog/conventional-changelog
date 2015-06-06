@@ -11,7 +11,6 @@ var _ = require('lodash');
 function conventionalcommitsWriter(context, options) {
   var commits = [];
   var notes = [];
-  var generated = false;
 
   context = _.extend({
     commit: 'commits',
@@ -56,6 +55,7 @@ function conventionalcommitsWriter(context, options) {
     generateOn: function(commit) {
       return semverValid(commit.version);
     },
+    reverse: true,
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
@@ -77,21 +77,25 @@ function conventionalcommitsWriter(context, options) {
   return through.obj(function(chunk, enc, cb) {
     var commit = util.processCommit(chunk, options.transform);
 
-    if (commit) {
+    if (commit && !options.reverse) {
       commits.push(commit);
       notes = notes.concat(commit.notes);
     }
 
+    // previous blocks of logs
     if (generateOn(chunk)) {
       this.push(util.generate(options, commits, notes, context));
-      generated = true;
+    }
+
+    if (commit && options.reverse) {
+      commits.push(commit);
+      notes = notes.concat(commit.notes);
     }
 
     cb();
   }, function(cb) {
-    if (!generated || commits.length > 0) {
-      this.push(util.generate(options, commits, notes, context));
-    }
+    // latest (this) block of logs
+    this.push(util.generate(options, commits, notes, context));
 
     cb();
   });

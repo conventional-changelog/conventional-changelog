@@ -132,15 +132,18 @@ function getExtraContext(commits, notes, options) {
 }
 
 function generate(options, commits, notes, context) {
-  var lastCommit = commits[commits.length - 1];
-
   var compiled = compileTemplates(options);
 
   var mergedContext = _.merge({}, context, getExtraContext(commits, notes, options));
 
-  if (commits.length > 0 && lastCommit.version) {
-    mergedContext.version = lastCommit.version;
-    mergedContext.date = lastCommit.authorDate || context.date;
+  if (commits.length > 0) {
+    var keyIndex = options.reverse ? 0 : commits.length - 1;
+    var keyCommit = commits[keyIndex];
+
+    if (keyCommit.version) {
+      mergedContext.version = keyCommit.version;
+      mergedContext.date = keyCommit.authorDate || context.date;
+    }
   }
 
   if (mergedContext.version) {

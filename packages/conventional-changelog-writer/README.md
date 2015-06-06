@@ -140,6 +140,8 @@ If this is an object, the keys are paths (can be a [dot path](https://github.com
 
 If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object. This is a handy function if you can't provide a transform stream as an upstream of this one. If returns a falsy value this commit is ignored.
 
+a `raw` object that is originally poured form upstream is attached to `commit`.
+
 ##### groupBy
 
 Type: `string` Default: `'type'`
@@ -180,9 +182,15 @@ The string can be a dot path to a nested object property.
 
 ##### generateOn
 
-Type: `function` or `string` Default: if `commit.version` is a valid semver
+Type: `function` or `string` Default: if `commit.version` is a valid semver.
 
-when it reaches the end of the commit it will generate logs by default. However, it can generate logs according this criteria even it's not the end. **NOTE**: It verifies the original commit chunk instead of the transformed one.
+When the upstream finishes pouring the commits it will generate a block of logs by default. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream. **NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`).
+
+##### reverse
+
+Type: `boolean` Default: `true`
+
+Are the commits from upstream in the reverse order? You should only worry about this when generating more than one blocks of logs based on `generateOn`. If you find the last commit is in the wrong block inverse this value.
 
 ##### mainTemplate
 
@@ -215,7 +223,7 @@ It is possible to customize this the changelog to suit your needs. Templates are
 
 ### upstream
 
-Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables. A "raw" (original) commit message is attached to `commit.raw`.
+Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables. A "raw" commit message (original commit poured from upstream) is attached to `commit`.
 
 ### context
 
