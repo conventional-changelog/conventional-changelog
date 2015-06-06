@@ -146,7 +146,7 @@ function generate(options, commits, notes, context) {
   var mergedContext = _.merge({}, context, getExtraContext(commits, notes, options));
 
   if (commits.length > 0) {
-    var keyIndex = options.reverse ? 0 : commits.length - 1;
+    var keyIndex = options.reverse ? commits.length - 1 :  0;
     var keyCommit = commits[keyIndex];
 
     if (keyCommit.version) {

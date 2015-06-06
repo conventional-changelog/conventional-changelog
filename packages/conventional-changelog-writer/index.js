@@ -55,7 +55,7 @@ function conventionalcommitsWriter(context, options) {
     generateOn: function(commit) {
       return semverValid(commit.version);
     },
-    reverse: true,
+    reverse: false,
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
@@ -77,7 +77,7 @@ function conventionalcommitsWriter(context, options) {
   return through.obj(function(chunk, enc, cb) {
     var commit = util.processCommit(chunk, options.transform);
 
-    if (commit && !options.reverse) {
+    if (commit && options.reverse) {
       commits.push(commit);
       notes = notes.concat(commit.notes);
     }
@@ -87,7 +87,7 @@ function conventionalcommitsWriter(context, options) {
       this.push(util.generate(options, commits, notes, context));
     }
 
-    if (commit && options.reverse) {
+    if (commit && !options.reverse) {
       commits.push(commit);
       notes = notes.concat(commit.notes);
     }

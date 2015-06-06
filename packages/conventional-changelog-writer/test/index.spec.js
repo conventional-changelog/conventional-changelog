@@ -296,7 +296,7 @@ describe('conventionalCommitsWriter', function() {
         }));
     });
 
-    describe('when commits are reversed', function() {
+    describe('when commits are not reversed', function() {
       it('should generate on `\'version\'` if it\'s a valid semver', function(done) {
         var i = 0;
 
@@ -385,13 +385,13 @@ describe('conventionalCommitsWriter', function() {
       });
     });
 
-    describe('when commits are not reversed', function() {
+    describe('when commits are reversed', function() {
       it('should generate on `\'version\'` if it\'s a valid semver', function(done) {
         var i = 0;
 
         getStream()
           .pipe(conventionalcommitsWriter({}, {
-            reverse: false
+            reverse: true
           }))
           .pipe(through(function(chunk, enc, cb) {
             chunk = chunk.toString();
