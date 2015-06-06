@@ -3,39 +3,6 @@
 > Write logs based on conventional commits and templates
 
 
-## Conventional Commit Message Format
-
-Each input commit message consists of a **header**, a **body** (optional) and a **footer** (optional).
-
-```
-<header>
-<BLANK LINE>
-<body>
-<BLANK LINE>
-<footer>
-```
-
-### header
-
-The header has a special format that includes a **type**, a **scope** (optional) and a **subject**
-
-```
-<type>(<scope>): <subject>
-```
-
-### footer
-
-The footer should contain any information about **Important Notes** (optional) and is also the place to reference GitHub issues that this commit **references** (optional).
-
-```
-<important note>
-<BLANK LINE>
-<references>
-```
-
-[More details](CONVENTIONS.md)
-
-
 ## Install
 
 ```sh
@@ -51,7 +18,9 @@ var conventionalcommitsWriter = require('conventional-commits-writer');
 conventionalcommitsWriter(context, options);
 ```
 
-It returns a transform stream and expects an object mode upstream that looks something like this:
+It returns a transform stream.
+
+It expects an object mode upstream that looks something like this:
 
 ```js
 { hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
@@ -74,7 +43,9 @@ It returns a transform stream and expects an object mode upstream that looks som
   references: [] }
 ```
 
-Each chunk should be a commit. Json object is also **valid**. The downstream will look something like this:
+Each chunk should be a commit. Json object is also **valid**. Parts of the objects will be formatted and combined into a log based on the handlebars context, templates and options.
+
+The downstream might look something like this:
 
 ```js
 <a name="0.0.1"></a>
@@ -90,11 +61,6 @@ Each chunk should be a commit. Json object is also **valid**. The downstream wil
 ### BREAKING CHANGES
 
 * some breaking change
-
-
-
-
-
 ```
 
 
@@ -128,7 +94,7 @@ By default, this value is true if `version`'s patch is `0`.
 
 Type: `string`
 
-The hosting website. Eg: `'https://github.com/'` or `'https://bitbucket.org/'`
+The hosting website. Eg: `'https://github.com'` or `'https://bitbucket.org'`
 
 ##### repository
 
@@ -166,15 +132,19 @@ Type: `object`
 
 ##### transform
 
-Type: `object` or `function` Default: get the first 7 digits of hash, change `'fix'`, `'feat'` and `'perf'` to `'Bug Fixes'`, `'Features'` and `'Performance Improvements'`, strip leading `'v'` for `version`, change `'BREAKING CHANGE'` to `'BREAKING CHANGES'`, and `authorDate` will be formatted as `'yyyy-mm-dd'`.
+Type: `object` or `function` Default: get the first 7 digits of hash, strip leading `'v'` for `version`, and `authorDate` will be formatted as `'yyyy-mm-dd'`.
 
-Replace with new values in each commit. If this is an object, the keys are paths (can be a [dot path](https://github.com/sindresorhus/dot-prop) to a nested object property) and the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object. This is a handy function if you can't provide a transform stream as an upstream of this one. If returns a falsy value this commit is ignored.
+Replace with new values in each commit.
+
+If this is an object, the keys are paths (can be a [dot path](https://github.com/sindresorhus/dot-prop) to a nested object property). the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. This valued is merged with your own transform object.
+
+If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object. This is a handy function if you can't provide a transform stream as an upstream of this one. If returns a falsy value this commit is ignored.
 
 ##### groupBy
 
 Type: `string` Default: `'type'`
 
-How to group the commits. If this value is falsy, commits are not grouped.
+How to group the commits. EG: based on the same type. If this value is falsy, commits are not grouped.
 
 ##### commitGroupsSort
 
@@ -186,7 +156,7 @@ The string can be a dot path to a nested object property.
 
 ##### commitsSort
 
-Type: `function`, `string` or `array` Default: `['scope', 'subject']`
+Type: `function`, `string` or `array` Default: `'header'`
 
 A compare function used to sort commits. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
 
@@ -307,9 +277,6 @@ The output might become
 ### BREAKING CHANGES
 
 * The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.
-
-
-
 ```
 
 It is printed to stdout.

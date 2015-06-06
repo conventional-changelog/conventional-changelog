@@ -25,41 +25,15 @@ function conventionalcommitsWriter(context, options) {
     context.linkReferences = context.linkReferences || true;
   }
 
-  if (host && host[host.length - 1] === '/') {
-    context.host = host.slice(0, -1);
-  }
-
-  options = _.extend({
+  options = _.merge({
     transform: {
       hash: function(hash) {
         if (typeof hash === 'string') {
           return hash.substring(0, 7);
         }
       },
-      subject: function(subject) {
-        if (typeof subject === 'string') {
-          return subject.substring(0, 80);
-        }
-      },
-      type: function(type) {
-        if (type === 'fix') {
-          return 'Bug Fixes';
-        } else if (type === 'feat') {
-          return 'Features';
-        } else if (type === 'perf') {
-          return 'Performance Improvements';
-        }
-      },
-      notes: function(notes) {
-        _.map(notes, function(note) {
-          if (note.title === 'BREAKING CHANGE') {
-            note.title = 'BREAKING CHANGES';
-          }
-
-          return note;
-        });
-
-        return notes;
+      header: function(header) {
+        return header.substring(0, 100);
       },
       version: function(version) {
         if (typeof version === 'string') {
@@ -76,7 +50,7 @@ function conventionalcommitsWriter(context, options) {
     },
     groupBy: 'type',
     commitGroupsSort: 'title',
-    commitsSort: ['scope', 'subject'],
+    commitsSort: 'header',
     noteGroupsSort: 'title',
     notesSort: compareFunc(),
     generateOn: function(commit) {
