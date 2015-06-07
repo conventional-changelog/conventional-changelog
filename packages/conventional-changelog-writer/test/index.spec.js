@@ -389,7 +389,7 @@ describe('conventionalCommitsWriter', function() {
 
         getStream()
           .pipe(conventionalcommitsWriter({}, {
-            transform: function(commit) {
+            transform: function() {
               return false;
             }
           }))
@@ -454,7 +454,7 @@ describe('conventionalCommitsWriter', function() {
 
       getStream()
         .pipe(conventionalcommitsWriter({}, {
-          transform: function(commit) {
+          transform: function() {
             return false;
           },
           reverse: true
