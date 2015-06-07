@@ -184,7 +184,7 @@ The string can be a dot path to a nested object property.
 
 Type: `function` or `string` Default: if `commit.version` is a valid semver.
 
-When the upstream finishes pouring the commits it will generate a block of logs by default. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream. **NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`).
+When the upstream finishes pouring the commits it will generate a block of logs by default. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream. **NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`). However, if the transformed commit is ignored it falls back to the original commit.
 
 ##### reverse
 

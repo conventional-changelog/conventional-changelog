@@ -9,6 +9,7 @@ var util = require('./lib/util');
 var _ = require('lodash');
 
 function conventionalcommitsWriter(context, options) {
+  var savedKeyCommit;
   var commits = [];
   var notes = [];
 
@@ -76,26 +77,38 @@ function conventionalcommitsWriter(context, options) {
 
   return through.obj(function(chunk, enc, cb) {
     var commit = util.processCommit(chunk, options.transform);
-
-    if (commit && options.reverse) {
-      commits.push(commit);
-      notes = notes.concat(commit.notes);
-    }
+    var keyCommit = commit || chunk;
 
     // previous blocks of logs
-    if (generateOn(commit)) {
-      this.push(util.generate(options, commits, notes, context));
-    }
+    if (options.reverse) {
+      if (commit) {
+        commits.push(commit);
+        notes = notes.concat(commit.notes);
+      }
 
-    if (commit && !options.reverse) {
-      commits.push(commit);
-      notes = notes.concat(commit.notes);
+      if (generateOn(keyCommit)) {
+        this.push(util.generate(options, commits, notes, context, keyCommit));
+      }
+    } else {
+      if (generateOn(keyCommit)) {
+        this.push(util.generate(options, commits, notes, context, savedKeyCommit));
+        savedKeyCommit = keyCommit;
+      }
+
+      if (commit) {
+        commits.push(commit);
+        notes = notes.concat(commit.notes);
+      }
     }
 
     cb();
   }, function(cb) {
     // latest (this) block of logs
-    this.push(util.generate(options, commits, notes, context));
+    if (!options.reverse) {
+      this.push(util.generate(options, commits, notes, context, savedKeyCommit));
+    } else {
+      this.push(util.generate(options, commits, notes, context));
+    }
 
     cb();
   });

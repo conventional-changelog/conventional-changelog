@@ -383,6 +383,32 @@ describe('conventionalCommitsWriter', function() {
             done();
           }));
       });
+
+      it('should still generate a block even if the commit is ignored', function(done) {
+        var i = 0;
+
+        getStream()
+          .pipe(conventionalcommitsWriter({}, {
+            transform: function(commit) {
+              return false;
+            }
+          }))
+          .pipe(through(function(chunk, enc, cb) {
+            chunk = chunk.toString();
+
+            if (i === 0) {
+              expect(chunk).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n\n\n');
+            } else {
+              expect(chunk).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07 15:00:44 +1000)\n\n\n\n\n');
+            }
+
+            i++;
+            cb(null);
+          }, function() {
+            expect(i).to.equal(2);
+            done();
+          }));
+      });
     });
 
     describe('when commits are reversed', function() {
@@ -421,6 +447,33 @@ describe('conventionalCommitsWriter', function() {
             done();
           }));
       });
+    });
+
+    it('should still generate a block even if the commit is ignored', function(done) {
+      var i = 0;
+
+      getStream()
+        .pipe(conventionalcommitsWriter({}, {
+          transform: function(commit) {
+            return false;
+          },
+          reverse: true
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07 15:00:44 +1000)\n\n\n\n\n');
+          } else {
+            expect(chunk).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n\n\n');
+          }
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
     });
   });
 });
