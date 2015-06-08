@@ -1,5 +1,4 @@
 'use strict';
-var assign = require('lodash.assign');
 var dargs = require('dargs');
 var exec = require('child_process').exec;
 var split = require('split2');
@@ -11,11 +10,10 @@ function gitRawCommits(options) {
   var readable = new stream.Readable();
   readable._read = function() {};
 
-  options = assign({
-    from: '',
-    to: 'HEAD',
-    format: '%B'
-  }, options);
+  options = options || {};
+  options.format = options.format || '%B';
+  options.from = options.from || '';
+  options.to = options.to || 'HEAD';
 
   var args = dargs(options, {
     excludes: ['from', 'to', 'format']
