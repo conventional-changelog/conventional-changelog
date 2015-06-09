@@ -25,8 +25,24 @@ function conventionalcommitsWriter(context, options) {
     context.linkReferences = context.linkReferences || true;
   }
 
-  options = _.merge({
-    transform: {
+  options = _.assign({
+    groupBy: 'type',
+    commitGroupsSort: 'title',
+    commitsSort: 'header',
+    noteGroupsSort: 'title',
+    notesSort: compareFunc(),
+    generateOn: function(commit) {
+      return semverValid(commit.version);
+    },
+    reverse: false,
+    mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
+    headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
+    commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
+    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
+  }, options);
+
+  if (!_.isFunction(options.transform) && _.isObject(options.transform) || _.isUndefined(options.transform)) {
+    options.transform = _.assign({
       hash: function(hash) {
         if (typeof hash === 'string') {
           return hash.substring(0, 7);
@@ -47,21 +63,8 @@ function conventionalcommitsWriter(context, options) {
 
         return dateFormat(date, 'yyyy-mm-dd', true);
       }
-    },
-    groupBy: 'type',
-    commitGroupsSort: 'title',
-    commitsSort: 'header',
-    noteGroupsSort: 'title',
-    notesSort: compareFunc(),
-    generateOn: function(commit) {
-      return semverValid(commit.version);
-    },
-    reverse: false,
-    mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
-    headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
-    commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
-    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
-  }, options);
+    }, options.transform);
+  }
 
   var generateOn = options.generateOn;
   if (typeof generateOn === 'string') {
