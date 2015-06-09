@@ -46,7 +46,7 @@ The body should include the motivation for the change and contrast this with pre
 The footer should contain any information about **Breaking Changes** and is also the place to
 reference GitHub issues that this commit **Closes**.
 
-**Breaking Changes** are detected as such if the Body contains a line starting with
-`BREAKING CHANGES:` The rest of the commit message is then used for this.
+**Breaking Changes** are detected as such if the Footer contains a line starting with
+`BREAKING CHANGE:` The rest of the commit message is then used for this.
 
 A detailed explanation can be found in this [document](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/).
