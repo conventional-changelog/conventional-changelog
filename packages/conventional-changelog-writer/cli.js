@@ -11,7 +11,6 @@ var cli = meow({
   help: [
     'Usage',
     '  conventional-commits-writer <path> [<path> ...]',
-    '  conventional-commits-writer <path> [<path> ...]',
     '  cat <path> | conventional-commits-writer',
     '',
     'Example',

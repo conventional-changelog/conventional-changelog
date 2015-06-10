@@ -241,8 +241,9 @@ $ npm install --global conventional-commits-writer
 ```sh
 $ conventional-commits-writer --help
 
+Write logs based on conventional commits and templates
+
 Usage
-  conventional-commits-writer <path> [<path> ...]
   conventional-commits-writer <path> [<path> ...]
   cat <path> | conventional-commits-writer
 
@@ -251,9 +252,8 @@ Example
   cat commits.ldjson | conventional-commits-writer
 
 Options
-
--t, --context    A filepath of a json that is used to define template variables
--o, --options    A filepath of a javascript object that is used to define options
+  -t, --context    A filepath of a json that is used to define template variables
+  -o, --options    A filepath of a javascript object that is used to define options
 ```
 
 It works with [Line Delimited JSON](http://en.wikipedia.org/wiki/Line_Delimited_JSON).
