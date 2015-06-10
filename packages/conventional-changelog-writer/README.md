@@ -252,7 +252,7 @@ Example
   cat commits.ldjson | conventional-commits-writer
 
 Options
-  -t, --context    A filepath of a json that is used to define template variables
+  -c, --context    A filepath of a json that is used to define template variables
   -o, --options    A filepath of a javascript object that is used to define options
 ```
 
