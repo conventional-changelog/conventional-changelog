@@ -1,0 +1,15 @@
+{
+ "issue": "issues",
+ "commit": "commit",
+ "referenceKeywords": [
+   "close",
+   "closes",
+   "closed",
+   "fix",
+   "fixes",
+   "fixed",
+   "resolve",
+   "resolves",
+   "resolved"
+ ]
+}
