@@ -64,7 +64,9 @@ $ npm install --global git-raw-commits
 ```sh
 $ git-raw-commits --help
 
-  Usage,
+  Get raw git commits out of your repository using git-log(1)
+
+  Usage
     git-raw-commits [<git-log(1)-options>]
 
   Example
