@@ -29,6 +29,6 @@ describe('partial.footer', function() {
   it('should generate footer', function() {
     var log = Handlebars.compile(template)(templateContext);
 
-    expect(log).to.equal('\n### my title\n\n* my note 1\n* my note 2\n\n### my other title\n\n* my note 3\n* my note 4\n\n');
+    expect(log).to.equal('\n### my title\n\n* my note 1\n* my note 2\n\n### my other title\n\n* my note 3\n* my note 4\n');
   });
 });
