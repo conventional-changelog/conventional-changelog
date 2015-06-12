@@ -192,6 +192,12 @@ Type: `boolean` Default: `false`
 
 Are the commits from upstream in the reverse order? You should only worry about this when generating more than one blocks of logs based on `generateOn`. If you find the last commit is in the wrong block inverse this value.
 
+##### includeDetails
+
+Type: `boolean` Default: `false`
+
+If this value is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
+
 ##### mainTemplate
 
 Type: `string` Default: [template.hbs](templates/template.hbs)
