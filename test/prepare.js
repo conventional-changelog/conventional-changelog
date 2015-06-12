@@ -7,3 +7,4 @@ shell.cd('tmp');
 
 shell.mkdir('test');
 shell.mkdir('angular');
+shell.mkdir('cli');

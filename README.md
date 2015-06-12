@@ -98,6 +98,39 @@ See the [conventional-commits-parser](https://github.com/stevemao/conventional-c
 See the [conventional-commits-writer](https://github.com/stevemao/conventional-commits-writer) docs.
 
 
+### CLI
+
+```sh
+$ npm install -g conventional-changelog
+```
+
+```sh
+$ conventional-changelog --help
+
+  Generate a changelog from git metadata
+
+  Usage
+    conventional-changelog
+
+  Example
+    conventional-changelog -i CHANGELOG.md --overwrite
+
+  Options
+    -i, --infile              Read the CHANGELOG from this file.
+    -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout
+    -w, --overwrite           Overwrite the infile
+    -p, --preset              Name of the preset you want to use
+    -k, --pkg                 A filepath of where your package.json is located
+    -a, --append              Should the generated block be appended
+    -b, --all-blocks          Generate all blocks
+    -v, --verbose             Verbose output
+    -c, --context             A filepath of a javascript that is used to define template variables
+    --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options
+    --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options
+    --writer-opts             A filepath of a javascript that is used to define conventional-commits-writer options
+```
+
+
 ## License
 
 BSD
