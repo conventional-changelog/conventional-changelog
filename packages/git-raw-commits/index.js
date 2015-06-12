@@ -24,15 +24,21 @@ function gitRawCommits(options) {
     '<%= from ? [from, to].join("..") : to %> '
   )(options) + args.join(' ');
 
+  var anything = false;
+
   var child = exec(cmd);
   child.stdout
     .pipe(split('------------------------ >8 ------------------------\n'))
     .pipe(through(function(chunk, enc, cb) {
       readable.push(chunk);
+      anything = true;
 
       cb();
     }, function(cb) {
-      readable.push(null);
+      if (anything) {
+        readable.push(null);
+        readable.emit('close');
+      }
 
       cb();
     }));
@@ -40,7 +46,7 @@ function gitRawCommits(options) {
   child.stderr
     .pipe(through.obj(function(chunk) {
       readable.emit('error', chunk);
-      readable.push(null);
+      readable.emit('close');
     }));
 
   return readable;
