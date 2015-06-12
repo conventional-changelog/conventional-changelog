@@ -409,6 +409,42 @@ describe('conventionalCommitsWriter', function() {
             done();
           }));
       });
+
+      it('should include details', function(done) {
+        var i = 0;
+
+        getStream()
+          .pipe(conventionalcommitsWriter({}, {
+            includeDetails: true
+          }))
+          .pipe(through.obj(function(chunk, enc, cb) {
+            if (i === 0) {
+              expect(chunk.log).to.include('<a name=""></a>\n#  (' + today + ')\n\n');
+              expect(chunk.log).to.include('feat(scope): broadcast $destroy event on scope destruction');
+              expect(chunk.commits[0].header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
+              expect(chunk.keyCommit).to.eql();
+              expect(chunk.notes).to.eql([]);
+            } else {
+              expect(chunk.log).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n');
+              expect(chunk.log).to.include('fix(ng-list): Allow custom separator');
+              expect(chunk.log).to.include('perf(template): tweak');
+              expect(chunk.log).to.include('refactor(name): rename this module to conventional-commits-writer');
+              expect(chunk.commits[0].header).to.equal('fix(ng-list): Allow custom separator');
+              expect(chunk.commits[1].body).to.equal('My body.');
+              expect(chunk.commits[2].committerDate).to.equal('2015-04-07');
+              expect(chunk.keyCommit.body).to.equal('bla bla bla');
+              expect(chunk.keyCommit.committerDate).to.equal('2015-04-07');
+              expect(chunk.keyCommit.version).to.equal('1.0.1');
+              expect(chunk.notes).to.eql([]);
+            }
+
+            i++;
+            cb(null);
+          }, function() {
+            expect(i).to.equal(2);
+            done();
+          }));
+      });
     });
 
     describe('when commits are reversed', function() {
@@ -447,33 +483,69 @@ describe('conventionalCommitsWriter', function() {
             done();
           }));
       });
-    });
 
-    it('should still generate a block even if the commit is ignored', function(done) {
-      var i = 0;
+      it('should still generate a block even if the commit is ignored', function(done) {
+        var i = 0;
 
-      getStream()
-        .pipe(conventionalcommitsWriter({}, {
-          transform: function() {
-            return false;
-          },
-          reverse: true
-        }))
-        .pipe(through(function(chunk, enc, cb) {
-          chunk = chunk.toString();
+        getStream()
+          .pipe(conventionalcommitsWriter({}, {
+            transform: function() {
+              return false;
+            },
+            reverse: true
+          }))
+          .pipe(through(function(chunk, enc, cb) {
+            chunk = chunk.toString();
 
-          if (i === 0) {
-            expect(chunk).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07 15:00:44 +1000)\n\n\n\n\n');
-          } else {
-            expect(chunk).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n\n\n');
-          }
+            if (i === 0) {
+              expect(chunk).to.equal('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07 15:00:44 +1000)\n\n\n\n\n');
+            } else {
+              expect(chunk).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n\n\n');
+            }
 
-          i++;
-          cb(null);
-        }, function() {
-          expect(i).to.equal(2);
-          done();
-        }));
+            i++;
+            cb(null);
+          }, function() {
+            expect(i).to.equal(2);
+            done();
+          }));
+      });
+
+      it('should include details', function(done) {
+        var i = 0;
+
+        getStream()
+          .pipe(conventionalcommitsWriter({}, {
+            reverse: true,
+            includeDetails: true
+          }))
+          .pipe(through.obj(function(chunk, enc, cb) {
+            if (i === 0) {
+              expect(chunk.log).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n');
+              expect(chunk.log).to.include('broadcast $destroy event on scope destruction');
+              expect(chunk.log).to.include('fix(ng-list):');
+              expect(chunk.commits[0].header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
+              expect(chunk.commits[1].body).to.equal('bla bla bla');
+              expect(chunk.keyCommit.version).to.equal('1.0.1');
+              expect(chunk.keyCommit.committerDate).to.equal('2015-04-07');
+              expect(chunk.notes).to.eql([]);
+            } else {
+              expect(chunk.log).to.include('<a name=""></a>\n#  (' + today + ')\n\n');
+              expect(chunk.log).to.include('perf(template): tweak');
+              expect(chunk.log).to.include('refactor(name): rename this module to conventional-commits-writer');
+              expect(chunk.commits[0].header).to.equal('perf(template): tweak');
+              expect(chunk.commits[1].committerDate).to.equal('2015-04-07');
+              expect(chunk.keyCommit).to.eql();
+              expect(chunk.notes).to.eql([]);
+            }
+
+            i++;
+            cb(null);
+          }, function() {
+            expect(i).to.equal(2);
+            done();
+          }));
+      });
     });
   });
 });

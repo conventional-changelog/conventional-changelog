@@ -154,9 +154,6 @@ function generate(options, commits, notes, context, keyCommit) {
     mergedContext.isPatch = context.isPatch || semver.patch(mergedContext.version) !== 0;
   }
 
-  commits.length = 0;
-  notes.length = 0;
-
   return compiled(mergedContext);
 }
 

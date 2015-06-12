@@ -35,6 +35,7 @@ function conventionalcommitsWriter(context, options) {
       return semverValid(commit.version);
     },
     reverse: false,
+    includeDetails: false,
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
@@ -79,6 +80,7 @@ function conventionalcommitsWriter(context, options) {
   options.notesSort = util.functionify(options.notesSort);
 
   return through.obj(function(chunk, enc, cb) {
+    var result;
     var commit = util.processCommit(chunk, options.transform);
     var keyCommit = commit || chunk;
 
@@ -90,11 +92,37 @@ function conventionalcommitsWriter(context, options) {
       }
 
       if (generateOn(keyCommit)) {
-        this.push(util.generate(options, commits, notes, context, keyCommit));
+        result = util.generate(options, commits, notes, context, keyCommit);
+        if (options.includeDetails) {
+          this.push({
+            log: result,
+            commits: commits,
+            keyCommit: keyCommit,
+            notes: notes
+          });
+        } else {
+          this.push(result);
+        }
+
+        commits = [];
+        notes = [];
       }
     } else {
       if (generateOn(keyCommit)) {
-        this.push(util.generate(options, commits, notes, context, savedKeyCommit));
+        result = util.generate(options, commits, notes, context, savedKeyCommit);
+        if (options.includeDetails) {
+          this.push({
+            log: result,
+            commits: commits,
+            keyCommit: savedKeyCommit,
+            notes: notes
+          });
+        } else {
+          this.push(result);
+        }
+
+        commits = [];
+        notes = [];
         savedKeyCommit = keyCommit;
       }
 
@@ -106,11 +134,25 @@ function conventionalcommitsWriter(context, options) {
 
     cb();
   }, function(cb) {
+    var result;
+    var keyCommit;
+
     // latest (this) block of logs
     if (!options.reverse) {
-      this.push(util.generate(options, commits, notes, context, savedKeyCommit));
+      keyCommit = savedKeyCommit;
+    }
+
+    result = util.generate(options, commits, notes, context, savedKeyCommit);
+
+    if (options.includeDetails) {
+      this.push({
+        log: result,
+        commits: commits,
+        keyCommit: savedKeyCommit,
+        notes: notes
+      });
     } else {
-      this.push(util.generate(options, commits, notes, context));
+      this.push(result);
     }
 
     cb();
