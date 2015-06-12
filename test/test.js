@@ -155,4 +155,28 @@ describe('conventionalChangelog', function() {
       }
     });
   });
+
+  it('should error if it errors in git-raw-commits', function(done) {
+    conventionalChangelog({}, {}, {
+      unknowOptions: false
+    })
+      .on('error', function(err) {
+        expect(err).to.include('Error in git-raw-commits.');
+
+        done();
+      });
+  });
+
+  it('should error if it errors in `options.transform`', function(done) {
+    conventionalChangelog({
+      transform: through.obj(function(chunk, enc, cb) {
+        cb('error');
+      })
+    })
+      .on('error', function(err) {
+        expect(err).to.include('Error in conventional-commits-parser.');
+
+        done();
+      });
+  });
 });

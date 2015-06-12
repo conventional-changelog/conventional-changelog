@@ -1,6 +1,6 @@
 'use strict';
 var conventionalCommitsParser = require('conventional-commits-parser');
-var conventionalcommitsWriter = require('conventional-commits-writer');
+var conventionalCommitsWriter = require('conventional-commits-writer');
 var fs = require('fs');
 var getPkgRepo = require('get-pkg-repo');
 var gitLatestSemverTag = require('git-latest-semver-tag');
@@ -29,7 +29,6 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
     append: false,
     allBlocks: false,
     warn: function() {},
-    transform: through.obj()
   }, options);
 
   var loadPreset = options.preset;
@@ -138,12 +137,19 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
         },
         writerOpts
       );
+
       gitRawCommits(gitRawCommitsOpts)
+        .on('error', function(err) {
+          readable.emit('error', 'Error in git-raw-commits. ' + err);
+        })
         .pipe(conventionalCommitsParser(parserOpts))
+        .on('error', function(err) {
+          readable.emit('error', 'Error in conventional-commits-parser. ' + err);
+        })
         // it would be better to if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
-        .pipe(preset.transform || options.transform)
-        .pipe(conventionalcommitsWriter(context, writerOpts))
+        .pipe(options.transform || preset.transform || through.obj())
+        .pipe(conventionalCommitsWriter(context, writerOpts))
         .pipe(through(function(chunk, enc, cb) {
           readable.push(chunk);
 
