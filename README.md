@@ -6,7 +6,7 @@
 ## Why
 
 - Used by AngularJS and related projects.
-- Pluggable.
+- Everything internally or externally is Pluggable.
 - High performant. It doesn't spawn any extra child process to fetch data.
 - Fully configurable. There are several presets that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
 - Task runner integrations.
@@ -33,13 +33,16 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 ```js
 var conventionalChangelog = require('conventional-changelog');
 
-conventionalChangelog();
+conventionalChangelog({
+  preset: 'angular'
+})
+  .pipe(process.stdout);
 ```
 
 
 ## API
 
-### changelog([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
+### conventionalChangelog([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
 
 Returns a readable stream.
 
