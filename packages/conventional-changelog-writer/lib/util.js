@@ -1,6 +1,5 @@
 'use strict';
 var compareFunc = require('compare-func');
-var dotProp = require('dot-prop');
 var Handlebars = require('handlebars');
 var semver = require('semver');
 var _ = require('lodash');
@@ -112,7 +111,7 @@ function processCommit(chunk, transform) {
   }
 
   _.forEach(transform, function(el, path) {
-    var value = dotProp.get(commit, path);
+    var value = _.get(commit, path);
 
     if (typeof el === 'function') {
       value = el(value, path);
@@ -120,7 +119,7 @@ function processCommit(chunk, transform) {
       value = el;
     }
 
-    dotProp.set(commit, path, value);
+    _.set(commit, path, value);
   });
 
   commit.raw = chunk;

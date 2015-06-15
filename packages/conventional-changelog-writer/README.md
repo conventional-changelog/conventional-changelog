@@ -136,7 +136,7 @@ Type: `object` or `function` Default: get the first 7 digits of hash, strip lead
 
 Replace with new values in each commit.
 
-If this is an object, the keys are paths (can be a [dot path](https://github.com/sindresorhus/dot-prop) to a nested object property). the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. This valued is merged with your own transform object.
+If this is an object, the keys are paths to a nested object property. the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. This value is merged with your own transform object.
 
 If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object. This is a handy function if you can't provide a transform stream as an upstream of this one. If returns a falsy value this commit is ignored.
 
