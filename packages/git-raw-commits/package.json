@@ -27,8 +27,8 @@
     "dargs": "^4.0.1",
     "lodash.template": "^3.6.1",
     "meow": "^3.1.0",
-    "split2": "^0.2.1",
-    "through2": "^0.6.5"
+    "split2": "^1.0.0",
+    "through2": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
