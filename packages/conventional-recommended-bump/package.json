@@ -1,0 +1,41 @@
+{
+  "name": "conventional-recommended-bump",
+  "version": "0.0.0",
+  "description": "Get a recommended version bump based on conventional commits",
+  "homepage": "https://github.com/stevemao/conventional-recommended-bump",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "repository": "stevemao/conventional-recommended-bump",
+  "license": "MIT",
+  "keywords": [
+    "conventional-recommended-bump",
+    "recommend",
+    "conventional",
+    "bump"
+  ],
+  "dependencies": {
+    "concat-stream": "^1.4.10",
+    "conventional-commits-parser": "0.0.17",
+    "git-latest-semver-tag": "0.0.0",
+    "git-raw-commits": "0.0.7",
+    "meow": "^3.1.0",
+    "object-assign": "^3.0.0"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.8",
+    "jscs": "^1.11.3",
+    "jshint": "^2.6.3",
+    "mocha": "*",
+    "shelljs": "^0.5.1"
+  },
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "lint": "jshint presets test *.js --exclude node_modules && jscs presets test *.js",
+    "test": "npm run-script lint && mocha"
+  },
+  "bin": "cli.js"
+}
