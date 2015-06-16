@@ -96,7 +96,7 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
         tag = tagObj.value;
       }
 
-      if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceKeywords)) {
+      if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
         var match = context.host.match(rhosts);
         if (match) {
           hostOpts = require('./hosts/' + match[0]);
@@ -126,7 +126,8 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
 
       parserOpts = _.assign(
         preset.parserOpts || {}, {
-          referenceKeywords: hostOpts.referenceKeywords,
+          referenceActions: hostOpts.referenceActions,
+          issuePrefixes: hostOpts.issuePrefixes,
           warn: options.warn
         },
         parserOpts);
