@@ -21,6 +21,7 @@ $ npm install conventional-changelog
 
 Adapted from code originally written by @vojtajina and @btford in [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog).
 
+[Synopsis of Conventions](conventions)
 
 ## Example output
 
@@ -50,9 +51,9 @@ Returns a readable stream.
 
 ##### preset
 
-Type: `string` Possible values: `'angular'`
+Type: `string` Possible values: `'angular'`, `'jquery'`
 
-A set of preset options of a popular project.
+A set of options of a popular project.
 
 ##### pkg
 
