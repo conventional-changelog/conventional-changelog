@@ -94,7 +94,7 @@ describe('conventionalChangelog', function() {
     }));
   });
 
-  it('should read host configs if only `parserOpts.referenceKeywords` is missing', function(done) {
+  it('should read host configs if only `parserOpts.referenceActions` is missing', function(done) {
     conventionalChangelog({}, {
       host: 'github',
       repository: 'b/a',

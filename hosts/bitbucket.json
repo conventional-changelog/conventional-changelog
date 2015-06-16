@@ -1,7 +1,7 @@
 {
  "issue": "issue",
  "commit": "commits",
- "referenceKeywords": [
+ "referenceActions": [
    "close",
    "closes",
    "closed",
@@ -14,5 +14,8 @@
    "resolves",
    "resolved",
    "resolving"
+ ],
+ "issuePrefixes": [
+   "#"
  ]
 }
