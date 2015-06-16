@@ -143,7 +143,7 @@ describe('conventionalCommitsParser', function() {
       .pipe(conventionalCommitsParser({
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\ (.*)$/,
         noteKeywords: ['BREAKING CHANGES'],
-        referenceKeywords: ['fix']
+        referenceActions: ['fix']
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (i === 0) {
@@ -195,7 +195,7 @@ describe('conventionalCommitsParser', function() {
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
         headerCorrespondence: 'subject,type,  scope,',
         noteKeywords: 'BREAKING CHANGES',
-        referenceKeywords: 'fix'
+        referenceActions: 'fix'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (length === 2) {

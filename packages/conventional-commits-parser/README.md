@@ -114,7 +114,7 @@ Type: `array` of `string` or `string` Default `['type', 'scope', 'subject']`
 
 Used to define what capturing group of `headerPattern` captures what header part. The order of the array should correspond to the order of `headerPattern`'s capturing group. If the part is not captured it is `null`. If it's a `string` it will be converted to an `array` separated by a comma.
 
-##### referenceKeywords
+##### referenceActions
 
 Type: `array` of `string` or `string` Default:
 `[
@@ -129,7 +129,13 @@ Type: `array` of `string` or `string` Default:
   'resolved'
 ]`
 
-Keywords for references. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
+Keywords to reference an issue. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
+
+##### issuePrefixes
+
+Type: `array` of `string` or `string` Default: `['#']`
+
+The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
 
 ##### noteKeywords
 

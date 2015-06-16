@@ -8,7 +8,7 @@ function conventionalCommitsParser(options) {
   options = _.extend({
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
-    referenceKeywords: [
+    referenceActions: [
       'close',
       'closes',
       'closed',
@@ -19,6 +19,7 @@ function conventionalCommitsParser(options) {
       'resolves',
       'resolved'
     ],
+    issuePrefixes: ['#'],
     noteKeywords: ['BREAKING CHANGE'],
     fieldPattern: /^-(.*?)-$/,
     warn: function() {}
@@ -35,8 +36,12 @@ function conventionalCommitsParser(options) {
     options.headerCorrespondence = options.headerCorrespondence.split(',');
   }
 
-  if (typeof options.referenceKeywords === 'string') {
-    options.referenceKeywords = options.referenceKeywords.split(',');
+  if (typeof options.referenceActions === 'string') {
+    options.referenceActions = options.referenceActions.split(',');
+  }
+
+  if (typeof options.issuePrefixes === 'string') {
+    options.issuePrefixes = options.issuePrefixes.split(',');
   }
 
   if (typeof options.noteKeywords === 'string') {

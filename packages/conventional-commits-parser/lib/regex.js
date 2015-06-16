@@ -1,7 +1,6 @@
 'use strict';
 
 var reNomatch = /(?!.*)/;
-var reReferenceParts = /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi;
 
 function join(array, joiner) {
   return array
@@ -22,19 +21,24 @@ function getNotesRegex(noteKeywords) {
   return new RegExp('(' + join(noteKeywords, '|') + ')[:\\s]*(.*)');
 }
 
-function getReferencesRegex(referenceKeywords) {
-  if (!referenceKeywords) {
+function getReferencePartsRegex(issuePrefixes) {
+  return new RegExp('(?:.*?)??\\s*(\\S*?)??(?:' + join(issuePrefixes, '|') + ')(\\d+)', 'gi');
+}
+
+function getReferencesRegex(referenceActions) {
+  if (!referenceActions) {
     return reNomatch;
   }
 
-  var joinedKeywords = join(referenceKeywords, '|');
-  return new RegExp('(' + joinedKeywords + ')(?:\\s+(.*?))(?=(?:' + joinedKeywords + ')|$)', 'ig');
+  var joinedKeywords = join(referenceActions, '|');
+  return new RegExp('(' + joinedKeywords + ')(?:\\s+(.*?))(?=(?:' + joinedKeywords + ')|$)', 'gi');
 }
 
 module.exports = function(options) {
   options = options || {};
   var reNotes = getNotesRegex(options.noteKeywords);
-  var reReferences = getReferencesRegex(options.referenceKeywords);
+  var reReferenceParts = getReferencePartsRegex(options.issuePrefixes);
+  var reReferences = getReferencesRegex(options.referenceActions);
 
   return {
     notes: reNotes,

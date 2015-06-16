@@ -6,7 +6,8 @@ describe('regex', function() {
   describe('notes', function() {
     it('should match a simple note', function() {
       var reNotes = regex({
-        noteKeywords: ['Breaking News', 'Breaking Change']
+        noteKeywords: ['Breaking News', 'Breaking Change'],
+        issuePrefixes: ['#']
       }).notes;
       var match = 'Breaking News: This is so important.'.match(reNotes);
       expect(match[0]).to.equal('Breaking News: This is so important.');
@@ -16,7 +17,8 @@ describe('regex', function() {
 
     it('should ignore whitespace', function() {
       var reNotes = regex({
-        noteKeywords: [' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  ']
+        noteKeywords: [' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  '],
+        issuePrefixes: ['#']
       }).notes;
       var match = 'Breaking News: This is so important.'.match(reNotes);
       expect(match[0]).to.equal('Breaking News: This is so important.');
@@ -28,7 +30,8 @@ describe('regex', function() {
   describe('references', function() {
     it('should match a simple reference', function() {
       var reReferences = regex({
-        referenceKeywords: ['Closes']
+        referenceActions: ['Closes'],
+        issuePrefixes: ['#']
       }).references;
       var match = reReferences.exec('closes #1');
       expect(match[0]).to.equal('closes #1');
@@ -37,7 +40,8 @@ describe('regex', function() {
 
     it('should ignore cases', function() {
       var reReferences = regex({
-        referenceKeywords: ['Closes']
+        referenceActions: ['Closes'],
+        issuePrefixes: ['#']
       }).references;
       var match = reReferences.exec('ClOsEs #1');
       expect(match[0]).to.equal('ClOsEs #1');
@@ -46,7 +50,8 @@ describe('regex', function() {
 
     it('should not match if keywords does not present', function() {
       var reReferences = regex({
-        referenceKeywords: ['Close']
+        referenceActions: ['Close'],
+        issuePrefixes: ['#']
       }).references;
       var match = reReferences.exec('Closes #1');
       expect(match).to.equal(null);
@@ -54,7 +59,8 @@ describe('regex', function() {
 
     it('should take multiple reference keywords', function() {
       var reReferences = regex({
-        referenceKeywords: [' Closes', 'amends', 'fixes']
+        referenceActions: [' Closes', 'amends', 'fixes'],
+        issuePrefixes: ['#']
       }).references;
       var match = reReferences.exec('amends #1');
       expect(match[0]).to.eql('amends #1');
@@ -63,7 +69,8 @@ describe('regex', function() {
 
     it('should match multiple references', function() {
       var reReferences = regex({
-        referenceKeywords: ['Closes', 'amends']
+        referenceActions: ['Closes', 'amends'],
+        issuePrefixes: ['#']
       }).references;
       var string = 'Closes #1 amends #2; closes bug #4';
       var match = reReferences.exec(string);
@@ -81,7 +88,8 @@ describe('regex', function() {
 
     it('should ignore whitespace', function() {
       var reReferences = regex({
-        referenceKeywords: [' Closes', 'amends ', '', ' fixes ', '   ']
+        referenceActions: [' Closes', 'amends ', '', ' fixes ', '   '],
+        issuePrefixes: ['#']
       }).references;
       var match = 'closes #1, amends #2, fixes #3'.match(reReferences);
       expect(match).to.eql(['closes #1, ', 'amends #2, ', 'fixes #3']);
@@ -89,7 +97,9 @@ describe('regex', function() {
   });
 
   describe('referenceParts', function() {
-    var reReferenceParts = regex().referenceParts;
+    var reReferenceParts = regex({
+      issuePrefixes: ['#']
+    }).referenceParts;
 
     afterEach(function() {
       reReferenceParts.lastIndex = 0;
@@ -137,6 +147,23 @@ describe('regex', function() {
       expect(match[0]).to.equal('; repo#4');
       expect(match[1]).to.equal('repo');
       expect(match[2]).to.equal('4');
+    });
+
+    it('should match issues with customized prefix', function() {
+      var string = 'closes gh-1, amends #2, fixes prefix-3';
+      reReferenceParts = regex({
+        issuePrefixes: ['gh-', 'prefix-']
+      }).referenceParts;
+
+      var match = reReferenceParts.exec(string);
+      expect(match[0]).to.equal('closes gh-1');
+      expect(match[1]).to.equal(undefined);
+      expect(match[2]).to.equal('1');
+
+      match = reReferenceParts.exec(string);
+      expect(match[0]).to.equal(', amends #2, fixes prefix-3');
+      expect(match[1]).to.equal(undefined);
+      expect(match[2]).to.equal('3');
     });
   });
 });

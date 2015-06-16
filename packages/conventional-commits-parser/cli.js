@@ -34,15 +34,19 @@ var cli = meow({
     'Options',
     '  -p, --header-pattern           Regex to match header pattern',
     '  -c, --header-correspondence    Comma separated parts used to define what capturing group of `headerPattern` captures what',
-    '  -r, --reference-keywords       Comma separated keywords that used to reference issues',
-    '  -n, --note-keywords            Comma separated keywords for important notes'
+    '  -r, --reference-actions        Comma separated keywords that used to reference issues',
+    '  -i, --issue-prefixes           Comma separated prefixes of an issue',
+    '  -n, --note-keywords            Comma separated keywords for important notes',
+    '  -f, --field-pattern            Regex to match other fields'
   ].join('\n')
 }, {
   alias: {
     p: 'headerPattern',
     c: 'headerCorrespondence',
-    r: 'referenceKeywords',
-    n: 'noteKeywords'
+    r: 'referenceActions',
+    i: 'issuePrefixes',
+    n: 'noteKeywords',
+    f: 'fieldPattern'
   }
 });
 
