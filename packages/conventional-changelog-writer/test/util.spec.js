@@ -32,10 +32,16 @@ describe('util', function() {
   });
 
   describe('functionify', function() {
-    it('should turn anything into a function', function() {
-      var func = util.functionify('');
+    it('should turn any truthy value into a function', function() {
+      var func = util.functionify('a');
 
       expect(func).to.be.a('function');
+    });
+
+    it('should not change falsy value', function() {
+      var func = util.functionify(null);
+
+      expect(func).to.equal(null);
     });
   });
 

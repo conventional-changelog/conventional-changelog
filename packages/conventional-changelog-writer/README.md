@@ -152,7 +152,7 @@ How to group the commits. EG: based on the same type. If this value is falsy, co
 
 Type: `function`, `string` or `array` Default: `'title'`
 
-A compare function used to sort commit groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
+A compare function used to sort commit groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
 The string can be a dot path to a nested object property.
 
@@ -160,7 +160,7 @@ The string can be a dot path to a nested object property.
 
 Type: `function`, `string` or `array` Default: `'header'`
 
-A compare function used to sort commits. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
+A compare function used to sort commits. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
 The string can be a dot path to a nested object property.
 
@@ -168,7 +168,7 @@ The string can be a dot path to a nested object property.
 
 Type : `function` Default: `'title'`
 
-A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
+A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
 The string can be a dot path to a nested object property.
 
@@ -176,7 +176,7 @@ The string can be a dot path to a nested object property.
 
 Type: `function` Default: sort by `localeCompare`.
 
-A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`.
+A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
 The string can be a dot path to a nested object property.
 

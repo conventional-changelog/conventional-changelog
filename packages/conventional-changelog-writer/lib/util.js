@@ -31,7 +31,7 @@ function compileTemplates(templates) {
 }
 
 function functionify(strOrArr) {
-  if (!_.isFunction(strOrArr)) {
+  if (strOrArr && !_.isFunction(strOrArr)) {
     return compareFunc(strOrArr);
   }
   return strOrArr;
