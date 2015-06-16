@@ -194,6 +194,7 @@ describe('conventionalCommitsParser', function() {
         fieldPattern: '^-(.*?)-$',
         headerPattern: '^(\\w*)(?:\\(([\\w\\$\\.\\-\\* ]*)\\))?\\ (.*)$',
         headerCorrespondence: 'subject,type,  scope,',
+        issuePrefixes: '#',
         noteKeywords: 'BREAKING CHANGES',
         referenceActions: 'fix'
       }))

@@ -22,6 +22,10 @@ function getNotesRegex(noteKeywords) {
 }
 
 function getReferencePartsRegex(issuePrefixes) {
+  if (!issuePrefixes) {
+    return reNomatch;
+  }
+
   return new RegExp('(?:.*?)??\\s*(\\S*?)??(?:' + join(issuePrefixes, '|') + ')(\\d+)', 'gi');
 }
 

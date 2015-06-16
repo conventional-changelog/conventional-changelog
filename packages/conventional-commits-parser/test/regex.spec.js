@@ -6,8 +6,7 @@ describe('regex', function() {
   describe('notes', function() {
     it('should match a simple note', function() {
       var reNotes = regex({
-        noteKeywords: ['Breaking News', 'Breaking Change'],
-        issuePrefixes: ['#']
+        noteKeywords: ['Breaking News', 'Breaking Change']
       }).notes;
       var match = 'Breaking News: This is so important.'.match(reNotes);
       expect(match[0]).to.equal('Breaking News: This is so important.');
@@ -164,6 +163,14 @@ describe('regex', function() {
       expect(match[0]).to.equal(', amends #2, fixes prefix-3');
       expect(match[1]).to.equal(undefined);
       expect(match[2]).to.equal('3');
+    });
+
+    it('should match nothing if there is no customized prefix', function() {
+      var string = 'closes gh-1, amends #2, fixes prefix-3';
+      reReferenceParts = regex().referenceParts;
+
+      var match = reReferenceParts.exec(string);
+      expect(match).to.equal(null);
     });
   });
 });
