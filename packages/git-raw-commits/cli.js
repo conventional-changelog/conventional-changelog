@@ -15,7 +15,7 @@ var cli = meow({
 
 gitRawCommits(cli.flags)
   .on('error', function(err) {
-    console.error(err);
+    process.stderr.write(err);
     process.exit(1);
   })
   .pipe(process.stdout);
