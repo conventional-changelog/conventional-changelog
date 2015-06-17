@@ -93,6 +93,11 @@ Type: `string` Possible values: `'major'`, `'minor'` and `'patch'`
 The value of what it should release as. If it cannot decide this is an empty string.
 
 
+## Related
+
+- [conventional-changelog](https://github.com/ajoslin/conventional-changelog) - Generate a changelog from git metadata
+
+
 ## License
 
 MIT © [Steve Mao](https://github.com/stevemao)
