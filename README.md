@@ -135,6 +135,12 @@ $ conventional-changelog --help
 ```
 
 
+## Related
+
+- [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
+
+
+
 ## License
 
 BSD
