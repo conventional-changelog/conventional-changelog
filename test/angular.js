@@ -8,7 +8,7 @@ var writeFileSync = require('fs').writeFileSync;
 
 describe('presets', function() {
   describe('angular', function() {
-    before(function() {
+    before(function(done) {
       shell.cd('angular');
       shell.exec('git init');
       writeFileSync('test1', '');
@@ -22,6 +22,8 @@ describe('presets', function() {
         shell.exec('git add --all && git commit -m"perf(ngOptions): make it faster"');
         writeFileSync('test5', '');
         shell.exec('git add --all && git commit -m"revert(ngOptions): make it faster"');
+
+        done();
       });
     });
 
