@@ -1,0 +1,49 @@
+{
+  "name": "conventional-changelog-cli",
+  "version": "0.0.0",
+  "description": "Generate a changelog from git metadata",
+  "homepage": "https://github.com/stevemao/conventional-changelog-cli",
+  "repository": "stevemao/conventional-changelog-cli",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "bin": {
+    "conventional-changelog": "cli.js"
+  },
+  "files": [
+    "cli.js"
+  ],
+  "keywords": [
+    "cli",
+    "cli-app",
+    "conventional-changelog",
+    "conventional",
+    "changelog",
+    "log"
+  ],
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "concat-stream": "^1.5.1",
+    "coveralls": "^2.11.6",
+    "jscs": "^2.7.0",
+    "jshint": "^2.8.0",
+    "mocha": "*",
+    "nyc": "^5.0.1",
+    "shelljs": "^0.5.3"
+  },
+  "dependencies": {
+    "add-stream": "^1.0.0",
+    "conventional-changelog": "^0.5.3",
+    "lodash": "^4.1.0",
+    "meow": "^3.7.0",
+    "tempfile": "^1.1.1"
+  },
+  "scripts": {
+    "test": "nyc mocha --timeout 30000 && npm run-script lint",
+    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "license": "MIT"
+}
