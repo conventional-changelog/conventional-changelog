@@ -10,6 +10,7 @@ var cli = meow({
     '',
     'Example',
     '  conventional-recommended-bump',
+    '',
     'Options',
     '  -p, --preset                   Name of the preset you want to use',
     '  -h, --header-pattern           Regex to match header pattern',
@@ -19,7 +20,7 @@ var cli = meow({
     '  -n, --note-keywords            Comma separated keywords for important notes',
     '  -f, --field-pattern            Regex to match other fields',
     '  -v, --verbose                  Verbose output'
-  ].join('\n')
+  ]
 }, {
   alias: {
     p: 'preset',

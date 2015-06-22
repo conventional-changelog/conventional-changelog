@@ -36,6 +36,7 @@ $ conventional-recommended-bump --help
 
   Example
     conventional-recommended-bump
+
   Options
     -p, --preset                   Name of the preset you want to use
     -h, --header-pattern           Regex to match header pattern
