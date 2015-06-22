@@ -1,8 +1,21 @@
 'use strict';
-var equal = require('assert').strictEqual;
 var conventionalRecommendedBump = require('../');
+var equal = require('assert').strictEqual;
+var fs = require('fs');
+var shell = require('shelljs');
 
 describe('conventional-recommended-bump', function() {
+  before(function() {
+    shell.cd('test');
+    shell.exec('git init');
+    fs.writeFileSync('test1', '');
+    shell.exec('git add --all && git commit -m"First commit"');
+  });
+
+  after(function() {
+    shell.cd('../');
+  });
+
   it('should return `null` if no `whatBump` is found', function(done) {
     conventionalRecommendedBump(function(err, releaseAs) {
       equal(releaseAs, '');
