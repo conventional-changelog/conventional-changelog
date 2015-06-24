@@ -57,6 +57,6 @@
   },
   "bin": "cli.js",
   "publishConfig": {
-    "tag": "0.1.0-alpha"
+    "tag": "next"
   }
 }
