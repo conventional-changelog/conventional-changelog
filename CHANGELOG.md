@@ -1,3 +1,24 @@
+<a name="0.1.0-alpha.1"></a>
+# 0.1.0-alpha.1 (2015-06-24)
+
+
+### Bug Fixes
+
+* **err:** emit error if there is any in gitRawCommits and conventionalCommitsParser ([00ac3c1](https://github.com/ajoslin/conventional-changelog/commit/00ac3c1))
+
+### Features
+
+* **cli:** first commit of cli ([d74b96b](https://github.com/ajoslin/conventional-changelog/commit/d74b96b)), closes [#31](https://github.com/ajoslin/conventional-changelog/issues/31)
+* **issuePrefixes:** default for the hosts ([b1c3ee9](https://github.com/ajoslin/conventional-changelog/commit/b1c3ee9)), closes [#59](https://github.com/ajoslin/conventional-changelog/issues/59) [#60](https://github.com/ajoslin/conventional-changelog/issues/60)
+* **rewrite:** rewrite this module ([7c48e0d](https://github.com/ajoslin/conventional-changelog/commit/7c48e0d)), closes [#50](https://github.com/ajoslin/conventional-changelog/issues/50) [#45](https://github.com/ajoslin/conventional-changelog/issues/45) [#40](https://github.com/ajoslin/conventional-changelog/issues/40) [#22](https://github.com/ajoslin/conventional-changelog/issues/22) [#13](https://github.com/ajoslin/conventional-changelog/issues/13) [#12](https://github.com/ajoslin/conventional-changelog/issues/12) [#54](https://github.com/ajoslin/conventional-changelog/issues/54) [#51](https://github.com/ajoslin/conventional-changelog/issues/51)
+
+
+### BREAKING CHANGES
+
+* This module is rewritten so API is changed and it is not backward compatible. Please check docs and all the submodules including git-raw-commits, conventional-commits-parser and conventional-commits-writer for more information.
+
+
+
 <a name"0.0.17"></a>
 ### 0.0.17 (2015-04-03)
 
