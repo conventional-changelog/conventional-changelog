@@ -23,6 +23,12 @@ Adapted from code originally written by @vojtajina and @btford in [grunt-convent
 
 *Note:* As 0.1.x this module is rewritten and so the API is not backward compatible. If you are still using 0.0.x please checkout the README in your downloaded package or dig through the old tags.
 
+*Note:*: As the next release is still under development and we would like you to help test pre-release features, you can install by typing
+
+```sh
+$ npm install conventional-changelog@next
+```
+
 [Synopsis of Conventions](conventions)
 
 ## Example output
