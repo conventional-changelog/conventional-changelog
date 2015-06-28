@@ -142,11 +142,10 @@ function getExtraContext(commits, notes, options) {
 function generate(options, commits, notes, context, keyCommit) {
   var compiled = compileTemplates(options);
 
-  var mergedContext = _.merge({}, context, getExtraContext(commits, notes, options));
+  var mergedContext = _.merge({}, context, keyCommit, getExtraContext(commits, notes, options));
 
-  if (keyCommit && keyCommit.version) {
-    mergedContext.version = keyCommit.version;
-    mergedContext.date = keyCommit.committerDate || context.date;
+  if (keyCommit && keyCommit.committerDate) {
+    mergedContext.date = keyCommit.committerDate;
   }
 
   if (mergedContext.version) {

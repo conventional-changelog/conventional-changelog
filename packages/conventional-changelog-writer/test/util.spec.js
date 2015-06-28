@@ -528,4 +528,18 @@ describe('util', function() {
       });
     });
   });
+
+  describe('generate', function() {
+    it('should merge with the key commit', function() {
+      var log = util.generate({
+        mainTemplate: '{{whatever}}'
+      }, [], [], {
+        whatever: 'a'
+      }, {
+        whatever: 'b'
+      });
+
+      expect(log).to.equal('b');
+    });
+  });
 });
