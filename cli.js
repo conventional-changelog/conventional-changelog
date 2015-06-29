@@ -28,7 +28,7 @@ var cli = meow({
     '  --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options',
     '  --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options',
     '  --writer-opts             A filepath of a javascript that is used to define conventional-commits-writer options'
-  ].join('\n')
+  ]
 }, {
   alias: {
     i: 'infile',

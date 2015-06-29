@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "add-stream": "^1.0.0",
-    "compare-func": "^1.2.0",
+    "compare-func": "^1.3.1",
     "conventional-commits-parser": "0.0.17",
     "conventional-commits-writer": "0.0.14",
     "dateformat": "^1.0.11",
@@ -34,7 +34,7 @@
     "git-latest-semver-tag": "0.0.0",
     "git-raw-commits": "0.0.8",
     "lodash": "^3.9.3",
-    "meow": "^3.1.0",
+    "meow": "^3.3.0",
     "q": "^1.4.1",
     "semver": "^4.3.6",
     "tempfile": "^1.1.1",
