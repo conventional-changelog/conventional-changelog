@@ -23,7 +23,7 @@ it('should emit an error if there is no commits', function(done) {
     }));
 });
 
-it('should get commits without `options` (`options.from` defaults to first commit)', function(done) {
+it('should execute the command without error', function(done) {
   writeFileSync('test1', '');
   shell.exec('git add --all && git commit -m"First commit"');
   writeFileSync('test2', '');
@@ -31,6 +31,20 @@ it('should get commits without `options` (`options.from` defaults to first commi
   writeFileSync('test3', '');
   shell.exec('git add --all && git commit -m"Third commit"');
 
+  var called = false;
+  var callback = function(err) {
+    if (!called) {
+      called = true;
+      done(err);
+    }
+  };
+
+  gitRawCommits()
+    .on('close', callback)
+    .on('error', callback);
+});
+
+it('should get commits without `options` (`options.from` defaults to first commit)', function(done) {
   var i = 0;
 
   gitRawCommits()
