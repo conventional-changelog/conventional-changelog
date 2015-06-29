@@ -31,12 +31,8 @@ it('should execute the command without error', function(done) {
   writeFileSync('test3', '');
   shell.exec('git add --all && git commit -m"Third commit"');
 
-  var called = false;
   var callback = function(err) {
-    if (!called) {
-      called = true;
-      done(err);
-    }
+    done(err);
   };
 
   gitRawCommits()
@@ -105,6 +101,31 @@ it('should honour `options.to`', function(done) {
       cb();
     }, function() {
       expect(i).to.equal(2);
+      done();
+    }));
+});
+
+it('should honour `options.format`', function(done) {
+  var i = 0;
+
+  gitRawCommits({
+    format: 'what%n%B'
+  })
+    .pipe(through(function(chunk, enc, cb) {
+      chunk = chunk.toString();
+
+      if (i === 0) {
+        expect(chunk).to.equal('what\nThird commit\n\n');
+      } else if (i === 1) {
+        expect(chunk).to.equal('what\nSecond commit\n\n');
+      }else {
+        expect(chunk).to.equal('what\nFirst commit\n\n');
+      }
+
+      i++;
+      cb();
+    }, function() {
+      expect(i).to.equal(3);
       done();
     }));
 });
