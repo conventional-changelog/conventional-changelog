@@ -20,7 +20,7 @@ function gitRawCommits(options) {
   });
 
   var cmd = template(
-    'git log --format=\'<%= format %>%n------------------------ >8 ------------------------\' ' +
+    'git log --format=\"<%= format %>%n------------------------ >8 ------------------------\" ' +
     '<%= from ? [from, to].join("..") : to %> '
   )(options) + args.join(' ');
 
