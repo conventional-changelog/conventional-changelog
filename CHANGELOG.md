@@ -1,3 +1,10 @@
+<a name="0.1.0-alpha.2"></a>
+# 0.1.0-alpha.2 (2015-06-29)
+
+Bump deps and fix https://github.com/ajoslin/conventional-changelog/issues/64
+
+
+
 <a name="0.1.0-alpha.1"></a>
 # 0.1.0-alpha.1 (2015-06-24)
 
