@@ -13,7 +13,7 @@ module.exports = function(callback) {
 
     var tags = [];
 
-    data.split('\n').some(function(decorations) {
+    data.split('\n').forEach(function(decorations) {
       var match;
       while (match = regex.exec(decorations)) {
         var tag = match[1];
