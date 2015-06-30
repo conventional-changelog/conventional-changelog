@@ -30,13 +30,9 @@ it('should execute the command without error', function(done) {
   writeFileSync('test3', '');
   shell.exec('git add --all && git commit -m"Third commit"');
 
-  var callback = function(err) {
-    done(err);
-  };
-
   gitRawCommits()
-    .on('close', callback)
-    .on('error', callback);
+    .on('close', done)
+    .on('error', done);
 });
 
 it('should get commits without `options` (`options.from` defaults to first commit)', function(done) {
