@@ -8,4 +8,5 @@ shell.cd('tmp');
 shell.mkdir('test');
 shell.mkdir('angular');
 shell.mkdir('jquery');
+shell.mkdir('jshint');
 shell.mkdir('cli');
