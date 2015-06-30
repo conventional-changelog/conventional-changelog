@@ -1,0 +1,44 @@
+{
+  "name": "git-semver-tags",
+  "version": "0.0.0",
+  "description": "Get all git semver tag of your repository in the latest to oldest order",
+  "homepage": "https://github.com/stevemao/git-semver-tags",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "repository": "stevemao/git-semver-tags",
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "git-semver-tags",
+    "recent",
+    "semver",
+    "tag",
+    "git-tag"
+  ],
+  "dependencies": {
+    "meow": "^3.3.0",
+    "semver": "^4.3.6"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.17",
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
+    "mocha": "*",
+    "shelljs": "^0.5.1"
+  },
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "test": "npm run-script lint && mocha"
+  },
+  "bin": {
+    "git-semver-tags": "cli.js"
+  }
+}
