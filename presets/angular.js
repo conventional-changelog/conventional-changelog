@@ -50,8 +50,6 @@ function presetOpts(cb) {
         return;
       }
 
-      regex.lastIndex = 0;
-
       if (typeof commit.hash === 'string') {
         commit.hash = commit.hash.substring(0, 7);
       }

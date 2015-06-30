@@ -10,9 +10,9 @@ var regex = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
 function presetOpts(cb) {
   var parserOpts = {
-    headerPattern: /^(\w*)\: (.*)$/,
+    headerPattern: /^\[\[(.*)]] (.*)$/,
     headerCorrespondence: [
-      'component',
+      'type',
       'shortDesc'
     ]
   };
@@ -34,37 +34,36 @@ function presetOpts(cb) {
 
   var writerOpts = {
     transform: function(commit) {
-      var componentLength;
-
-      if (!commit.component || typeof commit.component !== 'string') {
+      if (commit.type === 'FEAT') {
+        commit.type = 'Features';
+      } else if (commit.type === 'FIX') {
+        commit.type = 'Bug Fixes';
+      } else {
         return;
       }
 
-      commit.component = commit.component.substring(0, 72);
-      componentLength = commit.component.length;
+      if (!commit.type || typeof commit.type !== 'string') {
+        return;
+      }
 
       if (typeof commit.hash === 'string') {
         commit.hash = commit.hash.substring(0, 7);
       }
 
-      if (typeof commit.shortDesc === 'string') {
-        commit.shortDesc = commit.shortDesc.substring(0, 72 - componentLength);
-      }
-
       return commit;
     },
-    groupBy: 'component',
+    groupBy: 'type',
     commitGroupsSort: 'title',
-    commitsSort: ['component', 'shortDesc'],
+    commitsSort: ['type', 'shortDesc'],
     generateOn: function(commit) {
       return semver.valid(commit.version);
     }
   };
 
   Q.all([
-    readFile(resolve(__dirname, '../templates/jquery/template.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, '../templates/jquery/header.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, '../templates/jquery/commit.hbs'), 'utf-8')
+    readFile(resolve(__dirname, '../templates/jshint/template.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, '../templates/jshint/header.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, '../templates/jshint/commit.hbs'), 'utf-8')
   ])
     .spread(function(template, header, commit) {
       writerOpts.mainTemplate = template;
