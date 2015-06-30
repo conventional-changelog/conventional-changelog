@@ -18,7 +18,6 @@ it('should emit an error if there is no commits', function(done) {
       done();
     })
     .pipe(through(function() {
-      // istanbul ignore next
       done('should error');
     }));
 });
