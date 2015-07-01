@@ -449,5 +449,30 @@ describe('parser', function() {
         hash: '9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca'
       });
     });
+
+    it('should parse revert even if a field is missing', function() {
+      options = {
+        revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+        revertCorrespondence: ['header', 'hash']
+      };
+
+      regex = {
+        notes: /(BREAKING AMEND)[:\s]*(.*)/,
+        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
+        references: /(close)(?:\s+(.*?))(?=(?:close)|$)/gi
+      };
+
+      msg = parser(
+        'Revert ""\n\n' +
+        'This reverts commit .',
+        options,
+        regex
+      );
+
+      expect(msg.revert).to.eql({
+        header: null,
+        hash: null
+      });
+    });
   });
 });
