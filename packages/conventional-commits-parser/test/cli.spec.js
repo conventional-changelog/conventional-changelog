@@ -2,14 +2,10 @@
 var concat = require('concat-stream');
 var expect = require('chai').expect;
 var fs = require('fs');
-var readFileSync = require('fs').readFileSync;
 var spawn = require('child_process').spawn;
 var through = require('through2');
 
 var cliPath = './cli.js';
-var output1 = readFileSync('test/expected/output1.json', 'utf-8');
-var output2 = readFileSync('test/expected/output2.json', 'utf-8');
-var output3 = readFileSync('test/expected/output3.json', 'utf-8');
 
 describe('cli', function() {
   it('should parse commits in a file', function(done) {
@@ -18,7 +14,8 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal(output1);
+        expect(chunk.toString()).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"');
+
         done();
       }));
   });
@@ -29,7 +26,11 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal(output2);
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"');
+        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"');
+
         done();
       }));
   });
@@ -40,8 +41,12 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        var expected = output1 + output2;
-        expect(chunk.toString()).to.equal(expected);
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"');
+        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"');
+        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"');
+
         done();
       }));
   });
@@ -53,11 +58,14 @@ describe('cli', function() {
     });
     cp.stderr
       .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
         if (i === 0) {
-          expect(chunk.toString()).to.contain('Failed to read file test/fixtures/log4.txt');
+          expect(chunk).to.contain('Failed to read file test/fixtures/log4.txt');
         } else {
-          expect(chunk.toString()).to.contain('Failed to read file test/fixtures/log5.txt');
+          expect(chunk).to.contain('Failed to read file test/fixtures/log5.txt');
         }
+
         i++;
         cb();
       }, function() {
@@ -71,7 +79,10 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal(output3);
+        expect(chunk.toString()).to.include('"scope":"category","type":"fix:subcategory","subject":"My subject"');
+        expect(chunk.toString()).to.include('"references":[{"action":"Close","repository":null,"issue":"10036","raw":"#10036"},{"action":"fix","repository":null,"issue":"9338","raw":"#9338"}]');
+        expect(chunk.toString()).to.include('"notes":[{"title":"BREAKING NEWS","text":"A lot of changes!\\n"}]');
+
         done();
       }));
   });
@@ -82,7 +93,8 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal(output1);
+        expect(chunk.toString()).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"');
+
         done();
       }));
   });
@@ -94,6 +106,7 @@ describe('cli', function() {
     cp.stderr
       .pipe(concat(function(chunk) {
         expect(chunk.toString()).to.equal('TypeError: Expected a raw commit\n');
+
         done();
       }));
   });

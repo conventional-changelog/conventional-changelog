@@ -1,5 +1,0 @@
-[
-{"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly\n","body":null,"footer":null,"notes":[],"references":[]}
-,
-{"type":"fix","scope":"$animate","subject":"applyStyles from options on leave","header":"fix($animate): applyStyles from options on leave\n","body":null,"footer":"Closes #10068\n","notes":[],"references":[{"action":"Closes","repository":null,"issue":"10068","raw":"#10068"}]}
-]

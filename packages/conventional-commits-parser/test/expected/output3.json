@@ -1,3 +1,0 @@
-[
-{"scope":"category","type":"fix:subcategory","subject":"My subject","header":"category(fix:subcategory): My subject\n","body":"This is my commit body.\n","footer":"BREAKING NEWS: A lot of changes!\nClose #10036, Closes #10000\nFixed #13233\nfix #9338\n","notes":[{"title":"BREAKING NEWS","text":"A lot of changes!\n"}],"references":[{"action":"Close","repository":null,"issue":"10036","raw":"#10036"},{"action":"fix","repository":null,"issue":"9338","raw":"#9338"}]}
-]
