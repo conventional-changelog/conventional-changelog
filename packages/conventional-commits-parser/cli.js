@@ -37,7 +37,10 @@ var cli = meow({
     '  -r, --reference-actions        Comma separated keywords that used to reference issues',
     '  -i, --issue-prefixes           Comma separated prefixes of an issue',
     '  -n, --note-keywords            Comma separated keywords for important notes',
-    '  -f, --field-pattern            Regex to match other fields'
+    '  -f, --field-pattern            Regex to match other fields',
+    '  --revert-pattern               Regex to match revert pattern',
+    '  --revert-correspondence        Comma separated fields used to define what the commit reverts',
+    '  -v, --verbose                  Verbose output'
   ].join('\n')
 }, {
   alias: {
@@ -46,7 +49,8 @@ var cli = meow({
     r: 'referenceActions',
     i: 'issuePrefixes',
     n: 'noteKeywords',
-    f: 'fieldPattern'
+    f: 'fieldPattern',
+    v: 'verbose'
   }
 });
 
@@ -60,7 +64,10 @@ forEach(cli.input, function(arg) {
 
 var length = filePaths.length;
 var options = cli.flags;
-options.warn = console.log.bind(console);
+
+if (options.verbose) {
+  options.warn = console.log.bind(console);
+}
 
 function processFile(fileIndex) {
   var filePath = filePaths[fileIndex];
