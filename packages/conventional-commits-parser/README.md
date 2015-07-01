@@ -108,7 +108,7 @@ Type: `regex` or `string` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
 
 Used to match header pattern.
 
-##### headerCorrespondence:
+##### headerCorrespondence
 
 Type: `array` of `string` or `string` Default `['type', 'scope', 'subject']`
 
@@ -148,6 +148,41 @@ Keywords for important notes. If it's a `string` it will be converted to an `arr
 Type: `regex` or `string` Default: `/^-(.*?)-$/`
 
 Pattern to match other fields.
+
+##### revertPattern
+
+Type: `regex` or `string` Default: `/^Revert\s([\s\S]*)This reverts commit (.*)\.$/`
+
+Pattern to match what this commit reverts.
+
+##### revertCorrespondence
+
+Type: `array` of `string` or `string` Default: `['header', 'hash']`
+
+Used to define what capturing group of `revertPattern` captures what reverted commit fields. The order of the array should correspond to the order of `revertPattern`'s capturing group.
+
+For example, if we have commit
+
+```
+revert throw an error if a callback is passed
+
+This reverts commit 9bb4d6c.
+```
+
+And the parsed result might be
+
+```js
+{
+  revert: {
+    header: 'throw an error if a callback is passed',
+    hash: '9bb4d6c'
+  }
+}
+```
+
+It implies that this commit reverts a commit with header `'throw an error if a callback is passed'` and hash `'9bb4d6c'`.
+
+If it's a `string` it will be converted to an `array` separated by a comma.
 
 ##### warn
 

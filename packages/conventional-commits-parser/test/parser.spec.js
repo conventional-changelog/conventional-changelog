@@ -69,6 +69,20 @@ describe('parser', function() {
     }).to.throw('Expected a raw commit');
   });
 
+  it('should throw if `options` is empty', function() {
+    expect(function() {
+      parser('bla bla');
+    }).to.throw('Expected options');
+  });
+
+  it('should throw if `regex` is empty', function() {
+    expect(function() {
+      parser('bla bla', {
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/
+      });
+    }).to.throw('Expected regex');
+  });
+
   it('should trim extra newlines', function() {
     expect(msg).to.eql(parser(
       '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
@@ -84,12 +98,6 @@ describe('parser', function() {
   });
 
   describe('header', function() {
-    it('should throw if `options` is empty', function() {
-      expect(function() {
-        parser('bla bla');
-      }).to.throw('Expected options');
-    });
-
     it('should allow ":" in scope', function() {
       var msg = parser('feat(ng:list): Allow custom separator', {
         headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
@@ -413,6 +421,33 @@ describe('parser', function() {
 
       expect(msg.committerName).to.equal('Steve Mao\n');
       expect(msg[' committerEmail']).to.equal('test@github.com\n');
+    });
+  });
+
+  describe('revert', function() {
+    it('should revert other commit', function() {
+      options = {
+        revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+        revertCorrespondence: ['header', 'hash']
+      };
+
+      regex = {
+        notes: /(BREAKING AMEND)[:\s]*(.*)/,
+        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
+        references: /(close)(?:\s+(.*?))(?=(?:close)|$)/gi
+      };
+
+      msg = parser(
+        'Revert "throw an error if a callback is passed to animate methods"\n\n' +
+        'This reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.',
+        options,
+        regex
+      );
+
+      expect(msg.revert).to.eql({
+        header: 'throw an error if a callback is passed to animate methods',
+        hash: '9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca'
+      });
     });
   });
 });

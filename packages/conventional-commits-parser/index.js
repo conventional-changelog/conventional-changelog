@@ -22,14 +22,13 @@ function conventionalCommitsParser(options) {
     issuePrefixes: ['#'],
     noteKeywords: ['BREAKING CHANGE'],
     fieldPattern: /^-(.*?)-$/,
+    revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+    revertCorrespondence: ['header', 'hash'],
     warn: function() {}
   }, options);
 
-  var headerPattern = options.headerPattern;
-  var fieldPattern = options.fieldPattern;
-
-  if (typeof headerPattern === 'string') {
-    options.headerPattern = new RegExp(headerPattern);
+  if (typeof options.headerPattern === 'string') {
+    options.headerPattern = new RegExp(options.headerPattern);
   }
 
   if (typeof options.headerCorrespondence === 'string') {
@@ -48,8 +47,16 @@ function conventionalCommitsParser(options) {
     options.noteKeywords = options.noteKeywords.split(',');
   }
 
-  if (typeof fieldPattern === 'string') {
-    options.fieldPattern = new RegExp(fieldPattern);
+  if (typeof options.fieldPattern === 'string') {
+    options.fieldPattern = new RegExp(options.fieldPattern);
+  }
+
+  if (typeof options.revertPattern === 'string') {
+    options.revertPattern = new RegExp(options.revertPattern);
+  }
+
+  if (typeof options.revertCorrespondence === 'string') {
+    options.revertCorrespondence = options.revertCorrespondence.split(',');
   }
 
   var reg = regex(options);

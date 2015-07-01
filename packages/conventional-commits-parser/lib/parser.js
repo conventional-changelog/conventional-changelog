@@ -10,10 +10,15 @@ function parser(raw, options, regex) {
     throw new TypeError('Expected options');
   }
 
+  if (_.isEmpty(regex)) {
+    throw new TypeError('Expected regex');
+  }
+
   var headerMatch;
   var referenceSentences;
   var referenceMatch;
   var currentProcessedField;
+  var revertMatch;
   var otherFields = {};
   var lines = _.compact(raw.split('\n'));
   var continueNote = false;
@@ -21,9 +26,15 @@ function parser(raw, options, regex) {
   var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
     return part.trim();
   });
+  var revertCorrespondence = _.map(options.revertCorrespondence, function(field) {
+    return field.trim();
+  });
+
   var reNotes = regex.notes;
   var reReferenceParts = regex.referenceParts;
   var reReferences = regex.references;
+
+  raw = lines.join('\n');
 
   // msg parts
   var header = lines.shift();
@@ -32,6 +43,7 @@ function parser(raw, options, regex) {
   var footer = '';
   var notes = [];
   var references = [];
+  var revert;
 
   headerMatch = header.match(options.headerPattern);
 
@@ -155,12 +167,26 @@ function parser(raw, options, regex) {
     footer = null;
   }
 
+  // does this commit revert any other commit?
+  revertMatch = raw.match(options.revertPattern);
+
+  if (revertMatch) {
+    revert = {};
+    _.forEach(revertCorrespondence, function(fieldName, index) {
+      var fieldValue = revertMatch[index + 1] || null;
+      revert[fieldName] = fieldValue;
+    });
+  } else {
+    revert = null;
+  }
+
   var msg  = _.merge(headerParts, {
     header: header + '\n',
     body: body,
     footer: footer,
     notes: notes,
-    references: references
+    references: references,
+    revert: revert
   }, otherFields);
 
   return msg;
