@@ -425,7 +425,7 @@ describe('parser', function() {
   });
 
   describe('revert', function() {
-    it('should revert other commit', function() {
+    it('should parse revert', function() {
       options = {
         revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
         revertCorrespondence: ['header', 'hash']

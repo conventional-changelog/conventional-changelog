@@ -181,12 +181,13 @@ describe('conventionalCommitsParser', function() {
 
   it('should take string options', function(done) {
     var stream = through();
-    var length = commits.length;
+    var i = 0;
 
     forEach(commits, function(commit) {
       stream.write(commit);
     });
     stream.write('blabla\n-hash-\n9b1aff905b638aa274a5fc8f88662df446d374bd');
+    stream.write('Revert "throw an error if a callback is passed to animate methods"\n\nThis reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.');
     stream.end();
 
     stream
@@ -196,10 +197,12 @@ describe('conventionalCommitsParser', function() {
         headerCorrespondence: 'subject,type,  scope,',
         issuePrefixes: '#',
         noteKeywords: 'BREAKING CHANGES',
-        referenceActions: 'fix'
+        referenceActions: 'fix',
+        revertPattern: '^Revert\\s"([\\s\\S]*)"\\s*This reverts commit (.*)\\.$',
+        revertCorrespondence: 'header'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
-        if (length === 2) {
+        if (i === 0) {
           expect(chunk.subject).to.equal('feat');
           expect(chunk.type).to.equal('ng-list');
           expect(chunk.scope).to.equal('Allow custom separator');
@@ -214,7 +217,7 @@ describe('conventionalCommitsParser', function() {
             raw: '#33',
             repository: null
           }]);
-        } else if (length === 1) {
+        } else if (i === 1) {
           expect(chunk.type).to.equal('ng-list');
           expect(chunk.scope).to.equal('Another custom separator');
           expect(chunk.subject).to.equal('fix');
@@ -222,13 +225,16 @@ describe('conventionalCommitsParser', function() {
             title: 'BREAKING CHANGES',
             text: 'some breaking changes\n'
           });
-        } else {
+        } else if (i === 2) {
           expect(chunk.header).to.equal('blabla\n');
           expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd\n');
+        } else if (i === 3) {
+          expect(chunk.revert.header).to.equal('throw an error if a callback is passed to animate methods');
 
           done();
         }
-        --length;
+
+        i++;
         cb();
       }));
   });
