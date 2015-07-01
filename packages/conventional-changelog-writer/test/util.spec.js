@@ -541,5 +541,15 @@ describe('util', function() {
 
       expect(log).to.equal('b');
     });
+
+    it('should not html escape any content', function() {
+      var log = util.generate({
+        mainTemplate: '{{whatever}}'
+      }, [], [], {
+        whatever: '`a`'
+      });
+
+      expect(log).to.equal('`a`');
+    });
   });
 });

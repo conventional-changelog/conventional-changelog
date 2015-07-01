@@ -276,7 +276,7 @@ And you run
 $ conventional-commits-writer commits.ldjson -o options.js
 ```
 
-The output might become
+The output might look something like this
 
 ```md
 <a name="1.0.0"></a>
@@ -290,7 +290,7 @@ The output might become
 
 ### BREAKING CHANGES
 
-* The &#x60;ngMessagesInclude&#x60; attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.
+* The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.
 ```
 
 It is printed to stdout.

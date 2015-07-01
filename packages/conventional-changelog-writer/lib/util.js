@@ -27,7 +27,9 @@ function compileTemplates(templates) {
     Handlebars.registerPartial(name, partial);
   });
 
-  return Handlebars.compile(main);
+  return Handlebars.compile(main, {
+    noEscape: true
+  });
 }
 
 function functionify(strOrArr) {
