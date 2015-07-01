@@ -12,7 +12,7 @@ describe('conventionalCommitsParser', function() {
       'bla bla bla\n\n' +
       'Closes #123\nCloses #25\nFixes #33\n',
 
-      'feat(ng-list): Allow custom separator\n' +
+      'feat(scope): broadcast $destroy event on scope destruction\n' +
       'bla bla bla\n\n' +
       'BREAKING CHANGE: some breaking change\n',
 
@@ -23,7 +23,12 @@ describe('conventionalCommitsParser', function() {
 
       'chore(scope with spaces): some chore\n' +
       'bla bla bla\n\n' +
-      'BREAKING CHANGE: some breaking change\n'
+      'BREAKING CHANGE: some other breaking change\n',
+
+      'Revert "throw an error if a callback is passed to animate methods"\n\n' +
+      'This reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.\n\n' +
+      '-hash-\n' +
+      'd7a40a29214f37d469e57d730dfd042b639d4d1f'
     ];
 
     forEach(commits, function(commit) {
@@ -39,17 +44,25 @@ describe('conventionalCommitsParser', function() {
         if (i === 0) {
           expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
         } else if (i === 1) {
-          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
+          expect(chunk.notes).to.eql([{
+            title: 'BREAKING CHANGE',
+            text: 'some breaking change\n'
+          }]);
         } else if (i === 2) {
           expect(chunk.header).to.equal('fix(zzz): Very cool commit\n');
         } else if (i === 3) {
           expect(chunk.header).to.equal('chore(scope with spaces): some chore\n');
+        } else if (i === 4) {
+          expect(chunk.revert).to.eql({
+            header: 'throw an error if a callback is passed to animate methods',
+            hash: '9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca'
+          });
         }
 
         i++;
         cb();
       }, function() {
-        expect(i).to.equal(4);
+        expect(i).to.equal(5);
         done();
       }));
   });
@@ -198,7 +211,7 @@ describe('conventionalCommitsParser', function() {
         issuePrefixes: '#',
         noteKeywords: 'BREAKING CHANGES',
         referenceActions: 'fix',
-        revertPattern: '^Revert\\s"([\\s\\S]*)"\\s*This reverts commit (.*)\\.$',
+        revertPattern: '^Revert\\s"([\\s\\S]*)"\\s*This reverts commit (\\w*)\\.',
         revertCorrespondence: 'header'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
@@ -230,12 +243,13 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd\n');
         } else if (i === 3) {
           expect(chunk.revert.header).to.equal('throw an error if a callback is passed to animate methods');
-
-          done();
         }
 
         i++;
         cb();
+      }, function() {
+        expect(i).to.equal(4);
+        done();
       }));
   });
 });

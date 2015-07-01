@@ -22,7 +22,7 @@ function conventionalCommitsParser(options) {
     issuePrefixes: ['#'],
     noteKeywords: ['BREAKING CHANGE'],
     fieldPattern: /^-(.*?)-$/,
-    revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+    revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./,
     revertCorrespondence: ['header', 'hash'],
     warn: function() {}
   }, options);
