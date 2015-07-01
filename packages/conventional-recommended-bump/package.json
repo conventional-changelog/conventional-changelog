@@ -21,7 +21,9 @@
     "conventional-commits-parser": "0.0.17",
     "git-latest-semver-tag": "0.0.0",
     "git-raw-commits": "0.0.7",
+    "is-subset": "^0.1.1",
     "meow": "^3.3.0",
+    "modify-values": "^1.0.0",
     "object-assign": "^3.0.0"
   },
   "devDependencies": {

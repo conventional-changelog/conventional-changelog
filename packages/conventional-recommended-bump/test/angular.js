@@ -7,6 +7,10 @@ var writeFileSync = require('fs').writeFileSync;
 
 describe('preset', function() {
   describe('angular', function() {
+    var opts = {
+      preset: 'angular'
+    };
+
     before(function() {
       shell.cd('angular');
       shell.exec('git init');
@@ -23,18 +27,14 @@ describe('preset', function() {
     });
 
     it('should release as minor', function(done) {
-      conventionalRecommendedBump({
-        preset: 'angular'
-      }, function(err, releaseAs) {
+      conventionalRecommendedBump(opts, function(err, releaseAs) {
         equal(releaseAs, 'minor');
         done();
       });
     });
 
     it('should merge parserOpts', function(done) {
-      conventionalRecommendedBump({
-        preset: 'angular'
-      }, {
+      conventionalRecommendedBump(opts, {
         headerPattern: /^(\w*)\: (.*)$/,
       }, function(err, releaseAs) {
         equal(releaseAs, 'patch');
@@ -46,12 +46,33 @@ describe('preset', function() {
       writeFileSync('test4', '');
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
       child.exec('git add --all && git commit -m"feat(): amazing new module\n\nBREAKING CHANGE: Not backward compatible."', function() {
-        conventionalRecommendedBump({
-          preset: 'angular'
-        }, function(err, releaseAs) {
+        conventionalRecommendedBump(opts, function(err, releaseAs) {
           equal(releaseAs, 'major');
           done();
         });
+      });
+    });
+
+    it('should ignore a reverted commit', function(done) {
+      writeFileSync('test5', '');
+      child.exec('git rev-parse HEAD', function(err, hash) {
+        // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
+        child.exec('git add --all && git commit -m"revert: feat(): amazing new module\n\nThis reverts commit ' + hash.trim() + '."', function() {
+          conventionalRecommendedBump(opts, function(err, releaseAs) {
+            equal(releaseAs, 'minor');
+            done();
+          });
+        });
+      });
+    });
+
+    it('should not ignore a reverted commit', function(done) {
+      conventionalRecommendedBump({
+        preset: 'angular',
+        ignoreReverted: false
+      }, function(err, releaseAs) {
+        equal(releaseAs, 'major');
+        done();
       });
     });
   });

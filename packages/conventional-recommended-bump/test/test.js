@@ -1,6 +1,7 @@
 'use strict';
+var assert = require('assert');
 var conventionalRecommendedBump = require('../');
-var equal = require('assert').strictEqual;
+var equal = assert.strictEqual;
 var fs = require('fs');
 var shell = require('shelljs');
 
@@ -16,8 +17,8 @@ describe('conventional-recommended-bump', function() {
     shell.cd('../');
   });
 
-  it('should return `null` if no `whatBump` is found', function(done) {
-    conventionalRecommendedBump(function(err, releaseAs) {
+  it('should return `""` if no `whatBump` is found', function(done) {
+    conventionalRecommendedBump({}, function(err, releaseAs) {
       equal(releaseAs, '');
       done();
     });
@@ -35,7 +36,13 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('should not error if callback is missing', function() {
-    conventionalRecommendedBump();
+    conventionalRecommendedBump({});
+  });
+
+  it('should error if `options` is missing', function() {
+    assert.throws(function() {
+      conventionalRecommendedBump(function() {});
+    }, 'options must be an object');
   });
 
   it('should error if no preset found', function(done) {

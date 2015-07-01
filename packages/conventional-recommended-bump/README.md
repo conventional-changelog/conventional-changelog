@@ -21,6 +21,7 @@ conventionalRecommendedBump({
     preset: 'angular'
   }, function(err, releaseAs) {
     console.log(releaseAs);
+    //=> 'major'
   });
 });
 ```
@@ -51,9 +52,15 @@ $ conventional-recommended-bump --help
 
 ## API
 
-### conventionalRecommendedBump([options, [parserOpts]], [callback])
+### conventionalRecommendedBump(options, [parserOpts], [callback])
 
 #### options
+
+##### ignoreReverted
+
+Type: `boolean` Default: `true`
+
+If true, reverted commits will be ignored.
 
 ##### preset
 

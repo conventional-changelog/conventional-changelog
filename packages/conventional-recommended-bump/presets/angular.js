@@ -21,7 +21,9 @@ var presetOpts = {
       'scope',
       'subject'
     ],
-    noteKeywords: 'BREAKING CHANGE'
+    noteKeywords: 'BREAKING CHANGE',
+    revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
+    revertCorrespondence: ['header', 'hash']
   }
 };
 
