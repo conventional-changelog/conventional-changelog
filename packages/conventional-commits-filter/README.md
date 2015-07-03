@@ -1,0 +1,107 @@
+# conventional-commits-filter [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+> Filter out reverted commits parsed by conventional-commits-parser
+
+
+## Install
+
+```sh
+$ npm install --save conventional-commits-filter
+```
+
+
+## Usage
+
+```js
+var conventionalCommitsFilter = require('conventional-commits-filter');
+
+var commits = [{
+  type: 'revert',
+  scope: null,
+  subject: 'feat(): amazing new module',
+  header: 'revert: feat(): amazing new module\n',
+  body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
+  footer: null,
+  notes: [],
+  references: [],
+  revert: {
+    header: 'feat(): amazing new module',
+    hash: '56185b7356766d2b30cfa2406b257080272e0b7a'
+  },
+  hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
+}, {
+  type: 'feat',
+  scope: null,
+  subject: 'amazing new module',
+  header: 'feat(): amazing new module\n',
+  body: null,
+  footer: 'BREAKING CHANGE: Not backward compatible.\n',
+  notes: [],
+  references: [],
+  revert: null,
+  hash: '56185b7356766d2b30cfa2406b257080272e0b7a\n'
+}, {
+  type: 'feat',
+  scope: null,
+  subject: 'new feature',
+  header: 'feat(): new feature\n',
+  body: null,
+  footer: null,
+  notes: [],
+  references: [],
+  revert: null,
+  hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
+}, {
+  type: 'chore',
+  scope: null,
+  subject: 'first commit',
+  header: 'chore: first commit\n',
+  body: null,
+  footer: null,
+  notes: [],
+  references: [],
+  revert: null,
+  hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
+}];
+
+commits = conventionalCommitsFilter(commits);
+console.log(commits);
+/*=>
+[{
+  type: 'feat',
+  scope: null,
+  subject: 'new feature',
+  header: 'feat(): new feature\n',
+  body: null,
+  footer: null,
+  notes: [],
+  references: [],
+  revert: null,
+  hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
+}, {
+  type: 'chore',
+  scope: null,
+  subject: 'first commit',
+  header: 'chore: first commit\n',
+  body: null,
+  footer: null,
+  notes: [],
+  references: [],
+  revert: null,
+  hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
+}]
+*/
+```
+
+## License
+
+MIT © [Steve Mao]()
+
+
+[npm-image]: https://badge.fury.io/js/conventional-commits-filter.svg
+[npm-url]: https://npmjs.org/package/conventional-commits-filter
+[travis-image]: https://travis-ci.org//conventional-commits-filter.svg?branch=master
+[travis-url]: https://travis-ci.org//conventional-commits-filter
+[daviddm-image]: https://david-dm.org//conventional-commits-filter.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org//conventional-commits-filter
+[coveralls-image]: https://coveralls.io/repos//conventional-commits-filter/badge.svg
+[coveralls-url]: https://coveralls.io/r//conventional-commits-filter
