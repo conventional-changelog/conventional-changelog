@@ -1,5 +1,6 @@
 'use strict';
 var compareFunc = require('compare-func');
+var conventionalCommitsFilter = require('conventional-commits-filter');
 var Handlebars = require('handlebars');
 var semver = require('semver');
 var _ = require('lodash');
@@ -143,6 +144,10 @@ function getExtraContext(commits, notes, options) {
 
 function generate(options, commits, notes, context, keyCommit) {
   var compiled = compileTemplates(options);
+
+  if (options.ignoreReverted) {
+    commits = conventionalCommitsFilter(commits);
+  }
 
   var mergedContext = _.merge({}, context, keyCommit, getExtraContext(commits, notes, options));
 

@@ -200,6 +200,12 @@ If this value is `true`, instead of emitting strings of changelog, it emits obje
 
 *NOTE:* The downstream must be in object mode if this is `true`.
 
+##### ignoreReverted
+
+Type: `boolean` Default: `true`
+
+If `true`, reverted commits will be ignored.
+
 ##### mainTemplate
 
 Type: `string` Default: [template.hbs](templates/template.hbs)

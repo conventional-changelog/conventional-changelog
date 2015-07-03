@@ -36,6 +36,7 @@ function conventionalcommitsWriter(context, options) {
     },
     reverse: false,
     includeDetails: false,
+    ignoreReverted: true,
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),

@@ -551,5 +551,52 @@ describe('util', function() {
 
       expect(log).to.equal('`a`');
     });
+
+    it('should ignore a reverted commit', function() {
+      var log = util.generate({
+        mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}',
+        ignoreReverted: true
+      }, [{
+        header: 'revert: feat(): amazing new module\n',
+        body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
+        footer: null,
+        notes: [],
+        references: [],
+        revert: {
+          header: 'feat(): amazing new module',
+          hash: '56185b7356766d2b30cfa2406b257080272e0b7a'
+        },
+        hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
+      }, {
+        header: 'feat(): amazing new module\n',
+        body: null,
+        footer: 'BREAKING CHANGE: Not backward compatible.\n',
+        notes: [],
+        references: [],
+        revert: null,
+        hash: '56185b7356766d2b30cfa2406b257080272e0b7a\n'
+      }, {
+        header: 'feat(): new feature\n',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        revert: null,
+        hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
+      }, {
+        header: 'chore: first commit\n',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        revert: null,
+        hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
+      }]);
+
+      expect(log).to.include('feat(): new feature\n');
+      expect(log).to.include('chore: first commit\n');
+      expect(log).to.not.include('amazing new module');
+      expect(log).to.not.include('revert');
+    });
   });
 });
