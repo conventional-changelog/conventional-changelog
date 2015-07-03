@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-filter",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Filter out reverted commits parsed by conventional-commits-parser",
   "homepage": "https://github.com/stevemao/conventional-commits-filter",
   "repository": "stevemao/conventional-commits-filter",
