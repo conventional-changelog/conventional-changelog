@@ -1,6 +1,6 @@
 'use strict';
 var conventionalCommitsParser = require('conventional-commits-parser');
-var conventionalCommitsWriter = require('conventional-commits-writer');
+var conventionalChangelogWriter = require('conventional-changelog-writer');
 var fs = require('fs');
 var getPkgRepo = require('get-pkg-repo');
 var gitLatestSemverTag = require('git-latest-semver-tag');
@@ -150,7 +150,7 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
         // it would be better to if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
         .pipe(options.transform || preset.transform || through.obj())
-        .pipe(conventionalCommitsWriter(context, writerOpts))
+        .pipe(conventionalChangelogWriter(context, writerOpts))
         .pipe(through(function(chunk, enc, cb) {
           readable.push(chunk);
 

@@ -27,7 +27,7 @@ var cli = meow({
     '  -c, --context             A filepath of a javascript that is used to define template variables',
     '  --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options',
     '  --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options',
-    '  --writer-opts             A filepath of a javascript that is used to define conventional-commits-writer options'
+    '  --writer-opts             A filepath of a javascript that is used to define conventional-changelog-writer options'
   ]
 }, {
   alias: {
