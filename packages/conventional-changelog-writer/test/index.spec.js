@@ -1,11 +1,11 @@
 'use strict';
-var conventionalcommitsWriter = require('../');
+var conventionalChangelogWriter = require('../');
 var expect = require('chai').expect;
 var map = require('lodash').map;
 var through = require('through2');
 var today = require('dateformat')(new Date(), 'yyyy-mm-dd', true);
 
-describe('conventionalCommitsWriter', function() {
+describe('conventionalChangelogWriter', function() {
   function getStream() {
     var upstream = through.obj();
     upstream.write({
@@ -55,7 +55,7 @@ describe('conventionalCommitsWriter', function() {
     });
     upstream.write({
       hash: '5f241416b79994096527d319395f654a8972591a',
-      header: 'refactor(name): rename this module to conventional-commits-writer',
+      header: 'refactor(name): rename this module to conventional-changelog-writer',
       body: '',
       footer: '',
       notes: [],
@@ -73,7 +73,7 @@ describe('conventionalCommitsWriter', function() {
       var upstream = through.obj();
       upstream.end();
       upstream
-        .pipe(conventionalcommitsWriter())
+        .pipe(conventionalChangelogWriter())
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n\n\n');
 
@@ -91,7 +91,7 @@ describe('conventionalCommitsWriter', function() {
       var i = 0;
 
       getStream()
-        .pipe(conventionalcommitsWriter({
+        .pipe(conventionalChangelogWriter({
           version: '0.5.0',
           title: 'this is a title',
           host: 'https://github.com',
@@ -112,7 +112,7 @@ describe('conventionalCommitsWriter', function() {
       var i = 0;
 
       getStream()
-        .pipe(conventionalcommitsWriter())
+        .pipe(conventionalChangelogWriter())
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.not.include('https://github.com/a/b/commits/13f3160');
 
@@ -138,7 +138,7 @@ describe('conventionalCommitsWriter', function() {
       });
       upstream.end();
       upstream
-        .pipe(conventionalcommitsWriter())
+        .pipe(conventionalChangelogWriter())
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n* bla \n\n\n\n');
 
@@ -163,7 +163,7 @@ describe('conventionalCommitsWriter', function() {
       });
       upstream.end();
       upstream
-        .pipe(conventionalcommitsWriter())
+        .pipe(conventionalChangelogWriter())
         .pipe(through(function(chunk, enc, cb) {
           if (i === 1) {
             expect(chunk.toString()).to.equal('<a name="1.0.0"></a>\n# 1.0.0 (' + today + ')\n\n\n* bla \n\n\n\n');
@@ -181,7 +181,7 @@ describe('conventionalCommitsWriter', function() {
       var i = 0;
 
       getStream()
-        .pipe(conventionalcommitsWriter({}, {
+        .pipe(conventionalChangelogWriter({}, {
           transform: {
             notes: function(notes) {
               map(notes, function(note) {
@@ -215,7 +215,7 @@ describe('conventionalCommitsWriter', function() {
       var i = 0;
 
       getStream()
-        .pipe(conventionalcommitsWriter({}, {
+        .pipe(conventionalChangelogWriter({}, {
           transform: function() {
             return false;
           }
@@ -261,7 +261,7 @@ describe('conventionalCommitsWriter', function() {
         committerDate: '2015-04-07 15:01:30 +1000'
       });
       upstream.write({
-        header: 'refactor(name): rename this module to conventional-commits-writer',
+        header: 'refactor(name): rename this module to conventional-changelog-writer',
         body: null,
         footer: null,
         notes: [],
@@ -277,7 +277,7 @@ describe('conventionalCommitsWriter', function() {
       var i = 0;
 
       getStream()
-        .pipe(conventionalcommitsWriter({
+        .pipe(conventionalChangelogWriter({
           version: '1.0.0'
         }, {
           transform: function(commit) {
@@ -301,7 +301,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter())
+          .pipe(conventionalChangelogWriter())
           .pipe(through(function(chunk, enc, cb) {
             chunk = chunk.toString();
 
@@ -335,7 +335,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({}, {
+          .pipe(conventionalChangelogWriter({}, {
             generateOn: 'version'
           }))
           .pipe(through(function(chunk, enc, cb) {
@@ -361,7 +361,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({
+          .pipe(conventionalChangelogWriter({
             version: '0.0.1',
             date: '2015-01-01'
           }))
@@ -388,7 +388,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({}, {
+          .pipe(conventionalChangelogWriter({}, {
             transform: function() {
               return false;
             }
@@ -414,7 +414,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({}, {
+          .pipe(conventionalChangelogWriter({}, {
             includeDetails: true
           }))
           .pipe(through.obj(function(chunk, enc, cb) {
@@ -428,7 +428,7 @@ describe('conventionalCommitsWriter', function() {
               expect(chunk.log).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n');
               expect(chunk.log).to.include('fix(ng-list): Allow custom separator');
               expect(chunk.log).to.include('perf(template): tweak');
-              expect(chunk.log).to.include('refactor(name): rename this module to conventional-commits-writer');
+              expect(chunk.log).to.include('refactor(name): rename this module to conventional-changelog-writer');
               expect(chunk.commits[0].header).to.equal('fix(ng-list): Allow custom separator');
               expect(chunk.commits[1].body).to.equal('My body.');
               expect(chunk.commits[2].committerDate).to.equal('2015-04-07');
@@ -452,7 +452,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({}, {
+          .pipe(conventionalChangelogWriter({}, {
             reverse: true
           }))
           .pipe(through(function(chunk, enc, cb) {
@@ -488,7 +488,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({}, {
+          .pipe(conventionalChangelogWriter({}, {
             transform: function() {
               return false;
             },
@@ -515,7 +515,7 @@ describe('conventionalCommitsWriter', function() {
         var i = 0;
 
         getStream()
-          .pipe(conventionalcommitsWriter({}, {
+          .pipe(conventionalChangelogWriter({}, {
             reverse: true,
             includeDetails: true
           }))
@@ -532,7 +532,7 @@ describe('conventionalCommitsWriter', function() {
             } else {
               expect(chunk.log).to.include('<a name=""></a>\n#  (' + today + ')\n\n');
               expect(chunk.log).to.include('perf(template): tweak');
-              expect(chunk.log).to.include('refactor(name): rename this module to conventional-commits-writer');
+              expect(chunk.log).to.include('refactor(name): rename this module to conventional-changelog-writer');
               expect(chunk.commits[0].header).to.equal('perf(template): tweak');
               expect(chunk.commits[1].committerDate).to.equal('2015-04-07');
               expect(chunk.keyCommit).to.eql();

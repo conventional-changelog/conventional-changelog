@@ -8,7 +8,7 @@ var through = require('through2');
 var util = require('./lib/util');
 var _ = require('lodash');
 
-function conventionalcommitsWriter(context, options) {
+function conventionalChangelogWriter(context, options) {
   var savedKeyCommit;
   var commits = [];
   var notes = [];
@@ -160,4 +160,4 @@ function conventionalcommitsWriter(context, options) {
   });
 }
 
-module.exports = conventionalcommitsWriter;
+module.exports = conventionalChangelogWriter;

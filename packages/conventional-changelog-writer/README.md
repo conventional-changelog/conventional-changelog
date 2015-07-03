@@ -6,16 +6,16 @@
 ## Install
 
 ```sh
-$ npm install --save conventional-commits-writer
+$ npm install --save conventional-changelog-writer
 ```
 
 
 ## Usage
 
 ```js
-var conventionalcommitsWriter = require('conventional-commits-writer');
+var conventionalChangelogWriter = require('conventional-changelog-writer');
 
-conventionalcommitsWriter(context, options);
+conventionalChangelogWriter(context, options);
 ```
 
 It returns a transform stream.
@@ -66,7 +66,7 @@ The downstream might look something like this:
 
 ## API
 
-### conventionalcommitsWriter([context, [options]])
+### conventionalChangelogWriter([context, [options]])
 
 Returns a transform stream.
 
@@ -100,7 +100,7 @@ The hosting website. Eg: `'https://github.com'` or `'https://bitbucket.org'`
 
 Type: `string`
 
-The repository name on `host`. Eg: `'stevemao/conventional-commits-writer'`.
+The repository name on `host`. Eg: `'stevemao/conventional-changelog-writer'`.
 
 ##### linkReferences
 
@@ -249,21 +249,21 @@ Basically you can make your own templates and define all your template variables
 ## CLI
 
 ```sh
-$ npm install --global conventional-commits-writer
+$ npm install --global conventional-changelog-writer
 ```
 
 ```sh
-$ conventional-commits-writer --help
+$ conventional-changelog-writer --help
 
   Write logs based on conventional commits and templates
 
   Usage
-    conventional-commits-writer <path> [<path> ...]
-    cat <path> | conventional-commits-writer
+    conventional-changelog-writer <path> [<path> ...]
+    cat <path> | conventional-changelog-writer
 
   Example
-    conventional-commits-writer commits.ldjson
-    cat commits.ldjson | conventional-commits-writer
+    conventional-changelog-writer commits.ldjson
+    cat commits.ldjson | conventional-changelog-writer
 
   Options
     -c, --context    A filepath of a json that is used to define template variables
@@ -281,7 +281,7 @@ If you have commits.ldjson
 And you run
 
 ```sh
-$ conventional-commits-writer commits.ldjson -o options.js
+$ conventional-changelog-writer commits.ldjson -o options.js
 ```
 
 The output might look something like this
@@ -309,11 +309,11 @@ It is printed to stdout.
 MIT © [Steve Mao](https://github.com/stevemao)
 
 
-[npm-image]: https://badge.fury.io/js/conventional-commits-writer.svg
-[npm-url]: https://npmjs.org/package/conventional-commits-writer
-[travis-image]: https://travis-ci.org/stevemao/conventional-commits-writer.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-commits-writer
-[daviddm-image]: https://david-dm.org/stevemao/conventional-commits-writer.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-commits-writer
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-commits-writer/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-commits-writer
+[npm-image]: https://badge.fury.io/js/conventional-changelog-writer.svg
+[npm-url]: https://npmjs.org/package/conventional-changelog-writer
+[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-writer.svg?branch=master
+[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-writer
+[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-writer.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-writer
+[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-changelog-writer/badge.svg
+[coveralls-url]: https://coveralls.io/r/stevemao/conventional-changelog-writer

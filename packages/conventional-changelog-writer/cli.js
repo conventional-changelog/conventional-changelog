@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-var conventionalcommitsWriter = require('./');
+var conventionalChangelogWriter = require('./');
 var forEach = require('lodash').forEach;
 var fs = require('fs');
 var meow = require('meow');
@@ -10,12 +10,12 @@ var split = require('split');
 var cli = meow({
   help: [
     'Usage',
-    '  conventional-commits-writer <path> [<path> ...]',
-    '  cat <path> | conventional-commits-writer',
+    '  conventional-changelog-writer <path> [<path> ...]',
+    '  cat <path> | conventional-changelog-writer',
     '',
     'Example',
-    '  conventional-commits-writer commits.ldjson',
-    '  cat commits.ldjson | conventional-commits-writer',
+    '  conventional-changelog-writer commits.ldjson',
+    '  cat commits.ldjson | conventional-changelog-writer',
     '',
     'Options',
     '  -c, --context    A filepath of a json that is used to define template variables',
@@ -60,7 +60,7 @@ if (optionsPath) {
 }
 
 try {
-  var stream = conventionalcommitsWriter(templateContext, options);
+  var stream = conventionalChangelogWriter(templateContext, options);
 } catch (err) {
   console.error(err.toString());
   process.exit(1);

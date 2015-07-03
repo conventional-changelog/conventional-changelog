@@ -1,17 +1,17 @@
 {
-  "name": "conventional-commits-writer",
+  "name": "conventional-changelog-writer",
   "version": "0.0.15",
   "description": "Write logs based on conventional commits and templates",
-  "homepage": "https://github.com/stevemao/conventional-commits-writer",
+  "homepage": "https://github.com/stevemao/conventional-changelog-writer",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": "stevemao/conventional-commits-writer",
+  "repository": "stevemao/conventional-changelog-writer",
   "license": "MIT",
   "keywords": [
-    "conventional-commits-writer",
+    "conventional-changelog-writer",
     "changelog",
     "conventional",
     "commits",
@@ -46,6 +46,6 @@
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
   },
   "bin": {
-    "conventional-commits-writer": "cli.js"
+    "conventional-changelog-writer": "cli.js"
   }
 }
