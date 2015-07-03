@@ -99,9 +99,9 @@ MIT © [Steve Mao]()
 
 [npm-image]: https://badge.fury.io/js/conventional-commits-filter.svg
 [npm-url]: https://npmjs.org/package/conventional-commits-filter
-[travis-image]: https://travis-ci.org//conventional-commits-filter.svg?branch=master
-[travis-url]: https://travis-ci.org//conventional-commits-filter
-[daviddm-image]: https://david-dm.org//conventional-commits-filter.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org//conventional-commits-filter
-[coveralls-image]: https://coveralls.io/repos//conventional-commits-filter/badge.svg
-[coveralls-url]: https://coveralls.io/r//conventional-commits-filter
+[travis-image]: https://travis-ci.org/stevemao/conventional-commits-filter.svg?branch=master
+[travis-url]: https://travis-ci.org/stevemao/conventional-commits-filter
+[daviddm-image]: https://david-dm.org/stevemao/conventional-commits-filter.svg
+[daviddm-url]: https://david-dm.org/stevemao/conventional-commits-filter
+[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-commits-filter/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/r/stevemao/conventional-commits-filter
