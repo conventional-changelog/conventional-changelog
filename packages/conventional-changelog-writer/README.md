@@ -198,7 +198,7 @@ Type: `boolean` Default: `false`
 
 If this value is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
 
-*NOTE:* The down stream must be in object mode if this is true.
+*NOTE:* The downstream must be in object mode if this is `true`.
 
 ##### mainTemplate
 
