@@ -11,7 +11,7 @@ var through = require('through2');
 var url = require('url');
 var _ = require('lodash');
 
-var rhosts = /github|butbucket/i;
+var rhosts = /github|bitbucket/i;
 
 function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var presetPromise;
