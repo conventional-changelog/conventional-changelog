@@ -95,7 +95,7 @@ A transform stream that applies after the parser and before the writer.
 
 #### context
 
-See the [conventional-commits-writer](https://github.com/stevemao/conventional-commits-writer) docs.
+See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs.
 
 #### gitRawCommitsOpts
 
@@ -107,7 +107,7 @@ See the [conventional-commits-parser](https://github.com/stevemao/conventional-c
 
 #### writerOpts
 
-See the [conventional-commits-writer](https://github.com/stevemao/conventional-commits-writer) docs.
+See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs.
 
 
 ### CLI
@@ -139,7 +139,7 @@ $ conventional-changelog --help
     -c, --context             A filepath of a javascript that is used to define template variables
     --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options
     --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options
-    --writer-opts             A filepath of a javascript that is used to define conventional-commits-writer options
+    --writer-opts             A filepath of a javascript that is used to define conventional-changelog-writer options
 ```
 
 

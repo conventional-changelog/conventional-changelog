@@ -22,7 +22,7 @@ Bump deps and fix https://github.com/ajoslin/conventional-changelog/issues/64
 
 ### BREAKING CHANGES
 
-* This module is rewritten so API is changed and it is not backward compatible. Please check docs and all the submodules including git-raw-commits, conventional-commits-parser and conventional-commits-writer for more information.
+* This module is rewritten so API is changed and it is not backward compatible. Please check docs and all the submodules including git-raw-commits, conventional-commits-parser and conventional-changelog-writer for more information.
 
 
 
