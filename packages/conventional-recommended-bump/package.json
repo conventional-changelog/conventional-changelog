@@ -18,12 +18,11 @@
   ],
   "dependencies": {
     "concat-stream": "^1.4.10",
+    "conventional-commits-filter": "0.0.1",
     "conventional-commits-parser": "0.0.18",
     "git-latest-semver-tag": "0.0.0",
     "git-raw-commits": "0.0.8",
-    "is-subset": "^0.1.1",
     "meow": "^3.3.0",
-    "modify-values": "^1.0.0",
     "object-assign": "^3.0.0"
   },
   "devDependencies": {

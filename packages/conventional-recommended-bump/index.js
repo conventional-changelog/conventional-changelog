@@ -1,54 +1,12 @@
 'use strict';
 var concat = require('concat-stream');
+var conventionalCommitsFilter = require('conventional-commits-filter');
 var conventionalCommitsParser = require('conventional-commits-parser');
 var gitLatestSemverTag = require('git-latest-semver-tag');
 var gitRawCommits = require('git-raw-commits');
-var modifyValues = require('modify-values');
-var isSubset = require('is-subset');
 var objectAssign = require('object-assign');
 
 var VERSIONS = ['major', 'minor', 'patch'];
-
-function filterCommits(commits) {
-  var ret = [];
-  var ignores = [];
-  commits.forEach(function(commit) {
-    if (commit.revert) {
-      ignores.push(commit.revert);
-    } else {
-      ret.push(commit);
-    }
-  });
-
-  ret = ret.filter(function(commit) {
-    var ignoreThis = false;
-
-    commit = modifyValues(commit, function(val) {
-      if (typeof val === 'string') {
-        return val.trim();
-      }
-
-      return val;
-    });
-
-    ignores.some(function(ignore) {
-      ignore = modifyValues(ignore, function(val) {
-        if (typeof val === 'string') {
-          return val.trim();
-        }
-
-        return val.trim();
-      });
-
-      ignoreThis = isSubset(commit, ignore);
-      return ignoreThis;
-    });
-
-    return !ignoreThis;
-  });
-
-  return ret;
-}
 
 function conventionalRecommendedBump(options, parserOpts, cb) {
   var preset;
@@ -99,7 +57,7 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
         var commits;
 
         if (options.ignoreReverted) {
-          commits = filterCommits(data);
+          commits = conventionalCommitsFilter(data);
         } else {
           commits = data;
         }

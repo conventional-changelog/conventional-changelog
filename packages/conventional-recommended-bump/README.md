@@ -60,7 +60,7 @@ $ conventional-recommended-bump --help
 
 Type: `boolean` Default: `true`
 
-If true, reverted commits will be ignored.
+If `true`, reverted commits will be ignored.
 
 ##### preset
 
