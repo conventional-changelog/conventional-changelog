@@ -61,7 +61,7 @@ Returns a readable stream.
 
 Type: `string` Possible values: `'angular'`, `'jquery'`, `'jshint'`
 
-A set of options of a popular project.
+A set of options of a popular project so you don't have to define everything in options, context, gitRawCommitsOpts, parserOpts or writerOpts manually. The preset values can be overwritten.
 
 ##### pkg
 
@@ -95,11 +95,35 @@ A transform stream that applies after the parser and before the writer.
 
 #### context
 
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs.
+See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults:
+
+##### host
+
+Default: normalized host found in `package.json`.
+
+##### version
+
+Default: version found in `package.json`.
+
+##### repository
+
+Default: normalized repository found in `package.json`.
 
 #### gitRawCommitsOpts
 
-See the [git-raw-commits](https://github.com/stevemao/git-raw-commits) docs.
+See the [git-raw-commits](https://github.com/stevemao/git-raw-commits) docs. There are some defaults:
+
+##### format
+
+Default: `'%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci'`
+
+##### from
+
+Default: latest semver tag if `options.allBlocks` is `false`.
+
+##### reverse
+
+Default: only `true` if `options.append` is truthy.
 
 #### parserOpts
 
@@ -107,8 +131,11 @@ See the [conventional-commits-parser](https://github.com/stevemao/conventional-c
 
 #### writerOpts
 
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs.
+See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults:
 
+##### reverse
+
+Default: same as `options.append`.
 
 ### CLI
 
