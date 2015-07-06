@@ -1,3 +1,19 @@
+<a name="0.1.0-alpha.3"></a>
+# 0.1.0-alpha.3 (2015-07-06)
+
+
+### Bug Fixes
+
+* conventional-commits-writer -> conventional-changelog-writer ([aa6cbd6](https://github.com/ajoslin/conventional-changelog/commit/aa6cbd6))
+* **hosts:** spelling mistake of host bitbucket ([1e30d54](https://github.com/ajoslin/conventional-changelog/commit/1e30d54)), closes [#68](https://github.com/ajoslin/conventional-changelog/issues/68) [#69](https://github.com/ajoslin/conventional-changelog/issues/69)
+
+### Features
+
+* **angular:** add new revert opts for the parser ([9e15f01](https://github.com/ajoslin/conventional-changelog/commit/9e15f01))
+* **preset:** add jshint ([384e6ce](https://github.com/ajoslin/conventional-changelog/commit/384e6ce))
+
+
+
 <a name="0.1.0-alpha.2"></a>
 # 0.1.0-alpha.2 (2015-06-29)
 
