@@ -110,6 +110,34 @@ describe('conventionalChangelog', function() {
     }));
   });
 
+  it('should read github\'s host configs', function(done) {
+    conventionalChangelog({}, {
+      host: 'github',
+      repository: 'b/a'
+    }, {}, {}).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](github/b/a/commit/');
+      expect(chunk).to.include('closes [#1](github/b/a/issues/1)');
+
+      done();
+    }));
+  });
+
+  it('should read bitbucket\'s host configs', function(done) {
+    conventionalChangelog({}, {
+      host: 'bitbucket',
+      repository: 'b/a'
+    }, {}, {}).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](bitbucket/b/a/commits/');
+      expect(chunk).to.include('closes [#1](bitbucket/b/a/issue/1)');
+
+      done();
+    }));
+  });
+
   it('should warn if preset is not found', function(done) {
     conventionalChangelog({
       preset: 'no',
