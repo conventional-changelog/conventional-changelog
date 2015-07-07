@@ -16,7 +16,7 @@ var cli = meow({
     '  conventional-changelog -i CHANGELOG.md --overwrite',
     '',
     'Options',
-    '  -i, --infile              Read the CHANGELOG from this file.',
+    '  -i, --infile              Read the CHANGELOG from this file',
     '  -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout',
     '  -w, --overwrite           Overwrite the infile',
     '  -p, --preset              Name of the preset you want to use',
