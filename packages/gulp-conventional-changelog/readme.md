@@ -14,7 +14,7 @@ $ npm install --save-dev gulp-conventional-changelog
 
 ## Usage
 
-### Streaming mode
+### streaming mode
 
 ```js
 var gulp = require('gulp');
@@ -63,5 +63,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/stevemao/gulp-conventional-changelog
 [daviddm-image]: https://david-dm.org/stevemao/gulp-conventional-changelog.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/gulp-conventional-changelog
-[coveralls-image]: https://coveralls.io/repos/stevemao/gulp-conventional-changelog/badge.svg
+[coveralls-image]: https://coveralls.io/repos/github/stevemao/gulp-conventional-changelog/badge.svg
 [coveralls-url]: https://coveralls.io/r/stevemao/gulp-conventional-changelog
