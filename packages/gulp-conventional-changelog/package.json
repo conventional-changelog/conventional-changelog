@@ -1,0 +1,46 @@
+{
+  "name": "gulp-conventional-changelog",
+  "version": "0.0.0",
+  "description": "Generate a changelog using conventional-changelog",
+  "license": "MIT",
+  "repository": "stevemao/gulp-conventional-changelog",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "test": "npm run-script lint && mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "conventional-changelog",
+    "conventional",
+    "changelog",
+    "log"
+  ],
+  "dependencies": {
+    "add-stream": "^1.0.0",
+    "concat-stream": "^1.5.0",
+    "conventional-changelog": "0.1.0-alpha.3",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "coveralls": "^2.11.2",
+    "gulp-util": "^3.0.6",
+    "istanbul": "^0.3.17",
+    "jscs": "^1.13.1",
+    "jshint": "^2.8.0",
+    "mocha": "*",
+    "shelljs": "^0.5.1"
+  }
+}
