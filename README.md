@@ -9,7 +9,7 @@
 - Everything internally or externally is Pluggable.
 - High performant. It doesn't spawn any extra child process to fetch data.
 - Fully configurable. There are several presets that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
-- Task runner integrations.
+- Task runner integrations: [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog).
 - Actively maintained.
 
 
@@ -155,7 +155,7 @@ $ conventional-changelog --help
     conventional-changelog -i CHANGELOG.md --overwrite
 
   Options
-    -i, --infile              Read the CHANGELOG from this file.
+    -i, --infile              Read the CHANGELOG from this file
     -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout
     -w, --overwrite           Overwrite the infile
     -p, --preset              Name of the preset you want to use
@@ -173,7 +173,6 @@ $ conventional-changelog --help
 ## Related
 
 - [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
-
 
 
 ## License
