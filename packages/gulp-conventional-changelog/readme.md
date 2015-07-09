@@ -27,7 +27,7 @@ gulp.task('default', function () {
     .pipe(conventionalChangelog({
       preset: 'angular'
     }))
-    .pipe(gulp.dest('CHANGELOG.md'));
+    .pipe(gulp.dest('./'));
 });
 ```
 
@@ -42,7 +42,7 @@ gulp.task('default', function () {
     .pipe(conventionalChangelog({
       preset: 'angular'
     }))
-    .pipe(gulp.dest('CHANGELOG.md'));
+    .pipe(gulp.dest('./'));
 });
 ```
 
