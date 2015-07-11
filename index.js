@@ -86,14 +86,10 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
             context.repository = context.repository || repositoryUrl.pathname.replace('/', '');
           } catch (err) {
             options.warn('package.json: "' + options.pkg + '" cannot be parsed');
-            pkg = {};
           }
         } else {
           options.warn('package.json: "' + options.pkg + '" does not exist');
-          pkg = {};
         }
-      } else {
-        pkg = {};
       }
 
       if (tagObj.state === 'fulfilled') {
