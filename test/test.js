@@ -207,4 +207,13 @@ describe('conventionalChangelog', function() {
         done();
       });
   });
+
+  it('should be object mode if `writerOpts.includeDetails` is `true`', function(done) {
+    conventionalChangelog({}, {}, {}, {}, {
+      includeDetails: true
+    })
+      .pipe(through.obj(function() {
+        done();
+      }));
+  });
 });
