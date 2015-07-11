@@ -18,7 +18,11 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
   var pkgPromise;
   var latestSemverPromise;
 
-  var readable = new stream.Readable();
+  writerOpts = writerOpts || {};
+
+  var readable = new stream.Readable({
+    objectMode: writerOpts.includeDetails
+  });
   readable._read = function() {};
 
   context = context || {};
@@ -151,7 +155,9 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
         // so we don't need to transform here
         .pipe(options.transform || preset.transform || through.obj())
         .pipe(conventionalChangelogWriter(context, writerOpts))
-        .pipe(through(function(chunk, enc, cb) {
+        .pipe(through({
+          objectMode: writerOpts.includeDetails
+        }, function(chunk, enc, cb) {
           readable.push(chunk);
 
           cb();
