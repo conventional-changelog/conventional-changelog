@@ -4,7 +4,7 @@ var regex = require('./lib/regex');
 var through = require('through2');
 var _ = require('lodash');
 
-function conventionalCommitsParser(options) {
+function assignOpts(options) {
   options = _.extend({
     headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
@@ -59,6 +59,11 @@ function conventionalCommitsParser(options) {
     options.revertCorrespondence = options.revertCorrespondence.split(',');
   }
 
+  return options;
+}
+
+function conventionalCommitsParser(options) {
+  options = assignOpts(options);
   var reg = regex(options);
 
   return through.obj(function(data, enc, cb) {
@@ -78,4 +83,12 @@ function conventionalCommitsParser(options) {
   });
 }
 
+function sync(commit, options) {
+  options = assignOpts(options);
+  var reg = regex(options);
+
+  return parser(commit, options, reg);
+}
+
 module.exports = conventionalCommitsParser;
+module.exports.sync = sync;

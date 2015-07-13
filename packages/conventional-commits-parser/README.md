@@ -192,6 +192,16 @@ Type: `function` or `boolean` Default: `function() {}`
 
 What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
 
+### conventionalCommitsParser.sync(commit, [options])
+
+#### commit
+
+A single commit to be parsed.
+
+#### options
+
+Same as the `options` of `conventionalCommitsParser`.
+
 
 ## CLI
 

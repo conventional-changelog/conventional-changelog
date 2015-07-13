@@ -253,3 +253,15 @@ describe('conventionalCommitsParser', function() {
       }));
   });
 });
+
+describe('sync', function() {
+  it('should work', function() {
+    var commit = 'feat(ng-list): Allow custom separator\n' +
+      'bla bla bla\n\n' +
+      'Closes #123\nCloses #25\nFixes #33\n';
+    var result = conventionalCommitsParser.sync(commit);
+
+    expect(result.header).to.equal('feat(ng-list): Allow custom separator\n');
+    expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33\n');
+  });
+});
