@@ -165,14 +165,16 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.subject).to.equal('Allow custom separator');
           expect(chunk.references).to.eql([{
             action: 'Fix',
+            owner: null,
+            repository: null,
             issue: '123',
-            raw: '#123',
-            repository: null
+            raw: '#123'
           }, {
             action: 'fix',
+            owner: null,
+            repository: null,
             issue: '33',
-            raw: '#33',
-            repository: null
+            raw: '#33'
           }]);
         } else if (i === 1) {
           expect(chunk.type).to.equal('fix');
@@ -221,14 +223,16 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.scope).to.equal('Allow custom separator');
           expect(chunk.references).to.eql([{
             action: 'Fix',
+            owner: null,
+            repository: null,
             issue: '123',
-            raw: '#123',
-            repository: null
+            raw: '#123'
           }, {
             action: 'fix',
+            owner: null,
+            repository: null,
             issue: '33',
-            raw: '#33',
-            repository: null
+            raw: '#33'
           }]);
         } else if (i === 1) {
           expect(chunk.type).to.equal('ng-list');

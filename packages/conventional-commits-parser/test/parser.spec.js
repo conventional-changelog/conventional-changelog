@@ -29,7 +29,8 @@ describe('parser', function() {
       'BREAKING AMEND: some breaking change\n' +
       'Kills #1, #123\n' +
       'killed #25\n' +
-      'handle #33, Closes #100, Handled #3 kills repo#77',
+      'handle #33, Closes #100, Handled #3 kills repo#77\n' +
+      'kills stevemao/conventional-commits-parser#1',
       options,
       regex
     );
@@ -91,7 +92,8 @@ describe('parser', function() {
       '\n\n\n\nBREAKING AMEND: some breaking change\n' +
       '\n\nKills #1, #123\n' +
       '\n\n\nkilled #25\n\n\n\n\n' +
-      '\nhandle #33, Closes #100, Handled #3 kills repo#77\n',
+      '\nhandle #33, Closes #100, Handled #3 kills repo#77\n' +
+      'kills stevemao/conventional-commits-parser#1',
       options,
       regex
     ));
@@ -146,9 +148,10 @@ describe('parser', function() {
       var msg = parser('handled #1', options, regex);
       expect(msg.references).to.eql([{
         action: 'handled',
+        owner: null,
+        repository: null,
         issue: '1',
-        raw: '#1',
-        repository: null
+        raw: '#1'
       }]);
     });
   });
@@ -175,7 +178,8 @@ describe('parser', function() {
         'BREAKING AMEND: some breaking change\n' +
         'Kills #1, #123\n' +
         'killed #25\n' +
-        'handle #33, Closes #100, Handled #3 kills repo#77\n'
+        'handle #33, Closes #100, Handled #3 kills repo#77\n' +
+        'kills stevemao/conventional-commits-parser#1\n'
       );
     });
 
@@ -204,39 +208,52 @@ describe('parser', function() {
     it('should parse references', function() {
       expect(msg.references).to.eql([{
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '1',
-        raw: '#1',
-        repository: null
+        raw: '#1'
       }, {
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '123',
-        raw: ', #123',
-        repository: null
+        raw: ', #123'
       }, {
         action: 'killed',
+        owner: null,
+        repository: null,
         issue: '25',
-        raw: '#25',
-        repository: null
+        raw: '#25'
       }, {
         action: 'handle',
+        owner: null,
+        repository: null,
         issue: '33',
-        raw: '#33',
-        repository: null
+        raw: '#33'
       }, {
         action: 'handle',
+        owner: null,
+        repository: null,
         issue: '100',
-        raw: ', Closes #100',
-        repository: null
+        raw: ', Closes #100'
       }, {
         action: 'Handled',
+        owner: null,
+        repository: null,
         issue: '3',
-        raw: '#3',
-        repository: null
+        raw: '#3'
       }, {
         action: 'kills',
+        owner: null,
+        repository: 'repo',
         issue: '77',
-        raw: 'repo#77',
-        repository: 'repo'
+        raw: 'repo#77'
+      }, {
+        action: 'kills',
+        owner: 'stevemao',
+        repository: 'conventional-commits-parser',
+        issue: '1',
+        raw: 'stevemao/conventional-commits-parser#1'
       }]);
     });
 
@@ -257,7 +274,7 @@ describe('parser', function() {
       expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother\n');
     });
 
-    it('shoudl parse properly if important notes comes after references', function() {
+    it('should parse properly if important notes comes after references', function() {
       var msg = parser(
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
@@ -273,14 +290,16 @@ describe('parser', function() {
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '1',
-        raw: '#1',
-        repository: null
+        raw: '#1'
       }, {
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '123',
-        raw: ', #123',
-        repository: null
+        raw: ', #123'
       }]);
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\n');
     });
@@ -301,14 +320,16 @@ describe('parser', function() {
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '1',
-        raw: '#1',
-        repository: null
+        raw: '#1'
       }, {
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '123',
-        raw: ', #123',
-        repository: null
+        raw: ', #123'
       }]);
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change\n');
     });
@@ -330,14 +351,16 @@ describe('parser', function() {
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '1',
         raw: '#1',
-        repository: null
       }, {
         action: 'Kills',
+        owner: null,
+        repository: null,
         issue: '123',
-        raw: ', #123',
-        repository: null
+        raw: ', #123'
       }]);
       expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change\n');
     });

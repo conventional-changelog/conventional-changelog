@@ -80,7 +80,7 @@ describe('cli', function() {
     cp.stdout
       .pipe(concat(function(chunk) {
         expect(chunk.toString()).to.include('"scope":"category","type":"fix:subcategory","subject":"My subject"');
-        expect(chunk.toString()).to.include('"references":[{"action":"Close","repository":null,"issue":"10036","raw":"#10036"},{"action":"fix","repository":null,"issue":"9338","raw":"#9338"}]');
+        expect(chunk.toString()).to.include('"references":[{"action":"Close","owner":null,"repository":null,"issue":"10036","raw":"#10036"},{"action":"fix","owner":null,"repository":null,"issue":"9338","raw":"#9338"}]');
         expect(chunk.toString()).to.include('"notes":[{"title":"BREAKING NEWS","text":"A lot of changes!\\n"}]');
 
         done();

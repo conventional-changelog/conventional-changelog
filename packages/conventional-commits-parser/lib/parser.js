@@ -63,9 +63,23 @@ function parser(raw, options, regex) {
     var action = referenceSentences[1];
     var sentence = referenceSentences[2];
     while (referenceMatch = reReferenceParts.exec(sentence)) {
+      var owner = null;
+      var repository = referenceMatch[1];
+
+      if (repository) {
+        var repo = repository.split('/');
+        if (repo.length > 1) {
+          owner = repo.shift();
+          repository = repo.join('/');
+        }
+      } else {
+        repository = null;
+      }
+
       var reference = {
         action: action,
-        repository: referenceMatch[1] || null,
+        owner: owner,
+        repository: repository,
         issue: referenceMatch[2],
         raw: referenceMatch[0]
       };
@@ -124,9 +138,24 @@ function parser(raw, options, regex) {
         referenceMatched = true;
         continueNote = false;
         isBody = false;
+
+        var owner = null;
+        var repository = referenceMatch[1];
+
+        if (repository) {
+          var repo = repository.split('/');
+          if (repo.length > 1) {
+            owner = repo.shift();
+            repository = repo.join('/');
+          }
+        } else {
+          repository = null;
+        }
+
         var reference = {
           action: action,
-          repository: referenceMatch[1] || null,
+          owner: owner,
+          repository: repository,
           issue: referenceMatch[2],
           raw: referenceMatch[0]
         };
