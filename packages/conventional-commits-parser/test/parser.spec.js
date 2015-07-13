@@ -144,7 +144,29 @@ describe('parser', function() {
       expect(msg.scope).to.equal(undefined);
     });
 
-    it('should reference an issue', function() {
+    it('should reference an issue with an owner', function() {
+      var msg = parser('handled angular/angular.js#1', options, regex);
+      expect(msg.references).to.eql([{
+        action: 'handled',
+        owner: 'angular',
+        repository: 'angular.js',
+        issue: '1',
+        raw: 'angular/angular.js#1'
+      }]);
+    });
+
+    it('should reference an issue with a repository', function() {
+      var msg = parser('handled angular.js#1', options, regex);
+      expect(msg.references).to.eql([{
+        action: 'handled',
+        owner: null,
+        repository: 'angular.js',
+        issue: '1',
+        raw: 'angular.js#1'
+      }]);
+    });
+
+    it('should reference an issue without both', function() {
       var msg = parser('handled #1', options, regex);
       expect(msg.references).to.eql([{
         action: 'handled',
