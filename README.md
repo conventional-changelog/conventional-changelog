@@ -140,7 +140,7 @@ Default: same as `options.append`.
 ### CLI
 
 ```sh
-$ npm install -g conventional-changelog
+$ npm install -g conventional-changelog@next
 ```
 
 ```sh
