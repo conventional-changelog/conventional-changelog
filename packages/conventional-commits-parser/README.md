@@ -194,6 +194,8 @@ What warn function to use. For example, `console.warn.bind(console)` or `grunt.l
 
 ### conventionalCommitsParser.sync(commit, [options])
 
+The sync version. Useful when parsing a single commit. Returns the result.
+
 #### commit
 
 A single commit to be parsed.
