@@ -67,10 +67,10 @@ function parser(raw, options, regex) {
       var repository = referenceMatch[1];
 
       if (repository) {
-        var repo = repository.split('/');
-        if (repo.length > 1) {
-          owner = repo.shift();
-          repository = repo.join('/');
+        var ownerRepo = repository.split('/');
+        if (ownerRepo.length > 1) {
+          owner = ownerRepo.shift();
+          repository = ownerRepo.join('/');
         }
       } else {
         repository = null;
@@ -143,10 +143,10 @@ function parser(raw, options, regex) {
         var repository = referenceMatch[1];
 
         if (repository) {
-          var repo = repository.split('/');
-          if (repo.length > 1) {
-            owner = repo.shift();
-            repository = repo.join('/');
+          var ownerRepo = repository.split('/');
+          if (ownerRepo.length > 1) {
+            owner = ownerRepo.shift();
+            repository = ownerRepo.join('/');
           }
         } else {
           repository = null;
