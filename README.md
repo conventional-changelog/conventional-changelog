@@ -105,9 +105,13 @@ Default: normalized host found in `package.json`.
 
 Default: version found in `package.json`.
 
+##### owner
+
+Default: extracted from normalized `package.json` `repository.url` field.
+
 ##### repository
 
-Default: normalized repository found in `package.json`.
+Default: extracted from normalized `package.json` `repository.url` field.
 
 #### gitRawCommitsOpts
 

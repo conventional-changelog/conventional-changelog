@@ -83,7 +83,9 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
             var repositoryUrl = url.parse(getPkgRepo(pkg));
             context.host = context.host || repositoryUrl.protocol + (repositoryUrl.slashes ? '//' : '') + repositoryUrl.host;
             context.version = context.version || pkg.version;
-            context.repository = context.repository || repositoryUrl.pathname.replace('/', '');
+            var ownerRepo = repositoryUrl.pathname.replace('/', '').split('/');
+            context.owner = context.owner || ownerRepo.shift();
+            context.repository = context.repository || ownerRepo.join('/');
           } catch (err) {
             options.warn('package.json: "' + options.pkg + '" cannot be parsed');
           }
