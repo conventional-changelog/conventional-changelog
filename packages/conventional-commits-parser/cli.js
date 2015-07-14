@@ -41,7 +41,7 @@ var cli = meow({
     '  --revert-pattern               Regex to match revert pattern',
     '  --revert-correspondence        Comma separated fields used to define what the commit reverts',
     '  -v, --verbose                  Verbose output'
-  ].join('\n')
+  ]
 }, {
   alias: {
     p: 'headerPattern',

@@ -22,7 +22,7 @@
     "JSONStream": "^1.0.4",
     "is-text-path": "^1.0.0",
     "lodash": "^3.3.1",
-    "meow": "^3.1.0",
+    "meow": "^3.3.0",
     "split": "^1.0.0",
     "through2": "^2.0.0"
   },
