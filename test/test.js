@@ -83,7 +83,8 @@ describe('conventionalChangelog', function() {
       pkg: __dirname + '/fixtures/_package.json'
     }, {
       host: 'github',
-      repository: 'a/b'
+      owner: 'a',
+      repository: 'b'
     }).pipe(through(function(chunk) {
       chunk = chunk.toString();
 
