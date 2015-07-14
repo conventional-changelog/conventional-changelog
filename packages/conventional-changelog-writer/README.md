@@ -31,7 +31,7 @@ It expects an object mode upstream that looks something like this:
   body: null,
   footer: 'Closes #1',
   notes: [],
-  references: [ { action: 'Closes', repository: null, issue: '1', raw: '#1' } ] }
+  references: [ { action: 'Closes', owner: null, repository: null, issue: '1', raw: '#1' } ] }
 { hash: '13f31602f396bc269076ab4d389cfd8ca94b20ba',
   header: 'feat(ng-list): Allow custom separator',
   type: 'feat',
@@ -96,11 +96,17 @@ Type: `string`
 
 The hosting website. Eg: `'https://github.com'` or `'https://bitbucket.org'`
 
+##### owner
+
+Type: `string`
+
+The owner of the repository. Eg: `'stevemao'`.
+
 ##### repository
 
 Type: `string`
 
-The repository name on `host`. Eg: `'stevemao/conventional-changelog-writer'`.
+The repository name on `host`. Eg: `'conventional-changelog-writer'`.
 
 ##### linkReferences
 
@@ -275,7 +281,7 @@ It works with [Line Delimited JSON](http://en.wikipedia.org/wiki/Line_Delimited_
 If you have commits.ldjson
 
 ```js
-{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"references":[{"action":"Closes","repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","repository":null,"issue":"9338","raw":"#9338"}]}
+{"hash":"9b1aff905b638aa274a5fc8f88662df446d374bd","header":"feat(ngMessages): provide support for dynamic message resolution","type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"references":[{"action":"Closes","owner",null,"repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","owner":null,"repository":null,"issue":"9338","raw":"#9338"}]}
 ```
 
 And you run
