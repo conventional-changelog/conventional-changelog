@@ -1,3 +1,17 @@
+<a name="0.1.0-beta.1"></a>
+# 0.1.0-beta.1 (2015-07-15)
+
+
+### Bug Fixes
+
+* **stream:** is object mode if writerOpts.includeDetails is true ([38e3faa](https://github.com/ajoslin/conventional-changelog/commit/38e3faa))
+
+### Features
+
+* **owner:** add context.owner support ([87d60b4](https://github.com/ajoslin/conventional-changelog/commit/87d60b4))
+
+
+
 <a name="0.1.0-alpha.3"></a>
 # 0.1.0-alpha.3 (2015-07-06)
 
