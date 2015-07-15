@@ -35,6 +35,7 @@ $ npm install conventional-changelog@next
 
 - https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
+- https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
 
 
 ## Usage
@@ -176,6 +177,7 @@ $ conventional-changelog --help
 
 ## Related
 
+- [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
 - [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 
 
