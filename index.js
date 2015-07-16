@@ -79,13 +79,16 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
           pkg = pkgObj.value;
           try {
             pkg = JSON.parse(pkg);
+            var repo = getPkgRepo(pkg);
 
-            var repositoryUrl = url.parse(getPkgRepo(pkg));
-            context.host = context.host || repositoryUrl.protocol + (repositoryUrl.slashes ? '//' : '') + repositoryUrl.host;
-            context.version = context.version || pkg.version;
-            var ownerRepo = repositoryUrl.pathname.replace('/', '').split('/');
-            context.owner = context.owner || ownerRepo.shift();
-            context.repository = context.repository || ownerRepo.join('/');
+            if (repo.type) {
+              var browse = repo.browse();
+              var parsedBrowse = url.parse(browse);
+              context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
+              context.version = context.version || pkg.version;
+              context.owner = context.owner || repo.user;
+              context.repository = context.repository || repo.project;
+            }
           } catch (err) {
             options.warn('package.json: "' + options.pkg + '" cannot be parsed');
           }
