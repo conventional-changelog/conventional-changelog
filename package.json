@@ -30,7 +30,7 @@
     "conventional-changelog-writer": "0.0.17",
     "conventional-commits-parser": "0.0.19",
     "dateformat": "^1.0.11",
-    "get-pkg-repo": "0.0.6",
+    "get-pkg-repo": "^0.1.0",
     "git-latest-semver-tag": "0.0.0",
     "git-raw-commits": "0.0.8",
     "lodash": "^3.9.3",
