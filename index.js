@@ -138,10 +138,11 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
 
       parserOpts = _.assign({
           referenceActions: hostOpts.referenceActions,
-          issuePrefixes: hostOpts.issuePrefixes,
+          issuePrefixes: hostOpts.issuePrefixes
+        },
+        preset.parserOpts, {
           warn: options.warn
         },
-        preset.parserOpts,
         parserOpts);
 
       writerOpts = _.assign(
