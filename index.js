@@ -136,12 +136,12 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
         gitRawCommitsOpts.reverse = gitRawCommitsOpts.reverse || true;
       }
 
-      parserOpts = _.assign(
-        preset.parserOpts || {}, {
+      parserOpts = _.assign({
           referenceActions: hostOpts.referenceActions,
           issuePrefixes: hostOpts.issuePrefixes,
           warn: options.warn
         },
+        preset.parserOpts,
         parserOpts);
 
       writerOpts = _.assign(
