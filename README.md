@@ -204,7 +204,7 @@ So, when you build a parent module, you need to read the old logs and append or 
 
 ## License
 
-BSD
+MIT
 
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog.svg
