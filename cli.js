@@ -63,7 +63,9 @@ if (infile && infile === outfile) {
 
 var options = _.omit({
   preset: flags.preset,
-  pkg: flags.pkg,
+  pkg: {
+    path: flags.pkg
+  },
   append: append,
   allBlocks: allBlocks
 }, _.isUndefined);
