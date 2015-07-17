@@ -34,21 +34,8 @@ function presetOpts(cb) {
 
   var writerOpts = {
     transform: function(commit) {
-      var tagLength;
-
       if (!commit.tag || typeof commit.tag !== 'string') {
         return;
-      }
-
-      commit.tag = commit.tag.substring(0, 72);
-      tagLength = commit.tag.length;
-
-      if (typeof commit.hash === 'string') {
-        commit.hash = commit.hash.substring(0, 7);
-      }
-
-      if (typeof commit.message === 'string') {
-        commit.message = commit.message.substring(0, 72 - tagLength);
       }
 
       return commit;
