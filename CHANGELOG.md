@@ -1,3 +1,26 @@
+<a name="0.1.0-beta.2"></a>
+# 0.1.0-beta.2 (2015-07-17)
+
+
+### Bug Fixes
+
+* **parserOpts:** options.warn should overwrite preset.parserOpts.warn ([94f40cf](https://github.com/ajoslin/conventional-changelog/commit/94f40cf))
+* **parserOpts:** preset.parserOpts should overwrite hostOpts ([8bb7451](https://github.com/ajoslin/conventional-changelog/commit/8bb7451))
+* **preset:** no length limit for eslint ([70b1a76](https://github.com/ajoslin/conventional-changelog/commit/70b1a76))
+
+### Features
+
+* **pkg:** add a transform function ([e576563](https://github.com/ajoslin/conventional-changelog/commit/e576563))
+* **preset:** add atom ([714b694](https://github.com/ajoslin/conventional-changelog/commit/714b694))
+* **preset:** add eslint ([af37323](https://github.com/ajoslin/conventional-changelog/commit/af37323))
+
+
+### BREAKING CHANGES
+
+* `options.pkg` is now an object. `options.pkg.path` is the path of the package.json and `options.pkg.transform` is the function to transform the package.json.
+
+
+
 <a name="0.1.0-beta.1"></a>
 # 0.1.0-beta.1 (2015-07-15)
 
