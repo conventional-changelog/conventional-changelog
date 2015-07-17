@@ -28,15 +28,21 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
   context = context || {};
   gitRawCommitsOpts = gitRawCommitsOpts || {};
 
-  options = _.assign({
-    pkg: 'package.json',
+  options = _.merge({
+    pkg: {
+      path: 'package.json',
+      transform: function(pkg) {
+        return pkg;
+      }
+    },
     append: false,
     allBlocks: false,
     warn: function() {},
   }, options);
 
+  options.pkg = options.pkg || {};
   var loadPreset = options.preset;
-  var loadPkg = (!context.host || !context.repository || !context.version) && options.pkg;
+  var loadPkg = (!context.host || !context.repository || !context.version) && options.pkg.path;
 
   if (loadPreset) {
     try {
@@ -48,7 +54,7 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
   }
 
   if (loadPkg) {
-    pkgPromise = Q.nfcall(fs.readFile, options.pkg, 'utf8');
+    pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
   }
 
   if (!options.allBlocks && !gitRawCommitsOpts.from) {
@@ -80,6 +86,7 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
           try {
             pkg = JSON.parse(pkg);
             var repo = getPkgRepo(pkg);
+            pkg = options.pkg.transform(pkg);
 
             if (repo.type) {
               var browse = repo.browse();
@@ -90,10 +97,10 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
               context.repository = context.repository || repo.project;
             }
           } catch (err) {
-            options.warn('package.json: "' + options.pkg + '" cannot be parsed');
+            options.warn('package.json: "' + options.pkg.path + '" cannot be parsed');
           }
         } else {
-          options.warn('package.json: "' + options.pkg + '" does not exist');
+          options.warn('package.json: "' + options.pkg.path + '" does not exist');
         }
       }
 
