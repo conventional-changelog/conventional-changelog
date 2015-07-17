@@ -10,4 +10,5 @@ shell.mkdir('angular');
 shell.mkdir('jquery');
 shell.mkdir('jshint');
 shell.mkdir('eslint');
+shell.mkdir('atom');
 shell.mkdir('cli');
