@@ -219,6 +219,23 @@ describe('cli', function() {
     });
   });
 
+  it('-k should work', function(done) {
+    var cp = spawn(cliPath, ['-k', __dirname + '/fixtures/_package.json'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        expect(chunk.toString()).to.include('0.0.17');
+      }));
+
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+
+      done();
+    });
+  });
+
   it('should be verbose', function(done) {
     var cp = spawn(cliPath, ['-v', '-p', 'no'], {
       stdio: [process.stdin, null, null]

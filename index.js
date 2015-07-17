@@ -13,7 +13,7 @@ var _ = require('lodash');
 
 var rhosts = /github|bitbucket/i;
 
-function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var presetPromise;
   var pkgPromise;
   var latestSemverPromise;
@@ -180,4 +180,4 @@ function changelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) 
   return readable;
 }
 
-module.exports = changelog;
+module.exports = conventinalChangelog;
