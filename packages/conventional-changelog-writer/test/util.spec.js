@@ -16,13 +16,26 @@ describe('util', function() {
       expect(compiled()).to.equal('header\ncommit\nfooter\n');
     });
 
+    it('should compile templates with default partials if one is an empty string', function() {
+      var templates = {
+        mainTemplate: '{{> header}}{{> commit}}{{> footer}}',
+        headerPartial: '',
+        commitPartial: 'commit\n',
+        footerPartial: 'footer\n'
+      };
+      var compiled = util.compileTemplates(templates);
+
+      expect(compiled()).to.equal('commit\nfooter\n');
+    });
+
     it('should compile templates with customized partials', function() {
       var templates = {
         mainTemplate: '{{> partial1}}{{> partial2}}{{> partial3}}',
         partials: {
           partial1: 'partial1\n',
           partial2: 'partial2\n',
-          partial3: 'partial3\n'
+          partial3: 'partial3\n',
+          partial4: null
         }
       };
       var compiled = util.compileTemplates(templates);

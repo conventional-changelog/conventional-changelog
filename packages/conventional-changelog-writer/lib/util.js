@@ -12,20 +12,22 @@ function compileTemplates(templates) {
   var footerPartial = templates.footerPartial;
   var partials = templates.partials;
 
-  if (headerPartial) {
+  if (_.isString(headerPartial)) {
     Handlebars.registerPartial('header', headerPartial);
   }
 
-  if (commitPartial) {
+  if (_.isString(commitPartial)) {
     Handlebars.registerPartial('commit', commitPartial);
   }
 
-  if (footerPartial) {
+  if (_.isString(footerPartial)) {
     Handlebars.registerPartial('footer', footerPartial);
   }
 
   _.forEach(partials, function(partial, name) {
-    Handlebars.registerPartial(name, partial);
+    if (_.isString(partial)) {
+      Handlebars.registerPartial(name, partial);
+    }
   });
 
   return Handlebars.compile(main, {
