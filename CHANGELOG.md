@@ -1,3 +1,13 @@
+<a name="0.1.0-beta.3"></a>
+# 0.1.0-beta.3 (2015-07-17)
+
+
+### Bug Fixes
+
+* **cli:** map pkg.path correctly ([c9a59a7](https://github.com/ajoslin/conventional-changelog/commit/c9a59a7))
+
+
+
 <a name="0.1.0-beta.2"></a>
 # 0.1.0-beta.2 (2015-07-17)
 
