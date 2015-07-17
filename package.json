@@ -12,7 +12,7 @@
     "changelog",
     "log"
   ],
-  "license": "BSD",
+  "license": "MIT",
   "contributors": [
     {
       "name": "Brian Ford"
