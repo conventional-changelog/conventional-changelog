@@ -66,9 +66,19 @@ A set of options of a popular project so you don't have to define everything in 
 
 ##### pkg
 
+Type: `object`
+
+###### path
+
 Type: `string` Default: `'package.json'`
 
 The location of your "package.json".
+
+###### transform
+
+Type: `function` Default: pass through
+
+A function that takes `package.json` data as the argument and returns the modified data. Note this is performed on the normalized package.json data. Useful when you need to add a leading 'v' to your version, etc.
 
 ##### append
 

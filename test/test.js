@@ -52,12 +52,35 @@ describe('conventionalChangelog', function() {
 
   it('should load package.json for data', function(done) {
     conventionalChangelog({
-      pkg: __dirname + '/fixtures/_package.json'
+      pkg: {
+        path: __dirname + '/fixtures/_package.json'
+      }
     })
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
         expect(chunk).to.include('## 0.0.17');
+        expect(chunk).to.include('First commit');
+        expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)');
+
+        done();
+      }));
+  });
+
+  it('should transform package.json data', function(done) {
+    conventionalChangelog({
+      pkg: {
+        path: __dirname + '/fixtures/_package.json',
+        transform: function(pkg) {
+          pkg.version = 'v' + pkg.version;
+          return pkg;
+        }
+      }
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('## v0.0.17');
         expect(chunk).to.include('First commit');
         expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)');
 
@@ -80,7 +103,9 @@ describe('conventionalChangelog', function() {
 
   it('should read package.json if only `context.version` is missing', function(done) {
     conventionalChangelog({
-      pkg: __dirname + '/fixtures/_package.json'
+      pkg: {
+        path: __dirname + '/fixtures/_package.json'
+      }
     }, {
       host: 'github',
       owner: 'a',
@@ -165,7 +190,9 @@ describe('conventionalChangelog', function() {
 
   it('should warn if package.json is not found', function(done) {
     conventionalChangelog({
-      pkg: 'no',
+      pkg: {
+        path: 'no'
+      },
       warn: function(warning) {
         expect(warning).to.equal('package.json: "no" does not exist');
 
@@ -176,7 +203,9 @@ describe('conventionalChangelog', function() {
 
   it('should warn if package.json cannot be parsed', function(done) {
     conventionalChangelog({
-      pkg: __dirname + '/fixtures/_malformation.json',
+      pkg: {
+        path: __dirname + '/fixtures/_malformation.json'
+      },
       warn: function(warning) {
         expect(warning).to.equal('package.json: "' + __dirname + '/fixtures/_malformation.json" cannot be parsed');
 
