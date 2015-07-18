@@ -103,6 +103,7 @@ The value of what it should release as. If it cannot decide this is an empty str
 
 ## Related
 
+- [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
 - [conventional-changelog](https://github.com/ajoslin/conventional-changelog) - Generate a changelog from git metadata
 
 
