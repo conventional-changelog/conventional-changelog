@@ -6,8 +6,9 @@
 ## Why
 
 - Used by AngularJS and related projects.
-- Everything internally or externally is Pluggable.
+- Everything internally or externally is pluggable.
 - High performant. It doesn't spawn any extra child process to fetch data.
+- Intelligently setup defaults but you can still modify them to your needs.
 - Fully configurable. There are several presets that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
 - Task runner integrations: [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog).
 - Actively maintained.
@@ -30,6 +31,7 @@ $ npm install conventional-changelog@next
 ```
 
 [Synopsis of Conventions](conventions)
+
 
 ## Example output
 
