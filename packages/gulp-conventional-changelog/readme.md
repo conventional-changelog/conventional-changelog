@@ -46,6 +46,40 @@ gulp.task('default', function () {
 });
 ```
 
+**Note:** If your `options.allBlocks` is `true` you can just use [conventional-changelog](https://github.com/stevemao/conventional-changelog) directly or not to read the file at all.
+
+```js
+var gulp = require('gulp');
+var conventionalChangelog = require('conventional-changelog');
+var fs = require('fs');
+
+gulp.task('default', function () {
+  return conventionalChangelog({
+    preset: 'angular',
+    allBlocks: true
+  })
+    .pipe(fs.createWriteStream('CHANGELOG.md'));
+});
+```
+
+Or
+
+```js
+var gulp = require('gulp');
+var conventionalChangelog = require('gulp-conventional-changelog');
+
+gulp.task('default', function () {
+  return gulp.src('CHANGELOG.md', {
+    read: false
+  })
+    .pipe(conventionalChangelog({
+      preset: 'angular',
+      allBlocks: true
+    }))
+    .pipe(gulp.dest('./'));
+});
+```
+
 
 ## API
 
