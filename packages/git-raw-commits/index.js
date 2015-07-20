@@ -24,27 +24,30 @@ function gitRawCommits(options) {
     '"<%- from ? [from, to].join("..") : to %>" '
   )(options) + args.join(' ');
 
-  var anything = false;
+  var isError = false;
 
   var child = exec(cmd);
   child.stdout
     .pipe(split('------------------------ >8 ------------------------\n'))
     .pipe(through(function(chunk, enc, cb) {
       readable.push(chunk);
-      anything = true;
+      isError = false;
 
       cb();
     }, function(cb) {
-      if (anything) {
-        readable.push(null);
-        readable.emit('close');
-      }
+      setImmediate(function() {
+        if (!isError) {
+          readable.push(null);
+          readable.emit('close');
+        }
 
-      cb();
+        cb();
+      });
     }));
 
   child.stderr
     .pipe(through.obj(function(chunk) {
+      isError = true;
       readable.emit('error', chunk);
       readable.emit('close');
     }));

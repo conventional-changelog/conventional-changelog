@@ -19,6 +19,8 @@ it('should emit an error if there is no commits', function(done) {
     })
     .pipe(through(function() {
       done('should error');
+    }, function() {
+      done('should error');
     }));
 });
 
