@@ -2,10 +2,12 @@
 var addStream = require('add-stream');
 var concat = require('concat-stream');
 var conventionalChangelog = require('conventional-changelog');
+var gutil = require('gulp-util');
 var through = require('through2');
 
 module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   opts = opts || {};
+  opts.warn = gutil.log;
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {

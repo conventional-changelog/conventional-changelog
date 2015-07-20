@@ -2,7 +2,7 @@
 
 > Generate a changelog using [conventional-changelog](https://github.com/stevemao/conventional-changelog)
 
-*Issues with the output should be reported on the conventional-changelog [issue tracker](https://github.com/stevemao/conventional-changelog/issues).*
+*Issues with the output should be reported on the `conventional-changelog` [issue tracker](https://github.com/stevemao/conventional-changelog/issues).*
 
 
 ## Install
@@ -84,6 +84,14 @@ gulp.task('default', function () {
 ## API
 
 See the [conventional-changelog](https://github.com/ajoslin/conventional-changelog) docs.
+
+There are some changes:
+
+### changelogOpts
+
+#### warn
+
+It is `gutil.log`.
 
 
 ## License
