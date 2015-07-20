@@ -1,8 +1,8 @@
 # gulp-conventional-changelog [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> Generate a changelog using [conventional-changelog](https://github.com/stevemao/conventional-changelog)
+> Generate a changelog using [conventional-changelog](https://github.com/ajoslin/conventional-changelog)
 
-*Issues with the output should be reported on the `conventional-changelog` [issue tracker](https://github.com/stevemao/conventional-changelog/issues).*
+*Issues with the output should be reported on the `conventional-changelog` [issue tracker](https://github.com/ajoslin/conventional-changelog/issues).*
 
 
 ## Install
@@ -46,7 +46,7 @@ gulp.task('default', function () {
 });
 ```
 
-**Note:** If your `options.allBlocks` is `true` you can just use [conventional-changelog](https://github.com/stevemao/conventional-changelog) directly or not to read the file at all.
+**Note:** If your `options.allBlocks` is `true` you can just use [conventional-changelog](https://github.com/ajoslin/conventional-changelog) directly or not to read the file at all.
 
 ```js
 var gulp = require('gulp');
