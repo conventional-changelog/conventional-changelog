@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
@@ -55,8 +55,5 @@
     "lint": "jshint presets hosts test *.js --exclude node_modules && jscs presets hosts test *.js",
     "test": "npm run-script lint && mocha"
   },
-  "bin": "cli.js",
-  "publishConfig": {
-    "tag": "next"
-  }
+  "bin": "cli.js"
 }
