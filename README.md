@@ -197,6 +197,20 @@ This module has options `append` and `allBlocks`. However, it doesn't read your 
 So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. If `options.allBlocks` is `true` you need to ignore any previous logs.
 
 
+## Recommended workflow when not using `options.allBlocks`
+
+1. Make changes
+2. Commit those changes
+3. Make sure Travis turns green
+4. Bump version in `package.json`
+5. `conventionalChangelog`
+6. Commit `package.json` and `CHANGELOG.md` files
+7. Tag
+8. Push
+
+The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
+
+
 ## License
 
 MIT
