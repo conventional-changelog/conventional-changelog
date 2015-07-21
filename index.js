@@ -85,14 +85,15 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
           pkg = pkgObj.value;
           try {
             pkg = JSON.parse(pkg);
-            var repo = getPkgRepo(pkg);
             pkg = options.pkg.transform(pkg);
+            context.version = context.version || pkg.version;
+
+            var repo = getPkgRepo(pkg);
 
             if (repo.type) {
               var browse = repo.browse();
               var parsedBrowse = url.parse(browse);
               context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
-              context.version = context.version || pkg.version;
               context.owner = context.owner || repo.user;
               context.repository = context.repository || repo.project;
             }
