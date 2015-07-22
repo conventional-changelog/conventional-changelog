@@ -73,7 +73,7 @@ The location of your "package.json".
 
 Type: `function` Default: pass through
 
-A function that takes `package.json` data as the argument and returns the modified data. Note this is performed on the normalized package.json data. Useful when you need to add a leading 'v' to your version, etc.
+A function that takes `package.json` data as the argument and returns the modified data. Note this is performed before normalizing package.json data. Useful when you need to add a leading 'v' to your version or modify your repository url, etc.
 
 ##### append
 
