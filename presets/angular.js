@@ -50,6 +50,16 @@ function presetOpts(cb) {
         commit.type = 'Performance Improvements';
       } else if (commit.type === 'revert') {
         commit.type = 'Reverts';
+      } else if (commit.type === 'docs') {
+        commit.type = 'Documentation';
+      } else if (commit.type === 'style') {
+        commit.type = 'Style';
+      } else if (commit.type === 'test') {
+        commit.type = 'Tests';
+      } else if (commit.type === 'chore') {
+        commit.type = 'Chore';
+      } else if (commit.type === 'refactor') {
+        commit.type = 'Refactor';
       } else {
         return;
       }
