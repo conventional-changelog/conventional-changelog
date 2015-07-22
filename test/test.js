@@ -86,9 +86,10 @@ describe('conventionalChangelog', function() {
   it('should transform package.json data', function(done) {
     conventionalChangelog({
       pkg: {
-        path: __dirname + '/fixtures/_package.json',
+        path: __dirname + '/fixtures/_short.json',
         transform: function(pkg) {
           pkg.version = 'v' + pkg.version;
+          pkg.repository.url = 'https://github.com/a/b.git';
           return pkg;
         }
       }
@@ -98,7 +99,7 @@ describe('conventionalChangelog', function() {
 
         expect(chunk).to.include('## v0.0.17');
         expect(chunk).to.include('First commit');
-        expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)');
+        expect(chunk).to.include('closes [#1](https://github.com/a/b/issues/1)');
 
         done();
       }));
