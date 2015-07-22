@@ -26,6 +26,8 @@ function presetOpts(cb) {
   var transform = through.obj(function(chunk, enc, cb) {
     if (typeof chunk.gitTags === 'string') {
       var match = regex.exec(chunk.gitTags);
+      regex.lastIndex = 0;
+
       if (match) {
         chunk.version = match[1];
       }
