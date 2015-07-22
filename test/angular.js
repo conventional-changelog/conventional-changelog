@@ -108,5 +108,33 @@ describe('presets', function() {
           done();
         }));
     });
+
+    it('should work if there are two semver tags', function(done) {
+      var i = 0;
+
+      writeFileSync('test7', '');
+      shell.exec('git add --all && git commit -m"feat: some more features"');
+      shell.exec('git tag v2.0.0');
+
+      conventionalChangelog({
+        preset: 'angular',
+        allBlocks: true
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 1) {
+            expect(chunk).to.include('# 2.0.0');
+          } else if (i === 2) {
+            expect(chunk).to.include('# 1.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(3);
+          done();
+        }));
+    });
   });
 });
