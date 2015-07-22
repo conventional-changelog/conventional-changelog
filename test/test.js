@@ -67,6 +67,22 @@ describe('conventionalChangelog', function() {
       }));
   });
 
+  it('should load package.json for data even if repository field is missing', function(done) {
+    conventionalChangelog({
+      pkg: {
+        path: __dirname + '/fixtures/_version-only.json'
+      }
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('## 0.0.17');
+        expect(chunk).to.include('First commit');
+
+        done();
+      }));
+  });
+
   it('should transform package.json data', function(done) {
     conventionalChangelog({
       pkg: {
