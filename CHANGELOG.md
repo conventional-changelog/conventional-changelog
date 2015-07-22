@@ -1,3 +1,14 @@
+<a name="0.1.2"></a>
+## 0.1.2 (2015-07-22)
+
+
+### Bug Fixes
+
+* **pkg.transform:** transform should be performed before normalizing pkgData ([7c59bfd](https://github.com/ajoslin/conventional-changelog/commit/7c59bfd))
+* **pkgRepo:** get version even if no `repo.type` ([1016e08](https://github.com/ajoslin/conventional-changelog/commit/1016e08)), closes [#74](https://github.com/ajoslin/conventional-changelog/issues/74) [#75](https://github.com/ajoslin/conventional-changelog/issues/75)
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2015-07-20)
 
