@@ -1,3 +1,13 @@
+<a name="0.1.3"></a>
+## 0.1.3 (2015-07-22)
+
+
+### Bug Fixes
+
+* **preset:** work if more than two semver tags ([b8ad049](https://github.com/ajoslin/conventional-changelog/commit/b8ad049))
+
+
+
 <a name="0.1.2"></a>
 ## 0.1.2 (2015-07-22)
 
