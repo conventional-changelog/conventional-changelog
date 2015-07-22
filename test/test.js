@@ -89,7 +89,7 @@ describe('conventionalChangelog', function() {
         path: __dirname + '/fixtures/_short.json',
         transform: function(pkg) {
           pkg.version = 'v' + pkg.version;
-          pkg.repository.url = 'https://github.com/a/b.git';
+          pkg.repository = 'a/b';
           return pkg;
         }
       }
