@@ -66,6 +66,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
       var preset;
       var pkg;
       var tag;
+      var repo;
 
       var hostOpts;
 
@@ -88,7 +89,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
             pkg = options.pkg.transform(pkg);
             context.version = context.version || pkg.version;
 
-            var repo = getPkgRepo(pkg);
+            repo = getPkgRepo(pkg);
 
             if (repo.type) {
               var browse = repo.browse();
@@ -110,9 +111,19 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
       }
 
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
-        var match = context.host.match(rhosts);
-        if (match) {
-          hostOpts = require('./hosts/' + match[0]);
+        var type;
+
+        if (repo && repo.type) {
+          type = repo.type;
+        } else {
+          var match = context.host.match(rhosts);
+          if (match) {
+            type = match[0];
+          }
+        }
+
+        if (type) {
+          hostOpts = require('./hosts/' + type);
 
           context = _.assign({
             issue: hostOpts.issue,
