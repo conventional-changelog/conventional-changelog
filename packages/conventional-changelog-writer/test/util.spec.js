@@ -567,7 +567,7 @@ describe('util', function() {
 
     it('should ignore a reverted commit', function() {
       var log = util.generate({
-        mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}',
+        mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{this}}{{/each}}{{/each}}',
         ignoreReverted: true
       }, [{
         header: 'revert: feat(): amazing new module\n',
@@ -584,7 +584,10 @@ describe('util', function() {
         header: 'feat(): amazing nee\n',
         body: null,
         footer: 'BREAKI]ompatible.\n',
-        notes: [],
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'some breaking change'
+        }],
         references: [],
         revert: null,
         hash: '56185b',
@@ -592,7 +595,10 @@ describe('util', function() {
           header: 'feat(): amazing new module\n',
           body: null,
           footer: 'BREAKING CHANGE: Not backward compatible.\n',
-          notes: [],
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'some breaking change'
+          }],
           references: [],
           revert: null,
           hash: '56185b7356766d2b30cfa2406b257080272e0b7a\n',
@@ -601,7 +607,10 @@ describe('util', function() {
         header: 'feat(): new feature\n',
         body: null,
         footer: null,
-        notes: [],
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'WOW SO MANY CHANGES'
+        }],
         references: [],
         revert: null,
         hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
@@ -617,8 +626,10 @@ describe('util', function() {
 
       expect(log).to.include('feat(): new feature\n');
       expect(log).to.include('chore: first commit\n');
+      expect(log).to.include('WOW SO MANY CHANGES');
       expect(log).to.not.include('amazing new module');
       expect(log).to.not.include('revert');
+      expect(log).to.not.include('breaking change');
     });
   });
 });
