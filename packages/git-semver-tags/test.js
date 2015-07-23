@@ -63,3 +63,11 @@ it('should get all semver tags if two tags on the same commit', function(done) {
     done();
   });
 });
+
+it('should still work if I run it again', function(done) {
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0']);
+
+    done();
+  });
+});

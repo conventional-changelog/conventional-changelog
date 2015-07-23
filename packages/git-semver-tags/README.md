@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> Get all git semver tag of your repository in the latest to oldest order
+> Get all git semver tag of your repository in reverse chronological order
 
 *Note:* since lightweight tags do not store date information, the date of a semver is the date of the commit that is tagged on. If two semver tags on one commit, the order is not guaranteed.
 
