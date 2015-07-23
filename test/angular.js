@@ -22,6 +22,14 @@ describe('presets', function() {
         shell.exec('git add --all && git commit -m"perf(ngOptions): make it faster"');
         writeFileSync('test5', '');
         shell.exec('git add --all && git commit -m"revert(ngOptions): make it faster"');
+        writeFileSync('test6', '');
+        shell.exec('git add --all && git commit -m"docs(README): specify requirements"');
+        writeFileSync('test7', '');
+        shell.exec('git add --all && git commit -m"style($compile): use spaces instead of tabs"');
+        writeFileSync('test8', '');
+        shell.exec('git add --all && git commit -m"test($compile): add missing tests"');
+        writeFileSync('test9', '');
+        shell.exec('git add --all && git commit -m"refactor(ngOptions): write it <better></better>"');
 
         done();
       });
@@ -38,6 +46,7 @@ describe('presets', function() {
         .pipe(through(function(chunk) {
           chunk = chunk.toString();
 
+          expect(chunk).to.include('first commit');
           expect(chunk).to.include('amazing new module');
           expect(chunk).to.include('avoid a bug');
           expect(chunk).to.include('make it faster');
@@ -47,8 +56,13 @@ describe('presets', function() {
           expect(chunk).to.include('Performance Improvements');
           expect(chunk).to.include('Reverts');
           expect(chunk).to.include('BREAKING CHANGES');
+          expect(chunk).to.include('Features');
+          expect(chunk).to.include('Documentation');
+          expect(chunk).to.include('Style');
+          expect(chunk).to.include('Tests');
+          expect(chunk).to.include('Chore');
+          expect(chunk).to.include('Refactor');
 
-          expect(chunk).to.not.include('first commit');
           expect(chunk).to.not.include('feat');
           expect(chunk).to.not.include('fix');
           expect(chunk).to.not.include('perf');
@@ -62,7 +76,7 @@ describe('presets', function() {
       var i = 0;
 
       shell.exec('git tag v1.0.0');
-      writeFileSync('test6', '');
+      writeFileSync('test10', '');
       shell.exec('git add --all && git commit -m"feat: some more features"');
 
       conventionalChangelog({
@@ -112,7 +126,7 @@ describe('presets', function() {
     it('should work if there are two semver tags', function(done) {
       var i = 0;
 
-      writeFileSync('test7', '');
+      writeFileSync('test11', '');
       shell.exec('git add --all && git commit -m"feat: some more features"');
       shell.exec('git tag v2.0.0');
 
