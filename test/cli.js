@@ -153,8 +153,8 @@ describe('cli', function() {
       }));
   });
 
-  it('should ignore `infile` if `allBlocks` is `true` (stdout)', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--all-blocks'], {
+  it('should ignore `infile` if `versionRange.start` is `0` (stdout)', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--versionRangeStart', '0'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -169,8 +169,8 @@ describe('cli', function() {
       }));
   });
 
-  it('should ignore `infile` if `allBlocks` is `true` (file)', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--all-blocks', '-w'], {
+  it('should ignore `infile` if `versionRange.start` is `0` (file)', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--versionRangeStart', '0', '-w'], {
       stdio: [process.stdin, null, null]
     });
 
