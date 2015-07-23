@@ -20,7 +20,7 @@ function conventionalCommitsFilter (commits) {
   ret = ret.filter(function (commit) {
     var ignoreThis = false;
 
-    commit = modifyValues(commit, function (val) {
+    var raw = modifyValues(commit.raw, function (val) {
       if (typeof val === 'string') {
         return val.trim();
       }
@@ -37,7 +37,7 @@ function conventionalCommitsFilter (commits) {
         return val;
       });
 
-      ignoreThis = isSubset(commit, ignore);
+      ignoreThis = isSubset(raw, ignore);
       return ignoreThis;
     });
 
