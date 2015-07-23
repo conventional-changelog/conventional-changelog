@@ -357,6 +357,26 @@ describe('conventionalChangelogWriter', function() {
           }));
       });
 
+      it('`generateOn` could be a null', function(done) {
+        var i = 0;
+
+        getStream()
+          .pipe(conventionalChangelogWriter({}, {
+            generateOn: null
+          }))
+          .pipe(through(function(chunk, enc, cb) {
+            chunk = chunk.toString();
+
+            expect(chunk).to.include('<a name=""></a>\n#  (' + today);
+
+            i++;
+            cb(null);
+          }, function() {
+            expect(i).to.equal(1);
+            done();
+          }));
+      });
+
       it('version should fall back on `context.version` and `context.date`', function(done) {
         var i = 0;
 

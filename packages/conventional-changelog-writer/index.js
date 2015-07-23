@@ -46,7 +46,7 @@ function conventionalChangelogWriter(context, options) {
   if (!_.isFunction(options.transform) && _.isObject(options.transform) || _.isUndefined(options.transform)) {
     options.transform = _.assign({
       hash: function(hash) {
-        if (typeof hash === 'string') {
+        if (_.isString(hash)) {
           return hash.substring(0, 7);
         }
       },
@@ -54,7 +54,7 @@ function conventionalChangelogWriter(context, options) {
         return header.substring(0, 100);
       },
       version: function(version) {
-        if (typeof version === 'string') {
+        if (_.isString(version)) {
           return version.replace(/^[v=]/i, '');
         }
       },
@@ -69,9 +69,13 @@ function conventionalChangelogWriter(context, options) {
   }
 
   var generateOn = options.generateOn;
-  if (typeof generateOn === 'string') {
+  if (_.isString(generateOn)) {
     generateOn = function(chunk) {
-      return chunk[options.generateOn];
+      return !_.isUndefined(chunk[options.generateOn]);
+    };
+  } else if (!_.isFunction(generateOn)) {
+    generateOn = function() {
+      return false;
     };
   }
 
