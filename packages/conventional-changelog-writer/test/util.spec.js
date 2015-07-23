@@ -581,13 +581,22 @@ describe('util', function() {
         },
         hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
       }, {
-        header: 'feat(): amazing new module\n',
+        header: 'feat(): amazing nee\n',
         body: null,
-        footer: 'BREAKING CHANGE: Not backward compatible.\n',
+        footer: 'BREAKI]ompatible.\n',
         notes: [],
         references: [],
         revert: null,
-        hash: '56185b7356766d2b30cfa2406b257080272e0b7a\n'
+        hash: '56185b',
+        raw: {
+          header: 'feat(): amazing new module\n',
+          body: null,
+          footer: 'BREAKING CHANGE: Not backward compatible.\n',
+          notes: [],
+          references: [],
+          revert: null,
+          hash: '56185b7356766d2b30cfa2406b257080272e0b7a\n',
+        }
       }, {
         header: 'feat(): new feature\n',
         body: null,
