@@ -81,27 +81,11 @@ Type: `boolean` Default: `false`
 
 Should the log be appended.
 
-##### versionRange
+##### allBlocks
 
-Type: `object`
+Type: `boolean` Default: `false`
 
-###### start
-
-Type: `number` Default: `-1`
-
-1 based index of semver tags at which to start.
-
-If greater than the number of existing semver tags, actual starting index will be set to the upcoming new version.
-
-If negative, it will begin that many from the end. If the absolute number is greater than the number of existing semver tags, it will be set to the first version.
-
-If `0` generate all logs.
-
-###### count
-
-Type: `number` Default: `1`
-
-How many versions to generate. If it exceeds the possible range it will set to the maximum possibility.
+Set to `true` if you want to generate all blocks of the log. `false` if you just want to generate the current one.
 
 ##### warn
 
@@ -145,11 +129,7 @@ Default: `'%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci'`
 
 ##### from
 
-Default: based on `options.versionRange`.
-
-##### to
-
-Default: based on `options.versionRange`.
+Default: latest semver tag if `options.allBlocks` is `false`.
 
 ##### reverse
 
@@ -185,19 +165,18 @@ $ conventional-changelog --help
     conventional-changelog -i CHANGELOG.md --overwrite
 
   Options
-    -i, --infile                 Read the CHANGELOG from this file
-    -o, --outfile                Write the CHANGELOG to this file. If unspecified, it prints to stdout
-    -w, --overwrite              Overwrite the infile
-    -p, --preset                 Name of the preset you want to use
-    -k, --pkg                    A filepath of where your package.json is located
-    -a, --append                 Should the generated block be appended
-    -s, --version-range-start    index of semver tags at which to start
-    -n, --verion-range-count     How many versions to generate
-    -v, --verbose                Verbose output
-    -c, --context                A filepath of a javascript that is used to define template variables
-    --git-raw-commits-opts       A filepath of a javascript that is used to define git-raw-commits options
-    --parser-opts                A filepath of a javascript that is used to define conventional-commits-parser options
-    --writer-opts                A filepath of a javascript that is used to define conventional-changelog-writer options
+    -i, --infile              Read the CHANGELOG from this file
+    -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout
+    -w, --overwrite           Overwrite the infile
+    -p, --preset              Name of the preset you want to use
+    -k, --pkg                 A filepath of where your package.json is located
+    -a, --append              Should the generated block be appended
+    -b, --all-blocks          Generate all blocks
+    -v, --verbose             Verbose output
+    -c, --context             A filepath of a javascript that is used to define template variables
+    --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options
+    --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options
+    --writer-opts             A filepath of a javascript that is used to define conventional-changelog-writer options
 ```
 
 
@@ -209,16 +188,16 @@ $ conventional-changelog --help
 
 ## Notes for parent modules
 
-This module has options `append` and `versionRange`. However, it doesn't read your previous changelog. Reasons being:
+This module has options `append` and `allBlocks`. However, it doesn't read your previous changelog. Reasons being:
 
 1. The old logs is just to be appended or prepended to the newly generated logs, which is a very simple thing that could be done in the parent module.
 2. We want it to be very flexible for the parent module. You could create a readable stream from the file or you could just read the file.
 3. We want the duty of this module to be very minimum.
 
-So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append` or ignore any previous logs if you are regenerating all.
+So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.allBlocks` is `true` you need to ignore any previous logs.
 
 
-## Recommended workflow
+## Recommended workflow when not using `options.allBlocks`
 
 1. Make changes
 2. Commit those changes
