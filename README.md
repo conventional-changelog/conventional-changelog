@@ -89,13 +89,13 @@ Type: `object`
 
 Type: `number` Default: `-1`
 
-1 based index of semver tags at which to start.
+1 based index of versions at which to start. Versions are based on the semver tags and the upcoming new release (not tagged yet) is also counted as 1.
 
-If greater than the number of existing semver tags, actual starting index will be set to the upcoming new version.
+If greater than the number of existing versions, actual starting index will be set to the upcoming new version.
 
-If negative, it will begin that many from the end. If the absolute number is greater than the number of existing semver tags, it will be set to the first version.
+If negative, it will begin that many from the end. If the absolute number is greater than the number of existing versions, it will be set to the first version.
 
-If `0` generate all logs.
+If `0`, regenerate all logs.
 
 ###### count
 
