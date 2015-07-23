@@ -1,6 +1,6 @@
 {
   "name": "git-semver-tags",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Get all git semver tag of your repository in reverse chronological order",
   "homepage": "https://github.com/stevemao/git-semver-tags",
   "author": {
