@@ -81,11 +81,11 @@ Type: `boolean` Default: `false`
 
 Should the log be appended.
 
-##### allBlocks
+##### releaseCount
 
-Type: `boolean` Default: `false`
+Type: `number` Default: `1`
 
-Set to `true` if you want to generate all blocks of the log. `false` if you just want to generate the current one.
+How many releases of changelog you want to generate. It counts from the upcoming release. Useful when you forgot to generate any previous changelog. Set to `0` to regenerate all.
 
 ##### warn
 
@@ -129,7 +129,7 @@ Default: `'%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci'`
 
 ##### from
 
-Default: latest semver tag if `options.allBlocks` is `false`.
+Default: based on `options.releaseCount`.
 
 ##### reverse
 
@@ -188,16 +188,16 @@ $ conventional-changelog --help
 
 ## Notes for parent modules
 
-This module has options `append` and `allBlocks`. However, it doesn't read your previous changelog. Reasons being:
+This module has options `append` and `releaseCount`. However, it doesn't read your previous changelog. Reasons being:
 
 1. The old logs is just to be appended or prepended to the newly generated logs, which is a very simple thing that could be done in the parent module.
 2. We want it to be very flexible for the parent module. You could create a readable stream from the file or you could just read the file.
 3. We want the duty of this module to be very minimum.
 
-So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.allBlocks` is `true` you need to ignore any previous logs.
+So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs.
 
 
-## Recommended workflow when not using `options.allBlocks`
+## Recommended workflow when not regenerating the changelog
 
 1. Make changes
 2. Commit those changes

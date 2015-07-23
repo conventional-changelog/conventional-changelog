@@ -22,7 +22,7 @@ var cli = meow({
     '  -p, --preset              Name of the preset you want to use',
     '  -k, --pkg                 A filepath of where your package.json is located',
     '  -a, --append              Should the generated block be appended',
-    '  -b, --all-blocks          Generate all blocks',
+    '  -r, --release-count       How many releases to be generated from the latest',
     '  -v, --verbose             Verbose output',
     '  -c, --context             A filepath of a javascript that is used to define template variables',
     '  --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options',
@@ -37,7 +37,7 @@ var cli = meow({
     p: 'preset',
     k: 'pkg',
     a: 'append',
-    b: 'allBlocks',
+    r: 'releaseCount',
     v: 'verbose',
     c: 'context'
   }
@@ -48,7 +48,7 @@ var infile = flags.infile;
 var outfile = flags.outfile;
 var overwrite = flags.overwrite;
 var append = flags.append;
-var allBlocks = flags.allBlocks;
+var releaseCount = flags.releaseCount;
 
 if (infile && infile === outfile) {
   overwrite = true;
@@ -67,7 +67,7 @@ var options = _.omit({
     path: flags.pkg
   },
   append: append,
-  allBlocks: allBlocks
+  releaseCount: releaseCount
 }, _.isUndefined);
 
 if (flags.verbose) {
@@ -102,7 +102,7 @@ try {
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts);
 
-if (infile && !allBlocks) {
+if (infile && releaseCount !== 0) {
   if (overwrite) {
     if (options.append) {
       changelogStream

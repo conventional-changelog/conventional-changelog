@@ -87,7 +87,7 @@ describe('presets', function() {
 
       conventionalChangelog({
         preset: 'angular',
-        allBlocks: true
+        releaseCount: 0
       })
         .pipe(through(function(chunk, enc, cb) {
           chunk = chunk.toString();
@@ -118,7 +118,7 @@ describe('presets', function() {
 
       conventionalChangelog({
         preset: 'angular',
-        allBlocks: true
+        releaseCount: 0
       })
         .pipe(through(function(chunk, enc, cb) {
           chunk = chunk.toString();
