@@ -441,21 +441,15 @@ describe('conventionalChangelogWriter', function() {
             if (i === 0) {
               expect(chunk.log).to.include('<a name=""></a>\n#  (' + today + ')\n\n');
               expect(chunk.log).to.include('feat(scope): broadcast $destroy event on scope destruction');
-              expect(chunk.commits[0].header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
               expect(chunk.keyCommit).to.eql();
-              expect(chunk.notes).to.eql([]);
             } else {
               expect(chunk.log).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n');
               expect(chunk.log).to.include('fix(ng-list): Allow custom separator');
               expect(chunk.log).to.include('perf(template): tweak');
               expect(chunk.log).to.include('refactor(name): rename this module to conventional-changelog-writer');
-              expect(chunk.commits[0].header).to.equal('fix(ng-list): Allow custom separator');
-              expect(chunk.commits[1].body).to.equal('My body.');
-              expect(chunk.commits[2].committerDate).to.equal('2015-04-07');
               expect(chunk.keyCommit.body).to.equal('bla bla bla');
               expect(chunk.keyCommit.committerDate).to.equal('2015-04-07');
               expect(chunk.keyCommit.version).to.equal('1.0.1');
-              expect(chunk.notes).to.eql([]);
             }
 
             i++;
@@ -544,19 +538,13 @@ describe('conventionalChangelogWriter', function() {
               expect(chunk.log).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)\n\n');
               expect(chunk.log).to.include('broadcast $destroy event on scope destruction');
               expect(chunk.log).to.include('fix(ng-list):');
-              expect(chunk.commits[0].header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
-              expect(chunk.commits[1].body).to.equal('bla bla bla');
               expect(chunk.keyCommit.version).to.equal('1.0.1');
               expect(chunk.keyCommit.committerDate).to.equal('2015-04-07');
-              expect(chunk.notes).to.eql([]);
             } else {
               expect(chunk.log).to.include('<a name=""></a>\n#  (' + today + ')\n\n');
               expect(chunk.log).to.include('perf(template): tweak');
               expect(chunk.log).to.include('refactor(name): rename this module to conventional-changelog-writer');
-              expect(chunk.commits[0].header).to.equal('perf(template): tweak');
-              expect(chunk.commits[1].committerDate).to.equal('2015-04-07');
               expect(chunk.keyCommit).to.eql();
-              expect(chunk.notes).to.eql([]);
             }
 
             i++;

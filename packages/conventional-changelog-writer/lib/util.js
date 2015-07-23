@@ -144,12 +144,17 @@ function getExtraContext(commits, notes, options) {
   return context;
 }
 
-function generate(options, commits, notes, context, keyCommit) {
+function generate(options, commits, context, keyCommit) {
+  var notes = [];
   var compiled = compileTemplates(options);
 
   if (options.ignoreReverted) {
     commits = conventionalCommitsFilter(commits);
   }
+
+  _.forEach(commits, function(commit) {
+    notes = notes.concat(commit.notes);
+  });
 
   var mergedContext = _.merge({}, context, keyCommit, getExtraContext(commits, notes, options));
 

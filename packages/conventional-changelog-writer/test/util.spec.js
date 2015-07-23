@@ -546,7 +546,7 @@ describe('util', function() {
     it('should merge with the key commit', function() {
       var log = util.generate({
         mainTemplate: '{{whatever}}'
-      }, [], [], {
+      }, [], {
         whatever: 'a'
       }, {
         whatever: 'b'

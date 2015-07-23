@@ -11,7 +11,6 @@ var _ = require('lodash');
 function conventionalChangelogWriter(context, options) {
   var savedKeyCommit;
   var commits = [];
-  var notes = [];
 
   context = _.extend({
     commit: 'commits',
@@ -93,47 +92,39 @@ function conventionalChangelogWriter(context, options) {
     if (options.reverse) {
       if (commit) {
         commits.push(commit);
-        notes = notes.concat(commit.notes);
       }
 
       if (generateOn(keyCommit)) {
-        result = util.generate(options, commits, notes, context, keyCommit);
+        result = util.generate(options, commits, context, keyCommit);
         if (options.includeDetails) {
           this.push({
             log: result,
-            commits: commits,
-            keyCommit: keyCommit,
-            notes: notes
+            keyCommit: keyCommit
           });
         } else {
           this.push(result);
         }
 
         commits = [];
-        notes = [];
       }
     } else {
       if (generateOn(keyCommit)) {
-        result = util.generate(options, commits, notes, context, savedKeyCommit);
+        result = util.generate(options, commits, context, savedKeyCommit);
         if (options.includeDetails) {
           this.push({
             log: result,
-            commits: commits,
-            keyCommit: savedKeyCommit,
-            notes: notes
+            keyCommit: savedKeyCommit
           });
         } else {
           this.push(result);
         }
 
         commits = [];
-        notes = [];
         savedKeyCommit = keyCommit;
       }
 
       if (commit) {
         commits.push(commit);
-        notes = notes.concat(commit.notes);
       }
     }
 
@@ -147,14 +138,12 @@ function conventionalChangelogWriter(context, options) {
       keyCommit = savedKeyCommit;
     }
 
-    result = util.generate(options, commits, notes, context, savedKeyCommit);
+    result = util.generate(options, commits, context, savedKeyCommit);
 
     if (options.includeDetails) {
       this.push({
         log: result,
-        commits: commits,
-        keyCommit: savedKeyCommit,
-        notes: notes
+        keyCommit: savedKeyCommit
       });
     } else {
       this.push(result);
