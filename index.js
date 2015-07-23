@@ -3,8 +3,8 @@ var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
 var fs = require('fs');
 var getPkgRepo = require('get-pkg-repo');
-var gitLatestSemverTag = require('git-latest-semver-tag');
 var gitRawCommits = require('git-raw-commits');
+var gitSemverTags = require('git-semver-tags');
 var Q = require('q');
 var stream = require('stream');
 var through = require('through2');
@@ -16,7 +16,7 @@ var rhosts = /github|bitbucket/i;
 function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var presetPromise;
   var pkgPromise;
-  var latestSemverPromise;
+  var semverPromise;
 
   writerOpts = writerOpts || {};
 
@@ -36,13 +36,17 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
       }
     },
     append: false,
-    allBlocks: false,
+    versionRange: {
+      start: -1,
+      count: 1
+    },
     warn: function() {},
   }, options);
 
   options.pkg = options.pkg || {};
   var loadPreset = options.preset;
   var loadPkg = (!context.host || !context.repository || !context.version) && options.pkg.path;
+  var loadSemver = (!gitRawCommitsOpts.from || !gitRawCommitsOpts.to) && options.versionRange.start !== 0;
 
   if (loadPreset) {
     try {
@@ -57,16 +61,19 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
     pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
   }
 
-  if (!options.allBlocks && !gitRawCommitsOpts.from) {
-    latestSemverPromise = Q.nfcall(gitLatestSemverTag);
+  if (loadSemver) {
+    semverPromise = Q.nfcall(gitSemverTags);
   }
 
-  Q.allSettled([presetPromise, pkgPromise, latestSemverPromise])
+  Q.allSettled([presetPromise, pkgPromise, semverPromise])
     .spread(function(presetObj, pkgObj, tagObj) {
       var preset;
       var pkg;
-      var tag;
+      var tags;
       var repo;
+
+      var from;
+      var to;
 
       var hostOpts;
 
@@ -106,8 +113,43 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         }
       }
 
-      if (tagObj.state === 'fulfilled') {
-        tag = tagObj.value;
+      if (loadSemver && tagObj.state === 'fulfilled') {
+        tags = tagObj.value;
+        var start = options.versionRange.start;
+        var end;
+        var length = tags.length;
+        var count = options.versionRange.count;
+
+        tags.reverse();
+
+        if (start > 0) {
+          if (start > length + 1) {
+            start = length + 1;
+            options.warn('Start is too big. Genrating from the last version');
+          }
+        } else {
+          start = length + start + 2;
+          if (start < 1) {
+            start = 1;
+            options.warn('Start is too small. Genrating from the first commit');
+          }
+        }
+
+        from = tags[start - 2];
+
+        if (count < 0) {
+          count = 1;
+          options.warn('Count is too small. Genrating 1 version');
+        }
+
+        end = start + count;
+
+        if (end > length + 2) {
+          end = length + 2;
+          options.warn('Count is too big. Genrating to the last version');
+        }
+
+        to = tags[end - 2];
       }
 
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
@@ -139,7 +181,8 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
 
       gitRawCommitsOpts = _.assign({
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
-          from: tag
+          from: from,
+          to: to
         },
         gitRawCommitsOpts
       );

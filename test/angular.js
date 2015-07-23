@@ -82,12 +82,15 @@ describe('presets', function() {
         }));
     });
 
-    it('should generate all log blocks', function(done) {
+    it('should generate two versions', function(done) {
       var i = 0;
 
       conventionalChangelog({
         preset: 'angular',
-        allBlocks: true
+        versionRange: {
+          start: 1,
+          count: 2
+        }
       })
         .pipe(through(function(chunk, enc, cb) {
           chunk = chunk.toString();
@@ -109,7 +112,7 @@ describe('presets', function() {
         }));
     });
 
-    it('should work if there are two semver tags', function(done) {
+    it('should work if there are two semver tags on commits', function(done) {
       var i = 0;
 
       writeFileSync('test7', '');
@@ -118,7 +121,10 @@ describe('presets', function() {
 
       conventionalChangelog({
         preset: 'angular',
-        allBlocks: true
+        versionRange: {
+          start: 1,
+          count: 3
+        }
       })
         .pipe(through(function(chunk, enc, cb) {
           chunk = chunk.toString();

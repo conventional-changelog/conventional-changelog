@@ -16,18 +16,19 @@ var cli = meow({
     '  conventional-changelog -i CHANGELOG.md --overwrite',
     '',
     'Options',
-    '  -i, --infile              Read the CHANGELOG from this file',
-    '  -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout',
-    '  -w, --overwrite           Overwrite the infile',
-    '  -p, --preset              Name of the preset you want to use',
-    '  -k, --pkg                 A filepath of where your package.json is located',
-    '  -a, --append              Should the generated block be appended',
-    '  -b, --all-blocks          Generate all blocks',
-    '  -v, --verbose             Verbose output',
-    '  -c, --context             A filepath of a javascript that is used to define template variables',
-    '  --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options',
-    '  --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options',
-    '  --writer-opts             A filepath of a javascript that is used to define conventional-changelog-writer options'
+    '  -i, --infile                 Read the CHANGELOG from this file',
+    '  -o, --outfile                Write the CHANGELOG to this file. If unspecified, it prints to stdout',
+    '  -w, --overwrite              Overwrite the infile',
+    '  -p, --preset                 Name of the preset you want to use',
+    '  -k, --pkg                    A filepath of where your package.json is located',
+    '  -a, --append                 Should the generated block be appended',
+    '  -s, --version-range-start    index of semver tags at which to start',
+    '  -n, --verion-range-count     How many versions to generate',
+    '  -v, --verbose                Verbose output',
+    '  -c, --context                A filepath of a javascript that is used to define template variables',
+    '  --git-raw-commits-opts       A filepath of a javascript that is used to define git-raw-commits options',
+    '  --parser-opts                A filepath of a javascript that is used to define conventional-commits-parser options',
+    '  --writer-opts                A filepath of a javascript that is used to define conventional-changelog-writer options'
   ]
 }, {
   alias: {
@@ -37,7 +38,8 @@ var cli = meow({
     p: 'preset',
     k: 'pkg',
     a: 'append',
-    b: 'allBlocks',
+    s: 'versionRangeStart',
+    n: 'verionRangeCount',
     v: 'verbose',
     c: 'context'
   }
@@ -48,7 +50,6 @@ var infile = flags.infile;
 var outfile = flags.outfile;
 var overwrite = flags.overwrite;
 var append = flags.append;
-var allBlocks = flags.allBlocks;
 
 if (infile && infile === outfile) {
   overwrite = true;
@@ -67,7 +68,10 @@ var options = _.omit({
     path: flags.pkg
   },
   append: append,
-  allBlocks: allBlocks
+  versionRange: {
+    start: flags.versionRangeStart,
+    count: flags.versionRangeCount,
+  }
 }, _.isUndefined);
 
 if (flags.verbose) {
@@ -102,7 +106,7 @@ try {
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts);
 
-if (infile && !allBlocks) {
+if (infile && flags.versionRangeStart !== 0) {
   if (overwrite) {
     if (options.append) {
       changelogStream
