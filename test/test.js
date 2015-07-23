@@ -26,12 +26,57 @@ describe('conventionalChangelog', function() {
       }));
   });
 
-  it('should honour `gitRawCommitsOpts.from`', function(done) {
+  it('should generate the changelog for the upcoming release', function(done) {
+    shell.exec('git tag v0.1.0');
     writeFileSync('test2', '');
     shell.exec('git add --all && git commit -m"Second commit"');
     writeFileSync('test3', '');
     shell.exec('git add --all && git commit -m"Third commit closes #1"');
 
+    conventionalChangelog()
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('Second commit');
+        expect(chunk).to.include('Third commit');
+
+        expect(chunk).to.not.include('First commit');
+
+        done();
+      }));
+  });
+
+  it('should generate the changelog last two releases', function(done) {
+    conventionalChangelog({
+      releaseCount: 2
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('First commit');
+        expect(chunk).to.include('Second commit');
+        expect(chunk).to.include('Third commit');
+
+        done();
+      }));
+  });
+
+  it('should generate the changelog last two releases even if release count exceeds the limit', function(done) {
+    conventionalChangelog({
+      releaseCount: 100
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('First commit');
+        expect(chunk).to.include('Second commit');
+        expect(chunk).to.include('Third commit');
+
+        done();
+      }));
+  });
+
+  it('should honour `gitRawCommitsOpts.from`', function(done) {
     conventionalChangelog({}, {}, {
       from: 'HEAD~2'
     }, {}, {
@@ -60,7 +105,7 @@ describe('conventionalChangelog', function() {
         chunk = chunk.toString();
 
         expect(chunk).to.include('## 0.0.17');
-        expect(chunk).to.include('First commit');
+        expect(chunk).to.include('Second commit');
         expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)');
 
         done();
@@ -77,7 +122,7 @@ describe('conventionalChangelog', function() {
         chunk = chunk.toString();
 
         expect(chunk).to.include('## 0.0.17');
-        expect(chunk).to.include('First commit');
+        expect(chunk).to.include('Second commit');
 
         done();
       }));
@@ -98,7 +143,7 @@ describe('conventionalChangelog', function() {
         chunk = chunk.toString();
 
         expect(chunk).to.include('## v0.0.17');
-        expect(chunk).to.include('First commit');
+        expect(chunk).to.include('Second commit');
         expect(chunk).to.include('closes [#1](https://github.com/a/b/issues/1)');
 
         done();
@@ -112,7 +157,7 @@ describe('conventionalChangelog', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.match(/First commit\n.*?\n\* Second commit/);
+        expect(chunk).to.match(/Second commit\n.*?\n\* Third commit/);
 
         done();
       }));

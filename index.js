@@ -3,8 +3,8 @@ var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
 var fs = require('fs');
 var getPkgRepo = require('get-pkg-repo');
-var gitLatestSemverTag = require('git-latest-semver-tag');
 var gitRawCommits = require('git-raw-commits');
+var gitSemverTags = require('git-semver-tags');
 var Q = require('q');
 var stream = require('stream');
 var through = require('through2');
@@ -16,7 +16,7 @@ var rhosts = /github|bitbucket/i;
 function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var presetPromise;
   var pkgPromise;
-  var latestSemverPromise;
+  var semverTagsPromise;
 
   writerOpts = writerOpts || {};
 
@@ -36,13 +36,14 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
       }
     },
     append: false,
-    allBlocks: false,
+    releaseCount: 1,
     warn: function() {},
   }, options);
 
   options.pkg = options.pkg || {};
   var loadPreset = options.preset;
   var loadPkg = (!context.host || !context.repository || !context.version) && options.pkg.path;
+  var loadSemverTags = !gitRawCommitsOpts.from && options.releaseCount;
 
   if (loadPreset) {
     try {
@@ -57,12 +58,12 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
     pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
   }
 
-  if (!options.allBlocks && !gitRawCommitsOpts.from) {
-    latestSemverPromise = Q.nfcall(gitLatestSemverTag);
+  if (loadSemverTags) {
+    semverTagsPromise = Q.nfcall(gitSemverTags);
   }
 
-  Q.allSettled([presetPromise, pkgPromise, latestSemverPromise])
-    .spread(function(presetObj, pkgObj, tagObj) {
+  Q.allSettled([presetPromise, pkgPromise, semverTagsPromise])
+    .spread(function(presetObj, pkgObj, tagsObj) {
       var preset;
       var pkg;
       var tag;
@@ -106,8 +107,8 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         }
       }
 
-      if (tagObj.state === 'fulfilled') {
-        tag = tagObj.value;
+      if (loadSemverTags && tagsObj.state === 'fulfilled') {
+        tag = tagsObj.value[options.releaseCount - 1];
       }
 
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
