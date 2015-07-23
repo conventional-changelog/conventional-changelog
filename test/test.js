@@ -26,12 +26,31 @@ describe('conventionalChangelog', function() {
       }));
   });
 
-  it('should load package.json for data', function(done) {
+  it('should honour `gitRawCommitsOpts.from`', function(done) {
     writeFileSync('test2', '');
     shell.exec('git add --all && git commit -m"Second commit"');
     writeFileSync('test3', '');
     shell.exec('git add --all && git commit -m"Third commit closes #1"');
 
+    conventionalChangelog({}, {}, {
+      from: 'HEAD~2'
+    }, {}, {
+      commitsSort: null
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('Second commit');
+        expect(chunk).to.include('Third commit');
+        expect(chunk).to.match(/Third commit closes #1\n.*?\n\* Second commit/);
+
+        expect(chunk).to.not.include('First commit');
+
+        done();
+      }));
+  });
+
+  it('should load package.json for data', function(done) {
     conventionalChangelog({
       pkg: {
         path: __dirname + '/fixtures/_package.json'
@@ -162,177 +181,6 @@ describe('conventionalChangelog', function() {
     }));
   });
 
-  it('should honour `gitRawCommitsOpts.from` and `gitRawCommitsOpts.to`', function(done) {
-    shell.exec('git tag v1.0.0');
-    conventionalChangelog({}, {}, {
-      from: 'HEAD~2',
-      to: 'HEAD^'
-    }, {}, {
-      commitsSort: null
-    })
-      .pipe(through(function(chunk) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.include('Second commit');
-
-        expect(chunk).to.not.include('First commit');
-        expect(chunk).to.not.include('Third commit');
-
-        done();
-      }));
-  });
-
-  describe('versionRange', function() {
-    it('should start with the first and generate 1', function(done) {
-      writeFileSync('test4', '');
-      shell.exec('git add --all && git commit -m"Forth commit"');
-
-      conventionalChangelog({
-        versionRange: {
-          start: 1
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('First commit');
-          expect(chunk).to.include('Second commit');
-          expect(chunk).to.include('Third commit');
-
-          expect(chunk).to.not.include('Forth commit');
-
-          done();
-        }));
-    });
-
-    it('`start` should be the last version index if bigger than exists', function(done) {
-      conventionalChangelog({
-        versionRange: {
-          start: 10000
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('Forth commit');
-
-          expect(chunk).to.not.include('First commit');
-          expect(chunk).to.not.include('Second commit');
-          expect(chunk).to.not.include('Third commit');
-
-          done();
-        }));
-    });
-
-    it('`count` should be the number of all versions if bigger than exists', function(done) {
-      writeFileSync('test5', '');
-      shell.exec('git add --all && git commit -m"Fifth commit"');
-      shell.exec('git tag v3.0.0');
-      writeFileSync('test6', '');
-      shell.exec('git add --all && git commit -m"Sixth commit"');
-
-      conventionalChangelog({
-        versionRange: {
-          start: 1,
-          count: 10000
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('First commit');
-          expect(chunk).to.include('Second commit');
-          expect(chunk).to.include('Third commit');
-          expect(chunk).to.include('Forth commit');
-          expect(chunk).to.include('Fifth commit');
-          expect(chunk).to.include('Sixth commit');
-
-          done();
-        }));
-    });
-
-    it('should generate the second latest version', function(done) {
-      conventionalChangelog({
-        versionRange: {
-          start: -2
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('Forth commit');
-          expect(chunk).to.include('Fifth commit');
-
-          expect(chunk).to.not.include('First commit');
-          expect(chunk).to.not.include('Second commit');
-          expect(chunk).to.not.include('Third commit');
-          expect(chunk).to.not.include('Sixth commit');
-
-          done();
-        }));
-    });
-
-    it('should generate the first version if `start` is too small', function(done) {
-      conventionalChangelog({
-        versionRange: {
-          start: -100,
-          count: 1
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('First commit');
-          expect(chunk).to.include('Second commit');
-          expect(chunk).to.include('Third commit');
-
-          expect(chunk).to.not.include('Forth commit');
-
-          done();
-        }));
-    });
-
-    it('should generate the one version if `count` is smaller than 1', function(done) {
-      conventionalChangelog({
-        versionRange: {
-          start: 1,
-          count: -1
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('First commit');
-          expect(chunk).to.include('Second commit');
-          expect(chunk).to.include('Third commit');
-
-          expect(chunk).to.not.include('Forth commit');
-
-          done();
-        }));
-    });
-
-    it('should generate all if `start === 0`', function(done) {
-      conventionalChangelog({
-        versionRange: {
-          start: 0
-        }
-      })
-        .pipe(through(function(chunk) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.include('First commit');
-          expect(chunk).to.include('Second commit');
-          expect(chunk).to.include('Third commit');
-          expect(chunk).to.include('Forth commit');
-          expect(chunk).to.include('Fifth commit');
-          expect(chunk).to.include('Sixth commit');
-
-          done();
-        }));
-    });
-  });
-
   it('should warn if preset is not found', function(done) {
     conventionalChangelog({
       preset: 'no',
@@ -399,8 +247,6 @@ describe('conventionalChangelog', function() {
       transform: through.obj(function(chunk, enc, cb) {
         cb('error');
       })
-    }, {}, {
-      from: 'HEAD^'
     })
       .on('error', function(err) {
         expect(err).to.include('Error in conventional-commits-parser.');
