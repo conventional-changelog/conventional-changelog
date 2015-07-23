@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "meow": "^3.3.0",
-    "semver": "^4.3.6"
+    "semver": "^5.0.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
