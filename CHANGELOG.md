@@ -1,3 +1,13 @@
+<a name="0.2.1"></a>
+## 0.2.1 (2015-07-24)
+
+
+### Features
+
+* **transform:** put the default from presets to core ([946c1da](https://github.com/ajoslin/conventional-changelog/commit/946c1da))
+
+
+
 <a name="0.2.0"></a>
 # 0.2.0 (2015-07-24)
 
