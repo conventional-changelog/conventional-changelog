@@ -1,3 +1,22 @@
+<a name="0.2.0"></a>
+# 0.2.0 (2015-07-24)
+
+
+### Features
+
+* **releaseCount:** replace allBlocks ([fd1ce9d](https://github.com/ajoslin/conventional-changelog/commit/fd1ce9d))
+
+### Performance Improvements
+
+* **context:** use the parsed host type if possible ([305b3d5](https://github.com/ajoslin/conventional-changelog/commit/305b3d5))
+
+
+### BREAKING CHANGES
+
+* `allBlocks` is removed. Use `releaseCount` instead.
+
+
+
 <a name="0.1.3"></a>
 ## 0.1.3 (2015-07-22)
 
