@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-writer",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Write logs based on conventional commits and templates",
   "homepage": "https://github.com/stevemao/conventional-changelog-writer",
   "author": {
