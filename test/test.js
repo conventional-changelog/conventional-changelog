@@ -46,32 +46,50 @@ describe('conventionalChangelog', function() {
       }));
   });
 
-  it('should generate the changelog last two releases', function(done) {
+  it('should generate the changelog of the last two releases', function(done) {
+    var i = 0;
+
     conventionalChangelog({
       releaseCount: 2
     })
-      .pipe(through(function(chunk) {
+      .pipe(through(function(chunk, enc, cb) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include('First commit');
-        expect(chunk).to.include('Second commit');
-        expect(chunk).to.include('Third commit');
+        if (i === 0) {
+          expect(chunk).to.include('Second commit');
+          expect(chunk).to.include('Third commit');
+        } else if (i === 1) {
+          expect(chunk).to.include('First commit');
+        }
 
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(2);
         done();
       }));
   });
 
-  it('should generate the changelog last two releases even if release count exceeds the limit', function(done) {
+  it('should generate the changelog of the last two releases even if release count exceeds the limit', function(done) {
+    var i = 0;
+
     conventionalChangelog({
       releaseCount: 100
     })
-      .pipe(through(function(chunk) {
+      .pipe(through(function(chunk, enc, cb) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include('First commit');
-        expect(chunk).to.include('Second commit');
-        expect(chunk).to.include('Third commit');
+        if (i === 0) {
+          expect(chunk).to.include('Second commit');
+          expect(chunk).to.include('Third commit');
+        } else if (i === 1) {
+          expect(chunk).to.include('First commit');
+        }
 
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(2);
         done();
       }));
   });
@@ -226,6 +244,74 @@ describe('conventionalChangelog', function() {
     }));
   });
 
+  it('should transform the commit', function(done) {
+    conventionalChangelog({
+      transform: through.obj(function(chunk, enc, cb) {
+        chunk.header = 'A tiny header';
+        cb(null, chunk);
+      })
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('A tiny header');
+        expect(chunk).to.not.include('Third');
+
+        done();
+      }));
+  });
+
+  it('should generate all log blocks', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      releaseCount: 0
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        if (i === 0) {
+          expect(chunk).to.include('Second commit');
+          expect(chunk).to.include('Third commit closes #1');
+        } else {
+          expect(chunk).to.include('First commit');
+        }
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(2);
+        done();
+      }));
+  });
+
+  it('should work if there are two semver tags', function(done) {
+    writeFileSync('test7', '');
+    shell.exec('git add --all && git commit -m"some more features"');
+    shell.exec('git tag v2.0.0');
+
+    var i = 0;
+
+    conventionalChangelog({
+      releaseCount: 0
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        if (i === 1) {
+          expect(chunk).to.include('# 2.0.0');
+        } else if (i === 2) {
+          expect(chunk).to.include('# 0.1.0');
+        }
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(3);
+        done();
+      }));
+  });
+
   it('should warn if preset is not found', function(done) {
     conventionalChangelog({
       preset: 'no',
@@ -288,6 +374,9 @@ describe('conventionalChangelog', function() {
   });
 
   it('should error if it errors in `options.transform`', function(done) {
+    writeFileSync('test8', '');
+    shell.exec('git add --all && git commit -m"test8"');
+
     conventionalChangelog({
       transform: through.obj(function(chunk, enc, cb) {
         cb('error');
