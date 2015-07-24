@@ -79,7 +79,7 @@ describe('stream', function() {
   it('should generate all blocks', function(cb) {
     var stream = conventionalChangelog({
       preset: 'angular',
-      allBlocks: true
+      releaseCount: 0
     });
 
     var fakeStream = through();
@@ -150,7 +150,7 @@ describe('buffer', function() {
   it('should generate all blocks', function(cb) {
     var stream = conventionalChangelog({
       preset: 'angular',
-      allBlocks: true
+      releaseCount: 0
     });
 
     stream.on('data', function(file) {

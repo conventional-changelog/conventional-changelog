@@ -46,7 +46,7 @@ gulp.task('default', function () {
 });
 ```
 
-**Note:** If your `options.allBlocks` is `true` you can just use [conventional-changelog](https://github.com/ajoslin/conventional-changelog) directly or not to read the file at all.
+**Note:** If your `options.releaseCount` is `0` (regenerate all changelog from previous releases) you can just use [conventional-changelog](https://github.com/ajoslin/conventional-changelog) directly or not to read the file at all.
 
 ```js
 var gulp = require('gulp');
@@ -56,7 +56,7 @@ var fs = require('fs');
 gulp.task('default', function () {
   return conventionalChangelog({
     preset: 'angular',
-    allBlocks: true
+    releaseCount: 0
   })
     .pipe(fs.createWriteStream('CHANGELOG.md'));
 });
@@ -74,7 +74,7 @@ gulp.task('default', function () {
   })
     .pipe(conventionalChangelog({
       preset: 'angular',
-      allBlocks: true
+      releaseCount: 0
     }))
     .pipe(gulp.dest('./'));
 });

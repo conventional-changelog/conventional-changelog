@@ -18,7 +18,7 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
     var stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts);
 
     if (file.isStream()) {
-      if (opts.allBlocks) {
+      if (opts.releaseCount === 0) {
         file.contents = stream;
       } else if (opts.append) {
         file.contents = file.contents
@@ -34,7 +34,7 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
 
     stream
       .pipe(concat(function(data) {
-        if (opts.allBlocks) {
+        if (opts.releaseCount === 0) {
           file.contents = data;
         } else if (opts.append) {
           file.contents = Buffer.concat([file.contents, data]);
