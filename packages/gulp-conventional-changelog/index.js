@@ -1,13 +1,20 @@
 'use strict';
 var addStream = require('add-stream');
+var assign = require('object-assign');
 var concat = require('concat-stream');
 var conventionalChangelog = require('conventional-changelog');
 var gutil = require('gulp-util');
 var through = require('through2');
 
 module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOpts) {
-  opts = opts || {};
-  opts.warn = gutil.log;
+  opts = assign({
+    // TODO: remove this when gulp get's a real logger with levels
+    verbose: process.argv.indexOf('--verbose') !== -1
+  }, opts);
+
+  if (opts.verbose) {
+    opts.warn = gutil.log;
+  }
 
   return through.obj(function(file, enc, cb) {
     if (file.isNull()) {
