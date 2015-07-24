@@ -138,7 +138,7 @@ Type: `object`
 
 ##### transform
 
-Type: `object` or `function` Default: get the first 7 digits of hash, strip leading `'v'` for `version`, and `committerDate` will be formatted as `'yyyy-mm-dd'`.
+Type: `object` or `function` Default: get the first 7 digits of hash, and `committerDate` will be formatted as `'yyyy-mm-dd'`.
 
 Replace with new values in each commit.
 

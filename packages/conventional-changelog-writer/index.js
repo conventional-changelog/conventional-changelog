@@ -52,11 +52,6 @@ function conventionalChangelogWriter(context, options) {
       header: function(header) {
         return header.substring(0, 100);
       },
-      version: function(version) {
-        if (_.isString(version)) {
-          return version.replace(/^[v=]/i, '');
-        }
-      },
       committerDate: function(date) {
         if (!date) {
           return;

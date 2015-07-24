@@ -150,33 +150,6 @@ describe('conventionalChangelogWriter', function() {
         }));
     });
 
-    it('should strip the leading v', function(done) {
-      var i = 0;
-
-      var upstream = through.obj();
-      upstream.write({
-        header: 'bla',
-        body: null,
-        footer: null,
-        notes: [],
-        version: 'v1.0.0'
-      });
-      upstream.end();
-      upstream
-        .pipe(conventionalChangelogWriter())
-        .pipe(through(function(chunk, enc, cb) {
-          if (i === 1) {
-            expect(chunk.toString()).to.equal('<a name="1.0.0"></a>\n# 1.0.0 (' + today + ')\n\n\n* bla \n\n\n\n');
-          }
-
-          i++;
-          cb(null);
-        }, function() {
-          expect(i).to.equal(2);
-          done();
-        }));
-    });
-
     it('should merge with the provided transform object', function(done) {
       var i = 0;
 
