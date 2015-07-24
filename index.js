@@ -1,6 +1,7 @@
 'use strict';
 var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
+var dateFormat = require('dateformat');
 var fs = require('fs');
 var getPkgRepo = require('get-pkg-repo');
 var gitRawCommits = require('git-raw-commits');
@@ -12,6 +13,7 @@ var url = require('url');
 var _ = require('lodash');
 
 var rhosts = /github|bitbucket/i;
+var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
 function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var presetPromise;
@@ -38,6 +40,22 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
     append: false,
     releaseCount: 1,
     warn: function() {},
+    transform: through.obj(function(chunk, enc, cb) {
+      if (typeof chunk.gitTags === 'string') {
+        var match = rtag.exec(chunk.gitTags);
+        rtag.lastIndex = 0;
+
+        if (match) {
+          chunk.version = match[1];
+        }
+      }
+
+      if (chunk.committerDate) {
+        chunk.committerDate = dateFormat(chunk.committerDate, 'yyyy-mm-dd', true);
+      }
+
+      cb(null, chunk);
+    })
   }, options);
 
   options.pkg = options.pkg || {};
@@ -175,7 +193,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         })
         // it would be better to if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
-        .pipe(options.transform || preset.transform || through.obj())
+        .pipe(options.transform)
         .pipe(conventionalChangelogWriter(context, writerOpts))
         .pipe(through({
           objectMode: writerOpts.includeDetails

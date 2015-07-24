@@ -1,14 +1,10 @@
 'use strict';
 var compareFunc = require('compare-func');
-var dateFormat = require('dateformat');
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
 var semver = require('semver');
-var through = require('through2');
 var _ = require('lodash');
-
-var regex = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
 function presetOpts(cb) {
   var parserOpts = {
@@ -22,23 +18,6 @@ function presetOpts(cb) {
     revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
     revertCorrespondence: ['header', 'hash']
   };
-
-  var transform = through.obj(function(chunk, enc, cb) {
-    if (typeof chunk.gitTags === 'string') {
-      var match = regex.exec(chunk.gitTags);
-      regex.lastIndex = 0;
-
-      if (match) {
-        chunk.version = match[1];
-      }
-    }
-
-    if (chunk.committerDate) {
-      chunk.committerDate = dateFormat(chunk.committerDate, 'yyyy-mm-dd', true);
-    }
-
-    cb(null, chunk);
-  });
 
   var writerOpts = {
     transform: function(commit) {
@@ -96,7 +75,6 @@ function presetOpts(cb) {
 
       cb(null, {
         parserOpts: parserOpts,
-        transform: transform,
         writerOpts: writerOpts
       });
     });
