@@ -11,4 +11,5 @@ shell.mkdir('jquery');
 shell.mkdir('jshint');
 shell.mkdir('eslint');
 shell.mkdir('atom');
+shell.mkdir('express');
 shell.mkdir('cli');
