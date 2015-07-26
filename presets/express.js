@@ -6,41 +6,37 @@ var semver = require('semver');
 
 function presetOpts(cb) {
   var parserOpts = {
-    headerPattern: /^\[\[(.*)]] (.*)$/,
+    headerPattern: /^(\w*)\: (.*)$/,
     headerCorrespondence: [
-      'type',
+      'component',
       'shortDesc'
     ]
   };
 
   var writerOpts = {
     transform: function(commit) {
-      if (commit.type === 'FEAT') {
-        commit.type = 'Features';
-      } else if (commit.type === 'FIX') {
-        commit.type = 'Bug Fixes';
+      if (commit.component === 'perf') {
+        commit.component = 'Performance';
+      } else if (commit.component === 'deps') {
+        commit.component = 'Dependencies';
       } else {
         return;
       }
 
-      if (typeof commit.hash === 'string') {
-        commit.hash = commit.hash.substring(0, 7);
-      }
-
       return commit;
     },
-    groupBy: 'type',
+    groupBy: 'component',
     commitGroupsSort: 'title',
-    commitsSort: ['type', 'shortDesc'],
+    commitsSort: ['component', 'shortDesc'],
     generateOn: function(commit) {
       return semver.valid(commit.version);
     }
   };
 
   Q.all([
-    readFile(resolve(__dirname, '../templates/jshint/template.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, '../templates/jshint/header.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, '../templates/jshint/commit.hbs'), 'utf-8')
+    readFile(resolve(__dirname, '../templates/express/template.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, '../templates/express/header.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, '../templates/express/commit.hbs'), 'utf-8')
   ])
     .spread(function(template, header, commit) {
       writerOpts.mainTemplate = template;
