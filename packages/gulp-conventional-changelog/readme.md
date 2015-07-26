@@ -91,7 +91,7 @@ There are some changes:
 
 #### warn
 
-It is `gutil.log`.
+If the cli contains flag `--verbose` it is `gutil.log`.
 
 
 ## License
