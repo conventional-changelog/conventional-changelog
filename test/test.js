@@ -312,6 +312,28 @@ describe('conventionalChangelog', function() {
       }));
   });
 
+  it('semverTags should be attached to the `context` object', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      releaseCount: 0
+    }, {}, {}, {}, {
+      mainTemplate: '{{gitSemverTags}} or {{gitSemverTags.[0]}}'
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.equal('v2.0.0,v0.1.0 or v2.0.0');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(3);
+        done();
+      }));
+
+  });
+
   it('should warn if preset is not found', function(done) {
     conventionalChangelog({
       preset: 'no',

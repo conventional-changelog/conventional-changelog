@@ -101,7 +101,7 @@ A transform stream that applies after the parser and before the writer.
 
 #### context
 
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults:
+See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults or changes:
 
 ##### host
 
@@ -118,6 +118,12 @@ Default: extracted from normalized `package.json` `repository.url` field.
 ##### repository
 
 Default: extracted from normalized `package.json` `repository.url` field.
+
+##### gitSemverTags
+
+Type: `array`
+
+All git semver tags found in the repository. You can't overwrite this value.
 
 #### gitRawCommitsOpts
 

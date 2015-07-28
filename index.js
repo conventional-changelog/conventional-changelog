@@ -61,7 +61,6 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
   options.pkg = options.pkg || {};
   var loadPreset = options.preset;
   var loadPkg = (!context.host || !context.repository || !context.version) && options.pkg.path;
-  var loadSemverTags = !gitRawCommitsOpts.from && options.releaseCount;
 
   if (loadPreset) {
     try {
@@ -76,9 +75,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
     pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
   }
 
-  if (loadSemverTags) {
-    semverTagsPromise = Q.nfcall(gitSemverTags);
-  }
+  semverTagsPromise = Q.nfcall(gitSemverTags);
 
   Q.allSettled([presetPromise, pkgPromise, semverTagsPromise])
     .spread(function(presetObj, pkgObj, tagsObj) {
@@ -125,7 +122,8 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         }
       }
 
-      if (loadSemverTags && tagsObj.state === 'fulfilled') {
+      context.gitSemverTags = tagsObj.value;
+      if (tagsObj.state === 'fulfilled') {
         tag = tagsObj.value[options.releaseCount - 1];
       }
 
