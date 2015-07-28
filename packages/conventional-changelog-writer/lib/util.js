@@ -156,17 +156,17 @@ function generate(options, commits, context, keyCommit) {
     notes = notes.concat(commit.notes);
   });
 
-  var mergedContext = _.merge({}, context, keyCommit, getExtraContext(commits, notes, options));
+  context = _.merge({}, context, keyCommit, getExtraContext(commits, notes, options));
 
   if (keyCommit && keyCommit.committerDate) {
-    mergedContext.date = keyCommit.committerDate;
+    context.date = keyCommit.committerDate;
   }
 
-  if (mergedContext.version) {
-    mergedContext.isPatch = context.isPatch || semver.patch(mergedContext.version) !== 0;
+  if (context.version) {
+    context.isPatch = context.isPatch || semver.patch(context.version) !== 0;
   }
 
-  return compiled(mergedContext);
+  return compiled(context);
 }
 
 module.exports = {
