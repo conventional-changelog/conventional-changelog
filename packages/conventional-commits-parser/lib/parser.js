@@ -180,9 +180,10 @@ function parser(raw, options, regex) {
     // this is the body
     if (isBody) {
       body += line + '\n';
-    } else {
-      // revert this when https://github.com/jscs-dev/node-jscs/issues/1421 is solved
-      // this is the continued footer
+    }
+
+    // this is the continued footer
+    else {
       footer += line + '\n';
     }
   });
