@@ -1,6 +1,7 @@
 'use strict';
 var conventionalChangelog = require('../');
 var expect = require('chai').expect;
+var gitTails = require('git-tails');
 var shell = require('shelljs');
 var through = require('through2');
 var writeFileSync = require('fs').writeFileSync;
@@ -331,7 +332,73 @@ describe('conventionalChangelog', function() {
         expect(i).to.equal(3);
         done();
       }));
+  });
 
+  describe('finalizeContext', function() {
+    var tail;
+
+    before(function(done) {
+      shell.exec('git tag -d v0.1.0');
+      gitTails(function(err, data) {
+        tail = data[data.length - 1].substring(0, 7);
+        done();
+      });
+    });
+
+    it('should make `context.previousTag` default to a previous version of generated log (prepend)', function(done) {
+      var i = 0;
+
+      conventionalChangelog({
+        releaseCount: 0
+      }, {
+        version: '3.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('v2.0.0...v3.0.0');
+          } else if (i === 1) {
+            expect(chunk).to.equal(tail + '...v2.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('should make `context.previousTag` default to a previous version of generated log (append)', function(done) {
+      var i = 0;
+
+      conventionalChangelog({
+        releaseCount: 0,
+        append: true
+      }, {
+        version: '3.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal(tail + '...v2.0.0');
+          } else if (i === 1) {
+            expect(chunk).to.equal('v2.0.0...v3.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(2);
+          done();
+        }));
+    });
   });
 
   it('should warn if preset is not found', function(done) {
