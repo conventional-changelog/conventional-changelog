@@ -399,6 +399,73 @@ describe('conventionalChangelog', function() {
           done();
         }));
     });
+
+    it('should still work if first release has no commits (prepend)', function(done) {
+      shell.exec('git tag v0.0.1 ' + tail);
+      var i = 0;
+
+      conventionalChangelog({
+        releaseCount: 0
+      }, {
+        version: '3.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}',
+        transform: function() {
+          return null;
+        }
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('v2.0.0...v3.0.0');
+          } else if (i === 1) {
+            expect(chunk).to.equal('v0.0.1...v2.0.0');
+          } else if (i === 2) {
+            expect(chunk).to.equal('...v0.0.1');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(3);
+          done();
+        }));
+    });
+
+    it('should still work if first release has no commits (append)', function(done) {
+      shell.exec('git tag v0.0.1 ' + tail);
+      var i = 0;
+
+      conventionalChangelog({
+        releaseCount: 0,
+        append: true
+      }, {
+        version: '3.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}',
+        transform: function() {
+          return null;
+        }
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('...v0.0.1');
+          } else if (i === 1) {
+            expect(chunk).to.equal('v0.0.1...v2.0.0');
+          } else if (i === 2) {
+            expect(chunk).to.equal('v2.0.0...v3.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(3);
+          done();
+        }));
+    });
   });
 
   it('should warn if preset is not found', function(done) {
