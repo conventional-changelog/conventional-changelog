@@ -184,9 +184,9 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
 
               if (!previousTag) {
                 if (options.append) {
-                  context.previousTag = context.previousTag || commits[0].hash;
+                  context.previousTag = context.previousTag || commits[0] ? commits[0].hash : null;
                 } else {
-                  context.previousTag = context.previousTag || commits[commits.length - 1].hash;
+                  context.previousTag = context.previousTag || commits[commits.length - 1] ? commits[commits.length - 1].hash : null;
                 }
               }
             } else {
