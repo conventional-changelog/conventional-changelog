@@ -122,7 +122,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         }
       }
 
-      context.gitSemverTags = tagsObj.value;
+      var gitSemverTags = context.gitSemverTags = tagsObj.value;
       if (tagsObj.state === 'fulfilled') {
         tag = tagsObj.value[options.releaseCount - 1];
       }
@@ -174,8 +174,30 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         },
         parserOpts);
 
-      writerOpts = _.assign(
-        preset.writerOpts || {}, {
+      writerOpts = _.assign({
+          finalizeContext: function(context, writerOpts, commits, keyCommit) {
+            if ((!context.currentTag || !context.previousTag) && keyCommit) {
+              var match = /tag:\s*(.+?)[,\)]/gi.exec(keyCommit.gitTags);
+              var currentTag = context.currentTag = context.currentTag || match ? match[1] : null;
+              var index = gitSemverTags.indexOf(currentTag);
+              var previousTag = context.previousTag = gitSemverTags[index + 1];
+
+              if (!previousTag) {
+                if (options.append) {
+                  context.previousTag = context.previousTag || commits[0].hash;
+                } else {
+                  context.previousTag = context.previousTag || commits[commits.length - 1].hash;
+                }
+              }
+            } else {
+              context.previousTag = context.previousTag || gitSemverTags[0];
+              context.currentTag = context.currentTag || 'v' + context.version;
+            }
+
+            return context;
+          }
+        },
+        preset.writerOpts, {
           reverse: options.append
         },
         writerOpts

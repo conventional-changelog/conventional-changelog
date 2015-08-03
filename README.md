@@ -125,6 +125,14 @@ Type: `array`
 
 All git semver tags found in the repository. You can't overwrite this value.
 
+##### previousTag
+
+Type: `string` Default: previous tag or the first commit hash if no previous tag.
+
+##### currentTag
+
+Type: `string` Default: current tag or `'v'` + version if no current tag.
+
 #### gitRawCommitsOpts
 
 See the [git-raw-commits](https://github.com/stevemao/git-raw-commits) docs. There are some defaults:
