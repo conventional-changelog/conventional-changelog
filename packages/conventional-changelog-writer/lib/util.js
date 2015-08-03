@@ -166,6 +166,8 @@ function generate(options, commits, context, keyCommit) {
     context.isPatch = context.isPatch || semver.patch(context.version) !== 0;
   }
 
+  context = options.finalizeContext(context, options, commits, keyCommit);
+
   return compiled(context);
 }
 

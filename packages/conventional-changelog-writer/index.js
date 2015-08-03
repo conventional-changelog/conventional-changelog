@@ -33,6 +33,9 @@ function conventionalChangelogWriter(context, options) {
     generateOn: function(commit) {
       return semverValid(commit.version);
     },
+    finalizeContext: function(context) {
+      return context;
+    },
     reverse: false,
     includeDetails: false,
     ignoreReverted: true,

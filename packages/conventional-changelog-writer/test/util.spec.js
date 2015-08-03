@@ -545,7 +545,10 @@ describe('util', function() {
   describe('generate', function() {
     it('should merge with the key commit', function() {
       var log = util.generate({
-        mainTemplate: '{{whatever}}'
+        mainTemplate: '{{whatever}}',
+        finalizeContext: function(context) {
+          return context;
+        }
       }, [], {
         whatever: 'a'
       }, {
@@ -557,7 +560,10 @@ describe('util', function() {
 
     it('should not html escape any content', function() {
       var log = util.generate({
-        mainTemplate: '{{whatever}}'
+        mainTemplate: '{{whatever}}',
+        finalizeContext: function(context) {
+          return context;
+        }
       }, [], [], {
         whatever: '`a`'
       });
@@ -568,7 +574,10 @@ describe('util', function() {
     it('should ignore a reverted commit', function() {
       var log = util.generate({
         mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{this}}{{/each}}{{/each}}',
-        ignoreReverted: true
+        ignoreReverted: true,
+        finalizeContext: function(context) {
+          return context;
+        }
       }, [{
         header: 'revert: feat(): amazing new module\n',
         body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
@@ -630,6 +639,20 @@ describe('util', function() {
       expect(log).to.not.include('amazing new module');
       expect(log).to.not.include('revert');
       expect(log).to.not.include('breaking change');
+    });
+
+    it('should finalize context', function() {
+      var log = util.generate({
+        mainTemplate: '{{whatever}} {{somethingExtra}}',
+        finalizeContext: function(context) {
+          context.somethingExtra = 'oh';
+          return context;
+        }
+      }, [], [], {
+        whatever: '`a`'
+      });
+
+      expect(log).to.equal('`a` oh');
     });
   });
 });

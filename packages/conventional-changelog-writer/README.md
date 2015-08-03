@@ -194,6 +194,28 @@ When the upstream finishes pouring the commits it will generate a block of logs 
 
 If this value is a `string`, it checks the existence of the field. Set to other type to disable it.
 
+##### finalizeContext
+
+Type: `function` Default: pass through
+
+###### finalizeContext(context, options, commits, keyCommit)
+
+####### context
+
+The generated context based on original input `context` and `options`.
+
+####### options
+
+Normalized options.
+
+####### commits
+
+Filtered commits from your git metadata.
+
+####### keyCommit
+
+The commit that triggers to generate the log.
+
 ##### reverse
 
 Type: `boolean` Default: `false`
@@ -251,7 +273,7 @@ Variables in upstream are commit specific and should be used per commit. Eg: *co
 
 context should be module specific and can be used across the whole log. Thus these variables should not be related to any single commit and should be generic information of the module or all commits. Eg: *repository url* and *author names*, etc. You can think of them as "global" or "root" variables.
 
-Basically you can make your own templates and define all your template variables. This module can iterate the commits and compile them. For more details, please checkout [handlebars](http://handlebarsjs.com) and the source code of this module.
+Basically you can make your own templates and define all your template context. Extra context are based on commits from upstream and `options`. For more details, please checkout [handlebars](http://handlebarsjs.com) and the source code of this module.
 
 
 ## CLI
