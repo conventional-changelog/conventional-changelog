@@ -26,7 +26,10 @@ function gitRawCommits(options) {
 
   var isError = false;
 
-  var child = exec(cmd);
+  var child = exec(cmd, {
+    maxBuffer: Infinity
+  });
+
   child.stdout
     .pipe(split('------------------------ >8 ------------------------\n'))
     .pipe(through(function(chunk, enc, cb) {
