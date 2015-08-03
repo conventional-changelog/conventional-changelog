@@ -1,6 +1,6 @@
 {
   "name": "git-raw-commits",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Get raw git commits out of your repository using git-log(1)",
   "homepage": "https://github.com/stevemao/git-latest-tag",
   "author": {
