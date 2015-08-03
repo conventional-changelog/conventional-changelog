@@ -31,7 +31,7 @@
     "conventional-commits-parser": "0.0.19",
     "dateformat": "^1.0.11",
     "get-pkg-repo": "^0.1.0",
-    "git-raw-commits": "0.1.0",
+    "git-raw-commits": "^0.1.1",
     "git-semver-tags": "^1.0.0",
     "lodash": "^3.9.3",
     "meow": "^3.3.0",
@@ -45,7 +45,7 @@
     "concat-stream": "^1.4.10",
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.15",
-    "jscs": "^1.13.1",
+    "jscs": "^2.0.0",
     "jshint": "^2.8.0",
     "mocha": "*",
     "shelljs": "^0.5.1"
