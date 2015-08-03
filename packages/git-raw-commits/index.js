@@ -16,7 +16,7 @@ function gitRawCommits(options) {
   options.to = options.to || 'HEAD';
 
   var args = dargs(options, {
-    excludes: ['from', 'to', 'format', 'maxBuffer']
+    excludes: ['from', 'to', 'format']
   });
 
   var cmd = template(
@@ -26,10 +26,7 @@ function gitRawCommits(options) {
 
   var isError = false;
 
-  var child = exec(cmd, {
-    maxBuffer: options.maxBuffer || 2000 * 1024
-  });
-
+  var child = exec(cmd);
   child.stdout
     .pipe(split('------------------------ >8 ------------------------\n'))
     .pipe(through(function(chunk, enc, cb) {

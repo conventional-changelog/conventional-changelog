@@ -33,13 +33,7 @@ Returns a readable stream. Stream is split to break on each commit.
 
 Type: `object`
 
-##### maxBuffer
-
-Type: `number` Default: `2000 * 1024`
-
-Only increase this value if you cannot get all your commits. For more details please check the `maxBuffer` option at https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback.
-
-For other options please check http://git-scm.com/docs/git-log.
+Please check the available options at http://git-scm.com/docs/git-log.
 **NOTE:** Single dash arguments are not supported because of https://github.com/sindresorhus/dargs/blob/master/index.js#L5.
 
 *NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this patter:
