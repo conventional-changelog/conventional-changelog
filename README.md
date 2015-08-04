@@ -133,6 +133,12 @@ Type: `string` Default: previous tag or the first commit hash if no previous tag
 
 Type: `string` Default: current tag or `'v'` + version if no current tag.
 
+##### linkCompare
+
+Type: `boolean` Default: `true` if `previousTag` and `currentTag` are truthy.
+
+Should link to the page that compares current tag with previous tag?
+
 #### gitRawCommitsOpts
 
 See the [git-raw-commits](https://github.com/stevemao/git-raw-commits) docs. There are some defaults:
