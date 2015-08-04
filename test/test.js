@@ -434,7 +434,6 @@ describe('conventionalChangelog', function() {
     });
 
     it('should still work if first release has no commits (append)', function(done) {
-      shell.exec('git tag v0.0.1 ' + tail);
       var i = 0;
 
       conventionalChangelog({
@@ -466,6 +465,67 @@ describe('conventionalChangelog', function() {
           done();
         }));
     });
+
+    it('should not link compare if previousTag is not truthy', function(done) {
+      var i = 0;
+
+      conventionalChangelog({
+        releaseCount: 0,
+        append: true
+      }, {
+        version: '3.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{#if linkCompare}}{{previousTag}}...{{currentTag}}{{else}}Not linked{{/if}}',
+        transform: function() {
+          return null;
+        }
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('Not linked');
+          } else if (i === 1) {
+            expect(chunk).to.equal('v0.0.1...v2.0.0');
+          } else if (i === 2) {
+            expect(chunk).to.equal('v2.0.0...v3.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(3);
+          done();
+        }));
+    });
+  });
+
+  it('should not link compare', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      releaseCount: 0,
+      append: true
+    }, {
+      version: '3.0.0',
+      linkCompare: false
+    }, {}, {}, {
+      mainTemplate: '{{#if linkCompare}}{{previousTag}}...{{currentTag}}{{else}}Not linked{{/if}}',
+      transform: function() {
+        return null;
+      }
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.equal('Not linked');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(3);
+        done();
+      }));
   });
 
   it('should warn if preset is not found', function(done) {
