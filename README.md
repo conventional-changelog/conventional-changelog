@@ -71,7 +71,7 @@ The location of your "package.json".
 
 ###### transform
 
-Type: `function` Default: grab version from tag and format date.
+Type: `function` Default: grab the version (without leading 'v') from tag and format date.
 
 A function that takes `package.json` data as the argument and returns the modified data. Note this is performed before normalizing package.json data. Useful when you need to add a leading 'v' to your version or modify your repository url, etc.
 
