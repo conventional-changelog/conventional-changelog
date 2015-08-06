@@ -10,8 +10,8 @@
 - High performant. It doesn't spawn any extra child process to fetch data.
 - Intelligently setup defaults but you can still modify them to your needs.
 - Fully configurable. There are several presets that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
-- Task runner integrations: [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog).
-- Actively maintained.
+- Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
+- A lot of tests and actively maintained.
 
 
 ## Install
@@ -200,12 +200,6 @@ $ conventional-changelog --help
 ```
 
 
-## Related
-
-- [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
-- [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
-
-
 ## Notes for parent modules
 
 This module has options `append` and `releaseCount`. However, it doesn't read your previous changelog. Reasons being:
@@ -229,6 +223,18 @@ So, when you build a parent module, you need to read the old logs and append or 
 8. Push
 
 The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
+
+
+## Task runners
+
+- [grunt](https://github.com/btford/grunt-conventional-changelog)
+- [gulp](https://github.com/stevemao/gulp-conventional-changelog)
+
+
+## Related
+
+- [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
+- [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 
 
 ## License
