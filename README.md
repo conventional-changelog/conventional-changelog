@@ -55,7 +55,7 @@ Returns a readable stream.
 
 ##### preset
 
-Type: `string` Possible values: `'angular'`, `'jquery'`, `'jshint'`, `'eslint'`
+Type: `string` [Possible values](presets)
 
 A set of options of a popular project so you don't have to define everything in options, context, gitRawCommitsOpts, parserOpts or writerOpts manually. The preset values can be overwritten.
 
