@@ -20,8 +20,8 @@ function conventionalChangelogWriter(context, options) {
 
   var host = context.host;
 
-  if (host && context.repository && context.commit && context.issue) {
-    context.linkReferences = context.linkReferences || true;
+  if (typeof context.linkReferences !== 'boolean' && host && context.repository && context.commit && context.issue) {
+    context.linkReferences = true;
   }
 
   options = _.assign({

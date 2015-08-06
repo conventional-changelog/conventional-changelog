@@ -108,11 +108,33 @@ describe('conventionalChangelogWriter', function() {
         }));
     });
 
-    it ('should not link otherwise', function(done) {
+    it ('should not link if host, repository, commit and issue are not truthy', function(done) {
       var i = 0;
 
       getStream()
         .pipe(conventionalChangelogWriter())
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.not.include('https://github.com/a/b/commits/13f3160');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(1);
+          done();
+        }));
+    });
+
+    it ('should not link references', function(done) {
+      var i = 0;
+
+      getStream()
+        .pipe(conventionalChangelogWriter({
+          version: '0.5.0',
+          title: 'this is a title',
+          host: 'https://github.com',
+          repository: 'a/b',
+          linkReferences: false
+        }))
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.not.include('https://github.com/a/b/commits/13f3160');
 
