@@ -118,7 +118,7 @@ function processCommit(chunk, transform) {
   _.forEach(transform, function(el, path) {
     var value = _.get(commit, path);
 
-    if (typeof el === 'function') {
+    if (_.isFunction(el)) {
       value = el(value, path);
     } else {
       value = el;
