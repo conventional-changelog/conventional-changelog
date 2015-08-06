@@ -158,6 +158,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
           from: tag
         },
+        preset.gitRawCommitsOpts,
         gitRawCommitsOpts
       );
 
