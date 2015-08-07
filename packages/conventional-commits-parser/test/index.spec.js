@@ -42,16 +42,16 @@ describe('conventionalCommitsParser', function() {
       .pipe(conventionalCommitsParser())
       .pipe(through.obj(function(chunk, enc, cb) {
         if (i === 0) {
-          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator\n');
+          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator');
         } else if (i === 1) {
           expect(chunk.notes).to.eql([{
             title: 'BREAKING CHANGE',
-            text: 'some breaking change\n'
+            text: 'some breaking change'
           }]);
         } else if (i === 2) {
-          expect(chunk.header).to.equal('fix(zzz): Very cool commit\n');
+          expect(chunk.header).to.equal('fix(zzz): Very cool commit');
         } else if (i === 3) {
-          expect(chunk.header).to.equal('chore(scope with spaces): some chore\n');
+          expect(chunk.header).to.equal('chore(scope with spaces): some chore');
         } else if (i === 4) {
           expect(chunk.revert).to.eql({
             header: 'throw an error if a callback is passed to animate methods',
@@ -182,7 +182,7 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.subject).to.equal('Another custom separator');
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
-            text: 'some breaking changes\n'
+            text: 'some breaking changes'
           });
         }
 
@@ -240,11 +240,11 @@ describe('conventionalCommitsParser', function() {
           expect(chunk.subject).to.equal('fix');
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
-            text: 'some breaking changes\n'
+            text: 'some breaking changes'
           });
         } else if (i === 2) {
-          expect(chunk.header).to.equal('blabla\n');
-          expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd\n');
+          expect(chunk.header).to.equal('blabla');
+          expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd');
         } else if (i === 3) {
           expect(chunk.revert.header).to.equal('throw an error if a callback is passed to animate methods');
         }
@@ -265,7 +265,7 @@ describe('sync', function() {
       'Closes #123\nCloses #25\nFixes #33\n';
     var result = conventionalCommitsParser.sync(commit);
 
-    expect(result.header).to.equal('feat(ng-list): Allow custom separator\n');
-    expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33\n');
+    expect(result.header).to.equal('feat(ng-list): Allow custom separator');
+    expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33');
   });
 });

@@ -115,7 +115,7 @@ describe('parser', function() {
     });
 
     it('should parse header', function() {
-      expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction\n');
+      expect(msg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
     });
 
     it('should understand header parts', function() {
@@ -182,7 +182,7 @@ describe('parser', function() {
     it('should parse body', function() {
       expect(msg.body).to.equal(
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
-        'when destroying 10k nested scopes where each scope has a $destroy listener\n');
+        'when destroying 10k nested scopes where each scope has a $destroy listener');
     });
 
     it('should be null if not found', function() {
@@ -201,7 +201,7 @@ describe('parser', function() {
         'Kills #1, #123\n' +
         'killed #25\n' +
         'handle #33, Closes #100, Handled #3 kills repo#77\n' +
-        'kills stevemao/conventional-commits-parser#1\n'
+        'kills stevemao/conventional-commits-parser#1'
       );
     });
 
@@ -212,14 +212,14 @@ describe('parser', function() {
     it('should parse important notes', function() {
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\n'
+        text: 'some breaking change'
       });
     });
 
     it('should parse important notes with more than one paragraphs', function() {
       expect(longNoteMsg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\nsome other breaking change\n'
+        text: 'some breaking change\nsome other breaking change'
       });
     });
 
@@ -293,7 +293,7 @@ describe('parser', function() {
         regex
       );
 
-      expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother\n');
+      expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother');
     });
 
     it('should parse properly if important notes comes after references', function() {
@@ -308,7 +308,7 @@ describe('parser', function() {
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\n'
+        text: 'some breaking change'
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
@@ -323,7 +323,7 @@ describe('parser', function() {
         issue: '123',
         raw: ', #123'
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\n');
+      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change');
     });
 
     it('shoudl parse properly if important notes comes with more than one paragraphs after references', function() {
@@ -338,7 +338,7 @@ describe('parser', function() {
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\nsome other breaking change\n'
+        text: 'some breaking change\nsome other breaking change'
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
@@ -353,7 +353,7 @@ describe('parser', function() {
         issue: '123',
         raw: ', #123'
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change\n');
+      expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change');
     });
 
     it('shoudl parse properly if important notes comes after references with something after references', function() {
@@ -369,7 +369,7 @@ describe('parser', function() {
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
-        text: 'some breaking change\n'
+        text: 'some breaking change'
       });
       expect(msg.references).to.eql([{
         action: 'Kills',
@@ -384,7 +384,7 @@ describe('parser', function() {
         issue: '123',
         raw: ', #123'
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change\n');
+      expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change');
     });
   });
 
@@ -410,7 +410,7 @@ describe('parser', function() {
         regex
       );
 
-      expect(msg.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd\n');
+      expect(msg.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd');
     });
 
     it('should parse sideNotes', function() {
@@ -438,7 +438,7 @@ describe('parser', function() {
 
       expect(msg.sideNotes).to.equal('It should warn the correct unfound file names.\n' +
         'Also it should continue if one file cannot be found.\n' +
-        'Tests are added for these\n');
+        'Tests are added for these');
     });
 
     it('should parse committer name and email', function() {
@@ -464,8 +464,8 @@ describe('parser', function() {
         regex
       );
 
-      expect(msg.committerName).to.equal('Steve Mao\n');
-      expect(msg[' committerEmail']).to.equal('test@github.com\n');
+      expect(msg.committerName).to.equal('Steve Mao');
+      expect(msg[' committerEmail']).to.equal('test@github.com');
     });
   });
 

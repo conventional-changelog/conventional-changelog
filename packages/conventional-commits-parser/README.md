@@ -225,7 +225,7 @@ You will enter an interactive shell. To show your parsed output enter "return" t
 > fix(title): a title is fixed
 
 
-{"type":"fix","scope":"title","subject":"a title is fixed","header":"fix(title): a title is fixed\n","body":null,"footer":null,"notes":[],"references":[],"revert":null}
+{"type":"fix","scope":"title","subject":"a title is fixed","header":"fix(title): a title is fixed","body":null,"footer":null,"notes":[],"references":[],"revert":null}
 ```
 
 You can also use cli to parse messages from files.
@@ -255,7 +255,7 @@ An array of json will be printed to stdout.
 
 ```sh
 [
-{"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","header":"feat(ngMessages): provide support for dynamic message resolution\n","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.\n","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338\n","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\n"}],"references":[{"action":"Closes","owner":null,"repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","owner":null,"repository":null,"issue":"9338","raw":"#9338"}],"revert":null}
+{"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution","header":"feat(ngMessages): provide support for dynamic message resolution","body":"Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.","footer":"BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.\nCloses #10036\nCloses #9338","notes":[{"title":"BREAKING CHANGE","text":"The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive."}],"references":[{"action":"Closes","owner":null,"repository":null,"issue":"10036","raw":"#10036"},{"action":"Closes","owner":null,"repository":null,"issue":"9338","raw":"#9338"}],"revert":null}
 ]
 ```
 
@@ -281,9 +281,9 @@ $ conventional-commits-parser log2.txt '==='
 
 ```sh
 [
-{"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly\n","body":null,"footer":null,"notes":[],"references":[],"revert":null}
+{"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly","header":"docs(ngMessageExp): split ngMessage docs up to show its alias more clearly","body":null,"footer":null,"notes":[],"references":[],"revert":null}
 ,
-{"type":"fix","scope":"$animate","subject":"applyStyles from options on leave","header":"fix($animate): applyStyles from options on leave\n","body":null,"footer":"Closes #10068\n","notes":[],"references":[{"action":"Closes","owner":null,"repository":null,"issue":"10068","raw":"#10068"}],"revert":null}
+{"type":"fix","scope":"$animate","subject":"applyStyles from options on leave","header":"fix($animate): applyStyles from options on leave","body":null,"footer":"Closes #10068","notes":[],"references":[{"action":"Closes","owner":null,"repository":null,"issue":"10068","raw":"#10068"}],"revert":null}
 ]
 ```
 

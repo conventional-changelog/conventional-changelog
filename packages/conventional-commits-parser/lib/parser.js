@@ -1,6 +1,16 @@
 'use strict';
 var _ = require('lodash');
 
+function append(src, line) {
+  if (src) {
+    src += '\n' + line;
+  } else {
+    src = line;
+  }
+
+  return src;
+}
+
 function parser(raw, options, regex) {
   if (!raw || !raw.trim()) {
     throw new TypeError('Expected a raw commit');
@@ -99,11 +109,7 @@ function parser(raw, options, regex) {
       }
 
       if (currentProcessedField) {
-        if (otherFields[currentProcessedField]) {
-          otherFields[currentProcessedField] += line + '\n';
-        } else {
-          otherFields[currentProcessedField] = line + '\n';
-        }
+        otherFields[currentProcessedField] = append(otherFields[currentProcessedField], line);
 
         return;
       }
@@ -116,15 +122,13 @@ function parser(raw, options, regex) {
     if (notesMatch) {
       continueNote = true;
       isBody = false;
-      footer += line + '\n';
+      footer = append(footer, line);
 
       var note = {
         title: notesMatch[1],
         text: notesMatch[2]
       };
-      if (note.text.trim()) {
-        note.text += '\n';
-      }
+
       notes.push(note);
 
       return;
@@ -164,32 +168,30 @@ function parser(raw, options, regex) {
     }
 
     if (referenceMatched) {
-      footer += line + '\n';
+      footer = append(footer, line);
 
       return;
     }
 
     // this is the continued important note
     if (continueNote) {
-      notes[notes.length - 1].text += line + '\n';
-      footer += line + '\n';
+      notes[notes.length - 1].text = append(notes[notes.length - 1].text, line);
+      footer = append(footer, line);
 
       return;
     }
 
     // this is the body
     if (isBody) {
-      body += line + '\n';
+      body = append(body, line);
     }
 
     // this is the continued footer
     else {
-      footer += line + '\n';
+      footer = append(footer, line);
     }
   });
 
-  body = body;
-  footer = footer;
   if (!body) {
     body = null;
   }
@@ -211,7 +213,7 @@ function parser(raw, options, regex) {
   }
 
   var msg  = _.merge(headerParts, {
-    header: header + '\n',
+    header: header,
     body: body,
     footer: footer,
     notes: notes,
