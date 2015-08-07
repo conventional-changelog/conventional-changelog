@@ -100,7 +100,11 @@ try {
   process.exit(1);
 }
 
-var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts);
+var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts)
+  .on('error', function(err) {
+    console.error(err.toString());
+    process.exit(1);
+  });
 
 if (infile && releaseCount !== 0) {
   if (overwrite) {

@@ -247,10 +247,10 @@ describe('conventionalChangelog', function() {
 
   it('should transform the commit', function(done) {
     conventionalChangelog({
-      transform: through.obj(function(chunk, enc, cb) {
+      transform: function(chunk, cb) {
         chunk.header = 'A tiny header';
         cb(null, chunk);
-      })
+      }
     })
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
@@ -583,23 +583,52 @@ describe('conventionalChangelog', function() {
       unknowOptions: false
     })
       .on('error', function(err) {
-        expect(err).to.include('Error in git-raw-commits.');
+        expect(err.message).to.include('Error in git-raw-commits:');
 
         done();
       });
   });
 
-  it('should error if it errors in `options.transform`', function(done) {
+  it('should error if it emits an error in `options.transform`', function(done) {
     writeFileSync('test8', '');
     shell.exec('git add --all && git commit -m"test8"');
 
     conventionalChangelog({
-      transform: through.obj(function(chunk, enc, cb) {
+      transform: function(commit, cb) {
         cb('error');
-      })
+      }
     })
       .on('error', function(err) {
-        expect(err).to.include('Error in conventional-commits-parser.');
+        expect(err.message).to.include('Error in options.transform:');
+
+        done();
+      });
+  });
+
+  it('should error if there is an error in `options.transform`', function(done) {
+    writeFileSync('test8', '');
+    shell.exec('git add --all && git commit -m"test8"');
+
+    conventionalChangelog({
+      transform: function() {
+        undefined.a = 10;
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('Error in options.transform:');
+
+        done();
+      });
+  });
+
+  it('should error if it errors in conventional-changelog-writer', function(done) {
+    conventionalChangelog({}, {}, {}, {}, {
+      finalizeContext: function() {
+        return undefined.a;
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('Error in conventional-changelog-writer:');
 
         done();
       });
@@ -609,7 +638,8 @@ describe('conventionalChangelog', function() {
     conventionalChangelog({}, {}, {}, {}, {
       includeDetails: true
     })
-      .pipe(through.obj(function() {
+      .pipe(through.obj(function(chunk) {
+        expect(chunk).to.be.an('object');
         done();
       }));
   });

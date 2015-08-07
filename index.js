@@ -40,22 +40,22 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
     append: false,
     releaseCount: 1,
     warn: function() {},
-    transform: through.obj(function(chunk, enc, cb) {
-      if (typeof chunk.gitTags === 'string') {
-        var match = rtag.exec(chunk.gitTags);
+    transform: function(commit, cb) {
+      if (typeof commit.gitTags === 'string') {
+        var match = rtag.exec(commit.gitTags);
         rtag.lastIndex = 0;
 
         if (match) {
-          chunk.version = match[1];
+          commit.version = match[1];
         }
       }
 
-      if (chunk.committerDate) {
-        chunk.committerDate = dateFormat(chunk.committerDate, 'yyyy-mm-dd', true);
+      if (commit.committerDate) {
+        commit.committerDate = dateFormat(commit.committerDate, 'yyyy-mm-dd', true);
       }
 
-      cb(null, chunk);
-    })
+      cb(null, commit);
+    }
   }, options);
 
   options.pkg = options.pkg || {};
@@ -210,16 +210,32 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
 
       gitRawCommits(gitRawCommitsOpts)
         .on('error', function(err) {
-          readable.emit('error', 'Error in git-raw-commits. ' + err);
+          err.message = 'Error in git-raw-commits: ' + err.message;
+          readable.emit('error', err);
         })
         .pipe(conventionalCommitsParser(parserOpts))
         .on('error', function(err) {
-          readable.emit('error', 'Error in conventional-commits-parser. ' + err);
+          err.message = 'Error in conventional-commits-parser: ' + err.message;
+          readable.emit('error', err);
         })
         // it would be better to if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
-        .pipe(options.transform)
+        .pipe(through.obj(function(chunk, enc, cb) {
+          try {
+            options.transform.call(this, chunk, cb);
+          } catch (err) {
+            cb(err);
+          }
+        }))
+        .on('error', function(err) {
+          err.message = 'Error in options.transform: ' + err.message;
+          readable.emit('error', err);
+        })
         .pipe(conventionalChangelogWriter(context, writerOpts))
+        .on('error', function(err) {
+          err.message = 'Error in conventional-changelog-writer: ' + err.message;
+          readable.emit('error', err);
+        })
         .pipe(through({
           objectMode: writerOpts.includeDetails
         }, function(chunk, enc, cb) {
