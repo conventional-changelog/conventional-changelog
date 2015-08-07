@@ -3,12 +3,9 @@
 > Parse raw conventional commits
 
 
-Adapted from code originally written by @ajoslin in [conventional-changelog](https://github.com/ajoslin/conventional-changelog).
-
-
 ## Conventional Commit Message Format
 
-A minimum input should contain the raw message.
+A minimum input should contain a raw message.
 
 Each commit message consists of a a **header**, a **body** (optional) and a **footer** (optional).
 
@@ -35,7 +32,7 @@ The footer should contain any information about **Important Notes** (optional) a
 <references>
 ```
 
-This module will just parse the message itself. However, it is possible to include other fields such as hash, committer or date.
+This module will only parse the message body. However, it is possible to include other fields such as hash, committer or date.
 
 ```
 My commit message
