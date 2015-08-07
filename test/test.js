@@ -106,7 +106,7 @@ describe('conventionalChangelog', function() {
 
         expect(chunk).to.include('Second commit');
         expect(chunk).to.include('Third commit');
-        expect(chunk).to.match(/Third commit closes #1\n.*?\n\* Second commit/);
+        expect(chunk).to.match(/Third commit closes #1[\w\W]*?\* Second commit/);
 
         expect(chunk).to.not.include('First commit');
 
@@ -176,7 +176,7 @@ describe('conventionalChangelog', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.match(/Second commit\n.*?\n\* Third commit/);
+        expect(chunk).to.match(/Second commit[\w\W]*?\* Third commit/);
 
         done();
       }));
