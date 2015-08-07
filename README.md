@@ -95,9 +95,25 @@ A warn function. EG: `grunt.verbose.writeln`
 
 ##### transform
 
-Type: `object` Default: `through.obj()`
+Type: `function` Default: get the version from tag and format date.
 
-A transform stream that applies after the parser and before the writer.
+###### function(commit, cb)
+
+A transform function that applies after the parser and before the writer.
+
+This is the place to modify the parsed commits.
+
+####### commit
+
+The commit from conventional-commits-parser.
+
+####### cb
+
+Callback when you are done.
+
+####### this
+
+`this` arg of through2.
 
 #### context
 
