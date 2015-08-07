@@ -82,72 +82,80 @@ function conventionalChangelogWriter(context, options) {
   options.notesSort = util.functionify(options.notesSort);
 
   return through.obj(function(chunk, enc, cb) {
-    var result;
-    var commit = util.processCommit(chunk, options.transform);
-    var keyCommit = commit || chunk;
+    try {
+      var result;
+      var commit = util.processCommit(chunk, options.transform);
+      var keyCommit = commit || chunk;
 
-    // previous blocks of logs
-    if (options.reverse) {
-      if (commit) {
-        commits.push(commit);
-      }
-
-      if (generateOn(keyCommit)) {
-        result = util.generate(options, commits, context, keyCommit);
-        if (options.includeDetails) {
-          this.push({
-            log: result,
-            keyCommit: keyCommit
-          });
-        } else {
-          this.push(result);
+      // previous blocks of logs
+      if (options.reverse) {
+        if (commit) {
+          commits.push(commit);
         }
 
-        commits = [];
-      }
-    } else {
-      if (generateOn(keyCommit)) {
-        result = util.generate(options, commits, context, savedKeyCommit);
-        if (options.includeDetails) {
-          this.push({
-            log: result,
-            keyCommit: savedKeyCommit
-          });
-        } else {
-          this.push(result);
+        if (generateOn(keyCommit)) {
+          result = util.generate(options, commits, context, keyCommit);
+          if (options.includeDetails) {
+            this.push({
+              log: result,
+              keyCommit: keyCommit
+            });
+          } else {
+            this.push(result);
+          }
+
+          commits = [];
+        }
+      } else {
+        if (generateOn(keyCommit)) {
+          result = util.generate(options, commits, context, savedKeyCommit);
+          if (options.includeDetails) {
+            this.push({
+              log: result,
+              keyCommit: savedKeyCommit
+            });
+          } else {
+            this.push(result);
+          }
+
+          commits = [];
+          savedKeyCommit = keyCommit;
         }
 
-        commits = [];
-        savedKeyCommit = keyCommit;
+        if (commit) {
+          commits.push(commit);
+        }
       }
 
-      if (commit) {
-        commits.push(commit);
-      }
+      cb();
+    } catch (err) {
+      cb(err);
     }
-
-    cb();
   }, function(cb) {
-    var result;
-    var keyCommit;
+    try {
+      var result;
+      var keyCommit;
 
-    // latest (this) block of logs
-    if (!options.reverse) {
-      keyCommit = savedKeyCommit;
+      // latest (this) block of logs
+      if (!options.reverse) {
+        keyCommit = savedKeyCommit;
+      }
+
+      result = util.generate(options, commits, context, savedKeyCommit);
+
+      if (options.includeDetails) {
+        this.push({
+          log: result,
+          keyCommit: savedKeyCommit
+        });
+      } else {
+        this.push(result);
+      }
+
+      cb();
+    } catch (err) {
+      cb(err);
     }
-
-    result = util.generate(options, commits, context, savedKeyCommit);
-
-    if (options.includeDetails) {
-      this.push({
-        log: result,
-        keyCommit: savedKeyCommit
-      });
-    } else {
-      this.push(result);
-    }
-
-    cb();
   });
 }
 

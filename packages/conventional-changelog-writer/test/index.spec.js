@@ -551,4 +551,30 @@ describe('conventionalChangelogWriter', function() {
       });
     });
   });
+
+  it('should callback with error on transform', function(done) {
+    getStream()
+      .pipe(conventionalChangelogWriter({}, {
+        transform: function() {
+          return undefined.a;
+        }
+      }))
+      .on('error', function(err) {
+        expect(err).to.be.ok; // jshint ignore:line
+        done();
+      });
+  });
+
+  it('should callback with error on flush', function(done) {
+    getStream()
+      .pipe(conventionalChangelogWriter({}, {
+        finalizeContext: function() {
+          return undefined.a;
+        }
+      }))
+      .on('error', function(err) {
+        expect(err).to.be.ok; // jshint ignore:line
+        done();
+      });
+  });
 });
