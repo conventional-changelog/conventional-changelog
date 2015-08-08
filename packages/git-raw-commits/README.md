@@ -3,9 +3,6 @@
 > Get raw git commits out of your repository using git-log(1)
 
 
-Adapted from code originally written by @ajoslin in [conventional-changelog](https://github.com/ajoslin/conventional-changelog).
-
-
 ## Install
 
 ```sh
