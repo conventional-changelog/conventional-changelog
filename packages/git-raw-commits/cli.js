@@ -10,7 +10,7 @@ var cli = meow({
     '',
     'Example',
     '  git-raw-commits --from HEAD~2 --to HEAD^'
-  ].join('\n')
+  ]
 });
 
 gitRawCommits(cli.flags)
