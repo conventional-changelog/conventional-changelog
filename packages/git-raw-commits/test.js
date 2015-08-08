@@ -11,10 +11,11 @@ shell.mkdir('tmp');
 shell.cd('tmp');
 shell.exec('git init');
 
-it('should emit an error if there is no commits', function(done) {
+it('should emit an error and the error should not be read only if there is no commits', function(done) {
   gitRawCommits()
     .on('error', function(err) {
       expect(err).to.be.ok; // jshint ignore:line
+      err.message = 'error message';
       done();
     })
     .pipe(through(function() {

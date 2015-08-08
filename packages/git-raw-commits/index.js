@@ -51,7 +51,7 @@ function gitRawCommits(options) {
   child.stderr
     .pipe(through.obj(function(chunk) {
       isError = true;
-      readable.emit('error', chunk);
+      readable.emit('error', new Error(chunk));
       readable.emit('close');
     }));
 
