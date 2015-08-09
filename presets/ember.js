@@ -22,7 +22,7 @@ function presetOpts(cb) {
 
       var header = commit.body || commit.footer;
 
-      var match = header.match(bodyPattern);
+      var match = header ? header.match(bodyPattern) : null;
 
       if (!match) {
         return;
