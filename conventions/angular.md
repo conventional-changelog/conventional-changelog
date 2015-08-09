@@ -1,7 +1,6 @@
 ### Commit Message Format
 
-Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
-format that includes a **type**, a **scope** and a **subject**:
+A commit message consists of a **header**, **body** and **footer**.  The header has a **type**, **scope** and **subject**:
 
 ```
 <type>(<scope>): <subject>
@@ -16,24 +15,41 @@ The **header** is mandatory and the **scope** of the header is optional.
 Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
 to read on github as well as in various git tools.
 
+#### Examples
+
+Appears under the "Features" header, pencil subheader:
+
+```
+feat(pencil): add 'graphiteWidth' option
+```
+
+Appears under the "Fixes" header, graphite subheader, with a link to issue #28
+
+```
+fix(graphite): stop it from breaking when graphiteWidth < 0.1
+
+Closes #28
+```
+
+Appears under features with the subject, and under breaking changes with the breaking change explanation:
+
+```
+fix(pencil): remove graphiteWidth option
+
+BREAKING CHANGE: The graphiteWidth option has been removed. The default graphite width of 10mm is always used.
+```
+
 ### Revert
 
 If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
 
 ### Type
 
-Must be one of the following:
+If the prefix is `feat` or `fix`, it will always appear in the changelog.
 
-* **feat**: A new feature
-* **fix**: A bug fix
-* **docs**: Documentation only changes
-* **style**: Changes that do not affect the meaning of the code (white-space, formatting, missing
-  semi-colons, etc)
-* **refactor**: A code change that neither fixes a bug or adds a feature
-* **perf**: A code change that improves performance
-* **test**: Adding missing tests
-* **chore**: Changes to the build process or auxiliary tools and libraries such as documentation
-  generation
+Additionally, breaking changes will always appear in the changelog.
+
+Other prefixes are up to your discretion. Suggested prefixes are `chore`, `style`, `refactor`, and `test` for non-changelog related tasks.
 
 ### Scope
 
