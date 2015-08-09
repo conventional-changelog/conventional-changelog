@@ -1,3 +1,29 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/ajoslin/conventional-changelog/compare/v0.2.1...v0.3.0) (2015-08-09)
+
+
+### Bug Fixes
+
+* **ember:** when cannot find header in pr ([9d833fd](https://github.com/ajoslin/conventional-changelog/commit/9d833fd))
+* **err:** better error handling ([7f0e3f5](https://github.com/ajoslin/conventional-changelog/commit/7f0e3f5))
+* **preset:** gitRawCommitsOpts should be counted ([2bb4b47](https://github.com/ajoslin/conventional-changelog/commit/2bb4b47))
+* **previousTag:** incase there is no commits in the first release ([8d9f363](https://github.com/ajoslin/conventional-changelog/commit/8d9f363))
+
+### Features
+
+* **compareLink:** link version numbers to compare ([f0dbadb](https://github.com/ajoslin/conventional-changelog/commit/f0dbadb))
+* **context:** attach gitSemverTags ([ac098a3](https://github.com/ajoslin/conventional-changelog/commit/ac098a3)), closes [#79](https://github.com/ajoslin/conventional-changelog/issues/79)
+* **finalizeContext:** `context.previousVersion` defaults to a previous version of generated log ([a2df9ca](https://github.com/ajoslin/conventional-changelog/commit/a2df9ca))
+* **preset:** add ember ([0ccb8da](https://github.com/ajoslin/conventional-changelog/commit/0ccb8da))
+* **preset:** add express ([c4b20b1](https://github.com/ajoslin/conventional-changelog/commit/c4b20b1))
+* **preset:** add jscs ([1313d55](https://github.com/ajoslin/conventional-changelog/commit/1313d55))
+
+
+### BREAKING CHANGES
+
+* `options.transform` is a function instead of a stream. This is more elegant and easier to handle any error.
+
+
 <a name="0.2.1"></a>
 ## 0.2.1 (2015-07-24)
 
