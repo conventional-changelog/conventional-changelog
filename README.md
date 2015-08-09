@@ -9,7 +9,7 @@
 - Everything internally or externally is pluggable.
 - High performant. It doesn't spawn any extra child process to fetch data.
 - Intelligently setup defaults but you can still modify them to your needs.
-- Fully configurable. There are several presets that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
+- Fully configurable. There are [many presets](presets) that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
 - Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
 - A lot of tests and actively maintained.
 
