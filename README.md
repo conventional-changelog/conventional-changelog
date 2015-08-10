@@ -1,51 +1,46 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> Generate a changelog from git metadata
+> Generate a changelog from your git commit messages
 
+### Quick Start
 
-## Why
+```
+npm install -g conventional-changelog
 
-- Used by AngularJS and related projects.
-- Everything internally or externally is pluggable.
-- High performant. It doesn't spawn any extra child process to fetch data.
-- Intelligently setup defaults but you can still modify them to your needs.
-- Fully configurable. There are [many presets](presets) that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
-- Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
-- A lot of tests and actively maintained.
-
-
-## Install
-
-```sh
-$ npm install conventional-changelog
+cd my-project
+conventional-changelog
 ```
 
-*Note:* As 0.1.x this module is rewritten and so the API is not backward compatible. If you are still using 0.0.x please checkout the README in your downloaded package or dig through the old tags.
+The above generates a changelog based on commits since the last tag that match the pattern of a "feature", "fix", "performance enhancement" or "breaking change"
 
+For more details on the default conventions, read [conventions/default.md](https://github.com/ajoslin/conventional-changelog/tree/master/conventions/default.md).
 
-[Synopsis of Conventions](conventions)
+Other [conventions](conventions) are available as options, as well.
 
-
-## Example output
+### Example output
 
 - https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
 - https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
 
+### Install
 
-## Usage
+- CLI
+  `npm install -g conventional-changelog`
 
-```js
-var conventionalChangelog = require('conventional-changelog');
+- Node
+  ```js
+  var fs = require('fs')
+  require('conventional-changelog')({})
+    .pipe(fs.createWriteStream(__dirname + '/CHANGELOG.md')
+  ```
 
-conventionalChangelog({
-  preset: 'angular'
-})
-  .pipe(process.stdout);
-```
+- [grunt](https://github.com/btford/grunt-conventional-changelog)
+
+- [gulp](https://github.com/stevemao/gulp-conventional-changelog)
 
 
-## API
+### API
 
 ### conventionalChangelog([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
 
@@ -57,29 +52,25 @@ Returns a readable stream.
 
 Type: `string` [Possible values](presets)
 
-A set of options of a popular project so you don't have to define everything in options, context, gitRawCommitsOpts, parserOpts or writerOpts manually. The preset values can be overwritten.
+It's recommended to use a preset so you don't have to define everything yourself.
+
+Defaults to 'standard'.
 
 ##### pkg
 
 Type: `object`
 
+An object representing package.json.
+
 ###### path
 
 Type: `string` Default: `'package.json'`
-
-The location of your "package.json".
-
-###### transform
-
-Type: `function` Default: grab the version (without leading 'v') from tag and format date.
-
-A function that takes `package.json` data as the argument and returns the modified data. Note this is performed before normalizing package.json data. Useful when you need to add a leading 'v' to your version or modify your repository url, etc.
 
 ##### append
 
 Type: `boolean` Default: `false`
 
-Should the log be appended.
+Should the log be appended to existing data? Default: prepend.
 
 ##### releaseCount
 
@@ -242,9 +233,6 @@ The reason why you should commit and tag after `conventionalChangelog` is that t
 
 
 ## Task runners
-
-- [grunt](https://github.com/btford/grunt-conventional-changelog)
-- [gulp](https://github.com/stevemao/gulp-conventional-changelog)
 
 
 ## Related
