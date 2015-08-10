@@ -23,10 +23,10 @@ Appears under the "Features" header, pencil subheader:
 feat(pencil): add 'graphiteWidth' option
 ```
 
-Appears under the "Fixes" header, graphite subheader, with a link to issue #28
+Appears under the "Fixes" header, graphite subheader, with a link to issue #28:
 
 ```
-fix(graphite): stop it from breaking when graphiteWidth < 0.1
+perf(graphite): increase fps when writing from 40 to 60
 
 Closes #28
 ```
@@ -45,7 +45,7 @@ If the commit reverts a previous commit, it should begin with `revert: `, follow
 
 ### Type
 
-If the prefix is `feat` or `fix`, it will always appear in the changelog.
+If the prefix is `feat`, `fix` or `perf`, it will always appear in the changelog.
 
 Additionally, breaking changes will always appear in the changelog.
 
