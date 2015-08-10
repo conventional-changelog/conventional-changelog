@@ -26,12 +26,12 @@ feat(pencil): add 'graphiteWidth' option
 Appears under the "Fixes" header, graphite subheader, with a link to issue #28:
 
 ```
-perf(graphite): increase fps when writing from 40 to 60
+fix(graphite): stop grpahite breaking when width < 0.1
 
 Closes #28
 ```
 
-Appears under features with the subject, and under breaking changes with the breaking change explanation:
+Appears under "Features" with the subject, and under breaking changes with the breaking change explanation:
 
 ```
 fix(pencil): remove graphiteWidth option
