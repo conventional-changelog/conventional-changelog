@@ -13,7 +13,7 @@ A commit message consists of a **header**, **body** and **footer**.  The header 
 The **header** is mandatory and the **scope** of the header is optional.
 
 Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
-to read on github as well as in various git tools.
+to read on GitHub as well as in various git tools.
 
 #### Examples
 
@@ -66,7 +66,7 @@ The subject contains succinct description of the change:
 
 ### Body
 
-Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes"
+Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
 The body should include the motivation for the change and contrast this with previous behavior.
 
 ### Footer
