@@ -105,6 +105,7 @@ The value of what it should release as. If it cannot decide this is an empty str
 
 - [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
 - [conventional-changelog](https://github.com/ajoslin/conventional-changelog) - Generate a changelog from git metadata
+- [conventional-commits-detector](https://github.com/stevemao/conventional-commits-detector) - Detect what commit message convention your repository is using
 
 
 ## License
