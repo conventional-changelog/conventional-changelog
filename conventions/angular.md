@@ -1,3 +1,27 @@
+#### Examples
+
+Appears under the "Features" header, pencil subheader:
+
+```
+feat(pencil): add 'graphiteWidth' option
+```
+
+Appears under the "Bug Fixes" header, graphite subheader, with a link to issue #28:
+
+```
+fix(graphite): stop grpahite breaking when width < 0.1
+
+Closes #28
+```
+
+Appears under "Performance Improvements" header, and under breaking changes with the breaking change explanation:
+
+```
+perf(pencil): remove graphiteWidth option
+
+BREAKING CHANGE: The graphiteWidth option has been removed. The default graphite width of 10mm is always used for performance reason.
+```
+
 ### Commit Message Format
 
 A commit message consists of a **header**, **body** and **footer**.  The header has a **type**, **scope** and **subject**:
@@ -14,30 +38,6 @@ The **header** is mandatory and the **scope** of the header is optional.
 
 Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
 to read on GitHub as well as in various git tools.
-
-#### Examples
-
-Appears under the "Features" header, pencil subheader:
-
-```
-feat(pencil): add 'graphiteWidth' option
-```
-
-Appears under the "Fixes" header, graphite subheader, with a link to issue #28:
-
-```
-fix(graphite): stop grpahite breaking when width < 0.1
-
-Closes #28
-```
-
-Appears under "Features" with the subject, and under breaking changes with the breaking change explanation:
-
-```
-fix(pencil): remove graphiteWidth option
-
-BREAKING CHANGE: The graphiteWidth option has been removed. The default graphite width of 10mm is always used.
-```
 
 ### Revert
 
