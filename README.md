@@ -71,7 +71,7 @@ The location of your "package.json".
 
 ###### transform
 
-Type: `function` Default: grab the version (without leading 'v') from tag and format date.
+Type: `function` Default: pass through.
 
 A function that takes `package.json` data as the argument and returns the modified data. Note this is performed before normalizing package.json data. Useful when you need to add a leading 'v' to your version or modify your repository url, etc.
 
@@ -95,7 +95,7 @@ A warn function. EG: `grunt.verbose.writeln`
 
 ##### transform
 
-Type: `function` Default: get the version from tag and format date.
+Type: `function` Default: get the version (without leading 'v') from tag and format date.
 
 ###### function(commit, cb)
 
