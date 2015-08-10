@@ -79,6 +79,8 @@ var gitRawCommitsOpts;
 var parserOpts;
 var writerOpts;
 
+var outStream;
+
 try {
   if (flags.context) {
     templateContext = require(flags.context);
@@ -106,7 +108,23 @@ var changelogStream = conventionalChangelog(options, templateContext, gitRawComm
     process.exit(1);
   });
 
+function noInputFile() {
+  if (outfile) {
+    outStream = fs.createWriteStream(outfile);
+  } else {
+    outStream = process.stdout;
+  }
+
+  changelogStream
+    .pipe(outStream);
+}
+
 if (infile && releaseCount !== 0) {
+  var readStream = fs.createReadStream(infile)
+    .on('error', function() {
+      noInputFile();
+    });
+
   if (overwrite) {
     if (options.append) {
       changelogStream
@@ -117,16 +135,14 @@ if (infile && releaseCount !== 0) {
       var tmp = tempfile();
 
       changelogStream
-        .pipe(addStream(fs.createReadStream(infile)))
+        .pipe(addStream(readStream))
         .pipe(fs.createWriteStream(tmp))
         .on('finish', function() {
           fs.createReadStream(tmp)
-            .pipe(fs.createWriteStream(infile));
+            .pipe(fs.createWriteStream(outfile));
         });
     }
   } else {
-    var outStream;
-
     if (outfile) {
       outStream = fs.createWriteStream(outfile);
     } else {
@@ -136,23 +152,16 @@ if (infile && releaseCount !== 0) {
     var stream;
 
     if (options.append) {
-      stream = fs.createReadStream(infile)
+      stream = readStream
         .pipe(addStream(changelogStream));
     } else {
       stream = changelogStream
-        .pipe(addStream(fs.createReadStream(infile)));
+        .pipe(addStream(readStream));
     }
 
     stream
       .pipe(outStream);
   }
 } else {
-  if (outfile) {
-    outStream = fs.createWriteStream(outfile);
-  } else {
-    outStream = process.stdout;
-  }
-
-  changelogStream
-    .pipe(outStream);
+  noInputFile();
 }

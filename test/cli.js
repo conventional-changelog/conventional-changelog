@@ -185,6 +185,38 @@ describe('cli', function() {
     });
   });
 
+  it('should ignore `infile` if `infile` is ENOENT', function(done) {
+    var cp = spawn(cliPath, ['-i', 'no-such-file.md'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('First commit');
+        expect(chunk).to.not.include('previous');
+
+        done();
+      }));
+  });
+
+  it('should create `infile` if `infile` is ENOENT and overwrite infile', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-w'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync(__dirname + '/../tmp/no-such-file.md', 'utf8');
+      expect(modified).to.include('First commit');
+      expect(modified).to.not.include('previous');
+
+      originalChangelog();
+      done();
+    });
+  });
+
   it('should error if `-w` presents but `-i` is missing', function(done) {
     var cp = spawn(cliPath, ['-w'], {
       stdio: [process.stdin, null, null]
