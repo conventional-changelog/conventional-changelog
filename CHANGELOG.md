@@ -1,3 +1,13 @@
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/ajoslin/conventional-changelog/compare/v0.3.0...v0.3.1) (2015-08-11)
+
+
+### Bug Fixes
+
+* **cli:** gracefully handle it if infile is ENOENT ([12f2889](https://github.com/ajoslin/conventional-changelog/commit/12f2889))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/ajoslin/conventional-changelog/compare/v0.2.1...v0.3.0) (2015-08-09)
 
