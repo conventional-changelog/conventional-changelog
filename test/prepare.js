@@ -14,4 +14,5 @@ shell.mkdir('atom');
 shell.mkdir('express');
 shell.mkdir('jscs');
 shell.mkdir('ember');
+shell.mkdir('codemirror');
 shell.mkdir('cli');
