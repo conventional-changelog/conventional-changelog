@@ -2,6 +2,14 @@
 var isSubset = require('is-subset');
 var modifyValues = require('modify-values');
 
+function modifyValue(val) {
+  if (typeof val === 'string') {
+    return val.trim();
+  }
+
+  return val;
+}
+
 function conventionalCommitsFilter (commits) {
   if (!Array.isArray(commits)) {
     throw new TypeError('Expected an array');
@@ -20,24 +28,12 @@ function conventionalCommitsFilter (commits) {
   ret = ret.filter(function (commit) {
     var ignoreThis = false;
 
-    var raw = modifyValues(commit.raw, function (val) {
-      if (typeof val === 'string') {
-        return val.trim();
-      }
-
-      return val;
-    });
+    commit = commit.raw ? modifyValues(commit.raw, modifyValue) : modifyValues(commit, modifyValue);
 
     ignores.some(function (ignore) {
-      ignore = modifyValues(ignore, function (val) {
-        if (typeof val === 'string') {
-          return val.trim();
-        }
+      ignore = modifyValues(ignore, modifyValue);
 
-        return val;
-      });
-
-      ignoreThis = isSubset(raw, ignore);
+      ignoreThis = isSubset(commit, ignore);
       return ignoreThis;
     });
 
