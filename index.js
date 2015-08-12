@@ -104,6 +104,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
             pkg = JSON.parse(pkg);
             pkg = options.pkg.transform(pkg);
             context.version = context.version || pkg.version;
+            context.packageData = pkg;
 
             repo = getPkgRepo(pkg);
 

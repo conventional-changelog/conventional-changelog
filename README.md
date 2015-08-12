@@ -149,6 +149,12 @@ Type: `string` Default: previous tag or the first commit hash if no previous tag
 
 Type: `string` Default: current tag or `'v'` + version if no current tag.
 
+##### packageData
+
+Type: `object`
+
+Your `package.json` data. You can't overwrite this value.
+
 ##### linkCompare
 
 Type: `boolean` Default: `true` if `previousTag` and `currentTag` are truthy.
