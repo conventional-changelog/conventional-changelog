@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "concat-stream": "^1.4.10",
-    "conventional-commits-filter": "^0.1.0",
+    "conventional-commits-filter": "^0.1.1",
     "conventional-commits-parser": "^0.1.0",
     "git-latest-semver-tag": "^1.0.0",
     "git-raw-commits": "^0.1.2",
