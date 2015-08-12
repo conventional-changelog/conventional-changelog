@@ -18,17 +18,17 @@
   ],
   "dependencies": {
     "concat-stream": "^1.4.10",
-    "conventional-commits-filter": "0.0.1",
-    "conventional-commits-parser": "0.0.18",
-    "git-latest-semver-tag": "0.0.0",
-    "git-raw-commits": "0.0.8",
+    "conventional-commits-filter": "^0.1.0",
+    "conventional-commits-parser": "^0.1.0",
+    "git-latest-semver-tag": "^1.0.0",
+    "git-raw-commits": "^0.1.2",
     "meow": "^3.3.0",
     "object-assign": "^3.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
     "istanbul": "^0.3.8",
-    "jscs": "^1.11.3",
+    "jscs": "^2.0.0",
     "jshint": "^2.6.3",
     "mocha": "*",
     "shelljs": "^0.5.1"
