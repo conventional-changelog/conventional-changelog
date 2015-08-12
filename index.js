@@ -60,7 +60,6 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
 
   options.pkg = options.pkg || {};
   var loadPreset = options.preset;
-  var loadPkg = (!context.host || !context.repository || !context.version) && options.pkg.path;
 
   if (loadPreset) {
     try {
@@ -71,9 +70,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
     }
   }
 
-  if (loadPkg) {
-    pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
-  }
+  pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
 
   semverTagsPromise = Q.nfcall(gitSemverTags);
 
@@ -97,28 +94,28 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
         preset = {};
       }
 
-      if (loadPkg) {
-        if (pkgObj.state === 'fulfilled') {
-          pkg = pkgObj.value;
-          try {
-            pkg = JSON.parse(pkg);
-            pkg = options.pkg.transform(pkg);
-            context.version = context.version || pkg.version;
-            context.packageData = pkg;
+      if (pkgObj.state === 'fulfilled') {
+        pkg = pkgObj.value;
+        try {
+          pkg = JSON.parse(pkg);
+          pkg = options.pkg.transform(pkg);
+          context.version = context.version || pkg.version;
+          context.packageData = pkg;
 
-            repo = getPkgRepo(pkg);
+          repo = getPkgRepo(pkg);
 
-            if (repo.type) {
-              var browse = repo.browse();
-              var parsedBrowse = url.parse(browse);
-              context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
-              context.owner = context.owner || repo.user;
-              context.repository = context.repository || repo.project;
-            }
-          } catch (err) {
-            options.warn('package.json: "' + options.pkg.path + '" cannot be parsed');
+          if (repo.type) {
+            var browse = repo.browse();
+            var parsedBrowse = url.parse(browse);
+            context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
+            context.owner = context.owner || repo.user;
+            context.repository = context.repository || repo.project;
           }
-        } else {
+        } catch (err) {
+          options.warn('package.json: "' + options.pkg.path + '" cannot be parsed');
+        }
+      } else {
+        if (options.pkg && options.pkg.path) {
           options.warn('package.json: "' + options.pkg.path + '" does not exist');
         }
       }
