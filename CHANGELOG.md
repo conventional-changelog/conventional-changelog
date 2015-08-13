@@ -1,3 +1,18 @@
+<a name="0.3.2"></a>
+## [0.3.2](https://github.com/ajoslin/conventional-changelog/compare/v0.3.1...v0.3.2) (2015-08-13)
+
+
+### Bug Fixes
+
+* **pkg:** should always read package.json ([fcaac48](https://github.com/ajoslin/conventional-changelog/commit/fcaac48))
+* **preset:** should still work if preset is wrong ([bc8240e](https://github.com/ajoslin/conventional-changelog/commit/bc8240e))
+
+### Features
+
+* **context:** attach your packageData ([7138206](https://github.com/ajoslin/conventional-changelog/commit/7138206))
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/ajoslin/conventional-changelog/compare/v0.3.0...v0.3.1) (2015-08-11)
 
