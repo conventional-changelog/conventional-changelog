@@ -539,6 +539,25 @@ describe('conventionalChangelog', function() {
     });
   });
 
+  it('should still work if preset is not found', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      preset: 'no'
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('#');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
   it('should warn if host is not found', function(done) {
     conventionalChangelog({
       pkg: null,

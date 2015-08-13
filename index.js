@@ -66,6 +66,7 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
       var presetFn = require('./presets/' + options.preset);
       presetPromise = Q.nfcall(presetFn);
     } catch (err) {
+      loadPreset = false;
       options.warn('Preset: "' + options.preset + '" does not exist');
     }
   }
