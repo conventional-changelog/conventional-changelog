@@ -12,7 +12,7 @@ var through = require('through2');
 var url = require('url');
 var _ = require('lodash');
 
-var rhosts = /github|bitbucket/i;
+var rhosts = /github|bitbucket|gitlab/i;
 var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
 function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
