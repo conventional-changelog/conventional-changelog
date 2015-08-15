@@ -1,3 +1,13 @@
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/ajoslin/conventional-changelog/compare/v0.4.0...v0.4.1) (2015-08-15)
+
+
+### Features
+
+* **hosts:** add support for gitlab.com repositories ([bc1746b](https://github.com/ajoslin/conventional-changelog/commit/bc1746b)), closes [#86](https://github.com/ajoslin/conventional-changelog/issues/86) [#88](https://github.com/ajoslin/conventional-changelog/issues/88)
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/ajoslin/conventional-changelog/compare/v0.3.2...v0.4.0) (2015-08-15)
 
