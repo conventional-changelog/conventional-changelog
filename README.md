@@ -56,6 +56,10 @@ Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to
 
 ## Programmatic usage
 
+```sh
+$ npm install --save conventional-changelog
+```
+
 ```js
 var conventionalChangelog = require('conventional-changelog');
 
