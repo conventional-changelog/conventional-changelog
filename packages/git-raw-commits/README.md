@@ -56,18 +56,7 @@ Please check http://git-scm.com/docs/git-log for format options.
 
 ```sh
 $ npm install --global git-raw-commits
-```
-
-```sh
-$ git-raw-commits --help
-
-  Get raw git commits out of your repository using git-log(1)
-
-  Usage
-    git-raw-commits [<git-log(1)-options>]
-
-  Example
-    git-raw-commits --from HEAD~2 --to HEAD^
+$ git-raw-commits --help # for more details
 ```
 
 
