@@ -1,12 +1,12 @@
 #### Examples
 
-Appears under the "Features" header, pencil subheader:
+Appears under "Features" header, pencil subheader:
 
 ```
 feat(pencil): add 'graphiteWidth' option
 ```
 
-Appears under the "Bug Fixes" header, graphite subheader, with a link to issue #28:
+Appears under "Bug Fixes" header, graphite subheader, with a link to issue #28:
 
 ```
 fix(graphite): stop grpahite breaking when width < 0.1
@@ -14,7 +14,7 @@ fix(graphite): stop grpahite breaking when width < 0.1
 Closes #28
 ```
 
-Appears under "Performance Improvements" header, and under breaking changes with the breaking change explanation:
+Appears under "Performance Improvements" header, and under "Breaking Changes" with the breaking change explanation:
 
 ```
 perf(pencil): remove graphiteWidth option

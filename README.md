@@ -2,28 +2,38 @@
 
 > Generate a changelog from git metadata
 
-
-## Why
-
-- Used by AngularJS and related projects.
-- Everything internally or externally is pluggable.
-- High performant. It doesn't spawn any extra child process to fetch data.
-- Intelligently setup defaults but you can still modify them to your needs.
-- Fully configurable. There are [many presets](presets) that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
-- Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
-- A lot of tests and actively maintained.
+[Synopsis of Conventions](conventions)
 
 
-## Install
+## Quick start
 
 ```sh
-$ npm install conventional-changelog
+$ npm install -g conventional-changelog
+$ cd my-project
+$ conventional-changelog -p angular -i CHANGELOG -w
 ```
 
-*Note:* As 0.1.x this module is rewritten and so the API is not backward compatible. If you are still using 0.0.x please checkout the README in your downloaded package or dig through the old tags.
+The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+
+**Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"`.
+
+Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog)
 
 
-[Synopsis of Conventions](conventions)
+## Recommended workflow
+
+1. Make changes
+2. Commit those changes
+3. Make sure Travis turns green
+4. Bump version in `package.json`
+5. `conventionalChangelog`
+6. Commit `package.json` and `CHANGELOG.md` files
+7. Tag
+8. Push
+
+The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
+
+Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to make a release or change it to your needs.
 
 
 ## Example output
@@ -33,7 +43,18 @@ $ npm install conventional-changelog
 - https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
 
 
-## Usage
+## Why
+
+- Used by AngularJS and related projects.
+- Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
+- Intelligently setup defaults but you can still modify them to your needs.
+- Fully configurable. There are [many presets](presets) that you can use if you just want to use the same conventions. But it is also possible to configure if you want to go down to the nth degree.
+- Everything internally or externally is pluggable.
+- High performant. It doesn't spawn any extra child process to fetch data.
+- A lot of tests and actively maintained.
+
+
+## Programmatic usage
 
 ```js
 var conventionalChangelog = require('conventional-changelog');
@@ -41,7 +62,7 @@ var conventionalChangelog = require('conventional-changelog');
 conventionalChangelog({
   preset: 'angular'
 })
-  .pipe(process.stdout);
+  .pipe(process.stdout); // or any writable stream
 ```
 
 
@@ -57,7 +78,7 @@ Returns a readable stream.
 
 Type: `string` [Possible values](presets)
 
-A set of options of a popular project so you don't have to define everything in options, context, gitRawCommitsOpts, parserOpts or writerOpts manually. The preset values can be overwritten.
+It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten.
 
 ##### pkg
 
@@ -79,7 +100,7 @@ A function that takes `package.json` data as the argument and returns the modifi
 
 Type: `boolean` Default: `false`
 
-Should the log be appended.
+Should the log be appended to existing data.
 
 ##### releaseCount
 
@@ -192,33 +213,8 @@ Default: same as `options.append`.
 ### CLI
 
 ```sh
-$ npm install -g conventional-changelog
-```
-
-```sh
-$ conventional-changelog --help
-
-  Generate a changelog from git metadata
-
-  Usage
-    conventional-changelog
-
-  Example
-    conventional-changelog -i CHANGELOG.md --overwrite
-
-  Options
-    -i, --infile              Read the CHANGELOG from this file
-    -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout
-    -w, --overwrite           Overwrite the infile
-    -p, --preset              Name of the preset you want to use
-    -k, --pkg                 A filepath of where your package.json is located
-    -a, --append              Should the generated block be appended
-    -r, --release-count       How many releases to be generated from the latest
-    -v, --verbose             Verbose output
-    -c, --context             A filepath of a javascript that is used to define template variables
-    --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options
-    --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options
-    --writer-opts             A filepath of a javascript that is used to define conventional-changelog-writer options
+$ npm install --global conventional-changelog
+$ conventional-changelog --help # for more details
 ```
 
 
@@ -231,26 +227,6 @@ This module has options `append` and `releaseCount`. However, it doesn't read yo
 3. We want the duty of this module to be very minimum.
 
 So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs.
-
-
-## Recommended workflow when not regenerating the changelog
-
-1. Make changes
-2. Commit those changes
-3. Make sure Travis turns green
-4. Bump version in `package.json`
-5. `conventionalChangelog`
-6. Commit `package.json` and `CHANGELOG.md` files
-7. Tag
-8. Push
-
-The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
-
-
-## Task runners
-
-- [grunt](https://github.com/btford/grunt-conventional-changelog)
-- [gulp](https://github.com/stevemao/gulp-conventional-changelog)
 
 
 ## Related
