@@ -245,6 +245,20 @@ describe('conventionalChangelog', function() {
     }));
   });
 
+  it('should read gitlab\'s host configs', function(done) {
+    conventionalChangelog({}, {
+      host: 'gitlab',
+      repository: 'b/a'
+    }, {}, {}).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](gitlab/b/a/commit/');
+      expect(chunk).to.include('closes [#1](gitlab/b/a/issues/1)');
+
+      done();
+    }));
+  });
+
   it('should transform the commit', function(done) {
     conventionalChangelog({
       transform: function(chunk, cb) {
