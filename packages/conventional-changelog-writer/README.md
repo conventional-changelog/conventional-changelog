@@ -280,24 +280,7 @@ Basically you can make your own templates and define all your template context. 
 
 ```sh
 $ npm install --global conventional-changelog-writer
-```
-
-```sh
-$ conventional-changelog-writer --help
-
-  Write logs based on conventional commits and templates
-
-  Usage
-    conventional-changelog-writer <path> [<path> ...]
-    cat <path> | conventional-changelog-writer
-
-  Example
-    conventional-changelog-writer commits.ldjson
-    cat commits.ldjson | conventional-changelog-writer
-
-  Options
-    -c, --context    A filepath of a json that is used to define template variables
-    -o, --options    A filepath of a javascript object that is used to define options
+$ conventional-changelog-writer --help # for more details
 ```
 
 It works with [Line Delimited JSON](http://en.wikipedia.org/wiki/Line_Delimited_JSON).
