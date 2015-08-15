@@ -1,3 +1,13 @@
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/ajoslin/conventional-changelog/compare/v0.3.2...v0.4.0) (2015-08-15)
+
+
+### Features
+
+* **preset:** add codemirror ([bc480f8](https://github.com/ajoslin/conventional-changelog/commit/bc480f8))
+
+
+
 <a name="0.3.2"></a>
 ## [0.3.2](https://github.com/ajoslin/conventional-changelog/compare/v0.3.1...v0.3.2) (2015-08-13)
 
