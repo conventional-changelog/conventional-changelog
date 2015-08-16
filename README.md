@@ -10,10 +10,16 @@
 ```sh
 $ npm install -g conventional-changelog
 $ cd my-project
-$ conventional-changelog -p angular -i CHANGELOG -w
+$ conventional-changelog -p angular -i CHANGELOG.md -w
 ```
 
 The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+
+If you first time use this tool and want to generate all previous changelog, you could do
+
+```sh
+$ conventional-changelog -p angular -i CHANGELOG.md -w -r 0
+```
 
 **Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"`.
 
