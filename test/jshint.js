@@ -1,4 +1,5 @@
 'use strict';
+var child = require('child_process');
 var conventionalChangelog = require('../');
 var expect = require('chai').expect;
 var shell = require('shelljs');
@@ -7,7 +8,7 @@ var writeFileSync = require('fs').writeFileSync;
 
 describe('presets', function() {
   describe('jshint', function() {
-    before(function() {
+    before(function(done) {
       shell.cd('jshint');
       shell.exec('git init');
       writeFileSync('test1', '');
@@ -17,9 +18,12 @@ describe('presets', function() {
       writeFileSync('test3', '');
       shell.exec('git add --all && git commit -m"[[FIX]] catch params are scoped to the catch only"');
       writeFileSync('test4', '');
-      shell.exec('git add --all && git commit -m"[[FEAT]] Option to assume strict mode"');
-      writeFileSync('test5', '');
-      shell.exec('git add --all && git commit -m"Bad commit"');
+      child.exec('git add --all && git commit -m"[[FEAT]] Option to assume strict mode\n\nBREAKING CHANGE: Not backward compatible."', function() {
+        writeFileSync('test5', '');
+        shell.exec('git add --all && git commit -m"Bad commit"');
+
+        done();
+      });
     });
 
     after(function() {
@@ -37,6 +41,7 @@ describe('presets', function() {
           expect(chunk).to.include('### Bug Fixes');
           expect(chunk).to.include('Option to assume strict mode');
           expect(chunk).to.include('### Features');
+          expect(chunk).to.include('BREAKING CHANGES');
 
           expect(chunk).to.not.include('Chore');
           expect(chunk).to.not.include('Move scope-manager to external file');
