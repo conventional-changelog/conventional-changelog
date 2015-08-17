@@ -1,3 +1,13 @@
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/ajoslin/conventional-changelog/compare/v0.4.1...v0.4.2) (2015-08-17)
+
+
+### Bug Fixes
+
+* **preset:** jshint may contain BREAKING CHANGE footer ([2683cee](https://github.com/ajoslin/conventional-changelog/commit/2683cee))
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/ajoslin/conventional-changelog/compare/v0.4.0...v0.4.1) (2015-08-15)
 
