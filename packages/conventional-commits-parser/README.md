@@ -7,7 +7,7 @@
 
 A minimum input should contain a raw message.
 
-Each commit message consists of a a **header**, a **body** (optional) and a **footer** (optional).
+Each commit message consists of a a **header** (mandatory), a **body** and a **footer**.
 
 ```
 <header>
@@ -31,6 +31,8 @@ The footer should contain any information about **Important Notes** (optional) a
 <important note>
 <references>
 ```
+
+### other parts
 
 This module will only parse the message body. However, it is possible to include other fields such as hash, committer or date.
 
