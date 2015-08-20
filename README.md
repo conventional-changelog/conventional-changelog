@@ -23,6 +23,8 @@ $ conventional-changelog -p angular -i CHANGELOG.md -w -r 0
 
 This *will* overwrite any previous changelog if exist.
 
+All available command line parameters can be listed using [CLI](#cli) : `conventional-changelog --help`.
+
 **Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"`.
 
 Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog)
