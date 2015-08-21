@@ -29,6 +29,7 @@ All available command line parameters can be listed using [CLI](#cli) : `convent
 
 Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog)
 
+Note: all available command line parameters can be listed using [CLI](#cli) : `$ conventional-changelog --help # for more details`
 
 ## Recommended workflow
 
