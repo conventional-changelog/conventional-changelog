@@ -2,11 +2,12 @@
 var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
 var dateFormat = require('dateformat');
-var fs = require('fs');
 var getPkgRepo = require('get-pkg-repo');
 var gitRawCommits = require('git-raw-commits');
 var gitSemverTags = require('git-semver-tags');
 var Q = require('q');
+var readPkg = require('read-pkg');
+var readPkgUp = require('read-pkg-up');
 var stream = require('stream');
 var through = require('through2');
 var url = require('url');
@@ -32,7 +33,6 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
   options = _.merge({
     pkg: {
-      path: 'package.json',
       transform: function(pkg) {
         return pkg;
       }
@@ -58,7 +58,6 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     }
   }, options);
 
-  options.pkg = options.pkg || {};
   var loadPreset = options.preset;
 
   if (loadPreset) {
@@ -71,7 +70,13 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     }
   }
 
-  pkgPromise = Q.nfcall(fs.readFile, options.pkg.path, 'utf8');
+  if (options.pkg) {
+    if (options.pkg.path) {
+      pkgPromise = Q(readPkg(options.pkg.path)); // jshint ignore:line
+    } else {
+      pkgPromise = Q(readPkgUp()); // jshint ignore:line
+    }
+  }
 
   semverTagsPromise = Q.nfcall(gitSemverTags);
 
@@ -95,15 +100,23 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         preset = {};
       }
 
-      if (pkgObj.state === 'fulfilled') {
-        pkg = pkgObj.value;
-        try {
-          pkg = JSON.parse(pkg);
+      if (options.pkg) {
+        if (pkgObj.state === 'fulfilled') {
+          if (options.pkg.path) {
+            pkg = pkgObj.value;
+          } else {
+            pkg = pkgObj.value.pkg;
+          }
+
           pkg = options.pkg.transform(pkg);
           context.version = context.version || pkg.version;
           context.packageData = pkg;
 
-          repo = getPkgRepo(pkg);
+          try {
+            repo = getPkgRepo(pkg);
+          } catch (err) {
+            repo = {};
+          }
 
           if (repo.type) {
             var browse = repo.browse();
@@ -112,12 +125,8 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
             context.owner = context.owner || repo.user;
             context.repository = context.repository || repo.project;
           }
-        } catch (err) {
-          options.warn('package.json: "' + options.pkg.path + '" cannot be parsed');
-        }
-      } else {
-        if (options.pkg && options.pkg.path) {
-          options.warn('package.json: "' + options.pkg.path + '" does not exist');
+        } else if (options.pkg.path) {
+          options.warn(pkgObj.reason.toString());
         }
       }
 
@@ -129,13 +138,13 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
         var type;
 
-        if (repo && repo.type) {
-          type = repo.type;
-        } else {
+        if (context.host) {
           var match = context.host.match(rhosts);
           if (match) {
             type = match[0];
           }
+        } else if (repo && repo.type) {
+          type = repo.type;
         }
 
         if (type) {

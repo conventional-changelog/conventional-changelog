@@ -201,10 +201,20 @@ describe('conventionalChangelog', function() {
     }));
   });
 
+  it('should read the closest package.json by default', function(done) {
+    conventionalChangelog()
+      .pipe(through(function(chunk) {
+        expect(chunk.toString()).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)');
+
+        done();
+      }));
+  });
+
   it('should read host configs if only `parserOpts.referenceActions` is missing', function(done) {
     conventionalChangelog({}, {
       host: 'github',
-      repository: 'b/a',
+      owner: 'b',
+      repository: 'a',
       issue: 'issue',
       commit: 'commits'
     }, {}, {}).pipe(through(function(chunk) {
@@ -220,7 +230,8 @@ describe('conventionalChangelog', function() {
   it('should read github\'s host configs', function(done) {
     conventionalChangelog({}, {
       host: 'github',
-      repository: 'b/a'
+      owner: 'b',
+      repository: 'a'
     }, {}, {}).pipe(through(function(chunk) {
       chunk = chunk.toString();
 
@@ -234,7 +245,8 @@ describe('conventionalChangelog', function() {
   it('should read bitbucket\'s host configs', function(done) {
     conventionalChangelog({}, {
       host: 'bitbucket',
-      repository: 'b/a'
+      owner: 'b',
+      repository: 'a'
     }, {}, {}).pipe(through(function(chunk) {
       chunk = chunk.toString();
 
@@ -248,7 +260,8 @@ describe('conventionalChangelog', function() {
   it('should read gitlab\'s host configs', function(done) {
     conventionalChangelog({}, {
       host: 'gitlab',
-      repository: 'b/a'
+      owner: 'b',
+      repository: 'a'
     }, {}, {}).pipe(through(function(chunk) {
       chunk = chunk.toString();
 
@@ -598,7 +611,7 @@ describe('conventionalChangelog', function() {
         path: 'no'
       },
       warn: function(warning) {
-        expect(warning).to.equal('package.json: "no" does not exist');
+        expect(warning).to.include('Error');
 
         done();
       }
@@ -611,7 +624,7 @@ describe('conventionalChangelog', function() {
         path: __dirname + '/fixtures/_malformation.json'
       },
       warn: function(warning) {
-        expect(warning).to.equal('package.json: "' + __dirname + '/fixtures/_malformation.json" cannot be parsed');
+        expect(warning).to.include('Error');
 
         done();
       }
@@ -630,6 +643,22 @@ describe('conventionalChangelog', function() {
       expect(err).to.be.ok; // jshint ignore:line
       done();
     });
+  });
+
+  it('should error if there is an error in `options.pkg.transform`', function(done) {
+    conventionalChangelog({
+      pkg: {
+        path: __dirname + '/fixtures/_short.json',
+        transform: function() {
+          undefined.a = 10;
+        }
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('undefined');
+
+        done();
+      });
   });
 
   it('should error if it errors in git-raw-commits', function(done) {
