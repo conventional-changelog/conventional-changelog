@@ -6,6 +6,7 @@ var fs = require('fs');
 var meow = require('meow');
 var tempfile = require('tempfile');
 var _ = require('lodash');
+var join = require('path').join;
 
 var cli = meow({
   help: [
@@ -83,19 +84,19 @@ var outStream;
 
 try {
   if (flags.context) {
-    templateContext = require(flags.context);
+    templateContext = require(join(process.cwd(), flags.context));
   }
 
   if (flags.gitRawCommitsOpts) {
-    gitRawCommitsOpts = require(flags.gitRawCommitsOpts);
+    gitRawCommitsOpts = require(join(process.cwd(), flags.gitRawCommitsOpts));
   }
 
   if (flags.parserOpts) {
-    parserOpts = require(flags.parserOpts);
+    parserOpts = require(join(process.cwd(), flags.parserOpts));
   }
 
   if (flags.writerOpts) {
-    writerOpts = require(flags.writerOpts);
+    writerOpts = require(join(process.cwd(), flags.writerOpts));
   }
 } catch (err) {
   console.error('Failed to get file. ' + err);
