@@ -196,6 +196,8 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
 
             if (typeof options.linkCompare !== 'boolean' && context.previousTag && context.currentTag) {
               context.linkCompare = true;
+            } else {
+              context.linkCompare = options.linkCompare;
             }
 
             return context;
