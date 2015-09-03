@@ -246,6 +246,9 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
 
           cb();
         }));
+    })
+    .catch(function(err) {
+      setImmediate(readable.emit.bind(readable), 'error', err);
     });
 
   return readable;
