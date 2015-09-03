@@ -543,11 +543,18 @@ describe('conventionalChangelog', function() {
   });
 
   it('should warn if preset is not found', function(done) {
+    var i = 0;
+
     conventionalChangelog({
       preset: 'no',
       warn: function(warning) {
+        if (i > 0) {
+          return;
+        }
+
         expect(warning).to.equal('Preset: "no" does not exist');
 
+        i++;
         done();
       }
     });
@@ -608,6 +615,20 @@ describe('conventionalChangelog', function() {
 
         done();
       }
+    });
+  });
+
+  it('should error if anything throws', function(done) {
+    conventionalChangelog({
+      pkg: {
+        path: __dirname + '/fixtures/_malformation.json'
+      },
+      warn: function() {
+        undefined.a = 10;
+      }
+    }).on('error', function(err) {
+      expect(err).to.be.ok; // jshint ignore:line
+      done();
     });
   });
 
