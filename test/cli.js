@@ -268,6 +268,30 @@ describe('cli', function() {
     });
   });
 
+  it('--writer-opts should work with relative path', function(done) {
+    var cp = spawn(cliPath, ['--writer-opts', '../../test/fixtures/writer-opts.js'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        expect(chunk.toString()).to.equal('template');
+        done();
+      }));
+  });
+
+  it('--writer-opts should work with absolute path', function(done) {
+    var cp = spawn(cliPath, ['--writer-opts', __dirname + '/fixtures/writer-opts.js'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        expect(chunk.toString()).to.equal('template');
+        done();
+      }));
+  });
+
   it('should be verbose', function(done) {
     var cp = spawn(cliPath, ['-v', '-p', 'no'], {
       stdio: [process.stdin, null, null]
