@@ -33,6 +33,10 @@ function presetOpts(cb) {
         return;
       }
 
+      if (commit.scope === '*') {
+        commit.scope = '';
+      }
+
       if (typeof commit.hash === 'string') {
         commit.hash = commit.hash.substring(0, 7);
       }
