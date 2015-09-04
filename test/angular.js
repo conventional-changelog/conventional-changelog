@@ -22,6 +22,8 @@ describe('presets', function() {
         shell.exec('git add --all && git commit -m"perf(ngOptions): make it faster"');
         writeFileSync('test5', '');
         shell.exec('git add --all && git commit -m"revert(ngOptions): make it faster"');
+        writeFileSync('test6', '');
+        shell.exec('git add --all && git commit -m"fix(*): oops"');
 
         done();
       });
@@ -53,6 +55,7 @@ describe('presets', function() {
           expect(chunk).to.not.include('fix');
           expect(chunk).to.not.include('perf');
           expect(chunk).to.not.include('revert');
+          expect(chunk).to.not.include('***:**');
 
           done();
         }));
@@ -62,7 +65,7 @@ describe('presets', function() {
       var i = 0;
 
       shell.exec('git tag v1.0.0');
-      writeFileSync('test6', '');
+      writeFileSync('test7', '');
       shell.exec('git add --all && git commit -m"feat: some more features"');
 
       conventionalChangelog({
