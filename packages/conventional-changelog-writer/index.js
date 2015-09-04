@@ -29,6 +29,7 @@ function conventionalChangelogWriter(context, options) {
     commitGroupsSort: 'title',
     commitsSort: 'header',
     noteGroupsSort: 'title',
+    // fixme
     notesSort: compareFunc(),
     generateOn: function(commit) {
       return semverValid(commit.version);

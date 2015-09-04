@@ -221,13 +221,28 @@ describe('util', function() {
 
       expect(noteGroups).to.eql([{
         title: 'A title',
-        notes: ['this is A and its a bit longer', 'this is another A']
+        notes: [{
+          title: 'A title',
+          text: 'this is A and its a bit longer'
+        }, {
+          title: 'A title',
+          text: 'this is another A'
+        }]
       }, {
         title: 'B+',
-        notes: ['this is B', 'this is another B']
+        notes: [{
+          title: 'B+',
+          text: 'this is B'
+        }, {
+          title: 'B+',
+          text: 'this is another B'
+        }]
       }, {
         title: 'C',
-        notes: ['this is C']
+        notes: [{
+          title: 'C',
+          text: 'this is C'
+        }]
       }]);
     });
 
@@ -244,22 +259,37 @@ describe('util', function() {
 
       expect(noteGroups).to.eql([{
         title: 'C',
-        notes: ['this is C']
+        notes: [{
+          title: 'C',
+          text: 'this is C'
+        }]
       }, {
         title: 'B+',
-        notes: ['this is B', 'this is another B']
+        notes: [{
+          title: 'B+',
+          text: 'this is B'
+        }, {
+          title: 'B+',
+          text: 'this is another B'
+        }]
       }, {
         title: 'A title',
-        notes: ['this is A and its a bit longer', 'this is another A']
+        notes: [{
+          title: 'A title',
+          text: 'this is A and its a bit longer'
+        }, {
+          title: 'A title',
+          text: 'this is another A'
+        }]
       }]);
     });
 
     it('should group and sort notes', function() {
       var noteGroups = util.getNoteGroups(notes, false, function(a, b) {
-        if (a.length < b.length) {
+        if (a.text.length < b.text.length) {
           return 1;
         }
-        if (a.length > b.length) {
+        if (a.text.length > b.text.length) {
           return -1;
         }
         return 0;
@@ -267,13 +297,28 @@ describe('util', function() {
 
       expect(noteGroups).to.eql([{
         title: 'A title',
-        notes: ['this is A and its a bit longer', 'this is another A']
+        notes: [{
+          title: 'A title',
+          text: 'this is A and its a bit longer'
+        }, {
+          title: 'A title',
+          text: 'this is another A'
+        }]
       }, {
         title: 'B+',
-        notes: ['this is another B', 'this is B']
+        notes: [{
+          title: 'B+',
+          text: 'this is another B'
+        }, {
+          title: 'B+',
+          text: 'this is B'
+        }]
       }, {
         title: 'C',
-        notes: ['this is C']
+        notes: [{
+          title: 'C',
+          text: 'this is C'
+        }]
       }]);
     });
 
@@ -296,10 +341,22 @@ describe('util', function() {
 
       expect(noteGroups).to.eql([{
         title: '',
-        notes: ['this is A and its a bit longer', 'this is another A']
+        notes: [{
+          title: '',
+          text: 'this is A and its a bit longer'
+        }, {
+          title: '',
+          text: 'this is another A'
+        }]
       }, {
         title: 'B+',
-        notes: ['this is B', 'this is another B']
+        notes: [{
+          title: 'B+',
+          text: 'this is B'
+        }, {
+          title: 'B+',
+          text: 'this is another B'
+        }]
       }]);
     });
   });
@@ -458,16 +515,22 @@ describe('util', function() {
         }],
         noteGroups: [{
           title: 'A',
-          notes: [
-            'this is A and its a bit longer',
-            'this is another A'
-          ]
+          notes: [{
+            title: 'A',
+            text: 'this is A and its a bit longer'
+          }, {
+            title: 'A',
+            text: 'this is another A'
+          }]
         }, {
           title: 'B',
-          notes: [
-            'this is B',
-            'this is another B'
-          ]
+          notes: [{
+            title: 'B',
+            text: 'this is B'
+          }, {
+            title: 'B',
+            text: 'this is another B'
+          }]
         }]
       });
     });
@@ -494,16 +557,22 @@ describe('util', function() {
         }],
         noteGroups: [{
           title: 'A',
-          notes: [
-            'this is A and its a bit longer',
-            'this is another A'
-          ]
+          notes: [{
+            title: 'A',
+            text: 'this is A and its a bit longer'
+          }, {
+            title: 'A',
+            text: 'this is another A'
+          }]
         }, {
           title: 'B',
-          notes: [
-            'this is B',
-            'this is another B'
-          ]
+          notes: [{
+            title: 'B',
+            text: 'this is B'
+          }, {
+            title: 'B',
+            text: 'this is another B'
+          }]
         }]
       });
     });
@@ -527,16 +596,22 @@ describe('util', function() {
         }],
         noteGroups: [{
           title: 'A',
-          notes: [
-            'this is A and its a bit longer',
-            'this is another A'
-          ]
+          notes: [{
+            title: 'A',
+            text: 'this is A and its a bit longer'
+          }, {
+            title: 'A',
+            text: 'this is another A'
+          }]
         }, {
           title: 'B',
-          notes: [
-            'this is B',
-            'this is another B'
-          ]
+          notes: [{
+            title: 'B',
+            text: 'this is B'
+          }, {
+            title: 'B',
+            text: 'this is another B'
+          }]
         }]
       });
     });
@@ -558,6 +633,44 @@ describe('util', function() {
       expect(log).to.equal('b');
     });
 
+    it('should attach a copy of the commit to note', function() {
+      var log = util.generate({
+        mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
+        ignoreReverted: true,
+        finalizeContext: function(context) {
+          return context;
+        }
+      }, [{
+        header: 'feat(): new feature',
+        body: null,
+        footer: null,
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'WOW SO MANY CHANGES'
+        }],
+        references: [],
+        revert: null,
+        hash: '815a3f0717bf1dfce007bd076420c609504edcf3'
+      }, {
+        header: 'chore: first commit',
+        body: null,
+        footer: null,
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'Not backward compatible.'
+        }, {
+          title: 'IMPORTANT CHANGE',
+          text: 'This is very important!'
+        }],
+        references: [],
+        revert: null,
+        hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a'
+      }]);
+
+      expect(log).to.include('feat(): new feature');
+      expect(log).to.include('chore: first commit');
+    });
+
     it('should not html escape any content', function() {
       var log = util.generate({
         mainTemplate: '{{whatever}}',
@@ -573,7 +686,7 @@ describe('util', function() {
 
     it('should ignore a reverted commit', function() {
       var log = util.generate({
-        mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{this}}{{/each}}{{/each}}',
+        mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{text}}{{/each}}{{/each}}',
         ignoreReverted: true,
         finalizeContext: function(context) {
           return context;

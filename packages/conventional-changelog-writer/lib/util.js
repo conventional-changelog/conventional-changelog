@@ -75,7 +75,7 @@ function getNoteGroups(notes, noteGroupsSort, notesSort) {
     _.forEach(retGroups, function(group) {
       if (group.title === title) {
         titleExists = true;
-        group.notes.push(note.text);
+        group.notes.push(note);
         return false;
       }
     });
@@ -83,7 +83,7 @@ function getNoteGroups(notes, noteGroupsSort, notesSort) {
     if (!titleExists) {
       retGroups.push({
         title: title,
-        notes: [note.text]
+        notes: [note]
       });
     }
   });
@@ -153,6 +153,12 @@ function generate(options, commits, context, keyCommit) {
   }
 
   _.forEach(commits, function(commit) {
+    _.map(commit.notes, function(note) {
+      note.commit = commit;
+
+      return note;
+    });
+
     notes = notes.concat(commit.notes);
   });
 

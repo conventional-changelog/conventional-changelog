@@ -17,10 +17,22 @@ beforeEach(function() {
   templateContext = {
     noteGroups: [{
       title: 'my title',
-      notes: ['my note 1', 'my note 2']
+      notes: [{
+        title: 'my title',
+        text: 'my note 1'
+      }, {
+        title: 'my title',
+        text: 'my note 2'
+      }]
     }, {
       title: 'my other title',
-      notes: ['my note 3', 'my note 4']
+      notes: [{
+        title: 'my other title',
+        text: 'my note 3'
+      }, {
+        title: 'my other title',
+        text: 'my note 4'
+      }]
     }]
   };
 });
