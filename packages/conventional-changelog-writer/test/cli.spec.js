@@ -34,8 +34,32 @@ describe('cli', function() {
       }));
   });
 
+  it('should take absolute context path', function(done) {
+    var cp = spawn(cliPath, ['-c', __dirname + '/fixtures/context.json', commitsPath], {
+      stdio: [process.stdin, null, null]
+    });
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        var log = chunk.toString();
+        expect(log).to.contain('This is a title');
+        expect(log).to.contain('2015 March 14');
+        done();
+      }));
+  });
+
   it('should take options', function(done) {
     var cp = spawn(cliPath, ['-o', optionsPath, commitsPath], {
+      stdio: [process.stdin, null, null]
+    });
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        expect(chunk.toString()).to.equal('template');
+        done();
+      }));
+  });
+
+  it('should take absolute options path', function(done) {
+    var cp = spawn(cliPath, ['-o', __dirname + '/fixtures/options.js', commitsPath], {
       stdio: [process.stdin, null, null]
     });
     cp.stdout

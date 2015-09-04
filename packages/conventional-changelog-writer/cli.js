@@ -41,7 +41,7 @@ var templateContext;
 var contextPath = flags.context;
 if (contextPath) {
   try {
-    templateContext = require(path.join(process.cwd(), contextPath));
+    templateContext = require(path.resolve(process.cwd(), contextPath));
   } catch (err) {
     console.error('Failed to get context from file ' + contextPath + '\n' + err);
     process.exit(1);
@@ -52,7 +52,7 @@ var options;
 var optionsPath = flags.options;
 if (optionsPath) {
   try {
-    options = require(path.join(process.cwd(), optionsPath));
+    options = require(path.resolve(process.cwd(), optionsPath));
   } catch (err) {
     console.error('Failed to get options from file ' + optionsPath + '\n' + err);
     process.exit(1);
