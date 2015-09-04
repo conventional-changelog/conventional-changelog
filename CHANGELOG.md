@@ -1,3 +1,17 @@
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/ajoslin/conventional-changelog/compare/v0.4.2...v0.4.3) (2015-09-04)
+
+
+### Bug Fixes
+
+* **cli:** require at the correct directory ([feceb8b](https://github.com/ajoslin/conventional-changelog/commit/feceb8b))
+* **cli:** require file with absolute path ([7f68b3e](https://github.com/ajoslin/conventional-changelog/commit/7f68b3e)), closes [#96](https://github.com/ajoslin/conventional-changelog/issues/96)
+* **error:** emit error if there is any async ([831c960](https://github.com/ajoslin/conventional-changelog/commit/831c960))
+* **preset:** if scope is * for angular it should be ignored ([91094c9](https://github.com/ajoslin/conventional-changelog/commit/91094c9))
+* **templates:** add a missing newline after notes ([e1ae4b2](https://github.com/ajoslin/conventional-changelog/commit/e1ae4b2))
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/ajoslin/conventional-changelog/compare/v0.4.1...v0.4.2) (2015-08-17)
 
