@@ -15,7 +15,7 @@ var _ = require('lodash');
 var rhosts = /github|bitbucket|gitlab/i;
 var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
-function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var presetPromise;
   var pkgPromise;
   var semverTagsPromise;
@@ -254,4 +254,4 @@ function conventinalChangelog(options, context, gitRawCommitsOpts, parserOpts, w
   return readable;
 }
 
-module.exports = conventinalChangelog;
+module.exports = conventionalChangelog;
