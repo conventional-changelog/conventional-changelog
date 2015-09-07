@@ -9,7 +9,7 @@ feat(pencil): add 'graphiteWidth' option
 Appears under "Bug Fixes" header, graphite subheader, with a link to issue #28:
 
 ```
-fix(graphite): stop grpahite breaking when width < 0.1
+fix(graphite): stop graphite breaking when width < 0.1
 
 Closes #28
 ```
