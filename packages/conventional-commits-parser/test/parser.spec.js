@@ -95,18 +95,47 @@ describe('parser', function() {
   });
 
   it('should trim extra newlines', function() {
-    expect(msg).to.eql(parser(
+    expect(parser(
       '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
       '\n\n\nperf testing shows that in chrome this change adds 5-15% overhead\n' +
       '\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener\n\n' +
       '\n\n\n\nBREAKING AMEND: some breaking change\n' +
-      '\n\nKills #1, #123\n' +
-      '\n\n\nkilled #25\n\n\n\n\n' +
-      '\nhandle #33, Closes #100, Handled #3 kills repo#77\n' +
-      'kills stevemao/conventional-commits-parser#1',
+      '\n\n\n\nBREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```' +
+      '\n\nKills #1\n' +
+      '\n\n\nkilled #25\n\n\n\n\n',
       options,
       reg
-    ));
+    )).to.eql({
+      header: 'feat(scope): broadcast $destroy event on scope destruction',
+      body: 'perf testing shows that in chrome this change adds 5-15% overhead\n\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
+      footer: 'BREAKING AMEND: some breaking change\n\n\n\n\nBREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\nKills #1\n\n\n\nkilled #25',
+      notes: [{
+        title: 'BREAKING AMEND',
+        text: 'some breaking change'
+      }, {
+        title: 'BREAKING AMEND',
+        text: 'An awesome breaking change\n\n\n```\ncode here\n```'
+      }],
+      references: [{
+        action: 'Kills',
+        owner: null,
+        repository: null,
+        issue: '1',
+        raw: '#1',
+        prefix: '#'
+      }, {
+        action: 'killed',
+        owner: null,
+        repository: null,
+        issue: '25',
+        raw: '#25',
+        prefix: '#'
+      }],
+      revert: null,
+      scope: 'scope',
+      subject: 'broadcast $destroy event on scope destruction',
+      type: 'feat'
+    });
   });
 
   describe('header', function() {

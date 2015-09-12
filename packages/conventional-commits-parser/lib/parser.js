@@ -30,7 +30,7 @@ function parser(raw, options, regex) {
   var currentProcessedField;
   var revertMatch;
   var otherFields = {};
-  var lines = _.compact(raw.split('\n'));
+  var lines = raw.trim().split('\n');
   var continueNote = false;
   var isBody = true;
   var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
@@ -43,8 +43,6 @@ function parser(raw, options, regex) {
   var reNotes = regex.notes;
   var reReferenceParts = regex.referenceParts;
   var reReferences = regex.references;
-
-  raw = lines.join('\n');
 
   // msg parts
   var header = lines.shift();
@@ -194,13 +192,6 @@ function parser(raw, options, regex) {
     }
   });
 
-  if (!body) {
-    body = null;
-  }
-  if (!footer) {
-    footer = null;
-  }
-
   // does this commit revert any other commit?
   revertMatch = raw.match(options.revertPattern);
 
@@ -214,10 +205,16 @@ function parser(raw, options, regex) {
     revert = null;
   }
 
+  _.map(notes, function(note) {
+    note.text = note.text.trim();
+
+    return note;
+  });
+
   var msg  = _.merge(headerParts, {
     header: header,
-    body: body,
-    footer: footer,
+    body: body ? body.trim() : null,
+    footer: footer ? footer.trim() : null,
     notes: notes,
     references: references,
     revert: revert
