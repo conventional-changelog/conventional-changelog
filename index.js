@@ -105,7 +105,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
           repo = getPkgRepo(pkg);
 
-          if (repo.type) {
+          if (repo.type || context.host) {
             var browse = repo.browse();
             var parsedBrowse = url.parse(browse);
             context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
