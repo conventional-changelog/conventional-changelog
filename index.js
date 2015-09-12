@@ -136,7 +136,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           if (match) {
             type = match[0];
           } else {
-            if (pkg.repository.private) {
+            if (pkg && pkg.repository && pkg.repository.private) {
               type = pkg.repository.private;
             }
           }
