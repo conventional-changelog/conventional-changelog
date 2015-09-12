@@ -9,7 +9,7 @@ var writeFileSync = require('fs').writeFileSync;
 describe('conventionalChangelog', function() {
   before(function() {
     shell.cd('test');
-    shell.exec('git init');
+    shell.exec('git init --template=../git-templates');
     writeFileSync('test1', '');
     shell.exec('git add --all && git commit -m"First commit"');
   });

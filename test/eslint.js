@@ -9,7 +9,7 @@ describe('presets', function() {
   describe('eslint', function() {
     before(function() {
       shell.cd('eslint');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m\'Fix: the `no-class-assign` rule (fixes #2718)\'');
       writeFileSync('test2', '');

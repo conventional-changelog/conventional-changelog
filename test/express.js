@@ -10,7 +10,7 @@ describe('presets', function() {
   describe('express', function() {
     before(function(done) {
       shell.cd('express');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       child.exec('git add --all && git commit -m"deps: type-is@~1.6.3\n\n - deps: mime-types@~2.1.1\n - perf: reduce try block size\n - perf: remove bitwise operations"', function() {
         writeFileSync('test2', '');

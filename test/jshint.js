@@ -10,7 +10,7 @@ describe('presets', function() {
   describe('jshint', function() {
     before(function(done) {
       shell.cd('jshint');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m"[[Chore]] Move scope-manager to external file"');
       writeFileSync('test2', '');

@@ -9,7 +9,7 @@ describe('presets', function() {
   describe('jquery', function() {
     before(function() {
       shell.cd('jquery');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m"Core: Make jQuery objects iterable"');
       writeFileSync('test2', '');

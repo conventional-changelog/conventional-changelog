@@ -10,7 +10,7 @@ describe('presets', function() {
   describe('ember', function() {
     before(function(done) {
       shell.cd('ember');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       child.exec('git add --all && git commit -m"Merge pull request #12001 from rwjblue/remove-with-controller\n\n[CLEANUP beta] Remove {{with}} keyword\'s controller option. Closes #1"', function() {
         writeFileSync('test2', '');
