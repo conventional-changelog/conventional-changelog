@@ -105,12 +105,12 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
           repo = getPkgRepo(pkg);
 
-          if (repo.type) {
+          if (repo.type || repo.host) {
             var browse = repo.browse();
             var parsedBrowse = url.parse(browse);
-            context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
+            context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + (repo.domain ? repo.domain : repo.hostname);
             context.owner = context.owner || repo.user;
-            context.repository = context.repository || repo.project;
+            context.repository = context.repository || repo.project || parsedBrowse.path.substring(1);
           }
         } catch (err) {
           options.warn('package.json: "' + options.pkg.path + '" cannot be parsed');
@@ -135,6 +135,10 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           var match = context.host.match(rhosts);
           if (match) {
             type = match[0];
+          } else {
+            if (pkg.repository.private) {
+              type = pkg.repository.private;
+            }
           }
         }
 
