@@ -9,7 +9,7 @@ describe('presets', function() {
   describe('jscs', function() {
     before(function() {
       shell.cd('jscs');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m"disallowKeywordsOnNewLine: Allow comments before keywords"');
       writeFileSync('test2', '');

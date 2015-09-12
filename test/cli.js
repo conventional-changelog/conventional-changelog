@@ -16,7 +16,7 @@ function originalChangelog() {
 describe('cli', function() {
   before(function() {
     shell.cd('cli');
-    shell.exec('git init');
+    shell.exec('git init --template=../git-templates');
     writeFileSync('test1', '');
     shell.exec('git add --all && git commit -m"First commit"');
   });

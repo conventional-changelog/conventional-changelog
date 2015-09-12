@@ -10,7 +10,7 @@ describe('presets', function() {
   describe('angular', function() {
     before(function(done) {
       shell.cd('angular');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m"chore: first commit"');
       writeFileSync('test2', '');

@@ -9,7 +9,7 @@ describe('presets', function() {
   describe('codemirror', function() {
     before(function() {
       shell.cd('codemirror');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m"[tern addon] Use correct primary when selecting variables"');
       writeFileSync('test2', '');

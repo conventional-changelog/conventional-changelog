@@ -9,7 +9,7 @@ describe('presets', function() {
   describe('atom', function() {
     before(function() {
       shell.cd('atom');
-      shell.exec('git init');
+      shell.exec('git init --template=../git-templates');
       writeFileSync('test1', '');
       shell.exec('git add --all && git commit -m":arrow_down: exception-reporting"');
       writeFileSync('test2', '');
