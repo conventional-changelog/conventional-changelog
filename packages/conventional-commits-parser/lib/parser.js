@@ -90,8 +90,9 @@ function parser(raw, options, regex) {
         action: action,
         owner: owner,
         repository: repository,
-        issue: referenceMatch[2],
-        raw: referenceMatch[0]
+        issue: referenceMatch[3],
+        raw: referenceMatch[0],
+        prefix: referenceMatch[2]
       };
       references.push(reference);
     }
@@ -160,8 +161,9 @@ function parser(raw, options, regex) {
           action: action,
           owner: owner,
           repository: repository,
-          issue: referenceMatch[2],
-          raw: referenceMatch[0]
+          issue: referenceMatch[3],
+          raw: referenceMatch[0],
+          prefix: referenceMatch[2]
         };
         references.push(reference);
       }

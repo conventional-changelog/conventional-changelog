@@ -1,26 +1,36 @@
 'use strict';
 var expect = require('chai').expect;
 var parser = require('../lib/parser');
+var regex = require('../lib/regex');
 
 describe('parser', function() {
   var options;
-  var regex;
+  var reg;
   var msg;
   var simpleMsg;
   var longNoteMsg;
   var headerOnlyMsg;
 
   beforeEach(function() {
-    regex = {
-      notes: /(BREAKING AMEND)[:\s]*(.*)/,
-      referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
-      references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
+    options = {
+      revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+      revertCorrespondence: ['header', 'hash'],
+      fieldPattern: /^-(.*?)-$/,
+      headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+      headerCorrespondence: ['type', 'scope', 'subject'],
+      noteKeywords: ['BREAKING AMEND'],
+      issuePrefixes: ['#', 'gh-'],
+      referenceActions: [
+        'kill',
+        'kills',
+        'killed',
+        'handle',
+        'handles',
+        'handled'
+      ]
     };
 
-    options = {
-      headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-      headerCorrespondence: ['type', 'scope', 'subject']
-    };
+    reg = regex(options);
 
     msg = parser(
       'feat(scope): broadcast $destroy event on scope destruction\n' +
@@ -32,7 +42,7 @@ describe('parser', function() {
       'handle #33, Closes #100, Handled #3 kills repo#77\n' +
       'kills stevemao/conventional-commits-parser#1',
       options,
-      regex
+      reg
     );
 
     longNoteMsg = parser(
@@ -46,16 +56,16 @@ describe('parser', function() {
       'killed #25\n' +
       'handle #33, Closes #100, Handled #3',
       options,
-      regex
+      reg
     );
 
     simpleMsg = parser(
       'chore: some chore\n',
       options,
-      regex
+      reg
     );
 
-    headerOnlyMsg = parser('header', options, regex);
+    headerOnlyMsg = parser('header', options, reg);
   });
 
   it('should throw if nothing to parse', function() {
@@ -95,7 +105,7 @@ describe('parser', function() {
       '\nhandle #33, Closes #100, Handled #3 kills repo#77\n' +
       'kills stevemao/conventional-commits-parser#1',
       options,
-      regex
+      reg
     ));
   });
 
@@ -104,7 +114,7 @@ describe('parser', function() {
       var msg = parser('feat(ng:list): Allow custom separator', {
         headerPattern: /^(\w*)(?:\(([:\w\$\.\-\* ]*)\))?\: (.*)$/,
         headerCorrespondence: ['type', 'scope', 'subject']
-      }, regex);
+      }, reg);
       expect(msg.scope).to.equal('ng:list');
     });
 
@@ -128,7 +138,7 @@ describe('parser', function() {
       var msg = parser('scope(my subject): fix this', {
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
         headerCorrespondence: ['scope', 'subject', 'type']
-      }, regex);
+      }, reg);
 
       expect(msg.type).to.equal('fix this');
       expect(msg.scope).to.equal('scope');
@@ -139,41 +149,44 @@ describe('parser', function() {
       msg = parser('scope(my subject): fix this', {
         headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
         headerCorrespondence: ['scop', 'subject']
-      }, regex);
+      }, reg);
 
       expect(msg.scope).to.equal(undefined);
     });
 
     it('should reference an issue with an owner', function() {
-      var msg = parser('handled angular/angular.js#1', options, regex);
+      var msg = parser('handled angular/angular.js#1', options, reg);
       expect(msg.references).to.eql([{
         action: 'handled',
         owner: 'angular',
         repository: 'angular.js',
         issue: '1',
-        raw: 'angular/angular.js#1'
+        raw: 'angular/angular.js#1',
+        prefix: '#'
       }]);
     });
 
     it('should reference an issue with a repository', function() {
-      var msg = parser('handled angular.js#1', options, regex);
+      var msg = parser('handled angular.js#1', options, reg);
       expect(msg.references).to.eql([{
         action: 'handled',
         owner: null,
         repository: 'angular.js',
         issue: '1',
-        raw: 'angular.js#1'
+        raw: 'angular.js#1',
+        prefix: '#'
       }]);
     });
 
     it('should reference an issue without both', function() {
-      var msg = parser('handled #1', options, regex);
+      var msg = parser('handled gh-1', options, reg);
       expect(msg.references).to.eql([{
         action: 'handled',
         owner: null,
         repository: null,
         issue: '1',
-        raw: '#1'
+        raw: 'gh-1',
+        prefix: 'gh-'
       }]);
     });
   });
@@ -233,49 +246,57 @@ describe('parser', function() {
         owner: null,
         repository: null,
         issue: '1',
-        raw: '#1'
+        raw: '#1',
+        prefix: '#'
       }, {
         action: 'Kills',
         owner: null,
         repository: null,
         issue: '123',
-        raw: ', #123'
+        raw: ', #123',
+        prefix: '#'
       }, {
         action: 'killed',
         owner: null,
         repository: null,
         issue: '25',
-        raw: '#25'
+        raw: '#25',
+        prefix: '#'
       }, {
         action: 'handle',
         owner: null,
         repository: null,
         issue: '33',
-        raw: '#33'
+        raw: '#33',
+        prefix: '#'
       }, {
         action: 'handle',
         owner: null,
         repository: null,
         issue: '100',
-        raw: ', Closes #100'
+        raw: ', Closes #100',
+        prefix: '#'
       }, {
         action: 'Handled',
         owner: null,
         repository: null,
         issue: '3',
-        raw: '#3'
+        raw: '#3',
+        prefix: '#'
       }, {
         action: 'kills',
         owner: null,
         repository: 'repo',
         issue: '77',
-        raw: 'repo#77'
+        raw: 'repo#77',
+        prefix: '#'
       }, {
         action: 'kills',
         owner: 'stevemao',
         repository: 'conventional-commits-parser',
         issue: '1',
-        raw: 'stevemao/conventional-commits-parser#1'
+        raw: 'stevemao/conventional-commits-parser#1',
+        prefix: '#'
       }]);
     });
 
@@ -290,7 +311,7 @@ describe('parser', function() {
         'handle #33, Closes #100, Handled #3\n' +
         'other',
         options,
-        regex
+        reg
       );
 
       expect(msg.footer).to.equal('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother');
@@ -304,7 +325,7 @@ describe('parser', function() {
         'Kills #1, #123\n' +
         'BREAKING AMEND: some breaking change\n',
         options,
-        regex
+        reg
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
@@ -315,13 +336,15 @@ describe('parser', function() {
         owner: null,
         repository: null,
         issue: '1',
-        raw: '#1'
+        raw: '#1',
+        prefix: '#'
       }, {
         action: 'Kills',
         owner: null,
         repository: null,
         issue: '123',
-        raw: ', #123'
+        raw: ', #123',
+        prefix: '#'
       }]);
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change');
     });
@@ -334,7 +357,7 @@ describe('parser', function() {
         'Kills #1, #123\n' +
         'BREAKING AMEND: some breaking change\nsome other breaking change',
         options,
-        regex
+        reg
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
@@ -345,13 +368,15 @@ describe('parser', function() {
         owner: null,
         repository: null,
         issue: '1',
-        raw: '#1'
+        raw: '#1',
+        prefix: '#'
       }, {
         action: 'Kills',
         owner: null,
         repository: null,
         issue: '123',
-        raw: ', #123'
+        raw: ', #123',
+        prefix: '#'
       }]);
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change');
     });
@@ -361,11 +386,11 @@ describe('parser', function() {
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
-        'Kills #1, #123\n' +
+        'Kills gh-1, #123\n' +
         'other\n' +
         'BREAKING AMEND: some breaking change\n',
         options,
-        regex
+        reg
       );
       expect(msg.notes[0]).to.eql({
         title: 'BREAKING AMEND',
@@ -376,56 +401,34 @@ describe('parser', function() {
         owner: null,
         repository: null,
         issue: '1',
-        raw: '#1',
+        raw: 'gh-1',
+        prefix: 'gh-'
       }, {
         action: 'Kills',
         owner: null,
         repository: null,
         issue: '123',
-        raw: ', #123'
+        raw: ', #123',
+        prefix: '#'
       }]);
-      expect(msg.footer).to.equal('Kills #1, #123\nother\nBREAKING AMEND: some breaking change');
+      expect(msg.footer).to.equal('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change');
     });
   });
 
   describe('others', function() {
     it('should parse hash', function() {
-      regex = {
-        notes: /(BREAKING AMEND)[:\s]*(.*)/,
-        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
-        references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
-      };
-
-      options = {
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-        headerCorrespondence: ['type', 'scope', 'subject'],
-        fieldPattern: /^-(.*?)-$/
-      };
-
       msg = parser(
         'My commit message\n' +
         '-hash-\n' +
         '9b1aff905b638aa274a5fc8f88662df446d374bd',
         options,
-        regex
+        reg
       );
 
       expect(msg.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd');
     });
 
     it('should parse sideNotes', function() {
-      regex = {
-        notes: /(BREAKING AMEND)[:\s]*(.*)/,
-        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
-        references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
-      };
-
-      options = {
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-        headerCorrespondence: ['type', 'scope', 'subject'],
-        fieldPattern: /^-(.*?)-$/
-      };
-
       msg = parser(
         'My commit message\n' +
         '-sideNotes-\n' +
@@ -433,7 +436,7 @@ describe('parser', function() {
         'Also it should continue if one file cannot be found.\n' +
         'Tests are added for these',
         options,
-        regex
+        reg
       );
 
       expect(msg.sideNotes).to.equal('It should warn the correct unfound file names.\n' +
@@ -442,18 +445,6 @@ describe('parser', function() {
     });
 
     it('should parse committer name and email', function() {
-      regex = {
-        notes: /(BREAKING AMEND)[:\s]*(.*)/,
-        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
-        references: /(kill|kills|killed|handle|handles|handled)(?:\s+(.*?))(?=(?:kill|kills|killed|handle|handles|handled)|$)/gi
-      };
-
-      options = {
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
-        headerCorrespondence: ['type', 'scope', 'subject'],
-        fieldPattern: /^-(.*?)-$/
-      };
-
       msg = parser(
         'My commit message\n' +
         '-committerName-\n' +
@@ -461,7 +452,7 @@ describe('parser', function() {
         '- committerEmail-\n' +
         'test@github.com',
         options,
-        regex
+        reg
       );
 
       expect(msg.committerName).to.equal('Steve Mao');
@@ -471,22 +462,11 @@ describe('parser', function() {
 
   describe('revert', function() {
     it('should parse revert', function() {
-      options = {
-        revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
-        revertCorrespondence: ['header', 'hash']
-      };
-
-      regex = {
-        notes: /(BREAKING AMEND)[:\s]*(.*)/,
-        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
-        references: /(close)(?:\s+(.*?))(?=(?:close)|$)/gi
-      };
-
       msg = parser(
         'Revert "throw an error if a callback is passed to animate methods"\n\n' +
         'This reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.',
         options,
-        regex
+        reg
       );
 
       expect(msg.revert).to.eql({
@@ -496,22 +476,11 @@ describe('parser', function() {
     });
 
     it('should parse revert even if a field is missing', function() {
-      options = {
-        revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
-        revertCorrespondence: ['header', 'hash']
-      };
-
-      regex = {
-        notes: /(BREAKING AMEND)[:\s]*(.*)/,
-        referenceParts: /(?:.*?)??\s*(\S*?)??(?:gh-|#)(\d+)/gi,
-        references: /(close)(?:\s+(.*?))(?=(?:close)|$)/gi
-      };
-
       msg = parser(
         'Revert ""\n\n' +
         'This reverts commit .',
         options,
-        regex
+        reg
       );
 
       expect(msg.revert).to.eql({

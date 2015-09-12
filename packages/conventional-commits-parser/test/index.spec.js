@@ -168,13 +168,15 @@ describe('conventionalCommitsParser', function() {
             owner: null,
             repository: null,
             issue: '123',
-            raw: '#123'
+            raw: '#123',
+            prefix: '#'
           }, {
             action: 'fix',
             owner: null,
             repository: null,
             issue: '33',
-            raw: '#33'
+            raw: '#33',
+            prefix: '#'
           }]);
         } else if (i === 1) {
           expect(chunk.type).to.equal('fix');
@@ -226,13 +228,15 @@ describe('conventionalCommitsParser', function() {
             owner: null,
             repository: null,
             issue: '123',
-            raw: '#123'
+            raw: '#123',
+            prefix: '#'
           }, {
             action: 'fix',
             owner: null,
             repository: null,
             issue: '33',
-            raw: '#33'
+            raw: '#33',
+            prefix: '#'
           }]);
         } else if (i === 1) {
           expect(chunk.type).to.equal('ng-list');
