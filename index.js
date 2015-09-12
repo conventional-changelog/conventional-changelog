@@ -135,10 +135,6 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           var match = context.host.match(rhosts);
           if (match) {
             type = match[0];
-          } else {
-            if (context.type) {
-              type = context.type;
-            }
           }
         }
 
