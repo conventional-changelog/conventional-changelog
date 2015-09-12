@@ -95,6 +95,25 @@ describe('regex', function() {
       expect(match[1]).to.equal('closes');
     });
 
+    it('should match references with mixed content, like JIRA tickets', function() {
+      var reReferences = regex({
+        referenceActions: ['Closes', 'amends'],
+        issuePrefixes: ['#']
+      }).references;
+      var string = 'Closes #JIRA-123 amends #MY-OTHER-PROJECT-123; closes bug #4';
+      var match = reReferences.exec(string);
+      expect(match[0]).to.equal('Closes #JIRA-123 ');
+      expect(match[1]).to.equal('Closes');
+
+      match = reReferences.exec(string);
+      expect(match[0]).to.equal('amends #MY-OTHER-PROJECT-123; ');
+      expect(match[1]).to.equal('amends');
+
+      match = reReferences.exec(string);
+      expect(match[0]).to.equal('closes bug #4');
+      expect(match[1]).to.equal('closes');
+    });
+
     it('should ignore whitespace', function() {
       var reReferences = regex({
         referenceActions: [' Closes', 'amends ', '', ' fixes ', '   '],
@@ -134,6 +153,19 @@ describe('regex', function() {
       expect(match[0]).to.equal('repo#1');
       expect(match[1]).to.equal('repo');
       expect(match[3]).to.equal('1');
+    });
+
+    it('should match JIRA-123 like reference parts', function() {
+      var match = reReferenceParts.exec('#JIRA-123');
+      expect(match[0]).to.equal('#JIRA-123');
+      expect(match[1]).to.equal(undefined);
+      expect(match[2]).to.equal('#');
+      expect(match[3]).to.equal('JIRA-123');
+    });
+
+    it('should not match MY-€#%#&-123 mixed symbol reference parts', function() {
+      var match = reReferenceParts.exec('#MY-€#%#&-123');
+      expect(match).to.equal(null);
     });
 
     it('should match reference parts with multiple references', function() {
