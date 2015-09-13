@@ -44,7 +44,7 @@ describe('presets', function() {
 
           expect(chunk).to.include('### Dependencies');
           expect(chunk).to.include('type-is@~1.6.3');
-          expect(chunk).to.include(' - deps: mime-types@~2.1.1\n');
+          expect(chunk).to.include('- deps: mime-types@~2.1.1\n');
           expect(chunk).to.include('path-to-regexp@0.1.4');
           expect(chunk).to.include('### Performance');
           expect(chunk).to.include('use saved reference to http.STATUS_CODES');
