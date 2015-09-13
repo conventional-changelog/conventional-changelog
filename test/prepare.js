@@ -5,6 +5,7 @@ shell.rm('-rf', 'tmp');
 shell.mkdir('tmp');
 shell.cd('tmp');
 
+shell.mkdir('git-templates');
 shell.mkdir('test');
 shell.mkdir('angular');
 shell.mkdir('jquery');
