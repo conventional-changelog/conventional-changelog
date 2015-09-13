@@ -180,7 +180,7 @@ The string can be a dot path to a nested object property.
 
 ##### notesSort
 
-Type: `function` Default: sort by `localeCompare`.
+Type: `function` Default: `'text'`.
 
 A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 

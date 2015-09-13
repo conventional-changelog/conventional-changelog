@@ -1,5 +1,4 @@
 'use strict';
-var compareFunc = require('compare-func');
 var dateFormat = require('dateformat');
 var join = require('path').join;
 var readFileSync = require('fs').readFileSync;
@@ -29,8 +28,7 @@ function conventionalChangelogWriter(context, options) {
     commitGroupsSort: 'title',
     commitsSort: 'header',
     noteGroupsSort: 'title',
-    // fixme
-    notesSort: compareFunc(),
+    notesSort: 'text',
     generateOn: function(commit) {
       return semverValid(commit.version);
     },

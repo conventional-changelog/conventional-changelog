@@ -552,6 +552,44 @@ describe('conventionalChangelogWriter', function() {
     });
   });
 
+  it('should sort notes on `text` by default', function(done) {
+    var upstream = through.obj();
+    upstream.write({
+      header: 'feat(scope): broadcast $destroy event on scope destruction',
+      body: null,
+      footer: null,
+      notes: [{
+        title: 'BREAKING CHANGE',
+        text: 'No backward compatibility.'
+      }],
+      references: [],
+      committerDate: '2015-04-07 14:17:05 +1000'
+    });
+    upstream.write({
+      header: 'fix(ng-list): Allow custom separator',
+      body: 'bla bla bla',
+      footer: null,
+      notes: [{
+        title: 'BREAKING CHANGE',
+        text: 'Another change.'
+      }, {
+        title: 'BREAKING CHANGE',
+        text: 'Some breaking change.'
+      }],
+      references: [],
+      committerDate: '2015-04-07 15:00:44 +1000'
+    });
+    upstream.end();
+
+    upstream
+      .pipe(conventionalChangelogWriter())
+      .pipe(through(function(chunk) {
+        expect(chunk.toString()).to.match(/Another change.[\w\W]*No backward compatibility.[\w\W]*Some breaking change./);
+
+        done();
+      }));
+  });
+
   it('should callback with error on transform', function(done) {
     getStream()
       .pipe(conventionalChangelogWriter({}, {
