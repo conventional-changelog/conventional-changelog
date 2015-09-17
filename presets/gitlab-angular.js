@@ -6,14 +6,17 @@ var resolve = require('path').resolve;
 var semver = require('semver');
 var _ = require('lodash');
 
+var bodyPattern = /^(\w*)(?:\((.*)\))?\: (.*)$/m;
+var headerCorrespondence = [
+  'type',
+  'scope',
+  'subject'
+];
+
 function presetOpts(cb) {
   var parserOpts = {
-    headerPattern: /^(\w*)(?:\((.*)\))?\: (.*)$/m,
-    headerCorrespondence: [
-      'type',
-      'scope',
-      'subject'
-    ],
+    headerPattern: /^Merge branch '(.*)' into '(.*)'$/,
+    headerCorrespondence: [],
     noteKeywords: 'BREAKING CHANGE',
     revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
     revertCorrespondence: ['header', 'hash']
@@ -21,6 +24,24 @@ function presetOpts(cb) {
 
   var writerOpts = {
     transform: function(commit) {
+
+      var header = commit.body || commit.footer;
+
+      var headerMatch = header ? header.match(bodyPattern) : null;
+
+      if (!headerMatch) {
+        return;
+      }
+
+      headerCorrespondence = _.map(headerCorrespondence, function(part) {
+        return part.trim();
+      });
+
+      _.forEach(headerCorrespondence, function(partName, index) {
+        var partValue = headerMatch[index + 1] || null;
+        commit[partName] = partValue;
+      });
+
       if (commit.type === 'feat') {
         commit.type = 'Features';
       } else if (commit.type === 'fix') {
