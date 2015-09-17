@@ -16,7 +16,10 @@ var headerCorrespondence = [
 function presetOpts(cb) {
   var parserOpts = {
     headerPattern: /^Merge branch '(.*)' into '(.*)'$/,
-    headerCorrespondence: [],
+    headerCorrespondence: [
+      'source',
+      'destination'
+    ],
     noteKeywords: 'BREAKING CHANGE',
     revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
     revertCorrespondence: ['header', 'hash']
@@ -25,8 +28,11 @@ function presetOpts(cb) {
   var writerOpts = {
     transform: function(commit) {
 
-      var header = commit.body || commit.footer;
+      if (!commit.source || !commit.destination) {
+        return;
+      }
 
+      var header = commit.body || commit.footer;
       var headerMatch = header ? header.match(bodyPattern) : null;
 
       if (!headerMatch) {
