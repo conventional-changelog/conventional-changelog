@@ -1,4 +1,5 @@
 'use strict';
+var trimOffNewlines = require('trim-off-newlines');
 var _ = require('lodash');
 
 function append(src, line) {
@@ -30,7 +31,7 @@ function parser(raw, options, regex) {
   var currentProcessedField;
   var revertMatch;
   var otherFields = {};
-  var lines = raw.trim().split('\n');
+  var lines = trimOffNewlines(raw).split('\n');
   var continueNote = false;
   var isBody = true;
   var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
@@ -206,15 +207,15 @@ function parser(raw, options, regex) {
   }
 
   _.map(notes, function(note) {
-    note.text = note.text.trim();
+    note.text = trimOffNewlines(note.text);
 
     return note;
   });
 
   var msg  = _.merge(headerParts, {
     header: header,
-    body: body ? body.trim() : null,
-    footer: footer ? footer.trim() : null,
+    body: body ? trimOffNewlines(body) : null,
+    footer: footer ? trimOffNewlines(footer) : null,
     notes: notes,
     references: references,
     revert: revert

@@ -138,6 +138,42 @@ describe('parser', function() {
     });
   });
 
+  it('should keep spaces', function() {
+    expect(parser(
+      ' feat(scope): broadcast $destroy event on scope destruction \n' +
+      ' perf testing shows that in chrome this change adds 5-15% overhead \n\n' +
+      ' when destroying 10k nested scopes where each scope has a $destroy listener \n' +
+      '         BREAKING AMEND: some breaking change         \n\n' +
+      '   BREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```' +
+      '\n\n    Kills   #1\n',
+      options,
+      reg
+    )).to.eql({
+      header: ' feat(scope): broadcast $destroy event on scope destruction ',
+      body: ' perf testing shows that in chrome this change adds 5-15% overhead \n\n when destroying 10k nested scopes where each scope has a $destroy listener ',
+      footer: '         BREAKING AMEND: some breaking change         \n\n   BREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1',
+      notes: [{
+        title: 'BREAKING AMEND',
+        text: 'some breaking change         '
+      }, {
+        title: 'BREAKING AMEND',
+        text: 'An awesome breaking change\n\n\n```\ncode here\n```'
+      }],
+      references: [{
+        action: 'Kills',
+        owner: null,
+        repository: null,
+        issue: '1',
+        raw: '#1',
+        prefix: '#'
+      }],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+  });
+
   describe('header', function() {
     it('should allow ":" in scope', function() {
       var msg = parser('feat(ng:list): Allow custom separator', {

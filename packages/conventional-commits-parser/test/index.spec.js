@@ -216,7 +216,7 @@ describe('conventionalCommitsParser', function() {
         noteKeywords: 'BREAKING CHANGES',
         referenceActions: 'fix',
         revertPattern: '^Revert\\s"([\\s\\S]*)"\\s*This reverts commit (\\w*)\\.',
-        revertCorrespondence: 'header'
+        revertCorrespondence: ' header'
       }))
       .pipe(through.obj(function(chunk, enc, cb) {
         if (i === 0) {
