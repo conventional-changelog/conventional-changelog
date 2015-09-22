@@ -108,7 +108,7 @@ describe('conventionalChangelogWriter', function() {
         }));
     });
 
-    it ('should not link if host, repository, commit and issue are not truthy', function(done) {
+    it('should not link if host, repository, commit and issue are not truthy', function(done) {
       var i = 0;
 
       getStream()
@@ -124,7 +124,7 @@ describe('conventionalChangelogWriter', function() {
         }));
     });
 
-    it ('should not link references', function(done) {
+    it('should not link references', function(done) {
       var i = 0;
 
       getStream()
