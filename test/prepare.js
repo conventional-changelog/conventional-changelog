@@ -14,6 +14,7 @@ shell.mkdir('eslint');
 shell.mkdir('atom');
 shell.mkdir('express');
 shell.mkdir('jscs');
+shell.mkdir('jira');
 shell.mkdir('ember');
 shell.mkdir('codemirror');
 shell.mkdir('cli');

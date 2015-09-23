@@ -1,0 +1,5 @@
+* {{#if @root.linkReferences}}{{#if @root.jira_browse}}[{{task}}]({{@root.jira_browse}}/{{task}}){{else}}{{task}}{{/if}}{{else}}{{task}}{{/if}} - {{#if shortDesc}}{{shortDesc}}{{else}}{{header}}{{/if}}
+
+{{~!-- commit hash --}} {{#if @root.linkReferences}}([{{hash}}]({{@root.host}}/{{#if @root.owner}}{{@root.owner}}/{{/if}}{{@root.repository}}/{{@root.commit}}/{{hash}})){{else}}{{hash~}}{{/if}}
+
+{{~!-- commit references --}}{{#if references}}, closes{{~#each references}} {{#if @root.linkReferences}}{{#if @root.jira_browse}}[{{this.issue}}]({{@root.jira_browse}}/{{this.issue}}){{else}}{{this.issue}}{{/if}}{{else}}{{this.issue}}{{/if}}{{/each}}{{/if}}
