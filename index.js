@@ -118,12 +118,12 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
             repo = {};
           }
 
-          if (repo.type) {
+          if (repo.browse) {
             var browse = repo.browse();
             var parsedBrowse = url.parse(browse);
-            context.host = context.host || parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain;
-            context.owner = context.owner || repo.user;
-            context.repository = context.repository || repo.project;
+            context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null);
+            context.owner = context.owner || repo.user || '';
+            context.repository = context.repository || repo.project || browse;
           }
         } else if (options.pkg.path) {
           options.warn(pkgObj.reason.toString());
@@ -174,14 +174,19 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         gitRawCommitsOpts.reverse = gitRawCommitsOpts.reverse || true;
       }
 
-      parserOpts = _.assign({
-          referenceActions: hostOpts.referenceActions,
-          issuePrefixes: hostOpts.issuePrefixes
-        },
+      parserOpts = _.assign(
         preset.parserOpts, {
           warn: options.warn
         },
         parserOpts);
+
+      if (hostOpts.referenceActions && parserOpts) {
+        parserOpts.referenceActions = hostOpts.referenceActions;
+      }
+
+      if (hostOpts.issuePrefixes && parserOpts) {
+        parserOpts.issuePrefixes = hostOpts.issuePrefixes;
+      }
 
       writerOpts = _.assign({
           finalizeContext: function(context, writerOpts, commits, keyCommit) {

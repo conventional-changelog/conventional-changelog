@@ -147,6 +147,23 @@ describe('conventionalChangelog', function() {
       }));
   });
 
+  it('should fallback to use the url if repo is unknown', function(done) {
+    conventionalChangelog({
+      pkg: {
+        path: __dirname + '/fixtures/_unknown-host.json'
+      }
+    }, {
+      linkReferences: true
+    }).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](https://unknown-host/a/b/commits/');
+      expect(chunk).to.include('closes [#1](https://unknown-host/a/b/issues/1)');
+
+      done();
+    }));
+  });
+
   it('should transform package.json data', function(done) {
     conventionalChangelog({
       pkg: {
