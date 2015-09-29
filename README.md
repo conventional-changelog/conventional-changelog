@@ -100,7 +100,7 @@ Type: `object`
 
 ###### path
 
-Type: `string` Default: `'package.json'`
+Type: `string` Default: [closest package.json](https://github.com/sindresorhus/read-pkg-up).
 
 The location of your "package.json".
 
