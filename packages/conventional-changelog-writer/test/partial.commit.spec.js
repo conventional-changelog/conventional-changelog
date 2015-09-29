@@ -26,6 +26,22 @@ beforeEach(function() {
 });
 
 describe('partial.commit', function() {
+  it('should ignore host and owner if they do not exist and just use repository to link', function() {
+    var log = Handlebars.compile(template)({
+      header: 'my header',
+      repository: 'www.myhost.com/a/b',
+      commit: 'my commits',
+      issue: 'my issue',
+      hash: 'hash',
+      linkReferences: true,
+      references: [{
+        issue: 1
+      }]
+    });
+
+    expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1)\n');
+  });
+
   it('should not link the commit if `linkReferences` is falsy', function() {
     var log = Handlebars.compile(template)(templateContext);
 
