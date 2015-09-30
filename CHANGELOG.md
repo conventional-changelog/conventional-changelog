@@ -1,3 +1,24 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/ajoslin/conventional-changelog/compare/v0.4.3...v0.5.0) (2015-09-30)
+
+
+### Bug Fixes
+
+* **unknown-host:** fallback to use the whole repo url ([514c4e2](https://github.com/ajoslin/conventional-changelog/commit/514c4e2)), closes [#98](https://github.com/ajoslin/conventional-changelog/issues/98)
+
+### Features
+
+* **dep:** bump conventional-changelog-writer to ^0.4.1 ([cbfb222](https://github.com/ajoslin/conventional-changelog/commit/cbfb222))
+* **pkg:** load closest package.json by default ([5942809](https://github.com/ajoslin/conventional-changelog/commit/5942809)), closes [#91](https://github.com/ajoslin/conventional-changelog/issues/91)
+* **template:** add `scope` to breaking changes ([d2fdd44](https://github.com/ajoslin/conventional-changelog/commit/d2fdd44)), closes [#93](https://github.com/ajoslin/conventional-changelog/issues/93)
+
+
+### BREAKING CHANGES
+
+* dep: syntax.
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/ajoslin/conventional-changelog/compare/v0.4.2...v0.4.3) (2015-09-04)
 
