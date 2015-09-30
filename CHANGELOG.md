@@ -15,7 +15,7 @@
 
 ### BREAKING CHANGES
 
-* dep: syntax.
+* dep: Use the new conventional-changelog-writer syntax. `notes` in `noteGroups` is not an array of simple string any more but object. You must use `note.text` to access the equivalent of previous `note`.
 
 
 
