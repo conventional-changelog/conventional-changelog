@@ -17,9 +17,7 @@ function conventionalChangelogWriter(context, options) {
     date: dateFormat(new Date(), 'yyyy-mm-dd', true)
   }, context);
 
-  var host = context.host;
-
-  if (!_.isBoolean(context.linkReferences) && host && context.repository && context.commit && context.issue) {
+  if (!_.isBoolean(context.linkReferences) && context.repository && context.commit && context.issue) {
     context.linkReferences = true;
   }
 

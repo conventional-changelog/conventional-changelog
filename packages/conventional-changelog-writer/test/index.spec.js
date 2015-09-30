@@ -87,15 +87,14 @@ describe('conventionalChangelogWriter', function() {
   });
 
   describe('link', function() {
-    it('should link if host, repository, commit and issue are truthy', function(done) {
+    it('should link if repository, commit and issue are truthy', function(done) {
       var i = 0;
 
       getStream()
         .pipe(conventionalChangelogWriter({
           version: '0.5.0',
           title: 'this is a title',
-          host: 'https://github.com',
-          repository: 'a/b'
+          repository: 'https://github.com/a/b'
         }))
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.include('https://github.com/a/b/commits/13f3160');
@@ -108,7 +107,7 @@ describe('conventionalChangelogWriter', function() {
         }));
     });
 
-    it('should not link if host, repository, commit and issue are not truthy', function(done) {
+    it('should not link if repository, commit and issue are not truthy', function(done) {
       var i = 0;
 
       getStream()

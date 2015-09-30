@@ -110,7 +110,7 @@ The repository name on `host`. Eg: `'conventional-changelog-writer'`.
 
 ##### linkReferences
 
-Type: `boolean` Default: `true` if `host`, `repository`, `commit` and `issue` are truthy
+Type: `boolean` Default: `true` if `repository`, `commit` and `issue` are truthy
 
 Should all references be linked?
 
