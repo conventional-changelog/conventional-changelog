@@ -56,7 +56,7 @@
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
     "lint": "jshint presets hosts test *.js --exclude node_modules && jscs presets hosts test *.js",
-    "test": "npm run-script lint && mocha --timeout 10000"
+    "test": "npm run-script lint && mocha --timeout 15000"
   },
   "bin": "cli.js"
 }
