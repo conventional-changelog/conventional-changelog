@@ -17,15 +17,16 @@ describe('presets', function() {
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
       child.exec('git add --all && git commit -m"feat: amazing new module\n\nBREAKING CHANGE: Not backward compatible."', function() {
         writeFileSync('test3', '');
-        shell.exec('git add --all && git commit -m"fix($compile): avoid a bug"');
-        writeFileSync('test4', '');
-        shell.exec('git add --all && git commit -m"perf(ngOptions): make it faster"');
-        writeFileSync('test5', '');
-        shell.exec('git add --all && git commit -m"revert(ngOptions): make it faster"');
-        writeFileSync('test6', '');
-        shell.exec('git add --all && git commit -m"fix(*): oops"');
+        child.exec('git add --all && git commit -m"fix(compile): avoid a bug\n\nBREAKING CHANGE: The Change is huge."', function() {
+          writeFileSync('test4', '');
+          shell.exec('git add --all && git commit -m"perf(ngOptions): make it faster"');
+          writeFileSync('test5', '');
+          shell.exec('git add --all && git commit -m"revert(ngOptions): make it faster"');
+          writeFileSync('test6', '');
+          shell.exec('git add --all && git commit -m"fix(*): oops"');
 
-        done();
+          done();
+        });
       });
     });
 
@@ -44,6 +45,7 @@ describe('presets', function() {
           expect(chunk).to.include('avoid a bug');
           expect(chunk).to.include('make it faster');
           expect(chunk).to.include('Not backward compatible.');
+          expect(chunk).to.include('compile: The Change is huge.');
           expect(chunk).to.include('Features');
           expect(chunk).to.include('Bug Fixes');
           expect(chunk).to.include('Performance Improvements');
@@ -56,6 +58,7 @@ describe('presets', function() {
           expect(chunk).to.not.include('perf');
           expect(chunk).to.not.include('revert');
           expect(chunk).to.not.include('***:**');
+          expect(chunk).to.not.include(': Not backward compatible.');
 
           done();
         }));
