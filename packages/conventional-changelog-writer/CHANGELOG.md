@@ -1,3 +1,22 @@
+<a name="0.4.1"></a>
+## [0.4.1](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.0...v0.4.1) (2015-09-30)
+
+
+### Bug Fixes
+
+* **template:** default commit template should handle unkown host ([ef62bfd](https://github.com/stevemao/conventional-changelog-writer/commit/ef62bfd))
+
+### Features
+
+* **context:** linkReferences has nothing to do with context.host ([f5883a6](https://github.com/stevemao/conventional-changelog-writer/commit/f5883a6))
+
+
+### BREAKING CHANGES
+
+* `context.host` cannot change the default of `context.linkReferences` because if the host is unknown, `context.host` is `undefined` and all links will just use `context.repository`.
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.3.2...v0.4.0) (2015-09-23)
 
