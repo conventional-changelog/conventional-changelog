@@ -63,11 +63,11 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
   var loadPreset = options.preset;
 
   if (loadPreset) {
-    var avaliblePresets = fs.readdirSync('./presets/');
     try {
+      var avaliblePresets = fs.readdirSync(__dirname + '/presets/');
       loadPreset = (avaliblePresets.indexOf(loadPreset + '.js') > -1) ?
-        './presets/' + options.preset;
-        path.resolve(process.cwd(), options.preset):
+        './presets/' + options.preset :
+        path.resolve(process.cwd(), options.preset);
 
       var presetFn = require(loadPreset);
 
