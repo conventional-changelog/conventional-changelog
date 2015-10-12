@@ -10,8 +10,9 @@ var readPkg = require('read-pkg');
 var readPkgUp = require('read-pkg-up');
 var stream = require('stream');
 var through = require('through2');
-var url = require('url');
+var fs = require('fs');
 var path = require('path');
+var url = require('url');
 var _ = require('lodash');
 
 var rhosts = /github|bitbucket|gitlab/i;
@@ -62,11 +63,13 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
   var loadPreset = options.preset;
 
   if (loadPreset) {
-    var parsedPresetPath = path.parse(loadPreset);
+    var avaliblePresets = fs.readdirSync('./presets/');
     try {
-      var presetFn = (parsedPresetPath.root || parsedPresetPath.dir) ?
-        require(options.preset) :
-        require('./presets/' + options.preset);
+      loadPreset = (avaliblePresets.indexOf(loadPreset + '.js') > -1) ?
+        './presets/' + options.preset;
+        path.resolve(process.cwd(), options.preset):
+
+      var presetFn = require(loadPreset);
 
       presetPromise = Q.nfcall(presetFn);
     } catch (err) {
