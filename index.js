@@ -11,6 +11,7 @@ var readPkgUp = require('read-pkg-up');
 var stream = require('stream');
 var through = require('through2');
 var url = require('url');
+var path = require('path');
 var _ = require('lodash');
 
 var rhosts = /github|bitbucket|gitlab/i;
@@ -61,8 +62,12 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
   var loadPreset = options.preset;
 
   if (loadPreset) {
+    var parsedPresetPath = path.parse(loadPreset);
     try {
-      var presetFn = require('./presets/' + options.preset);
+      var presetFn = (parsedPresetPath.root || parsedPresetPath.dir) ?
+        require(options.preset) :
+        require('./presets/' + options.preset);
+
       presetPromise = Q.nfcall(presetFn);
     } catch (err) {
       loadPreset = false;
