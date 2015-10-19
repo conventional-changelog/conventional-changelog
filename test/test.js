@@ -743,4 +743,25 @@ describe('conventionalChangelog', function() {
         done();
       }));
   });
+
+  it('should pass `parserOpts` to conventional-commits-parser', function(done) {
+    writeFileSync('test9', '');
+    shell.exec('git add --all && git commit -m"test9" -m"Release note: super release!"');
+
+    conventionalChangelog({}, {}, {}, {
+      noteKeywords: [
+        'Release note'
+      ]
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('* test9');
+        expect(chunk).to.include('### Release note\n\n* super release!');
+
+        cb();
+      }, function() {
+        done();
+      }));
+  });
 });
