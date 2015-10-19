@@ -175,7 +175,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       }
 
       parserOpts = _.assign(
-        preset.parserOpts, {
+        {}, preset.parserOpts, {
           warn: options.warn
         },
         parserOpts);
