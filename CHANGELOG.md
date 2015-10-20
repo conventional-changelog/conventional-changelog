@@ -1,3 +1,13 @@
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/ajoslin/conventional-changelog/compare/v0.5.0...v0.5.1) (2015-10-20)
+
+
+### Bug Fixes
+
+* **options:** fix losing parserOpts without preset ([e6a9cf3](https://github.com/ajoslin/conventional-changelog/commit/e6a9cf3)), closes [#116](https://github.com/ajoslin/conventional-changelog/issues/116)
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/ajoslin/conventional-changelog/compare/v0.4.3...v0.5.0) (2015-09-30)
 
