@@ -249,6 +249,7 @@ So, when you build a parent module, you need to read the old logs and append or 
 - [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 - [conventional-commits-detector](https://github.com/stevemao/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
+- [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
 
 
 ## License
