@@ -17,6 +17,7 @@ describe('presets', function() {
       shell.exec('git add --all && git commit -m"[[Test]] Add test for gh-985. Fixes #985"');
       writeFileSync('test3', '');
       shell.exec('git add --all && git commit -m"[[FIX]] catch params are scoped to the catch only"');
+      shell.exec('git commit --allow-empty -m"[[Fix]] accidentally use lower-case"');
       writeFileSync('test4', '');
       child.exec('git add --all && git commit -m"[[FEAT]] Option to assume strict mode\n\nBREAKING CHANGE: Not backward compatible."', function() {
         writeFileSync('test5', '');
@@ -40,6 +41,7 @@ describe('presets', function() {
           expect(chunk).to.include('catch params are scoped to the catch only');
           expect(chunk).to.include('### Bug Fixes');
           expect(chunk).to.include('Option to assume strict mode');
+          expect(chunk).to.include('accidentally use lower-case');
           expect(chunk).to.include('### Features');
           expect(chunk).to.include('BREAKING CHANGES');
 

@@ -18,9 +18,11 @@ function presetOpts(cb) {
 
   var writerOpts = {
     transform: function(commit) {
-      if (commit.type === 'FEAT') {
+      var type = commit.type ? commit.type.toUpperCase() : '';
+
+      if (type === 'FEAT') {
         commit.type = 'Features';
-      } else if (commit.type === 'FIX') {
+      } else if (type === 'FIX') {
         commit.type = 'Bug Fixes';
       } else {
         return;
