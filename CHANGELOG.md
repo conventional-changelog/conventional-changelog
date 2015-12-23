@@ -1,3 +1,13 @@
+<a name="0.5.2"></a>
+## [0.5.2](https://github.com/ajoslin/conventional-changelog/compare/v0.5.1...v0.5.2) (2015-12-23)
+
+
+### Features
+
+* **preset:** relax JSHint message requirements ([5aa5e32](https://github.com/ajoslin/conventional-changelog/commit/5aa5e32)), closes [#129](https://github.com/ajoslin/conventional-changelog/issues/129)
+
+
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/ajoslin/conventional-changelog/compare/v0.5.0...v0.5.1) (2015-10-20)
 
