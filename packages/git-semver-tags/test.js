@@ -16,47 +16,50 @@ it('should error if no commits found', function(done) {
     assert(err);
 
     writeFileSync('test1', '');
-    shell.exec('git add --all && git commit -m"First commit"');
-    shell.exec('git tag foo');
 
     done();
   });
 });
 
 it('should get no semver tags', function(done) {
+  shell.exec('git add --all && git commit -m"First commit"');
+  shell.exec('git tag foo');
+
   gitSemverTags(function(err, tags) {
     equal(tags, []);
-
-    writeFileSync('test2', '');
-    shell.exec('git add --all && git commit -m"Second commit"');
-    shell.exec('git tag v2.0.0');
-    writeFileSync('test3', '');
-    shell.exec('git add --all && git commit -m"Third commit"');
-    shell.exec('git tag va.b.c');
 
     done();
   });
 });
 
 it('should get the semver tag', function(done) {
+  writeFileSync('test2', '');
+  shell.exec('git add --all && git commit -m"Second commit"');
+  shell.exec('git tag v2.0.0');
+  writeFileSync('test3', '');
+  shell.exec('git add --all && git commit -m"Third commit"');
+  shell.exec('git tag va.b.c');
+
   gitSemverTags(function(err, tags) {
     equal(tags, ['v2.0.0']);
-    shell.exec('git tag v3.0.0');
 
     done();
   });
 });
 
 it('should get both semver tags', function(done) {
+  shell.exec('git tag v3.0.0');
+
   gitSemverTags(function(err, tags) {
     equal(tags, ['v3.0.0', 'v2.0.0']);
-    shell.exec('git tag v4.0.0');
 
     done();
   });
 });
 
 it('should get all semver tags if two tags on the same commit', function(done) {
+  shell.exec('git tag v4.0.0');
+
   gitSemverTags(function(err, tags) {
     equal(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0']);
 
@@ -67,6 +70,18 @@ it('should get all semver tags if two tags on the same commit', function(done) {
 it('should still work if I run it again', function(done) {
   gitSemverTags(function(err, tags) {
     equal(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0']);
+
+    done();
+  });
+});
+
+it('should be in reverse chronological order', function(done) {
+  writeFileSync('test4', '');
+  shell.exec('git add --all && git commit -m"Fourth commit"');
+  shell.exec('git tag v1.0.0');
+
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0']);
 
     done();
   });
