@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-core",
   "version": "0.0.0",
-  "description": "Generate a changelog from git metadata",
+  "description": "conventional-changelog core",
   "repository": {
     "type": "git",
     "url": "https://github.com/stevemao/conventional-changelog-core.git"
