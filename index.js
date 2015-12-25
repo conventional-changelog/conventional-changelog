@@ -105,7 +105,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           if (options.pkg.path) {
             pkg = pkgObj.value;
           } else {
-            pkg = pkgObj.value.pkg;
+            pkg = pkgObj.value.pkg || {};
           }
 
           pkg = options.pkg.transform(pkg);
