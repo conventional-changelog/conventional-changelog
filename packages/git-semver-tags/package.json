@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
+    "git-dummy-commit": "^1.1.0",
     "istanbul": "^0.3.17",
     "jscs": "^1.13.1",
     "jshint": "^2.8.0",

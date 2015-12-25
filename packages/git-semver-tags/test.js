@@ -4,6 +4,7 @@ var equal = assert.deepEqual;
 var gitSemverTags = require('./');
 var shell = require('shelljs');
 var writeFileSync = require('fs').writeFileSync;
+var gitDummyCommit = require('git-dummy-commit');
 
 shell.config.silent = true;
 shell.rm('-rf', 'tmp');
@@ -15,13 +16,12 @@ it('should error if no commits found', function(done) {
   gitSemverTags(function(err) {
     assert(err);
 
-    writeFileSync('test1', '');
-
     done();
   });
 });
 
 it('should get no semver tags', function(done) {
+  writeFileSync('test1', '');
   shell.exec('git add --all && git commit -m"First commit"');
   shell.exec('git tag foo');
 
@@ -82,6 +82,33 @@ it('should be in reverse chronological order', function(done) {
 
   gitSemverTags(function(err, tags) {
     equal(tags, ['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0']);
+
+    done();
+  });
+});
+
+it('should work with prerelease', function(done) {
+  writeFileSync('test5', '');
+  shell.exec('git add --all && git commit -m"Fifth commit"');
+  shell.exec('git tag 5.0.0-pre');
+
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0']);
+
+    done();
+  });
+});
+
+it('should work with empty commit', function(done) {
+  shell.rm('-rf', '.git');
+  shell.exec('git init');
+  gitDummyCommit('empty commit');
+  shell.exec('git tag v1.1.0');
+  gitDummyCommit('empty commit2');
+  gitDummyCommit('empty commit3');
+
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['v1.1.0']);
 
     done();
   });
