@@ -10,6 +10,8 @@ var readPkg = require('read-pkg');
 var readPkgUp = require('read-pkg-up');
 var stream = require('stream');
 var through = require('through2');
+var fs = require('fs');
+var path = require('path');
 var url = require('url');
 var _ = require('lodash');
 
@@ -62,8 +64,12 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
   if (loadPreset) {
     try {
-      var presetFn = require('./presets/' + options.preset);
-      presetPromise = Q.nfcall(presetFn);
+      var avaliblePresets = fs.readdirSync(__dirname + '/presets/');
+      loadPreset = (avaliblePresets.indexOf(loadPreset + '.js') > -1) ?
+        './presets/' + options.preset :
+        path.resolve(process.cwd(), options.preset);
+
+      presetPromise = Q.nfcall(require(loadPreset));
     } catch (err) {
       loadPreset = false;
       options.warn('Preset: "' + options.preset + '" does not exist');

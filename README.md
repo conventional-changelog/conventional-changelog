@@ -88,7 +88,7 @@ Returns a readable stream.
 
 ##### preset
 
-Type: `string` [Possible values](presets)
+Type: `string` [Default values](presets) or any valid absolute or relative path
 
 It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten.
 
