@@ -1,0 +1,46 @@
+{
+  "name": "conventional-changelog-core",
+  "version": "0.0.0",
+  "description": "Generate a changelog from git metadata",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevemao/conventional-changelog-core.git"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "core",
+    "conventional",
+    "changelog",
+    "log"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "conventional-changelog-writer": "^0.4.1",
+    "conventional-commits-parser": "^0.1.2",
+    "dateformat": "^1.0.12",
+    "get-pkg-repo": "^0.1.0",
+    "git-raw-commits": "^0.1.2",
+    "git-semver-tags": "^1.1.0",
+    "lodash": "^3.10.1",
+    "q": "^1.4.1",
+    "read-pkg": "^1.1.0",
+    "read-pkg-up": "^1.0.1",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "coveralls": "^2.11.6",
+    "git-dummy-commit": "^1.1.0",
+    "git-tails": "^1.0.0",
+    "istanbul": "^0.4.1",
+    "jscs": "^2.7.0",
+    "jshint": "^2.9.1-rc2",
+    "mocha": "*",
+    "shelljs": "^0.5.3"
+  },
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "lint": "jshint hosts test *.js --exclude node_modules && jscs hosts test *.js",
+    "test": "mocha --timeout 15000 && npm run-script lint"
+  }
+}
