@@ -1,3 +1,13 @@
+<a name="0.5.3"></a>
+## [0.5.3](https://github.com/ajoslin/conventional-changelog/compare/v0.5.2...v0.5.3) (2015-12-25)
+
+
+### Bug Fixes
+
+* **defaults:** do not throw if no package.json found ([906a904](https://github.com/ajoslin/conventional-changelog/commit/906a904)), closes [#123](https://github.com/ajoslin/conventional-changelog/issues/123)
+
+
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/ajoslin/conventional-changelog/compare/v0.5.1...v0.5.2) (2015-12-23)
 
