@@ -2,7 +2,6 @@
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
-var semver = require('semver');
 
 function presetOpts(cb) {
   var parserOpts = {
@@ -36,10 +35,7 @@ function presetOpts(cb) {
     },
     groupBy: 'component',
     commitGroupsSort: 'title',
-    commitsSort: ['component', 'shortDesc'],
-    generateOn: function(commit) {
-      return semver.valid(commit.version);
-    }
+    commitsSort: ['component', 'shortDesc']
   };
 
   Q.all([

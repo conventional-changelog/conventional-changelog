@@ -1,9 +1,9 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) jquery preset
+> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [jQuery](https://github.com/jquery/jquery) preset
 
 
-See [conventional](convention.md)
+See [convention](convention.md)
 
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-jquery.svg

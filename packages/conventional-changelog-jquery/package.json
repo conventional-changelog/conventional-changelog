@@ -24,17 +24,17 @@
   },
   "homepage": "https://github.com/stevemao/conventional-changelog-jquery#readme",
   "devDependencies": {
-    "chai": "^3.4.1",
-    "conventional-changelog-core": "0.0.1",
+    "chai": "^3.5.0",
+    "conventional-changelog-core": "0.0.2",
     "coveralls": "^2.11.6",
-    "jscs": "^2.7.0",
-    "jshint": "^2.9.1-rc2",
+    "istanbul": "^0.4.2",
+    "jscs": "^2.9.0",
+    "jshint": "^2.9.1",
     "mocha": "*",
     "shelljs": "^0.5.3",
     "through2": "^2.0.0"
   },
   "dependencies": {
-    "q": "^1.4.1",
-    "semver": "^5.1.0"
+    "q": "^1.4.1"
   }
 }

@@ -31,6 +31,9 @@ describe('jquery preset', function() {
     conventionalChangelogCore({
       config: config
     })
+      .on('error', function(err) {
+        done(err);
+      })
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
