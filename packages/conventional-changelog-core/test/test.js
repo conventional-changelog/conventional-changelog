@@ -1,12 +1,13 @@
 'use strict';
-var conventionalChangelog = require('../');
+var conventionalChangelogCore = require('../');
 var expect = require('chai').expect;
 var gitTails = require('git-tails');
 var shell = require('shelljs');
 var gitDummyCommit = require('git-dummy-commit');
 var through = require('through2');
+var Promise = require('pinkie-promise');
 
-describe('conventionalChangelog', function() {
+describe('conventionalChangelogCore', function() {
   before(function() {
     shell.config.silent = true;
     shell.rm('-rf', 'tmp');
@@ -22,7 +23,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should work if there is no tag', function(done) {
-    conventionalChangelog()
+    conventionalChangelogCore()
       .pipe(through(function(chunk) {
         expect(chunk.toString()).to.include('First commit');
 
@@ -35,7 +36,7 @@ describe('conventionalChangelog', function() {
     gitDummyCommit('Second commit');
     gitDummyCommit('Third commit closes #1');
 
-    conventionalChangelog()
+    conventionalChangelogCore()
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
@@ -51,7 +52,7 @@ describe('conventionalChangelog', function() {
   it('should generate the changelog of the last two releases', function(done) {
     var i = 0;
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       releaseCount: 2
     })
       .pipe(through(function(chunk, enc, cb) {
@@ -75,7 +76,7 @@ describe('conventionalChangelog', function() {
   it('should generate the changelog of the last two releases even if release count exceeds the limit', function(done) {
     var i = 0;
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       releaseCount: 100
     })
       .pipe(through(function(chunk, enc, cb) {
@@ -97,7 +98,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should honour `gitRawCommitsOpts.from`', function(done) {
-    conventionalChangelog({}, {}, {
+    conventionalChangelogCore({}, {}, {
       from: 'HEAD~2'
     }, {}, {
       commitsSort: null
@@ -116,7 +117,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should load package.json for data', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_package.json'
       }
@@ -133,7 +134,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should load package.json for data even if repository field is missing', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_version-only.json'
       }
@@ -149,7 +150,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should fallback to use the url if repo is unknown', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_unknown-host.json'
       }
@@ -166,7 +167,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should transform package.json data', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_short.json',
         transform: function(pkg) {
@@ -188,7 +189,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should work in append mode', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       append: true,
     })
       .pipe(through(function(chunk) {
@@ -201,7 +202,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should read package.json if only `context.version` is missing', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_package.json'
       }
@@ -220,7 +221,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should read the closest package.json by default', function(done) {
-    conventionalChangelog()
+    conventionalChangelogCore()
       .pipe(through(function(chunk) {
         expect(chunk.toString()).to.include('closes [#1](https://github.com/stevemao/conventional-changelog-core/issues/1)');
 
@@ -229,7 +230,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should read host configs if only `parserOpts.referenceActions` is missing', function(done) {
-    conventionalChangelog({}, {
+    conventionalChangelogCore({}, {
       host: 'github',
       owner: 'b',
       repository: 'a',
@@ -246,7 +247,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should read github\'s host configs', function(done) {
-    conventionalChangelog({}, {
+    conventionalChangelogCore({}, {
       host: 'github',
       owner: 'b',
       repository: 'a'
@@ -261,7 +262,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should read bitbucket\'s host configs', function(done) {
-    conventionalChangelog({}, {
+    conventionalChangelogCore({}, {
       host: 'bitbucket',
       owner: 'b',
       repository: 'a'
@@ -276,7 +277,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should read gitlab\'s host configs', function(done) {
-    conventionalChangelog({}, {
+    conventionalChangelogCore({}, {
       host: 'gitlab',
       owner: 'b',
       repository: 'a'
@@ -291,7 +292,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should transform the commit', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       transform: function(chunk, cb) {
         chunk.header = 'A tiny header';
         cb(null, chunk);
@@ -310,7 +311,7 @@ describe('conventionalChangelog', function() {
   it('should generate all log blocks', function(done) {
     var i = 0;
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       releaseCount: 0
     })
       .pipe(through(function(chunk, enc, cb) {
@@ -337,7 +338,7 @@ describe('conventionalChangelog', function() {
 
     var i = 0;
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       releaseCount: 0
     })
       .pipe(through(function(chunk, enc, cb) {
@@ -360,7 +361,7 @@ describe('conventionalChangelog', function() {
   it('semverTags should be attached to the `context` object', function(done) {
     var i = 0;
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       releaseCount: 0
     }, {}, {}, {}, {
       mainTemplate: '{{gitSemverTags}} or {{gitSemverTags.[0]}}'
@@ -392,7 +393,7 @@ describe('conventionalChangelog', function() {
     it('should make `context.previousTag` default to a previous version of generated log (prepend)', function(done) {
       var i = 0;
 
-      conventionalChangelog({
+      conventionalChangelogCore({
         releaseCount: 0
       }, {
         version: '3.0.0'
@@ -419,7 +420,7 @@ describe('conventionalChangelog', function() {
     it('should make `context.previousTag` default to a previous version of generated log (append)', function(done) {
       var i = 0;
 
-      conventionalChangelog({
+      conventionalChangelogCore({
         releaseCount: 0,
         append: true
       }, {
@@ -448,7 +449,7 @@ describe('conventionalChangelog', function() {
       shell.exec('git tag v0.0.1 ' + tail);
       var i = 0;
 
-      conventionalChangelog({
+      conventionalChangelogCore({
         releaseCount: 0
       }, {
         version: '3.0.0'
@@ -480,7 +481,7 @@ describe('conventionalChangelog', function() {
     it('should still work if first release has no commits (append)', function(done) {
       var i = 0;
 
-      conventionalChangelog({
+      conventionalChangelogCore({
         releaseCount: 0,
         append: true
       }, {
@@ -513,7 +514,7 @@ describe('conventionalChangelog', function() {
     it('should not link compare if previousTag is not truthy', function(done) {
       var i = 0;
 
-      conventionalChangelog({
+      conventionalChangelogCore({
         releaseCount: 0,
         append: true
       }, {
@@ -547,7 +548,7 @@ describe('conventionalChangelog', function() {
   it('should not link compare', function(done) {
     var i = 0;
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       releaseCount: 0,
       append: true
     }, {
@@ -572,45 +573,72 @@ describe('conventionalChangelog', function() {
       }));
   });
 
-  it('should warn if preset is not found', function(done) {
-    var i = 0;
-
-    conventionalChangelog({
-      preset: 'no',
-      warn: function(warning) {
-        if (i > 0) {
-          return;
-        }
-
-        expect(warning).to.equal('Preset: "no" does not exist');
-
-        i++;
-        done();
+  describe('config', function() {
+    var config = {
+      context: {
+        version: 'v100.0.0'
       }
+    };
+
+    var promise = new Promise(function(resolve) {
+      resolve(config);
+    });
+
+    var fn = function(cb) {
+      cb(null, config);
+    };
+
+    it('should load object config', function(done) {
+      conventionalChangelogCore({
+        config: config,
+        pkg: {
+          path: __dirname + '/fixtures/_package.json'
+        }
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          expect(chunk).to.include('v100.0.0');
+
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('should load promise config', function(done) {
+      conventionalChangelogCore({
+        config: promise
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          expect(chunk).to.include('v100.0.0');
+
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('should load function config', function(done) {
+      conventionalChangelogCore({
+        config: fn
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          expect(chunk).to.include('v100.0.0');
+
+          cb();
+        }, function() {
+          done();
+        }));
     });
   });
 
-  it('should still work if preset is not found', function(done) {
-    var i = 0;
-
-    conventionalChangelog({
-      preset: 'no'
-    })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.include('#');
-
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(1);
-        done();
-      }));
-  });
-
   it('should warn if host is not found', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: null,
       warn: function(warning) {
         expect(warning).to.equal('Host: "no" does not exist');
@@ -623,7 +651,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should warn if package.json is not found', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: 'no'
       },
@@ -636,7 +664,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should warn if package.json cannot be parsed', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_malformation.json'
       },
@@ -649,7 +677,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should error if anything throws', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_malformation.json'
       },
@@ -663,7 +691,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should error if there is an error in `options.pkg.transform`', function(done) {
-    conventionalChangelog({
+    conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_short.json',
         transform: function() {
@@ -679,7 +707,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should error if it errors in git-raw-commits', function(done) {
-    conventionalChangelog({}, {}, {
+    conventionalChangelogCore({}, {}, {
       unknowOptions: false
     })
       .on('error', function(err) {
@@ -692,7 +720,7 @@ describe('conventionalChangelog', function() {
   it('should error if it emits an error in `options.transform`', function(done) {
     gitDummyCommit('test8');
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       transform: function(commit, cb) {
         cb('error');
       }
@@ -707,7 +735,7 @@ describe('conventionalChangelog', function() {
   it('should error if there is an error in `options.transform`', function(done) {
     gitDummyCommit('test8');
 
-    conventionalChangelog({
+    conventionalChangelogCore({
       transform: function() {
         undefined.a = 10;
       }
@@ -720,7 +748,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should error if it errors in conventional-changelog-writer', function(done) {
-    conventionalChangelog({}, {}, {}, {}, {
+    conventionalChangelogCore({}, {}, {}, {}, {
       finalizeContext: function() {
         return undefined.a;
       }
@@ -733,7 +761,7 @@ describe('conventionalChangelog', function() {
   });
 
   it('should be object mode if `writerOpts.includeDetails` is `true`', function(done) {
-    conventionalChangelog({}, {}, {}, {}, {
+    conventionalChangelogCore({}, {}, {}, {}, {
       includeDetails: true
     })
       .pipe(through.obj(function(chunk) {
@@ -745,7 +773,7 @@ describe('conventionalChangelog', function() {
   it('should pass `parserOpts` to conventional-commits-parser', function(done) {
     gitDummyCommit(['test9', 'Release note: super release!']);
 
-    conventionalChangelog({}, {}, {}, {
+    conventionalChangelogCore({}, {}, {}, {
       noteKeywords: [
         'Release note'
       ]

@@ -8,32 +8,33 @@ You might want to use the [cli](https://github.com/stevemao/conventional-changel
 ## Usage
 
 ```sh
-$ npm install --save conventional-changelog
+$ npm install --save conventional-changelog-core
 ```
 
 ```js
-var conventionalChangelog = require('conventional-changelog');
+var conventionalChangelogCore = require('conventional-changelog-core');
 
-conventionalChangelog({
-  preset: 'angular'
-})
+conventionalChangelogCore()
   .pipe(process.stdout); // or any writable stream
 ```
 
 
 ## API
 
-### conventionalChangelog([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
+### conventionalChangelogCore([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
 
 Returns a readable stream.
 
 #### options
 
-##### preset
+##### config
 
-Type: `string` [Possible values](presets)
+Type: `object`, `promise` or `function`
 
-It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten.
+If this is an object, it is the config object. The config object should include context, gitRawCommitsOpts, parserOpts and writerOpts.
+If this is a promise, it should resolve with the config.
+If this is a function, it expects a node style callback with the config object.
+The config values can be overwritten.
 
 ##### pkg
 

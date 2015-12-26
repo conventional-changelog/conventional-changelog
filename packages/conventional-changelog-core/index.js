@@ -17,7 +17,7 @@ var rhosts = /github|bitbucket|gitlab/i;
 var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
 function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
-  var presetPromise;
+  var configPromise;
   var pkgPromise;
   var semverTagsPromise;
 
@@ -58,15 +58,11 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     }
   }, options);
 
-  var loadPreset = options.preset;
-
-  if (loadPreset) {
-    try {
-      var presetFn = require('./presets/' + options.preset);
-      presetPromise = Q.nfcall(presetFn);
-    } catch (err) {
-      loadPreset = false;
-      options.warn('Preset: "' + options.preset + '" does not exist');
+  if (options.config) {
+    if (_.isFunction(options.config)) {
+      configPromise = Q.nfcall(options.config);
+    } else {
+      configPromise = Q(options.config); // jshint ignore:line
     }
   }
 
@@ -78,27 +74,30 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     }
   }
 
+  // todo: if `context.gitSemverTags` already exists, resolve it straight away.
   semverTagsPromise = Q.nfcall(gitSemverTags);
 
-  Q.allSettled([presetPromise, pkgPromise, semverTagsPromise])
-    .spread(function(presetObj, pkgObj, tagsObj) {
-      var preset;
+  Q.allSettled([configPromise, pkgPromise, semverTagsPromise])
+    .spread(function(configObj, pkgObj, tagsObj) {
+      var config;
       var pkg;
       var tag;
       var repo;
 
       var hostOpts;
 
-      if (loadPreset) {
-        if (presetObj.state === 'fulfilled') {
-          preset = presetObj.value;
+      if (options.config) {
+        if (configObj.state === 'fulfilled') {
+          config = configObj.value;
         } else {
-          options.warn('Internal error in preset: "' + options.preset + '"');
-          preset = {};
+          options.warn('Error in config "' + options.config + '": ' + configObj.reason.toString());
+          config = {};
         }
       } else {
-        preset = {};
+        config = {};
       }
+
+      context = _.assign(context, config.context);
 
       if (options.pkg) {
         if (pkgObj.state === 'fulfilled') {
@@ -166,7 +165,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
           from: tag
         },
-        preset.gitRawCommitsOpts,
+        config.gitRawCommitsOpts,
         gitRawCommitsOpts
       );
 
@@ -175,7 +174,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       }
 
       parserOpts = _.assign(
-        {}, preset.parserOpts, {
+        {}, config.parserOpts, {
           warn: options.warn
         },
         parserOpts);
@@ -215,7 +214,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
             return context;
           }
         },
-        preset.writerOpts, {
+        config.writerOpts, {
           reverse: options.append
         },
         writerOpts

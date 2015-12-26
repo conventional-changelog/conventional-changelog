@@ -35,6 +35,7 @@
     "jscs": "^2.7.0",
     "jshint": "^2.9.1-rc2",
     "mocha": "*",
+    "pinkie-promise": "^2.0.0",
     "shelljs": "^0.5.3"
   },
   "scripts": {
