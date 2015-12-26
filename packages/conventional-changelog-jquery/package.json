@@ -1,0 +1,40 @@
+{
+  "name": "conventional-changelog-jquery",
+  "version": "0.0.0",
+  "description": "conventional-changelog jquery preset",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "test": "mocha && npm run-script lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevemao/conventional-changelog-jquery.git"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "jquery",
+    "preset"
+  ],
+  "author": "Steve Mao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stevemao/conventional-changelog-jquery/issues"
+  },
+  "homepage": "https://github.com/stevemao/conventional-changelog-jquery#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "conventional-changelog-core": "0.0.1",
+    "coveralls": "^2.11.6",
+    "jscs": "^2.7.0",
+    "jshint": "^2.9.1-rc2",
+    "mocha": "*",
+    "shelljs": "^0.5.3",
+    "through2": "^2.0.0"
+  },
+  "dependencies": {
+    "q": "^1.4.1",
+    "semver": "^5.1.0"
+  }
+}
