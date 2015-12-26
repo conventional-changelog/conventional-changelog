@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> (conventional-changelog)[https://github.com/ajoslin/conventional-changelog] core
+> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) core
 
 You might want to use the [cli](https://github.com/stevemao/conventional-changelog-cli) module.
 
