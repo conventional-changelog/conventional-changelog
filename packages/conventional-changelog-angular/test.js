@@ -32,6 +32,9 @@ describe('angular preset', function() {
     conventionalChangelogCore({
       config: preset
     })
+      .on('error', function(err) {
+        done(err);
+      })
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
@@ -67,6 +70,9 @@ describe('angular preset', function() {
     conventionalChangelogCore({
       config: preset
     })
+      .on('error', function(err) {
+        done(err);
+      })
       .pipe(through(function(chunk, enc, cb) {
         chunk = chunk.toString();
 
