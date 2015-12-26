@@ -38,7 +38,7 @@
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "npm run-script lint && mocha"
+    "test": "npm run-script lint && mocha --timeout 10000"
   },
   "bin": {
     "git-semver-tags": "cli.js"
