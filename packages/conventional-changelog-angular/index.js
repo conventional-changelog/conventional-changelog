@@ -3,8 +3,6 @@ var compareFunc = require('compare-func');
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
-var semver = require('semver');
-var _ = require('lodash');
 
 function presetOpts() {
   var parserOpts = {
@@ -45,12 +43,10 @@ function presetOpts() {
         commit.subject = commit.subject.substring(0, 80);
       }
 
-      _.map(commit.notes, function(note) {
+      commit.notes.forEach(function(note) {
         if (note.title === 'BREAKING CHANGE') {
           note.title = 'BREAKING CHANGES';
         }
-
-        return note;
       });
 
       return commit;
@@ -59,10 +55,7 @@ function presetOpts() {
     commitGroupsSort: 'title',
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
-    notesSort: compareFunc,
-    generateOn: function(commit) {
-      return semver.valid(commit.version);
-    }
+    notesSort: compareFunc
   };
 
   return Q.all([

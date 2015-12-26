@@ -1,9 +1,9 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) angular preset
+> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [angular](https://github.com/angular/angular) preset
 
 
-See [conventional](convention.md)
+See [convention](convention.md)
 
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
