@@ -184,6 +184,8 @@ This module has options `append` and `releaseCount`. However, it doesn't read yo
 
 So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs.
 
+Arguments passed to `conventionalChangelog` will be mutated.
+
 
 ## License
 
