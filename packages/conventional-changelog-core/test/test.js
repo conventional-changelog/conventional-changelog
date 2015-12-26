@@ -635,6 +635,19 @@ describe('conventionalChangelogCore', function() {
           done();
         }));
     });
+
+    it('should warn if config errors', function(done) {
+      conventionalChangelogCore({
+        config: new Promise(function(solve, reject) {
+          reject('config error');
+        }),
+        warn: function(warning) {
+          expect(warning).to.include('config error');
+
+          done();
+        }
+      });
+    });
   });
 
   it('should warn if host is not found', function(done) {
