@@ -1,11 +1,11 @@
 'use strict';
 var child = require('child_process');
 var conventionalChangelogCore = require('conventional-changelog-core');
+var preset = require('./');
 var expect = require('chai').expect;
 var gitDummyCommit = require('git-dummy-commit');
 var shell = require('shelljs');
 var through = require('through2');
-var preset = require('./')();
 
 describe('angular preset', function() {
   before(function(done) {
