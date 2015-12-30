@@ -2,67 +2,10 @@
 
 > Generate a changelog from git metadata
 
-[Synopsis of Conventions](conventions)
+You are probably looking for the [cli](https://github.com/stevemao/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog).
 
 
-## Quick start
-
-```sh
-$ npm install -g conventional-changelog
-$ cd my-project
-$ conventional-changelog -p angular -i CHANGELOG.md -w
-```
-
-This will *not* overwrite any previous changelog. The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
-
-If you first time use this tool and want to generate all previous changelog, you could do
-
-```sh
-$ conventional-changelog -p angular -i CHANGELOG.md -w -r 0
-```
-
-This *will* overwrite any previous changelog if exist.
-
-All available command line parameters can be listed using [CLI](#cli) : `conventional-changelog --help`.
-
-**Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"`.
-
-Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog)
-
-
-## Recommended workflow
-
-1. Make changes
-2. Commit those changes
-3. Make sure Travis turns green
-4. Bump version in `package.json`
-5. `conventionalChangelog`
-6. Commit `package.json` and `CHANGELOG.md` files
-7. Tag
-8. Push
-
-The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
-
-Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to make a release or change it to your needs.
-
-
-## Example output
-
-- https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
-- https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
-- https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
-
-
-## Why
-
-- Used by AngularJS and related projects.
-- Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
-- Intelligently setup defaults but yet fully configurable with presets of popular projects.
-- Everything internally or externally is pluggable.
-- A lot of tests and actively maintained.
-
-
-## Programmatic usage
+## Usage
 
 ```sh
 $ npm install --save conventional-changelog
@@ -86,148 +29,13 @@ Returns a readable stream.
 
 #### options
 
+See the [conventional-changelog-core](https://github.com/stevemao/conventional-changelog-core) docs. The API is exactly the same with some additions:
+
 ##### preset
 
-Type: `string` [Possible values](presets)
+Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint'`
 
-It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten.
-
-##### pkg
-
-Type: `object`
-
-###### path
-
-Type: `string` Default: [closest package.json](https://github.com/sindresorhus/read-pkg-up).
-
-The location of your "package.json".
-
-###### transform
-
-Type: `function` Default: pass through.
-
-A function that takes `package.json` data as the argument and returns the modified data. Note this is performed before normalizing package.json data. Useful when you need to add a leading 'v' to your version or modify your repository url, etc.
-
-##### append
-
-Type: `boolean` Default: `false`
-
-Should the log be appended to existing data.
-
-##### releaseCount
-
-Type: `number` Default: `1`
-
-How many releases of changelog you want to generate. It counts from the upcoming release. Useful when you forgot to generate any previous changelog. Set to `0` to regenerate all.
-
-##### warn
-
-Type: `function` Default: `function() {}`
-
-A warn function. EG: `grunt.verbose.writeln`
-
-##### transform
-
-Type: `function` Default: get the version (without leading 'v') from tag and format date.
-
-###### function(commit, cb)
-
-A transform function that applies after the parser and before the writer.
-
-This is the place to modify the parsed commits.
-
-####### commit
-
-The commit from conventional-commits-parser.
-
-####### cb
-
-Callback when you are done.
-
-####### this
-
-`this` arg of through2.
-
-#### context
-
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults or changes:
-
-##### host
-
-Default: normalized host found in `package.json`.
-
-##### version
-
-Default: version found in `package.json`.
-
-##### owner
-
-Default: extracted from normalized `package.json` `repository.url` field.
-
-##### repository
-
-Default: extracted from normalized `package.json` `repository.url` field.
-
-##### gitSemverTags
-
-Type: `array`
-
-All git semver tags found in the repository. You can't overwrite this value.
-
-##### previousTag
-
-Type: `string` Default: previous tag or the first commit hash if no previous tag.
-
-##### currentTag
-
-Type: `string` Default: current tag or `'v'` + version if no current tag.
-
-##### packageData
-
-Type: `object`
-
-Your `package.json` data. You can't overwrite this value.
-
-##### linkCompare
-
-Type: `boolean` Default: `true` if `previousTag` and `currentTag` are truthy.
-
-Should link to the page that compares current tag with previous tag?
-
-#### gitRawCommitsOpts
-
-See the [git-raw-commits](https://github.com/stevemao/git-raw-commits) docs. There are some defaults:
-
-##### format
-
-Default: `'%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci'`
-
-##### from
-
-Default: based on `options.releaseCount`.
-
-##### reverse
-
-Default: only `true` if `options.append` is truthy.
-
-#### parserOpts
-
-See the [conventional-commits-parser](https://github.com/stevemao/conventional-commits-parser) docs.
-
-#### writerOpts
-
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults:
-
-##### reverse
-
-Default: same as `options.append`.
-
-### CLI
-
-```sh
-$ npm install --global conventional-changelog
-$ conventional-changelog --help # for more details
-```
+It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten. This value is case insensitive.
 
 
 ## Notes for parent modules
