@@ -5,7 +5,9 @@ var regex = /tag:\s*(.+?)[,\)]/gi;
 var cmd = 'git log --decorate';
 
 module.exports = function(callback) {
-  exec(cmd, function(err, data) {
+  exec(cmd, {
+    maxBuffer: Infinity
+  }, function(err, data) {
     if (err) {
       callback(err);
       return;
