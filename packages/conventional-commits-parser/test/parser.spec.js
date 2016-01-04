@@ -478,6 +478,7 @@ describe('parser', function() {
       }]);
       expect(msg.footer).to.equal('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change');
     });
+
   });
 
   describe('others', function() {
@@ -554,4 +555,109 @@ describe('parser', function() {
       });
     });
   });
+
+  describe('pull request', function() {
+    var githubOptions = {
+      headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+      headerCorrespondence: ['type', 'scope', 'subject'],
+      pullRequestPattern: /^Merge pull request #(\d+) from (.*)$/,
+      pullRequestCorrespondence: ['id', 'source']
+    };
+
+    var githubRegex = regex(githubOptions);
+
+    var githubMsg = parser(
+      'Merge pull request #1 from user/feature/feature-name\n' +
+      '\n' +
+      'feat(scope): broadcast $destroy event on scope destruction\n' +
+      '\n' +
+      'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+      'when destroying 10k nested scopes where each scope has a $destroy listener',
+      githubOptions,
+      githubRegex
+    );
+
+    it('should parse header in GitHub like pull request', function() {
+      expect(githubMsg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
+    });
+
+    it('should understand header parts in GitHub like pull request', function() {
+      expect(githubMsg.type).to.equal('feat');
+      expect(githubMsg.scope).to.equal('scope');
+      expect(githubMsg.subject).to.equal('broadcast $destroy event on scope destruction');
+    });
+
+    it('should understand pull request parts in GitHub like pull request', function() {
+      expect(githubMsg.pullRequest).to.eql({
+        id: '1',
+        source: 'user/feature/feature-name'
+      });
+    });
+
+    var gitLabOptions = {
+      headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+      headerCorrespondence: ['type', 'scope', 'subject'],
+      pullRequestPattern: /^Merge branch '([^']+)' into '[^']+'$/,
+      pullRequestCorrespondence: ['source']
+    };
+
+    var gitLabRegex = regex(gitLabOptions);
+
+    var gitlabMsg = parser(
+      'Merge branch \'feature/feature-name\' into \'master\'\r\n' +
+      '\r\n' +
+      'feat(scope): broadcast $destroy event on scope destruction\r\n' +
+      '\r\n' +
+      'perf testing shows that in chrome this change adds 5-15% overhead\r\n' +
+      'when destroying 10k nested scopes where each scope has a $destroy listener\r\n' +
+      '\r\n' +
+      'See merge request !1',
+      gitLabOptions,
+      gitLabRegex
+    );
+
+    it('should parse header in GitLab like merge request', function() {
+      expect(gitlabMsg.header).to.equal('feat(scope): broadcast $destroy event on scope destruction');
+    });
+
+    it('should understand header parts in GitLab like merge request', function() {
+      expect(gitlabMsg.type).to.equal('feat');
+      expect(gitlabMsg.scope).to.equal('scope');
+      expect(gitlabMsg.subject).to.equal('broadcast $destroy event on scope destruction');
+    });
+
+    it('should understand pull request parts in GitLab like merge request', function() {
+      expect(gitlabMsg.pullRequest).to.eql({
+        source: 'feature/feature-name'
+      });
+    });
+
+    it('Should parse conventional header if pull request header is missing', function() {
+      var msgWithoutPullRequestHeader = parser(
+        'feat(scope): broadcast $destroy event on scope destruction',
+        githubOptions,
+        githubRegex
+      );
+
+      expect(msgWithoutPullRequestHeader.pullRequest).to.equal(null);
+    });
+
+    it('pullRequest should be undefied if options.pullRequestPattern is not defined', function() {
+      expect(msg.pullRequest).to.equal(undefined);
+    });
+
+    it('Should not parse conventional header if pull request header present and pullRequestPattern is not set', function() {
+      var msgWithPullRequestHeaderWithoutPullRequestPattern = parser(
+        'Merge pull request #1 from user/feature/feature-name\n' +
+        'feat(scope): broadcast $destroy event on scope destruction',
+        options,
+        reg
+      );
+      expect(msgWithPullRequestHeaderWithoutPullRequestPattern.type).to.equal(null);
+      expect(msgWithPullRequestHeaderWithoutPullRequestPattern.scope).to.equal(null);
+      expect(msgWithPullRequestHeaderWithoutPullRequestPattern.subject).to.equal(null);
+    });
+
+  });
+
 });

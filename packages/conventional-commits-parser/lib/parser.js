@@ -26,18 +26,22 @@ function parser(raw, options, regex) {
   }
 
   var headerMatch;
+  var pullRequestMatch;
   var referenceSentences;
   var referenceMatch;
   var currentProcessedField;
   var revertMatch;
   var otherFields = {};
-  var lines = trimOffNewlines(raw).split('\n');
+  var lines = trimOffNewlines(raw).split(/\r?\n/);
   var continueNote = false;
   var isBody = true;
   var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
     return part.trim();
   });
   var revertCorrespondence = _.map(options.revertCorrespondence, function(field) {
+    return field.trim();
+  });
+  var pullRequestCorrespondence = _.map(options.pullRequestCorrespondence, function(field) {
     return field.trim();
   });
 
@@ -53,9 +57,28 @@ function parser(raw, options, regex) {
   var notes = [];
   var references = [];
   var revert;
+  var pullRequest;
+
+  if (options.pullRequestPattern) {
+    pullRequestMatch = header.match(options.pullRequestPattern);
+    if (pullRequestMatch) {
+      pullRequest = {};
+      _.forEach(pullRequestCorrespondence, function(fieldName, index) {
+        var fieldValue = pullRequestMatch[index + 1] || null;
+        pullRequest[fieldName] = fieldValue;
+      });
+
+      do {
+        header = lines.shift();
+      }
+      while (header !== undefined && header.match(/^\r?$/));
+
+    } else {
+      pullRequest = null;
+    }
+  }
 
   headerMatch = header.match(options.headerPattern);
-
   if (headerMatch) {
     _.forEach(headerCorrespondence, function(partName, index) {
       var partValue = headerMatch[index + 1] || null;
@@ -218,7 +241,8 @@ function parser(raw, options, regex) {
     footer: footer ? trimOffNewlines(footer) : null,
     notes: notes,
     references: references,
-    revert: revert
+    revert: revert,
+    pullRequest: pullRequest
   }, otherFields);
 
   return msg;

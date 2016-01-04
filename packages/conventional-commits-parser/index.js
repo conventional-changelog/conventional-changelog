@@ -24,7 +24,9 @@ function assignOpts(options) {
     fieldPattern: /^-(.*?)-$/,
     revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./,
     revertCorrespondence: ['header', 'hash'],
-    warn: function() {}
+    warn: function() {},
+    pullRequestPattern: null,
+    pullRequestCorrespondence: null
   }, options);
 
   if (typeof options.headerPattern === 'string') {
@@ -57,6 +59,10 @@ function assignOpts(options) {
 
   if (typeof options.revertCorrespondence === 'string') {
     options.revertCorrespondence = options.revertCorrespondence.split(',');
+  }
+
+  if (typeof options.pullRequestPattern === 'string') {
+    options.pullRequestPattern = new RegExp(options.pullRequestPattern);
   }
 
   return options;
