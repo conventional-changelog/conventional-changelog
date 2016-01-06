@@ -39,6 +39,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     },
     append: false,
     releaseCount: 1,
+    commitsStream: null,
     warn: function() {},
     transform: function(commit, cb) {
       if (typeof commit.gitTags === 'string') {
@@ -86,6 +87,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       var pkg;
       var tag;
       var repo;
+      var commitsStream;
 
       var hostOpts;
 
@@ -221,11 +223,17 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         writerOpts
       );
 
-      gitRawCommits(gitRawCommitsOpts)
-        .on('error', function(err) {
-          err.message = 'Error in git-raw-commits: ' + err.message;
-          readable.emit('error', err);
-        })
+      if (options.commitsStream) {
+        commitsStream = options.commitsStream;
+      } else {
+        commitsStream = gitRawCommits(gitRawCommitsOpts)
+          .on('error', function (err) {
+            err.message = 'Error in git-raw-commits: ' + err.message;
+            readable.emit('error', err);
+          });
+      }
+
+      commitsStream
         .pipe(conventionalCommitsParser(parserOpts))
         .on('error', function(err) {
           err.message = 'Error in conventional-commits-parser: ' + err.message;

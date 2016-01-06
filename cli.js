@@ -7,6 +7,7 @@ var meow = require('meow');
 var tempfile = require('tempfile');
 var _ = require('lodash');
 var resolve = require('path').resolve;
+var split = require('split2');
 
 var cli = meow({
   help: [
@@ -25,6 +26,10 @@ var cli = meow({
     '  -a, --append              Should the generated block be appended',
     '  -r, --release-count       How many releases to be generated from the latest',
     '  -v, --verbose             Verbose output',
+    '  -d, --delimiter           The string used as the delimiter for commits when specifying a commits file. Defaults' +
+    '                            to the string used by git-raw-commits',
+    '  -f, --from-file           A filepath of a git log file with commits formatted as outlined in readme, and ' +
+    '                            delimited by the string set by -d',
     '  -c, --context             A filepath of a javascript that is used to define template variables',
     '  --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options',
     '  --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options',
@@ -40,7 +45,9 @@ var cli = meow({
     a: 'append',
     r: 'releaseCount',
     v: 'verbose',
-    c: 'context'
+    c: 'context',
+    d: 'delimiter',
+    f: 'from-file'
   }
 });
 
@@ -50,6 +57,8 @@ var outfile = flags.outfile;
 var overwrite = flags.overwrite;
 var append = flags.append;
 var releaseCount = flags.releaseCount;
+var fromFile = flags.fromFile;
+var delimiter = flags.delimiter || "------------------------ >8 ------------------------\n";
 
 if (infile && infile === outfile) {
   overwrite = true;
@@ -101,6 +110,15 @@ try {
 } catch (err) {
   console.error('Failed to get file. ' + err);
   process.exit(1);
+}
+
+if (fromFile) {
+  options.commitsStream = fs.createReadStream(fromFile)
+    .on('error', function(err) {
+      console.error('Error reading commits from file. ' + err.message);
+      process.exit(1);
+    })
+    .pipe(split(delimiter));
 }
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts)
