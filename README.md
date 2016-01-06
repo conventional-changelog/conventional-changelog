@@ -229,6 +229,12 @@ $ npm install --global conventional-changelog
 $ conventional-changelog --help # for more details
 ```
 
+#### Generating logs to use with --from-file
+
+```sh
+$ git log --format="%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci%n------------------------ >8 ------------------------" > logs.txt
+$ conventional-changelog -f logs.txt
+```
 
 ## Notes for parent modules
 
