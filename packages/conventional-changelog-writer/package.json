@@ -25,7 +25,7 @@
     "conventional-commits-filter": "^0.1.0",
     "dateformat": "^1.0.11",
     "handlebars": "^4.0.2",
-    "lodash": "^3.8.0",
+    "lodash": "^4.0.0",
     "meow": "^3.3.0",
     "semver": "^5.0.1",
     "split": "^1.0.0",
@@ -35,9 +35,9 @@
     "chai": "^3.0.0",
     "concat-stream": "^1.4.8",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.13",
+    "istanbul": "^0.4.2",
     "jscs": "^2.1.1",
-    "jshint": "^2.7.0",
+    "jshint": "^2.9.1-rc3",
     "mocha": "*"
   },
   "scripts": {
