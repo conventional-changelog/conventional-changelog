@@ -105,7 +105,11 @@ try {
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts)
   .on('error', function(err) {
-    console.error(err.toString());
+    if (flags.verbose) {
+      console.error(err.stack);
+    } else {
+      console.error(err.toString());
+    }
     process.exit(1);
   });
 
