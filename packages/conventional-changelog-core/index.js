@@ -86,11 +86,11 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
       var hostOpts;
 
-      if (options.config) {
+      if (configPromise) {
         if (configObj.state === 'fulfilled') {
           config = configObj.value;
         } else {
-          options.warn('Error in config "' + options.config + '": ' + configObj.reason.toString());
+          options.warn('Error in config' + configObj.reason.toString());
           config = {};
         }
       } else {
@@ -223,12 +223,12 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       gitRawCommits(gitRawCommitsOpts)
         .on('error', function(err) {
           err.message = 'Error in git-raw-commits: ' + err.message;
-          readable.emit('error', err);
+          setImmediate(readable.emit.bind(readable), 'error', err);
         })
         .pipe(conventionalCommitsParser(parserOpts))
         .on('error', function(err) {
           err.message = 'Error in conventional-commits-parser: ' + err.message;
-          readable.emit('error', err);
+          setImmediate(readable.emit.bind(readable), 'error', err);
         })
         // it would be better to if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
@@ -241,17 +241,23 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         }))
         .on('error', function(err) {
           err.message = 'Error in options.transform: ' + err.message;
-          readable.emit('error', err);
+          setImmediate(readable.emit.bind(readable), 'error', err);
         })
         .pipe(conventionalChangelogWriter(context, writerOpts))
         .on('error', function(err) {
           err.message = 'Error in conventional-changelog-writer: ' + err.message;
-          readable.emit('error', err);
+          setImmediate(readable.emit.bind(readable), 'error', err);
         })
         .pipe(through({
           objectMode: writerOpts.includeDetails
         }, function(chunk, enc, cb) {
-          readable.push(chunk);
+          try {
+            readable.push(chunk);
+          } catch (err) {
+            setImmediate(function() {
+              throw err;
+            });
+          }
 
           cb();
         }, function(cb) {
@@ -261,7 +267,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         }));
     })
     .catch(function(err) {
-      setImmediate(readable.emit.bind(readable), 'error', err);
+      readable.emit('error', err);
     });
 
   return readable;
