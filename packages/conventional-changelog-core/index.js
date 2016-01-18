@@ -41,7 +41,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     releaseCount: 1,
     warn: function() {},
     transform: function(commit, cb) {
-      if (typeof commit.gitTags === 'string') {
+      if (_.isString(commit.gitTags)) {
         var match = rtag.exec(commit.gitTags);
         rtag.lastIndex = 0;
 
@@ -207,7 +207,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
               context.currentTag = context.currentTag || 'v' + context.version;
             }
 
-            if (typeof context.linkCompare !== 'boolean' && context.previousTag && context.currentTag) {
+            if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
               context.linkCompare = true;
             }
 
