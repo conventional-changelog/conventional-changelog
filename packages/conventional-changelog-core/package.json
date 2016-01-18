@@ -20,7 +20,7 @@
     "get-pkg-repo": "^0.1.0",
     "git-raw-commits": "^0.1.2",
     "git-semver-tags": "^1.1.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.0.0",
     "q": "^1.4.1",
     "read-pkg": "^1.1.0",
     "read-pkg-up": "^1.0.1",
@@ -33,7 +33,7 @@
     "git-tails": "^1.0.0",
     "istanbul": "^0.4.1",
     "jscs": "^2.7.0",
-    "jshint": "^2.9.1-rc2",
+    "jshint": "^2.9.1",
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
     "shelljs": "^0.5.3"
