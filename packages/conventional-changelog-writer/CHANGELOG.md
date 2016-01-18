@@ -1,3 +1,13 @@
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.1...v0.4.2) (2016-01-18)
+
+
+### Features
+
+* **generateOn:** also pass commits, context and options to the function ([3146f66](https://github.com/stevemao/conventional-changelog-writer/commit/3146f66)), closes [ajoslin/conventional-changelog#135](https://github.com/ajoslin/conventional-changelog/issues/135)
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.0...v0.4.1) (2015-09-30)
 
