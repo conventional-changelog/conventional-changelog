@@ -351,6 +351,38 @@ describe('conventionalChangelogWriter', function() {
           }));
       });
 
+      it('`generateOn` could be a function', function(done) {
+        var i = 0;
+
+        getStream()
+          .pipe(conventionalChangelogWriter({}, {
+            generateOn: function(commit, commits, context, options) {
+              expect(commits.length).to.be.a('number');
+              expect(context.commit).to.equal('commits');
+              expect(options.groupBy).to.equal('type');
+
+              return commit.version;
+            }
+          }))
+          .pipe(through(function(chunk, enc, cb) {
+            chunk = chunk.toString();
+
+            if (i === 0) {
+              expect(chunk).to.include('<a name=""></a>\n#  (' + today);
+              expect(chunk).to.not.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)');
+            } else {
+              expect(chunk).to.include('<a name="1.0.1"></a>');
+              expect(chunk).to.not.include('<a name=""></a>');
+            }
+
+            i++;
+            cb(null);
+          }, function() {
+            expect(i).to.equal(2);
+            done();
+          }));
+      });
+
       it('`generateOn` could be a null', function(done) {
         var i = 0;
 

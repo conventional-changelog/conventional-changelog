@@ -64,8 +64,8 @@ function conventionalChangelogWriter(context, options) {
 
   var generateOn = options.generateOn;
   if (_.isString(generateOn)) {
-    generateOn = function(chunk) {
-      return !_.isUndefined(chunk[options.generateOn]);
+    generateOn = function(commit) {
+      return !_.isUndefined(commit[options.generateOn]);
     };
   } else if (!_.isFunction(generateOn)) {
     generateOn = function() {
@@ -90,7 +90,7 @@ function conventionalChangelogWriter(context, options) {
           commits.push(commit);
         }
 
-        if (generateOn(keyCommit)) {
+        if (generateOn(keyCommit, commits, context, options)) {
           result = util.generate(options, commits, context, keyCommit);
           if (options.includeDetails) {
             this.push({
@@ -104,7 +104,7 @@ function conventionalChangelogWriter(context, options) {
           commits = [];
         }
       } else {
-        if (generateOn(keyCommit)) {
+        if (generateOn(keyCommit, commits, context, options)) {
           result = util.generate(options, commits, context, savedKeyCommit);
           if (options.includeDetails) {
             this.push({

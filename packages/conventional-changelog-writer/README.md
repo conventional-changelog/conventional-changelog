@@ -190,7 +190,27 @@ The string can be a dot path to a nested object property.
 
 Type: `function`, `string` or `any` Default: if `commit.version` is a valid semver.
 
-When the upstream finishes pouring the commits it will generate a block of logs by default. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream. **NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`). However, if the transformed commit is ignored it falls back to the original commit.
+When the upstream finishes pouring the commits it will generate a block of logs by default. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream.
+
+###### generateOn(commit, commits, context, options)
+
+####### commit
+
+Current commit.
+
+####### commits
+
+Current collected commits.
+
+####### context
+
+The generated context based on original input `context` and `options`.
+
+####### options
+
+Normalized options.
+
+**NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`). However, if the transformed commit is ignored it falls back to the original commit.
 
 If this value is a `string`, it checks the existence of the field. Set to other type to disable it.
 
