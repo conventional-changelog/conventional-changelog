@@ -158,13 +158,17 @@ Default: only `true` if `options.append` is truthy.
 
 See the [conventional-commits-parser](https://github.com/stevemao/conventional-commits-parser) docs.
 
+##### warn
+
+Default: `options.warn`
+
 #### writerOpts
 
 See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults:
 
 ##### reverse
 
-Default: same as `options.append`.
+Default: `options.append`
 
 ### CLI
 
