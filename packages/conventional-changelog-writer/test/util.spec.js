@@ -767,5 +767,24 @@ describe('util', function() {
 
       expect(log).to.equal('`a` oh');
     });
+
+    it('should finalize context', function() {
+      var log = util.generate({
+        mainTemplate: '{{whatever}} {{somethingExtra}} {{opt}} {{commitsLen}} {{whatever}}',
+        finalizeContext: function(context, options, commits, keyCommit) {
+          context.somethingExtra = 'oh';
+          context.opt = options.opt;
+          context.commitsLen = commits.length;
+          context.whatever = keyCommit.whatever;
+
+          return context;
+        },
+        opt: 'opt'
+      }, [], [], {
+        whatever: '`a`'
+      });
+
+      expect(log).to.equal('`a` oh opt 0 `a`');
+    });
   });
 });
