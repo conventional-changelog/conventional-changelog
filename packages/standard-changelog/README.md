@@ -53,13 +53,7 @@ $ standard-changelog --help
 
 ## API
 
-### standardChangelog([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
-
-Returns a readable stream.
-
-#### options
-
-See the [standard-changelog-core](https://github.com/stevemao/standard-changelog-core) docs with the angular preset.
+See the [conventional-changelog](https://github.com/ajoslin/conventional-changelog) docs with the angular preset.
 
 
 ## [Notes for parent modules](https://github.com/stevemao/standard-changelog-core#notes-for-parent-modules)
