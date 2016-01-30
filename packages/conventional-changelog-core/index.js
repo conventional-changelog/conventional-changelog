@@ -74,7 +74,6 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     }
   }
 
-  // todo: if `context.gitSemverTags` already exists, resolve it straight away.
   semverTagsPromise = Q.nfcall(gitSemverTags);
 
   Q.allSettled([configPromise, pkgPromise, semverTagsPromise])
