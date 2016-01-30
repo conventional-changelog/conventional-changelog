@@ -735,7 +735,7 @@ describe('conventionalChangelogCore', function() {
 
     conventionalChangelogCore({
       transform: function(commit, cb) {
-        cb('error');
+        cb(new Error('error'));
       }
     })
       .on('error', function(err) {
