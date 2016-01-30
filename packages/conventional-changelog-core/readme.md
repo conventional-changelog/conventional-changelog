@@ -2,7 +2,7 @@
 
 > [conventional-changelog](https://github.com/ajoslin/conventional-changelog) core
 
-You might want to use the [cli](https://github.com/stevemao/conventional-changelog-cli) module.
+You are probably looking for the [cli](https://github.com/stevemao/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog).
 
 
 ## Usage
