@@ -50,8 +50,14 @@ describe('conventionalChangelog', function() {
     var i = 0;
 
     conventionalChangelog({
-      preset: 'aNgular'
+      preset: 'aNgular',
+      warn: function(warning) {
+        done(warning);
+      }
     })
+      .on('error', function(err) {
+        done(err);
+      })
       .pipe(through(function(chunk, enc, cb) {
         chunk = chunk.toString();
 
@@ -80,7 +86,10 @@ describe('conventionalChangelog', function() {
         i++;
         done();
       }
-    });
+    })
+      .on('error', function(err) {
+        done(err);
+      });
   });
 
   it('should still work if preset is not found', function(done) {
@@ -89,6 +98,9 @@ describe('conventionalChangelog', function() {
     conventionalChangelog({
       preset: 'no'
     })
+      .on('error', function(err) {
+        done(err);
+      })
       .pipe(through(function(chunk, enc, cb) {
         chunk = chunk.toString();
 

@@ -48,9 +48,9 @@
     "through2": "^2.0.0"
   },
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
     "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
-    "test": "npm run-script lint && mocha --timeout 15000"
+    "test": "npm run-script lint && mocha --timeout 30000"
   },
   "bin": "cli.js"
 }
