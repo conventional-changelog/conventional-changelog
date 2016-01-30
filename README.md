@@ -38,15 +38,7 @@ Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'esli
 It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten. This value is case insensitive.
 
 
-## Notes for parent modules
-
-This module has options `append` and `releaseCount`. However, it doesn't read your previous changelog. Reasons being:
-
-1. The old logs is just to be appended or prepended to the newly generated logs, which is a very simple thing that could be done in the parent module.
-2. We want it to be very flexible for the parent module. You could create a readable stream from the file or you could just read the file.
-3. We want the duty of this module to be very minimum.
-
-So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs.
+## [Notes for parent modules](https://github.com/stevemao/conventional-changelog-core#notes-for-parent-modules)
 
 
 ## Related
