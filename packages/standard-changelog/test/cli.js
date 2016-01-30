@@ -255,8 +255,20 @@ describe('cli', function() {
     });
   });
 
-  it('--context should work', function(done) {
+  it('--context should work with relative path', function(done) {
     var cp = spawn(cliPath, ['--context', '../test/fixtures/context.json', '--config', '../test/fixtures/config.js'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function(chunk) {
+        expect(chunk.toString()).to.include('my-repo');
+        done();
+      }));
+  });
+
+  it('--context should work with absolute path', function(done) {
+    var cp = spawn(cliPath, ['--context', '../test/fixtures/context.json', '--config', __dirname + '/fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     });
 
