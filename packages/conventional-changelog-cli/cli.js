@@ -25,10 +25,8 @@ var cli = meow({
     '  -a, --append              Should the generated block be appended',
     '  -r, --release-count       How many releases to be generated from the latest',
     '  -v, --verbose             Verbose output',
-    '  -c, --context             A filepath of a javascript that is used to define template variables',
-    '  --git-raw-commits-opts    A filepath of a javascript that is used to define git-raw-commits options',
-    '  --parser-opts             A filepath of a javascript that is used to define conventional-commits-parser options',
-    '  --writer-opts             A filepath of a javascript that is used to define conventional-changelog-writer options'
+    '  -n, --config              A filepath of your config script',
+    '  -c, --context             A filepath of a json that is used to define template variables'
   ]
 }, {
   alias: {
@@ -40,6 +38,7 @@ var cli = meow({
     a: 'append',
     r: 'releaseCount',
     v: 'verbose',
+    n: 'config',
     c: 'context'
   }
 });
@@ -76,9 +75,6 @@ if (flags.verbose) {
 }
 
 var templateContext;
-var gitRawCommitsOpts;
-var parserOpts;
-var writerOpts;
 
 var outStream;
 
@@ -87,23 +83,15 @@ try {
     templateContext = require(resolve(process.cwd(), flags.context));
   }
 
-  if (flags.gitRawCommitsOpts) {
-    gitRawCommitsOpts = require(resolve(process.cwd(), flags.gitRawCommitsOpts));
-  }
-
-  if (flags.parserOpts) {
-    parserOpts = require(resolve(process.cwd(), flags.parserOpts));
-  }
-
-  if (flags.writerOpts) {
-    writerOpts = require(resolve(process.cwd(), flags.writerOpts));
+  if (flags.config) {
+    options.config = require(resolve(process.cwd(), flags.config));
   }
 } catch (err) {
   console.error('Failed to get file. ' + err);
   process.exit(1);
 }
 
-var changelogStream = conventionalChangelog (options, templateContext, gitRawCommitsOpts, parserOpts, writerOpts)
+var changelogStream = conventionalChangelog (options, templateContext)
   .on('error', function (err) {
     if (flags.verbose) {
       console.error(err.stack);

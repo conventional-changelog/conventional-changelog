@@ -239,7 +239,7 @@ describe('cli', function () {
   });
 
   it('should error if it fails to get any options file', function (done) {
-    var cp = spawn(cliPath, ['--parser-opts', 'no'], {
+    var cp = spawn(cliPath, ['--config', 'no'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -272,8 +272,20 @@ describe('cli', function () {
     });
   });
 
-  it('--writer-opts should work with relative path', function (done) {
-    var cp = spawn(cliPath, ['--writer-opts', __dirname + '/fixtures/writer-opts.js'], {
+  it('--context should work', function (done) {
+    var cp = spawn(cliPath, ['--context', '../test/fixtures/context.json', '--config', '../test/fixtures/config.js'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.equal('unicorn template');
+        done();
+      }));
+  });
+
+  it('--config should work with relative path', function (done) {
+    var cp = spawn(cliPath, ['--config', '../test/fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -284,8 +296,8 @@ describe('cli', function () {
       }));
   });
 
-  it('--writer-opts should work with absolute path', function (done) {
-    var cp = spawn(cliPath, ['--writer-opts', __dirname + '/fixtures/writer-opts.js'], {
+  it('--config should work with absolute path', function (done) {
+    var cp = spawn(cliPath, ['--config', __dirname + '/fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     });
 

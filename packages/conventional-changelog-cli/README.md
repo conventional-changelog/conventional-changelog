@@ -69,7 +69,7 @@ Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to
 
 ## License
 
-MIT © [Steve Mao]()
+MIT © [Steve Mao](https://github.com/stevemao)
 
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-cli.svg
