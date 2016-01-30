@@ -29,13 +29,13 @@ Returns a readable stream.
 
 #### options
 
-See the [conventional-changelog-core](https://github.com/stevemao/conventional-changelog-core) docs. The API is exactly the same with some additions:
+See the [conventional-changelog-core](https://github.com/stevemao/conventional-changelog-core) docs. The API is the same with the following changes or additions:
 
 ##### preset
 
 Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint'`
 
-It's recommended to use a preset so you don't have to define everything yourself. The preset values can be overwritten. This value is case insensitive.
+It's recommended to use a preset so you don't have to define everything yourself. `options.config` will be set to this value.
 
 
 ## [Notes for parent modules](https://github.com/stevemao/conventional-changelog-core#notes-for-parent-modules)
