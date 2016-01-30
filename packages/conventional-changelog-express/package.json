@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-express",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "conventional-changelog express preset",
   "main": "index.js",
   "scripts": {
