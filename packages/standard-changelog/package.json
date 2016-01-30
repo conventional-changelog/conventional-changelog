@@ -1,0 +1,42 @@
+{
+  "name": "standard-changelog",
+  "version": "0.0.0",
+  "description": "Generate a changelog from git metadata with Angular commit convention",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevemao/standard-changelog.git"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "angular",
+    "conventional",
+    "changelog",
+    "log"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "add-stream": "^1.0.0",
+    "conventional-changelog-angular": "^0.1.0",
+    "conventional-changelog-core": "^0.0.2",
+    "lodash": "^4.1.0",
+    "meow": "^3.7.0",
+    "tempfile": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "concat-stream": "^1.5.1",
+    "coveralls": "^2.11.6",
+    "jscs": "^2.9.0",
+    "jshint": "^2.9.1",
+    "mocha": "*",
+    "nyc": "^5.5.0",
+    "shelljs": "^0.5.3",
+    "through2": "^2.0.0"
+  },
+  "scripts": {
+    "test": "nyc mocha --timeout 30000 && npm run-script lint",
+    "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "bin": "cli.js"
+}
