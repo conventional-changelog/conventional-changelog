@@ -42,7 +42,7 @@
   },
   "scripts": {
     "test": "nyc mocha --timeout 30000 && npm run-script lint",
-    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "license": "MIT"
