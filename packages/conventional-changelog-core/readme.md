@@ -31,10 +31,10 @@ Returns a readable stream.
 
 Type: `promise`, `function` or `object`
 
+This should serve as a default value for other arguments of `conventionalChangelogCore` so it could be overwritten.
 If this is a promise (recommended if async), it should resolve with the config.
 If this is a function, it expects a node style callback with the config object.
 If this is an object, it is the config object. The config object should include context, gitRawCommitsOpts, parserOpts and writerOpts.
-The config values can be overwritten.
 
 ##### pkg
 
