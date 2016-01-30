@@ -179,7 +179,7 @@ This module has options `append` and `releaseCount`. However, it doesn't read yo
 2. We want it to be very flexible for the parent module. You could create a readable stream from the file or you could just read the file.
 3. We want the duty of this module to be very minimum.
 
-So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs.
+So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs. Please see [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) as an example.
 
 Arguments passed to `conventionalChangelogCore` will be mutated.
 
