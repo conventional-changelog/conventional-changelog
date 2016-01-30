@@ -39,7 +39,7 @@
     "shelljs": "^0.5.3"
   },
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
     "lint": "jshint hosts test *.js --exclude node_modules && jscs hosts test *.js",
     "test": "mocha --timeout 30000 && npm run-script lint"
   }
