@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-ember",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "conventional-changelog ember preset",
   "main": "index.js",
   "scripts": {
