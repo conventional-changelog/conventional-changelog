@@ -1,3 +1,13 @@
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/stevemao/conventional-changelog-angular/compare/v0.0.1...v0.0.2) (2016-01-30)
+
+
+### Features
+
+* **exports:** export the promise ([60def39](https://github.com/stevemao/conventional-changelog-angular/commit/60def39))
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2015-12-26)
 
