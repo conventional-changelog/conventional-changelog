@@ -1,6 +1,6 @@
 {
   "name": "standard-changelog",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generate a changelog from git metadata with Angular commit convention",
   "repository": {
     "type": "git",
