@@ -23,7 +23,7 @@ $ conventional-changelog -p angular -i CHANGELOG.md -w -r 0
 
 This *will* overwrite any previous changelog if exist.
 
-All available command line parameters can be listed using [CLI](#cli) : `conventional-changelog --help`.
+All available command line parameters can be listed using CLI: `conventional-changelog --help`.
 
 **Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"`.
 
@@ -63,6 +63,7 @@ Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to
 
 ## Related
 
+- [conventional-changelog](https://github.com/ajoslin/conventional-changelog) - API of this module
 - [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
 - [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 - [conventional-commits-detector](https://github.com/stevemao/conventional-commits-detector) - Detect what commit message convention your repository is using
