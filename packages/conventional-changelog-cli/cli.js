@@ -14,25 +14,41 @@ var cli = meow({
     '  conventional-changelog',
     '',
     'Example',
-    '  conventional-changelog -i CHANGELOG.md --overwrite',
+    '  conventional-changelog -i CHANGELOG.md --same-file',
     '',
     'Options',
     '  -i, --infile              Read the CHANGELOG from this file',
-    '  -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout',
-    '  -w, --overwrite           Overwrite the infile',
-    '  -p, --preset              Name of the preset you want to use',
+    '',
+    '  -o, --outfile             Write the CHANGELOG to this file.',
+    '                            If unspecified, it prints to stdout',
+    '',
+    '  -s, --same-file           Ouputting to the infile so you don\'t need to specify the same file as outfile',
+    '',
+    '  -p, --preset              Name of the preset you want to use. Must be one of the following:',
+    '                            angular, atom, codemirror, ember, eslint, express, jquery, jscs or jshint',
+    '',
     '  -k, --pkg                 A filepath of where your package.json is located',
-    '  -a, --append              Should the generated block be appended',
+    '                            Default is the closest package.json from cwd',
+    '',
+    '  -a, --append              Should the newer release be appended to the older release',
+    '                            Default: false',
+    '',
     '  -r, --release-count       How many releases to be generated from the latest',
+    '                            If 0, the whole changelog will be regenerated and the outfile will be overwritten',
+    '                            Default: 1',
+    '',
     '  -v, --verbose             Verbose output',
+    '                            Default: false',
+    '',
     '  -n, --config              A filepath of your config script',
+    '',
     '  -c, --context             A filepath of a json that is used to define template variables'
   ]
 }, {
   alias: {
     i: 'infile',
     o: 'outfile',
-    w: 'overwrite',
+    s: 'sameFile',
     p: 'preset',
     k: 'pkg',
     a: 'append',
@@ -46,17 +62,17 @@ var cli = meow({
 var flags = cli.flags;
 var infile = flags.infile;
 var outfile = flags.outfile;
-var overwrite = flags.overwrite;
+var sameFile = flags.sameFile;
 var append = flags.append;
 var releaseCount = flags.releaseCount;
 
 if (infile && infile === outfile) {
-  overwrite = true;
-} else if (overwrite) {
+  sameFile = true;
+} else if (sameFile) {
   if (infile) {
     outfile = infile;
   } else {
-    console.error('Nothing to overwrite');
+    console.error('infile must be provided if same-file flag presents.');
     process.exit(1);
   }
 }
@@ -118,7 +134,7 @@ if (infile && releaseCount !== 0) {
       noInputFile();
     });
 
-  if (overwrite) {
+  if (sameFile) {
     if (options.append) {
       changelogStream
         .pipe(fs.createWriteStream(outfile, {

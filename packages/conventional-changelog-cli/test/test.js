@@ -43,8 +43,8 @@ describe('cli', function () {
       }));
   });
 
-  it('should overwrite if `-w` presents when appending', function (done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-w', '--append'], {
+  it('should output to the same file if `-s` presents when appending', function (done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-s', '--append'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -58,8 +58,8 @@ describe('cli', function () {
     });
   });
 
-  it('should overwrite if `-w` presents when not appending', function (done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-w'], {
+  it('should output to the same file if `-s` presents when not appending', function (done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -73,7 +73,7 @@ describe('cli', function () {
     });
   });
 
-  it('should overwrite if `infile` and `outfile` are the same', function (done) {
+  it('should output to the same file if `infile` and `outfile` are the same', function (done) {
     var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-o', __dirname + '/fixtures/_CHANGELOG.md'], {
       stdio: [process.stdin, null, null]
     });
@@ -174,7 +174,7 @@ describe('cli', function () {
   });
 
   it('should ignore `infile` if `releaseCount` is `0` (file)', function (done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--releaseCount', 0, '-w'], {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--releaseCount', 0, '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -205,8 +205,8 @@ describe('cli', function () {
       }));
   });
 
-  it('should create `infile` if `infile` is ENOENT and overwrite infile', function (done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-w'], {
+  it('should create `infile` if `infile` is ENOENT and output to the same file', function (done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -221,14 +221,14 @@ describe('cli', function () {
     });
   });
 
-  it('should error if `-w` presents but `-i` is missing', function (done) {
-    var cp = spawn(cliPath, ['-w'], {
+  it('should error if `-s` presents but `-i` is missing', function (done) {
+    var cp = spawn(cliPath, ['-s'], {
       stdio: [process.stdin, null, null]
     });
 
     cp.stderr
       .pipe(concat(function (chunk) {
-        expect(chunk.toString()).to.equal('Nothing to overwrite\n');
+        expect(chunk.toString()).to.equal('infile must be provided if same-file flag presents.\n');
       }));
 
     cp.on('close', function (code) {
