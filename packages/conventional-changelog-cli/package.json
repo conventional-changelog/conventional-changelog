@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "add-stream": "^1.0.0",
-    "conventional-changelog": "^0.5.3",
+    "conventional-changelog": "ajoslin/conventional-changelog",
     "lodash": "^4.1.0",
     "meow": "^3.7.0",
     "tempfile": "^1.1.1"
