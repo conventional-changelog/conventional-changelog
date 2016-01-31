@@ -41,6 +41,7 @@ var cli = meow({
     '                            Default: false',
     '',
     '  -n, --config              A filepath of your config script',
+    '                            This value is ignored if preset is specified.',
     '',
     '  -c, --context             A filepath of a json that is used to define template variables'
   ]

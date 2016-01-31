@@ -27,6 +27,8 @@ All available command line parameters can be listed using CLI: `conventional-cha
 
 **Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0"`.
 
+For more hairy details please checkout [conventional-changelog](https://github.com/ajoslin/conventional-changelog) and [conventional-changelog-core](https://github.com/stevemao/conventional-changelog-core) docs.
+
 
 ## Recommended workflow
 
