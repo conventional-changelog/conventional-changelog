@@ -18,6 +18,13 @@ var parserOpts = {
 
 var writerOpts = {
   transform: function(commit) {
+    var discard = true;
+
+    commit.notes.forEach(function(note) {
+      note.title = 'BREAKING CHANGES';
+      discard = false;
+    });
+
     if (commit.type === 'feat') {
       commit.type = 'Features';
     } else if (commit.type === 'fix') {
@@ -26,8 +33,18 @@ var writerOpts = {
       commit.type = 'Performance Improvements';
     } else if (commit.type === 'revert') {
       commit.type = 'Reverts';
-    } else {
+    } else if (discard) {
       return;
+    } else if (commit.type === 'docs') {
+      commit.type = 'Documentation';
+    } else if (commit.type === 'style') {
+      commit.type = 'Styles';
+    } else if (commit.type === 'refactor') {
+      commit.type = 'Code Refactoring';
+    } else if (commit.type === 'test') {
+      commit.type = 'Tests';
+    } else if (commit.type === 'chore') {
+      commit.type = 'Chores';
     }
 
     if (commit.scope === '*') {
@@ -41,12 +58,6 @@ var writerOpts = {
     if (typeof commit.subject === 'string') {
       commit.subject = commit.subject.substring(0, 80);
     }
-
-    commit.notes.forEach(function(note) {
-      if (note.title === 'BREAKING CHANGE') {
-        note.title = 'BREAKING CHANGES';
-      }
-    });
 
     return commit;
   },

@@ -61,6 +61,32 @@ describe('angular preset', function() {
       }));
   });
 
+  it('should not discard commit if there is BREAKING CHANGE', function(done) {
+    gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['chore(deps): bump', 'BREAKING CHANGE: The Change is huge.']);
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('Documentation');
+        expect(chunk).to.include('Styles');
+        expect(chunk).to.include('Code Refactoring');
+        expect(chunk).to.include('Tests');
+        expect(chunk).to.include('Chores');
+
+        done();
+      }));
+  });
+
   it('should work if there is a semver tag', function(done) {
     var i = 0;
 
