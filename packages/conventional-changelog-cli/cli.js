@@ -19,7 +19,7 @@ var cli = meow({
     'Options',
     '  -i, --infile              Read the CHANGELOG from this file',
     '',
-    '  -o, --outfile             Write the CHANGELOG to this file.',
+    '  -o, --outfile             Write the CHANGELOG to this file',
     '                            If unspecified, it prints to stdout',
     '',
     '  -s, --same-file           Ouputting to the infile so you don\'t need to specify the same file as outfile',
@@ -41,7 +41,7 @@ var cli = meow({
     '                            Default: false',
     '',
     '  -n, --config              A filepath of your config script',
-    '                            This value is ignored if preset is specified.',
+    '                            This value is ignored if preset is specified',
     '',
     '  -c, --context             A filepath of a json that is used to define template variables'
   ]
