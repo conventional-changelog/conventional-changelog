@@ -200,6 +200,7 @@ describe('cli', function () {
 
         expect(chunk).to.include('First commit');
         expect(chunk).to.not.include('previous');
+        expect(chunk).to.not.match(/First commit[\w\W]*First commit/);
 
         done();
       }));

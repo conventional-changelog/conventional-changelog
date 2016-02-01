@@ -136,7 +136,9 @@ if (infile && releaseCount !== 0) {
         console.warn('infile does not exist.');
       }
 
-      noInputFile();
+      if (sameFile) {
+        noInputFile();
+      }
     });
 
   if (sameFile) {
