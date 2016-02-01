@@ -120,7 +120,7 @@ var changelogStream = conventionalChangelog (options, templateContext)
 
 function noInputFile() {
   if (outfile) {
-    outStream = fs.createWriteStream (outfile);
+    outStream = fs.createWriteStream(outfile);
   } else {
     outStream = process.stdout;
   }
@@ -132,6 +132,10 @@ function noInputFile() {
 if (infile && releaseCount !== 0) {
   var readStream = fs.createReadStream(infile)
     .on('error', function () {
+      if (flags.verbose) {
+        console.warn('infile does not exist.');
+      }
+
       noInputFile();
     });
 

@@ -205,6 +205,21 @@ describe('cli', function () {
       }));
   });
 
+  it('should warn if `infile` is ENOENT', function (done) {
+    var cp = spawn(cliPath, ['-i', 'no-such-file.md', '-v'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stderr
+      .pipe(concat(function (chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('infile does not exist.');
+
+        done();
+      }));
+  });
+
   it('should create `infile` if `infile` is ENOENT and output to the same file', function (done) {
     var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-s'], {
       stdio: [process.stdin, null, null]
