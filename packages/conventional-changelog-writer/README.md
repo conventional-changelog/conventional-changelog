@@ -256,6 +256,12 @@ Type: `boolean` Default: `true`
 
 If `true`, reverted commits will be ignored.
 
+##### doFlush
+
+Type: `boolean` Default: `true`
+
+If `true`, the stream will flush out the last bit of changelog even it doesn't satisfy `generateOn`.
+
 ##### mainTemplate
 
 Type: `string` Default: [template.hbs](templates/template.hbs)
