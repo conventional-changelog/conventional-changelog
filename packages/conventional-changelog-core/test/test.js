@@ -802,4 +802,44 @@ describe('conventionalChangelogCore', function() {
         done();
       }));
   });
+
+  describe('unreleased', function() {
+    it('should not output unreleased', function(done) {
+      gitDummyCommit();
+      shell.exec('git tag v1.0.0');
+
+      conventionalChangelogCore({}, {
+        version: '1.0.0'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          expect(chunk).to.equal('');
+
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('should output unreleased', function(done) {
+      gitDummyCommit();
+      shell.exec('git tag v1.0.0');
+
+      conventionalChangelogCore({
+        outputUnreleased: true
+      }, {
+        version: 'v1.0.0'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          expect(chunk).to.include('Unreleased');
+
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+  });
 });

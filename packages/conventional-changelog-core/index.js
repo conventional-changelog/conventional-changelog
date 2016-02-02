@@ -80,10 +80,13 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
     .spread(function(configObj, pkgObj, tagsObj) {
       var config;
       var pkg;
-      var tag;
+      var fromTag;
+      var toTag;
       var repo;
 
       var hostOpts;
+
+      var gitSemverTags = [];
 
       if (configPromise) {
         if (configObj.state === 'fulfilled') {
@@ -128,9 +131,24 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         }
       }
 
-      var gitSemverTags = context.gitSemverTags = tagsObj.value;
       if (tagsObj.state === 'fulfilled') {
-        tag = tagsObj.value[options.releaseCount - 1];
+        gitSemverTags = context.gitSemverTags = tagsObj.value;
+        fromTag = gitSemverTags[options.releaseCount - 1];
+
+        var lastTag = gitSemverTags[0];
+
+        if (lastTag === context.version || lastTag === 'v' + context.version) {
+          toTag = lastTag;
+          options.outputUnreleased = options.outputUnreleased || false;
+
+          if (options.outputUnreleased) {
+            context.version = 'Unreleased';
+          }
+        }
+      }
+
+      if (!_.isBoolean(options.outputUnreleased)) {
+        options.outputUnreleased = true;
       }
 
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
@@ -162,7 +180,8 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
       gitRawCommitsOpts = _.assign({
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
-          from: tag
+          from: fromTag,
+          to: toTag
         },
         config.gitRawCommitsOpts,
         gitRawCommitsOpts
@@ -214,7 +233,8 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           }
         },
         config.writerOpts, {
-          reverse: options.append
+          reverse: options.append,
+          doFlush: options.outputUnreleased
         },
         writerOpts
       );

@@ -94,6 +94,12 @@ Callback when you are done.
 
 `this` arg of through2.
 
+##### outputUnreleased
+
+Type: `boolean` Default: `true` if a different version than last release is given. Otherwise `false`.
+
+If this value is `true` and `context.version` equals last release then `context.version` will be changed to `'Unreleased'`.
+
 #### context
 
 See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults or changes:
@@ -171,6 +177,10 @@ See the [conventional-changelog-writer](https://github.com/stevemao/conventional
 ##### reverse
 
 Default: `options.append`
+
+##### doFlush
+
+Default: `options.outputUnreleased`
 
 
 ## Notes for parent modules
