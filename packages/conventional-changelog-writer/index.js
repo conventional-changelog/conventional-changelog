@@ -36,6 +36,7 @@ function conventionalChangelogWriter(context, options) {
     reverse: false,
     includeDetails: false,
     ignoreReverted: true,
+    doFlush: true,
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
@@ -129,6 +130,11 @@ function conventionalChangelogWriter(context, options) {
       cb(err);
     }
   }, function(cb) {
+    if (!options.doFlush) {
+      cb(null);
+      return;
+    }
+
     try {
       var result = util.generate(options, commits, context, savedKeyCommit);
 

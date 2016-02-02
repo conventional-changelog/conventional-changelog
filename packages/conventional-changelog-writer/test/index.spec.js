@@ -583,6 +583,37 @@ describe('conventionalChangelogWriter', function() {
     });
   });
 
+  it('should not flush', function(done) {
+    var i = 0;
+
+    var upstream = through.obj();
+    upstream.write({
+      header: 'feat(scope): broadcast $destroy event on scope destruction',
+      body: null,
+      footer: null,
+      notes: [{
+        title: 'BREAKING CHANGE',
+        text: 'No backward compatibility.'
+      }],
+      references: [],
+      committerDate: '2015-04-07 14:17:05 +1000',
+      version: 'v1.0.0'
+    });
+    upstream.end();
+
+    upstream
+      .pipe(conventionalChangelogWriter({}, {
+        doFlush: false
+      }))
+      .pipe(through(function(chunk, enc, cb) {
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
   it('should sort notes on `text` by default', function(done) {
     var upstream = through.obj();
     upstream.write({
