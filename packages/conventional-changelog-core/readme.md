@@ -25,6 +25,8 @@ conventionalChangelogCore()
 
 Returns a readable stream.
 
+*Note:* [`options.transform`](#transform-1), [`options.pkg.transform`](#transform) and [`writerOpts.transform`](https://github.com/stevemao/conventional-changelog-writer#transform) are different. If you have a better naming suggestion, please send a PR.
+
 #### options
 
 ##### config
