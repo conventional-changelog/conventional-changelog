@@ -130,15 +130,7 @@ function conventionalChangelogWriter(context, options) {
     }
   }, function(cb) {
     try {
-      var result;
-      var keyCommit;
-
-      // latest (this) block of logs
-      if (!options.reverse) {
-        keyCommit = savedKeyCommit;
-      }
-
-      result = util.generate(options, commits, context, savedKeyCommit);
+      var result = util.generate(options, commits, context, savedKeyCommit);
 
       if (options.includeDetails) {
         this.push({
