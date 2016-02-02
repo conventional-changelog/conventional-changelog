@@ -1,3 +1,13 @@
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.2...v0.5.0) (2016-02-02)
+
+
+### Features
+
+* **flush:** add `options.doFlush` to make it possible not to flush ([7850589](https://github.com/stevemao/conventional-changelog-writer/commit/7850589))
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.1...v0.4.2) (2016-01-18)
 
