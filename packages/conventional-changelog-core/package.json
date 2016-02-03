@@ -17,7 +17,7 @@
     "conventional-changelog-writer": "^0.5.0",
     "conventional-commits-parser": "^0.1.2",
     "dateformat": "^1.0.12",
-    "get-pkg-repo": "^0.1.0",
+    "get-pkg-repo": "^1.0.0",
     "git-raw-commits": "^0.1.2",
     "git-remote-origin-url": "^2.0.0",
     "git-semver-tags": "^1.1.0",
