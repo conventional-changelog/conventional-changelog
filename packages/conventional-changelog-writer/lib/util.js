@@ -168,7 +168,7 @@ function generate(options, commits, context, keyCommit) {
     context.date = keyCommit.committerDate;
   }
 
-  if (context.version) {
+  if (context.version && semver.valid(context.version)) {
     context.isPatch = context.isPatch || semver.patch(context.version) !== 0;
   }
 

@@ -652,6 +652,21 @@ describe('conventionalChangelogWriter', function() {
       }));
   });
 
+  it('should not error if version is not semver', function(done) {
+    getStream()
+      .pipe(conventionalChangelogWriter({
+        version: 'a.b.c'
+      }))
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        expect(chunk.toString()).to.include('a.b.c');
+
+        done();
+      }));
+  });
+
   it('should callback with error on transform', function(done) {
     getStream()
       .pipe(conventionalChangelogWriter({}, {
