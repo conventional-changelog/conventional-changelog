@@ -3,11 +3,18 @@ var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
 var dateFormat = require('dateformat');
 var getPkgRepo = require('get-pkg-repo');
-var gitRemoteOriginUrl = require('git-remote-origin-url');
 var gitRawCommits = require('git-raw-commits');
 var gitSemverTags = require('git-semver-tags');
 var normalizePackageData = require('normalize-package-data');
 var Q = require('q');
+var gitRemoteOriginUrl;
+try {
+  gitRemoteOriginUrl = require('git-remote-origin-url');
+} catch (err) {
+  gitRemoteOriginUrl = function() {
+    return Q.reject(err);
+  };
+}
 var readPkg = require('read-pkg');
 var readPkgUp = require('read-pkg-up');
 var stream = require('stream');

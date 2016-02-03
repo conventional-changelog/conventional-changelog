@@ -6,6 +6,7 @@ var shell = require('shelljs');
 var gitDummyCommit = require('git-dummy-commit');
 var through = require('through2');
 var Promise = require('pinkie-promise');
+var semver = require('semver');
 
 describe('conventionalChangelogCore', function() {
   before(function() {
@@ -804,6 +805,12 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should pass fallback to git remote origin url', function(done) {
+    if (semver.major(process.version) < 4) {
+      console.log('This feature is only available under node>=4');
+      done();
+      return;
+    }
+
     shell.exec('git remote add origin https://github.com/user/repo.git');
 
     conventionalChangelogCore({

@@ -38,6 +38,7 @@
     "jshint": "^2.9.1",
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
+    "semver": "^5.1.0",
     "shelljs": "^0.5.3"
   },
   "scripts": {
