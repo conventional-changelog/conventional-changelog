@@ -3,8 +3,10 @@ var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
 var dateFormat = require('dateformat');
 var getPkgRepo = require('get-pkg-repo');
+var gitRemoteOriginUrl = require('git-remote-origin-url');
 var gitRawCommits = require('git-raw-commits');
 var gitSemverTags = require('git-semver-tags');
+var normalizePackageData = require('normalize-package-data');
 var Q = require('q');
 var readPkg = require('read-pkg');
 var readPkgUp = require('read-pkg-up');
@@ -20,6 +22,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
   var configPromise;
   var pkgPromise;
   var semverTagsPromise;
+  var gitRemoteOriginUrlPromise;
 
   writerOpts = writerOpts || {};
 
@@ -76,8 +79,10 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
   semverTagsPromise = Q.nfcall(gitSemverTags);
 
-  Q.allSettled([configPromise, pkgPromise, semverTagsPromise])
-    .spread(function(configObj, pkgObj, tagsObj) {
+  gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl()); // jshint ignore:line
+
+  Q.allSettled([configPromise, pkgPromise, semverTagsPromise, gitRemoteOriginUrlPromise])
+    .spread(function(configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj) {
       var config;
       var pkg;
       var fromTag;
@@ -110,25 +115,37 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           }
 
           pkg = options.pkg.transform(pkg);
-          context.version = context.version || pkg.version;
-          context.packageData = pkg;
 
-          try {
-            repo = getPkgRepo(pkg);
-          } catch (err) {
-            repo = {};
-          }
-
-          if (repo.browse) {
-            var browse = repo.browse();
-            var parsedBrowse = url.parse(browse);
-            context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null);
-            context.owner = context.owner || repo.user || '';
-            context.repository = context.repository || repo.project || browse;
-          }
         } else if (options.pkg.path) {
           options.warn(pkgObj.reason.toString());
         }
+      }
+
+      if ((!pkg || !pkg.repository || !pkg.repository.url) && gitRemoteOriginUrlObj.state === 'fulfilled') {
+        pkg = pkg || {};
+        pkg.repository = pkg.repository || {};
+        pkg.repository.url = gitRemoteOriginUrlObj.value;
+        normalizePackageData(pkg);
+      }
+
+      if (pkg) {
+        context.version = context.version || pkg.version;
+
+        try {
+          repo = getPkgRepo(pkg);
+        } catch (err) {
+          repo = {};
+        }
+
+        if (repo.browse) {
+          var browse = repo.browse();
+          var parsedBrowse = url.parse(browse);
+          context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null);
+          context.owner = context.owner || repo.user || '';
+          context.repository = context.repository || repo.project || browse;
+        }
+
+        context.packageData = pkg;
       }
 
       if (tagsObj.state === 'fulfilled') {

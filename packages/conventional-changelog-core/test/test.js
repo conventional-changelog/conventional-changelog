@@ -803,6 +803,26 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
+  it('should pass fallback to git remote origin url', function(done) {
+    shell.exec('git remote add origin https://github.com/user/repo.git');
+
+    conventionalChangelogCore({
+      pkg: {
+        path: __dirname + '/fixtures/_version-only.json'
+      },
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('https://github.com/user/repo');
+        expect(chunk).to.not.include('.git');
+
+        cb();
+      }, function() {
+        done();
+      }));
+  });
+
   describe('unreleased', function() {
     it('should not output unreleased', function(done) {
       gitDummyCommit();
