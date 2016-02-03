@@ -37,6 +37,8 @@ var cli = meow({
     '                            If 0, the whole changelog will be regenerated and the outfile will be overwritten',
     '                            Default: 1',
     '',
+    '  -u, --output-unreleased   Output unreleased changelog',
+    '',
     '  -v, --verbose             Verbose output',
     '                            Default: false',
     '',
@@ -54,6 +56,7 @@ var cli = meow({
     k: 'pkg',
     a: 'append',
     r: 'releaseCount',
+    u: 'outputUnreleased',
     v: 'verbose',
     n: 'config',
     c: 'context'
@@ -84,7 +87,8 @@ var options = _.omit({
     path: flags.pkg
   },
   append: append,
-  releaseCount: releaseCount
+  releaseCount: releaseCount,
+  outputUnreleased: flags.outputUnreleased
 }, _.isUndefined);
 
 if (flags.verbose) {
@@ -108,7 +112,7 @@ try {
   process.exit(1);
 }
 
-var changelogStream = conventionalChangelog (options, templateContext)
+var changelogStream = conventionalChangelog(options, templateContext)
   .on('error', function (err) {
     if (flags.verbose) {
       console.error(err.stack);
