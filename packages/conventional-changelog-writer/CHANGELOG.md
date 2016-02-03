@@ -1,3 +1,13 @@
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/stevemao/conventional-changelog-writer/compare/v0.5.0...v0.5.1) (2016-02-03)
+
+
+### Bug Fixes
+
+* **context.version:** only valid a semver can decide `context.isPatch` ([59ed325](https://github.com/stevemao/conventional-changelog-writer/commit/59ed325))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.2...v0.5.0) (2016-02-02)
 
