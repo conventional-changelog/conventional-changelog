@@ -270,7 +270,7 @@ describe('parser', function() {
       expect(gitlabMsg.source).to.equal('feature/feature-name');
     });
 
-    it('Should parse conventional header if pull request header is missing', function() {
+    it('Should parse header if merge header is missing', function() {
       var msgWithoutmergeHeader = parser(
         'feat(scope): broadcast $destroy event on scope destruction',
         githubOptions,
