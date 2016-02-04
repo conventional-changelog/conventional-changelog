@@ -14,6 +14,16 @@ describe('regex', function() {
       expect(match[2]).to.equal('This is so important.');
     });
 
+    it('should be case insensitive', function() {
+      var reNotes = regex({
+        noteKeywords: ['Breaking News', 'Breaking Change']
+      }).notes;
+      var match = 'BREAKING NEWS: This is so important.'.match(reNotes);
+      expect(match[0]).to.equal('BREAKING NEWS: This is so important.');
+      expect(match[1]).to.equal('BREAKING NEWS');
+      expect(match[2]).to.equal('This is so important.');
+    });
+
     it('should ignore whitespace', function() {
       var reNotes = regex({
         noteKeywords: [' Breaking News', 'Breaking Change ', '', ' Breaking SOLUTION ', '  '],
@@ -37,7 +47,7 @@ describe('regex', function() {
       expect(match[1]).to.equal('closes');
     });
 
-    it('should ignore cases', function() {
+    it('should be case insensitive', function() {
       var reReferences = regex({
         referenceActions: ['Closes'],
         issuePrefixes: ['#']

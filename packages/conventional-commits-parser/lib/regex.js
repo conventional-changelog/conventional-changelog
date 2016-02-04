@@ -18,7 +18,7 @@ function getNotesRegex(noteKeywords) {
     return reNomatch;
   }
 
-  return new RegExp('(' + join(noteKeywords, '|') + ')[:\\s]*(.*)');
+  return new RegExp('(' + join(noteKeywords, '|') + ')[:\\s]*(.*)', 'i');
 }
 
 function getReferencePartsRegex(issuePrefixes) {
