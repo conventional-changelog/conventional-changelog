@@ -7,13 +7,18 @@
 
 A minimum input should contain a raw message.
 
-Each commit message consists of a a **header** (mandatory), a **body** and a **footer**.
+Each commit message consists of a **merge header**, a **header** (mandatory), a **body** and a **footer**.
 
 ```
+<merge>
 <header>
 <body>
 <footer>
 ```
+
+### merge
+
+The header may optionally have a special format that includes other parts. EG: with the merge commit message: `Merge pull request #1 from user/feature/feature-name`, the parsed result could be **issueId**=`'1'` and **source**=`'user/feature/feature-name'`.
 
 ### header
 
