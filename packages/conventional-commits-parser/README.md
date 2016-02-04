@@ -191,11 +191,11 @@ Type: `function` or `boolean` Default: `function() {}`
 
 What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
 
-##### pullRequestPattern
+##### mergePattern
 
 Type: `regex` or `string` Default: null
 
-Pattern to match pull request or merge request headers. Used to parse GitHub or GitLab like pull requests headers. When a pull request header is parsed, the next line is used for conventionnal header parsing.  This option is disabled by default to avoid breaking changes.
+Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventionnal header parsing.
 
 For example, if we have a commit
 
@@ -209,17 +209,16 @@ We can parse it with these options and the default headerPattern :
 
 ```js
 {
-  pullRequestPattern: /^Merge pull request #(\d+) from (.*)$/,
-  pullRequestCorrespondence: ['id', 'source']
+  mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+  mergeCorrespondence: ['id', 'source']
 }
 ```
 
-
-##### pullRequestCorrespondence
+##### mergeCorrespondence
 
 Type: `array` of `string` or `string` Default: null
 
-Used to define what capturing group of `pullRequestPattern`.
+Used to define what capturing group of `mergePattern`.
 
 If it's a `string` it will be converted to an `array` separated by a comma.
 

@@ -106,6 +106,7 @@ describe('parser', function() {
       options,
       reg
     )).to.eql({
+      merge: null,
       header: 'feat(scope): broadcast $destroy event on scope destruction',
       body: 'perf testing shows that in chrome this change adds 5-15% overhead\n\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
       footer: 'BREAKING AMEND: some breaking change\n\n\n\n\nBREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\nKills #1\n\n\n\nkilled #25',
@@ -149,6 +150,7 @@ describe('parser', function() {
       options,
       reg
     )).to.eql({
+      merge: null,
       header: ' feat(scope): broadcast $destroy event on scope destruction ',
       body: ' perf testing shows that in chrome this change adds 5-15% overhead \n\n when destroying 10k nested scopes where each scope has a $destroy listener ',
       footer: '         BREAKING AMEND: some breaking change         \n\n   BREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1',
@@ -478,7 +480,6 @@ describe('parser', function() {
       }]);
       expect(msg.footer).to.equal('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change');
     });
-
   });
 
   describe('others', function() {
@@ -556,12 +557,12 @@ describe('parser', function() {
     });
   });
 
-  describe('pull request', function() {
+  describe('merge commits', function() {
     var githubOptions = {
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
       headerCorrespondence: ['type', 'scope', 'subject'],
-      pullRequestPattern: /^Merge pull request #(\d+) from (.*)$/,
-      pullRequestCorrespondence: ['id', 'source']
+      mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+      mergeCorrespondence: ['issueId', 'source']
     };
 
     var githubRegex = regex(githubOptions);
@@ -587,18 +588,17 @@ describe('parser', function() {
       expect(githubMsg.subject).to.equal('broadcast $destroy event on scope destruction');
     });
 
-    it('should understand pull request parts in GitHub like pull request', function() {
-      expect(githubMsg.pullRequest).to.eql({
-        id: '1',
-        source: 'user/feature/feature-name'
-      });
+    it('should understand merge parts in GitHub like pull request', function() {
+      expect(githubMsg.merge).to.equal('Merge pull request #1 from user/feature/feature-name');
+      expect(githubMsg.issueId).to.equal('1');
+      expect(githubMsg.source).to.equal('user/feature/feature-name');
     });
 
     var gitLabOptions = {
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
       headerCorrespondence: ['type', 'scope', 'subject'],
-      pullRequestPattern: /^Merge branch '([^']+)' into '[^']+'$/,
-      pullRequestCorrespondence: ['source']
+      mergePattern: /^Merge branch '([^']+)' into '[^']+'$/,
+      mergeCorrespondence: ['source']
     };
 
     var gitLabRegex = regex(gitLabOptions);
@@ -626,38 +626,35 @@ describe('parser', function() {
       expect(gitlabMsg.subject).to.equal('broadcast $destroy event on scope destruction');
     });
 
-    it('should understand pull request parts in GitLab like merge request', function() {
-      expect(gitlabMsg.pullRequest).to.eql({
-        source: 'feature/feature-name'
-      });
+    it('should understand merge parts in GitLab like merge request', function() {
+      expect(gitlabMsg.merge).to.equal('Merge branch \'feature/feature-name\' into \'master\'');
+      expect(gitlabMsg.source).to.equal('feature/feature-name');
     });
 
     it('Should parse conventional header if pull request header is missing', function() {
-      var msgWithoutPullRequestHeader = parser(
+      var msgWithoutmergeHeader = parser(
         'feat(scope): broadcast $destroy event on scope destruction',
         githubOptions,
         githubRegex
       );
 
-      expect(msgWithoutPullRequestHeader.pullRequest).to.equal(null);
+      expect(msgWithoutmergeHeader.merge).to.equal(null);
     });
 
-    it('pullRequest should be undefied if options.pullRequestPattern is not defined', function() {
-      expect(msg.pullRequest).to.equal(undefined);
+    it('merge should be null if options.mergePattern is not defined', function() {
+      expect(msg.merge).to.equal(null);
     });
 
-    it('Should not parse conventional header if pull request header present and pullRequestPattern is not set', function() {
-      var msgWithPullRequestHeaderWithoutPullRequestPattern = parser(
+    it('Should not parse conventional header if pull request header present and mergePattern is not set', function() {
+      var msgWithmergeHeaderWithoutmergePattern = parser(
         'Merge pull request #1 from user/feature/feature-name\n' +
         'feat(scope): broadcast $destroy event on scope destruction',
         options,
         reg
       );
-      expect(msgWithPullRequestHeaderWithoutPullRequestPattern.type).to.equal(null);
-      expect(msgWithPullRequestHeaderWithoutPullRequestPattern.scope).to.equal(null);
-      expect(msgWithPullRequestHeaderWithoutPullRequestPattern.subject).to.equal(null);
+      expect(msgWithmergeHeaderWithoutmergePattern.type).to.equal(null);
+      expect(msgWithmergeHeaderWithoutmergePattern.scope).to.equal(null);
+      expect(msgWithmergeHeaderWithoutmergePattern.subject).to.equal(null);
     });
-
   });
-
 });

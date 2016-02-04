@@ -26,7 +26,7 @@ function parser(raw, options, regex) {
   }
 
   var headerMatch;
-  var pullRequestMatch;
+  var mergeMatch;
   var referenceSentences;
   var referenceMatch;
   var currentProcessedField;
@@ -41,7 +41,7 @@ function parser(raw, options, regex) {
   var revertCorrespondence = _.map(options.revertCorrespondence, function(field) {
     return field.trim();
   });
-  var pullRequestCorrespondence = _.map(options.pullRequestCorrespondence, function(field) {
+  var mergeCorrespondence = _.map(options.mergeCorrespondence, function(field) {
     return field.trim();
   });
 
@@ -50,32 +50,36 @@ function parser(raw, options, regex) {
   var reReferences = regex.references;
 
   // msg parts
-  var header = lines.shift();
+  var merge = lines.shift();
+  var mergeParts = {};
+  var header;
   var headerParts = {};
   var body = '';
   var footer = '';
   var notes = [];
   var references = [];
   var revert;
-  var pullRequest;
 
-  if (options.pullRequestPattern) {
-    pullRequestMatch = header.match(options.pullRequestPattern);
-    if (pullRequestMatch) {
-      pullRequest = {};
-      _.forEach(pullRequestCorrespondence, function(fieldName, index) {
-        var fieldValue = pullRequestMatch[index + 1] || null;
-        pullRequest[fieldName] = fieldValue;
-      });
+  mergeMatch = merge.match(options.mergePattern);
+  if (mergeMatch && options.mergePattern) {
+    merge = mergeMatch[0];
 
-      do {
-        header = lines.shift();
-      }
-      while (header !== undefined && header.match(/^\r?$/));
-
-    } else {
-      pullRequest = null;
+    header = lines.shift();
+    while (!header.trim()) {
+      header = lines.shift();
     }
+
+    _.forEach(mergeCorrespondence, function(partName, index) {
+      var partValue = mergeMatch[index + 1] || null;
+      mergeParts[partName] = partValue;
+    });
+  } else {
+    header = merge;
+    merge = null;
+
+    _.forEach(mergeCorrespondence, function(partName) {
+      mergeParts[partName] = null;
+    });
   }
 
   headerMatch = header.match(options.headerPattern);
@@ -218,12 +222,11 @@ function parser(raw, options, regex) {
 
   // does this commit revert any other commit?
   revertMatch = raw.match(options.revertPattern);
-
   if (revertMatch) {
     revert = {};
-    _.forEach(revertCorrespondence, function(fieldName, index) {
-      var fieldValue = revertMatch[index + 1] || null;
-      revert[fieldName] = fieldValue;
+    _.forEach(revertCorrespondence, function(partName, index) {
+      var partValue = revertMatch[index + 1] || null;
+      revert[partName] = partValue;
     });
   } else {
     revert = null;
@@ -235,14 +238,14 @@ function parser(raw, options, regex) {
     return note;
   });
 
-  var msg  = _.merge(headerParts, {
+  var msg  = _.merge(headerParts, mergeParts, {
+    merge: merge,
     header: header,
     body: body ? trimOffNewlines(body) : null,
     footer: footer ? trimOffNewlines(footer) : null,
     notes: notes,
     references: references,
-    revert: revert,
-    pullRequest: pullRequest
+    revert: revert
   }, otherFields);
 
   return msg;
