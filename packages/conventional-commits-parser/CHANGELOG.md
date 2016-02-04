@@ -1,3 +1,15 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/stevemao/conventional-commits-parser/compare/v0.1.2...v0.2.0) (2016-02-04)
+
+
+### Features
+
+* **note:** noteKeywords is case insensitive ([4442b86](https://github.com/stevemao/conventional-commits-parser/commit/4442b86)), closes [#21](https://github.com/stevemao/conventional-commits-parser/issues/21)
+* **pullRequest:** Allow to skip and parse pull request header ([aa85033](https://github.com/stevemao/conventional-commits-parser/commit/aa85033)), closes [#20](https://github.com/stevemao/conventional-commits-parser/issues/20)
+* **regex:** matching JIRA-123 like references ([5342f45](https://github.com/stevemao/conventional-commits-parser/commit/5342f45)), closes [#19](https://github.com/stevemao/conventional-commits-parser/issues/19)
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/stevemao/conventional-commits-parser/compare/v0.1.1...v0.1.2) (2015-09-18)
 
