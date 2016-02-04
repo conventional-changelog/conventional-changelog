@@ -108,6 +108,37 @@ Returns an transform stream. If there is any malformed commits it will be gracef
 
 Type: `object`
 
+##### mergePattern
+
+Type: `regex` or `string` Default: null
+
+Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventionnal header parsing.
+
+For example, if we have a commit
+
+```
+Merge pull request #1 from user/feature/feature-name
+
+feat(scope): broadcast $destroy event on scope destruction
+```
+
+We can parse it with these options and the default headerPattern :
+
+```js
+{
+  mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+  mergeCorrespondence: ['id', 'source']
+}
+```
+
+##### mergeCorrespondence
+
+Type: `array` of `string` or `string` Default: null
+
+Used to define what capturing group of `mergePattern`.
+
+If it's a `string` it will be converted to an `array` separated by a comma.
+
 ##### headerPattern
 
 Type: `regex` or `string` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
@@ -195,37 +226,6 @@ If it's a `string` it will be converted to an `array` separated by a comma.
 Type: `function` or `boolean` Default: `function() {}`
 
 What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
-
-##### mergePattern
-
-Type: `regex` or `string` Default: null
-
-Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventionnal header parsing.
-
-For example, if we have a commit
-
-```
-Merge pull request #1 from user/feature/feature-name
-
-feat(scope): broadcast $destroy event on scope destruction
-```
-
-We can parse it with these options and the default headerPattern :
-
-```js
-{
-  mergePattern: /^Merge pull request #(\d+) from (.*)$/,
-  mergeCorrespondence: ['id', 'source']
-}
-```
-
-##### mergeCorrespondence
-
-Type: `array` of `string` or `string` Default: null
-
-Used to define what capturing group of `mergePattern`.
-
-If it's a `string` it will be converted to an `array` separated by a comma.
 
 ### conventionalCommitsParser.sync(commit, [options])
 
