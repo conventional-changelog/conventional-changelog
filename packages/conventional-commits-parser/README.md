@@ -242,7 +242,7 @@ Same as the `options` of `conventionalCommitsParser`.
 
 ## CLI
 
-You can use cli to practice writing commit messages or parse messages from files.
+You can use cli to practice writing commit messages or parse messages from files. Note: the sample output might be different. It's just for demonstration purposes.
 
 ```sh
 $ npm install --global conventional-commits-parser
