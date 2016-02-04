@@ -177,6 +177,26 @@ describe('parser', function() {
   });
 
   describe('merge commits', function() {
+    var mergeOptions = {
+      headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+      headerCorrespondence: ['type', 'scope', 'subject'],
+      mergePattern: /^Merge branch \'(\w+)\'$/,
+      mergeCorrespondence: ['source', 'issueId']
+    };
+
+    var mergeRegex = regex(mergeOptions);
+
+    var mergeMsg = parser(
+      'Merge branch \'feature\'\nHEADER',
+      mergeOptions,
+      mergeRegex
+    );
+
+    it('should parse merge header in merge commit', function() {
+      expect(mergeMsg.source).to.equal('feature');
+      expect(mergeMsg.issueId).to.equal(null);
+    });
+
     var githubOptions = {
       headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
       headerCorrespondence: ['type', 'scope', 'subject'],
