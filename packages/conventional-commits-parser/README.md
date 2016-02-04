@@ -18,7 +18,12 @@ Each commit message consists of a **merge header**, a **header** (mandatory), a 
 
 ### merge
 
-The header may optionally have a special format that includes other parts. EG: with the merge commit message: `Merge pull request #1 from user/feature/feature-name`, the parsed result could be **issueId**=`'1'` and **source**=`'user/feature/feature-name'`.
+The merge header may optionally have a special format that includes other parts, such as **branch**, **issueId** or **source**
+
+```
+Merge branch <branch>
+Merge pull request <issue-id> from <source>
+```
 
 ### header
 
