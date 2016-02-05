@@ -190,7 +190,7 @@ The string can be a dot path to a nested object property.
 
 Type: `function`, `string` or `any` Default: if `commit.version` is a valid semver.
 
-When the upstream finishes pouring the commits it will generate a block of logs by default. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream.
+When the upstream finishes pouring the commits it will generate a block of logs if `doFlush` is `true`. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream.
 
 ###### generateOn(commit, commits, context, options)
 
@@ -260,7 +260,7 @@ If `true`, reverted commits will be ignored.
 
 Type: `boolean` Default: `true`
 
-If `true`, the stream will flush out the last bit of changelog even it doesn't satisfy `generateOn`.
+If `true`, the stream will flush out the last bit of commits (could be empty) to changelog.
 
 ##### mainTemplate
 
