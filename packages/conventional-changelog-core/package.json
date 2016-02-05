@@ -14,11 +14,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "conventional-changelog-writer": "^0.5.0",
-    "conventional-commits-parser": "^0.1.2",
+    "conventional-changelog-writer": "^1.0.0",
+    "conventional-commits-parser": "^1.0.0",
     "dateformat": "^1.0.12",
     "get-pkg-repo": "^1.0.0",
-    "git-raw-commits": "^0.1.2",
+    "git-raw-commits": "^1.0.0",
     "git-remote-origin-url": "^2.0.0",
     "git-semver-tags": "^1.1.0",
     "lodash": "^4.0.0",
@@ -39,7 +39,7 @@
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
     "semver": "^5.1.0",
-    "shelljs": "^0.5.3"
+    "shelljs": "^0.6.0"
   },
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
