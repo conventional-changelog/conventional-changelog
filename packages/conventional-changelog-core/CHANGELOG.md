@@ -1,3 +1,23 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/stevemao/conventional-changelog-core/compare/v0.0.2...v1.0.0) (2016-02-05)
+
+
+### Bug Fixes
+
+* **oldNode:** git remote origin url feature is only available under node>=4 ([c69db53](https://github.com/stevemao/conventional-changelog-core/commit/c69db53))
+
+### Features
+
+* **pkg:** fallback to git remote origin url ([5b56952](https://github.com/stevemao/conventional-changelog-core/commit/5b56952))
+* **unreleased:** option to output or not unreleased changelog ([9dfe8d8](https://github.com/stevemao/conventional-changelog-core/commit/9dfe8d8)), closes [ajoslin/conventional-changelog#120](https://github.com/ajoslin/conventional-changelog/issues/120)
+
+
+### BREAKING CHANGES
+
+* unreleased: If `context.version` is the same as the version of the last release, by default the unreleased chagnelog will not output.
+
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/stevemao/conventional-changelog-core/compare/v0.0.1...v0.0.2) (2016-01-30)
 
