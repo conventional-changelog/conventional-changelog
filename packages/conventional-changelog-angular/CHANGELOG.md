@@ -1,3 +1,13 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/stevemao/conventional-changelog-angular/compare/v0.1.0...v1.0.0) (2016-02-05)
+
+
+### Features
+
+* **writerOpts.transform:** do not discard commit if there is BREAKING CHANGE ([e67c4a1](https://github.com/stevemao/conventional-changelog-angular/commit/e67c4a1)), closes [ajoslin/conventional-changelog#127](https://github.com/ajoslin/conventional-changelog/issues/127) [angular/angular#5672](https://github.com/angular/angular/issues/5672)
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/stevemao/conventional-changelog-angular/compare/v0.0.2...v0.1.0) (2016-01-30)
 
