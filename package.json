@@ -28,7 +28,7 @@
     "conventional-changelog-angular": "^0.1.0",
     "conventional-changelog-atom": "^0.1.0",
     "conventional-changelog-codemirror": "^0.1.0",
-    "conventional-changelog-core": "^0.0.2",
+    "conventional-changelog-core": "^1.0.0",
     "conventional-changelog-ember": "^0.1.0",
     "conventional-changelog-eslint": "^0.1.0",
     "conventional-changelog-express": "^0.1.0",
@@ -44,7 +44,7 @@
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
     "mocha": "*",
-    "shelljs": "^0.5.1",
+    "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },
   "scripts": {
