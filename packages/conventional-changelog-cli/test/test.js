@@ -244,7 +244,7 @@ describe('cli', function () {
 
     cp.stderr
       .pipe(concat(function (chunk) {
-        expect(chunk.toString()).to.equal('infile must be provided if same-file flag presents.\n');
+        expect(chunk.toString()).to.include('infile must be provided if same-file flag presents.\n');
       }));
 
     cp.on('close', function (code) {
