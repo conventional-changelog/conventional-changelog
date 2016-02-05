@@ -1,3 +1,30 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/stevemao/conventional-changelog-cli/compare/v0.0.1...v1.0.0) (2016-02-05)
+
+
+### Bug Fixes
+
+* **infile:** do not print the latest release twice if infile ENOENT ([e664087](https://github.com/stevemao/conventional-changelog-cli/commit/e664087))
+
+### Features
+
+* **flags:** add config and remove uncommon ones ([abc2b83](https://github.com/stevemao/conventional-changelog-cli/commit/abc2b83))
+* **help:** improve the flag names and add more descriptions ([f59d6d9](https://github.com/stevemao/conventional-changelog-cli/commit/f59d6d9))
+* **infile:** warn if infile does not exist ([443eb64](https://github.com/stevemao/conventional-changelog-cli/commit/443eb64))
+* add --output-unreleased ([d479ff4](https://github.com/stevemao/conventional-changelog-cli/commit/d479ff4))
+
+
+### BREAKING CHANGES
+
+* help: `overwrite` is now called `same-file`.
+
+Fixes https://github.com/ajoslin/conventional-changelog/issues/100
+* flags: `--git-raw-commits-opts`, `--parser-opts` and `--writer-opts` are removed as they are considered uncommon, use `--config` is easier as people can write all options within one file and they can learn from existing presets.
+
+Fixes https://github.com/ajoslin/conventional-changelog/issues/100
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2016-01-30)
 
