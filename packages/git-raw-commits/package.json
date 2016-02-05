@@ -41,8 +41,8 @@
   },
   "scripts": {
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "npm run-script lint && mocha",
-    "coverage": "istanbul cover -x test.js _mocha -- -R spec && rm -rf ./coverage"
+    "test": "npm run-script lint && mocha --timeout 30000",
+    "coverage": "istanbul cover -x test.js _mocha -- -R spec --timeout 30000 && rm -rf ./coverage"
   },
   "bin": {
     "git-raw-commits": "cli.js"
