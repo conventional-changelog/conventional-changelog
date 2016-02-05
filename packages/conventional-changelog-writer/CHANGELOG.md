@@ -1,3 +1,9 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.5.1...v1.0.0) (2016-02-05)
+
+
+
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/stevemao/conventional-changelog-writer/compare/v0.5.0...v0.5.1) (2016-02-03)
 
