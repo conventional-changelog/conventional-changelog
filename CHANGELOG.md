@@ -1,3 +1,23 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/ajoslin/conventional-changelog/compare/v0.5.3...v1.0.0) (2016-02-05)
+
+
+### Bug Fixes
+
+* **bin:** no cli anymore ([65a9f4b](https://github.com/ajoslin/conventional-changelog/commit/65a9f4b))
+* **cli:** print the stack if verbose ([81860ab](https://github.com/ajoslin/conventional-changelog/commit/81860ab))
+
+### Features
+
+* **module:** broken down into smaller modules ([48580b0](https://github.com/ajoslin/conventional-changelog/commit/48580b0))
+
+
+### BREAKING CHANGES
+
+* module: Presets have their own repos. cli and core have their own repos. This one is a pure wrapper. In the core, a new api `options.config` is added.
+
+
+
 <a name="0.5.3"></a>
 ## [0.5.3](https://github.com/ajoslin/conventional-changelog/compare/v0.5.2...v0.5.3) (2015-12-25)
 
