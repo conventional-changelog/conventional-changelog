@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-cli",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Generate a changelog from git metadata",
   "homepage": "https://github.com/stevemao/conventional-changelog-cli",
   "repository": "stevemao/conventional-changelog-cli",
