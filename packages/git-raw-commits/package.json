@@ -25,19 +25,19 @@
   ],
   "dependencies": {
     "dargs": "^4.0.1",
-    "lodash.template": "^3.6.1",
+    "lodash.template": "^4.0.2",
     "meow": "^3.3.0",
-    "split2": "^1.0.0",
+    "split2": "^2.0.0",
     "through2": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.0.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.14",
+    "istanbul": "^0.4.2",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
     "mocha": "*",
-    "shelljs": "^0.5.0"
+    "shelljs": "^0.6.0"
   },
   "scripts": {
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
