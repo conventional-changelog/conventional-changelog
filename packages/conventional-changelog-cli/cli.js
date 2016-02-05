@@ -22,7 +22,7 @@ var cli = meow({
     '  -o, --outfile             Write the CHANGELOG to this file',
     '                            If unspecified, it prints to stdout',
     '',
-    '  -s, --same-file           Ouputting to the infile so you don\'t need to specify the same file as outfile',
+    '  -s, --same-file           Outputting to the infile so you don\'t need to specify the same file as outfile',
     '',
     '  -p, --preset              Name of the preset you want to use. Must be one of the following:',
     '                            angular, atom, codemirror, ember, eslint, express, jquery, jscs or jshint',
