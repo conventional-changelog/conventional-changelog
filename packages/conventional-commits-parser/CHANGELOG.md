@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/stevemao/conventional-commits-parser/compare/v1.0.0...v1.0.1) (2016-02-05)
+
+
+### Bug Fixes
+
+* **deps:** require split2 ([ad55810](https://github.com/stevemao/conventional-commits-parser/commit/ad55810))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-commits-parser/compare/v0.2.0...v1.0.0) (2016-02-05)
 
