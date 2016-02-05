@@ -183,7 +183,7 @@ The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
 
 Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
 
-Keywords for important notes. If it's a `string` it will be converted to an `array` separated by a comma.
+Keywords for important notes. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
 ##### fieldPattern
 
