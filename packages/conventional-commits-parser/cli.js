@@ -7,7 +7,7 @@ var isTextPath = require('is-text-path');
 var JSONStream = require('JSONStream');
 var meow = require('meow');
 var readline = require('readline');
-var split = require('split');
+var split = require('split2');
 var through = require('through2');
 
 var filePaths = [];
