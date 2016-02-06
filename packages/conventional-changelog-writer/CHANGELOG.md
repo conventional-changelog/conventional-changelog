@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.0...v1.0.1) (2016-02-06)
+
+
+### Bug Fixes
+
+* **doFlush:** correct logic ([54d96cc](https://github.com/stevemao/conventional-changelog-writer/commit/54d96cc)), closes [#19](https://github.com/stevemao/conventional-changelog-writer/issues/19)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.5.1...v1.0.0) (2016-02-05)
 
