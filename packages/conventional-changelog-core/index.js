@@ -93,7 +93,6 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       var config;
       var pkg;
       var fromTag;
-      var toTag;
       var repo;
 
       var hostOpts;
@@ -162,11 +161,10 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         var lastTag = gitSemverTags[0];
 
         if (lastTag === context.version || lastTag === 'v' + context.version) {
-          toTag = lastTag;
-          options.outputUnreleased = options.outputUnreleased || false;
-
           if (options.outputUnreleased) {
             context.version = 'Unreleased';
+          } else {
+            options.outputUnreleased = false;
           }
         }
       }
@@ -204,8 +202,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
       gitRawCommitsOpts = _.assign({
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
-          from: fromTag,
-          to: toTag
+          from: fromTag
         },
         config.gitRawCommitsOpts,
         gitRawCommitsOpts

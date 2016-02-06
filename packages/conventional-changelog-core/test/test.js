@@ -838,12 +838,8 @@ describe('conventionalChangelogCore', function() {
       conventionalChangelogCore({}, {
         version: '1.0.0'
       })
-        .pipe(through(function(chunk, enc, cb) {
-          chunk = chunk.toString();
-
-          expect(chunk).to.equal('');
-
-          cb();
+        .pipe(through(function() {
+          done(new Error('should not output unreleased'));
         }, function() {
           done();
         }));
@@ -851,7 +847,7 @@ describe('conventionalChangelogCore', function() {
 
     it('should output unreleased', function(done) {
       gitDummyCommit();
-      shell.exec('git tag v1.0.0');
+      gitDummyCommit('something unreleased yet :)');
 
       conventionalChangelogCore({
         outputUnreleased: true
@@ -861,6 +857,7 @@ describe('conventionalChangelogCore', function() {
         .pipe(through(function(chunk, enc, cb) {
           chunk = chunk.toString();
 
+          expect(chunk).to.include('something unreleased yet :)');
           expect(chunk).to.include('Unreleased');
 
           cb();
