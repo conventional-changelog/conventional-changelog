@@ -5,7 +5,7 @@ var forEach = require('lodash').forEach;
 var fs = require('fs');
 var meow = require('meow');
 var path = require('path');
-var split = require('split2');
+var split = require('split');
 
 var cli = meow({
   help: [
