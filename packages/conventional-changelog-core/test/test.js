@@ -381,10 +381,13 @@ describe('conventionalChangelogCore', function() {
   });
 
   describe('finalizeContext', function() {
+    var head;
     var tail;
 
     before(function(done) {
       shell.exec('git tag -d v0.1.0');
+      head = shell.exec('git rev-parse HEAD').output.substring(0, 7);
+
       gitTails(function(err, data) {
         tail = data[data.length - 1].substring(0, 7);
         done();
@@ -508,6 +511,29 @@ describe('conventionalChangelogCore', function() {
           cb();
         }, function() {
           expect(i).to.equal(3);
+          done();
+        }));
+    });
+
+    it('should change `context.currentTag` to last commit hash if it is unreleased', function(done) {
+      var i = 0;
+
+      conventionalChangelogCore({
+        outputUnreleased: true
+      }, {
+        version: '2.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          expect(chunk).to.equal('v2.0.0...' + head);
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(1);
           done();
         }));
     });

@@ -228,6 +228,11 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
       writerOpts = _.assign({
           finalizeContext: function(context, writerOpts, commits, keyCommit) {
+            var firstCommit = commits[0];
+            var lastCommit = commits[commits.length - 1];
+            var firstCommitHash = firstCommit ? firstCommit.hash : null;
+            var lastCommitHash = lastCommit ? lastCommit.hash : null;
+
             if ((!context.currentTag || !context.previousTag) && keyCommit) {
               var match = /tag:\s*(.+?)[,\)]/gi.exec(keyCommit.gitTags);
               var currentTag = context.currentTag = context.currentTag || match ? match[1] : null;
@@ -236,14 +241,23 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
               if (!previousTag) {
                 if (options.append) {
-                  context.previousTag = context.previousTag || commits[0] ? commits[0].hash : null;
+                  context.previousTag = context.previousTag || firstCommitHash;
                 } else {
-                  context.previousTag = context.previousTag || commits[commits.length - 1] ? commits[commits.length - 1].hash : null;
+                  context.previousTag = context.previousTag || lastCommitHash;
                 }
               }
             } else {
               context.previousTag = context.previousTag || gitSemverTags[0];
-              context.currentTag = context.currentTag || 'v' + context.version;
+
+              if (context.version === 'Unreleased') {
+                if (options.append) {
+                  context.currentTag = context.currentTag || lastCommitHash;
+                } else {
+                  context.currentTag = context.currentTag || firstCommitHash;
+                }
+              } else {
+                context.currentTag = context.currentTag || 'v' + context.version;
+              }
             }
 
             if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
