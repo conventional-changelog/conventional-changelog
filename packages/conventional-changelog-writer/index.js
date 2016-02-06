@@ -10,7 +10,7 @@ var _ = require('lodash');
 function conventionalChangelogWriter(context, options) {
   var savedKeyCommit;
   var commits = [];
-  var firstGeneration = true;
+  var firstRelease = true;
   var neverGenerated = true;
 
   context = _.extend({
@@ -112,9 +112,7 @@ function conventionalChangelogWriter(context, options) {
           neverGenerated = false;
           result = util.generate(options, commits, context, savedKeyCommit);
 
-          if (!firstGeneration || options.doFlush) {
-            firstGeneration = false;
-
+          if (!firstRelease || options.doFlush) {
             if (options.includeDetails) {
               this.push({
                 log: result,
@@ -125,6 +123,7 @@ function conventionalChangelogWriter(context, options) {
             }
           }
 
+          firstRelease = false;
           commits = [];
           savedKeyCommit = keyCommit;
         }

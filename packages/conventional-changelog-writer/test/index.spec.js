@@ -552,6 +552,18 @@ describe('conventionalChangelogWriter', function() {
           committerDate: '2015-04-07 14:17:05 +1000',
           version: 'v1.0.0'
         });
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'No backward compatibility.'
+          }],
+          references: [],
+          committerDate: '2015-04-07 14:17:05 +1000',
+          version: 'v0.1.4'
+        });
         upstream.end();
 
         upstream
@@ -563,13 +575,17 @@ describe('conventionalChangelogWriter', function() {
           .pipe(through(function(chunk, enc, cb) {
             chunk = chunk.toString();
 
-            expect(chunk).to.contain('1.0.0');
-            expect(chunk).not.to.contain('2.0.0');
+            if (i === 0) {
+              expect(chunk).to.contain('1.0.0');
+              expect(chunk).not.to.contain('2.0.0');
+            } else {
+              expect(chunk).to.contain('0.1.4');
+            }
 
             i++;
             cb();
           }, function() {
-            expect(i).to.equal(1);
+            expect(i).to.equal(2);
             done();
           }));
       });
@@ -757,6 +773,18 @@ describe('conventionalChangelogWriter', function() {
           committerDate: '2015-04-07 14:17:05 +1000',
           version: 'v1.0.0'
         });
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'No backward compatibility.'
+          }],
+          references: [],
+          committerDate: '2015-04-07 14:17:05 +1000',
+          version: 'v2.0.290'
+        });
         upstream.end();
 
         upstream
@@ -769,13 +797,17 @@ describe('conventionalChangelogWriter', function() {
           .pipe(through(function(chunk, enc, cb) {
             chunk = chunk.toString();
 
-            expect(chunk).to.contain('1.0.0');
-            expect(chunk).not.to.contain('2.0.0');
+            if (i === 0) {
+              expect(chunk).to.contain('1.0.0');
+              expect(chunk).not.to.contain('2.0.0');
+            } else {
+              expect(chunk).to.contain('2.0.290');
+            }
 
             i++;
             cb();
           }, function() {
-            expect(i).to.equal(1);
+            expect(i).to.equal(2);
             done();
           }));
       });
