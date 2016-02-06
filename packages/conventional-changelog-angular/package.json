@@ -25,12 +25,12 @@
   "homepage": "https://github.com/stevemao/conventional-changelog-angular#readme",
   "devDependencies": {
     "chai": "^3.4.1",
-    "conventional-changelog-core": "1.0.0",
+    "conventional-changelog-core": "^1.0.1",
     "coveralls": "^2.11.6",
     "git-dummy-commit": "^1.1.1",
     "istanbul": "^0.4.1",
     "jscs": "^2.7.0",
-    "jshint": "^2.9.1-rc2",
+    "jshint": "^2.9.1",
     "mocha": "*",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"

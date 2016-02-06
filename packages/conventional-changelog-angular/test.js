@@ -94,7 +94,8 @@ describe('angular preset', function() {
     gitDummyCommit('feat: some more features');
 
     conventionalChangelogCore({
-      config: preset
+      config: preset,
+      outputUnreleased: true
     })
       .on('error', function(err) {
         done(err);
