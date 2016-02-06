@@ -536,7 +536,7 @@ describe('conventionalChangelogWriter', function() {
           }));
       });
 
-      it('should not flush', function(done) {
+      it('should not flush when previous release is generated', function(done) {
         var i = 0;
 
         var upstream = through.obj();
@@ -570,6 +570,37 @@ describe('conventionalChangelogWriter', function() {
             cb();
           }, function() {
             expect(i).to.equal(1);
+            done();
+          }));
+      });
+
+      it('should not flush when it is the only potential release', function(done) {
+        var i = 0;
+
+        var upstream = through.obj();
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'No backward compatibility.'
+          }],
+          references: [],
+          committerDate: '2015-04-07 14:17:05 +1000'
+        });
+        upstream.end();
+
+        upstream
+          .pipe(conventionalChangelogWriter({
+            version: 'v2.0.0'
+          }, {
+            doFlush: false
+          }))
+          .pipe(through(function() {
+            done(new Error('should not flush when it is the only potential release'));
+          }, function() {
+            expect(i).to.equal(0);
             done();
           }));
       });
@@ -710,7 +741,7 @@ describe('conventionalChangelogWriter', function() {
           }));
       });
 
-      it('should not flush', function(done) {
+      it('should not flush when previous release is generated', function(done) {
         var i = 0;
 
         var upstream = through.obj();
@@ -748,6 +779,38 @@ describe('conventionalChangelogWriter', function() {
             done();
           }));
       });
+    });
+
+    it('should not flush when it is the only potential release', function(done) {
+      var i = 0;
+
+      var upstream = through.obj();
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'No backward compatibility.'
+        }],
+        references: [],
+        committerDate: '2015-04-07 14:17:05 +1000'
+      });
+      upstream.end();
+
+      upstream
+        .pipe(conventionalChangelogWriter({
+          version: 'v2.0.0'
+        }, {
+          reverse: true,
+          doFlush: false
+        }))
+        .pipe(through(function() {
+          done(new Error('should not flush when it is the only potential release'));
+        }, function() {
+          expect(i).to.equal(0);
+          done();
+        }));
     });
   });
 

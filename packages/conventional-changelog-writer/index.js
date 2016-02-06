@@ -10,6 +10,8 @@ var _ = require('lodash');
 function conventionalChangelogWriter(context, options) {
   var savedKeyCommit;
   var commits = [];
+  var firstGeneration = true;
+  var neverGenerated = true;
 
   context = _.extend({
     commit: 'commits',
@@ -78,7 +80,6 @@ function conventionalChangelogWriter(context, options) {
   options.commitsSort = util.functionify(options.commitsSort);
   options.noteGroupsSort = util.functionify(options.noteGroupsSort);
   options.notesSort = util.functionify(options.notesSort);
-  var firstGeneration = true;
 
   return through.obj(function(chunk, enc, cb) {
     try {
@@ -93,6 +94,7 @@ function conventionalChangelogWriter(context, options) {
         }
 
         if (generateOn(keyCommit, commits, context, options)) {
+          neverGenerated = false;
           result = util.generate(options, commits, context, keyCommit);
           if (options.includeDetails) {
             this.push({
@@ -107,6 +109,7 @@ function conventionalChangelogWriter(context, options) {
         }
       } else {
         if (generateOn(keyCommit, commits, context, options)) {
+          neverGenerated = false;
           result = util.generate(options, commits, context, savedKeyCommit);
 
           if (!firstGeneration || options.doFlush) {
@@ -136,7 +139,7 @@ function conventionalChangelogWriter(context, options) {
       cb(err);
     }
   }, function(cb) {
-    if (!options.doFlush && options.reverse) {
+    if (!options.doFlush && (options.reverse || neverGenerated)) {
       cb(null);
       return;
     }
