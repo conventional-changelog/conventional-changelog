@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/stevemao/conventional-changelog-core/compare/v1.0.0...v1.0.1) (2016-02-06)
+
+
+### Bug Fixes
+
+* **unreleased:** now it can output unreleased commits ([87b7340](https://github.com/stevemao/conventional-changelog-core/commit/87b7340))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-changelog-core/compare/v0.0.2...v1.0.0) (2016-02-05)
 
