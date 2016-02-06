@@ -78,6 +78,7 @@ function conventionalChangelogWriter(context, options) {
   options.commitsSort = util.functionify(options.commitsSort);
   options.noteGroupsSort = util.functionify(options.noteGroupsSort);
   options.notesSort = util.functionify(options.notesSort);
+  var firstGeneration = true;
 
   return through.obj(function(chunk, enc, cb) {
     try {
@@ -107,13 +108,18 @@ function conventionalChangelogWriter(context, options) {
       } else {
         if (generateOn(keyCommit, commits, context, options)) {
           result = util.generate(options, commits, context, savedKeyCommit);
-          if (options.includeDetails) {
-            this.push({
-              log: result,
-              keyCommit: savedKeyCommit
-            });
-          } else {
-            this.push(result);
+
+          if (!firstGeneration || options.doFlush) {
+            firstGeneration = false;
+
+            if (options.includeDetails) {
+              this.push({
+                log: result,
+                keyCommit: savedKeyCommit
+              });
+            } else {
+              this.push(result);
+            }
           }
 
           commits = [];
@@ -130,7 +136,7 @@ function conventionalChangelogWriter(context, options) {
       cb(err);
     }
   }, function(cb) {
-    if (!options.doFlush) {
+    if (!options.doFlush && options.reverse) {
       cb(null);
       return;
     }

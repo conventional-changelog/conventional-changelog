@@ -328,7 +328,46 @@ describe('conventionalChangelogWriter', function() {
       it('`generateOn` could be a string', function(done) {
         var i = 0;
 
-        getStream()
+        var upstream = through.obj();
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [],
+          references: [],
+          version: '1.0.1',
+          committerDate: '2015-04-07 14:17:05 +1000'
+        });
+        upstream.write({
+          header: 'fix(ng-list): Allow custom separator',
+          body: 'bla bla bla',
+          footer: null,
+          notes: [],
+          references: [],
+          version: '2.0.1',
+          committerDate: '2015-04-07 15:00:44 +1000'
+        });
+        upstream.write({
+          header: 'perf(template): tweak',
+          body: 'My body.',
+          footer: null,
+          notes: [],
+          references: [],
+          version: '3.0.1',
+          committerDate: '2015-04-07 15:01:30 +1000'
+        });
+        upstream.write({
+          header: 'refactor(name): rename this module to conventional-changelog-writer',
+          body: null,
+          footer: null,
+          notes: [],
+          references: [],
+          version: '4.0.1',
+          committerDate: '2015-04-08 09:43:59 +1000'
+        });
+        upstream.end();
+
+        upstream
           .pipe(conventionalChangelogWriter({}, {
             generateOn: 'version'
           }))
@@ -338,7 +377,7 @@ describe('conventionalChangelogWriter', function() {
             if (i === 0) {
               expect(chunk).to.include('<a name=""></a>\n#  (' + today);
               expect(chunk).to.not.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)');
-            } else {
+            } else if (i === 1) {
               expect(chunk).to.include('<a name="1.0.1"></a>');
               expect(chunk).to.not.include('<a name=""></a>');
             }
@@ -346,7 +385,7 @@ describe('conventionalChangelogWriter', function() {
             i++;
             cb(null);
           }, function() {
-            expect(i).to.equal(2);
+            expect(i).to.equal(5);
             done();
           }));
       });
@@ -485,6 +524,44 @@ describe('conventionalChangelogWriter', function() {
             done();
           }));
       });
+
+      it('should not flush', function(done) {
+        var i = 0;
+
+        var upstream = through.obj();
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'No backward compatibility.'
+          }],
+          references: [],
+          committerDate: '2015-04-07 14:17:05 +1000',
+          version: 'v1.0.0'
+        });
+        upstream.end();
+
+        upstream
+          .pipe(conventionalChangelogWriter({
+            version: 'v2.0.0'
+          }, {
+            doFlush: false
+          }))
+          .pipe(through(function(chunk, enc, cb) {
+            chunk = chunk.toString();
+
+            expect(chunk).to.contain('1.0.0');
+            expect(chunk).not.to.contain('2.0.0');
+
+            i++;
+            cb();
+          }, function() {
+            expect(i).to.equal(1);
+            done();
+          }));
+      });
     });
 
     describe('when commits are reversed', function() {
@@ -580,38 +657,46 @@ describe('conventionalChangelogWriter', function() {
             done();
           }));
       });
+
+      it('should not flush', function(done) {
+        var i = 0;
+
+        var upstream = through.obj();
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'No backward compatibility.'
+          }],
+          references: [],
+          committerDate: '2015-04-07 14:17:05 +1000',
+          version: 'v1.0.0'
+        });
+        upstream.end();
+
+        upstream
+          .pipe(conventionalChangelogWriter({
+            version: 'v2.0.0'
+          }, {
+            reverse: true,
+            doFlush: false
+          }))
+          .pipe(through(function(chunk, enc, cb) {
+            chunk = chunk.toString();
+
+            expect(chunk).to.contain('1.0.0');
+            expect(chunk).not.to.contain('2.0.0');
+
+            i++;
+            cb();
+          }, function() {
+            expect(i).to.equal(1);
+            done();
+          }));
+      });
     });
-  });
-
-  it('should not flush', function(done) {
-    var i = 0;
-
-    var upstream = through.obj();
-    upstream.write({
-      header: 'feat(scope): broadcast $destroy event on scope destruction',
-      body: null,
-      footer: null,
-      notes: [{
-        title: 'BREAKING CHANGE',
-        text: 'No backward compatibility.'
-      }],
-      references: [],
-      committerDate: '2015-04-07 14:17:05 +1000',
-      version: 'v1.0.0'
-    });
-    upstream.end();
-
-    upstream
-      .pipe(conventionalChangelogWriter({}, {
-        doFlush: false
-      }))
-      .pipe(through(function(chunk, enc, cb) {
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(1);
-        done();
-      }));
   });
 
   it('should sort notes on `text` by default', function(done) {
