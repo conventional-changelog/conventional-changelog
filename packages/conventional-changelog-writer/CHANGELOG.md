@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.2...v1.0.3) (2016-02-06)
+
+
+### Bug Fixes
+
+* **firstRelease:** correct logic ([43552a2](https://github.com/stevemao/conventional-changelog-writer/commit/43552a2))
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.1...v1.0.2) (2016-02-06)
 
