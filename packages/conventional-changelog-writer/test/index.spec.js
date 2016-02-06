@@ -353,7 +353,6 @@ describe('conventionalChangelogWriter', function() {
           footer: null,
           notes: [],
           references: [],
-          version: '3.0.1',
           committerDate: '2015-04-07 15:01:30 +1000'
         });
         upstream.write({
@@ -376,16 +375,28 @@ describe('conventionalChangelogWriter', function() {
 
             if (i === 0) {
               expect(chunk).to.include('<a name=""></a>\n#  (' + today);
+
               expect(chunk).to.not.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)');
             } else if (i === 1) {
               expect(chunk).to.include('<a name="1.0.1"></a>');
+              expect(chunk).to.include('feat(scope): broadcast $destroy event on scope destruction');
+
               expect(chunk).to.not.include('<a name=""></a>');
+            } else if (i === 2) {
+              expect(chunk).to.include('<a name="2.0.1"></a>');
+              expect(chunk).to.include('fix(ng-list): Allow custom separator');
+              expect(chunk).to.include('perf(template): tweak');
+            } else if (i === 3) {
+              expect(chunk).to.include('<a name="4.0.1"></a>');
+              expect(chunk).to.include('refactor(name): rename this module to conventional-changelog-writer');
+
+              expect(chunk).to.not.include('perf(template): tweak');
             }
 
             i++;
             cb(null);
           }, function() {
-            expect(i).to.equal(5);
+            expect(i).to.equal(4);
             done();
           }));
       });
@@ -568,7 +579,45 @@ describe('conventionalChangelogWriter', function() {
       it('should generate on `\'version\'` if it\'s a valid semver', function(done) {
         var i = 0;
 
-        getStream()
+        var upstream = through.obj();
+        upstream.write({
+          header: 'feat(scope): broadcast $destroy event on scope destruction',
+          body: null,
+          footer: null,
+          notes: [],
+          references: [],
+          version: '1.0.1',
+          committerDate: '2015-04-07 14:17:05 +1000'
+        });
+        upstream.write({
+          header: 'fix(ng-list): Allow custom separator',
+          body: 'bla bla bla',
+          footer: null,
+          notes: [],
+          references: [],
+          version: '2.0.1',
+          committerDate: '2015-04-07 15:00:44 +1000'
+        });
+        upstream.write({
+          header: 'perf(template): tweak',
+          body: 'My body.',
+          footer: null,
+          notes: [],
+          references: [],
+          committerDate: '2015-04-07 15:01:30 +1000'
+        });
+        upstream.write({
+          header: 'refactor(name): rename this module to conventional-changelog-writer',
+          body: null,
+          footer: null,
+          notes: [],
+          references: [],
+          version: '4.0.1',
+          committerDate: '2015-04-08 09:43:59 +1000'
+        });
+        upstream.end();
+
+        upstream
           .pipe(conventionalChangelogWriter({}, {
             reverse: true
           }))
@@ -576,27 +625,30 @@ describe('conventionalChangelogWriter', function() {
             chunk = chunk.toString();
 
             if (i === 0) {
-              expect(chunk).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)');
+              expect(chunk).to.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07');
               expect(chunk).to.include('feat(scope): ');
-              expect(chunk).to.include('fix(ng-list): ');
 
               expect(chunk).to.not.include('<a name=""></a>');
               expect(chunk).to.not.include('perf(template): ');
               expect(chunk).to.not.include('refactor(name): ');
-            } else {
-              expect(chunk).to.include('<a name=""></a>\n#  (' + today);
-              expect(chunk).to.include('perf(template): ');
-              expect(chunk).to.include('refactor(name): ');
+            } else if (i === 1) {
+              expect(chunk).to.include('<a name="2.0.1"></a>\n## 2.0.1 (2015-04-07');
+              expect(chunk).to.include('fix(ng-list): ');
 
               expect(chunk).to.not.include('<a name="1.0.1"></a>');
               expect(chunk).to.not.include('feat(scope): ');
-              expect(chunk).to.not.include('fix(ng-list): ');
+            } else if (i === 2) {
+              expect(chunk).to.include('<a name="4.0.1"></a>\n#');
+              expect(chunk).to.include('perf(template): ');
+              expect(chunk).to.include('refactor(name): ');
+            } else if (i === 3) {
+              expect(chunk).to.include('<a name=""></a>\n#  (' + today);
             }
 
             i++;
             cb(null);
           }, function() {
-            expect(i).to.equal(2);
+            expect(i).to.equal(4);
             done();
           }));
       });
