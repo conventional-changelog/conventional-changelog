@@ -160,7 +160,7 @@ Default: based on `options.releaseCount`.
 
 ##### reverse
 
-Default: only `true` if `options.append` is truthy.
+Default: `true` if `options.append` is truthy.
 
 #### parserOpts
 
