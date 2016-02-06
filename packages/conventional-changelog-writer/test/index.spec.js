@@ -591,8 +591,6 @@ describe('conventionalChangelogWriter', function() {
       });
 
       it('should not flush when it is the only potential release', function(done) {
-        var i = 0;
-
         var upstream = through.obj();
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
@@ -616,7 +614,6 @@ describe('conventionalChangelogWriter', function() {
           .pipe(through(function() {
             done(new Error('should not flush when it is the only potential release'));
           }, function() {
-            expect(i).to.equal(0);
             done();
           }));
       });
@@ -814,8 +811,6 @@ describe('conventionalChangelogWriter', function() {
     });
 
     it('should not flush when it is the only potential release', function(done) {
-      var i = 0;
-
       var upstream = through.obj();
       upstream.write({
         header: 'feat(scope): broadcast $destroy event on scope destruction',
@@ -840,7 +835,6 @@ describe('conventionalChangelogWriter', function() {
         .pipe(through(function() {
           done(new Error('should not flush when it is the only potential release'));
         }, function() {
-          expect(i).to.equal(0);
           done();
         }));
     });
