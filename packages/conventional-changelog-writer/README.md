@@ -240,7 +240,7 @@ The commit that triggers to generate the log.
 
 Type: `boolean` Default: `false`
 
-Are the commits from upstream in the reverse order? You should only worry about this when generating more than one blocks of logs based on `generateOn`. If you find the last commit is in the wrong block inverse this value.
+The normal order means reverse chronological order. `reverse` order means chronological order. Are the commits from upstream in the reverse order? You should only worry about this when generating more than one blocks of logs based on `generateOn`. If you find the last commit is in the wrong block inverse this value.
 
 ##### includeDetails
 
