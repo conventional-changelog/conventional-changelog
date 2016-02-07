@@ -1,0 +1,275 @@
+'use strict';
+var dateFormat = require('dateformat');
+var getPkgRepo = require('get-pkg-repo');
+var gitSemverTags = require('git-semver-tags');
+var normalizePackageData = require('normalize-package-data');
+var Q = require('q');
+var gitRemoteOriginUrl;
+try {
+  gitRemoteOriginUrl = require('git-remote-origin-url');
+} catch (err) {
+  gitRemoteOriginUrl = function() {
+    return Q.reject(err);
+  };
+}
+var readPkg = require('read-pkg');
+var readPkgUp = require('read-pkg-up');
+var url = require('url');
+var _ = require('lodash');
+
+var rhosts = /github|bitbucket|gitlab/i;
+var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
+
+function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+  var configPromise;
+  var pkgPromise;
+  var semverTagsPromise;
+  var gitRemoteOriginUrlPromise;
+
+  context = context || {};
+  gitRawCommitsOpts = gitRawCommitsOpts || {};
+
+  options = _.merge({
+    pkg: {
+      transform: function(pkg) {
+        return pkg;
+      }
+    },
+    append: false,
+    releaseCount: 1,
+    warn: function() {},
+    transform: function(commit, cb) {
+      if (_.isString(commit.gitTags)) {
+        var match = rtag.exec(commit.gitTags);
+        rtag.lastIndex = 0;
+
+        if (match) {
+          commit.version = match[1];
+        }
+      }
+
+      if (commit.committerDate) {
+        commit.committerDate = dateFormat(commit.committerDate, 'yyyy-mm-dd', true);
+      }
+
+      cb(null, commit);
+    }
+  }, options);
+
+  if (options.config) {
+    if (_.isFunction(options.config)) {
+      configPromise = Q.nfcall(options.config);
+    } else {
+      configPromise = Q(options.config); // jshint ignore:line
+    }
+  }
+
+  if (options.pkg) {
+    if (options.pkg.path) {
+      pkgPromise = Q(readPkg(options.pkg.path)); // jshint ignore:line
+    } else {
+      pkgPromise = Q(readPkgUp()); // jshint ignore:line
+    }
+  }
+
+  semverTagsPromise = Q.nfcall(gitSemverTags);
+
+  gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl()); // jshint ignore:line
+
+  return Q.allSettled([configPromise, pkgPromise, semverTagsPromise, gitRemoteOriginUrlPromise])
+    .spread(function(configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj) {
+      var config;
+      var pkg;
+      var fromTag;
+      var repo;
+
+      var hostOpts;
+
+      var gitSemverTags = [];
+
+      if (configPromise) {
+        if (configObj.state === 'fulfilled') {
+          config = configObj.value;
+        } else {
+          options.warn('Error in config' + configObj.reason.toString());
+          config = {};
+        }
+      } else {
+        config = {};
+      }
+
+      context = _.assign(context, config.context);
+
+      if (options.pkg) {
+        if (pkgObj.state === 'fulfilled') {
+          if (options.pkg.path) {
+            pkg = pkgObj.value;
+          } else {
+            pkg = pkgObj.value.pkg || {};
+          }
+
+          pkg = options.pkg.transform(pkg);
+
+        } else if (options.pkg.path) {
+          options.warn(pkgObj.reason.toString());
+        }
+      }
+
+      if ((!pkg || !pkg.repository || !pkg.repository.url) && gitRemoteOriginUrlObj.state === 'fulfilled') {
+        pkg = pkg || {};
+        pkg.repository = pkg.repository || {};
+        pkg.repository.url = gitRemoteOriginUrlObj.value;
+        normalizePackageData(pkg);
+      }
+
+      if (pkg) {
+        context.version = context.version || pkg.version;
+
+        try {
+          repo = getPkgRepo(pkg);
+        } catch (err) {
+          repo = {};
+        }
+
+        if (repo.browse) {
+          var browse = repo.browse();
+          var parsedBrowse = url.parse(browse);
+          context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null);
+          context.owner = context.owner || repo.user || '';
+          context.repository = context.repository || repo.project || browse;
+        }
+
+        context.packageData = pkg;
+      }
+
+      if (tagsObj.state === 'fulfilled') {
+        gitSemverTags = context.gitSemverTags = tagsObj.value;
+        fromTag = gitSemverTags[options.releaseCount - 1];
+
+        var lastTag = gitSemverTags[0];
+
+        if (lastTag === context.version || lastTag === 'v' + context.version) {
+          if (options.outputUnreleased) {
+            context.version = 'Unreleased';
+          } else {
+            options.outputUnreleased = false;
+          }
+        }
+      }
+
+      if (!_.isBoolean(options.outputUnreleased)) {
+        options.outputUnreleased = true;
+      }
+
+      if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
+        var type;
+
+        if (context.host) {
+          var match = context.host.match(rhosts);
+          if (match) {
+            type = match[0];
+          }
+        } else if (repo && repo.type) {
+          type = repo.type;
+        }
+
+        if (type) {
+          hostOpts = require('../hosts/' + type);
+
+          context = _.assign({
+            issue: hostOpts.issue,
+            commit: hostOpts.commit
+          }, context);
+        } else {
+          options.warn('Host: "' + context.host + '" does not exist');
+          hostOpts = {};
+        }
+      } else {
+        hostOpts = {};
+      }
+
+      gitRawCommitsOpts = _.assign({
+          format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
+          from: fromTag
+        },
+        config.gitRawCommitsOpts,
+        gitRawCommitsOpts
+      );
+
+      if (options.append) {
+        gitRawCommitsOpts.reverse = gitRawCommitsOpts.reverse || true;
+      }
+
+      parserOpts = _.assign(
+        {}, config.parserOpts, {
+          warn: options.warn
+        },
+        parserOpts);
+
+      if (hostOpts.referenceActions && parserOpts) {
+        parserOpts.referenceActions = hostOpts.referenceActions;
+      }
+
+      if (hostOpts.issuePrefixes && parserOpts) {
+        parserOpts.issuePrefixes = hostOpts.issuePrefixes;
+      }
+
+      writerOpts = _.assign({
+          finalizeContext: function(context, writerOpts, commits, keyCommit) {
+            var firstCommit = commits[0];
+            var lastCommit = commits[commits.length - 1];
+            var firstCommitHash = firstCommit ? firstCommit.hash : null;
+            var lastCommitHash = lastCommit ? lastCommit.hash : null;
+
+            if ((!context.currentTag || !context.previousTag) && keyCommit) {
+              var match = /tag:\s*(.+?)[,\)]/gi.exec(keyCommit.gitTags);
+              var currentTag = context.currentTag = context.currentTag || match ? match[1] : null;
+              var index = gitSemverTags.indexOf(currentTag);
+              var previousTag = context.previousTag = gitSemverTags[index + 1];
+
+              if (!previousTag) {
+                if (options.append) {
+                  context.previousTag = context.previousTag || firstCommitHash;
+                } else {
+                  context.previousTag = context.previousTag || lastCommitHash;
+                }
+              }
+            } else {
+              context.previousTag = context.previousTag || gitSemverTags[0];
+
+              if (context.version === 'Unreleased') {
+                if (options.append) {
+                  context.currentTag = context.currentTag || lastCommitHash;
+                } else {
+                  context.currentTag = context.currentTag || firstCommitHash;
+                }
+              } else {
+                context.currentTag = context.currentTag || 'v' + context.version;
+              }
+            }
+
+            if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
+              context.linkCompare = true;
+            }
+
+            return context;
+          }
+        },
+        config.writerOpts, {
+          reverse: options.append,
+          doFlush: options.outputUnreleased
+        },
+        writerOpts
+      );
+
+      return {
+        options: options,
+        context: context,
+        gitRawCommitsOpts: gitRawCommitsOpts,
+        parserOpts: parserOpts,
+        writerOpts: writerOpts
+      };
+    });
+}
+
+module.exports = getDefaults;
