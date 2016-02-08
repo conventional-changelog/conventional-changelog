@@ -4,6 +4,7 @@
 
 Got the idea from https://github.com/ajoslin/conventional-changelog/pull/29
 
+
 ## Install
 
 ```sh
