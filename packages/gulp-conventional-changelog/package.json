@@ -13,9 +13,9 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "npm run-script lint && mocha"
+    "test": "npm run-script lint && mocha --timeout 30000"
   },
   "files": [
     "index.js"
