@@ -146,13 +146,16 @@ function getExtraContext(commits, notes, options) {
 
 function generate(options, commits, context, keyCommit) {
   var notes = [];
+  var filteredCommits;
   var compiled = compileTemplates(options);
 
   if (options.ignoreReverted) {
-    commits = conventionalCommitsFilter(commits);
+    filteredCommits = conventionalCommitsFilter(commits);
+  } else {
+    filteredCommits = _.clone(commits);
   }
 
-  _.forEach(commits, function(commit) {
+  _.forEach(filteredCommits, function(commit) {
     _.map(commit.notes, function(note) {
       note.commit = commit;
 
@@ -162,7 +165,7 @@ function generate(options, commits, context, keyCommit) {
     notes = notes.concat(commit.notes);
   });
 
-  context = _.merge({}, context, keyCommit, getExtraContext(commits, notes, options));
+  context = _.merge({}, context, keyCommit, getExtraContext(filteredCommits, notes, options));
 
   if (keyCommit && keyCommit.committerDate) {
     context.date = keyCommit.committerDate;
@@ -172,7 +175,7 @@ function generate(options, commits, context, keyCommit) {
     context.isPatch = context.isPatch || semver.patch(context.version) !== 0;
   }
 
-  context = options.finalizeContext(context, options, commits, keyCommit);
+  context = options.finalizeContext(context, options, filteredCommits, keyCommit, commits);
 
   return compiled(context);
 }

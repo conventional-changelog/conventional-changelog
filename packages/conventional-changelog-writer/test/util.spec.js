@@ -786,5 +786,69 @@ describe('util', function() {
 
       expect(log).to.equal('`a` oh opt 0 `a`');
     });
+
+    it('should pass the correct arguments', function() {
+      util.generate({
+        mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
+        ignoreReverted: true,
+        finalizeContext: function(context, options, filteredCommits, keyCommit, originalCommits) {
+          expect(filteredCommits.length).to.equal(2);
+          expect(originalCommits.length).to.equal(4);
+        }
+      }, [{
+        header: 'revert: feat(): amazing new module\n',
+        body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
+        footer: null,
+        notes: [],
+        references: [],
+        revert: {
+          header: 'feat(): amazing new module',
+          hash: '56185b7356766d2b30cfa2406b257080272e0b7a'
+        },
+        hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
+      }, {
+        header: 'feat(): amazing nee\n',
+        body: null,
+        footer: 'BREAKI]ompatible.\n',
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'some breaking change'
+        }],
+        references: [],
+        revert: null,
+        hash: '56185b',
+        raw: {
+          header: 'feat(): amazing new module\n',
+          body: null,
+          footer: 'BREAKING CHANGE: Not backward compatible.\n',
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'some breaking change'
+          }],
+          references: [],
+          revert: null,
+          hash: '56185b7356766d2b30cfa2406b257080272e0b7a\n',
+        }
+      }, {
+        header: 'feat(): new feature\n',
+        body: null,
+        footer: null,
+        notes: [{
+          title: 'BREAKING CHANGE',
+          text: 'WOW SO MANY CHANGES'
+        }],
+        references: [],
+        revert: null,
+        hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
+      }, {
+        header: 'chore: first commit\n',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        revert: null,
+        hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
+      }]);
+    });
   });
 });
