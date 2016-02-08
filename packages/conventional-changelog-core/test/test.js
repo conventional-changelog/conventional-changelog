@@ -380,16 +380,228 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
+  it('should not link compare', function(done) {
+    var i = 0;
+
+    conventionalChangelogCore({
+      releaseCount: 0,
+      append: true
+    }, {
+      version: '3.0.0',
+      linkCompare: false
+    }, {}, {}, {
+      mainTemplate: '{{#if linkCompare}}{{previousTag}}...{{currentTag}}{{else}}Not linked{{/if}}',
+      transform: function() {
+        return null;
+      }
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.equal('Not linked');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(3);
+        done();
+      }));
+  });
+
+  it('should warn if host is not found', function(done) {
+    conventionalChangelogCore({
+      pkg: null,
+      warn: function(warning) {
+        expect(warning).to.equal('Host: "no" does not exist');
+
+        done();
+      }
+    }, {
+      host: 'no'
+    });
+  });
+
+  it('should warn if package.json is not found', function(done) {
+    conventionalChangelogCore({
+      pkg: {
+        path: 'no'
+      },
+      warn: function(warning) {
+        expect(warning).to.include('Error');
+
+        done();
+      }
+    });
+  });
+
+  it('should warn if package.json cannot be parsed', function(done) {
+    conventionalChangelogCore({
+      pkg: {
+        path: __dirname + '/fixtures/_malformation.json'
+      },
+      warn: function(warning) {
+        expect(warning).to.include('Error');
+
+        done();
+      }
+    });
+  });
+
+  it('should error if anything throws', function(done) {
+    conventionalChangelogCore({
+      pkg: {
+        path: __dirname + '/fixtures/_malformation.json'
+      },
+      warn: function() {
+        undefined.a = 10;
+      }
+    }).on('error', function(err) {
+      expect(err).to.be.ok; // jshint ignore:line
+      done();
+    });
+  });
+
+  it('should error if there is an error in `options.pkg.transform`', function(done) {
+    conventionalChangelogCore({
+      pkg: {
+        path: __dirname + '/fixtures/_short.json',
+        transform: function() {
+          undefined.a = 10;
+        }
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('undefined');
+
+        done();
+      });
+  });
+
+  it('should error if it errors in git-raw-commits', function(done) {
+    conventionalChangelogCore({}, {}, {
+      unknowOptions: false
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('Error in git-raw-commits:');
+
+        done();
+      });
+  });
+
+  it('should error if it emits an error in `options.transform`', function(done) {
+    gitDummyCommit('test8');
+
+    conventionalChangelogCore({
+      transform: function(commit, cb) {
+        cb(new Error('error'));
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('Error in options.transform:');
+
+        done();
+      });
+  });
+
+  it('should error if there is an error in `options.transform`', function(done) {
+    gitDummyCommit('test8');
+
+    conventionalChangelogCore({
+      transform: function() {
+        undefined.a = 10;
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('Error in options.transform:');
+
+        done();
+      });
+  });
+
+  it('should error if it errors in conventional-changelog-writer', function(done) {
+    conventionalChangelogCore({}, {}, {}, {}, {
+      finalizeContext: function() {
+        return undefined.a;
+      }
+    })
+      .on('error', function(err) {
+        expect(err.message).to.include('Error in conventional-changelog-writer:');
+
+        done();
+      });
+  });
+
+  it('should be object mode if `writerOpts.includeDetails` is `true`', function(done) {
+    conventionalChangelogCore({}, {}, {}, {}, {
+      includeDetails: true
+    })
+      .pipe(through.obj(function(chunk) {
+        expect(chunk).to.be.an('object');
+        done();
+      }));
+  });
+
+  it('should pass `parserOpts` to conventional-commits-parser', function(done) {
+    gitDummyCommit(['test9', 'Release note: super release!']);
+
+    conventionalChangelogCore({}, {}, {}, {
+      noteKeywords: [
+        'Release note'
+      ]
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('* test9');
+        expect(chunk).to.include('### Release note\n\n* super release!');
+
+        cb();
+      }, function() {
+        done();
+      }));
+  });
+
+  it('should pass fallback to git remote origin url', function(done) {
+    if (semver.major(process.version) < 4) {
+      console.log('This feature is only available under node>=4');
+      done();
+      return;
+    }
+
+    shell.exec('git remote add origin https://github.com/user/repo.git');
+
+    conventionalChangelogCore({
+      pkg: {
+        path: __dirname + '/fixtures/_version-only.json'
+      },
+    })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('https://github.com/user/repo');
+        expect(chunk).to.not.include('.git');
+
+        cb();
+      }, function() {
+        done();
+      }));
+  });
+
   describe('finalizeContext', function() {
     var head;
     var tail;
 
     before(function(done) {
       shell.exec('git tag -d v0.1.0');
+      head = shell.exec('git rev-parse HEAD').output.trim();
+
+      gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.');
+
       head = shell.exec('git rev-parse HEAD').output.substring(0, 7);
 
       gitTails(function(err, data) {
         tail = data[data.length - 1].substring(0, 7);
+
         done();
       });
     });
@@ -572,34 +784,6 @@ describe('conventionalChangelogCore', function() {
     });
   });
 
-  it('should not link compare', function(done) {
-    var i = 0;
-
-    conventionalChangelogCore({
-      releaseCount: 0,
-      append: true
-    }, {
-      version: '3.0.0',
-      linkCompare: false
-    }, {}, {}, {
-      mainTemplate: '{{#if linkCompare}}{{previousTag}}...{{currentTag}}{{else}}Not linked{{/if}}',
-      transform: function() {
-        return null;
-      }
-    })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.equal('Not linked');
-
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(3);
-        done();
-      }));
-  });
-
   describe('config', function() {
     var config = {
       context: {
@@ -675,185 +859,6 @@ describe('conventionalChangelogCore', function() {
         }
       });
     });
-  });
-
-  it('should warn if host is not found', function(done) {
-    conventionalChangelogCore({
-      pkg: null,
-      warn: function(warning) {
-        expect(warning).to.equal('Host: "no" does not exist');
-
-        done();
-      }
-    }, {
-      host: 'no'
-    });
-  });
-
-  it('should warn if package.json is not found', function(done) {
-    conventionalChangelogCore({
-      pkg: {
-        path: 'no'
-      },
-      warn: function(warning) {
-        expect(warning).to.include('Error');
-
-        done();
-      }
-    });
-  });
-
-  it('should warn if package.json cannot be parsed', function(done) {
-    conventionalChangelogCore({
-      pkg: {
-        path: __dirname + '/fixtures/_malformation.json'
-      },
-      warn: function(warning) {
-        expect(warning).to.include('Error');
-
-        done();
-      }
-    });
-  });
-
-  it('should error if anything throws', function(done) {
-    conventionalChangelogCore({
-      pkg: {
-        path: __dirname + '/fixtures/_malformation.json'
-      },
-      warn: function() {
-        undefined.a = 10;
-      }
-    }).on('error', function(err) {
-      expect(err).to.be.ok; // jshint ignore:line
-      done();
-    });
-  });
-
-  it('should error if there is an error in `options.pkg.transform`', function(done) {
-    conventionalChangelogCore({
-      pkg: {
-        path: __dirname + '/fixtures/_short.json',
-        transform: function() {
-          undefined.a = 10;
-        }
-      }
-    })
-      .on('error', function(err) {
-        expect(err.message).to.include('undefined');
-
-        done();
-      });
-  });
-
-  it('should error if it errors in git-raw-commits', function(done) {
-    conventionalChangelogCore({}, {}, {
-      unknowOptions: false
-    })
-      .on('error', function(err) {
-        expect(err.message).to.include('Error in git-raw-commits:');
-
-        done();
-      });
-  });
-
-  it('should error if it emits an error in `options.transform`', function(done) {
-    gitDummyCommit('test8');
-
-    conventionalChangelogCore({
-      transform: function(commit, cb) {
-        cb(new Error('error'));
-      }
-    })
-      .on('error', function(err) {
-        expect(err.message).to.include('Error in options.transform:');
-
-        done();
-      });
-  });
-
-  it('should error if there is an error in `options.transform`', function(done) {
-    gitDummyCommit('test8');
-
-    conventionalChangelogCore({
-      transform: function() {
-        undefined.a = 10;
-      }
-    })
-      .on('error', function(err) {
-        expect(err.message).to.include('Error in options.transform:');
-
-        done();
-      });
-  });
-
-  it('should error if it errors in conventional-changelog-writer', function(done) {
-    conventionalChangelogCore({}, {}, {}, {}, {
-      finalizeContext: function() {
-        return undefined.a;
-      }
-    })
-      .on('error', function(err) {
-        expect(err.message).to.include('Error in conventional-changelog-writer:');
-
-        done();
-      });
-  });
-
-  it('should be object mode if `writerOpts.includeDetails` is `true`', function(done) {
-    conventionalChangelogCore({}, {}, {}, {}, {
-      includeDetails: true
-    })
-      .pipe(through.obj(function(chunk) {
-        expect(chunk).to.be.an('object');
-        done();
-      }));
-  });
-
-  it('should pass `parserOpts` to conventional-commits-parser', function(done) {
-    gitDummyCommit(['test9', 'Release note: super release!']);
-
-    conventionalChangelogCore({}, {}, {}, {
-      noteKeywords: [
-        'Release note'
-      ]
-    })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.include('* test9');
-        expect(chunk).to.include('### Release note\n\n* super release!');
-
-        cb();
-      }, function() {
-        done();
-      }));
-  });
-
-  it('should pass fallback to git remote origin url', function(done) {
-    if (semver.major(process.version) < 4) {
-      console.log('This feature is only available under node>=4');
-      done();
-      return;
-    }
-
-    shell.exec('git remote add origin https://github.com/user/repo.git');
-
-    conventionalChangelogCore({
-      pkg: {
-        path: __dirname + '/fixtures/_version-only.json'
-      },
-    })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.include('https://github.com/user/repo');
-        expect(chunk).to.not.include('.git');
-
-        cb();
-      }, function() {
-        done();
-      }));
   });
 
   describe('unreleased', function() {

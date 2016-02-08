@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "conventional-changelog-writer": "^1.0.0",
+    "conventional-changelog-writer": "^1.1.0",
     "conventional-commits-parser": "^1.0.0",
     "dateformat": "^1.0.12",
     "get-pkg-repo": "^1.0.0",

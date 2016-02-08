@@ -215,9 +215,9 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       }
 
       writerOpts = _.assign({
-          finalizeContext: function(context, writerOpts, commits, keyCommit) {
-            var firstCommit = commits[0];
-            var lastCommit = commits[commits.length - 1];
+          finalizeContext: function(context, writerOpts, filteredCommits, keyCommit, originalCommits) {
+            var firstCommit = originalCommits[0];
+            var lastCommit = originalCommits[originalCommits.length - 1];
             var firstCommitHash = firstCommit ? firstCommit.hash : null;
             var lastCommitHash = lastCommit ? lastCommit.hash : null;
 
