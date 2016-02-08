@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.3...v1.1.0) (2016-02-08)
+
+
+### Features
+
+* **generate:** originalCommits as last argument ([186bfb9](https://github.com/stevemao/conventional-changelog-writer/commit/186bfb9))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.2...v1.0.3) (2016-02-06)
 
