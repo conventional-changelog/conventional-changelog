@@ -193,7 +193,7 @@ Pattern to match other fields.
 
 ##### revertPattern
 
-Type: `regex` or `string` Default: `/^Revert\s([\s\S]*)This reverts commit (.*)\.$/`
+Type: `regex` or `string` Default: `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./`
 
 Pattern to match what this commit reverts.
 
