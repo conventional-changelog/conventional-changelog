@@ -1,3 +1,18 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/stevemao/gulp-conventional-changelog/compare/v0.7.0...v1.0.0) (2016-02-08)
+
+
+### Chores
+
+* **deps:** bump ([82ce9aa](https://github.com/stevemao/gulp-conventional-changelog/commit/82ce9aa))
+
+
+### BREAKING CHANGES
+
+* deps: Using conventional-changelog v1.
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/stevemao/gulp-conventional-changelog/compare/v0.6.0...v0.7.0) (2015-09-30)
 
