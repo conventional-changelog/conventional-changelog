@@ -30,7 +30,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "concat-stream": "^1.5.0",
-    "conventional-changelog": "^0.5.0",
+    "conventional-changelog": "^1.0.1",
     "gulp-util": "^3.0.6",
     "object-assign": "^4.0.1",
     "through2": "^2.0.0"
@@ -39,10 +39,10 @@
     "chai": "^3.0.0",
     "coveralls": "^2.11.2",
     "gulp-util": "^3.0.6",
-    "istanbul": "^0.3.17",
+    "istanbul": "^0.4.2",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
     "mocha": "*",
-    "shelljs": "^0.5.1"
+    "shelljs": "^0.6.0"
   }
 }
