@@ -38,7 +38,6 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "coveralls": "^2.11.2",
-    "gulp-util": "^3.0.6",
     "istanbul": "^0.4.2",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
