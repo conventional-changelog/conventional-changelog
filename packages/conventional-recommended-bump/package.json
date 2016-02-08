@@ -19,19 +19,19 @@
   "dependencies": {
     "concat-stream": "^1.4.10",
     "conventional-commits-filter": "^0.1.1",
-    "conventional-commits-parser": "^0.1.0",
+    "conventional-commits-parser": "^1.0.1",
     "git-latest-semver-tag": "^1.0.0",
-    "git-raw-commits": "^0.1.2",
+    "git-raw-commits": "^1.0.0",
     "meow": "^3.3.0",
-    "object-assign": "^3.0.0"
+    "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.8",
+    "istanbul": "^0.4.2",
     "jscs": "^2.0.0",
     "jshint": "^2.6.3",
     "mocha": "*",
-    "shelljs": "^0.5.1"
+    "shelljs": "^0.6.0"
   },
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
