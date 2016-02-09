@@ -4,6 +4,8 @@
 
 *Issues with the output should be reported on the `conventional-changelog` [issue tracker](https://github.com/ajoslin/conventional-changelog/issues).*
 
+Checkout the [gulp official recipe](https://github.com/gulpjs/gulp/blob/master/docs/recipes/automate-release-workflow.md) to automate releases with gulp and gulp-conventional-changelog.
+
 
 ## Install
 
