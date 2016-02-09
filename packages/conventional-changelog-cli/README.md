@@ -44,6 +44,8 @@ To fully customize the tool, please checkout [conventional-changelog](https://gi
 
 The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
 
+If you use `npm version`, it auto tags immediately after changing the version in package.json. In such case, you might want to specify the version manually and generate the changelog before `npm version`.
+
 Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to make a release or change it to your needs.
 
 
