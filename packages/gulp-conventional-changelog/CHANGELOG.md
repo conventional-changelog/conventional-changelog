@@ -1,3 +1,13 @@
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/stevemao/gulp-conventional-changelog/compare/v1.0.0...v1.0.1) (2016-02-10)
+
+
+### Bug Fixes
+
+* **error:** error should be emitted ([d49a6ec](https://github.com/stevemao/gulp-conventional-changelog/commit/d49a6ec))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/gulp-conventional-changelog/compare/v0.7.0...v1.0.0) (2016-02-08)
 
