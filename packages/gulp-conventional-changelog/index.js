@@ -22,7 +22,10 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
       return;
     }
 
-    var stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts);
+    var stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts)
+      .on('error', function(err) {
+        cb(new gutil.PluginError('gulp-conventional-changelog', err));
+      });
 
     if (file.isStream()) {
       if (opts.releaseCount === 0) {
@@ -40,7 +43,9 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
     }
 
     stream
-      .pipe(concat(function(data) {
+      .pipe(concat({
+        encoding: 'buffer'
+      }, function(data) {
         if (opts.releaseCount === 0) {
           file.contents = data;
         } else if (opts.append) {

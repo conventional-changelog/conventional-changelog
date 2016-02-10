@@ -8,19 +8,46 @@ var shell = require('shelljs');
 var through = require('through2');
 var writeFileSync = require('fs').writeFileSync;
 
-before(function(done) {
-  shell.config.silent = true;
-  shell.rm('-rf', 'tmp');
-  shell.mkdir('tmp');
-  shell.cd('tmp');
-  shell.exec('git init');
-  writeFileSync('test1', '');
-  shell.exec('git add --all && git commit -m"feat(module): amazing new module"');
+shell.config.silent = true;
+shell.rm('-rf', 'tmp');
+shell.mkdir('tmp');
+shell.cd('tmp');
+shell.exec('git init');
 
-  done();
+describe('error', function() {
+  it('should emit error if any', function(cb) {
+    var stream = conventionalChangelog({
+      preset: 'angular'
+    });
+
+    stream.on('error', function(err) {
+      expect(err.plugin).to.equal('gulp-conventional-changelog');
+      cb();
+    });
+
+    stream.on('data', function(file) {
+      cb(file);
+    });
+
+    stream.write(new gutil.File({
+      cwd: __dirname,
+      base: join(__dirname, 'fixtures'),
+      path: join(__dirname, 'fixtures/CHANGELOG.md'),
+      contents: new Buffer('')
+    }));
+
+    stream.end();
+  });
 });
 
 describe('stream', function() {
+  before(function(done) {
+    writeFileSync('test1', '');
+    shell.exec('git add --all && git commit -m"feat(module): amazing new module"');
+
+    done();
+  });
+
   it('should prepend the log', function(cb) {
     var stream = conventionalChangelog({
       preset: 'angular'
@@ -155,6 +182,30 @@ describe('buffer', function() {
 
     stream.on('data', function(file) {
       expect(file.contents.toString()).to.match(/[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/);
+    });
+
+    stream.on('end', cb);
+
+    stream.write(new gutil.File({
+      cwd: __dirname,
+      base: join(__dirname, 'fixtures'),
+      path: join(__dirname, 'fixtures/CHANGELOG.md'),
+      contents: new Buffer('CHANGELOG')
+    }));
+
+    stream.end();
+  });
+
+  it('output encoding should always be buffer', function(cb) {
+    shell.exec('git tag v0.0.0');
+    var stream = conventionalChangelog({
+      preset: 'angular'
+    }, {
+      version: '0.0.0'
+    });
+
+    stream.on('data', function(file) {
+      expect(file.contents.toString()).to.equal('CHANGELOG');
     });
 
     stream.on('end', cb);
