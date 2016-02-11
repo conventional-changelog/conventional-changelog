@@ -190,7 +190,8 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
 
       gitRawCommitsOpts = _.assign({
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
-          from: fromTag
+          from: fromTag,
+          merges: false
         },
         config.gitRawCommitsOpts,
         gitRawCommitsOpts

@@ -117,6 +117,24 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
+  it('should ignore merge commits by default', function(done) {
+    shell.exec('git checkout -b feature');
+    gitDummyCommit('This commit is from feature branch');
+    shell.exec('git checkout master');
+    gitDummyCommit('This commit is from master branch');
+    shell.exec('git merge feature -m"Merge branch \'feature\'"');
+    conventionalChangelogCore()
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('This commit is from feature branch');
+
+        expect(chunk).to.not.include('Merge');
+
+        done();
+      }));
+  });
+
   it('should load package.json for data', function(done) {
     conventionalChangelogCore({
       pkg: {
