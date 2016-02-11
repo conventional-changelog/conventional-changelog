@@ -3,13 +3,15 @@ var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
 
-var bodyPattern = /^\[(.*) (.*)] (.*)$/;
-
 function presetOpts(cb) {
   var parserOpts = {
-    headerPattern: /^Merge pull request #(.*) from .*$/,
+    mergePattern: /^Merge pull request #(.*) from .*$/,
+    mergeCorrespondence: ['pr'],
+    headerPattern: /^\[(.*) (.*)] (.*)$/,
     headerCorrespondence: [
-      'pr'
+      'tag',
+      'taggedAs',
+      'message'
     ]
   };
 
@@ -18,18 +20,6 @@ function presetOpts(cb) {
       if (!commit.pr) {
         return;
       }
-
-      var header = commit.body || commit.footer;
-
-      var match = header ? header.match(bodyPattern) : null;
-
-      if (!match) {
-        return;
-      }
-
-      commit.tag = match[1];
-      commit.taggedAs = match[2];
-      commit.message = match[3];
 
       if (commit.tag === 'BUGFIX') {
         commit.tag = 'Bug Fixes';
