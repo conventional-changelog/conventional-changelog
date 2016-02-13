@@ -245,3 +245,23 @@ describe('null', function() {
     stream.end();
   });
 });
+
+it('should verbose', function(cb) {
+  var stream = conventionalChangelog({
+    verbose: true
+  });
+
+  stream.on('error', function() {
+    console.log('You should see your git-log command');
+    cb();
+  });
+
+  stream.write(new gutil.File({
+    cwd: __dirname,
+    base: join(__dirname, 'fixtures'),
+    path: join(__dirname, 'fixtures/CHANGELOG.md'),
+    contents: new Buffer('CHANGELOG')
+  }));
+
+  stream.end();
+});

@@ -13,7 +13,7 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
   }, opts);
 
   if (opts.verbose) {
-    opts.warn = gutil.log;
+    opts.debug = gutil.log;
   }
 
   return through.obj(function(file, enc, cb) {
