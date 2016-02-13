@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/stevemao/gulp-conventional-changelog/compare/v1.0.1...v1.1.0) (2016-02-13)
+
+
+### Features
+
+* **debug:** use conventional-changelog 1.1.0 and debug when verbose ([a7d58c7](https://github.com/stevemao/gulp-conventional-changelog/commit/a7d58c7))
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/stevemao/gulp-conventional-changelog/compare/v1.0.0...v1.0.1) (2016-02-10)
 
