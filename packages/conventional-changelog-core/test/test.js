@@ -135,6 +135,15 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
+  it('should spit out some debug info', function(done) {
+    conventionalChangelogCore({
+      debug: function(cmd) {
+        expect(cmd).to.equal('Your git-log command is:\ngit log --format="%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci%n------------------------ >8 ------------------------" "v0.1.0..HEAD" --no-merges');
+        done();
+      }
+    });
+  });
+
   it('should load package.json for data', function(done) {
     conventionalChangelogCore({
       pkg: {

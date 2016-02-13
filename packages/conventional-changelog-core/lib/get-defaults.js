@@ -37,7 +37,7 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
     },
     append: false,
     releaseCount: 1,
-    warn: function() {},
+    debug: function() {},
     transform: function(commit, cb) {
       if (_.isString(commit.gitTags)) {
         var match = rtag.exec(commit.gitTags);
@@ -55,6 +55,8 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       cb(null, commit);
     }
   }, options);
+
+  options.warn = options.warn || options.debug;
 
   if (options.config) {
     if (_.isFunction(options.config)) {
@@ -191,7 +193,8 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       gitRawCommitsOpts = _.assign({
           format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
           from: fromTag,
-          merges: false
+          merges: false,
+          debug: options.debug
         },
         config.gitRawCommitsOpts,
         gitRawCommitsOpts

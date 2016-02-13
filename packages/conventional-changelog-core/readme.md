@@ -66,9 +66,15 @@ Type: `number` Default: `1`
 
 How many releases of changelog you want to generate. It counts from the upcoming release. Useful when you forgot to generate any previous changelog. Set to `0` to regenerate all.
 
-##### warn
+##### debug
 
 Type: `function` Default: `function() {}`
+
+A debug function. EG: `console.debug.bind(console)`
+
+##### warn
+
+Type: `function` Default: `options.debug`
 
 A warn function. EG: `grunt.verbose.writeln`
 
@@ -161,6 +167,10 @@ Default: based on `options.releaseCount`.
 ##### reverse
 
 Default: `true` if `options.append` is truthy.
+
+##### debug
+
+Type: `function` Default: `options.debug`
 
 #### parserOpts
 
