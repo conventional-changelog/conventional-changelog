@@ -57,6 +57,9 @@ function presetOpts(cb) {
       writerOpts.commitPartial = commit;
 
       cb(null, {
+        gitRawCommitsOpts: {
+          noMerges: null
+        },
         parserOpts: parserOpts,
         writerOpts: writerOpts
       });
