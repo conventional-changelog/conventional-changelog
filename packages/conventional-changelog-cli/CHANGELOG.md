@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/stevemao/conventional-changelog-cli/compare/v1.0.0...v1.1.0) (2016-02-13)
+
+
+### Features
+
+* **debug:** use conventional-changelog 1.1.0 and debug when verbose ([d1aa13d](https://github.com/stevemao/conventional-changelog-cli/commit/d1aa13d))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-changelog-cli/compare/v0.0.1...v1.0.0) (2016-02-05)
 
