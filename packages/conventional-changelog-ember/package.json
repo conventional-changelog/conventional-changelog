@@ -4,9 +4,9 @@
   "description": "conventional-changelog ember preset",
   "main": "index.js",
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "mocha && npm run-script lint"
+    "test": "mocha --timeout 30000 && npm run-script lint"
   },
   "repository": {
     "type": "git",
