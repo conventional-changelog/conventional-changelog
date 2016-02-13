@@ -39,7 +39,7 @@ var cli = meow({
     '',
     '  -u, --output-unreleased   Output unreleased changelog',
     '',
-    '  -v, --verbose             Verbose output',
+    '  -v, --verbose             Verbose output. Use this for debugging',
     '                            Default: false',
     '',
     '  -n, --config              A filepath of your config script',
@@ -92,6 +92,7 @@ var options = _.omit({
 }, _.isUndefined);
 
 if (flags.verbose) {
+  options.debug = console.info.bind(console);
   options.warn = console.warn.bind(console);
 }
 

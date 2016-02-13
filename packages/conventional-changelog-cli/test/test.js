@@ -341,11 +341,20 @@ describe('cli', function () {
       stdio: [process.stdin, null, null]
     });
 
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.include('Your git-log command is');
+      }));
+
     cp.stderr
       .pipe(concat(function (chunk) {
         expect(chunk.toString()).to.include('Preset: "no" does not exist\n');
-
-        done();
       }));
+
+    cp.on('close', function (code) {
+      expect(code).to.equal(0);
+
+      done();
+    });
   });
 });
