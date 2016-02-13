@@ -24,6 +24,10 @@ function gitRawCommits(options) {
     '"<%- from ? [from, to].join("..") : to %>" '
   )(options) + args.join(' ');
 
+  if (options.debug) {
+    options.debug('Your git-log command is:\n' + cmd);
+  }
+
   var isError = false;
 
   var child = exec(cmd, {
