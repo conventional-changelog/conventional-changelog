@@ -18,7 +18,7 @@
     "conventional-commits-parser": "^1.0.0",
     "dateformat": "^1.0.12",
     "get-pkg-repo": "^1.0.0",
-    "git-raw-commits": "^1.0.0",
+    "git-raw-commits": "^1.1.0",
     "git-remote-origin-url": "^2.0.0",
     "git-semver-tags": "^1.1.0",
     "lodash": "^4.0.0",
