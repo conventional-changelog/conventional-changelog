@@ -4,6 +4,7 @@
 
 > Generate a changelog from git metadata
 
+**Note** You don't have to use the angular commit convention. For the best result of the tool to tokenize you commit and produce flexible output, it's recommended to use a commit convention.
 
 ## Quick start
 
@@ -30,6 +31,13 @@ All available command line parameters can be listed using CLI: `conventional-cha
 To fully customize the tool, please checkout [conventional-changelog](https://github.com/ajoslin/conventional-changelog) and [conventional-changelog-core](https://github.com/stevemao/conventional-changelog-core) docs. You can find more details there.
 
 
+## Example output
+
+- https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
+- https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
+- https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
+
+
 ## Recommended workflow
 
 1. Make changes
@@ -49,16 +57,10 @@ If you use `npm version`, it auto tags immediately after changing the version in
 Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to make a release or change it to your needs.
 
 
-## Example output
-
-- https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
-- https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
-- https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
-
-
 ## Why
 
-- Used by AngularJS and related projects.
+- Used by AngularJS, JSHint and related projects.
+- Easy fully automate changelog generation. You could still add more points on top of it.
 - Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
 - Intelligently setup defaults but yet fully configurable with presets of [popular projects](https://github.com/ajoslin/conventional-changelog#preset).
 - Everything internally or externally is pluggable.
