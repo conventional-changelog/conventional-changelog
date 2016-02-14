@@ -60,9 +60,21 @@ Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to
 
 - Used by AngularJS and related projects.
 - Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
-- Intelligently setup defaults but yet fully configurable with presets of popular projects.
+- Intelligently setup defaults but yet fully configurable with presets of [popular projects](https://github.com/ajoslin/conventional-changelog#preset).
 - Everything internally or externally is pluggable.
 - A lot of tests and actively maintained.
+
+### Problems with [github-changelog-generator](https://github.com/skywinder/github-changelog-generator) or similar projects
+
+- Opinionated on how to write commits, issues or PRs.
+- No or partially support reference links.
+- Not system agnostic. Only support GitHub.
+- No template support. The output is mostly certain format of markdown.
+- No presets of popular commit message conventions.
+- Not modularized. Over the years [modularization is proven to be the best practice](https://github.com/sindresorhus/ama/issues/10#issuecomment-117766328).
+- No tests or coverage is too low. Program might be buggy.
+- Do not read your project's environment.
+- No or few task runner or build tool integrations.
 
 
 ## Related
