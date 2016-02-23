@@ -1,3 +1,9 @@
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/stevemao/conventional-recommended-bump/compare/v0.1.0...v0.1.1) (2016-02-23)
+
+
+
+
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/stevemao/conventional-recommended-bump/compare/v0.0.3...v0.1.0) (2016-02-08)
 
