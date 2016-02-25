@@ -18,12 +18,10 @@ $ npm install --save conventional-recommended-bump
 var conventionalRecommendedBump = require('conventional-recommended-bump');
 
 conventionalRecommendedBump({
-  conventionalRecommendedBump({
-    preset: 'angular'
-  }, function(err, releaseAs) {
-    console.log(releaseAs);
-    //=> 'major'
-  });
+  preset: 'angular'
+}, function(err, releaseAs) {
+  console.log(releaseAs);
+  //=> 'major'
 });
 ```
 
