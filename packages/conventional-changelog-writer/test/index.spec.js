@@ -161,7 +161,7 @@ describe('conventionalChangelogWriter', function() {
       upstream
         .pipe(conventionalChangelogWriter())
         .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + today + ')\n\n\n* bla \n\n\n\n');
+          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + today + ')\n\n* bla \n\n\n\n');
 
           i++;
           cb(null);

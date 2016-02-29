@@ -25,7 +25,6 @@ function conventionalChangelogWriter(context, options) {
 
   options = _.assign({
     groupBy: 'type',
-    commitGroupsSort: 'title',
     commitsSort: 'header',
     noteGroupsSort: 'title',
     notesSort: 'text',

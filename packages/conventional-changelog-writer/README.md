@@ -156,7 +156,7 @@ How to group the commits. EG: based on the same type. If this value is falsy, co
 
 ##### commitGroupsSort
 
-Type: `function`, `string` or `array` Default: `'title'`
+Type: `function`, `string` or `array`
 
 A compare function used to sort commit groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
