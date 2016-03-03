@@ -15,11 +15,11 @@ describe('preset', function() {
       shell.cd('angular');
       shell.exec('git init');
       writeFileSync('test1', '');
-      shell.exec('git add --all && git commit -m"chore: first commit"');
+      shell.exec('git add --all && git commit -m "chore: first commit"');
       writeFileSync('test2', '');
-      shell.exec('git add --all && git commit -m"feat($compile): new feature"');
+      shell.exec('git add --all && git commit -m "feat($compile): new feature"');
       writeFileSync('test3', '');
-      shell.exec('git add --all && git commit -m"perf(ngOptions): make it faster"');
+      shell.exec('git add --all && git commit -m "perf(ngOptions): make it faster"');
     });
 
     after(function() {
@@ -45,7 +45,18 @@ describe('preset', function() {
     it('should release as major', function(done) {
       writeFileSync('test4', '');
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
-      child.exec('git add --all && git commit -m"feat(): amazing new module\n\nBREAKING CHANGE: Not backward compatible."', function() {
+      child.exec('git add --all && git commit -m "feat(): amazing new module" -m "BREAKING CHANGE: Not backward compatible."', function() {
+        conventionalRecommendedBump(opts, function(err, releaseAs) {
+          equal(releaseAs, 'major');
+          done();
+        });
+      });
+    });
+
+    it('should release as major even after a feature', function(done) {
+      writeFileSync('test5', '');
+      // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
+      child.exec('git add --all && git commit -m "feat(): another amazing new module" -m "Super backward compatible."', function() {
         conventionalRecommendedBump(opts, function(err, releaseAs) {
           equal(releaseAs, 'major');
           done();
@@ -54,10 +65,10 @@ describe('preset', function() {
     });
 
     it('should ignore a reverted commit', function(done) {
-      writeFileSync('test5', '');
-      child.exec('git rev-parse HEAD', function(err, hash) {
+      writeFileSync('test6', '');
+      child.exec('git rev-parse HEAD~1', function(err, hash) {
         // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
-        child.exec('git add --all && git commit -m"revert: feat(): amazing new module\n\nThis reverts commit ' + hash.trim() + '."', function() {
+        child.exec('git add --all && git commit -m "revert: feat(): amazing new module" -m "This reverts commit ' + hash.trim() + '."', function() {
           conventionalRecommendedBump(opts, function(err, releaseAs) {
             equal(releaseAs, 'minor');
             done();

@@ -8,7 +8,6 @@ var presetOpts = {
         return true;
       } else if (commit.type === 'feat') {
         level = 1;
-        return true;
       }
     });
 
