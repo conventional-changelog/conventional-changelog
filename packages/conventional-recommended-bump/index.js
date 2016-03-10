@@ -62,6 +62,10 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
           commits = data;
         }
 
+        if (!commits || !commits.length) {
+          options.warn('No commits since last release');
+        }
+
         var level = whatBump(commits);
         var releaseAs = VERSIONS[level];
 

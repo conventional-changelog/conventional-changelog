@@ -20,13 +20,14 @@ describe('conventional-recommended-bump', function() {
     conventionalRecommendedBump({}, function(err) {
       if (err) {
         assert.ok(err);
-        shell.exec('git add --all && git commit -m"First commit"');
         done();
       }
     });
   });
 
   it('should return `""` if no `whatBump` is found', function(done) {
+    shell.exec('git add --all && git commit -m"First commit"');
+
     conventionalRecommendedBump({}, function(err, releaseAs) {
       equal(releaseAs, '');
       done();
@@ -41,6 +42,29 @@ describe('conventional-recommended-bump', function() {
     }, function(err, releaseAs) {
       equal(releaseAs, 'major');
       done();
+    });
+  });
+
+  it('should warn if there is no new commits since last release', function(done) {
+    shell.exec('git tag v1.0.0');
+
+    conventionalRecommendedBump({
+      warn: function(warning) {
+        equal(warning, 'No commits since last release');
+        done();
+      }
+    });
+  });
+
+  it('should get the commits from last tag', function(done) {
+    fs.writeFileSync('test2', '');
+    shell.exec('git add --all && git commit -m"Second commit"');
+
+    conventionalRecommendedBump({
+      whatBump: function(commits) {
+        equal(commits.length, 1);
+        done();
+      }
     });
   });
 
