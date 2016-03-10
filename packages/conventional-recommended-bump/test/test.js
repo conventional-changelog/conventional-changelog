@@ -10,11 +10,20 @@ describe('conventional-recommended-bump', function() {
     shell.cd('test');
     shell.exec('git init');
     fs.writeFileSync('test1', '');
-    shell.exec('git add --all && git commit -m"First commit"');
   });
 
   after(function() {
     shell.cd('../');
+  });
+
+  it('should error if no commits in the repo', function(done) {
+    conventionalRecommendedBump({}, function(err) {
+      if (err) {
+        assert.ok(err);
+        shell.exec('git add --all && git commit -m"First commit"');
+        done();
+      }
+    });
   });
 
   it('should return `""` if no `whatBump` is found', function(done) {
