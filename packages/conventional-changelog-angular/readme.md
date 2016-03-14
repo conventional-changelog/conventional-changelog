@@ -5,6 +5,8 @@
 
 See [convention](convention.md)
 
+**Issues with the convention itself should be reported on the angular issue tracker.**
+
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-angular
