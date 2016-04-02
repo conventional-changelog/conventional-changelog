@@ -1,7 +1,7 @@
 'use strict';
 var child = require('child_process');
 var conventionalRecommendedBump = require('../');
-var equal = require('assert').strictEqual;
+var equal = require('assert').deepStrictEqual;
 var shell = require('shelljs');
 var writeFileSync = require('fs').writeFileSync;
 
@@ -28,7 +28,12 @@ describe('preset', function() {
 
     it('should release as minor', function(done) {
       conventionalRecommendedBump(opts, function(err, releaseAs) {
-        equal(releaseAs, 'minor');
+        equal(releaseAs, {
+          level: 1,
+          reason: 'There are 0 BREAKING CHANGES and 1 features',
+          releaseAs: 'minor'
+        });
+
         done();
       });
     });
@@ -37,7 +42,12 @@ describe('preset', function() {
       conventionalRecommendedBump(opts, {
         headerPattern: /^(\w*)\: (.*)$/,
       }, function(err, releaseAs) {
-        equal(releaseAs, 'patch');
+        equal(releaseAs, {
+          level: 2,
+          reason: 'There are 0 BREAKING CHANGES and 0 features',
+          releaseAs: 'patch'
+        });
+
         done();
       });
     });
@@ -47,7 +57,12 @@ describe('preset', function() {
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
       child.exec('git add --all && git commit -m "feat(): amazing new module" -m "BREAKING CHANGE: Not backward compatible."', function() {
         conventionalRecommendedBump(opts, function(err, releaseAs) {
-          equal(releaseAs, 'major');
+          equal(releaseAs, {
+            level: 0,
+            reason: 'There are 1 BREAKING CHANGES and 1 features',
+            releaseAs: 'major'
+          });
+
           done();
         });
       });
@@ -58,7 +73,12 @@ describe('preset', function() {
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
       child.exec('git add --all && git commit -m "feat(): another amazing new module" -m "Super backward compatible."', function() {
         conventionalRecommendedBump(opts, function(err, releaseAs) {
-          equal(releaseAs, 'major');
+          equal(releaseAs, {
+            level: 0,
+            reason: 'There are 1 BREAKING CHANGES and 2 features',
+            releaseAs: 'major'
+          });
+
           done();
         });
       });
@@ -70,7 +90,12 @@ describe('preset', function() {
         // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
         child.exec('git add --all && git commit -m "revert: feat(): amazing new module" -m "This reverts commit ' + hash.trim() + '."', function() {
           conventionalRecommendedBump(opts, function(err, releaseAs) {
-            equal(releaseAs, 'minor');
+            equal(releaseAs, {
+              level: 1,
+              reason: 'There are 0 BREAKING CHANGES and 2 features',
+              releaseAs: 'minor'
+            });
+
             done();
           });
         });
@@ -82,7 +107,12 @@ describe('preset', function() {
         preset: 'angular',
         ignoreReverted: false
       }, function(err, releaseAs) {
-        equal(releaseAs, 'major');
+        equal(releaseAs, {
+          level: 0,
+          reason: 'There are 1 BREAKING CHANGES and 2 features',
+          releaseAs: 'major'
+        });
+
         done();
       });
     });

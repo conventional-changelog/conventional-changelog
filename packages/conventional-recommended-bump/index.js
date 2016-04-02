@@ -66,14 +66,21 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
           options.warn('No commits since last release');
         }
 
-        var level = whatBump(commits);
-        var releaseAs = VERSIONS[level];
+        var result = whatBump(commits);
 
-        if (releaseAs) {
-          cb(null, releaseAs);
-        } else {
-          cb(null, '');
+        if (typeof result === 'number') {
+          result = {
+            level: result
+          };
         }
+
+        if (result && result.level != null) {
+          result.releaseAs = VERSIONS[result.level];
+        } else if (result == null) {
+          result = {};
+        }
+
+        cb(null, result);
       }));
   });
 }

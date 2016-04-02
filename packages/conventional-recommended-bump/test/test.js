@@ -1,7 +1,7 @@
 'use strict';
 var assert = require('assert');
 var conventionalRecommendedBump = require('../');
-var equal = assert.strictEqual;
+var equal = require('assert').deepStrictEqual;
 var fs = require('fs');
 var shell = require('shelljs');
 
@@ -25,22 +25,45 @@ describe('conventional-recommended-bump', function() {
     });
   });
 
-  it('should return `""` if no `whatBump` is found', function(done) {
+  it('should return `{}` if no `whatBump` is found', function(done) {
     shell.exec('git add --all && git commit -m"First commit"');
 
     conventionalRecommendedBump({}, function(err, releaseAs) {
-      equal(releaseAs, '');
+      equal(releaseAs, {});
+
       done();
     });
   });
 
-  it('should be a mojor bump', function(done) {
+  it('should return what is returned by `whatBump`', function(done) {
+    shell.exec('git add --all && git commit -m"First commit"');
+
+    conventionalRecommendedBump({
+      whatBump: function() {
+        return {
+          test: 'test'
+        };
+      }
+    }, function(err, releaseAs) {
+      equal(releaseAs, {
+        test: 'test'
+      });
+
+      done();
+    });
+  });
+
+  it('should be a major bump', function(done) {
     conventionalRecommendedBump({
       whatBump: function() {
         return 0;
       }
     }, function(err, releaseAs) {
-      equal(releaseAs, 'major');
+      equal(releaseAs, {
+        level: 0,
+        releaseAs: 'major'
+      });
+
       done();
     });
   });
@@ -54,6 +77,10 @@ describe('conventional-recommended-bump', function() {
         done();
       }
     });
+  });
+
+  it('`warn` is optional', function(done) {
+    conventionalRecommendedBump({}, done);
   });
 
   it('should get the commits from last tag', function(done) {

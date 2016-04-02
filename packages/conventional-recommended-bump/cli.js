@@ -34,14 +34,12 @@ var cli = meow({
   }
 });
 
-var options;
+var options = {};
 var flags = cli.flags;
 var preset = flags.preset;
 
 if (preset) {
-  options = {
-    preset: preset
-  };
+  options.preset = preset;
   delete flags.preset;
 }
 
@@ -49,11 +47,17 @@ if (flags.verbose) {
   options.warn = console.warn.bind(console);
 }
 
-conventionalRecommendedBump(options, flags, function(err, releaseAs) {
+conventionalRecommendedBump(options, flags, function(err, data) {
   if (err) {
     console.error(err.toString());
     process.exit(1);
   }
 
-  console.log(releaseAs);
+  if (data.releaseAs) {
+    console.log(data.releaseAs);
+  }
+
+  if (flags.verbose && data.reason) {
+    console.log('Reason: ' + data.reason);
+  }
 });

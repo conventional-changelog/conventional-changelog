@@ -1,17 +1,25 @@
 var presetOpts = {
   whatBump: function(commits) {
     var level = 2;
+    var breakings = 0;
+    var features = 0;
 
-    commits.some(function(commit) {
+    commits.forEach(function(commit) {
       if (commit.notes.length > 0) {
+        breakings += commit.notes.length;
         level = 0;
-        return true;
       } else if (commit.type === 'feat') {
-        level = 1;
+        features += 1;
+        if (level === 2) {
+          level = 1;
+        }
       }
     });
 
-    return level;
+    return {
+      level: level,
+      reason: 'There are ' + breakings + ' BREAKING CHANGES and ' + features + ' features'
+    };
   },
   parserOpts: {
     headerPattern: /^(\w*)(?:\((.*)\))?\: (.*)$/,

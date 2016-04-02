@@ -28,24 +28,6 @@ conventionalRecommendedBump({
 ```sh
 $ npm install --global conventional-recommended-bump
 $ conventional-recommended-bump --help
-
-  Get a recommended version bump based on conventional commits
-
-  Usage
-    conventional-recommended-bump
-
-  Example
-    conventional-recommended-bump
-
-  Options
-    -p, --preset                   Name of the preset you want to use
-    -h, --header-pattern           Regex to match header pattern
-    -c, --header-correspondence    Comma separated parts used to define what capturing group of headerPattern captures what
-    -r, --reference-actions        Comma separated keywords that used to reference issues
-    -i, --issue-prefixes           Comma separated prefixes of an issue
-    -n, --note-keywords            Comma separated keywords for important notes
-    -f, --field-pattern            Regex to match other fields
-    -v, --verbose                  Verbose output
 ```
 
 
@@ -71,7 +53,11 @@ A set of options of a popular project.
 
 Type: `function`
 
-A function that takes parsed commits as argument and returns a number indicating what bump it should be.
+A function that takes parsed commits as argument.
+
+Return an object including `level` and `reason`. level is a `number` indicating what bump it should be and `reason` is the reason of such release.
+
+For backward compatibility, it could return a `number` indicating what bump it should be.
 
 ###### whatBump(commits)
 
@@ -91,13 +77,17 @@ See the [conventional-commits-parser](https://github.com/stevemao/conventional-c
 
 Type: `function`
 
-##### callback(error, releaseAs)
+##### callback(error, object)
 
-###### releaseAs
+###### object
+
+object includes what's returned by `whatBump` and
+
+####### releaseAs
 
 Type: `string` Possible values: `'major'`, `'minor'` and `'patch'`
 
-The value of what it should release as. If it cannot decide this is an empty string.
+The value of what it should release as.
 
 
 ## Related
