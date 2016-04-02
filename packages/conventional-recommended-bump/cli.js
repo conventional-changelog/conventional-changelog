@@ -2,6 +2,7 @@
 'use strict';
 var meow = require('meow');
 var conventionalRecommendedBump = require('./');
+var path = require('path');
 
 var cli = meow({
   help: [
@@ -13,6 +14,7 @@ var cli = meow({
     '',
     'Options',
     '  -p, --preset                   Name of the preset you want to use',
+    '  -g, --config                   A filepath of your config script',
     '  -h, --header-pattern           Regex to match header pattern',
     '  -c, --header-correspondence    Comma separated parts used to define what capturing group of `headerPattern` captures what',
     '  -r, --reference-actions        Comma separated keywords that used to reference issues',
@@ -24,6 +26,7 @@ var cli = meow({
 }, {
   alias: {
     p: 'preset',
+    g: 'config',
     h: 'headerPattern',
     c: 'headerCorrespondence',
     r: 'referenceActions',
@@ -37,10 +40,14 @@ var cli = meow({
 var options = {};
 var flags = cli.flags;
 var preset = flags.preset;
+var config = flags.config;
 
 if (preset) {
   options.preset = preset;
   delete flags.preset;
+} else if (config) {
+  options.config = require(path.resolve(process.cwd(), config));
+  delete flags.config;
 }
 
 if (flags.verbose) {

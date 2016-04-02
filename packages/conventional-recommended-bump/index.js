@@ -9,7 +9,7 @@ var objectAssign = require('object-assign');
 var VERSIONS = ['major', 'minor', 'patch'];
 
 function conventionalRecommendedBump(options, parserOpts, cb) {
-  var preset;
+  var config;
   var noop = function() {};
 
   if (typeof options !== 'object') {
@@ -29,17 +29,17 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
 
   if (options.preset) {
     try {
-      preset = require('./presets/' + options.preset);
+      config = require('./presets/' + options.preset);
     } catch (err) {
       cb(new Error('Preset: "' + options.preset + '" does not exist'));
       return;
     }
   } else {
-    preset = {};
+    config = options.config || {};
   }
 
-  var whatBump = options.whatBump || preset.whatBump || noop;
-  parserOpts = objectAssign({}, preset.parserOpts, parserOpts);
+  var whatBump = options.whatBump || config.whatBump || noop;
+  parserOpts = objectAssign({}, config.parserOpts, parserOpts);
   parserOpts.warn = parserOpts.warn || options.warn;
 
   gitLatestSemverTag(function(err, tag) {
