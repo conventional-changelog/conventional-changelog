@@ -1,7 +1,7 @@
 'use strict';
 var assert = require('assert');
 var conventionalRecommendedBump = require('../');
-var equal = require('assert').deepStrictEqual;
+var equal = require('core-assert').deepStrictEqual;
 var fs = require('fs');
 var shell = require('shelljs');
 
