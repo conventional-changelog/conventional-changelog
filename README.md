@@ -43,6 +43,8 @@ It's recommended to use a preset so you don't have to define everything yourself
 
 ## Related
 
+- [conventional-changelog-cli](https://github.com/stevemao/conventional-changelog-cli) - cli of this module
+- [standard-changelog](https://github.com/stevemao/standard-changelog) - Similar to this module but only with angular convention
 - [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
 - [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 - [conventional-commits-detector](https://github.com/stevemao/conventional-commits-detector) - Detect what commit message convention your repository is using
