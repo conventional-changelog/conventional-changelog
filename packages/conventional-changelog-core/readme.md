@@ -134,11 +134,11 @@ All git semver tags found in the repository. You can't overwrite this value.
 
 ##### previousTag
 
-Type: `string` Default: previous tag or the first commit hash if no previous tag.
+Type: `string` Default: previous semver tag or the first commit hash if no previous tag.
 
 ##### currentTag
 
-Type: `string` Default: current tag or `'v'` + version if no current tag.
+Type: `string` Default: current semver tag or `'v'` + version if no current tag.
 
 ##### packageData
 
