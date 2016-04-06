@@ -227,15 +227,22 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
 
             if ((!context.currentTag || !context.previousTag) && keyCommit) {
               var match = /tag:\s*(.+?)[,\)]/gi.exec(keyCommit.gitTags);
-              var currentTag = context.currentTag = context.currentTag || match ? match[1] : null;
-              var index = gitSemverTags.indexOf(currentTag);
-              var previousTag = context.previousTag = gitSemverTags[index + 1];
+              var currentTag = context.currentTag;
+              context.currentTag = currentTag || match ? match[1] : null;
+              var index = gitSemverTags.indexOf(context.currentTag);
 
-              if (!previousTag) {
-                if (options.append) {
-                  context.previousTag = context.previousTag || firstCommitHash;
-                } else {
-                  context.previousTag = context.previousTag || lastCommitHash;
+              // if `keyCommit.gitTags` is not a semver
+              if (index === -1) {
+                context.currentTag = currentTag || null;
+              } else {
+                var previousTag = context.previousTag = gitSemverTags[index + 1];
+
+                if (!previousTag) {
+                  if (options.append) {
+                    context.previousTag = context.previousTag || firstCommitHash;
+                  } else {
+                    context.previousTag = context.previousTag || lastCommitHash;
+                  }
                 }
               }
             } else {

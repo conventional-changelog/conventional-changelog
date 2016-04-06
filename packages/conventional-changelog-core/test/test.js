@@ -620,11 +620,6 @@ describe('conventionalChangelogCore', function() {
 
     before(function(done) {
       shell.exec('git tag -d v0.1.0');
-      head = shell.exec('git rev-parse HEAD').output.trim();
-
-      gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.');
-
-      head = shell.exec('git rev-parse HEAD').output.substring(0, 7);
 
       gitTails(function(err, data) {
         tail = data[data.length - 1].substring(0, 7);
@@ -633,7 +628,7 @@ describe('conventionalChangelogCore', function() {
       });
     });
 
-    it('should make `context.previousTag` default to a previous version of generated log (prepend)', function(done) {
+    it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', function(done) {
       var i = 0;
 
       conventionalChangelogCore({
@@ -660,7 +655,7 @@ describe('conventionalChangelogCore', function() {
         }));
     });
 
-    it('should make `context.previousTag` default to a previous version of generated log (append)', function(done) {
+    it('should make `context.previousTag` default to a previous semver version of generated log (append)', function(done) {
       var i = 0;
 
       conventionalChangelogCore({
@@ -684,6 +679,44 @@ describe('conventionalChangelogCore', function() {
           cb();
         }, function() {
           expect(i).to.equal(2);
+          done();
+        }));
+    });
+
+    it('`context.previousTag` and `context.currentTag` should be `null` if `keyCommit.gitTags` is not a semver', function(done) {
+      shell.exec('git tag not-semver');
+      gitDummyCommit();
+
+      head = shell.exec('git rev-parse HEAD').output.trim();
+      gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.');
+      head = shell.exec('git rev-parse HEAD').output.substring(0, 7);
+
+      var i = 0;
+
+      conventionalChangelogCore({
+        releaseCount: 0,
+        append: true
+      }, {
+        version: '3.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}',
+        generateOn: 'version'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal(tail + '...v2.0.0');
+          } else if (i === 1) {
+            expect(chunk).to.equal('...');
+          } else {
+            expect(chunk).to.equal('v2.0.0...v3.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          expect(i).to.equal(3);
           done();
         }));
     });
