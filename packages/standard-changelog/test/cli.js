@@ -1,5 +1,4 @@
 'use strict';
-var concat = require('concat-stream');
 var expect = require('chai').expect;
 var shell = require('shelljs');
 var spawn = require('child_process').spawn;
@@ -8,6 +7,8 @@ var readFileSync = fs.readFileSync;
 var writeFileSync = fs.writeFileSync;
 
 var cliPath = __dirname + '/../cli.js';
+
+require('chai').should();
 
 function originalChangelog() {
   writeFileSync(__dirname + '/fixtures/_CHANGELOG.md', 'Some previous changelog.\n');
@@ -19,10 +20,12 @@ describe('cli', function() {
     shell.rm('-rf', 'tmp');
     shell.mkdir('tmp');
     shell.cd('tmp');
-    shell.mkdir('git-templates');
-    shell.exec('git init --template=./git-templates');
-    writeFileSync('test1', '');
-    shell.exec('git add --all && git commit -m"feat: First commit"');
+    shell.exec('git init');
+    shell.exec('git add --all && git commit --allow-empty -m"feat: First commit"');
+  });
+
+  beforeEach(function() {
+    shell.rm('-rf', 'CHANGELOG.md');
   });
 
   after(function() {
@@ -30,21 +33,39 @@ describe('cli', function() {
     originalChangelog();
   });
 
-  it('should work without any arguments', function(done) {
-    var cp = spawn(cliPath, {
-      stdio: [process.stdin, null, null]
+  describe('without any argument', function() {
+    it('appends to changelog if it exists', function(done) {
+      writeFileSync('CHANGELOG.md', '\nold content', 'utf-8');
+
+      var cp = spawn(cliPath, {
+        stdio: [process.stdin, null, null]
+      });
+
+      cp.on('close', function(code) {
+        code.should.equal(0);
+        var content = readFileSync('CHANGELOG.md', 'utf-8');
+        content.should.match(/First commit/);
+        content.should.match(/old content/);
+        return done();
+      });
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('First commit');
+    it('generates changelog if it does not exist', function(done) {
+      var cp = spawn(cliPath, {
+        stdio: [process.stdin, null, null]
+      });
 
-        done();
-      }));
+      cp.on('close', function(code) {
+        code.should.equal(0);
+        var content = readFileSync('CHANGELOG.md', 'utf-8');
+        content.should.match(/First commit/);
+        return done();
+      });
+    });
   });
 
-  it('should overwrite if `-w` presents when appending', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-w', '--append'], {
+  it('should overwrite if `-s` presents when appending', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-s', '--append'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -58,8 +79,8 @@ describe('cli', function() {
     });
   });
 
-  it('should overwrite if `-w` presents when not appending', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-w'], {
+  it('should overwrite if `-s` presents when not appending', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -96,9 +117,9 @@ describe('cli', function() {
 
     cp.on('close', function(code) {
       expect(code).to.equal(0);
+
       var modified = readFileSync(__dirname + '/../tmp/_CHANGELOG.md', 'utf8');
       expect(modified).to.include('First commit');
-
       done();
     });
   });
@@ -126,7 +147,6 @@ describe('cli', function() {
       expect(code).to.equal(0);
       var modified = readFileSync(__dirname + '/../tmp/_CHANGELOG.md', 'utf8');
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/);
-
       done();
     });
   });
@@ -136,12 +156,13 @@ describe('cli', function() {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.match(/First commit(\s|.)*Some previous changelog./);
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync(__dirname + '/../tmp/_CHANGELOG.md', 'utf8');
+      expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/);
 
-        done();
-      }));
+      done();
+    });
   });
 
   it('should work if `infile` presets but `outfile` is missing when appending', function(done) {
@@ -149,32 +170,17 @@ describe('cli', function() {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.match(/Some previous changelog.(\s|.)*First commit/);
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync(__dirname + '/../tmp/_CHANGELOG.md', 'utf8');
+      expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/);
 
-        done();
-      }));
-  });
-
-  it('should ignore `infile` if `releaseCount` is `0` (stdout)', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--release-count', 0], {
-      stdio: [process.stdin, null, null]
+      done();
     });
-
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.include('First commit');
-        expect(chunk).to.not.include('previous');
-
-        done();
-      }));
   });
 
   it('should ignore `infile` if `releaseCount` is `0` (file)', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--releaseCount', 0, '-w'], {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '--releaseCount', 0], {
       stdio: [process.stdin, null, null]
     });
 
@@ -189,24 +195,22 @@ describe('cli', function() {
     });
   });
 
-  it('should ignore `infile` if `infile` is ENOENT', function(done) {
+  it('should create `infile` if `infile` is ENOENT', function(done) {
     var cp = spawn(cliPath, ['-i', 'no-such-file.md'], {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        chunk = chunk.toString();
-
-        expect(chunk).to.include('First commit');
-        expect(chunk).to.not.include('previous');
-
-        done();
-      }));
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync('no-such-file.md', 'utf8');
+      expect(modified).to.include('First commit');
+      expect(modified).to.not.include('previous');
+      done();
+    });
   });
 
   it('should create `infile` if `infile` is ENOENT and overwrite infile', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-w'], {
+    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -221,19 +225,16 @@ describe('cli', function() {
     });
   });
 
-  it('should error if `-w` presents but `-i` is missing', function(done) {
-    var cp = spawn(cliPath, ['-w'], {
+  it('should default to CHANGELOG.md if `-s` presents but `-i` is missing', function(done) {
+    var cp = spawn(cliPath, ['-s'], {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stderr
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal('Nothing to overwrite\n');
-      }));
-
     cp.on('close', function(code) {
-      expect(code).to.equal(1);
-
+      expect(code).to.equal(0);
+      var modified = readFileSync('CHANGELOG.md', 'utf8');
+      expect(modified).to.include('First commit');
+      expect(modified).to.not.include('previous');
       done();
     });
   });
@@ -243,14 +244,10 @@ describe('cli', function() {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('0.0.17');
-      }));
-
     cp.on('close', function(code) {
       expect(code).to.equal(0);
-
+      var modified = readFileSync('CHANGELOG.md', 'utf8');
+      expect(modified).to.include('0.0.17');
       done();
     });
   });
@@ -260,11 +257,12 @@ describe('cli', function() {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('my-repo');
-        done();
-      }));
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync('CHANGELOG.md', 'utf8');
+      expect(modified).to.include('my-repo');
+      done();
+    });
   });
 
   it('--context should work with absolute path', function(done) {
@@ -272,10 +270,45 @@ describe('cli', function() {
       stdio: [process.stdin, null, null]
     });
 
-    cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('my-repo');
-        done();
-      }));
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync('CHANGELOG.md', 'utf8');
+      expect(modified).to.include('my-repo');
+      done();
+    });
+  });
+
+  it('generates full historical changelog on --first-release', function(done) {
+    shell.exec('git tag -a v0.0.17 -m "old release"');
+
+    var cp = spawn(cliPath, ['-k', __dirname + '/fixtures/_package.json', '--first-release'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync('CHANGELOG.md', 'utf8');
+      expect(modified).to.include('First commit');
+      shell.exec('git tag -d v0.0.17');
+      done();
+    });
+  });
+
+  it('outputs an error if context file is not found', function(done) {
+    var output = '';
+
+    var cp = spawn(cliPath, ['--context', 'missing-file.txt'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stderr.on('data', function(data) {
+      output += data.toString();
+    });
+
+    cp.on('close', function(code) {
+      expect(code).to.equal(1);
+      output.toString().should.match(/Cannot find module/);
+      return done();
+    });
   });
 });

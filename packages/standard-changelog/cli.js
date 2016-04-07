@@ -1,26 +1,27 @@
 #!/usr/bin/env node
 'use strict';
 var addStream = require('add-stream');
+var chalk = require('chalk');
 var standardChangelog = require('./');
 var fs = require('fs');
 var meow = require('meow');
 var tempfile = require('tempfile');
 var _ = require('lodash');
 var resolve = require('path').resolve;
+var Readable = require('stream').Readable;
+var rimraf = require('rimraf');
 
 var cli = meow({
   help: [
     'Usage',
     '  standard-changelog',
     '',
-    'Example',
-    '  standard-changelog -i CHANGELOG.md --overwrite',
-    '',
     'Options',
     '  -i, --infile              Read the CHANGELOG from this file',
-    '  -o, --outfile             Write the CHANGELOG to this file. If unspecified, it prints to stdout',
-    '  -w, --overwrite           Overwrite the infile',
-    '  -p, --preset              Name of the preset you want to use',
+    '  -f, --first-release       Generate the CHANGELOG for the first time',
+    '  -o, --outfile             Write the CHANGELOG to this file. If unspecified (default: CHANGELOG.md)',
+    '  -s, --same-file           Overwrite the infile (default: true)',
+    '  -p, --preset              Name of the preset you want to use (default: angular)',
     '  -k, --pkg                 A filepath of where your package.json is located',
     '  -a, --append              Should the generated block be appended',
     '  -r, --release-count       How many releases to be generated from the latest',
@@ -30,34 +31,29 @@ var cli = meow({
 }, {
   alias: {
     i: 'infile',
+    h: 'help',
     o: 'outfile',
-    w: 'overwrite',
+    s: 'same-file',
     p: 'preset',
     k: 'pkg',
     a: 'append',
     r: 'releaseCount',
     v: 'verbose',
-    c: 'context'
+    c: 'context',
+    f: 'first-release'
+  },
+  default: {
+    i: 'CHANGELOG.md',
+    s: true
   }
 });
 
 var flags = cli.flags;
 var infile = flags.infile;
-var outfile = flags.outfile;
-var overwrite = flags.overwrite;
+var sameFile = flags.sameFile;
+var outfile = sameFile ? (flags.outfile || infile) : flags.outfile;
 var append = flags.append;
-var releaseCount = flags.releaseCount;
-
-if (infile && infile === outfile) {
-  overwrite = true;
-} else if (overwrite) {
-  if (infile) {
-    outfile = infile;
-  } else {
-    console.error('Nothing to overwrite');
-    process.exit(1);
-  }
-}
+var releaseCount = flags.firstRelease ? 0 : flags.releaseCount;
 
 var options = _.omit({
   preset: flags.preset,
@@ -74,81 +70,61 @@ if (flags.verbose) {
 
 var templateContext;
 
-var outStream;
+function outputError(err) {
+  if (flags.verbose) {
+    console.error(chalk.grey(err.stack));
+  } else {
+    console.error(chalk.red(err.toString()));
+  }
+  process.exit(1);
+}
 
 try {
   if (flags.context) {
     templateContext = require(resolve(process.cwd(), flags.context));
   }
 } catch (err) {
-  console.error('Failed to get file. ' + err);
-  process.exit(1);
+  outputError(err);
 }
 
 var changelogStream = standardChangelog(options, templateContext)
   .on('error', function(err) {
-    if (flags.verbose) {
-      console.error(err.stack);
-    } else {
-      console.error(err.toString());
-    }
-    process.exit(1);
+    outputError(err);
   });
 
-function noInputFile() {
-  if (outfile) {
-    outStream = fs.createWriteStream(outfile);
-  } else {
-    outStream = process.stdout;
-  }
+standardChangelog.createIfMissing(infile);
 
-  changelogStream
-    .pipe(outStream);
+var readStream = null;
+if (releaseCount !== 0) {
+  readStream = fs.createReadStream(infile)
+    .on('error', function(err) {
+      outputError(err);
+    });
+} else {
+  readStream = new Readable();
+  readStream.push(null);
 }
 
-if (infile && releaseCount !== 0) {
-  var readStream = fs.createReadStream(infile)
-    .on('error', function() {
-      noInputFile();
+if (options.append) {
+  changelogStream
+    .pipe(fs.createWriteStream(outfile, {
+      flags: 'a'
+    }))
+    .on('finish', function() {
+      standardChangelog.checkpoint('appended changes to %s', [outfile]);
     });
-
-  if (overwrite) {
-    if (options.append) {
-      changelogStream
-        .pipe(fs.createWriteStream(outfile, {
-          flags: 'a'
-        }));
-    } else {
-      var tmp = tempfile();
-
-      changelogStream
-        .pipe(addStream(readStream))
-        .pipe(fs.createWriteStream(tmp))
-        .on('finish', function() {
-          fs.createReadStream(tmp)
-            .pipe(fs.createWriteStream(outfile));
-        });
-    }
-  } else {
-    if (outfile) {
-      outStream = fs.createWriteStream(outfile);
-    } else {
-      outStream = process.stdout;
-    }
-
-    var stream;
-
-    if (options.append) {
-      stream = readStream
-        .pipe(addStream(changelogStream));
-    } else {
-      stream = changelogStream
-        .pipe(addStream(readStream));
-    }
-
-    stream
-      .pipe(outStream);
-  }
 } else {
-  noInputFile();
+  var tmp = tempfile();
+
+  changelogStream
+    .pipe(addStream(readStream))
+    .pipe(fs.createWriteStream(tmp))
+    .on('finish', function() {
+      fs.createReadStream(tmp)
+        .pipe(fs.createWriteStream(outfile))
+        .on('finish', function() {
+          standardChangelog.checkpoint('output changes to %s', [outfile]);
+          rimraf.sync(tmp);
+        });
+    });
 }

@@ -16,10 +16,15 @@
   "license": "MIT",
   "dependencies": {
     "add-stream": "^1.0.0",
-    "conventional-changelog-angular": "^0.1.0",
-    "conventional-changelog-core": "^0.0.2",
+    "chalk": "^1.1.3",
+    "conventional-changelog-angular": "^1.0.0",
+    "conventional-changelog-core": "^1.3.0",
+    "figures": "^1.5.0",
+    "fs-access": "^1.0.0",
     "lodash": "^4.1.0",
     "meow": "^3.7.0",
+    "rimraf": "^2.5.2",
+    "sprintf": "^0.1.5",
     "tempfile": "^1.1.1"
   },
   "devDependencies": {
@@ -29,8 +34,9 @@
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
     "mocha": "*",
-    "nyc": "^5.5.0",
-    "shelljs": "^0.5.3",
+    "mock-spawn": "^0.2.6",
+    "nyc": "^6.2.1",
+    "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },
   "scripts": {

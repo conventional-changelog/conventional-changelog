@@ -1,35 +1,65 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# Standard CHANGELOG
 
-> Generate a changelog from git metadata with [angular commit convention](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md)
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
+> An opinionated approach to package publishing and CHANGELOG generation using the workflow outlined in [conventional-changelog-cli](hhttps://github.com/conventional-changelog/conventional-changelog-cli#recommended-workflow)
 
-## Quick start
+_how does it work?_
+
+1. when you land commits on `master`, select the _Squash and Merge_ option.
+2. add a title and body that follows the [conventional-changelog conventions](https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md).
+3. when you're ready to release to npm:
+  1. checkout `master`.
+  2. run `standard-changelog`.
+  3. ~~push and publish: `git push --tags; git push origin master; npm publish`.~~
+
+_`standard-changelog` handles the following:_
+
+1. ~~bumping the version in package.json.~~
+2. generating an updated CHANGELOG.md.
+3. ~~commiting your _package.json_ and _CHANGELOG.md_.~~
+4. ~~tagging a new release.~~
+
+## Quick Start
 
 ```sh
 $ npm install -g standard-changelog
 $ cd my-project
-$ standard-changelog CHANGELOG.md -w
+$ standard-changelog
 ```
 
-This will *not* overwrite any previous changelog. The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
-
-If you first time use this tool and want to generate all previous changelog, you could do
+_or_
 
 ```sh
-$ standard-changelog -i CHANGELOG.md -w -r 0
+$ npm install standard-changelog --save-dev
+$ cd my-project
 ```
 
-This *will* overwrite any previous changelog if exist.
+_add the following to your **package.json:**_
+
+```json
+{
+  "script": {
+    "release": "standard-changelog"
+  }
+}
+```
+
+The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+
+**your first release:**
+
+If you're using this tool for the first time and want to generate new content in CHANGELOG.md, you can run:
+
+```sh
+$ standard-changelog --first-release
+```
+
+**advanced topics:**
 
 All available command line parameters can be listed using [CLI](#cli) : `standard-changelog --help`.
 
-**Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "standard-changelog -i CHANGELOG.md -w -r 0"`.
-
-
-## [Recommended workflow](https://github.com/conventional-changelog/conventional-changelog-cli#recommended-workflow)
-
-
-## Programmatic usage
+## Programmatic Usage
 
 ```sh
 $ npm install --save standard-changelog
@@ -42,7 +72,6 @@ standardChangelog()
   .pipe(process.stdout); // or any writable stream
 ```
 
-
 ## CLI
 
 ```sh
@@ -50,14 +79,9 @@ $ npm install -g standard-changelog
 $ standard-changelog --help
 ```
 
-
 ## API
 
 See the [conventional-changelog](https://github.com/ajoslin/conventional-changelog) docs with the angular preset.
-
-
-## [Notes for parent modules](https://github.com/conventional-changelog/conventional-changelog-core#notes-for-parent-modules)
-
 
 ## Related
 
@@ -68,11 +92,9 @@ See the [conventional-changelog](https://github.com/ajoslin/conventional-changel
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
 - [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
 
-
 ## License
 
 MIT
-
 
 [npm-image]: https://badge.fury.io/js/standard-changelog.svg
 [npm-url]: https://npmjs.org/package/standard-changelog
