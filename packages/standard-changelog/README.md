@@ -2,23 +2,7 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
-> An opinionated approach to package publishing and CHANGELOG generation using the workflow outlined in [conventional-changelog-cli](hhttps://github.com/conventional-changelog/conventional-changelog-cli#recommended-workflow)
-
-_how does it work?_
-
-1. when you land commits on `master`, select the _Squash and Merge_ option.
-2. add a title and body that follows the [conventional-changelog conventions](https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md).
-3. when you're ready to release to npm:
-  1. checkout `master`.
-  2. run `standard-changelog`.
-  3. ~~push and publish: `git push --tags; git push origin master; npm publish`.~~
-
-_`standard-changelog` handles the following:_
-
-1. ~~bumping the version in package.json.~~
-2. generating an updated CHANGELOG.md.
-3. ~~commiting your _package.json_ and _CHANGELOG.md_.~~
-4. ~~tagging a new release.~~
+> An opinionated approach to CHANGELOG generation using angular commit conventions.
 
 ## Quick Start
 
@@ -26,23 +10,6 @@ _`standard-changelog` handles the following:_
 $ npm install -g standard-changelog
 $ cd my-project
 $ standard-changelog
-```
-
-_or_
-
-```sh
-$ npm install standard-changelog --save-dev
-$ cd my-project
-```
-
-_add the following to your **package.json:**_
-
-```json
-{
-  "script": {
-    "release": "standard-changelog"
-  }
-}
 ```
 
 The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
