@@ -33,7 +33,7 @@ See the [conventional-changelog-core](https://github.com/stevemao/conventional-c
 
 ##### preset
 
-Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint'`
+Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'custom', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint'`
 
 It's recommended to use a preset so you don't have to define everything yourself. `options.config` will be set to this value.
 
