@@ -119,9 +119,9 @@ MIT © [Steve Mao](https://github.com/stevemao)
 
 [npm-image]: https://badge.fury.io/js/gulp-conventional-changelog.svg
 [npm-url]: https://npmjs.org/package/gulp-conventional-changelog
-[travis-image]: https://travis-ci.org/stevemao/gulp-conventional-changelog.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/gulp-conventional-changelog
-[daviddm-image]: https://david-dm.org/stevemao/gulp-conventional-changelog.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/gulp-conventional-changelog
-[coveralls-image]: https://coveralls.io/repos/github/stevemao/gulp-conventional-changelog/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/gulp-conventional-changelog
+[travis-image]: https://travis-ci.org/conventional-changelog/gulp-conventional-changelog.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/gulp-conventional-changelog
+[daviddm-image]: https://david-dm.org/conventional-changelog/gulp-conventional-changelog.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/gulp-conventional-changelog
+[coveralls-image]: https://coveralls.io/repos/github/conventional-changelog/gulp-conventional-changelog/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/gulp-conventional-changelog
