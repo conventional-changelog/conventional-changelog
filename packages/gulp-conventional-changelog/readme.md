@@ -16,13 +16,32 @@ $ npm install --save-dev gulp-conventional-changelog
 
 ## Usage
 
-### streaming mode
-
 ```js
 var gulp = require('gulp');
 var conventionalChangelog = require('gulp-conventional-changelog');
 
-gulp.task('default', function () {
+gulp.task('changelog', function () {
+  return gulp.src('CHANGELOG.md')
+    .pipe(conventionalChangelog({
+      // conventional-changelog options go here
+      preset: 'angular'
+    }, {
+      // context goes here
+    }, {
+      // git-raw-commits options go here
+    }, {
+      // conventional-commits-parser options go here
+    }, {
+      // conventional-changelog-writer options go here
+    }))
+    .pipe(gulp.dest('./'));
+});
+```
+
+### streaming mode
+
+```js
+gulp.task('changelog', function () {
   return gulp.src('CHANGELOG.md', {
     buffer: false
   })
@@ -36,10 +55,7 @@ gulp.task('default', function () {
 ### buffer mode
 
 ```js
-var gulp = require('gulp');
-var conventionalChangelog = require('gulp-conventional-changelog');
-
-gulp.task('default', function () {
+gulp.task('changelog', function () {
   return gulp.src('CHANGELOG.md')
     .pipe(conventionalChangelog({
       preset: 'angular'
