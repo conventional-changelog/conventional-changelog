@@ -2,7 +2,7 @@
 
 > Generate a changelog from git metadata
 
-You are probably looking for the [cli](https://github.com/stevemao/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog).
+You are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
 
 
 ## Usage
@@ -29,7 +29,7 @@ Returns a readable stream.
 
 #### options
 
-See the [conventional-changelog-core](https://github.com/stevemao/conventional-changelog-core) docs. The API is the same with the following changes or additions:
+See the [conventional-changelog-core](https://github.com/conventional-changelog/conventional-changelog-core) docs. The API is the same with the following changes or additions:
 
 ##### preset
 
@@ -40,16 +40,16 @@ It's recommended to use a preset so you don't have to define everything yourself
 **NOTE:** `options.config` will be overwritten by the values of preset. You should use either `preset` or `config`, but not both.
 
 
-## [Notes for parent modules](https://github.com/stevemao/conventional-changelog-core#notes-for-parent-modules)
+## [Notes for parent modules](https://github.com/conventional-changelog/conventional-changelog-core#notes-for-parent-modules)
 
 
 ## Related
 
-- [conventional-changelog-cli](https://github.com/stevemao/conventional-changelog-cli) - cli of this module
-- [standard-changelog](https://github.com/stevemao/standard-changelog) - Similar to this module but only with angular convention
-- [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) - Make a new GitHub release from git metadata
-- [conventional-recommended-bump](https://github.com/stevemao/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
-- [conventional-commits-detector](https://github.com/stevemao/conventional-commits-detector) - Detect what commit message convention your repository is using
+- [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog-cli) - cli of this module
+- [standard-changelog](https://github.com/conventional-changelog/standard-changelog) - Similar to this module but only with angular convention
+- [conventional-github-releaser](https://github.com/conventional-changelog/conventional-github-releaser) - Make a new GitHub release from git metadata
+- [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
+- [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
 - [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
 - [conventional-changelog-lint](https://github.com/marionebl/conventional-changelog-lint) - Lint commit messages against your conventional-changelog preset
@@ -62,9 +62,9 @@ MIT
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog
-[travis-image]: https://travis-ci.org/ajoslin/conventional-changelog.svg?branch=master
-[travis-url]: https://travis-ci.org/ajoslin/conventional-changelog
-[daviddm-image]: https://david-dm.org/ajoslin/conventional-changelog.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/ajoslin/conventional-changelog
-[coveralls-image]: https://coveralls.io/repos/ajoslin/conventional-changelog/badge.svg
-[coveralls-url]: https://coveralls.io/r/ajoslin/conventional-changelog
+[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog
+[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog
