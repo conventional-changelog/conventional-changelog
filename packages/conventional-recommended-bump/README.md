@@ -49,6 +49,14 @@ Type: `string` Possible values: `'angular'`
 
 A set of options of a popular project.
 
+##### config
+
+Type: `object`
+
+This should serve as default values for other arguments of `conventionalRecommendedBump` so you don't need to rewrite the same or similar config across your projects. Any value in this could be overwritten.
+
+**NOTE:** `options.config` will be overwritten by the values of preset. You should use either `preset` or `config`, but not both.
+
 ##### whatBump
 
 Type: `function`
