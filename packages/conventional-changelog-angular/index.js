@@ -56,7 +56,7 @@ var writerOpts = {
     }
 
     if (typeof commit.subject === 'string') {
-      commit.subject = commit.subject.substring(0, 80);
+      commit.subject = commit.subject;
     }
 
     return commit;
