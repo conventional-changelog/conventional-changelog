@@ -35,7 +35,7 @@ See the [conventional-changelog-core](https://github.com/conventional-changelog/
 
 Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint'`
 
-It's recommended to use a preset so you don't have to define everything yourself.
+It's recommended to use a preset so you don't have to define everything yourself. Presets are names of built-in `config`.
 
 **NOTE:** `options.config` will be overwritten by the values of preset. You should use either `preset` or `config`, but not both.
 
