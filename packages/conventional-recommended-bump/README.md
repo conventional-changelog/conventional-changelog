@@ -47,7 +47,7 @@ If `true`, reverted commits will be ignored.
 
 Type: `string` Possible values: `'angular'`
 
-A set of options of a popular project.
+It's recommended to use a preset so you don't have to define everything yourself. Presets are names of built-in `config`.
 
 ##### config
 
