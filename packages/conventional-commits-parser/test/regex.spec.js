@@ -34,6 +34,15 @@ describe('regex', function() {
       expect(match[1]).to.equal('Breaking News');
       expect(match[2]).to.equal('This is so important.');
     });
+
+    it('should not accidentally match in a sentence', function() {
+      var reNotes = regex({
+        noteKeywords: [' Breaking News'],
+        issuePrefixes: ['#']
+      }).notes;
+      var match = 'This is a breaking news: So important.'.match(reNotes);
+      expect(match).to.equal(null);
+    });
   });
 
   describe('references', function() {
