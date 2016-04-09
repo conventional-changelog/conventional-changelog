@@ -63,7 +63,7 @@ Type: `function`
 
 A function that takes parsed commits as argument.
 
-Return an object including `level` and `reason`. level is a `number` indicating what bump it should be and `reason` is the reason of such release.
+This should return an object including but not limited to `level` and `reason`. `level` is a `number` indicating what bump it should be and `reason` is the reason of such release.
 
 For backward compatibility, it could return a `number` indicating what bump it should be.
 
@@ -75,7 +75,7 @@ Type: `array`
 
 An array of parsed commits. The commits are from last semver tag to `HEAD` and is parsed by [conventional-commits-parser](https://github.com/conventional-changelog/conventional-commits-parser).
 
-If it returns `0` it will be a `major` bump. If `1`, `minor` bump. If `2`, `patch`.
+If it returns with `level` `0` it will be a `major` bump. If `1`, `minor` bump. If `2`, `patch`.
 
 #### parserOpts
 
@@ -89,7 +89,7 @@ Type: `function`
 
 ###### object
 
-object includes what's returned by `whatBump` and
+Object includes what's returned by `whatBump` and
 
 ####### releaseAs
 
