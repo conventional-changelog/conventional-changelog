@@ -63,6 +63,38 @@ describe('angular preset', function() {
       }));
   });
 
+  it('should replace #[0-9]+ with GitHub issue URL', function(done) {
+    gitDummyCommit(['feat(awesome): addresses the issue brought up in #133']);
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+        expect(chunk).to.include('[#133](https://github.com/bcoe/conventional-changelog-standard/issues/133)');
+        done();
+      }));
+  });
+
+  it('should replace @username with GitHub user URL', function(done) {
+    gitDummyCommit(['feat(awesome): issue brought up by @bcoe! on Friday']);
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+        expect(chunk).to.include('[@bcoe](https://github.com/bcoe)');
+        done();
+      }));
+  });
+
   it('should not discard commit if there is BREAKING CHANGE', function(done) {
     gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.']);
     gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.']);

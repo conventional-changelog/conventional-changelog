@@ -3,6 +3,17 @@ var compareFunc = require('compare-func');
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
+var path = require('path');
+var pkgJson = {};
+var gufg = require('github-url-from-git');
+try {
+  pkgJson = require(path.resolve(
+    process.cwd(),
+    './package.json'
+  ));
+} catch (err) {
+  console.error('no root package.json found');
+}
 
 var parserOpts = {
   headerPattern: /^(\w*)(?:\((.*)\))?\: (.*)$/,
@@ -15,6 +26,19 @@ var parserOpts = {
   revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
   revertCorrespondence: ['header', 'hash']
 };
+
+function issueUrl() {
+  var url = null;
+  if (pkgJson.repository && pkgJson.repository.url && ~pkgJson.repository.url.indexOf('github.com')) {
+    var gitUrl = gufg(pkgJson.repository.url);
+
+    if (gitUrl) {
+      return gitUrl + '/issues/';
+    } else {
+      return url;
+    }
+  }
+}
 
 var writerOpts = {
   transform: function(commit) {
@@ -56,6 +80,13 @@ var writerOpts = {
     }
 
     if (typeof commit.subject === 'string') {
+      var url = issueUrl();
+      if (url) {
+        // GitHub issue URLs.
+        commit.subject = commit.subject.replace(/( ?)#([0-9]+)(\b|^)/g, '$1[#$2](' + url + '$2)$3');
+      }
+      // GitHub user URLs.
+      commit.subject = commit.subject.replace(/( ?)@([a-zA-Z0-9_]+)(\b|^)/g, '$1[@$2](https://github.com/$2)$3');
       commit.subject = commit.subject;
     }
 
@@ -75,6 +106,7 @@ module.exports = Q.all([
   readFile(resolve(__dirname, 'templates/footer.hbs'), 'utf-8')
 ])
   .spread(function(template, header, commit, footer) {
+
     writerOpts.mainTemplate = template;
     writerOpts.headerPartial = header;
     writerOpts.commitPartial = commit;
