@@ -2,13 +2,13 @@
   "name": "conventional-recommended-bump",
   "version": "0.2.0",
   "description": "Get a recommended version bump based on conventional commits",
-  "homepage": "https://github.com/stevemao/conventional-recommended-bump",
+  "homepage": "https://github.com/conventional-changelog/conventional-recommended-bump",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": "stevemao/conventional-recommended-bump",
+  "repository": "conventional-changelog/conventional-recommended-bump",
   "license": "MIT",
   "keywords": [
     "conventional-recommended-bump",
