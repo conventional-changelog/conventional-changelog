@@ -2,7 +2,7 @@
 
 > [conventional-changelog](https://github.com/ajoslin/conventional-changelog) core
 
-You are probably looking for the [cli](https://github.com/stevemao/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/stevemao/gulp-conventional-changelog)/[atom](https://github.com/stevemao/atom-conventional-changelog).
+You are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
 
 
 ## Usage
@@ -25,7 +25,7 @@ conventionalChangelogCore()
 
 Returns a readable stream.
 
-*Note:* [`options.transform`](#transform-1), [`options.pkg.transform`](#transform) and [`writerOpts.transform`](https://github.com/stevemao/conventional-changelog-writer#transform) are different. If you have a better naming suggestion, please send a PR.
+*Note:* [`options.transform`](#transform-1), [`options.pkg.transform`](#transform) and [`writerOpts.transform`](https://github.com/conventional-changelog/conventional-changelog-writer#transform) are different. If you have a better naming suggestion, please send a PR.
 
 #### options
 
@@ -108,7 +108,7 @@ If this value is `true` and `context.version` equals last release then `context.
 
 #### context
 
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults or changes:
+See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog-writer) docs. There are some defaults or changes:
 
 ##### host
 
@@ -154,7 +154,7 @@ Should link to the page that compares current tag with previous tag?
 
 #### gitRawCommitsOpts
 
-See the [git-raw-commits](https://github.com/stevemao/git-raw-commits) docs. There are some defaults:
+See the [git-raw-commits](https://github.com/conventional-changelog/git-raw-commits) docs. There are some defaults:
 
 ##### format
 
@@ -174,7 +174,7 @@ Type: `function` Default: `options.debug`
 
 #### parserOpts
 
-See the [conventional-commits-parser](https://github.com/stevemao/conventional-commits-parser) docs.
+See the [conventional-commits-parser](https://github.com/conventional-changelog/conventional-commits-parser) docs.
 
 ##### warn
 
@@ -182,7 +182,7 @@ Default: `options.warn`
 
 #### writerOpts
 
-See the [conventional-changelog-writer](https://github.com/stevemao/conventional-changelog-writer) docs. There are some defaults:
+See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog-writer) docs. There are some defaults:
 
 ##### reverse
 
@@ -201,7 +201,7 @@ This module has options `append` and `releaseCount`. However, it doesn't read yo
 2. We want it to be very flexible for the parent module. You could create a readable stream from the file or you could just read the file.
 3. We want the duty of this module to be very minimum.
 
-So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs. Please see [conventional-github-releaser](https://github.com/stevemao/conventional-github-releaser) as an example.
+So, when you build a parent module, you need to read the old logs and append or prepend to them based on `options.append`. However, if `options.releaseCount` is `0` you need to ignore any previous logs. Please see [conventional-github-releaser](https://github.com/conventional-changelog/conventional-github-releaser) as an example.
 
 Arguments passed to `conventionalChangelogCore` will be mutated.
 
@@ -213,9 +213,9 @@ MIT
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-core.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-core
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-core.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-core
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-core.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-core
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-changelog-core/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-changelog-core
+[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog-core.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-core
+[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-core.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-core
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-core/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-core

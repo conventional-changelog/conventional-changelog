@@ -251,7 +251,7 @@ describe('conventionalChangelogCore', function() {
   it('should read the closest package.json by default', function(done) {
     conventionalChangelogCore()
       .pipe(through(function(chunk) {
-        expect(chunk.toString()).to.include('closes [#1](https://github.com/stevemao/conventional-changelog-core/issues/1)');
+        expect(chunk.toString()).to.include('closes [#1](https://github.com/conventional-changelog/conventional-changelog-core/issues/1)');
 
         done();
       }));
