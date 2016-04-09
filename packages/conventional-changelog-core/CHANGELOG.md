@@ -1,3 +1,13 @@
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.0...v1.3.1) (2016-04-09)
+
+
+### Bug Fixes
+
+* **defaults:** context tags ([2571038](https://github.com/conventional-changelog/conventional-changelog-core/commit/2571038))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/stevemao/conventional-changelog-core/compare/v1.2.0...v1.3.0) (2016-02-13)
 
