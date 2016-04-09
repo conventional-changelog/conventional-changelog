@@ -339,9 +339,9 @@ MIT © [Steve Mao](https://github.com/stevemao)
 
 [npm-image]: https://badge.fury.io/js/conventional-commits-parser.svg
 [npm-url]: https://npmjs.org/package/conventional-commits-parser
-[travis-image]: https://travis-ci.org/stevemao/conventional-commits-parser.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-commits-parser
-[daviddm-image]: https://david-dm.org/stevemao/conventional-commits-parser.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-commits-parser
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-commits-parser/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-commits-parser
+[travis-image]: https://travis-ci.org/conventional-changelog/conventional-commits-parser.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/conventional-commits-parser
+[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-commits-parser.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-commits-parser
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-commits-parser/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-commits-parser

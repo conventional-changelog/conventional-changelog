@@ -2,13 +2,13 @@
   "name": "conventional-commits-parser",
   "version": "1.0.1",
   "description": "Parse raw conventional commits",
-  "homepage": "https://github.com/stevemao/conventional-commits-parser",
+  "homepage": "https://github.com/conventional-changelog/conventional-commits-parser",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": "stevemao/conventional-commits-parser",
+  "repository": "conventional-changelog/conventional-commits-parser",
   "license": "MIT",
   "keywords": [
     "conventional-commits-parser",
