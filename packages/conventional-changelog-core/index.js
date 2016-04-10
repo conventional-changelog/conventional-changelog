@@ -32,7 +32,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
           err.message = 'Error in conventional-commits-parser: ' + err.message;
           setImmediate(readable.emit.bind(readable), 'error', err);
         })
-        // it would be better to if `gitRawCommits` could spit out better formatted data
+        // it would be better if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
         .pipe(through.obj(function(chunk, enc, cb) {
           try {
