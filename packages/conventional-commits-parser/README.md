@@ -18,7 +18,7 @@ Each commit message consists of a **merge header**, a **header** (mandatory), a 
 
 ### merge
 
-The merge header may optionally have a special format that includes other parts, such as **branch**, **issueId** or **source**
+The merge header may optionally have a special format that includes other parts, such as **branch**, **issueId** or **source**.
 
 ```
 Merge branch <branch>
@@ -27,7 +27,7 @@ Merge pull request <issue-id> from <source>
 
 ### header
 
-The header may optionally have a special format that includes other parts, such as **type**, **scope** and a **subject**
+The header may optionally have a special format that includes other parts, such as **type**, **scope** and a **subject**.
 
 ```
 <type>(<scope>): <subject>
@@ -127,7 +127,7 @@ Merge pull request #1 from user/feature/feature-name
 feat(scope): broadcast $destroy event on scope destruction
 ```
 
-We can parse it with these options and the default headerPattern :
+We can parse it with these options and the default headerPattern:
 
 ```js
 {
