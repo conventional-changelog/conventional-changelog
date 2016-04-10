@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevemao/conventional-changelog-jquery.git"
+    "url": "git+https://github.com/conventional-changelog/conventional-changelog-jquery.git"
   },
   "keywords": [
     "conventional-changelog",
@@ -20,9 +20,9 @@
   "author": "Steve Mao",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/stevemao/conventional-changelog-jquery/issues"
+    "url": "https://github.com/conventional-changelog/conventional-changelog-jquery/issues"
   },
-  "homepage": "https://github.com/stevemao/conventional-changelog-jquery#readme",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog-jquery#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "conventional-changelog-core": "0.0.2",

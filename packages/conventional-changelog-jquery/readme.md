@@ -8,9 +8,9 @@ See [convention](convention.md)
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-jquery.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-jquery
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-jquery.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-jquery
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-jquery.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-jquery
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-changelog-jquery/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-changelog-jquery
+[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog-jquery.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-jquery
+[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-jquery.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-jquery
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-jquery/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-jquery
