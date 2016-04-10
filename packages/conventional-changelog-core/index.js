@@ -4,7 +4,7 @@ var conventionalCommitsParser = require('conventional-commits-parser');
 var conventionalChangelogWriter = require('conventional-changelog-writer');
 var stream = require('stream');
 var through = require('through2');
-var getDefaults = require('./lib/get-defaults');
+var mergeConfig = require('./lib/merge-config');
 
 function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   writerOpts = writerOpts || {};
@@ -14,7 +14,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
   });
   readable._read = function() {};
 
-  getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts)
+  mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts)
     .then(function(data) {
       options = data.options;
       context = data.context;

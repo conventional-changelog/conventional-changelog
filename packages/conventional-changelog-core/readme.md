@@ -184,6 +184,12 @@ Default: `options.warn`
 
 See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog-writer) docs. There are some defaults:
 
+##### finalizeContext
+
+Finalize context is used for generating above context.
+
+**NOTE:** If you overwrite this value the above context defaults will be gone.
+
 ##### reverse
 
 Default: `options.append`

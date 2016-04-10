@@ -20,7 +20,7 @@ var _ = require('lodash');
 var rhosts = /github|bitbucket|gitlab/i;
 var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
-function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var configPromise;
   var pkgPromise;
   var semverTagsPromise;
@@ -283,4 +283,4 @@ function getDefaults(options, context, gitRawCommitsOpts, parserOpts, writerOpts
     });
 }
 
-module.exports = getDefaults;
+module.exports = mergeConfig;
