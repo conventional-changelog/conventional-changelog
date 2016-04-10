@@ -1,3 +1,17 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.0.1...v1.1.0) (2016-04-10)
+
+
+### Bug Fixes
+
+* **notes:** note keywords must appear at the beginning of a sentence ([6e13789](https://github.com/conventional-changelog/conventional-commits-parser/commit/6e13789)), closes [#23](https://github.com/conventional-changelog/conventional-commits-parser/issues/23)
+
+### Features
+
+* **reference:** able to reference an issue without an action ([cf847b1](https://github.com/conventional-changelog/conventional-commits-parser/commit/cf847b1)), closes [#22](https://github.com/conventional-changelog/conventional-commits-parser/issues/22)
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/stevemao/conventional-commits-parser/compare/v1.0.0...v1.0.1) (2016-02-05)
 
