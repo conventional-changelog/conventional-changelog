@@ -48,28 +48,27 @@ describe('regex', function() {
   describe('references', function() {
     it('should match a simple reference', function() {
       var reReferences = regex({
-        referenceActions: ['Closes'],
-        issuePrefixes: ['#']
+        referenceActions: ['Closes']
       }).references;
       var match = reReferences.exec('closes #1');
       expect(match[0]).to.equal('closes #1');
       expect(match[1]).to.equal('closes');
+      expect(match[2]).to.equal('#1');
     });
 
     it('should be case insensitive', function() {
       var reReferences = regex({
-        referenceActions: ['Closes'],
-        issuePrefixes: ['#']
+        referenceActions: ['Closes']
       }).references;
       var match = reReferences.exec('ClOsEs #1');
       expect(match[0]).to.equal('ClOsEs #1');
       expect(match[1]).to.equal('ClOsEs');
+      expect(match[2]).to.equal('#1');
     });
 
     it('should not match if keywords does not present', function() {
       var reReferences = regex({
-        referenceActions: ['Close'],
-        issuePrefixes: ['#']
+        referenceActions: ['Close']
       }).references;
       var match = reReferences.exec('Closes #1');
       expect(match).to.equal(null);
@@ -77,56 +76,69 @@ describe('regex', function() {
 
     it('should take multiple reference keywords', function() {
       var reReferences = regex({
-        referenceActions: [' Closes', 'amends', 'fixes'],
-        issuePrefixes: ['#']
+        referenceActions: [' Closes', 'amends', 'fixes']
       }).references;
       var match = reReferences.exec('amends #1');
       expect(match[0]).to.eql('amends #1');
       expect(match[1]).to.eql('amends');
+      expect(match[2]).to.equal('#1');
     });
 
     it('should match multiple references', function() {
       var reReferences = regex({
-        referenceActions: ['Closes', 'amends'],
-        issuePrefixes: ['#']
+        referenceActions: ['Closes', 'amends']
       }).references;
       var string = 'Closes #1 amends #2; closes bug #4';
       var match = reReferences.exec(string);
       expect(match[0]).to.equal('Closes #1 ');
       expect(match[1]).to.equal('Closes');
+      expect(match[2]).to.equal('#1 ');
 
       match = reReferences.exec(string);
       expect(match[0]).to.equal('amends #2; ');
       expect(match[1]).to.equal('amends');
+      expect(match[2]).to.equal('#2; ');
 
       match = reReferences.exec(string);
       expect(match[0]).to.equal('closes bug #4');
       expect(match[1]).to.equal('closes');
+      expect(match[2]).to.equal('bug #4');
     });
 
     it('should match references with mixed content, like JIRA tickets', function() {
       var reReferences = regex({
-        referenceActions: ['Closes', 'amends'],
-        issuePrefixes: ['#']
+        referenceActions: ['Closes', 'amends']
       }).references;
       var string = 'Closes #JIRA-123 amends #MY-OTHER-PROJECT-123; closes bug #4';
       var match = reReferences.exec(string);
       expect(match[0]).to.equal('Closes #JIRA-123 ');
       expect(match[1]).to.equal('Closes');
+      expect(match[2]).to.equal('#JIRA-123 ');
 
       match = reReferences.exec(string);
       expect(match[0]).to.equal('amends #MY-OTHER-PROJECT-123; ');
       expect(match[1]).to.equal('amends');
+      expect(match[2]).to.equal('#MY-OTHER-PROJECT-123; ');
 
       match = reReferences.exec(string);
       expect(match[0]).to.equal('closes bug #4');
       expect(match[1]).to.equal('closes');
+      expect(match[2]).to.equal('bug #4');
+    });
+
+    it('should reference an issue without an action', function() {
+      var string = 'gh-1, prefix-3, Closes gh-6';
+      var reReferences = regex().references;
+
+      var match = reReferences.exec(string);
+      expect(match[0]).to.equal('gh-1, prefix-3, Closes gh-6');
+      expect(match[1]).to.equal('');
+      expect(match[2]).to.equal('gh-1, prefix-3, Closes gh-6');
     });
 
     it('should ignore whitespace', function() {
       var reReferences = regex({
-        referenceActions: [' Closes', 'amends ', '', ' fixes ', '   '],
-        issuePrefixes: ['#']
+        referenceActions: [' Closes', 'amends ', '', ' fixes ', '   ']
       }).references;
       var match = 'closes #1, amends #2, fixes #3'.match(reReferences);
       expect(match).to.eql(['closes #1, ', 'amends #2, ', 'fixes #3']);

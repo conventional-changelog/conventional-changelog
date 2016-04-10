@@ -173,6 +173,8 @@ Type: `array` of `string` or `string` Default:
 
 Keywords to reference an issue. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
+Set it to `null` to reference an issue without any action.
+
 ##### issuePrefixes
 
 Type: `array` of `string` or `string` Default: `['#']`

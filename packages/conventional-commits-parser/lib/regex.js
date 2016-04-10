@@ -31,7 +31,8 @@ function getReferencePartsRegex(issuePrefixes) {
 
 function getReferencesRegex(referenceActions) {
   if (!referenceActions) {
-    return reNomatch;
+    // matches everything
+    return /()(.+)/gi;
   }
 
   var joinedKeywords = join(referenceActions, '|');

@@ -96,7 +96,7 @@ function parser(raw, options, regex) {
 
   // incase people reference an issue in the header
   while (referenceSentences = reReferences.exec(header)) {
-    var action = referenceSentences[1];
+    var action = referenceSentences[1] || null;
     var sentence = referenceSentences[2];
     while (referenceMatch = reReferenceParts.exec(sentence)) {
       var owner = null;
@@ -163,7 +163,7 @@ function parser(raw, options, regex) {
 
     // this references an issue
     while (referenceSentences = reReferences.exec(line)) {
-      var action = referenceSentences[1];
+      var action = referenceSentences[1] || null;
       var sentence = referenceSentences[2];
       while (referenceMatch = reReferenceParts.exec(sentence)) {
         referenceMatched = true;

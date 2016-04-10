@@ -377,6 +377,30 @@ describe('parser', function() {
         prefix: 'gh-'
       }]);
     });
+
+    it('should reference an issue without an action', function() {
+      var options = {
+        revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+        revertCorrespondence: ['header', 'hash'],
+        fieldPattern: /^-(.*?)-$/,
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        noteKeywords: ['BREAKING AMEND'],
+        issuePrefixes: ['#', 'gh-']
+      };
+
+      var reg = regex(options);
+
+      var msg = parser('This is gh-1', options, reg);
+      expect(msg.references).to.eql([{
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '1',
+        raw: 'This is gh-1',
+        prefix: 'gh-'
+      }]);
+    });
   });
 
   describe('body', function() {
@@ -424,7 +448,7 @@ describe('parser', function() {
       });
     });
 
-    it('references should be an empty string if not found', function() {
+    it('references should be empty if not found', function() {
       expect(simpleMsg.references).to.eql([]);
     });
 
@@ -488,6 +512,75 @@ describe('parser', function() {
       }]);
     });
 
+    it('should reference an issue without an action', function() {
+      var options = {
+        revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
+        revertCorrespondence: ['header', 'hash'],
+        fieldPattern: /^-(.*?)-$/,
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        noteKeywords: ['BREAKING AMEND'],
+        issuePrefixes: ['#', 'gh-']
+      };
+
+      var reg = regex(options);
+
+      var msg = parser(
+        'feat(scope): broadcast $destroy event on scope destruction\n' +
+        'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+        'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
+        'Kills #1, gh-123\n' +
+        'what\n' +
+        '#25\n' +
+        '#33, maybe gh-100, not sure about #3\n',
+        options, reg
+      );
+
+      expect(msg.references).to.eql([{
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '1',
+        raw: 'Kills #1',
+        prefix: '#'
+      }, {
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '123',
+        raw: ', gh-123',
+        prefix: 'gh-'
+      }, {
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '25',
+        raw: '#25',
+        prefix: '#'
+      }, {
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '33',
+        raw: '#33',
+        prefix: '#'
+      }, {
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '100',
+        raw: ', maybe gh-100',
+        prefix: 'gh-'
+      }, {
+        action: null,
+        owner: null,
+        repository: null,
+        issue: '3',
+        raw: ', not sure about #3',
+        prefix: '#'
+      }]);
+    });
+
     it('should put everything after references in footer', function() {
       var msg = parser(
         'feat(scope): broadcast $destroy event on scope destruction\n' +
@@ -537,7 +630,7 @@ describe('parser', function() {
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change');
     });
 
-    it('shoudl parse properly if important notes comes with more than one paragraphs after references', function() {
+    it('should parse properly if important notes comes with more than one paragraphs after references', function() {
       var msg = parser(
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
@@ -569,7 +662,7 @@ describe('parser', function() {
       expect(msg.footer).to.equal('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change');
     });
 
-    it('should parse properly if important notes comes after references with something after references', function() {
+    it('should parse properly if important notes comes after references', function() {
       var msg = parser(
         'feat(scope): broadcast $destroy event on scope destruction\n' +
         'perf testing shows that in chrome this change adds 5-15% overhead\n' +
