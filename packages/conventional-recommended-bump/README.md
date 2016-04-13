@@ -2,7 +2,7 @@
 
 > Get a recommended version bump based on conventional commits
 
-Got the idea from https://github.com/ajoslin/conventional-changelog/pull/29
+Got the idea from https://github.com/conventional-changelog/conventional-changelog/pull/29
 
 
 ## Install
