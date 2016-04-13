@@ -19,8 +19,8 @@ var conventionalRecommendedBump = require('conventional-recommended-bump');
 
 conventionalRecommendedBump({
   preset: 'angular'
-}, function(err, releaseAs) {
-  console.log(releaseAs);
+}, function(err, result) {
+  console.log(result.releaseAs);
   //=> 'major'
 });
 ```
