@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.1.0...v1.2.0) (2016-04-15)
+
+
+### Features
+
+* **mentions:** @someone in commit ([b2eabbf](https://github.com/conventional-changelog/conventional-commits-parser/commit/b2eabbf)), closes [#24](https://github.com/conventional-changelog/conventional-commits-parser/issues/24)
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.0.1...v1.1.0) (2016-04-10)
 
