@@ -132,6 +132,7 @@ describe('parser', function() {
         raw: '#25',
         prefix: '#'
       }],
+      mentions: [],
       revert: null,
       scope: 'scope',
       subject: 'broadcast $destroy event on scope destruction',
@@ -169,10 +170,41 @@ describe('parser', function() {
         raw: '#1',
         prefix: '#'
       }],
+      mentions: [],
       revert: null,
       scope: null,
       subject: null,
       type: null
+    });
+  });
+
+  describe('mentions', function() {
+    it('should mention someone in the commit', function() {
+      var options = {
+        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+        mergeCorrespondence: ['issueId', 'source']
+      };
+
+      var reg = regex(options);
+
+      var msg = parser(
+        '@Steve\n' +
+        '@conventional-changelog @someone' +
+        '\n' +
+        'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+        '@this is',
+        options,
+        reg
+      );
+
+      expect(msg.mentions).to.eql([
+        'Steve',
+        'conventional-changelog',
+        'someone',
+        'this'
+      ]);
     });
   });
 

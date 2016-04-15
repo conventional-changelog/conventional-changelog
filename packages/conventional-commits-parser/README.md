@@ -7,7 +7,7 @@
 
 A minimum input should contain a raw message.
 
-Each commit message consists of a **merge header**, a **header** (mandatory), a **body** and a **footer**.
+Each commit message consists of a **merge header**, a **header** (mandatory), a **body** and a **footer**. **Mention** (optional) someone using the `@` notation.
 
 ```
 <merge>
@@ -27,7 +27,7 @@ Merge pull request <issue-id> from <source>
 
 ### header
 
-The header may optionally have a special format that includes other parts, such as **type**, **scope** and a **subject**.
+The header may optionally have a special format that includes other parts, such as **type**, **scope** and **subject**. You could **reference** (optional) issues here.
 
 ```
 <type>(<scope>): <subject>
@@ -35,7 +35,7 @@ The header may optionally have a special format that includes other parts, such 
 
 ### footer
 
-The footer should contain any information about **Important Notes** (optional) and is also the place to reference GitHub issues that this commit **references** (optional).
+The footer should contain any information about **Important Notes** (optional) and is also the place to **reference** (optional) issues.
 
 ```
 <important note>
@@ -76,7 +76,7 @@ It returns a transform stream and expects an upstream that looks something like 
 
 ```
 'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
-'feat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change\n'
+'feat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change.\nThanks @stevemao\n'
 ```
 
 Each chunk should be a commit. The downstream will look something like this:
@@ -85,20 +85,32 @@ Each chunk should be a commit. The downstream will look something like this:
 { type: 'feat',
   scope: 'scope',
   subject: 'broadcast $destroy event on scope destruction',
+  merge: null,
   header: 'feat(scope): broadcast $destroy event on scope destruction',
   body: null,
   footer: 'Closes #1',
   notes: [],
-  references: [ { action: 'Closes', owner: null, repository: null, issue: '1', raw: '#1' } ],
+  references:
+   [ { action: 'Closes',
+       owner: null,
+       repository: null,
+       issue: '1',
+       raw: '#1',
+       prefix: '#' } ],
+  mentions: [],
   revert: null }
 { type: 'feat',
   scope: 'ng-list',
   subject: 'Allow custom separator',
+  merge: null,
   header: 'feat(ng-list): Allow custom separator',
   body: 'bla bla bla',
-  footer: 'BREAKING CHANGE: some breaking change',
-  notes: [ { title: 'BREAKING CHANGE', text: 'some breaking change' } ],
+  footer: 'BREAKING CHANGE: some breaking change.\nThanks @stevemao',
+  notes:
+   [ { title: 'BREAKING CHANGE',
+       text: 'some breaking change.\nThanks @stevemao' } ],
   references: [],
+  mentions: [ 'stevemao' ],
   revert: null }
 ```
 

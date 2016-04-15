@@ -30,6 +30,7 @@ function parser(raw, options, regex) {
   var referenceSentences;
   var referenceMatch;
   var currentProcessedField;
+  var mentionsMatch;
   var revertMatch;
   var otherFields = {};
   var lines = trimOffNewlines(raw).split(/\r?\n/);
@@ -58,6 +59,7 @@ function parser(raw, options, regex) {
   var footer = '';
   var notes = [];
   var references = [];
+  var mentions = [];
   var revert;
 
   mergeMatch = merge.match(options.mergePattern);
@@ -220,6 +222,10 @@ function parser(raw, options, regex) {
     }
   });
 
+  while (mentionsMatch = regex.mentions.exec(raw)) {
+    mentions.push(mentionsMatch[1]);
+  }
+
   // does this commit revert any other commit?
   revertMatch = raw.match(options.revertPattern);
   if (revertMatch) {
@@ -245,6 +251,7 @@ function parser(raw, options, regex) {
     footer: footer ? trimOffNewlines(footer) : null,
     notes: notes,
     references: references,
+    mentions: mentions,
     revert: revert
   }, otherFields);
 
