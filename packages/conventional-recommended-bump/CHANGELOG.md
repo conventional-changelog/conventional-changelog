@@ -1,3 +1,9 @@
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/conventional-changelog/conventional-recommended-bump/compare/v0.2.0...v0.2.1) (2016-04-16)
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/conventional-changelog/conventional-recommended-bump/compare/v0.1.2...v0.2.0) (2016-04-02)
 
