@@ -16,11 +16,11 @@ Every commit must have a subject (the first line). Everything else is optional.
 
 ### Subject
 
-This is the first line. It consists of a component, like "Event" or "Autocomplete". This line must be 72 characters or less. There should be no full stop (period) at the end.
+This is the first line. It consists of a component, like "Event" or "Autocomplete".
 
 ### Long description
 
-There are two line breaks between the subject and the long description. The description can have any length and formatting, like lists, but it must be hard-wrapped at 80 characters.
+There are two line breaks between the subject and the long description. The description can have any length and formatting, like lists.
 
 ### References
 
