@@ -17,11 +17,11 @@ describe('angular preset', function() {
     shell.exec('git init --template=./git-templates');
 
     gitDummyCommit('chore: first commit');
-    // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
+    // fix this once https://github.com/arturadib/shelljs/issues/175 is solved
     child.exec('git commit -m"feat: amazing new module\n\nBREAKING CHANGE: Not backward compatible." --allow-empty', function() {
       gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.']);
-      gitDummyCommit('perf(ngOptions): make it faster');
-      gitDummyCommit('revert(ngOptions): make it faster');
+      gitDummyCommit('perf(ngOptions): make it faster closes #1, #2');
+      gitDummyCommit('revert(ngOptions): bad commit');
       gitDummyCommit('fix(*): oops');
 
       done();
@@ -41,12 +41,14 @@ describe('angular preset', function() {
         expect(chunk).to.include('amazing new module');
         expect(chunk).to.include('avoid a bug');
         expect(chunk).to.include('make it faster');
+        expect(chunk).to.include(', closes [#1](https://github.com/stevemao/conventional-changelog-angular/issues/1) [#2](https://github.com/stevemao/conventional-changelog-angular/issues/2)');
         expect(chunk).to.include('Not backward compatible.');
         expect(chunk).to.include('compile: The Change is huge.');
         expect(chunk).to.include('Features');
         expect(chunk).to.include('Bug Fixes');
         expect(chunk).to.include('Performance Improvements');
         expect(chunk).to.include('Reverts');
+        expect(chunk).to.include('bad commit');
         expect(chunk).to.include('BREAKING CHANGES');
 
         expect(chunk).to.not.include('first commit');
