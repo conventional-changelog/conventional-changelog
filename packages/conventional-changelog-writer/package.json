@@ -36,7 +36,7 @@
     "concat-stream": "^1.4.8",
     "coveralls": "^2.11.2",
     "istanbul": "^0.4.2",
-    "jscs": "^2.1.1",
+    "jscs": "^3.0.3",
     "jshint": "^2.9.1-rc3",
     "mocha": "*"
   },
