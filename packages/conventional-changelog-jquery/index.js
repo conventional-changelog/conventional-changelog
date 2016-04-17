@@ -21,6 +21,12 @@ var writerOpts = {
       commit.hash = commit.hash.substring(0, 7);
     }
 
+    commit.references.forEach(function(reference) {
+      if (reference.prefix === '#') {
+        reference.originalIssueTracker = 'https://bugs.jquery.com/ticket/';
+      }
+    });
+
     return commit;
   },
   groupBy: 'component',

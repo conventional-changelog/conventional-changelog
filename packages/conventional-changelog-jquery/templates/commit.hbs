@@ -13,7 +13,7 @@
   {{~#if @root.owner}}
     {{~@root.owner}}/
   {{~/if}}
-    {{~@root.repository}}/{{@root.commit}}/{{hash}}))
+  {{~@root.repository}}/{{@root.commit}}/{{hash}}))
 {{~else}}
   {{~hash}}
 {{~/if}}
@@ -21,12 +21,14 @@
 {{~!-- commit references --}}
 {{~#if references~}}
   , closes
-  {{~#each references}}
-    {{~#if @root.linkReferences}}[
-      {{~#if this.owner}}
-        {{~this.owner}}/
-      {{~/if}}
-      {{~this.repository}}#{{this.issue}}](
+  {{~#each references}} {{#if @root.linkReferences}}[
+    {{~#if this.owner}}
+      {{~this.owner}}/
+    {{~/if}}
+    {{~this.repository}}{{this.prefix}}{{this.issue}}](
+    {{~#if this.originalIssueTracker}}
+      {{~this.originalIssueTracker}}
+    {{~else}}
       {{~#if @root.host}}
         {{~@root.host}}/
       {{~/if}}
@@ -41,13 +43,13 @@
         {{~/if}}
         {{~@root.repository}}
       {{~/if~}}
-      /{{@root.issue}}/{{this.issue}})
-    {{~else}}
-      {{~#if this.owner}}
-        {{~this.owner}}/
-      {{~/if}}
-      {{~this.repository}}#{{this.issue}}
-    {{/if}}
-  {{/each}}
+      /{{@root.issue}}/
+    {{~/if}}
+    {{~this.issue}})
+  {{~else}}
+    {{~#if this.owner}}
+      {{~this.owner}}/
+    {{~/if}}
+    {{~this.repository}}{{this.prefix}}{{this.issue}}
+  {{/if}}{{/each}}
 {{/if}}
-

@@ -20,16 +20,16 @@ describe('jquery preset', function() {
     writeFileSync('test2', '');
     shell.exec('git add --all && git commit -m"CSS: Don\'t name the anonymous swap function"');
     writeFileSync('test3', '');
-    shell.exec('git add --all && git commit -m"Event: Remove an internal argument to the on method"');
+    shell.exec('git add --all && git commit -m"Event: Remove an internal argument to the on method" -m"Fixes #2, #4, gh-200"');
     writeFileSync('test4', '');
-    shell.exec('git add --all && git commit -m"Manipulation: Remove an internal argument to the remove method"');
+    shell.exec('git add --all && git commit -m"Manipulation: Remove an internal argument to the remove method" -m"Closes #22"');
     writeFileSync('test5', '');
     shell.exec('git add --all && git commit -m"Bad commit"');
     writeFileSync('test6', '');
-    shell.exec('git add --all && git commit -m"Core: Create jQuery.ajax"');
+    shell.exec('git add --all && git commit -m"Core: Create jQuery.ajax" -m"Closes gh-100"');
   });
 
-  it('should work if there is no semver tag', function(done) {
+  it('should generate a changelog', function(done) {
     conventionalChangelogCore({
       config: config
     })
@@ -40,9 +40,11 @@ describe('jquery preset', function() {
         chunk = chunk.toString();
 
         expect(chunk).to.include('Create jQuery.ajax');
-        expect(chunk).to.include('))\n* Make jQuery objects iterable');
+        expect(chunk).to.include(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog-jquery/issues/100)');
+        expect(chunk).to.include(')\n* Make jQuery objects iterable');
         expect(chunk).to.include('### CSS');
         expect(chunk).to.include('Remove an internal argument to the on method');
+        expect(chunk).to.include(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog-jquery/issues/200)');
         expect(chunk).to.include('### Manipulation');
 
         expect(chunk).to.not.include('Bad');
