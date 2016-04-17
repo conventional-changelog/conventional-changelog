@@ -34,7 +34,7 @@
     "git-dummy-commit": "^1.1.0",
     "git-tails": "^1.0.0",
     "istanbul": "^0.4.1",
-    "jscs": "^2.7.0",
+    "jscs": "^3.0.3",
     "jshint": "^2.9.1",
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
