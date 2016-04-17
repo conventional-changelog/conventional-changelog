@@ -13,21 +13,12 @@ var parserOpts = {
 
 var writerOpts = {
   transform: function(commit) {
-    var componentLength;
-
     if (!commit.component || typeof commit.component !== 'string') {
       return;
     }
 
-    commit.component = commit.component.substring(0, 72);
-    componentLength = commit.component.length;
-
     if (typeof commit.hash === 'string') {
       commit.hash = commit.hash.substring(0, 7);
-    }
-
-    if (typeof commit.shortDesc === 'string') {
-      commit.shortDesc = commit.shortDesc.substring(0, 72 - componentLength);
     }
 
     return commit;
