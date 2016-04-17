@@ -25,6 +25,8 @@ describe('jquery preset', function() {
     shell.exec('git add --all && git commit -m"Manipulation: Remove an internal argument to the remove method"');
     writeFileSync('test5', '');
     shell.exec('git add --all && git commit -m"Bad commit"');
+    writeFileSync('test6', '');
+    shell.exec('git add --all && git commit -m"Core: Create jQuery.ajax"');
   });
 
   it('should work if there is no semver tag', function(done) {
@@ -37,7 +39,8 @@ describe('jquery preset', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include('Make jQuery objects iterable');
+        expect(chunk).to.include('Create jQuery.ajax');
+        expect(chunk).to.include('))\n* Make jQuery objects iterable');
         expect(chunk).to.include('### CSS');
         expect(chunk).to.include('Remove an internal argument to the on method');
         expect(chunk).to.include('### Manipulation');
