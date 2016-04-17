@@ -350,9 +350,9 @@ MIT © [Steve Mao](https://github.com/stevemao)
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-writer.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-writer
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-writer.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-writer
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-writer.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-writer
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-changelog-writer/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-changelog-writer
+[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog-writer.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-writer
+[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-writer.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-writer
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-writer/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-writer
