@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.1.1...v1.2.0) (2016-04-17)
+
+
+### Features
+
+* **transform:** also pass context as an arg ([9bd984c](https://github.com/conventional-changelog/conventional-changelog-writer/commit/9bd984c))
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/stevemao/conventional-changelog-writer/compare/v1.1.0...v1.1.1) (2016-02-29)
 
