@@ -1,3 +1,9 @@
+<a name="1.3.2"></a>
+## [1.3.2](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.1...v1.3.2) (2016-04-17)
+
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.0...v1.3.1) (2016-04-09)
 
