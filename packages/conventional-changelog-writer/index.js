@@ -83,7 +83,7 @@ function conventionalChangelogWriter(context, options) {
   return through.obj(function(chunk, enc, cb) {
     try {
       var result;
-      var commit = util.processCommit(chunk, options.transform);
+      var commit = util.processCommit(chunk, options.transform, context);
       var keyCommit = commit || chunk;
 
       // previous blocks of logs

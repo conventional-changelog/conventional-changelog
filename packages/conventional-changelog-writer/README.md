@@ -218,6 +218,8 @@ If this value is a `string`, it checks the existence of the field. Set to other 
 
 Type: `function` Default: pass through
 
+Last chance to modify your context before generating a changelog.
+
 ###### finalizeContext(context, options, commits, keyCommit)
 
 ####### context
@@ -293,13 +295,13 @@ It is possible to customize this the changelog to suit your needs. Templates are
 
 ### upstream
 
-Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables. A "raw" commit message (original commit poured from upstream) is attached to `commit`.
+Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables. A "raw" commit message (original commit poured from upstream) is attached to `commit`. `transform` can be used to modify a commit.
 
 ### context
 
 context should be module specific and can be used across the whole log. Thus these variables should not be related to any single commit and should be generic information of the module or all commits. Eg: *repository url* and *author names*, etc. You can think of them as "global" or "root" variables.
 
-Basically you can make your own templates and define all your template context. Extra context are based on commits from upstream and `options`. For more details, please checkout [handlebars](http://handlebarsjs.com) and the source code of this module.
+Basically you can make your own templates and define all your template context. Extra context are based on commits from upstream and `options`. For more details, please checkout [handlebars](http://handlebarsjs.com) and the source code of this module. `finalizeContext` can be used at last to modify context before generating a changelog.
 
 
 ## CLI

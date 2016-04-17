@@ -96,7 +96,7 @@ function getNoteGroups(notes, noteGroupsSort, notesSort) {
   return retGroups;
 }
 
-function processCommit(chunk, transform) {
+function processCommit(chunk, transform, context) {
   var commit;
 
   try {
@@ -106,7 +106,7 @@ function processCommit(chunk, transform) {
   commit = _.cloneDeep(chunk);
 
   if (_.isFunction(transform)) {
-    commit = transform(commit);
+    commit = transform(commit, context);
 
     if (commit) {
       commit.raw = chunk;

@@ -147,22 +147,22 @@ describe('conventionalChangelogWriter', function() {
   });
 
   describe('transform', function() {
-    it('should ignore the field if it doesn\'t exist', function(done) {
+    it('should transform the commit with context', function(done) {
       var i = 0;
 
-      var upstream = through.obj();
-      upstream.write({
-        header: 'bla',
-        body: null,
-        footer: null,
-        notes: []
-      });
-      upstream.end();
-      upstream
-        .pipe(conventionalChangelogWriter())
-        .pipe(through(function(chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + today + ')\n\n* bla \n\n\n\n');
+      getStream()
+        .pipe(conventionalChangelogWriter({}, {
+          transform: function(commit, context) {
+            expect(context).to.eql({
+              commit: 'commits',
+              issue: 'issues',
+              date: today
+            });
 
+            return commit;
+          }
+        }))
+        .pipe(through(function(chunk, enc, cb) {
           i++;
           cb(null);
         }, function() {
@@ -838,6 +838,30 @@ describe('conventionalChangelogWriter', function() {
           done();
         }));
     });
+  });
+
+  it('should ignore the field if it doesn\'t exist', function(done) {
+    var i = 0;
+
+    var upstream = through.obj();
+    upstream.write({
+      header: 'bla',
+      body: null,
+      footer: null,
+      notes: []
+    });
+    upstream.end();
+    upstream
+      .pipe(conventionalChangelogWriter())
+      .pipe(through(function(chunk, enc, cb) {
+        expect(chunk.toString()).to.equal('<a name=""></a>\n#  (' + today + ')\n\n* bla \n\n\n\n');
+
+        i++;
+        cb(null);
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
   });
 
   it('should sort notes on `text` by default', function(done) {
