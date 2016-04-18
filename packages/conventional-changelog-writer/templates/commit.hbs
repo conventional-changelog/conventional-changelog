@@ -8,7 +8,10 @@
   {{~#if @root.owner}}
     {{~@root.owner}}/
   {{~/if}}
-  {{~@root.repository}}/{{@root.commit}}/{{hash}}))
+  {{~#if @root.repository}}
+    {{~@root.repository}}/
+  {{~/if}}
+  {{~@root.commit}}/{{hash}}))
 {{~else}}
   {{~hash}}
 {{~/if}}
@@ -29,14 +32,16 @@
       {{~#if this.owner}}
         {{~this.owner}}/
       {{~/if}}
-      {{~this.repository}}
+      {{~this.repository}}/
     {{~else}}
       {{~#if @root.owner}}
         {{~@root.owner}}/
       {{~/if}}
-      {{~@root.repository}}
-    {{~/if~}}
-    /{{@root.issue}}/{{this.issue}})
+      {{~#if @root.repository}}
+        {{~@root.repository}}/
+      {{~/if}}
+    {{~/if}}
+    {{~@root.issue}}/{{this.issue}})
   {{~else}}
     {{~#if this.owner}}
       {{~this.owner}}/
