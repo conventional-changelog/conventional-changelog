@@ -2,6 +2,6 @@
   "version": "0.0.17",
   "repository": {
     "type": "git",
-    "url": "https://unknown-host/a/b.git"
+    "url": "https://unknown-host/.git"
   }
 }

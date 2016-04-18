@@ -177,18 +177,18 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
-  it('should fallback to use the url if repo is unknown', function(done) {
+  it('should only print the host', function(done) {
     conventionalChangelogCore({
       pkg: {
-        path: __dirname + '/fixtures/_unknown-host.json'
+        path: __dirname + '/fixtures/_host-only.json'
       }
     }, {
       linkReferences: true
     }).pipe(through(function(chunk) {
       chunk = chunk.toString();
 
-      expect(chunk).to.include('](https://unknown-host/a/b/commits/');
-      expect(chunk).to.include('closes [#1](https://unknown-host/a/b/issues/1)');
+      expect(chunk).to.include('](https://unknown-host/commits/');
+      expect(chunk).to.include('closes [#1](https://unknown-host/issues/1)');
 
       done();
     }));
