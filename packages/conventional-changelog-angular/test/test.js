@@ -1,7 +1,7 @@
 'use strict';
 var child = require('child_process');
 var conventionalChangelogCore = require('conventional-changelog-core');
-var preset = require('./');
+var preset = require('../');
 var expect = require('chai').expect;
 var gitDummyCommit = require('git-dummy-commit');
 var shell = require('shelljs');
@@ -147,4 +147,31 @@ describe('angular preset', function() {
         done();
       }));
   });
+
+  it('should work with unknown host', function(done) {
+    var i = 0;
+
+    conventionalChangelogCore({
+      config: preset,
+      pkg: {
+        path: __dirname + '/fixtures/_unknown-host.json'
+      },
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('(http://unknown/compare');
+        expect(chunk).to.include('](http://unknown/commits/');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
 });

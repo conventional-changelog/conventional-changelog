@@ -4,7 +4,10 @@
 {{~else~}}
   #
 {{~/if}} {{#if @root.linkCompare~}}
-  [{{version}}]({{@root.host}}/
+  [{{version}}](
+  {{~#if @root.host}}
+    {{~@root.host}}/
+  {{~/if}}
   {{~#if @root.owner}}
     {{~@root.owner}}/
   {{~/if}}
