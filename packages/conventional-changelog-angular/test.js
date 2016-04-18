@@ -41,7 +41,7 @@ describe('angular preset', function() {
         expect(chunk).to.include('amazing new module');
         expect(chunk).to.include('avoid a bug');
         expect(chunk).to.include('make it faster');
-        expect(chunk).to.include(', closes [#1](https://github.com/stevemao/conventional-changelog-angular/issues/1) [#2](https://github.com/stevemao/conventional-changelog-angular/issues/2)');
+        expect(chunk).to.include(', closes [#1](https://github.com/conventional-changelog/conventional-changelog-angular/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog-angular/issues/2)');
         expect(chunk).to.include('Not backward compatible.');
         expect(chunk).to.include('compile: The Change is huge.');
         expect(chunk).to.include('Features');
@@ -74,7 +74,7 @@ describe('angular preset', function() {
       })
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
-        expect(chunk).to.include('[#133](https://github.com/bcoe/conventional-changelog-standard/issues/133)');
+        expect(chunk).to.include('[#133](https://github.com/conventional-changelog/conventional-changelog-angular/issues/133)');
         done();
       }));
   });

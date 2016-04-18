@@ -10,9 +10,9 @@ See [convention](convention.md)
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-angular
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-angular.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-angular
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-angular.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-angular
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-changelog-angular/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-changelog-angular
+[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog-angular.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-angular
+[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-angular.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-angular
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-angular/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-angular
