@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.2.0...v1.2.1) (2016-04-19)
+
+
+### Bug Fixes
+
+* **templates:** generate correct url if only host exists ([bda0328](https://github.com/conventional-changelog/conventional-changelog-writer/commit/bda0328))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.1.1...v1.2.0) (2016-04-17)
 
