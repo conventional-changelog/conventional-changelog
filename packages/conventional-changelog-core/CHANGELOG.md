@@ -1,3 +1,13 @@
+<a name="1.3.3"></a>
+## [1.3.3](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.2...v1.3.3) (2016-04-19)
+
+
+### Bug Fixes
+
+* **unknownHost:** default context.repository ([eaa3b6f](https://github.com/conventional-changelog/conventional-changelog-core/commit/eaa3b6f))
+
+
+
 <a name="1.3.2"></a>
 ## [1.3.2](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.1...v1.3.2) (2016-04-17)
 
