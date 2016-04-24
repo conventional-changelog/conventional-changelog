@@ -1,3 +1,13 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.0...v1.2.1) (2016-04-24)
+
+
+### Bug Fixes
+
+* **mention:** fix mention matching ([43b32e7](https://github.com/conventional-changelog/conventional-commits-parser/commit/43b32e7)), closes [#26](https://github.com/conventional-changelog/conventional-commits-parser/issues/26)
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.1.0...v1.2.0) (2016-04-15)
 
