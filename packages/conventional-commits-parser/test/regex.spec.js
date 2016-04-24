@@ -239,4 +239,69 @@ describe('regex', function() {
       expect(match).to.equal(null);
     });
   });
+
+  describe('mentions', function() {
+    it('should match basically mention', function() {
+      var string = 'Thanks!! @someone';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@someone');
+      expect(match[1]).to.equal('someone');
+    });
+
+    it('should match mention with hyphen', function() {
+      var string = 'Thanks!! @some-one';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@some-one');
+      expect(match[1]).to.equal('some-one');
+    });
+
+    it('should match mention with underscore', function() {
+      var string = 'Thanks!! @some_one';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@some_one');
+      expect(match[1]).to.equal('some_one');
+    });
+
+    it('should match mention with parentheses', function() {
+      var string = 'Fix feature1 (by @someone)';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@someone');
+      expect(match[1]).to.equal('someone');
+    });
+
+    it('should match mention with brackets', function() {
+      var string = 'Fix feature1 [by @someone]';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@someone');
+      expect(match[1]).to.equal('someone');
+    });
+
+    it('should match mention with braces', function() {
+      var string = 'Fix feature1 {by @someone}';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@someone');
+      expect(match[1]).to.equal('someone');
+    });
+
+    it('should match mention with angle brackets', function() {
+      var string = 'Fix feature1 by <@someone>';
+      var mentions = regex().mentions;
+
+      var match = mentions.exec(string);
+      expect(match[0]).to.equal('@someone');
+      expect(match[1]).to.equal('someone');
+    });
+  });
 });

@@ -49,6 +49,6 @@ module.exports = function(options) {
     notes: reNotes,
     referenceParts: reReferenceParts,
     references: reReferences,
-    mentions: /@(\S+)/g
+    mentions: /@([\w-]+)/g
   };
 };
