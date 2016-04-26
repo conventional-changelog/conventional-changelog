@@ -1,3 +1,20 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.0.0...v1.1.0) (2016-04-26)
+
+
+### Bug Fixes
+
+* **template:** whitespace ([72f8b12](https://github.com/conventional-changelog/conventional-changelog-angular/commit/72f8b12))
+* update to reference conventional-changelog org ([cd1a75a](https://github.com/conventional-changelog/conventional-changelog-angular/commit/cd1a75a))
+* **template:** wrong version link if no host ([bb20a7b](https://github.com/conventional-changelog/conventional-changelog-angular/commit/bb20a7b)), closes [#8](https://github.com/conventional-changelog/conventional-changelog-angular/issues/8)
+
+### Features
+
+* remove commit length restriction ([6aebb75](https://github.com/conventional-changelog/conventional-changelog-angular/commit/6aebb75)), closes [#12](https://github.com/conventional-changelog/conventional-changelog-angular/issues/12)
+* **github:** adds github-specific replacements for issues and users ([2633f73](https://github.com/conventional-changelog/conventional-changelog-angular/commit/2633f73)), closes [#12](https://github.com/conventional-changelog/conventional-changelog-angular/issues/12)
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-changelog-angular/compare/v0.1.0...v1.0.0) (2016-02-05)
 
