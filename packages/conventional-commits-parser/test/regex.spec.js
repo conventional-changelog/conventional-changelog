@@ -162,6 +162,21 @@ describe('regex', function() {
       expect(match[3]).to.equal('1');
     });
 
+    it('should reference an issue in parenthesis', function() {
+      var string = '#27), pinned shelljs to version that works with nyc (#30)';
+      var match = reReferenceParts.exec(string);
+      expect(match[0]).to.equal('#27');
+      expect(match[1]).to.equal(undefined);
+      expect(match[2]).to.equal('#');
+      expect(match[3]).to.equal('27');
+
+      match = reReferenceParts.exec(string);
+      expect(match[0]).to.equal('), pinned shelljs to version that works with nyc (#30');
+      expect(match[1]).to.equal(undefined);
+      expect(match[2]).to.equal('#');
+      expect(match[3]).to.equal('30');
+    });
+
     it('should match reference parts with something else', function() {
       var match = reReferenceParts.exec('something else #1');
       expect(match[0]).to.equal('something else #1');

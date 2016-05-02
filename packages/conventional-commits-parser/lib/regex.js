@@ -26,7 +26,7 @@ function getReferencePartsRegex(issuePrefixes) {
     return reNomatch;
   }
 
-  return new RegExp('(?:.*?)??\\s*(\\S*?)??(' + join(issuePrefixes, '|') + ')((?:\\w|-)*\\d+)', 'gi');
+  return new RegExp('(?:.*?)??\\s*([\\w-\\.\\/]*?)??(' + join(issuePrefixes, '|') + ')([\\w-]*\\d+)', 'gi');
 }
 
 function getReferencesRegex(referenceActions) {
