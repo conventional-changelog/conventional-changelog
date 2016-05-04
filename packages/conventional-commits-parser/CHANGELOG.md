@@ -1,3 +1,13 @@
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.1...v1.2.2) (2016-05-04)
+
+
+### Bug Fixes
+
+* **regex:** make getReferencePartsRegex stricter ([b8a9fda](https://github.com/conventional-changelog/conventional-commits-parser/commit/b8a9fda)), closes [#27](https://github.com/conventional-changelog/conventional-commits-parser/issues/27) [(#30](https://github.com/(/issues/30) [#27](https://github.com/conventional-changelog/conventional-commits-parser/issues/27) [#28](https://github.com/conventional-changelog/conventional-commits-parser/issues/28)
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.0...v1.2.1) (2016-04-24)
 
