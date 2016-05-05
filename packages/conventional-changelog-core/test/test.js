@@ -257,6 +257,44 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
+  it('should ignore other prefixes if an `issuePrefixes` option is not provided', function(done) {
+    gitDummyCommit('Custom prefix closes @42');
+
+    conventionalChangelogCore({}, {
+      host: 'github',
+      owner: 'b',
+      repository: 'a'
+    }, {}, {}).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](github/b/a/commit/');
+      expect(chunk).to.not.include('closes [#42](github/b/a/issues/42)');
+
+      done();
+    }));
+  });
+
+  it('should use custom prefixes if an `issuePrefixes` option is provided', function(done) {
+    gitDummyCommit('Custom prefix closes @42');
+    gitDummyCommit('Old prefix closes #71');
+
+    conventionalChangelogCore({}, {
+      host: 'github',
+      owner: 'b',
+      repository: 'a'
+    }, {}, {
+      issuePrefixes: ['@']
+    }).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](github/b/a/commit/');
+      expect(chunk).to.include('closes [#42](github/b/a/issues/42)');
+      expect(chunk).to.not.include('closes [#71](github/b/a/issues/71)');
+
+      done();
+    }));
+  });
+
   it('should read host configs if only `parserOpts.referenceActions` is missing', function(done) {
     conventionalChangelogCore({}, {
       host: 'github',

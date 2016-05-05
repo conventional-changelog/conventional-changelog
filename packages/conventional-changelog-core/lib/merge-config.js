@@ -218,7 +218,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
         parserOpts.referenceActions = hostOpts.referenceActions;
       }
 
-      if (hostOpts.issuePrefixes && parserOpts) {
+      if (_.isEmpty(parserOpts.issuePrefixes) && hostOpts.issuePrefixes) {
         parserOpts.issuePrefixes = hostOpts.issuePrefixes;
       }
 
