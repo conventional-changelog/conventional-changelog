@@ -1,3 +1,13 @@
+<a name="1.3.4"></a>
+## [1.3.4](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.3...v1.3.4) (2016-05-07)
+
+
+### Bug Fixes
+
+* **mergeConfig:** respect issuePrefixes option ([4be052b](https://github.com/conventional-changelog/conventional-changelog-core/commit/4be052b)), closes [#6](https://github.com/conventional-changelog/conventional-changelog-core/issues/6) [#8](https://github.com/conventional-changelog/conventional-changelog-core/issues/8)
+
+
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.2...v1.3.3) (2016-04-19)
 
