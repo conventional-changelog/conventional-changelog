@@ -39,7 +39,7 @@
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
     "semver": "^5.1.0",
-    "shelljs": "^0.6.0"
+    "shelljs": "^0.7.0"
   },
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",

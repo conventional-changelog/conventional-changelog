@@ -725,9 +725,9 @@ describe('conventionalChangelogCore', function() {
       shell.exec('git tag not-semver');
       gitDummyCommit();
 
-      head = shell.exec('git rev-parse HEAD').output.trim();
+      head = shell.exec('git rev-parse HEAD').stdout.trim();
       gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.');
-      head = shell.exec('git rev-parse HEAD').output.substring(0, 7);
+      head = shell.exec('git rev-parse HEAD').stdout.substring(0, 7);
 
       var i = 0;
 
