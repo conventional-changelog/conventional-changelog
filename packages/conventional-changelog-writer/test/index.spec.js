@@ -942,4 +942,14 @@ describe('conventionalChangelogWriter', function() {
         done();
       });
   });
+
+  it('should show your final context', function(done) {
+    getStream()
+      .pipe(conventionalChangelogWriter({}, {
+        debug: function(context) {
+          expect(context).to.include('Your final context is:\n');
+          done();
+        }
+      }));
+  });
 });

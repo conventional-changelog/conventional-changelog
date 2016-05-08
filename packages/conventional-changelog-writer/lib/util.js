@@ -4,6 +4,7 @@ var conventionalCommitsFilter = require('conventional-commits-filter');
 var Handlebars = require('handlebars');
 var semver = require('semver');
 var _ = require('lodash');
+var stringify = require('json-stringify-safe');
 
 function compileTemplates(templates) {
   var main = templates.mainTemplate;
@@ -176,6 +177,7 @@ function generate(options, commits, context, keyCommit) {
   }
 
   context = options.finalizeContext(context, options, filteredCommits, keyCommit, commits);
+  options.debug('Your final context is:\n' + stringify(context, null, 2));
 
   return compiled(context);
 }

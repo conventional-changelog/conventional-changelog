@@ -25,6 +25,7 @@
     "conventional-commits-filter": "^1.0.0",
     "dateformat": "^1.0.11",
     "handlebars": "^4.0.2",
+    "json-stringify-safe": "^5.0.1",
     "lodash": "^4.0.0",
     "meow": "^3.3.0",
     "semver": "^5.0.1",

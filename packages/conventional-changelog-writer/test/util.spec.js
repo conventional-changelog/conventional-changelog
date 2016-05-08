@@ -623,7 +623,8 @@ describe('util', function() {
         mainTemplate: '{{whatever}}',
         finalizeContext: function(context) {
           return context;
-        }
+        },
+        debug: function() {}
       }, [], {
         whatever: 'a'
       }, {
@@ -639,7 +640,8 @@ describe('util', function() {
         ignoreReverted: true,
         finalizeContext: function(context) {
           return context;
-        }
+        },
+        debug: function() {}
       }, [{
         header: 'feat(): new feature',
         body: null,
@@ -676,7 +678,8 @@ describe('util', function() {
         mainTemplate: '{{whatever}}',
         finalizeContext: function(context) {
           return context;
-        }
+        },
+        debug: function() {}
       }, [], [], {
         whatever: '`a`'
       });
@@ -690,7 +693,8 @@ describe('util', function() {
         ignoreReverted: true,
         finalizeContext: function(context) {
           return context;
-        }
+        },
+        debug: function() {}
       }, [{
         header: 'revert: feat(): amazing new module\n',
         body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
@@ -760,7 +764,8 @@ describe('util', function() {
         finalizeContext: function(context) {
           context.somethingExtra = 'oh';
           return context;
-        }
+        },
+        debug: function() {}
       }, [], [], {
         whatever: '`a`'
       });
@@ -779,6 +784,7 @@ describe('util', function() {
 
           return context;
         },
+        debug: function() {},
         opt: 'opt'
       }, [], [], {
         whatever: '`a`'
@@ -794,7 +800,8 @@ describe('util', function() {
         finalizeContext: function(context, options, filteredCommits, keyCommit, originalCommits) {
           expect(filteredCommits.length).to.equal(2);
           expect(originalCommits.length).to.equal(4);
-        }
+        },
+        debug: function() {}
       }, [{
         header: 'revert: feat(): amazing new module\n',
         body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',

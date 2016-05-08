@@ -34,6 +34,7 @@ function conventionalChangelogWriter(context, options) {
     finalizeContext: function(context) {
       return context;
     },
+    debug: function() {},
     reverse: false,
     includeDetails: false,
     ignoreReverted: true,

@@ -239,6 +239,12 @@ Filtered commits from your git metadata.
 
 The commit that triggers to generate the log.
 
+##### debug
+
+Type: `function` Default: `function() {}`
+
+A function to get debug information.
+
 ##### reverse
 
 Type: `boolean` Default: `false`
