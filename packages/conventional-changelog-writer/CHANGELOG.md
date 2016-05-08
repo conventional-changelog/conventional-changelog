@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.2.1...v1.3.0) (2016-05-08)
+
+
+### Features
+
+* **debug:** convient function for debugging([3b6233f](https://github.com/conventional-changelog/conventional-changelog-writer/commit/3b6233f))
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.2.0...v1.2.1) (2016-04-19)
 
