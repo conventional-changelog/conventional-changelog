@@ -51,6 +51,12 @@ Type: `string` Default: `'%B'`
 
 Please check http://git-scm.com/docs/git-log for format options.
 
+##### debug
+
+Type: `function`
+
+A function to get debug information.
+
 
 ## CLI
 
