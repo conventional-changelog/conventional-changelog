@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/conventional-changelog/conventional-changelog-cli/compare/v1.1.1...v1.2.0) (2016-05-08)
+
+
+### Features
+
+* **config:** should work with preset([a0449a2](https://github.com/conventional-changelog/conventional-changelog-cli/commit/a0449a2)), closes [#4](https://github.com/conventional-changelog/conventional-changelog-cli/issues/4)
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/stevemao/conventional-changelog-cli/compare/v1.1.0...v1.1.1) (2016-02-14)
 
