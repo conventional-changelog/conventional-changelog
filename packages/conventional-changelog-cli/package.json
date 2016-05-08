@@ -2,8 +2,8 @@
   "name": "conventional-changelog-cli",
   "version": "1.1.1",
   "description": "Generate a changelog from git metadata",
-  "homepage": "https://github.com/stevemao/conventional-changelog-cli",
-  "repository": "stevemao/conventional-changelog-cli",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog-cli",
+  "repository": "conventional-changelog/conventional-changelog-cli",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
