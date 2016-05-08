@@ -190,6 +190,10 @@ Finalize context is used for generating above context.
 
 **NOTE:** If you overwrite this value the above context defaults will be gone.
 
+##### debug
+
+Type: `function` Default: `options.debug`
+
 ##### reverse
 
 Default: `options.append`

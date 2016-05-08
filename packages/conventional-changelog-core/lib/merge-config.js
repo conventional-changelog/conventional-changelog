@@ -268,7 +268,8 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
             }
 
             return context;
-          }
+          },
+          debug: options.debug
         },
         config.writerOpts, {
           reverse: options.append,
