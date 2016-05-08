@@ -44,7 +44,6 @@ var cli = meow({
     '',
     '  -n, --config              A filepath of your config script',
     '                            Example of a config script: https://github.com/stevemao/conventional-changelog-angular/blob/master/index.js',
-    '                            This value is ignored if preset is specified',
     '',
     '  -c, --context             A filepath of a json that is used to define template variables'
   ]
@@ -64,6 +63,7 @@ var cli = meow({
   }
 });
 
+var config;
 var flags = cli.flags;
 var infile = flags.infile;
 var outfile = flags.outfile;
@@ -107,14 +107,16 @@ try {
   }
 
   if (flags.config) {
-    options.config = require(resolve(process.cwd(), flags.config));
+    config = require(resolve(process.cwd(), flags.config));
+  } else {
+    config = {};
   }
 } catch (err) {
   console.error('Failed to get file. ' + err);
   process.exit(1);
 }
 
-var changelogStream = conventionalChangelog(options, templateContext)
+var changelogStream = conventionalChangelog(options, templateContext, config.gitRawCommitsOpts, config.parserOpts, config.writerOpts)
   .on('error', function (err) {
     if (flags.verbose) {
       console.error(err.stack);

@@ -336,6 +336,32 @@ describe('cli', function () {
       }));
   });
 
+  it('--preset should work', function (done) {
+    writeFileSync('angular', '');
+    shell.exec('git add --all && git commit -m"fix: fix it!"');
+    var cp = spawn(cliPath, ['--preset', 'angular'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.include('Bug Fixes');
+        done();
+      }));
+  });
+
+  it('--config should work with --preset', function (done) {
+    var cp = spawn(cliPath, ['--preset', 'angular', '--config', __dirname + '/fixtures/config.js'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.equal('Bug Fixestemplate');
+        done();
+      }));
+  });
+
   it('should be verbose', function (done) {
     var cp = spawn(cliPath, ['-v', '-p', 'no'], {
       stdio: [process.stdin, null, null]

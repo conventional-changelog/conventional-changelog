@@ -2,6 +2,6 @@
 
 module.exports = {
   writerOpts: {
-    mainTemplate: '{{testContext}}template'
+    mainTemplate: '{{commitGroups.[0].commits.[0].type}}{{testContext}}template'
   }
 };
