@@ -139,10 +139,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
           context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null);
           context.owner = context.owner || repo.user || '';
           context.repository = context.repository || repo.project;
-
-          if (!context.host && !context.owner && !context.repository) {
-            context.repository = browse;
-          }
+          context.repoUrl = browse;
         }
 
         context.packageData = pkg;

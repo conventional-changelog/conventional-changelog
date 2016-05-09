@@ -126,6 +126,10 @@ Default: extracted from normalized `package.json` `repository.url` field.
 
 Default: extracted from normalized `package.json` `repository.url` field.
 
+##### repoUrl
+
+Default: The whole normalized repository url in `package.json`.
+
 ##### gitSemverTags
 
 Type: `array`

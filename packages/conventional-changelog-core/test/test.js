@@ -182,7 +182,7 @@ describe('conventionalChangelogCore', function() {
       }));
   });
 
-  it('should only print the host', function(done) {
+  it('should fallback to use repo url if repo is repository is null', function(done) {
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_host-only.json'
@@ -194,6 +194,23 @@ describe('conventionalChangelogCore', function() {
 
       expect(chunk).to.include('](https://unknown-host/commits/');
       expect(chunk).to.include('closes [#1](https://unknown-host/issues/1)');
+
+      done();
+    }));
+  });
+
+  it('should fallback to use repo url if repo is repository is null', function(done) {
+    conventionalChangelogCore({
+      pkg: {
+        path: __dirname + '/fixtures/_unknown-host.json'
+      }
+    }, {
+      linkReferences: true
+    }).pipe(through(function(chunk) {
+      chunk = chunk.toString();
+
+      expect(chunk).to.include('](https://stash.local/scm/conventional-changelog/conventional-changelog/commits/');
+      expect(chunk).to.include('closes [#1](https://stash.local/scm/conventional-changelog/conventional-changelog/issues/1)');
 
       done();
     }));
