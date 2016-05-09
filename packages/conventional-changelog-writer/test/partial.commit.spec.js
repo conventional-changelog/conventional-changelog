@@ -59,10 +59,11 @@ describe('partial.commit', function() {
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1)\n');
   });
 
-  it('should just use host to link', function() {
+  it('should just use repoUrl to link', function() {
     var log = Handlebars.compile(template)({
       header: 'my header',
       host: 'www.myhost.com',
+      repoUrl: 'www.myhost.com',
       commit: 'my commits',
       issue: 'my issue',
       hash: 'hash',

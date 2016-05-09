@@ -107,7 +107,13 @@ The owner of the repository. Eg: `'stevemao'`.
 Type: `string`
 
 The repository name on `host`. Eg: `'conventional-changelog-writer'`.
-Or the whole repository url if `context.host` and `context.owner` do not exist.
+
+##### repoUrl
+
+Type: `string`
+
+The whole repository url. Eg: `'https://github.com/conventional-changelog/conventional-changelog-writer'`.
+The should be used as a fallback when `context.repository` doesn't exist.
 
 ##### linkReferences
 
