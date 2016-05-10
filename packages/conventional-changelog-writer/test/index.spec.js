@@ -87,14 +87,15 @@ describe('conventionalChangelogWriter', function() {
   });
 
   describe('link', function() {
-    it('should link if repository, commit and issue are truthy', function(done) {
+    it('should auto link if `context.repository`, `context.commit` and `context.issue` are truthy', function(done) {
       var i = 0;
 
       getStream()
         .pipe(conventionalChangelogWriter({
           version: '0.5.0',
           title: 'this is a title',
-          repository: 'https://github.com/a/b'
+          host: 'https://github.com',
+          repository: 'a/b'
         }))
         .pipe(through(function(chunk, enc, cb) {
           expect(chunk.toString()).to.include('https://github.com/a/b/commits/13f3160');
@@ -107,7 +108,27 @@ describe('conventionalChangelogWriter', function() {
         }));
     });
 
-    it('should not link if repository, commit and issue are not truthy', function(done) {
+    it('should auto link if `context.repoUrl`, `context.commit` and `context.issue` are truthy', function(done) {
+      var i = 0;
+
+      getStream()
+        .pipe(conventionalChangelogWriter({
+          version: '0.5.0',
+          title: 'this is a title',
+          repoUrl: 'https://github.com/a/b'
+        }))
+        .pipe(through(function(chunk, enc, cb) {
+          expect(chunk.toString()).to.include('https://github.com/a/b/commits/13f3160');
+
+          i++;
+          cb(null);
+        }, function() {
+          expect(i).to.equal(1);
+          done();
+        }));
+    });
+
+    it('should not auto link', function(done) {
       var i = 0;
 
       getStream()

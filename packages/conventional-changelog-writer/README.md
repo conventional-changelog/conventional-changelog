@@ -117,7 +117,7 @@ The should be used as a fallback when `context.repository` doesn't exist.
 
 ##### linkReferences
 
-Type: `boolean` Default: `true` if `repository`, `commit` and `issue` are truthy
+Type: `boolean` Default: `true` if (`context.repository` or `context.repoUrl`), `context.commit` and `context.issue` are truthy
 
 Should all references be linked?
 
@@ -125,13 +125,13 @@ Should all references be linked?
 
 Type: `string` Default: `'commits'`
 
-Commit keyword in the url if `options.linkReferences === true`.
+Commit keyword in the url if `context.linkReferences === true`.
 
 ##### issue
 
 Type: `string` Default: `'issues'`
 
-Issue or pull request keyword in the url if `options.linkReferences === true`.
+Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
