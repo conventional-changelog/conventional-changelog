@@ -43,8 +43,8 @@
   },
   "scripts": {
     "lint": "jshint *.js lib test && jscs *.js lib test",
-    "test": "npm run lint && mocha",
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage"
+    "test": "npm run lint && mocha --timeout 30000",
+    "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage"
   },
   "bin": {
     "conventional-changelog-writer": "cli.js"
