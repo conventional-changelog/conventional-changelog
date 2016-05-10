@@ -155,7 +155,7 @@ describe('angular preset', function() {
       config: preset,
       pkg: {
         path: __dirname + '/fixtures/_unknown-host.json'
-      },
+      }
     })
       .on('error', function(err) {
         done(err);
