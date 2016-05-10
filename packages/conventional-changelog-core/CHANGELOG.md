@@ -1,3 +1,13 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.4.0...v1.5.0) (2016-05-10)
+
+
+### Features
+
+* **context:** fallback to repoUrl([da0b096](https://github.com/conventional-changelog/conventional-changelog-core/commit/da0b096)), closes [#7](https://github.com/conventional-changelog/conventional-changelog-core/issues/7)
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.3.4...v1.4.0) (2016-05-08)
 
