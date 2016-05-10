@@ -1,3 +1,13 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.3.0...v1.4.0) (2016-05-10)
+
+
+### Features
+
+* **context:** fallback to repoUrl([e504682](https://github.com/conventional-changelog/conventional-changelog-writer/commit/e504682))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.2.1...v1.3.0) (2016-05-08)
 
