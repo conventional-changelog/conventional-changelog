@@ -1,3 +1,13 @@
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.4.0...v1.4.1) (2016-05-10)
+
+
+### Bug Fixes
+
+* **context:** auto link references if repoUrl([30bb234](https://github.com/conventional-changelog/conventional-changelog-writer/commit/30bb234))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.3.0...v1.4.0) (2016-05-10)
 
