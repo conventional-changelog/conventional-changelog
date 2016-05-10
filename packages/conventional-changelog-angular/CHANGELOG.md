@@ -1,3 +1,13 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.1.0...v1.2.0) (2016-05-10)
+
+
+### Features
+
+* **template:** use context.repoUrl([2b5818b](https://github.com/conventional-changelog/conventional-changelog-angular/commit/2b5818b))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.0.0...v1.1.0) (2016-04-26)
 
