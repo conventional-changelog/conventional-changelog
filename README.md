@@ -2,7 +2,9 @@
 
 > Generate a changelog from git metadata
 
-You are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
+It's recommended to use high level [standard-version](https://github.com/conventional-changelog/standard-version).
+Alternatively, you are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog-cli) module.
+Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
 
 
 ## Usage
