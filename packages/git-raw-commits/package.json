@@ -40,7 +40,7 @@
     "shelljs": "^0.6.0"
   },
   "scripts": {
-    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "lint": "jshint . --exclude node_modules && jscs .",
     "test": "npm run-script lint && mocha --timeout 30000",
     "coverage": "istanbul cover -x test.js _mocha -- -R spec --timeout 30000 && rm -rf ./coverage"
   },
