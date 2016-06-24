@@ -43,7 +43,7 @@
   },
   "scripts": {
     "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
-    "lint": "jshint hosts test *.js --exclude node_modules && jscs hosts test *.js",
+    "lint": "jshint . --exclude node_modules && jscs .",
     "test": "mocha --timeout 30000 && npm run-script lint"
   }
 }
