@@ -73,11 +73,11 @@ MIT © [Steve Mao](https://github.com/stevemao)
 
 [npm-image]: https://badge.fury.io/js/git-raw-commits.svg
 [npm-url]: https://npmjs.org/package/git-raw-commits
-[travis-image]: https://travis-ci.org/stevemao/git-raw-commits.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/git-raw-commits
+[travis-image]: https://travis-ci.org/conventional-changelog/git-raw-commits.svg?branch=master
+[travis-url]: https://travis-ci.org/conventional-changelog/git-raw-commits
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/4qm3bjmg41k3dsbv/branch/master?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/stevemao/git-raw-commits/branch/master
-[daviddm-image]: https://david-dm.org/stevemao/git-raw-commits.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/git-raw-commits
-[coveralls-image]: https://coveralls.io/repos/stevemao/git-raw-commits/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/git-raw-commits
+[daviddm-image]: https://david-dm.org/conventional-changelog/git-raw-commits.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/conventional-changelog/git-raw-commits
+[coveralls-image]: https://coveralls.io/repos/conventional-changelog/git-raw-commits/badge.svg
+[coveralls-url]: https://coveralls.io/r/conventional-changelog/git-raw-commits

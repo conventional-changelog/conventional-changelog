@@ -2,13 +2,13 @@
   "name": "git-raw-commits",
   "version": "1.1.0",
   "description": "Get raw git commits out of your repository using git-log(1)",
-  "homepage": "https://github.com/stevemao/git-latest-tag",
+  "homepage": "https://github.com/conventional-changelog/git-latest-tag",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": "stevemao/git-raw-commits",
+  "repository": "conventional-changelog/git-raw-commits",
   "license": "MIT",
   "files": [
     "index.js",
