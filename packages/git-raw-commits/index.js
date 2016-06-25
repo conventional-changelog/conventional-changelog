@@ -24,6 +24,13 @@ function gitRawCommits(options) {
     '"<%- from ? [from, to].join("..") : to %>" '
   )(options) + args.join(' ');
 
+  if (process.platform === 'win32') {
+    // Git format strings have percent signs in them
+    // On windows percent signs need to be doubled to escape them,
+    // so that they aren't used for variable expansion
+    cmd.replace(/%/g, '%%');
+  }
+
   if (options.debug) {
     options.debug('Your git-log command is:\n' + cmd);
   }
