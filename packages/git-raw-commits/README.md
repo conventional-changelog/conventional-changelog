@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status: Linux][travis-image]][travis-url] [![Build Status: Windows][appveyor-image]][appveyor-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
 > Get raw git commits out of your repository using git-log(1)
 
@@ -75,6 +75,8 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [npm-url]: https://npmjs.org/package/git-raw-commits
 [travis-image]: https://travis-ci.org/stevemao/git-raw-commits.svg?branch=master
 [travis-url]: https://travis-ci.org/stevemao/git-raw-commits
+[appveyor-image]: https://ci.appveyor.com/api/projects/status/4qm3bjmg41k3dsbv/branch/master?svg=true
+[appveyor-url]: https://ci.appveyor.com/project/stevemao/git-raw-commits/branch/master
 [daviddm-image]: https://david-dm.org/stevemao/git-raw-commits.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/git-raw-commits
 [coveralls-image]: https://coveralls.io/repos/stevemao/git-raw-commits/badge.svg
