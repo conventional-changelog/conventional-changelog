@@ -1,6 +1,6 @@
 'use strict';
 var dargs = require('dargs');
-var exec = require('child_process').exec;
+var execFile = require('child_process').execFile;
 var split = require('split2');
 var stream = require('stream');
 var template = require('lodash.template');
@@ -15,29 +15,28 @@ function gitRawCommits(options) {
   options.from = options.from || '';
   options.to = options.to || 'HEAD';
 
+  var gitFormat = template('--format=<%= format %>%n' +
+    '------------------------ >8 ------------------------'
+  )(options);
+  var gitFromTo = template('<%- from ? [from, to].join("..") : to %>')(options);
+
   var args = dargs(options, {
     excludes: ['from', 'to', 'format']
   });
 
-  var cmd = template(
-    'git log --format="<%= format %>%n------------------------ >8 ------------------------" ' +
-    '"<%- from ? [from, to].join("..") : to %>" '
-  )(options) + args.join(' ');
-
-  if (process.platform === 'win32') {
-    // Git format strings have percent signs in them
-    // On windows percent signs need to be doubled to escape them,
-    // so that they aren't used for variable expansion
-    cmd.replace(/%/g, '%%');
-  }
+  args = [
+    'log',
+    gitFormat,
+    gitFromTo
+  ].concat(args);
 
   if (options.debug) {
-    options.debug('Your git-log command is:\n' + cmd);
+    options.debug('Your git-log command is:\ngit ' + args.join(' '));
   }
 
   var isError = false;
 
-  var child = exec(cmd, {
+  var child = execFile('git', args, {
     maxBuffer: Infinity
   });
 

@@ -132,8 +132,33 @@ it('should show your git-log command', function(done) {
   gitRawCommits({
     format: 'what%n%B',
     debug: function(cmd) {
-      expect(cmd).to.equal('Your git-log command is:\ngit log --format="what%n%B%n------------------------ >8 ------------------------" "HEAD" ');
+      expect(cmd).to.include('Your git-log command is:\ngit log --format');
       done();
     }
   });
+});
+
+it('should prevent variable expansion on windows', function(done) {
+  var i = 0;
+
+  gitRawCommits({
+    format: '%%cd%n%B'
+  })
+    .pipe(through(function(chunk, enc, cb) {
+      chunk = chunk.toString();
+
+      if (i === 0) {
+        expect(chunk).to.equal('%cd\nThird commit\n\n');
+      } else if (i === 1) {
+        expect(chunk).to.equal('%cd\nSecond commit\n\n');
+      } else {
+        expect(chunk).to.equal('%cd\nFirst commit\n\n');
+      }
+
+      i++;
+      cb();
+    }, function() {
+      expect(i).to.equal(3);
+      done();
+    }));
 });
