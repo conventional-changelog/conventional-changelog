@@ -43,6 +43,7 @@ function issueUrl() {
 var writerOpts = {
   transform: function(commit) {
     var discard = true;
+    var issues = [];
 
     commit.notes.forEach(function(note) {
       note.title = 'BREAKING CHANGES';
@@ -83,12 +84,24 @@ var writerOpts = {
       var url = issueUrl();
       if (url) {
         // GitHub issue URLs.
-        commit.subject = commit.subject.replace(/( ?)#([0-9]+)(\b|^)/g, '$1[#$2](' + url + '$2)$3');
+        commit.subject = commit.subject.replace(/#([0-9]+)/g, function(_, issue) {
+          issues.push(issue);
+          return '[#' + issue + '](' + url + issue + ')';
+        });
       }
       // GitHub user URLs.
-      commit.subject = commit.subject.replace(/( ?)@([a-zA-Z0-9_]+)(\b|^)/g, '$1[@$2](https://github.com/$2)$3');
+      commit.subject = commit.subject.replace(/@([a-zA-Z0-9_]+)/g, '[@$1](https://github.com/$1)');
       commit.subject = commit.subject;
     }
+
+    // remove references that already appear in the subject
+    commit.references = commit.references.filter(function(reference) {
+      if (issues.indexOf(reference.issue) === -1) {
+        return true;
+      }
+
+      return false;
+    });
 
     return commit;
   },

@@ -20,7 +20,7 @@ describe('angular preset', function() {
     // fix this once https://github.com/arturadib/shelljs/issues/175 is solved
     child.exec('git commit -m"feat: amazing new module\n\nBREAKING CHANGE: Not backward compatible." --allow-empty', function() {
       gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.']);
-      gitDummyCommit('perf(ngOptions): make it faster closes #1, #2');
+      gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2']);
       gitDummyCommit('revert(ngOptions): bad commit');
       gitDummyCommit('fix(*): oops');
 
@@ -75,6 +75,23 @@ describe('angular preset', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
         expect(chunk).to.include('[#133](https://github.com/conventional-changelog/conventional-changelog-angular/issues/133)');
+        done();
+      }));
+  });
+
+  it('should remove the issues that already appear in the subject', function(done) {
+    gitDummyCommit(['feat(awesome): fix #88']);
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+        expect(chunk).to.include('[#88](https://github.com/conventional-changelog/conventional-changelog-angular/issues/88)');
+        expect(chunk).to.not.include('closes [#88](https://github.com/conventional-changelog/conventional-changelog-angular/issues/88)');
         done();
       }));
   });
