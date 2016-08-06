@@ -29,10 +29,10 @@
     "coveralls": "^2.11.6",
     "git-dummy-commit": "^1.1.1",
     "istanbul": "^0.4.1",
-    "jscs": "^2.7.0",
+    "jscs": "^3.0.7",
     "jshint": "^2.9.1",
     "mocha": "*",
-    "shelljs": "^0.6.0",
+    "shelljs": "^0.7.3",
     "through2": "^2.0.0"
   },
   "dependencies": {
