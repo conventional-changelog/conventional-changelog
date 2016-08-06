@@ -1,3 +1,13 @@
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.2...v1.2.3) (2016-08-06)
+
+
+### Bug Fixes
+
+* **regex:** do not treat it as note if there are texts after keywords ([9cb56bc](https://github.com/conventional-changelog/conventional-commits-parser/commit/9cb56bc))
+
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.1...v1.2.2) (2016-05-04)
 
