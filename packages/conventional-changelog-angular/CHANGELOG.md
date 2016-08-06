@@ -1,5 +1,5 @@
-<a name="2.0.0"></a>
-# [2.0.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.2.0...v2.0.0) (2016-08-06)
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.2.0...v1.3.0) (2016-08-06)
 
 
 ### Features
