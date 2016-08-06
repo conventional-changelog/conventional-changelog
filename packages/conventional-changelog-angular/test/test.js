@@ -121,6 +121,24 @@ describe('angular preset', function() {
       }));
   });
 
+  it('should BREAKING CHANGES the same as BREAKING CHANGE', function(done) {
+    gitDummyCommit(['feat(deps): bump', 'BREAKING CHANGES: Also works :)']);
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('Also works :)');
+
+        done();
+      }));
+  });
+
   it('should work if there is a semver tag', function(done) {
     var i = 0;
 
@@ -173,5 +191,4 @@ describe('angular preset', function() {
         done();
       }));
   });
-
 });
