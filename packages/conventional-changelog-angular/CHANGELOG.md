@@ -1,3 +1,14 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.2.0...v2.0.0) (2016-08-06)
+
+
+### Features
+
+* **noteKeywords:** make BREAKING CHANGE more forgiving ([7dce559](https://github.com/conventional-changelog/conventional-changelog-angular/commit/7dce559))
+* **references:** remove references that already appear in the subject ([aa765c2](https://github.com/conventional-changelog/conventional-changelog-angular/commit/aa765c2))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.1.0...v1.2.0) (2016-05-10)
 
