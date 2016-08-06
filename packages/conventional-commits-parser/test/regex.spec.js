@@ -43,6 +43,15 @@ describe('regex', function() {
       var match = 'This is a breaking news: So important.'.match(reNotes);
       expect(match).to.equal(null);
     });
+
+    it('should not match if there is text after `noteKeywords`', function() {
+      var reNotes = regex({
+        noteKeywords: [' BREAKING CHANGE'],
+        issuePrefixes: ['#']
+      }).notes;
+      var match = 'BREAKING CHANGES: Wow.'.match(reNotes);
+      expect(match).to.equal(null);
+    });
   });
 
   describe('references', function() {
