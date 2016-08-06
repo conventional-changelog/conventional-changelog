@@ -480,6 +480,30 @@ describe('parser', function() {
       });
     });
 
+    it('should not treat it as important notes if there are texts after `noteKeywords`', function() {
+      options.noteKeywords = ['BREAKING CHANGE'];
+      reg = regex(options);
+      var msg = parser(
+        'fix(core): report duplicate template bindings in templates\n' +
+        '\n' +
+        'Fixes #7315\n' +
+        '\n' +
+        'BREAKING CHANGES:\n' +
+        '\n' +
+        'Previously multiple template bindings on one element\n' +
+        '(ex. `<div *ngIf=\'..\' *ngFor=\'...\'>`) were allowed but most of the time\n' +
+        'were leading to undesired result. It is possible that a small number\n' +
+        'of applications will see template parse errors that shuld be fixed by\n' +
+        'nesting elements or using `<template>` tags explicitly.\n' +
+        '\n' +
+        'Closes #9462',
+        options,
+        reg
+      );
+
+      expect(msg.notes).to.eql([]);
+    });
+
     it('references should be empty if not found', function() {
       expect(simpleMsg.references).to.eql([]);
     });
