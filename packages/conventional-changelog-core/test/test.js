@@ -1,15 +1,17 @@
 'use strict';
 var conventionalChangelogCore = require('../');
 var expect = require('chai').expect;
-var gitTails = require('git-tails');
+var gitTails = require('git-tails').sync;
 var shell = require('shelljs');
 var gitDummyCommit = require('git-dummy-commit');
 var through = require('through2');
 var Promise = require('pinkie-promise');
 var semver = require('semver');
+var betterThanBefore = require('better-than-before')();
+var preparing = betterThanBefore.preparing;
 
-describe('conventionalChangelogCore', function() {
-  before(function() {
+betterThanBefore.setups([
+  function() { // 1
     shell.config.silent = true;
     shell.rm('-rf', 'tmp');
     shell.mkdir('tmp');
@@ -17,13 +19,78 @@ describe('conventionalChangelogCore', function() {
     shell.mkdir('git-templates');
     shell.exec('git init --template=./git-templates');
     gitDummyCommit('First commit');
-  });
+  },
+  function() { // 2
+    shell.exec('git tag v0.1.0');
+    gitDummyCommit('Second commit');
+    gitDummyCommit('Third commit closes #1');
+  },
+  function() { // 3
+    shell.exec('git checkout -b feature');
+    gitDummyCommit('This commit is from feature branch');
+    shell.exec('git checkout master');
+    gitDummyCommit('This commit is from master branch');
+    shell.exec('git merge feature -m"Merge branch \'feature\'"');
+  },
+  function() { // 4
+    gitDummyCommit('Custom prefix closes @42');
+  },
+  function() { // 5
+    gitDummyCommit('Custom prefix closes @42');
+    gitDummyCommit('Old prefix closes #71');
+  },
+  function() { // 6
+    gitDummyCommit('some more features');
+    shell.exec('git tag v2.0.0');
+  },
+  function() { // 7
+    gitDummyCommit('test8');
+  },
+  function() { // 8
+    gitDummyCommit('test8');
+  },
+  function() { // 9
+    gitDummyCommit(['test9', 'Release note: super release!']);
+  },
+  function() { // 10
+    shell.exec('git remote add origin https://github.com/user/repo.git');
+  },
+  function(context) { // 11
+    shell.exec('git tag -d v0.1.0');
+    var tails = gitTails();
+    context.tail = tails[tails.length - 1].substring(0, 7);
+  },
+  function(context) { // 12
+    shell.exec('git tag not-semver');
+    gitDummyCommit();
 
-  after(function() {
-    shell.cd('../');
-  });
+    var head = shell.exec('git rev-parse HEAD').stdout.trim();
+    gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.');
+    context.head = shell.exec('git rev-parse HEAD').stdout.substring(0, 7);
+  },
+  function(context) { // 13
+    var tail = context.tail;
+    shell.exec('git tag v0.0.1 ' + tail);
+  },
+  function() { // 14
+    gitDummyCommit();
+    shell.exec('git tag v1.0.0');
+  },
+  function() { // 15
+    gitDummyCommit();
+    gitDummyCommit('something unreleased yet :)');
+  }
+]);
 
+betterThanBefore.tearsWithJoy(function() {
+  shell.cd('../');
+  shell.rm('-rf', 'tmp');
+});
+
+describe('conventionalChangelogCore', function() {
   it('should work if there is no tag', function(done) {
+    preparing(1);
+
     conventionalChangelogCore()
       .pipe(through(function(chunk) {
         expect(chunk.toString()).to.include('First commit');
@@ -33,9 +100,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should generate the changelog for the upcoming release', function(done) {
-    shell.exec('git tag v0.1.0');
-    gitDummyCommit('Second commit');
-    gitDummyCommit('Third commit closes #1');
+    preparing(2);
 
     conventionalChangelogCore()
       .pipe(through(function(chunk) {
@@ -51,6 +116,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should generate the changelog of the last two releases', function(done) {
+    preparing(2);
     var i = 0;
 
     conventionalChangelogCore({
@@ -75,6 +141,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should generate the changelog of the last two releases even if release count exceeds the limit', function(done) {
+    preparing(2);
     var i = 0;
 
     conventionalChangelogCore({
@@ -99,6 +166,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should honour `gitRawCommitsOpts.from`', function(done) {
+    preparing(2);
+
     conventionalChangelogCore({}, {}, {
       from: 'HEAD~2'
     }, {}, {
@@ -118,11 +187,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should ignore merge commits by default', function(done) {
-    shell.exec('git checkout -b feature');
-    gitDummyCommit('This commit is from feature branch');
-    shell.exec('git checkout master');
-    gitDummyCommit('This commit is from master branch');
-    shell.exec('git merge feature -m"Merge branch \'feature\'"');
+    preparing(3);
+
     conventionalChangelogCore()
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
@@ -136,6 +202,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should spit out some debug info', function(done) {
+    preparing(3);
+
     var first = true;
 
     conventionalChangelogCore({
@@ -150,6 +218,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should load package.json for data', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_package.json'
@@ -167,6 +237,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should load package.json for data even if repository field is missing', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_version-only.json'
@@ -183,6 +255,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should fallback to use repo url if repo is repository is null', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_host-only.json'
@@ -200,6 +274,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should fallback to use repo url if repo is repository is null', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_unknown-host.json'
@@ -217,6 +293,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should transform package.json data', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_short.json',
@@ -239,6 +317,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should work in append mode', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       append: true,
     })
@@ -252,6 +332,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should read package.json if only `context.version` is missing', function(done) {
+    preparing(3);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_package.json'
@@ -271,6 +353,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should read the closest package.json by default', function(done) {
+    preparing(3);
+
     conventionalChangelogCore()
       .pipe(through(function(chunk) {
         expect(chunk.toString()).to.include('closes [#1](https://github.com/conventional-changelog/conventional-changelog-core/issues/1)');
@@ -280,7 +364,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should ignore other prefixes if an `issuePrefixes` option is not provided', function(done) {
-    gitDummyCommit('Custom prefix closes @42');
+    preparing(4);
 
     conventionalChangelogCore({}, {
       host: 'github',
@@ -297,8 +381,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should use custom prefixes if an `issuePrefixes` option is provided', function(done) {
-    gitDummyCommit('Custom prefix closes @42');
-    gitDummyCommit('Old prefix closes #71');
+    preparing(5);
 
     conventionalChangelogCore({}, {
       host: 'github',
@@ -318,6 +401,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should read host configs if only `parserOpts.referenceActions` is missing', function(done) {
+    preparing(5);
+
     conventionalChangelogCore({}, {
       host: 'github',
       owner: 'b',
@@ -335,6 +420,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should read github\'s host configs', function(done) {
+    preparing(5);
+
     conventionalChangelogCore({}, {
       host: 'github',
       owner: 'b',
@@ -350,6 +437,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should read bitbucket\'s host configs', function(done) {
+    preparing(5);
+
     conventionalChangelogCore({}, {
       host: 'bitbucket',
       owner: 'b',
@@ -365,6 +454,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should read gitlab\'s host configs', function(done) {
+    preparing(5);
+
     conventionalChangelogCore({}, {
       host: 'gitlab',
       owner: 'b',
@@ -380,6 +471,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should transform the commit', function(done) {
+    preparing(5);
+
     conventionalChangelogCore({
       transform: function(chunk, cb) {
         chunk.header = 'A tiny header';
@@ -397,6 +490,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should generate all log blocks', function(done) {
+    preparing(5);
     var i = 0;
 
     conventionalChangelogCore({
@@ -421,9 +515,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should work if there are two semver tags', function(done) {
-    gitDummyCommit('some more features');
-    shell.exec('git tag v2.0.0');
-
+    preparing(6);
     var i = 0;
 
     conventionalChangelogCore({
@@ -447,6 +539,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('semverTags should be attached to the `context` object', function(done) {
+    preparing(6);
     var i = 0;
 
     conventionalChangelogCore({
@@ -468,6 +561,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should not link compare', function(done) {
+    preparing(6);
     var i = 0;
 
     conventionalChangelogCore({
@@ -496,6 +590,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should warn if host is not found', function(done) {
+    preparing(6);
+
     conventionalChangelogCore({
       pkg: null,
       warn: function(warning) {
@@ -509,6 +605,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should warn if package.json is not found', function(done) {
+    preparing(6);
+
     conventionalChangelogCore({
       pkg: {
         path: 'no'
@@ -522,6 +620,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should warn if package.json cannot be parsed', function(done) {
+    preparing(6);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_malformation.json'
@@ -535,6 +635,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should error if anything throws', function(done) {
+    preparing(6);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_malformation.json'
@@ -549,6 +651,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should error if there is an error in `options.pkg.transform`', function(done) {
+    preparing(6);
+
     conventionalChangelogCore({
       pkg: {
         path: __dirname + '/fixtures/_short.json',
@@ -565,6 +669,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should error if it errors in git-raw-commits', function(done) {
+    preparing(6);
+
     conventionalChangelogCore({}, {}, {
       unknowOptions: false
     })
@@ -576,7 +682,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should error if it emits an error in `options.transform`', function(done) {
-    gitDummyCommit('test8');
+    preparing(7);
 
     conventionalChangelogCore({
       transform: function(commit, cb) {
@@ -591,7 +697,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should error if there is an error in `options.transform`', function(done) {
-    gitDummyCommit('test8');
+    preparing(8);
 
     conventionalChangelogCore({
       transform: function() {
@@ -606,6 +712,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should error if it errors in conventional-changelog-writer', function(done) {
+    preparing(8);
+
     conventionalChangelogCore({}, {}, {}, {}, {
       finalizeContext: function() {
         return undefined.a;
@@ -619,6 +727,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should be object mode if `writerOpts.includeDetails` is `true`', function(done) {
+    preparing(8);
+
     conventionalChangelogCore({}, {}, {}, {}, {
       includeDetails: true
     })
@@ -629,7 +739,7 @@ describe('conventionalChangelogCore', function() {
   });
 
   it('should pass `parserOpts` to conventional-commits-parser', function(done) {
-    gitDummyCommit(['test9', 'Release note: super release!']);
+    preparing(9);
 
     conventionalChangelogCore({}, {}, {}, {
       noteKeywords: [
@@ -655,7 +765,7 @@ describe('conventionalChangelogCore', function() {
       return;
     }
 
-    shell.exec('git remote add origin https://github.com/user/repo.git');
+    preparing(10);
 
     conventionalChangelogCore({
       pkg: {
@@ -675,20 +785,8 @@ describe('conventionalChangelogCore', function() {
   });
 
   describe('finalizeContext', function() {
-    var head;
-    var tail;
-
-    before(function(done) {
-      shell.exec('git tag -d v0.1.0');
-
-      gitTails(function(err, data) {
-        tail = data[data.length - 1].substring(0, 7);
-
-        done();
-      });
-    });
-
     it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', function(done) {
+      var tail = preparing(11).tail;
       var i = 0;
 
       conventionalChangelogCore({
@@ -716,6 +814,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('should make `context.previousTag` default to a previous semver version of generated log (append)', function(done) {
+      var tail = preparing(11).tail;
       var i = 0;
 
       conventionalChangelogCore({
@@ -744,13 +843,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('`context.previousTag` and `context.currentTag` should be `null` if `keyCommit.gitTags` is not a semver', function(done) {
-      shell.exec('git tag not-semver');
-      gitDummyCommit();
-
-      head = shell.exec('git rev-parse HEAD').stdout.trim();
-      gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.');
-      head = shell.exec('git rev-parse HEAD').stdout.substring(0, 7);
-
+      var tail = preparing(12).tail;
       var i = 0;
 
       conventionalChangelogCore({
@@ -782,7 +875,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('should still work if first release has no commits (prepend)', function(done) {
-      shell.exec('git tag v0.0.1 ' + tail);
+      preparing(13);
       var i = 0;
 
       conventionalChangelogCore({
@@ -815,6 +908,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('should still work if first release has no commits (append)', function(done) {
+      preparing(13);
       var i = 0;
 
       conventionalChangelogCore({
@@ -848,6 +942,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('should change `context.currentTag` to last commit hash if it is unreleased', function(done) {
+      var head = preparing(13).head;
       var i = 0;
 
       conventionalChangelogCore({
@@ -871,6 +966,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('should not link compare if previousTag is not truthy', function(done) {
+      preparing(13);
       var i = 0;
 
       conventionalChangelogCore({
@@ -983,8 +1079,7 @@ describe('conventionalChangelogCore', function() {
 
   describe('unreleased', function() {
     it('should not output unreleased', function(done) {
-      gitDummyCommit();
-      shell.exec('git tag v1.0.0');
+      preparing(14);
 
       conventionalChangelogCore({}, {
         version: '1.0.0'
@@ -997,8 +1092,7 @@ describe('conventionalChangelogCore', function() {
     });
 
     it('should output unreleased', function(done) {
-      gitDummyCommit();
-      gitDummyCommit('something unreleased yet :)');
+      preparing(15);
 
       conventionalChangelogCore({
         outputUnreleased: true
