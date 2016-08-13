@@ -28,8 +28,8 @@ describe('conventional-recommended-bump', function() {
   it('should return `{}` if no `whatBump` is found', function(done) {
     shell.exec('git add --all && git commit -m"First commit"');
 
-    conventionalRecommendedBump({}, function(err, releaseAs) {
-      equal(releaseAs, {});
+    conventionalRecommendedBump({}, function(err, releaseType) {
+      equal(releaseType, {});
 
       done();
     });
@@ -44,8 +44,8 @@ describe('conventional-recommended-bump', function() {
           test: 'test'
         };
       }
-    }, function(err, releaseAs) {
-      equal(releaseAs, {
+    }, function(err, releaseType) {
+      equal(releaseType, {
         test: 'test'
       });
 
@@ -58,10 +58,10 @@ describe('conventional-recommended-bump', function() {
       whatBump: function() {
         return 0;
       }
-    }, function(err, releaseAs) {
-      equal(releaseAs, {
+    }, function(err, releaseType) {
+      equal(releaseType, {
         level: 0,
-        releaseAs: 'major'
+        releaseType: 'major'
       });
 
       done();

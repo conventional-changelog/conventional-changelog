@@ -27,11 +27,11 @@ describe('preset', function() {
     });
 
     it('should release as minor', function(done) {
-      conventionalRecommendedBump(opts, function(err, releaseAs) {
-        equal(releaseAs, {
+      conventionalRecommendedBump(opts, function(err, releaseType) {
+        equal(releaseType, {
           level: 1,
           reason: 'There are 0 BREAKING CHANGES and 1 features',
-          releaseAs: 'minor'
+          releaseType: 'minor'
         });
 
         done();
@@ -41,11 +41,11 @@ describe('preset', function() {
     it('should merge parserOpts', function(done) {
       conventionalRecommendedBump(opts, {
         headerPattern: /^(\w*)\: (.*)$/,
-      }, function(err, releaseAs) {
-        equal(releaseAs, {
+      }, function(err, releaseType) {
+        equal(releaseType, {
           level: 2,
           reason: 'There are 0 BREAKING CHANGES and 0 features',
-          releaseAs: 'patch'
+          releaseType: 'patch'
         });
 
         done();
@@ -56,11 +56,11 @@ describe('preset', function() {
       writeFileSync('test4', '');
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
       child.exec('git add --all && git commit -m "feat(): amazing new module" -m "BREAKING CHANGE: Not backward compatible."', function() {
-        conventionalRecommendedBump(opts, function(err, releaseAs) {
-          equal(releaseAs, {
+        conventionalRecommendedBump(opts, function(err, releaseType) {
+          equal(releaseType, {
             level: 0,
             reason: 'There are 1 BREAKING CHANGES and 1 features',
-            releaseAs: 'major'
+            releaseType: 'major'
           });
 
           done();
@@ -72,11 +72,11 @@ describe('preset', function() {
       writeFileSync('test5', '');
       // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
       child.exec('git add --all && git commit -m "feat(): another amazing new module" -m "Super backward compatible."', function() {
-        conventionalRecommendedBump(opts, function(err, releaseAs) {
-          equal(releaseAs, {
+        conventionalRecommendedBump(opts, function(err, releaseType) {
+          equal(releaseType, {
             level: 0,
             reason: 'There are 1 BREAKING CHANGES and 2 features',
-            releaseAs: 'major'
+            releaseType: 'major'
           });
 
           done();
@@ -89,11 +89,11 @@ describe('preset', function() {
       child.exec('git rev-parse HEAD~1', function(err, hash) {
         // fix this until https://github.com/arturadib/shelljs/issues/175 is solved
         child.exec('git add --all && git commit -m "revert: feat(): amazing new module" -m "This reverts commit ' + hash.trim() + '."', function() {
-          conventionalRecommendedBump(opts, function(err, releaseAs) {
-            equal(releaseAs, {
+          conventionalRecommendedBump(opts, function(err, releaseType) {
+            equal(releaseType, {
               level: 1,
               reason: 'There are 0 BREAKING CHANGES and 2 features',
-              releaseAs: 'minor'
+              releaseType: 'minor'
             });
 
             done();
@@ -106,11 +106,11 @@ describe('preset', function() {
       conventionalRecommendedBump({
         preset: 'angular',
         ignoreReverted: false
-      }, function(err, releaseAs) {
-        equal(releaseAs, {
+      }, function(err, releaseType) {
+        equal(releaseType, {
           level: 0,
           reason: 'There are 1 BREAKING CHANGES and 2 features',
-          releaseAs: 'major'
+          releaseType: 'major'
         });
 
         done();

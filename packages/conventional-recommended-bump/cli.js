@@ -60,8 +60,8 @@ conventionalRecommendedBump(options, flags, function(err, data) {
     process.exit(1);
   }
 
-  if (data.releaseAs) {
-    console.log(data.releaseAs);
+  if (data.releaseType) {
+    console.log(data.releaseType);
   }
 
   if (flags.verbose && data.reason) {

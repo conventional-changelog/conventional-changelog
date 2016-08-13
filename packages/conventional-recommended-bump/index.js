@@ -75,7 +75,7 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
         }
 
         if (result && result.level != null) {
-          result.releaseAs = VERSIONS[result.level];
+          result.releaseType = VERSIONS[result.level];
         } else if (result == null) {
           result = {};
         }

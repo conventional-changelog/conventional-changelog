@@ -20,7 +20,7 @@ var conventionalRecommendedBump = require('conventional-recommended-bump');
 conventionalRecommendedBump({
   preset: 'angular'
 }, function(err, result) {
-  console.log(result.releaseAs);
+  console.log(result.releaseType);
   //=> 'major'
 });
 ```
@@ -91,7 +91,7 @@ Type: `function`
 
 Object includes what's returned by `whatBump` and
 
-####### releaseAs
+####### releaseType
 
 Type: `string` Possible values: `'major'`, `'minor'` and `'patch'`
 
