@@ -4,19 +4,40 @@ var conventionalRecommendedBump = require('../');
 var equal = require('core-assert').deepStrictEqual;
 var fs = require('fs');
 var shell = require('shelljs');
+var betterThanBefore = require('better-than-before')();
+var preparing = betterThanBefore.preparing;
 
-describe('conventional-recommended-bump', function() {
-  before(function() {
+betterThanBefore.setups([
+  function() { // 1
+    shell.mkdir('test');
     shell.cd('test');
     shell.exec('git init');
     fs.writeFileSync('test1', '');
-  });
+  },
+  function() { // 2
+    shell.exec('git add --all && git commit -m"First commit"');
+  },
+  function() { // 3
+    shell.exec('git add --all && git commit -m"First commit"');
+  },
+  function() { // 4
+    shell.exec('git tag v1.0.0');
+  },
+  function() { // 5
+    fs.writeFileSync('test2', '');
+    shell.exec('git add --all && git commit -m"Second commit"');
+  }
+]);
 
-  after(function() {
-    shell.cd('../');
-  });
+betterThanBefore.tearsWithJoy(function() {
+  shell.cd('../');
+  shell.rm('-rf', 'test');
+});
 
+describe('conventional-recommended-bump', function() {
   it('should error if no commits in the repo', function(done) {
+    preparing(1);
+
     conventionalRecommendedBump({}, function(err) {
       if (err) {
         assert.ok(err);
@@ -26,7 +47,7 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('should return `{}` if no `whatBump` is found', function(done) {
-    shell.exec('git add --all && git commit -m"First commit"');
+    preparing(2);
 
     conventionalRecommendedBump({}, function(err, releaseType) {
       equal(releaseType, {});
@@ -36,7 +57,7 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('should return what is returned by `whatBump`', function(done) {
-    shell.exec('git add --all && git commit -m"First commit"');
+    preparing(3);
 
     conventionalRecommendedBump({
       whatBump: function() {
@@ -54,6 +75,8 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('should be a major bump', function(done) {
+    preparing(3);
+
     conventionalRecommendedBump({
       whatBump: function() {
         return 0;
@@ -69,7 +92,7 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('should warn if there is no new commits since last release', function(done) {
-    shell.exec('git tag v1.0.0');
+    preparing(4);
 
     conventionalRecommendedBump({
       warn: function(warning) {
@@ -80,12 +103,13 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('`warn` is optional', function(done) {
+    preparing(4);
+
     conventionalRecommendedBump({}, done);
   });
 
   it('should get the commits from last tag', function(done) {
-    fs.writeFileSync('test2', '');
-    shell.exec('git add --all && git commit -m"Second commit"');
+    preparing(5);
 
     conventionalRecommendedBump({
       whatBump: function(commits) {
@@ -96,16 +120,22 @@ describe('conventional-recommended-bump', function() {
   });
 
   it('should not error if callback is missing', function() {
+    preparing(5);
+
     conventionalRecommendedBump({});
   });
 
   it('should error if `options` is missing', function() {
+    preparing(5);
+
     assert.throws(function() {
       conventionalRecommendedBump(function() {});
     }, 'options must be an object');
   });
 
   it('should error if no preset found', function(done) {
+    preparing(5);
+
     conventionalRecommendedBump({
       preset: 'no'
     }, function(err) {
