@@ -31,6 +31,10 @@ betterThanBefore.setups([
     writeFileSync('test6', '');
     var hash = execSync('git rev-parse HEAD~1').toString();
     execSync('git add --all && git commit -m "revert: feat(): amazing new module" -m "This reverts commit ' + hash.trim() + '."');
+  },
+  function() { // 5
+    writeFileSync('test7', '');
+    execSync('git add --all && git commit -m "feat(noteKeywords): make BREAKING CHANGE more forgiving\n\nPeople might type BREAKING CHANGES unintentionally. EG: https://github.com/angular/angular/commit/098b461"');
   }
 ]);
 
@@ -128,6 +132,20 @@ describe('preset', function() {
           level: 0,
           reason: 'There are 1 BREAKING CHANGES and 2 features',
           releaseType: 'major'
+        });
+
+        done();
+      });
+    });
+
+    it('should not be major', function(done) {
+      preparing(5);
+
+      conventionalRecommendedBump(opts, function(err, releaseType) {
+        equal(releaseType, {
+          level: 1,
+          reason: 'There are 0 BREAKING CHANGES and 3 features',
+          releaseType: 'minor'
         });
 
         done();
