@@ -28,14 +28,11 @@ var parserOpts = {
 };
 
 function issueUrl() {
-  var url = null;
   if (pkgJson.repository && pkgJson.repository.url && ~pkgJson.repository.url.indexOf('github.com')) {
     var gitUrl = gufg(pkgJson.repository.url);
 
     if (gitUrl) {
       return gitUrl + '/issues/';
-    } else {
-      return url;
     }
   }
 }
