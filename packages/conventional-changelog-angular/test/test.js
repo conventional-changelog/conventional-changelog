@@ -1,14 +1,16 @@
 'use strict';
-var child = require('child_process');
+var execSync = require('child_process').execSync;
 var conventionalChangelogCore = require('conventional-changelog-core');
 var preset = require('../');
 var expect = require('chai').expect;
 var gitDummyCommit = require('git-dummy-commit');
 var shell = require('shelljs');
 var through = require('through2');
+var betterThanBefore = require('better-than-before')();
+var preparing = betterThanBefore.preparing;
 
-describe('angular preset', function() {
-  before(function(done) {
+betterThanBefore.setups([
+  function() {
     shell.config.silent = true;
     shell.rm('-rf', 'tmp');
     shell.mkdir('tmp');
@@ -17,18 +19,41 @@ describe('angular preset', function() {
     shell.exec('git init --template=./git-templates');
 
     gitDummyCommit('chore: first commit');
-    // fix this once https://github.com/arturadib/shelljs/issues/175 is solved
-    child.exec('git commit -m"feat: amazing new module\n\nBREAKING CHANGE: Not backward compatible." --allow-empty', function() {
-      gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.']);
-      gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2']);
-      gitDummyCommit('revert(ngOptions): bad commit');
-      gitDummyCommit('fix(*): oops');
+    gitDummyCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.']);
+    gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2']);
+    gitDummyCommit('revert(ngOptions): bad commit');
+    gitDummyCommit('fix(*): oops');
+  },
+  function() {
+    gitDummyCommit(['feat(awesome): addresses the issue brought up in #133']);
+  },
+  function() {
+    gitDummyCommit(['feat(awesome): fix #88']);
+  },
+  function() {
+    gitDummyCommit(['feat(awesome): issue brought up by @bcoe! on Friday']);
+  },
+  function() {
+    gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.']);
+    gitDummyCommit(['chore(deps): bump', 'BREAKING CHANGE: The Change is huge.']);
+  },
+  function() {
+    gitDummyCommit(['feat(deps): bump', 'BREAKING CHANGES: Also works :)']);
+  },
+  function() {
+    shell.exec('git tag v1.0.0');
+    gitDummyCommit('feat: some more features');
+  }
+]);
 
-      done();
-    });
-  });
-
+describe('angular preset', function() {
   it('should work if there is no semver tag', function(done) {
+    preparing(1);
+
     conventionalChangelogCore({
       config: preset
     })
@@ -64,7 +89,7 @@ describe('angular preset', function() {
   });
 
   it('should replace #[0-9]+ with GitHub issue URL', function(done) {
-    gitDummyCommit(['feat(awesome): addresses the issue brought up in #133']);
+    preparing(2);
 
     conventionalChangelogCore({
       config: preset
@@ -80,7 +105,7 @@ describe('angular preset', function() {
   });
 
   it('should remove the issues that already appear in the subject', function(done) {
-    gitDummyCommit(['feat(awesome): fix #88']);
+    preparing(3);
 
     conventionalChangelogCore({
       config: preset
@@ -97,7 +122,7 @@ describe('angular preset', function() {
   });
 
   it('should replace @username with GitHub user URL', function(done) {
-    gitDummyCommit(['feat(awesome): issue brought up by @bcoe! on Friday']);
+    preparing(4);
 
     conventionalChangelogCore({
       config: preset
@@ -113,11 +138,7 @@ describe('angular preset', function() {
   });
 
   it('should not discard commit if there is BREAKING CHANGE', function(done) {
-    gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.']);
-    gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.']);
-    gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.']);
-    gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.']);
-    gitDummyCommit(['chore(deps): bump', 'BREAKING CHANGE: The Change is huge.']);
+    preparing(5);
 
     conventionalChangelogCore({
       config: preset
@@ -139,7 +160,7 @@ describe('angular preset', function() {
   });
 
   it('should BREAKING CHANGES the same as BREAKING CHANGE', function(done) {
-    gitDummyCommit(['feat(deps): bump', 'BREAKING CHANGES: Also works :)']);
+    preparing(6);
 
     conventionalChangelogCore({
       config: preset
@@ -157,10 +178,8 @@ describe('angular preset', function() {
   });
 
   it('should work if there is a semver tag', function(done) {
+    preparing(7);
     var i = 0;
-
-    shell.exec('git tag v1.0.0');
-    gitDummyCommit('feat: some more features');
 
     conventionalChangelogCore({
       config: preset,
@@ -184,6 +203,7 @@ describe('angular preset', function() {
   });
 
   it('should work with unknown host', function(done) {
+    preparing(7);
     var i = 0;
 
     conventionalChangelogCore({

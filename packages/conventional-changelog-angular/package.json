@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog-angular#readme",
   "devDependencies": {
+    "better-than-before": "^1.0.0",
     "chai": "^3.4.1",
     "conventional-changelog-core": "^1.0.1",
     "coveralls": "^2.11.6",
