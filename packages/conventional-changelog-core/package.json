@@ -29,6 +29,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
+    "better-than-before": "^1.0.0",
     "chai": "^3.4.1",
     "coveralls": "^2.11.6",
     "git-dummy-commit": "^1.1.0",
