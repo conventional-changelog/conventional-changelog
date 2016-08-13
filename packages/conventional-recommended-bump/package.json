@@ -1,6 +1,6 @@
 {
   "name": "conventional-recommended-bump",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Get a recommended version bump based on conventional commits",
   "homepage": "https://github.com/conventional-changelog/conventional-recommended-bump",
   "author": {
