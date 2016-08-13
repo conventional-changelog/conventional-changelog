@@ -39,11 +39,11 @@ describe('angular preset', function() {
         chunk = chunk.toString();
 
         expect(chunk).to.include('amazing new module');
-        expect(chunk).to.include('avoid a bug');
+        expect(chunk).to.include('**compile:** avoid a bug');
         expect(chunk).to.include('make it faster');
         expect(chunk).to.include(', closes [#1](https://github.com/conventional-changelog/conventional-changelog-angular/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog-angular/issues/2)');
         expect(chunk).to.include('Not backward compatible.');
-        expect(chunk).to.include('compile: The Change is huge.');
+        expect(chunk).to.include('**compile:** The Change is huge.');
         expect(chunk).to.include('Features');
         expect(chunk).to.include('Bug Fixes');
         expect(chunk).to.include('Performance Improvements');
