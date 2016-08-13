@@ -1,3 +1,18 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/conventional-changelog/conventional-recommended-bump/compare/v0.2.1...v0.3.0) (2016-08-13)
+
+
+### Code Refactoring
+
+* **naming:** releaseAs => releaseType ([1476f1e](https://github.com/conventional-changelog/conventional-recommended-bump/commit/1476f1e)), closes [#15](https://github.com/conventional-changelog/conventional-recommended-bump/issues/15)
+
+
+### BREAKING CHANGES
+
+* naming: `releaseAs` => `releaseType`
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/conventional-changelog/conventional-recommended-bump/compare/v0.2.0...v0.2.1) (2016-04-16)
 
