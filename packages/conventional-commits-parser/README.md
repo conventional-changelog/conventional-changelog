@@ -220,7 +220,7 @@ Used to define what capturing group of `revertPattern` captures what reverted co
 For example, if we have commit
 
 ```
-revert throw an error if a callback is passed
+Revert "throw an error if a callback is passed"
 
 This reverts commit 9bb4d6c.
 ```
