@@ -217,7 +217,7 @@ Type: `array` of `string` or `string` Default: `['header', 'hash']`
 
 Used to define what capturing group of `revertPattern` captures what reverted commit fields. The order of the array should correspond to the order of `revertPattern`'s capturing group.
 
-For example, if we have commit
+For example, if we had commit
 
 ```
 Revert "throw an error if a callback is passed"
@@ -225,7 +225,7 @@ Revert "throw an error if a callback is passed"
 This reverts commit 9bb4d6c.
 ```
 
-And the parsed result might be
+If configured correctly, the parsed result would be 
 
 ```js
 {
