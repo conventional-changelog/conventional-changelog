@@ -1,5 +1,7 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
+[![Join the chat at https://gitter.im/conventional-changelog/conventional-changelog](https://badges.gitter.im/conventional-changelog/conventional-changelog.svg)](https://gitter.im/conventional-changelog/conventional-changelog?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > Generate a changelog from git metadata
 
 It's recommended to use high level [standard-version](https://github.com/conventional-changelog/standard-version).
