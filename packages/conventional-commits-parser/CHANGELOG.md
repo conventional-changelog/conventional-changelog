@@ -1,3 +1,13 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.3...v1.3.0) (2016-10-15)
+
+
+### Features
+
+* support squash commits (#31) ([860c7a1](https://github.com/conventional-changelog/conventional-commits-parser/commit/860c7a1))
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.2...v1.2.3) (2016-08-06)
 
