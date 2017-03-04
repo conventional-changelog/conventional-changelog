@@ -113,3 +113,27 @@ it('should work with empty commit', function(done) {
     done();
   });
 });
+
+it('should work with lerna style tags', function(done) {
+  writeFileSync('test5', '');
+  shell.exec('git add --all && git commit -m"sixth commit"');
+  shell.exec('git tag foo-project@4.0.0');
+  shell.exec('git add --all && git commit -m"seventh commit"');
+  shell.exec('git tag foo-project@5.0.0');
+
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['foo-project@5.0.0', 'foo-project@4.0.0']);
+    done();
+  }, {lernaTags: true});
+});
+
+it('should allow lerna style tags to be filtered by package', function(done) {
+  writeFileSync('test5', '');
+  shell.exec('git add --all && git commit -m"seventh commit"');
+  shell.exec('git tag bar-project@5.0.0');
+
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['bar-project@5.0.0']);
+    done();
+  }, {lernaTags: true, package: 'bar-project'});
+});

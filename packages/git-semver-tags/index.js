@@ -4,7 +4,17 @@ var semverValid = require('semver').valid;
 var regex = /tag:\s*(.+?)[,\)]/gi;
 var cmd = 'git log --decorate --no-color';
 
-module.exports = function(callback) {
+function lernaTag(tag, pkg) {
+  if (pkg && !(new RegExp('^' + pkg + '@')).test(tag)) {
+    return false;
+  } else {
+    return /^.+@[0-9]+\.[0-9]\.[0-9](-.+)?$/.test(tag);
+  }
+}
+
+module.exports = function(callback, opts) {
+  opts = opts || {};
+
   exec(cmd, {
     maxBuffer: Infinity
   }, function(err, data) {
@@ -19,7 +29,11 @@ module.exports = function(callback) {
       var match;
       while (match = regex.exec(decorations)) {
         var tag = match[1];
-        if (semverValid(tag)) {
+        if (opts.lernaTags) {
+          if (lernaTag(tag, opts.package)) {
+            tags.push(tag);
+          }
+        } else if (semverValid(tag)) {
           tags.push(tag);
         }
       }

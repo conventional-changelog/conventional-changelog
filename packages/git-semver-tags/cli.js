@@ -3,12 +3,22 @@
 var meow = require('meow');
 var gitSemverTags = require('./');
 
-meow({
+var args = meow({
   help: [
     'Usage',
-    '  git-semver-tags'
+    '  git-semver-tags',
+    'Options',
+    ' --lerna, -l parse lerna style git tags',
+    ' --package, -p when listing lerna style tags, filter by a package'
   ]
 });
+
+// the package argument only makes sense
+// when used in the context of lerna-style git-tags.
+if (args.flags.package && !args.flags.lerna) {
+  console.error('--package should only be used when running in --lerna mode');
+  process.exit(1);
+}
 
 gitSemverTags(function(err, tags) {
   if (err) {
@@ -17,4 +27,7 @@ gitSemverTags(function(err, tags) {
   }
 
   console.log(tags.join('\n'));
+}, {
+  lernaTags: args.flags.lerna,
+  package: args.flags.package
 });

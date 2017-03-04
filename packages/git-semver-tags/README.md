@@ -15,7 +15,7 @@ $ npm install --save git-semver-tags
 ## Usage
 
 ```js
-var gitSemverTags = require('git-semver-tags');
+var gitSemverTags = require('git-semver-tags', [options]);
 
 gitSemverTags(function(err, tag) {
   console.log(tag);
@@ -30,6 +30,12 @@ v2.0.0
 v1.0.0
 ```
 
+## Options
+
+* `opts.lernaTags`: extract lerna style tags (`foo-package@2.0.0`) from the
+  git history, rather than `v1.0.0` format.
+* `opts.package`: what package should lerna style tags be listed for, e.g.,
+  `foo-package`.
 
 ## License
 
