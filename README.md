@@ -9,7 +9,7 @@
 It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which handles the the entire tagging and CHANGELOG
 generation process.
 
-Alternatively, the [conventional-changelog-cli)](https://github.com/conventional-changelog/conventional-changelog-cli) allows you to generate a CHANGELOG from the
+Alternatively, the [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog-cli) allows you to generate a CHANGELOG from the
 command line.
 
 ## Plugins Supporting Conventional Changelog
