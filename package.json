@@ -5,7 +5,7 @@
   "description": "generate a changelog from git metadata",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ./scripts/each.sh npm test",
+    "test": "nyc lerna exec npm test",
     "postinstall": "lerna bootstrap"
   },
   "repository": {

@@ -37,7 +37,7 @@
   },
   "scripts": {
     "lint": "jshint *.js lib test && jscs *.js lib test",
-    "test": "npm run lint && mocha"
+    "test": "npm run lint && mocha --timeout=30000"
   },
   "bin": {
     "conventional-commits-parser": "cli.js"
