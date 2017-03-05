@@ -4,7 +4,6 @@
   "description": "conventional-changelog angular preset",
   "main": "index.js",
   "scripts": {
-    "coverage": "istanbul cover -x test.js _mocha -- -R spec --timeout 30000 && rm -rf ./coverage",
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
     "test": "mocha --timeout 30000 && npm run-script lint"
   },
@@ -27,7 +26,6 @@
     "better-than-before": "^1.0.0",
     "chai": "^3.4.1",
     "conventional-changelog-core": "^1.0.1",
-    "coveralls": "^2.11.6",
     "git-dummy-commit": "^1.1.1",
     "istanbul": "^0.4.1",
     "jscs": "^3.0.7",

@@ -30,19 +30,16 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "concat-stream": "^1.5.1",
-    "coveralls": "^2.11.6",
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
     "mocha": "*",
     "mock-spawn": "^0.2.6",
-    "nyc": "^6.2.1",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },
   "scripts": {
-    "test": "nyc mocha --timeout 30000 && npm run-script lint",
-    "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "mocha --timeout 30000 && npm run-script lint",
+    "lint": "jshint test *.js --exclude node_modules && jscs test *.js"
   },
   "bin": "cli.js"
 }

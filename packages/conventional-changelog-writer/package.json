@@ -35,7 +35,6 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "concat-stream": "^1.4.8",
-    "coveralls": "^2.11.2",
     "istanbul": "^0.4.2",
     "jscs": "^3.0.3",
     "jshint": "^2.9.1-rc3",
@@ -43,8 +42,7 @@
   },
   "scripts": {
     "lint": "jshint *.js lib test && jscs *.js lib test",
-    "test": "npm run lint && mocha --timeout 30000",
-    "coverage": "istanbul cover _mocha -- -R spec --timeout 30000 && rm -rf ./coverage"
+    "test": "npm run lint && mocha --timeout 30000"
   },
   "bin": {
     "conventional-changelog-writer": "cli.js"

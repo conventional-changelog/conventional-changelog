@@ -26,11 +26,9 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "concat-stream": "^1.5.1",
-    "coveralls": "^2.11.6",
     "jscs": "^2.7.0",
     "jshint": "^2.8.0",
     "mocha": "*",
-    "nyc": "^5.0.1",
     "shelljs": "^0.6.0"
   },
   "dependencies": {
@@ -41,9 +39,8 @@
     "tempfile": "^1.1.1"
   },
   "scripts": {
-    "test": "nyc mocha --timeout 30000 && npm run-script lint",
-    "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "mocha --timeout 30000 && npm run-script lint",
+    "lint": "jshint test *.js --exclude node_modules && jscs test *.js"
   },
   "license": "MIT"
 }

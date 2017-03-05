@@ -27,7 +27,6 @@
     "semver": "^5.0.1"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
     "git-dummy-commit": "^1.1.0",
     "istanbul": "^0.4.2",
     "jscs": "^2.9.0",
@@ -36,7 +35,6 @@
     "shelljs": "^0.5.1"
   },
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
     "test": "npm run-script lint && mocha --timeout 10000"
   },

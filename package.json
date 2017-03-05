@@ -5,7 +5,7 @@
   "description": "generate a changelog from git metadata",
   "main": "index.js",
   "scripts": {
-    "test": "./scripts/each.sh npm test",
+    "test": "nyc ./scripts/each.sh npm test",
     "postinstall": "lerna bootstrap"
   },
   "repository": {
@@ -24,6 +24,9 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog#readme",
   "devDependencies": {
-    "lerna": "2.0.0-beta.38"
+    "coveralls": "^2.11.16",
+    "lerna": "2.0.0-beta.38",
+    "nyc": "^10.1.2",
+    "standard-version": "^4.0.0"
   }
 }

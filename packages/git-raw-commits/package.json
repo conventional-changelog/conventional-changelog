@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
-    "coveralls": "^2.11.2",
     "istanbul": "^0.4.2",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
@@ -41,8 +40,7 @@
   },
   "scripts": {
     "lint": "jshint . --exclude node_modules && jscs .",
-    "test": "npm run-script lint && mocha --timeout 30000",
-    "coverage": "istanbul cover -x test.js _mocha -- -R spec --timeout 30000 && rm -rf ./coverage"
+    "test": "npm run-script lint && mocha --timeout 30000"
   },
   "bin": {
     "git-raw-commits": "cli.js"
