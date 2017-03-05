@@ -1,0 +1,8 @@
+feat(ngMessages): provide support for dynamic message resolution
+
+Prior to this fix it was impossible to apply a binding to a the ngMessage directive to represent the name of the error.
+
+BREAKING CHANGE: The `ngMessagesInclude` attribute is now its own directive and that must be placed as a **child** element within the element with the ngMessages directive.
+
+Closes #10036
+Closes #9338

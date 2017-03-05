@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - 'node'
+  - '4'
+  - '3'
+  - '2'
+  - '1'
+  - '0.12'
+  - '0.10'
+before_script:
+  - git config --global user.name 'Travis-CI'
+  - git config --global user.email 'dummy@example.org'
+after_success: npm run coveralls

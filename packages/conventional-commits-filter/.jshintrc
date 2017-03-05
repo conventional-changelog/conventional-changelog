@@ -1,0 +1,11 @@
+{
+  "node": true,
+  "esnext": true,
+  "camelcase": true,
+  "immed": true,
+  "newcap": true,
+  "undef": true,
+  "unused": "vars",
+  "strict": true,
+  "mocha": true
+}

@@ -1,0 +1,37 @@
+{
+  "name": "conventional-commits-filter",
+  "version": "1.0.0",
+  "description": "Filter out reverted commits parsed by conventional-commits-parser",
+  "homepage": "https://github.com/stevemao/conventional-commits-filter",
+  "repository": "stevemao/conventional-commits-filter",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "filter",
+    "conventional",
+    "changelog",
+    "commits"
+  ],
+  "dependencies": {
+    "is-subset": "^0.1.1",
+    "modify-values": "^1.0.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.2",
+    "jscs": "^2.9.0",
+    "jshint": "^2.8.0",
+    "mocha": "*"
+  },
+  "scripts": {
+    "lint": "jshint *.js && jscs *.js",
+    "test": "npm run lint && mocha --timeout=30000",
+    "test-windows": "mocha --timeout 30000"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,49 @@
+{
+  "name": "conventional-changelog-core",
+  "version": "1.5.0",
+  "description": "conventional-changelog core",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog-core.git"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "conventional",
+    "changelog",
+    "log"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "conventional-changelog-writer": "^1.1.0",
+    "conventional-commits-parser": "^1.0.0",
+    "dateformat": "^1.0.12",
+    "get-pkg-repo": "^1.0.0",
+    "git-raw-commits": "^1.1.0",
+    "git-remote-origin-url": "^2.0.0",
+    "git-semver-tags": "^1.1.0",
+    "lodash": "^4.0.0",
+    "normalize-package-data": "^2.3.5",
+    "q": "^1.4.1",
+    "read-pkg": "^1.1.0",
+    "read-pkg-up": "^1.0.1",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "better-than-before": "^1.0.0",
+    "chai": "^3.4.1",
+    "git-dummy-commit": "^1.1.0",
+    "git-tails": "^1.0.0",
+    "istanbul": "^0.4.1",
+    "jscs": "^3.0.3",
+    "jshint": "^2.9.1",
+    "mocha": "*",
+    "pinkie-promise": "^2.0.0",
+    "semver": "^5.1.0",
+    "shelljs": "^0.7.0"
+  },
+  "scripts": {
+    "lint": "jshint . --exclude node_modules && jscs .",
+    "test": "mocha --timeout 30000 && npm run-script lint",
+    "test-windows": "mocha --timeout 30000"
+  }
+}

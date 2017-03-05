@@ -1,0 +1,7 @@
+
+docs(ngMessageExp): split ngMessage docs up to show its alias more clearly
+===
+
+fix($animate): applyStyles from options on leave
+
+Closes #10068
