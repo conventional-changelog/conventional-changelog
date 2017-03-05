@@ -1,7 +1,6 @@
 environment:
   matrix:
     - nodejs_version: "6"
-    - nodejs_version: "7"
 
 init:
   - git config --global user.email dummy@example.org
