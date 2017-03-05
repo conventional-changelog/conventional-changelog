@@ -8,17 +8,10 @@ var args = meow({
     'Usage',
     '  git-semver-tags',
     'Options',
-    ' --lerna, -l parse lerna style git tags',
-    ' --package, -p when listing lerna style tags, filter by a package'
+    ' --lerna parse lerna style git tags',
+    ' --package when listing lerna style tags, filter by a package'
   ]
 });
-
-// the package argument only makes sense
-// when used in the context of lerna-style git-tags.
-if (args.flags.package && !args.flags.lerna) {
-  console.error('--package should only be used when running in --lerna mode');
-  process.exit(1);
-}
 
 gitSemverTags(function(err, tags) {
   if (err) {

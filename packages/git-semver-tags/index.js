@@ -15,6 +15,11 @@ function lernaTag(tag, pkg) {
 module.exports = function(callback, opts) {
   opts = opts || {};
 
+  if (opts.package && !opts.lernaTags) {
+    callback(Error('opts.package should only be used when running in lerna mode'));
+    return;
+  }
+
   exec(cmd, {
     maxBuffer: Infinity
   }, function(err, data) {

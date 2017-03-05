@@ -104,6 +104,7 @@ it('should work with empty commit', function(done) {
   shell.exec('git init');
   gitDummyCommit('empty commit');
   shell.exec('git tag v1.1.0');
+  shell.exec('git tag blarg-project@1.0.0'); // should be ignored.
   gitDummyCommit('empty commit2');
   gitDummyCommit('empty commit3');
 
@@ -122,7 +123,7 @@ it('should work with lerna style tags', function(done) {
   shell.exec('git tag foo-project@5.0.0');
 
   gitSemverTags(function(err, tags) {
-    equal(tags, ['foo-project@5.0.0', 'foo-project@4.0.0']);
+    equal(tags, ['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0']);
     done();
   }, {lernaTags: true});
 });
@@ -136,4 +137,11 @@ it('should allow lerna style tags to be filtered by package', function(done) {
     equal(tags, ['bar-project@5.0.0']);
     done();
   }, {lernaTags: true, package: 'bar-project'});
+});
+
+it('should not allow package filter without lernaTags=true', function(done) {
+  gitSemverTags(function(err) {
+    equal(err.message, 'opts.package should only be used when running in lerna mode');
+    done();
+  }, {package: 'bar-project'});
 });
