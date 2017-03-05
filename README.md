@@ -12,6 +12,13 @@ generation process.
 Alternatively, the [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog-cli) allows you to generate a CHANGELOG from the
 command line.
 
+## About this Repo
+
+The conventional-changelog repo is managed as a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md); it's composed of many npm packages.
+
+The original `conventional-changelog/conventional-changelog` repo can be
+found in [packages/conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog).
+
 ## Plugins Supporting Conventional Changelog
 
 [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
