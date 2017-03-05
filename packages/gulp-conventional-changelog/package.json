@@ -14,7 +14,8 @@
   },
   "scripts": {
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "npm run-script lint && mocha --timeout 30000"
+    "test": "npm run-script lint && mocha --timeout 30000",
+    "test-windows": "mocha --timeout 30000"
   },
   "files": [
     "index.js"

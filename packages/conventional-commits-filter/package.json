@@ -30,7 +30,8 @@
   },
   "scripts": {
     "lint": "jshint *.js && jscs *.js",
-    "test": "npm run lint && mocha --timeout=30000"
+    "test": "npm run lint && mocha --timeout=30000",
+    "test-windows": "mocha --timeout 30000"
   },
   "license": "MIT"
 }

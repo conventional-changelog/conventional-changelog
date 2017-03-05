@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "mocha --timeout 30000 && npm run-script lint"
+    "test": "mocha --timeout 30000 && npm run-script lint",
+    "test-windows": "mocha --timeout 30000"
   },
   "repository": {
     "type": "git",

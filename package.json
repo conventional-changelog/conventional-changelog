@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc lerna exec npm test",
+    "test-windows": "lerna exec npm run test-windows",
     "postinstall": "lerna bootstrap"
   },
   "repository": {
