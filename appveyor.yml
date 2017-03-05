@@ -10,6 +10,7 @@ init:
 
 install:
   - ps: Install-Product node $env:nodejs_version
+  - npm config set force true
   - npm install
 
 matrix:
