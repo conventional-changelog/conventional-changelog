@@ -4,9 +4,9 @@
   "description": "conventional-changelog atom preset",
   "main": "index.js",
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec && rm -rf ./coverage",
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "mocha && npm run-script lint"
+    "test": "mocha --timeout 30000 && npm run-script lint",
+    "test-windows": "mocha --timeout 30000"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,6 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "conventional-changelog-core": "0.0.2",
-    "coveralls": "^2.11.6",
-    "istanbul": "^0.4.2",
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
     "mocha": "*",
