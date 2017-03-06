@@ -21,14 +21,17 @@ function gitRawCommits(options) {
   var gitFromTo = template('<%- from ? [from, to].join("..") : to %>')(options);
 
   var args = dargs(options, {
-    excludes: ['from', 'to', 'format']
+    excludes: ['from', 'to', 'format', 'path']
   });
 
-  args = [
-    'log',
-    gitFormat,
-    gitFromTo
-  ].concat(args);
+  var argsPrefix = [gitFormat, gitFromTo];
+  // allow commits to focus on a single directory
+  // this is useful for monorepos.
+  if (options.path) {
+    argsPrefix.push('--', options.path);
+  }
+
+  args = ['log'].concat(argsPrefix, args);
 
   if (options.debug) {
     options.debug('Your git-log command is:\ngit ' + args.join(' '));

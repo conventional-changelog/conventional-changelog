@@ -4,6 +4,7 @@ var gitRawCommits = require('./');
 var shell = require('shelljs');
 var through = require('through2');
 var writeFileSync = require('fs').writeFileSync;
+var mkdirp = require('mkdirp');
 
 shell.config.silent = true;
 shell.rm('-rf', 'tmp');
@@ -26,7 +27,9 @@ it('should emit an error and the error should not be read only if there is no co
 });
 
 it('should execute the command without error', function(done) {
-  writeFileSync('test1', '');
+
+  mkdirp.sync('./packages/foo');
+  writeFileSync('./packages/foo/test1', '');
   shell.exec('git add --all && git commit -m"First commit"');
   writeFileSync('test2', '');
   shell.exec('git add --all && git commit -m"Second commit"');
@@ -124,6 +127,26 @@ it('should honour `options.format`', function(done) {
       cb();
     }, function() {
       expect(i).to.equal(3);
+      done();
+    }));
+});
+
+it('should allow commits to be scoped to a specific directory', function(done) {
+  var i = 0;
+  var output = '';
+
+  gitRawCommits({
+    path: './packages/foo'
+  })
+    .pipe(through(function(chunk, enc, cb) {
+      output += chunk.toString();
+
+      i++;
+      cb();
+    }, function() {
+      expect(i).to.equal(1);
+      expect(output).to.match(/First commit/);
+      expect(output).to.not.match(/Second commit/);
       done();
     }));
 });
