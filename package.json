@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "generate a changelog from git metadata",
-  "main": "index.js",
   "scripts": {
     "test": "nyc lerna exec npm test",
     "test-windows": "lerna exec npm run test-windows",
