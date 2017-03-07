@@ -57,6 +57,12 @@ Type: `function`
 
 A function to get debug information.
 
+##### path
+
+Type: `string`
+
+Filter commits to the path provided. 
+
 
 ## CLI
 
