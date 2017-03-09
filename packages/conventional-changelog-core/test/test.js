@@ -9,6 +9,8 @@ var Promise = require('pinkie-promise');
 var semver = require('semver');
 var betterThanBefore = require('better-than-before')();
 var preparing = betterThanBefore.preparing;
+var mkdirp = require('mkdirp');
+var writeFileSync = require('fs').writeFileSync;
 
 betterThanBefore.setups([
   function() { // 1
@@ -79,6 +81,21 @@ betterThanBefore.setups([
   function() { // 15
     gitDummyCommit();
     gitDummyCommit('something unreleased yet :)');
+  },
+  function() { // 16
+    shell.exec('git tag foo@2.0.0');
+    mkdirp.sync('./packages/foo');
+    writeFileSync('./packages/foo/test1', '');
+    shell.exec('git add --all && git commit -m"first lerna style commit hooray"');
+    mkdirp.sync('./packages/bar');
+    writeFileSync('./packages/bar/test1', '');
+    shell.exec('git add --all && git commit -m"another lerna package, this should be skipped"');
+  },
+  function() { // 17
+    shell.exec('git tag foo@2.1.0');
+    mkdirp.sync('./packages/foo');
+    writeFileSync('./packages/foo/test2', '');
+    shell.exec('git add --all && git commit -m"second lerna style commit woo"');
   }
 ]);
 
@@ -1105,6 +1122,45 @@ describe('conventionalChangelogCore', function() {
           expect(chunk).to.include('something unreleased yet :)');
           expect(chunk).to.include('Unreleased');
 
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+  });
+
+  describe('lerna style repository', function() {
+    it('handles upcoming release', function(done) {
+      preparing(16);
+
+      conventionalChangelogCore({
+        lernaPackage: 'foo'
+      }, {}, {path: './packages/foo'})
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+          expect(chunk).to.include('first lerna style commit hooray');
+          expect(chunk).to.not.include('second lerna style commit woo');
+          expect(chunk).to.not.include('another lerna package, this should be skipped');
+          expect(chunk).to.not.include('something unreleased yet :)');
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('should generate the changelog of the last two releases', function(done) {
+      preparing(17);
+
+      conventionalChangelogCore({
+        lernaPackage: 'foo',
+        releaseCount: 2
+      }, {}, {path: './packages/foo'})
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+          expect(chunk).to.include('first lerna style commit hooray');
+          expect(chunk).to.include('second lerna style commit woo');
+          expect(chunk).to.not.include('another lerna package, this should be skipped');
+          expect(chunk).to.not.include('something unreleased yet :)');
           cb();
         }, function() {
           done();
