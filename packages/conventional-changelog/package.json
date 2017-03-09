@@ -39,6 +39,7 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "concat-stream": "^1.4.10",
+    "@yoitsro/conventional-changelog-angular": "^1.0.0",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
     "mocha": "*",
