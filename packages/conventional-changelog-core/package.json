@@ -36,6 +36,7 @@
     "istanbul": "^0.4.1",
     "jscs": "^3.0.3",
     "jshint": "^2.9.1",
+    "mkdirp": "^0.5.1",
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
     "semver": "^5.1.0",

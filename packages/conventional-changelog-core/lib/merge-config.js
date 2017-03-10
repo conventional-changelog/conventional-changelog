@@ -20,10 +20,21 @@ var _ = require('lodash');
 var rhosts = /github|bitbucket|gitlab/i;
 var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
+function semverTagsPromise(options) {
+  return Q.Promise(function(resolve, reject) {
+    gitSemverTags(function(err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage});
+  });
+}
+
 function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var configPromise;
   var pkgPromise;
-  var semverTagsPromise;
   var gitRemoteOriginUrlPromise;
 
   context = context || {};
@@ -53,7 +64,8 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       }
 
       cb(null, commit);
-    }
+    },
+    lernaPackage: null
   }, options);
 
   options.warn = options.warn || options.debug;
@@ -74,11 +86,9 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
     }
   }
 
-  semverTagsPromise = Q.nfcall(gitSemverTags);
-
   gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl()); // jshint ignore:line
 
-  return Q.allSettled([configPromise, pkgPromise, semverTagsPromise, gitRemoteOriginUrlPromise])
+  return Q.allSettled([configPromise, pkgPromise, semverTagsPromise(options), gitRemoteOriginUrlPromise])
     .spread(function(configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj) {
       var config;
       var pkg;
@@ -148,7 +158,6 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       if (tagsObj.state === 'fulfilled') {
         gitSemverTags = context.gitSemverTags = tagsObj.value;
         fromTag = gitSemverTags[options.releaseCount - 1];
-
         var lastTag = gitSemverTags[0];
 
         if (lastTag === context.version || lastTag === 'v' + context.version) {

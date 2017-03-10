@@ -106,6 +106,13 @@ Type: `boolean` Default: `true` if a different version than last release is give
 
 If this value is `true` and `context.version` equals last release then `context.version` will be changed to `'Unreleased'`.
 
+##### lernaPackage
+
+Specify a package in lerna-style monorepo that the CHANGELOG should be generated for.
+
+Lerna tags releases in the format `foo-package@1.0.0` and assumes that packages
+are stored in the directory structure `./package/foo-package`.
+
 #### context
 
 See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog-writer) docs. There are some defaults or changes:
