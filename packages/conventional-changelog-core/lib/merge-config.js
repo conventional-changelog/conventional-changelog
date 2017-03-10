@@ -21,15 +21,15 @@ var rhosts = /github|bitbucket|gitlab/i;
 var rtag = /tag:\s*[v=]?(.+?)[,\)]/gi;
 
 function semverTagsPromise(options) {
-  var semverTagsDeferred = Q.defer();
-  gitSemverTags(function(err, result) {
-    if (err) {
-      semverTagsDeferred.reject(err);
-    } else {
-      semverTagsDeferred.resolve(result);
-    }
-  }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage});
-  return semverTagsDeferred.promise;
+  return Q.Promise(function(resolve, reject) {
+    gitSemverTags(function(err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage});
+  });
 }
 
 function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
