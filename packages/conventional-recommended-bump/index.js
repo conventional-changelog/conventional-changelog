@@ -2,7 +2,7 @@
 var concat = require('concat-stream');
 var conventionalCommitsFilter = require('conventional-commits-filter');
 var conventionalCommitsParser = require('conventional-commits-parser');
-var gitLatestSemverTag = require('git-latest-semver-tag');
+var gitSemverTags = require('git-semver-tags');
 var gitRawCommits = require('git-raw-commits');
 var objectAssign = require('object-assign');
 
@@ -42,7 +42,7 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
   parserOpts = objectAssign({}, config.parserOpts, parserOpts);
   parserOpts.warn = parserOpts.warn || options.warn;
 
-  gitLatestSemverTag(function(err, tag) {
+  gitSemverTags(function(err, tags) {
     if (err) {
       cb(err);
       return;
@@ -50,7 +50,8 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
 
     gitRawCommits({
       format: '%B%n-hash-%n%H',
-      from: tag
+      from: tags[0] || '',
+      path: options.path
     })
       .pipe(conventionalCommitsParser(parserOpts))
       .pipe(concat(function(data) {
@@ -82,7 +83,7 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
 
         cb(null, result);
       }));
-  });
+  }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage});
 }
 
 module.exports = conventionalRecommendedBump;

@@ -6,6 +6,7 @@ var fs = require('fs');
 var shell = require('shelljs');
 var betterThanBefore = require('better-than-before')();
 var preparing = betterThanBefore.preparing;
+var mkdirp = require('mkdirp');
 
 betterThanBefore.setups([
   function() { // 1
@@ -26,7 +27,26 @@ betterThanBefore.setups([
   function() { // 5
     fs.writeFileSync('test2', '');
     shell.exec('git add --all && git commit -m"Second commit"');
-  }
+  },
+  function() { // 6
+    mkdirp.sync('test/packages/foo');
+    fs.writeFileSync('test/packages/foo/foo1.txt', '');
+    shell.exec('git add --all && git commit -m"feat: should not be taken into account\nBREAKING CHANGE: I break the API"');
+    shell.exec('git tag foo@1.0.0');
+    fs.writeFileSync('test/packages/foo/foo2.txt', '');
+    shell.exec('git tag foo@1.0.1');
+    shell.exec('git add --all && git commit -m"feat: my awesome new monorepo feature"');
+  },
+  function() { // 7
+    shell.exec('git tag bar@1.0.0');
+    mkdirp.sync('test/packages/bar');
+    fs.writeFileSync('test/packages/bar/bar.txt', '');
+    shell.exec('git add --all && git commit -m"feat: should not be taken into account\nBREAKING CHANGE: I break the API"');
+
+    shell.exec('git tag foo@1.1.0');
+    fs.writeFileSync('test/packages/foo/foo2.txt', 'change');
+    shell.exec('git add --all && git commit -m"fix: I made a slight change to foo2.txt"');
+  },
 ]);
 
 betterThanBefore.tearsWithJoy(function() {
@@ -141,6 +161,45 @@ describe('conventional-recommended-bump', function() {
     }, function(err) {
       equal(err.message, 'Preset: "no" does not exist');
       done();
+    });
+  });
+
+  it('should error if no preset found', function(done) {
+    preparing(5);
+
+    conventionalRecommendedBump({
+      preset: 'no'
+    }, function(err) {
+      equal(err.message, 'Preset: "no" does not exist');
+      done();
+    });
+  });
+
+  describe('lerna style repo', function() {
+    it('should recommends a minor release if appropriate', function(done) {
+      preparing(6);
+
+      conventionalRecommendedBump({
+        lernaPackage: 'foo',
+        preset: 'angular',
+        path: 'test/packages/foo'
+      }, function(err, recommendation) {
+        equal(recommendation.releaseType, 'minor');
+        done();
+      });
+    });
+
+    it('should ignore commits in other package folders', function(done) {
+      preparing(7);
+
+      conventionalRecommendedBump({
+        lernaPackage: 'foo',
+        preset: 'angular',
+        path: 'test/packages/foo'
+      }, function(err, recommendation) {
+        equal(recommendation.releaseType, 'patch');
+        done();
+      });
     });
   });
 });

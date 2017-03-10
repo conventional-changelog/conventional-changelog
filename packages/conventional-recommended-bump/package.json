@@ -20,7 +20,7 @@
     "concat-stream": "^1.4.10",
     "conventional-commits-filter": "^1.0.0",
     "conventional-commits-parser": "^1.0.1",
-    "git-latest-semver-tag": "^1.0.0",
+    "git-semver-tags": "^1.0.0",
     "git-raw-commits": "^1.0.0",
     "meow": "^3.3.0",
     "object-assign": "^4.0.1"
@@ -29,16 +29,16 @@
     "better-than-before": "^1.0.0",
     "core-assert": "^0.2.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.4.2",
     "jscs": "^3.0.7",
     "jshint": "^2.6.3",
+    "mkdirp": "^0.5.1",
     "mocha": "*",
     "shelljs": "^0.7.3"
   },
   "scripts": {
-    "coverage": "istanbul cover _mocha -- -R spec --timeout 20000 && rm -rf ./coverage",
     "lint": "jshint presets test *.js --exclude node_modules && jscs presets test *.js",
-    "test": "npm run-script lint && mocha --timeout 20000"
+    "test": "npm run-script lint && mocha --timeout 30000",
+    "test-windows": "mocha --timeout 30000"
   },
   "bin": "cli.js"
 }

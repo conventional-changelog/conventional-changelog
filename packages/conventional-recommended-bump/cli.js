@@ -21,7 +21,9 @@ var cli = meow({
     '  -i, --issue-prefixes           Comma separated prefixes of an issue',
     '  -n, --note-keywords            Comma separated keywords for important notes',
     '  -f, --field-pattern            Regex to match other fields',
-    '  -v, --verbose                  Verbose output'
+    '  -v, --verbose                  Verbose output',
+    '  -l, --lerna-package            Recommend a bump for a specific lerna package (:pkg-name@1.0.0)',
+    '  --commit-path                  Recommend a bump scoped to a specific directory'
   ]
 }, {
   alias: {
@@ -33,11 +35,15 @@ var cli = meow({
     i: 'issuePrefixes',
     n: 'noteKeywords',
     f: 'fieldPattern',
-    v: 'verbose'
+    v: 'verbose',
+    l: 'lernaPackage'
   }
 });
 
-var options = {};
+var options = {
+  path: cli.flags.commitPath,
+  lernaPackage: cli.flags.lernaPackage
+};
 var flags = cli.flags;
 var preset = flags.preset;
 var config = flags.config;
