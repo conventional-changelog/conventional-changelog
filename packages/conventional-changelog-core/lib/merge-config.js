@@ -265,7 +265,9 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
                   context.currentTag = context.currentTag || firstCommitHash;
                 }
               } else {
-                context.currentTag = context.currentTag || 'v' + context.version;
+                if (!context.currentTag) {
+                  context.currentTag = options.lernaPackage ? options.lernaPackage + '@' + context.version : 'v' + context.version;
+                }
               }
             }
 

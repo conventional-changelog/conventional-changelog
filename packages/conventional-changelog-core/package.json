@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "better-than-before": "^1.0.0",
+    "conventional-changelog-angular": "^1.3.2",
     "chai": "^3.4.1",
     "git-dummy-commit": "^1.1.0",
     "git-tails": "^1.0.0",

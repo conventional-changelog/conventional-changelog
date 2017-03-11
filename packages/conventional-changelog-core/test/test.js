@@ -83,19 +83,20 @@ betterThanBefore.setups([
     gitDummyCommit('something unreleased yet :)');
   },
   function() { // 16
-    shell.exec('git tag foo@2.0.0');
+    writeFileSync('./package.json', '{"version": "2.0.0"}'); // required by angular preset.
+    shell.exec('git tag foo@1.0.0');
     mkdirp.sync('./packages/foo');
     writeFileSync('./packages/foo/test1', '');
-    shell.exec('git add --all && git commit -m"first lerna style commit hooray"');
+    shell.exec('git add --all && git commit -m"feat: first lerna style commit hooray"');
     mkdirp.sync('./packages/bar');
     writeFileSync('./packages/bar/test1', '');
-    shell.exec('git add --all && git commit -m"another lerna package, this should be skipped"');
+    shell.exec('git add --all && git commit -m"feat: another lerna package, this should be skipped"');
   },
   function() { // 17
-    shell.exec('git tag foo@2.1.0');
+    shell.exec('git tag foo@1.1.0');
     mkdirp.sync('./packages/foo');
     writeFileSync('./packages/foo/test2', '');
-    shell.exec('git add --all && git commit -m"second lerna style commit woo"');
+    shell.exec('git add --all && git commit -m"feat: second lerna style commit woo"');
   }
 ]);
 
@@ -1142,6 +1143,24 @@ describe('conventionalChangelogCore', function() {
           expect(chunk).to.not.include('second lerna style commit woo');
           expect(chunk).to.not.include('another lerna package, this should be skipped');
           expect(chunk).to.not.include('something unreleased yet :)');
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('takes into account lerna tag format when generating context.currentTag', function(done) {
+      preparing(16);
+
+      conventionalChangelogCore({
+        lernaPackage: 'foo',
+        config: require('conventional-changelog-angular')
+      }, {}, {path: './packages/foo'})
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+          // confirm that context.currentTag behaves differently when
+          // lerna style tags are applied.
+          expect(chunk).to.include('foo@1.0.0...foo@2.0.0');
           cb();
         }, function() {
           done();
