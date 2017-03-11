@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.7.0...conventional-changelog-core@1.8.0) (2017-03-11)
+
+
+### Features
+
+* context.currentTag should take into account lerna tag format ([#178](https://github.com/conventional-changelog/conventional-changelog/issues/178)) ([f0e5875](https://github.com/conventional-changelog/conventional-changelog-core/commit/f0e5875))
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/v1.4.0...v1.5.0) (2016-05-10)
 
@@ -147,6 +160,3 @@
 ### BREAKING CHANGES
 
 * config: `options.preset` is removed in favour of `options.config`
-
-
-

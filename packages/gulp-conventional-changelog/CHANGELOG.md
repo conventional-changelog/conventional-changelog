@@ -1,3 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/conventional-changelog/gulp-conventional-changelog/compare/gulp-conventional-changelog@1.1.2...gulp-conventional-changelog@1.1.3) (2017-03-11)
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/stevemao/gulp-conventional-changelog/compare/v1.0.1...v1.1.0) (2016-02-13)
 
@@ -50,7 +58,3 @@
 
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/stevemao/gulp-conventional-changelog/compare/v0.5.0...v0.6.0) (2015-08-15)
-
-
-
-

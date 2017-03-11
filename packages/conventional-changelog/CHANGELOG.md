@@ -1,3 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.1.3"></a>
+## [1.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.2...conventional-changelog@1.1.3) (2017-03-11)
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/ajoslin/conventional-changelog/compare/v1.0.2...v1.1.0) (2016-02-13)
 
@@ -477,4 +485,3 @@ and patchVersionText options.
 #### Features
 
 * create conventional-changelog module ([dd1959d7b2c18846b12b088b47345a2a171c1309](https://github.com/ajoslin/conventional-changelog/commit/dd1959d7b2c18846b12b088b47345a2a171c1309))
-

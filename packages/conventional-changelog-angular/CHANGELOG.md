@@ -1,3 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.3.3"></a>
+## [1.3.3](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.3.2...conventional-changelog-angular@1.3.3) (2017-03-11)
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.2.0...v1.3.0) (2016-08-06)
 
@@ -69,6 +77,3 @@
 ### Features
 
 * **init:** extracting code from https://github.com/ajoslin/conventional-changelog ([79a8c6b](https://github.com/stevemao/conventional-changelog-angular/commit/79a8c6b))
-
-
-

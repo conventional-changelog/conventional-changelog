@@ -1,3 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/conventional-changelog/conventional-changelog-cli/compare/conventional-changelog-cli@1.3.0...conventional-changelog-cli@1.3.1) (2017-03-11)
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-changelog-cli/compare/v1.1.1...v1.2.0) (2016-05-08)
 
@@ -58,6 +66,3 @@ Fixes https://github.com/ajoslin/conventional-changelog/issues/100
 ### Features
 
 * **init:** extract cli from conventional-changelog ([2246df5](https://github.com/stevemao/conventional-changelog-cli/commit/2246df5))
-
-
-
