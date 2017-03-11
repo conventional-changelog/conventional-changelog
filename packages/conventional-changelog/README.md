@@ -24,6 +24,15 @@ conventionalChangelog({
   .pipe(process.stdout); // or any writable stream
 ```
 
+Or if you want to use your own custom preset:
+
+```js
+var conventionalChangelog = require('conventional-changelog');
+
+var config = require('@org/conventional-changelog-custom-preset');
+conventionalChangelog({config})
+  .pipe(process.stdout); // or any writable stream
+```
 
 ## API
 
