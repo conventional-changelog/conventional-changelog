@@ -1149,7 +1149,7 @@ describe('conventionalChangelogCore', function() {
         }));
     });
 
-    it('context.currentTag takes into account lerna tag format', function(done) {
+    it('takes into account lerna tag format when generating context.currentTag', function(done) {
       preparing(16);
 
       conventionalChangelogCore({
