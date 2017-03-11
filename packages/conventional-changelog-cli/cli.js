@@ -45,7 +45,9 @@ var cli = meow({
     '  -n, --config              A filepath of your config script',
     '                            Example of a config script: https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/index.js',
     '',
-    '  -c, --context             A filepath of a json that is used to define template variables'
+    '  -c, --context             A filepath of a json that is used to define template variables',
+    '  -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)',
+    '  --commit-path             Generate a changelog scoped to a specific directory'
   ]
 }, {
   alias: {
@@ -59,7 +61,8 @@ var cli = meow({
     u: 'outputUnreleased',
     v: 'verbose',
     n: 'config',
-    c: 'context'
+    c: 'context',
+    l: 'lernaPackage'
   }
 });
 
@@ -89,7 +92,8 @@ var options = _.omit({
   },
   append: append,
   releaseCount: releaseCount,
-  outputUnreleased: flags.outputUnreleased
+  outputUnreleased: flags.outputUnreleased,
+  lernaPackage: flags.lernaPackage
 }, _.isUndefined);
 
 if (flags.verbose) {
@@ -116,7 +120,10 @@ try {
   process.exit(1);
 }
 
-var changelogStream = conventionalChangelog(options, templateContext, config.gitRawCommitsOpts, config.parserOpts, config.writerOpts)
+var gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {});
+if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath;
+
+var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
   .on('error', function (err) {
     if (flags.verbose) {
       console.error(err.stack);

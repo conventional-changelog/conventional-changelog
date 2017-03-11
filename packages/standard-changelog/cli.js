@@ -26,7 +26,9 @@ var cli = meow({
     '  -a, --append              Should the generated block be appended',
     '  -r, --release-count       How many releases to be generated from the latest',
     '  -v, --verbose             Verbose output',
-    '  -c, --context             A filepath of a json that is used to define template variables'
+    '  -c, --context             A filepath of a json that is used to define template variables',
+    '  -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)',
+    '  --commit-path             Generate a changelog scoped to a specific directory'
   ]
 }, {
   alias: {
@@ -40,7 +42,8 @@ var cli = meow({
     r: 'releaseCount',
     v: 'verbose',
     c: 'context',
-    f: 'first-release'
+    f: 'firstRelease',
+    l: 'lernaPackage'
   },
   default: {
     i: 'CHANGELOG.md',
@@ -61,7 +64,8 @@ var options = _.omit({
     path: flags.pkg
   },
   append: append,
-  releaseCount: releaseCount
+  releaseCount: releaseCount,
+  lernaPackage: flags.lernaPackage
 }, _.isUndefined);
 
 if (flags.verbose) {
@@ -87,7 +91,7 @@ try {
   outputError(err);
 }
 
-var changelogStream = standardChangelog(options, templateContext)
+var changelogStream = standardChangelog(options, templateContext, flags.commitPath ? {path: flags.commitPath} : {})
   .on('error', function(err) {
     outputError(err);
   });
