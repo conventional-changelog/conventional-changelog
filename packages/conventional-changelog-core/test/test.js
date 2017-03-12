@@ -97,7 +97,11 @@ betterThanBefore.setups([
     mkdirp.sync('./packages/foo');
     writeFileSync('./packages/foo/test2', '');
     shell.exec('git add --all && git commit -m"feat: second lerna style commit woo"');
-  }
+  },
+  function() { // 18
+    gitDummyCommit();
+    shell.exec('git tag 3.0.0');
+  },
 ]);
 
 betterThanBefore.tearsWithJoy(function() {
@@ -979,6 +983,86 @@ describe('conventionalChangelogCore', function() {
           cb();
         }, function() {
           expect(i).to.equal(1);
+          done();
+        }));
+    });
+
+    it('should not prefix with a "v"', function(done) {
+      preparing(18);
+      var i = 0;
+
+      conventionalChangelogCore({
+        releaseCount: 0
+      }, {
+        version: '4.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('3.0.0...4.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('should remove the first "v"', function(done) {
+      preparing(18);
+      var i = 0;
+
+      conventionalChangelogCore({
+        releaseCount: 0
+      }, {
+        version: 'v4.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk, enc, cb) {
+          chunk = chunk.toString();
+
+          if (i === 0) {
+            expect(chunk).to.equal('3.0.0...4.0.0');
+          }
+
+          i++;
+          cb();
+        }, function() {
+          done();
+        }));
+    });
+
+    it('should prefix a leading v to version if no previous tags found', function(done) {
+      preparing(1);
+
+      conventionalChangelogCore({}, {
+        version: '1.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk) {
+          expect(chunk.toString()).to.include('...v1.0.0');
+
+          done();
+        }));
+    });
+
+    it('should not prefix a leading v to version if there is already a leading v', function(done) {
+      preparing(1);
+
+      conventionalChangelogCore({}, {
+        version: 'v1.0.0'
+      }, {}, {}, {
+        mainTemplate: '{{previousTag}}...{{currentTag}}'
+      })
+        .pipe(through(function(chunk) {
+          expect(chunk.toString()).to.include('...v1.0.0');
+
           done();
         }));
     });

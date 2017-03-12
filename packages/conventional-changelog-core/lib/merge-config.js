@@ -155,6 +155,8 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
         context.packageData = pkg;
       }
 
+      context.version = context.version || '';
+
       if (tagsObj.state === 'fulfilled') {
         gitSemverTags = context.gitSemverTags = tagsObj.value;
         fromTag = gitSemverTags[options.releaseCount - 1];
@@ -230,6 +232,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
 
       writerOpts = _.assign({
           finalizeContext: function(context, writerOpts, filteredCommits, keyCommit, originalCommits) {
+            var currentTag;
             var firstCommit = originalCommits[0];
             var lastCommit = originalCommits[originalCommits.length - 1];
             var firstCommitHash = firstCommit ? firstCommit.hash : null;
@@ -237,7 +240,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
 
             if ((!context.currentTag || !context.previousTag) && keyCommit) {
               var match = /tag:\s*(.+?)[,\)]/gi.exec(keyCommit.gitTags);
-              var currentTag = context.currentTag;
+              currentTag = context.currentTag;
               context.currentTag = currentTag || match ? match[1] : null;
               var index = gitSemverTags.indexOf(context.currentTag);
 
@@ -264,9 +267,27 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
                 } else {
                   context.currentTag = context.currentTag || firstCommitHash;
                 }
-              } else {
-                if (!context.currentTag) {
-                  context.currentTag = options.lernaPackage ? options.lernaPackage + '@' + context.version : 'v' + context.version;
+              } else if (!context.currentTag) {
+                if (options.lernaPackage) {
+                  context.currentTag = options.lernaPackage + '@' + context.version;
+                } else {
+                  if (gitSemverTags[0]) {
+                    if (gitSemverTags[0][0] === 'v' && context.version[0] !== 'v') {
+                      currentTag = 'v' + context.version;
+                    } else if (gitSemverTags[0][0] !== 'v' && context.version[0] === 'v') {
+                      currentTag = context.version.replace(/^v/, '');
+                    } else {
+                      currentTag = context.version;
+                    }
+                  } else {
+                    if (context.version[0] !== 'v') {
+                      currentTag = 'v' + context.version;
+                    } else {
+                      currentTag = context.version;
+                    }
+                  }
+
+                  context.currentTag = currentTag;
                 }
               }
             }
