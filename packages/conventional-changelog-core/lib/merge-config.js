@@ -32,6 +32,26 @@ function semverTagsPromise(options) {
   });
 }
 
+function guessNextTag(previousTag, version) {
+  if (previousTag) {
+    if (previousTag[0] === 'v' && version[0] !== 'v') {
+      return 'v' + version;
+    }
+
+    if (previousTag[0] !== 'v' && version[0] === 'v') {
+      return version.replace(/^v/, '');
+    }
+
+    return version;
+  }
+
+  if (version[0] !== 'v') {
+    return 'v' + version;
+  }
+
+  return version;
+}
+
 function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   var configPromise;
   var pkgPromise;
@@ -155,6 +175,8 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
         context.packageData = pkg;
       }
 
+      context.version = context.version || '';
+
       if (tagsObj.state === 'fulfilled') {
         gitSemverTags = context.gitSemverTags = tagsObj.value;
         fromTag = gitSemverTags[options.releaseCount - 1];
@@ -264,9 +286,11 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
                 } else {
                   context.currentTag = context.currentTag || firstCommitHash;
                 }
-              } else {
-                if (!context.currentTag) {
-                  context.currentTag = options.lernaPackage ? options.lernaPackage + '@' + context.version : 'v' + context.version;
+              } else if (!context.currentTag) {
+                if (options.lernaPackage) {
+                  context.currentTag = options.lernaPackage + '@' + context.version;
+                } else {
+                  context.currentTag = guessNextTag(gitSemverTags[0], context.version);
                 }
               }
             }
