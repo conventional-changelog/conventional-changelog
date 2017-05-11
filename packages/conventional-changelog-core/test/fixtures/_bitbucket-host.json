@@ -1,0 +1,7 @@
+{
+  "version": "0.0.17",
+  "repository": {
+    "type": "git",
+    "url": "https://some-user@bitbucket.org/some-group/some-project.git"
+  }
+}

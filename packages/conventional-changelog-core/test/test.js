@@ -492,6 +492,27 @@ describe('conventionalChangelogCore', function() {
     }));
   });
 
+  it('should generate correct compare url for bitbucket', function(done) {
+    preparing(18);
+
+    conventionalChangelogCore({
+      releaseCount: 0,
+      pkg: {
+        path: __dirname + '/fixtures/_bitbucket-host.json'
+      },
+      config: require('../../conventional-changelog-angular')
+    }, {
+      version: 'v4.0.0'
+    })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('https://bitbucket.org/some-group/some-project/compare/4.0.0..3.0.0');
+
+        done();
+      }));
+  });
+
   it('should transform the commit', function(done) {
     preparing(5);
 
@@ -1269,5 +1290,6 @@ describe('conventionalChangelogCore', function() {
           done();
         }));
     });
+
   });
 });
