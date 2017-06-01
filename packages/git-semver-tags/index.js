@@ -2,7 +2,7 @@
 var exec = require('child_process').exec;
 var semverValid = require('semver').valid;
 var regex = /tag:\s*(.+?)[,\)]/gi;
-var cmd = 'git log --decorate --no-color';
+var cmd = 'git log --tags --simplify-by-decoration --pretty=format:"%d"';
 
 function lernaTag(tag, pkg) {
   if (pkg && !(new RegExp('^' + pkg + '@')).test(tag)) {
