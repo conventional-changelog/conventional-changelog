@@ -106,6 +106,8 @@ Type: `boolean` Default: `true` if a different version than last release is give
 
 If this value is `true` and `context.version` equals last release then `context.version` will be changed to `'Unreleased'`.
 
+**NOTE:** You may want to combine this option with `releaseCount` set to `0` to always overwrite the whole CHANGELOG. `conventional-changelog` only outputs a CHANGELOG but doesn't read any existing one.
+
 ##### lernaPackage
 
 Specify a package in lerna-style monorepo that the CHANGELOG should be generated for.
