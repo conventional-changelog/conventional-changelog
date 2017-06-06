@@ -198,13 +198,13 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
         var type;
 
-        if (context.host) {
+        if (repo && repo.type) {
+          type = repo.type;
+        } else if (context.host) {
           var match = context.host.match(rhosts);
           if (match) {
             type = match[0];
           }
-        } else if (repo && repo.type) {
-          type = repo.type;
         }
 
         if (type) {
