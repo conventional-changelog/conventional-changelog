@@ -4,11 +4,19 @@ var conventionalChangelogCore = require('conventional-changelog-core');
 function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   options.warn = options.warn || function() {};
 
+  var scope = '';
+
+  if (options.scope) {
+    scope = options.scope.toLowerCase() + '/';
+  }
+
   if (options.preset) {
     try {
-      options.config = require('conventional-changelog-' + options.preset.toLowerCase());
+      options.config = require(scope + 'conventional-changelog-' + options.preset.toLowerCase());
     } catch (err) {
-      options.warn('Preset: "' + options.preset + '" does not exist');
+      var errMessage = 'Preset: "' + options.preset + '" does not exist';
+      errMessage += scope !== '' ?  ' under scope "' + options.scope + '"' : '';
+      options.warn(errMessage);
     }
   }
 

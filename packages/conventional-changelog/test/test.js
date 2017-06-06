@@ -113,4 +113,72 @@ describe('conventionalChangelog', function() {
         done();
       }));
   });
+
+  it('should work with scoped presets', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      preset: 'angular',
+      scope: '@yoitsro'
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('#');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
+  it('should warn if scoped preset is not found', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      preset: 'angular',
+      scope: '@yoitsroo',
+      warn: function(warning) {
+        if (i > 0) {
+          return;
+        }
+
+        expect(warning).to.equal('Preset: "angular" does not exist under scope "@yoitsroo"');
+
+        i++;
+        done();
+      }
+    })
+      .on('error', function(err) {
+        done(err);
+      });
+  });
+
+  it('should still work if scoped preset is not found', function(done) {
+    var i = 0;
+
+    conventionalChangelog({
+      preset: 'angular',
+      scope: '@yoitsroo',
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('#');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
 });
