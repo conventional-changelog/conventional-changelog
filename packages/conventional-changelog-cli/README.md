@@ -44,20 +44,46 @@ To fully customize the tool, please checkout [conventional-changelog](https://gi
 ## Recommended workflow
 
 1. Make changes
-2. Commit those changes
-3. Make sure Travis turns green
-4. Bump version in `package.json`
-5. `conventionalChangelog`
-6. Commit `package.json` and `CHANGELOG.md` files
-7. Tag
-8. Push
-
+1. Commit those changes
+1. Make sure Travis turns green
+1. Bump version in `package.json`
+1. `conventionalChangelog`
+1. Commit `package.json` and `CHANGELOG.md` files
+1. Tag
+1. Push
 
 The reason why you should commit and tag after `conventionalChangelog` is that the CHANGELOG should be included in the new release, hence `gitRawCommitsOpts.from` defaults to the latest semver tag.
 
-If you use `npm version`, it auto tags immediately after changing the version in package.json. In such case, you might want to specify the version manually and generate the changelog before `npm version`.
 
-Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to make a release or change it to your needs.
+### With `npm version`
+
+Using the npm scripts to our advantage with the following hooks:
+
+```json
+{
+  "scripts": {
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
+  }
+}
+```
+
+You could follow the following workflow
+
+1. Make changes
+1. Commit those changes
+1. Pull all the tags
+1. Run the [`npm version [path|minor|major]`](https://docs.npmjs.com/cli/version) command
+1. Push
+
+You could optionally add a `preversion` script to package your project or running a full suit of test.
+And a `postversion` script to clean your system and push your release and tags.
+
+By adding a `.npmrc` you could also automate your commit message and set your tag prefix as such:
+
+```
+tag-version-prefix=""
+message="chore(release): %s :tada:"
+```
 
 
 ## Why
