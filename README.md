@@ -6,7 +6,7 @@
 
 > Generate a CHANGELOG from git metadata
 
-It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which handles the the entire tagging and CHANGELOG
+It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which handles the entire tagging and CHANGELOG
 generation process.
 
 Alternatively, the [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) allows you to generate a CHANGELOG from the
