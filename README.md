@@ -32,4 +32,4 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 - [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
 - [validate-commit-msg](https://github.com/conventional-changelog/validate-commit-msg) - Githook to validate commit messages are up to standard
-- [conventional-changelog-lint](https://github.com/marionebl/conventional-changelog-lint) - Lint commit messages against your conventional-changelog preset
+- [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
