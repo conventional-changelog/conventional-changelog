@@ -1,19 +1,10 @@
 'use strict';
 var compareFunc = require('compare-func');
+var gufg = require('github-url-from-git');
+var readPkgUp = require('read-pkg-up');
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
-var path = require('path');
-var pkgJson = {};
-var gufg = require('github-url-from-git');
-try {
-  pkgJson = require(path.resolve(
-    process.cwd(),
-    './package.json'
-  ));
-} catch (err) {
-  console.error('no root package.json found');
-}
 
 var parserOpts = {
   headerPattern: /^(\w*)(?:\((.*)\))?\: (.*)$/,
@@ -28,8 +19,10 @@ var parserOpts = {
 };
 
 function issueUrl() {
-  if (pkgJson.repository && pkgJson.repository.url && ~pkgJson.repository.url.indexOf('github.com')) {
-    var gitUrl = gufg(pkgJson.repository.url);
+  var pkg = readPkgUp.sync().pkg;
+
+  if (pkg && pkg.repository && pkg.repository.url && ~pkg.repository.url.indexOf('github.com')) {
+    var gitUrl = gufg(pkg.repository.url);
 
     if (gitUrl) {
       return gitUrl + '/issues/';
