@@ -1,7 +1,5 @@
 # conventional-changelog-cli
 
-[![Join the chat at https://gitter.im/conventional-changelog/conventional-changelog-cli](https://badges.gitter.im/conventional-changelog/conventional-changelog-cli.svg)](https://gitter.im/conventional-changelog/conventional-changelog-cli?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 
 > Generate a changelog from git metadata

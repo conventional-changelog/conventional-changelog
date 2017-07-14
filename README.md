@@ -4,6 +4,10 @@
 [![Coverage Status](https://coveralls.io/repos/conventional-changelog/conventional-changelog/badge.svg?branch=master)](https://coveralls.io/r/conventional-changelog/conventional-changelog?branch=master)
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 
+
+[![Join the chat at https://gitter.im/conventional-changelog/conventional-changelog](https://badges.gitter.im/conventional-changelog/conventional-changelog.svg)](https://gitter.im/conventional-changelog/conventional-changelog?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+
 > Generate a CHANGELOG from git metadata
 
 It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which handles the entire tagging and CHANGELOG
