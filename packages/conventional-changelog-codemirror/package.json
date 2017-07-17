@@ -1,12 +1,11 @@
 {
   "name": "conventional-changelog-codemirror",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "conventional-changelog CodeMirror preset",
   "main": "index.js",
   "scripts": {
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
     "test": "mocha --timeout 30000 && npm run-script lint",
-    "test-windows": "mocha --timeout 30000",
     "test-windows": "echo 'make work on windows'"
   },
   "repository": {

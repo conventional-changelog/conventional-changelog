@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.3.3...conventional-changelog-angular@1.4.0) (2017-07-17)
+
+
+### Features
+
+* **angular:** find package.json from cwd upwards ([#206](https://github.com/conventional-changelog/conventional-changelog/issues/206)) ([867c142](https://github.com/conventional-changelog/conventional-changelog-angular/commit/867c142))
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.3.2...conventional-changelog-angular@1.3.3) (2017-03-11)
 

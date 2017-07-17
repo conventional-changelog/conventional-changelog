@@ -1,4 +1,112 @@
-<a name="1.3.0"></a>
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+      <a name="2.0.0"></a>
+# 2.0.0 (2017-07-17)
+
+
+### Bug Fixes
+
+* **cli:** commit can be split when testing a commit file ([f3b3a3f](https://github.com/conventional-changelog/conventional-commits-parser/commit/f3b3a3f))
+* **cli:** error handling for ENOENT is fixed ([3c92233](https://github.com/conventional-changelog/conventional-commits-parser/commit/3c92233))
+* **cli:** fix "undefined" in json string ([0680e42](https://github.com/conventional-changelog/conventional-commits-parser/commit/0680e42))
+* **cli:** options format ([491357e](https://github.com/conventional-changelog/conventional-commits-parser/commit/491357e))
+* **deps:** require split2 ([1941c37](https://github.com/conventional-changelog/conventional-commits-parser/commit/1941c37))
+* **error:** change error type and wordings ([d8be5e5](https://github.com/conventional-changelog/conventional-commits-parser/commit/d8be5e5))
+* **footer:** notes contains more than one paragraphs after references ([d744ec7](https://github.com/conventional-changelog/conventional-commits-parser/commit/d744ec7))
+* **headerCorrespondence:** string value for cli ([fb774fc](https://github.com/conventional-changelog/conventional-commits-parser/commit/fb774fc))
+* **headerPattern:** change how capturing groups works ([fe1fe0c](https://github.com/conventional-changelog/conventional-commits-parser/commit/fe1fe0c))
+* **issuePrefixes:** should return noMatch if falsy ([72db2bf](https://github.com/conventional-changelog/conventional-commits-parser/commit/72db2bf))
+* **mention:** fix mention matching ([965986b](https://github.com/conventional-changelog/conventional-commits-parser/commit/965986b)), closes [#26](https://github.com/conventional-changelog/conventional-commits-parser/issues/26)
+* **newlines:** preserve newlines in a part ([06b8c7c](https://github.com/conventional-changelog/conventional-commits-parser/commit/06b8c7c)), closes [#15](https://github.com/conventional-changelog/conventional-commits-parser/issues/15)
+* **notes:** note keywords must appear at the beginning of a sentence ([5a2059e](https://github.com/conventional-changelog/conventional-commits-parser/commit/5a2059e)), closes [#23](https://github.com/conventional-changelog/conventional-commits-parser/issues/23)
+* **parser:** do not trim spaces but newlines ([1e8c4c5](https://github.com/conventional-changelog/conventional-commits-parser/commit/1e8c4c5))
+* **parser:** it returns null if there is no header ([8571c9e](https://github.com/conventional-changelog/conventional-commits-parser/commit/8571c9e))
+* **regex:** do not treat it as note if there are texts after keywords ([571b03e](https://github.com/conventional-changelog/conventional-commits-parser/commit/571b03e))
+* **regex:** make getReferencePartsRegex stricter ([62adf54](https://github.com/conventional-changelog/conventional-commits-parser/commit/62adf54)), closes [#27](https://github.com/conventional-changelog/conventional-commits-parser/issues/27) [#30](https://github.com/conventional-changelog/conventional-commits-parser/issues/30) [#27](https://github.com/conventional-changelog/conventional-commits-parser/issues/27) [#28](https://github.com/conventional-changelog/conventional-commits-parser/issues/28)
+* **revertPattern:** correct regex ([8628983](https://github.com/conventional-changelog/conventional-commits-parser/commit/8628983))
+* **util:** remove an accidentally commited file ([3710a8c](https://github.com/conventional-changelog/conventional-commits-parser/commit/3710a8c))
+* **warn:** should tell which commit cannot be parsed ([04b0a9b](https://github.com/conventional-changelog/conventional-commits-parser/commit/04b0a9b))
+
+
+### Chores
+
+* init ([a529841](https://github.com/conventional-changelog/conventional-commits-parser/commit/a529841))
+
+
+### Code Refactoring
+
+* **breaks:** change `breaks` to `notes` ([5189a61](https://github.com/conventional-changelog/conventional-commits-parser/commit/5189a61)), closes [#2](https://github.com/conventional-changelog/conventional-commits-parser/issues/2)
+* **merge:** pull-request should be merge ([4e7c61c](https://github.com/conventional-changelog/conventional-commits-parser/commit/4e7c61c))
+* **regex:** regex now takes `options` ([eea319a](https://github.com/conventional-changelog/conventional-commits-parser/commit/eea319a))
+
+
+### Features
+
+* **cli:** able to have two files, separator works for interactive ([db1e3b5](https://github.com/conventional-changelog/conventional-commits-parser/commit/db1e3b5))
+* **cli:** add aliases, more help details and tests ([eb654a2](https://github.com/conventional-changelog/conventional-commits-parser/commit/eb654a2))
+* **cli:** add missing options ([8ac1cf7](https://github.com/conventional-changelog/conventional-commits-parser/commit/8ac1cf7))
+* **cli:** add warn function for interactive shell ([84fe31f](https://github.com/conventional-changelog/conventional-commits-parser/commit/84fe31f))
+* **correspondence:** add `headerCorrespondence` and improve commit parts ([aca9e95](https://github.com/conventional-changelog/conventional-commits-parser/commit/aca9e95)), closes [#6](https://github.com/conventional-changelog/conventional-commits-parser/issues/6)
+* **fieldPattern:** should support string format ([b6b6b52](https://github.com/conventional-changelog/conventional-commits-parser/commit/b6b6b52))
+* **hash:** drop support ([1ccc751](https://github.com/conventional-changelog/conventional-commits-parser/commit/1ccc751))
+* **headerParts:** headerParts can be anything ([31e1c11](https://github.com/conventional-changelog/conventional-commits-parser/commit/31e1c11)), closes [#10](https://github.com/conventional-changelog/conventional-commits-parser/issues/10)
+* **issuePrefixes:** init and referenceKeywords -> referenceActions ([86bf798](https://github.com/conventional-changelog/conventional-commits-parser/commit/86bf798)), closes [#11](https://github.com/conventional-changelog/conventional-commits-parser/issues/11)
+* **maxSubjectLength:** removed ([3448582](https://github.com/conventional-changelog/conventional-commits-parser/commit/3448582))
+* **mentions:** [@someone](https://github.com/someone) in commit ([d60fe76](https://github.com/conventional-changelog/conventional-commits-parser/commit/d60fe76)), closes [#24](https://github.com/conventional-changelog/conventional-commits-parser/issues/24)
+* **newline:** fields does not contain leading or trailing newlines ([6db453b](https://github.com/conventional-changelog/conventional-commits-parser/commit/6db453b)), closes [#14](https://github.com/conventional-changelog/conventional-commits-parser/issues/14)
+* **note:** noteKeywords is case insensitive ([f779a29](https://github.com/conventional-changelog/conventional-commits-parser/commit/f779a29)), closes [#21](https://github.com/conventional-changelog/conventional-commits-parser/issues/21)
+* **options:** all options can be a string ([0fa17b4](https://github.com/conventional-changelog/conventional-commits-parser/commit/0fa17b4))
+* **otherFields:** other fields are possible to be included ([9e06278](https://github.com/conventional-changelog/conventional-commits-parser/commit/9e06278))
+* improvements and bug fixes ([1cde104](https://github.com/conventional-changelog/conventional-commits-parser/commit/1cde104)), closes [#5](https://github.com/conventional-changelog/conventional-commits-parser/issues/5)
+* migrate repo to lerna mono-repo ([793e823](https://github.com/conventional-changelog/conventional-commits-parser/commit/793e823))
+* **regex:** matching JIRA-123 like references ([20f1f7a](https://github.com/conventional-changelog/conventional-commits-parser/commit/20f1f7a)), closes [#19](https://github.com/conventional-changelog/conventional-commits-parser/issues/19)
+* support squash commits ([#31](https://github.com/conventional-changelog/conventional-changelog/issues/31)) ([fff60c0](https://github.com/conventional-changelog/conventional-commits-parser/commit/fff60c0))
+* **owner:** yield owner field ([d8d0334](https://github.com/conventional-changelog/conventional-commits-parser/commit/d8d0334)), closes [#12](https://github.com/conventional-changelog/conventional-commits-parser/issues/12)
+* **parser:** notes can have more than one paragraph ([733bfa9](https://github.com/conventional-changelog/conventional-commits-parser/commit/733bfa9)), closes [#3](https://github.com/conventional-changelog/conventional-commits-parser/issues/3)
+* **pullRequest:** Allow to skip and parse pull request header ([a2e929f](https://github.com/conventional-changelog/conventional-commits-parser/commit/a2e929f)), closes [#20](https://github.com/conventional-changelog/conventional-commits-parser/issues/20)
+* **reference:** able to reference an issue without an action ([6474123](https://github.com/conventional-changelog/conventional-commits-parser/commit/6474123)), closes [#22](https://github.com/conventional-changelog/conventional-commits-parser/issues/22)
+* **reference:** expose prefix ([47df766](https://github.com/conventional-changelog/conventional-commits-parser/commit/47df766)), closes [#17](https://github.com/conventional-changelog/conventional-commits-parser/issues/17)
+* **references:** allow header to reference an issue ([df18a24](https://github.com/conventional-changelog/conventional-commits-parser/commit/df18a24))
+* **references:** support other formats of references ([7c70213](https://github.com/conventional-changelog/conventional-commits-parser/commit/7c70213)), closes [#4](https://github.com/conventional-changelog/conventional-commits-parser/issues/4) [#8](https://github.com/conventional-changelog/conventional-commits-parser/issues/8)
+* **regex:** leading and trailing space for closes and breaks keywords are trimmed ([9639860](https://github.com/conventional-changelog/conventional-commits-parser/commit/9639860))
+* **revert:** parse a commit that reverts ([2af7233](https://github.com/conventional-changelog/conventional-commits-parser/commit/2af7233))
+* **stream:** emmit an empty string to down stream if commit cannot be parsed ([76bf84e](https://github.com/conventional-changelog/conventional-commits-parser/commit/76bf84e))
+* **sync:** add the sync function ([82071c6](https://github.com/conventional-changelog/conventional-commits-parser/commit/82071c6)), closes [#13](https://github.com/conventional-changelog/conventional-commits-parser/issues/13)
+* **warn:** optionally warn user what is wrong when commit cannot be parsed ([32b3cda](https://github.com/conventional-changelog/conventional-commits-parser/commit/32b3cda))
+
+
+### Performance Improvements
+
+* **regex:** regex should be constructed in index.html ([15afd26](https://github.com/conventional-changelog/conventional-commits-parser/commit/15afd26))
+
+
+### BREAKING CHANGES
+
+* **merge:** `pull request` should be `merge`. Also make the parsed result to be consistent with other parts.
+* This module is imported from https://github.com/ajoslin/conventional-changelog, and is originally written by @vojtajina, @btford and @ajoslin.
+* **hash:** hash is no longer supported. This parser should just parse raw commit messages. Also text fields are appended with a newline "
+".
+* **regex:** It returns a nomatch regex if it's keywords are missing.
+* **headerParts:** `headerParts` does not limit to `type`, `scope` and `subject`. They can now be defined in `options.headerCorrespondence` and the order is the order of capturing group in `options.headerPattern`. If part is missing in `options.headerCorrespondence` it is `undefined`. If part is not captured but is not missing in `options.headerCorrespondence` it is `null`.
+* **maxSubjectLength:** `maxSubjectLength` is not available any more.
+* **issuePrefixes:** `options.referenceKeywords` is now `options.referenceActions`
+* **references:** `closes` now becomes `references` and it is loosely based the links above.
+* **parser:** The regex for matching notes are loosen. The semicolon and space are optional. The `notes` object is no longer a key-value object but an array of note object, such as
+```js
+{
+title: 'BREAKING AMEND',
+text: 'some breaking change'
+}
+```
+The detection of notes, closes, continueNote and isBody are mutually exclusive.
+* **breaks:** Variable name related to `breaks` changes to `notes`, because "Important Notes" a more generic term. There is no functional changes.
+* **stream:** It no longer skips the chunk if commit cannot be parsed. An empty string is passed to down stream
+* **correspondence:** body and footer will be null if they are not found. type and subject are nullable too.
+
+      <a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.3...v1.3.0) (2016-10-15)
 
 
@@ -111,6 +219,3 @@
 ### Features
 
 * **reference:** expose prefix ([9962dda](https://github.com/stevemao/conventional-commits-parser/commit/9962dda)), closes [#17](https://github.com/stevemao/conventional-commits-parser/issues/17)
-
-
-

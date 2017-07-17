@@ -1,6 +1,6 @@
 {
   "name": "conventional-recommended-bump",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Get a recommended version bump based on conventional commits",
   "homepage": "https://github.com/conventional-changelog/conventional-recommended-bump",
   "author": {
@@ -24,8 +24,8 @@
   "dependencies": {
     "concat-stream": "^1.4.10",
     "conventional-commits-filter": "^1.0.0",
-    "conventional-commits-parser": "^1.0.1",
-    "git-semver-tags": "^1.2.0",
+    "conventional-commits-parser": "^2.0.0",
+    "git-semver-tags": "^1.2.1",
     "git-raw-commits": "^1.2.0",
     "meow": "^3.3.0",
     "object-assign": "^4.0.1"

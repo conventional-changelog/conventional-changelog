@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.4"></a>
+## [1.1.4](https://github.com/conventional-changelog/gulp-conventional-changelog/compare/gulp-conventional-changelog@1.1.3...gulp-conventional-changelog@1.1.4) (2017-07-17)
+
 <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/conventional-changelog/gulp-conventional-changelog/compare/gulp-conventional-changelog@1.1.2...gulp-conventional-changelog@1.1.3) (2017-03-11)
 

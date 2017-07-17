@@ -3,7 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="1.1.3"></a>
+       <a name="1.1.4"></a>
+## [1.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.3...conventional-changelog@1.1.4) (2017-07-17)
+
+       <a name="1.1.3"></a>
 ## [1.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.2...conventional-changelog@1.1.3) (2017-03-11)
 
 <a name="1.1.0"></a>
@@ -407,7 +410,7 @@ default title output from 0.0.9.
 If you wish to have a link to your version, simply customize the versionText
 and patchVersionText options.
 
- ([9d8e0548](https://github.com/ajoslin/conventional-changelog/commit/9d8e05480771f881c33e535f922401637f11861c))
+([9d8e0548](https://github.com/ajoslin/conventional-changelog/commit/9d8e05480771f881c33e535f922401637f11861c))
 
 
 ### 0.0.10 "revise" (2014-05-28)

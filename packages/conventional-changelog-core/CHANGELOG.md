@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.8.0...conventional-changelog-core@1.9.0) (2017-07-17)
+
+
+### Features
+
+* **context:** default currentTag may not prefix with v ([#179](https://github.com/conventional-changelog/conventional-changelog/issues/179)) ([431598a](https://github.com/conventional-changelog/conventional-changelog-core/commit/431598a))
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.7.0...conventional-changelog-core@1.8.0) (2017-03-11)
 

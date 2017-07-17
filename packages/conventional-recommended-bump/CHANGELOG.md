@@ -1,3 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.0.0...conventional-recommended-bump@1.0.1) (2017-07-17)
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/conventional-changelog/conventional-recommended-bump/compare/v0.2.1...v0.3.0) (2016-08-13)
 
@@ -82,7 +90,3 @@
 
 <a name="0.0.1"></a>
 ## 0.0.1 (2015-06-22)
-
-
-
-
