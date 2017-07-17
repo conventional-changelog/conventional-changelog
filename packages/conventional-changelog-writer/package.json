@@ -10,6 +10,12 @@
   },
   "repository": "conventional-changelog/conventional-changelog-writer",
   "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js",
+    "lib",
+    "templates"
+  ],
   "keywords": [
     "conventional-changelog-writer",
     "changelog",

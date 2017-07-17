@@ -14,6 +14,10 @@
     "log"
   ],
   "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
   "dependencies": {
     "add-stream": "^1.0.0",
     "chalk": "^1.1.3",

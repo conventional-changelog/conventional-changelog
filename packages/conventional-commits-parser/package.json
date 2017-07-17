@@ -10,6 +10,11 @@
   },
   "repository": "conventional-changelog/conventional-commits-parser",
   "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js",
+    "lib"
+  ],
   "keywords": [
     "conventional-commits-parser",
     "changelog",

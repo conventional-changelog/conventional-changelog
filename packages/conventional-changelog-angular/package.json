@@ -17,6 +17,10 @@
     "angular",
     "preset"
   ],
+  "files": [
+    "index.js",
+    "templates"
+  ],
   "author": "Steve Mao",
   "license": "ISC",
   "bugs": {

@@ -10,6 +10,11 @@
   },
   "repository": "conventional-changelog/conventional-recommended-bump",
   "license": "MIT",
+  "files": [
+    "index.js",
+    "cli.js",
+    "presets"
+  ],
   "keywords": [
     "conventional-recommended-bump",
     "recommend",
