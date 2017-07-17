@@ -13,6 +13,11 @@
     "log"
   ],
   "license": "MIT",
+  "files": [
+    "index.js",
+    "lib",
+    "hosts"
+  ],
   "dependencies": {
     "conventional-changelog-writer": "^1.1.0",
     "conventional-commits-parser": "^1.0.0",

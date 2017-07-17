@@ -13,6 +13,9 @@
     "log"
   ],
   "license": "MIT",
+  "files": [
+    "index.js"
+  ],
   "contributors": [
     {
       "name": "Brian Ford"

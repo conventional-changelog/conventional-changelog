@@ -19,6 +19,10 @@
   ],
   "author": "Steve Mao",
   "license": "ISC",
+  "files": [
+    "index.js",
+    "templates"
+  ],
   "bugs": {
     "url": "https://github.com/stevemao/conventional-changelog-atom/issues"
   },
