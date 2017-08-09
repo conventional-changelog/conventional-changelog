@@ -1,7 +1,6 @@
 'use strict';
 var compareFunc = require('compare-func');
 var gufg = require('github-url-from-git');
-var readPkgUp = require('read-pkg-up');
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
@@ -18,8 +17,8 @@ var parserOpts = {
   revertCorrespondence: ['header', 'hash']
 };
 
-function issueUrl() {
-  var pkg = readPkgUp.sync().pkg;
+function issueUrl(context) {
+  var pkg = context.packageData;
 
   if (pkg && pkg.repository && pkg.repository.url && ~pkg.repository.url.indexOf('github.com')) {
     var gitUrl = gufg(pkg.repository.url);
@@ -31,7 +30,7 @@ function issueUrl() {
 }
 
 var writerOpts = {
-  transform: function(commit) {
+  transform: function(commit, context) {
     var discard = true;
     var issues = [];
 
@@ -71,7 +70,7 @@ var writerOpts = {
     }
 
     if (typeof commit.subject === 'string') {
-      var url = issueUrl();
+      var url = issueUrl(context);
       if (url) {
         // GitHub issue URLs.
         commit.subject = commit.subject.replace(/#([0-9]+)/g, function(_, issue) {
