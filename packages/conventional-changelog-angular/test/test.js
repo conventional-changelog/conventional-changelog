@@ -46,7 +46,7 @@ betterThanBefore.setups([
   },
   function() {
     shell.exec('git tag v1.0.0');
-    gitDummyCommit('feat: some more features');
+    gitDummyCommit('feat: some more features, implementing #3');
   }
 ]);
 
@@ -220,6 +220,60 @@ describe('angular preset', function() {
 
         expect(chunk).to.include('(http://unknown/compare');
         expect(chunk).to.include('](http://unknown/commits/');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
+  it('should work specifying where to find a package.json using conventional-changelog-core', function(done) {
+    preparing(7);
+    var i = 0;
+
+    conventionalChangelogCore({
+      config: preset,
+      pkg: {
+        path: __dirname + '/fixtures/_known-host.json'
+      }
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('(https://github.com/conventional-changelog/example/compare');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/example/commit/');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/example/issues/');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
+  it('should fallback to the closest package.json when not providing a location for a package.json', function(done) {
+    preparing(7);
+    var i = 0;
+
+    conventionalChangelogCore({
+      config: preset,
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('(https://github.com/conventional-changelog/conventional-changelog-angular/compare');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/conventional-changelog-angular/commit/');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/conventional-changelog-angular/issues/');
+
 
         i++;
         cb();
