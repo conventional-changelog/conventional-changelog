@@ -47,6 +47,9 @@ betterThanBefore.setups([
   function() {
     shell.exec('git tag v1.0.0');
     gitDummyCommit('feat: some more features');
+  },
+  function() {
+    gitDummyCommit(['feat(*): implementing #5 by @dlmr', ' closes #10']);
   }
 ]);
 
@@ -225,6 +228,84 @@ describe('angular preset', function() {
         cb();
       }, function() {
         expect(i).to.equal(1);
+        done();
+      }));
+  });
+
+  it('should work specifying where to find a package.json using conventional-changelog-core', function(done) {
+    preparing(8);
+    var i = 0;
+
+    conventionalChangelogCore({
+      config: preset,
+      pkg: {
+        path: __dirname + '/fixtures/_known-host.json'
+      }
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('(https://github.com/conventional-changelog/example/compare');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/example/commit/');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/example/issues/');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
+  it('should fallback to the closest package.json when not providing a location for a package.json', function(done) {
+    preparing(8);
+    var i = 0;
+
+    conventionalChangelogCore({
+      config: preset,
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk, enc, cb) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('(https://github.com/conventional-changelog/conventional-changelog-angular/compare');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/conventional-changelog-angular/commit/');
+        expect(chunk).to.include('](https://github.com/conventional-changelog/conventional-changelog-angular/issues/');
+
+        i++;
+        cb();
+      }, function() {
+        expect(i).to.equal(1);
+        done();
+      }));
+  });
+
+  it('should support non public GitHub repository locations', function(done) {
+    preparing(8);
+
+    conventionalChangelogCore({
+      config: preset,
+      pkg: {
+        path: __dirname + '/fixtures/_ghe-host.json'
+      }
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.include('(https://github.internal.example.com/dlmr');
+        expect(chunk).to.include('(https://github.internal.example.com/conventional-changelog/internal/compare');
+        expect(chunk).to.include('](https://github.internal.example.com/conventional-changelog/internal/commit/');
+        expect(chunk).to.include('5](https://github.internal.example.com/conventional-changelog/internal/issues/5');
+        expect(chunk).to.include(' closes [#10](https://github.internal.example.com/conventional-changelog/internal/issues/10)')
+
         done();
       }));
   });
