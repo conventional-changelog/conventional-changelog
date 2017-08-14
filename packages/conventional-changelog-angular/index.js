@@ -1,7 +1,5 @@
 'use strict';
 var compareFunc = require('compare-func');
-var gufg = require('github-url-from-git');
-var readPkgUp = require('read-pkg-up');
 var Q = require('q');
 var readFile = Q.denodeify(require('fs').readFile);
 var resolve = require('path').resolve;
@@ -18,20 +16,8 @@ var parserOpts = {
   revertCorrespondence: ['header', 'hash']
 };
 
-function issueUrl() {
-  var pkg = readPkgUp.sync().pkg;
-
-  if (pkg && pkg.repository && pkg.repository.url && ~pkg.repository.url.indexOf('github.com')) {
-    var gitUrl = gufg(pkg.repository.url);
-
-    if (gitUrl) {
-      return gitUrl + '/issues/';
-    }
-  }
-}
-
 var writerOpts = {
-  transform: function(commit) {
+  transform: function(commit, context) {
     var discard = true;
     var issues = [];
 
@@ -71,17 +57,21 @@ var writerOpts = {
     }
 
     if (typeof commit.subject === 'string') {
-      var url = issueUrl();
+      var url = context.repository ?
+        context.host + '/' + context.owner + '/' + context.repository :
+        context.repoUrl;
       if (url) {
-        // GitHub issue URLs.
+        url = url + '/issues/';
+        // Issue URLs.
         commit.subject = commit.subject.replace(/#([0-9]+)/g, function(_, issue) {
           issues.push(issue);
           return '[#' + issue + '](' + url + issue + ')';
         });
       }
-      // GitHub user URLs.
-      commit.subject = commit.subject.replace(/@([a-zA-Z0-9_]+)/g, '[@$1](https://github.com/$1)');
-      commit.subject = commit.subject;
+      if (context.host) {
+        // User URLs.
+        commit.subject = commit.subject.replace(/@([a-zA-Z0-9_]+)/g, '[@$1](' + context.host + '/$1)');
+      }
     }
 
     // remove references that already appear in the subject
