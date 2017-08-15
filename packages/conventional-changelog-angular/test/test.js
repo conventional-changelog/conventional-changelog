@@ -50,6 +50,9 @@ betterThanBefore.setups([
   },
   function() {
     gitDummyCommit(['feat(*): implementing #5 by @dlmr', ' closes #10']);
+  },
+  function() {
+    gitDummyCommit(['fix: use npm@5 (@username)']);
   }
 ]);
 
@@ -305,6 +308,25 @@ describe('angular preset', function() {
         expect(chunk).to.include('](https://github.internal.example.com/conventional-changelog/internal/commit/');
         expect(chunk).to.include('5](https://github.internal.example.com/conventional-changelog/internal/issues/5');
         expect(chunk).to.include(' closes [#10](https://github.internal.example.com/conventional-changelog/internal/issues/10)')
+
+        done();
+      }));
+  });
+
+  it('should only replace with link to user if it is an username', function (done) {
+    preparing(9);
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function(err) {
+        done(err);
+      })
+      .pipe(through(function(chunk) {
+        chunk = chunk.toString();
+
+        expect(chunk).to.not.include('(https://github.com/5');
+        expect(chunk).to.include('(https://github.com/username');
 
         done();
       }));

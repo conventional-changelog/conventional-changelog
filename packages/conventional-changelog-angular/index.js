@@ -70,7 +70,7 @@ var writerOpts = {
       }
       if (context.host) {
         // User URLs.
-        commit.subject = commit.subject.replace(/@([a-zA-Z0-9_]+)/g, '[@$1](' + context.host + '/$1)');
+        commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9]){0,38})/g, '[@$1](' + context.host + '/$1)');
       }
     }
 
