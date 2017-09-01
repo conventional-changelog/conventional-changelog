@@ -3,7 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-      <a name="2.0.0"></a>
+  <a name="2.0.1"></a>
+## [2.0.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.0...conventional-changelog-writer@2.0.1) (2017-09-01)
+
+  <a name="2.0.0"></a>
 # 2.0.0 (2017-07-17)
 
 
@@ -112,7 +115,7 @@ text: 'some breaking change'
 * **compareFunc:** Default compare functions no longer sort by lexicographical order. They use `localeCompare` instead
 * **version:** `version` is not a required field and it is moved to the `context` object. If version is found in the last commit, it will be overwritten.
 
-      <a name="1.4.1"></a>
+<a name="1.4.1"></a>
 ## [1.4.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.4.0...v1.4.1) (2016-05-10)
 
 

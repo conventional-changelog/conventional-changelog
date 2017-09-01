@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.4.0...conventional-changelog-angular@1.5.0) (2017-09-01)
+
+
+### Bug Fixes
+
+* **angular:** smarter username detection ([#219](https://github.com/conventional-changelog/conventional-changelog/issues/219)) ([f1b4847](https://github.com/conventional-changelog/conventional-changelog-angular/commit/f1b4847)), closes [#218](https://github.com/conventional-changelog/conventional-changelog-angular/issues/218)
+
+
+### Features
+
+* **angular:** use the context for getting the repository and host urls ([#217](https://github.com/conventional-changelog/conventional-changelog/issues/217)) ([c146f2a](https://github.com/conventional-changelog/conventional-changelog-angular/commit/c146f2a))
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.3.3...conventional-changelog-angular@1.4.0) (2017-07-17)
 
