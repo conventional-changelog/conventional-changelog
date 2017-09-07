@@ -2,7 +2,7 @@
 
 > [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) core
 
-You are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
+You are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) module. Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom).
 
 
 ## Usage
@@ -117,7 +117,7 @@ are stored in the directory structure `./packages/foo-package`.
 
 #### context
 
-See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog-writer) docs. There are some defaults or changes:
+See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-writer) docs. There are some defaults or changes:
 
 ##### host
 
@@ -167,7 +167,7 @@ Should link to the page that compares current tag with previous tag?
 
 #### gitRawCommitsOpts
 
-See the [git-raw-commits](https://github.com/conventional-changelog/git-raw-commits) docs. There are some defaults:
+See the [git-raw-commits](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-raw-commits) docs. There are some defaults:
 
 ##### format
 
@@ -195,7 +195,7 @@ Default: `options.warn`
 
 #### writerOpts
 
-See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog-writer) docs. There are some defaults:
+See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-writer) docs. There are some defaults:
 
 ##### finalizeContext
 
