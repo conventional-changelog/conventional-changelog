@@ -31,7 +31,7 @@ All available command line parameters can be listed using CLI: `conventional-cha
 
 **Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"`.
 
-To fully customize the tool, please checkout [conventional-changelog](https://github.com/ajoslin/conventional-changelog) and [conventional-changelog-core](https://github.com/conventional-changelog/conventional-changelog-core) docs. You can find more details there. **Note: `config` here can work with `preset`, which is different than `options.config` in conventional-changelog.**
+To fully customize the tool, please checkout [conventional-changelog](https://github.com/ajoslin/conventional-changelog) and [conventional-changelog-core](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core) docs. You can find more details there. **Note: `config` here can work with `preset`, which is different than `options.config` in conventional-changelog.**
 
 
 ## Example output
@@ -85,9 +85,9 @@ Please use this [gist](https://gist.github.com/stevemao/280ef22ee861323993a0) to
 ## Related
 
 - [conventional-changelog](https://github.com/ajoslin/conventional-changelog) - API of this module
-- [standard-changelog](https://github.com/conventional-changelog/standard-changelog) - Similar to this module but only with angular convention
+- [standard-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/standard-changelog) - Similar to this module but only with angular convention
 - [conventional-github-releaser](https://github.com/conventional-changelog/conventional-github-releaser) - Make a new GitHub release from git metadata
-- [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
+- [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 - [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
 - [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
