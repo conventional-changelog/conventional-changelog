@@ -8,7 +8,7 @@ function lernaTag(tag, pkg) {
   if (pkg && !(new RegExp('^' + pkg + '@')).test(tag)) {
     return false;
   } else {
-    return /^.+@[0-9]+\.[0-9]\.[0-9](-.+)?$/.test(tag);
+    return /^.+@[0-9]+\.[0-9]+\.[0-9]+(-.+)?$/.test(tag);
   }
 }
 
