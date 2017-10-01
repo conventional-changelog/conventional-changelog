@@ -128,6 +128,21 @@ it('should work with lerna style tags', function(done) {
   }, {lernaTags: true});
 });
 
+it('should work with lerna style tags with multiple digits', function(done) {
+  writeFileSync('test5', '');
+  shell.exec('git add --all && git commit -m"fifth commit"');
+  shell.exec('git tag foobar-project@0.0.10');
+  shell.exec('git add --all && git commit -m"sixth commit"');
+  shell.exec('git tag foobar-project@0.10.0');
+  shell.exec('git add --all && git commit -m"seventh commit"');
+  shell.exec('git tag foobar-project@10.0.0');
+
+  gitSemverTags(function(err, tags) {
+    equal(tags, ['foobar-project@10.0.0', 'foobar-project@0.10.0', 'foobar-project@0.0.10', 'foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0']);
+    done();
+  }, {lernaTags: true});
+});
+
 it('should allow lerna style tags to be filtered by package', function(done) {
   writeFileSync('test5', '');
   shell.exec('git add --all && git commit -m"seventh commit"');
