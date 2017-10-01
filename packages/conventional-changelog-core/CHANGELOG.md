@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.2"></a>
+## [1.9.2](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.9.1...conventional-changelog-core@1.9.2) (2017-10-01)
+
 <a name="1.9.1"></a>
 ## [1.9.1](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.9.0...conventional-changelog-core@1.9.1) (2017-09-01)
 

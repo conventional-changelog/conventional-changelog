@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
     "get-pkg-repo": "^1.0.0",
     "git-raw-commits": "^1.2.0",
     "git-remote-origin-url": "^2.0.0",
-    "git-semver-tags": "^1.2.1",
+    "git-semver-tags": "^1.2.2",
     "lodash": "^4.0.0",
     "normalize-package-data": "^2.3.5",
     "q": "^1.4.1",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "better-than-before": "^1.0.0",
-    "conventional-changelog-angular": "^1.5.0",
+    "conventional-changelog-angular": "^1.5.1",
     "chai": "^3.4.1",
     "git-dummy-commit": "^1.1.0",
     "git-tails": "^1.0.0",

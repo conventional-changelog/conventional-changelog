@@ -3,10 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
- <a name="1.1.5"></a>
+       <a name="1.1.6"></a>
+## [1.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.5...conventional-changelog@1.1.6) (2017-10-01)
+
+       <a name="1.1.5"></a>
 ## [1.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.4...conventional-changelog@1.1.5) (2017-09-01)
 
- <a name="1.1.4"></a>
+<a name="1.1.4"></a>
 ## [1.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.3...conventional-changelog@1.1.4) (2017-07-17)
 
 <a name="1.1.3"></a>
