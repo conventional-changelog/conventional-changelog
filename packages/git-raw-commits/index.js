@@ -6,11 +6,12 @@ var stream = require('stream');
 var template = require('lodash.template');
 var through = require('through2');
 
-function gitRawCommits(options) {
+function gitRawCommits(options, opts) {
   var readable = new stream.Readable();
   readable._read = function() {};
 
   options = options || {};
+  opts = opts || {};
   options.format = options.format || '%B';
   options.from = options.from || '';
   options.to = options.to || 'HEAD';
@@ -40,6 +41,7 @@ function gitRawCommits(options) {
   var isError = false;
 
   var child = execFile('git', args, {
+    cwd: opts.cwd || process.cwd(),
     maxBuffer: Infinity
   });
 
