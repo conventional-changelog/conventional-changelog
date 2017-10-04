@@ -178,6 +178,50 @@ describe('parser', function() {
     });
   });
 
+  it('should ignore comments', function() {
+    expect(parser('# comment', options, reg)).to.eql({
+      merge: null,
+      header: null,
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser(' # non-comment', options, reg)).to.eql({
+      merge: null,
+      header: ' # non-comment',
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser('header\n# comment\n\nbody', options, reg)).to.eql({
+      merge: null,
+      header: 'header',
+      body: 'body',
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+  });
+
   describe('mentions', function() {
     it('should mention someone in the commit', function() {
       var options = {
