@@ -660,8 +660,8 @@ describe('parser', function() {
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
         'Kills #1, gh-123\n' +
         'what\n' +
-        '#25\n' +
-        '#33, maybe gh-100, not sure about #3\n',
+        '* #25\n' +
+        '* #33, maybe gh-100, not sure about #3\n',
         options, reg
       );
 
@@ -684,14 +684,14 @@ describe('parser', function() {
         owner: null,
         repository: null,
         issue: '25',
-        raw: '#25',
+        raw: '* #25',
         prefix: '#'
       }, {
         action: null,
         owner: null,
         repository: null,
         issue: '33',
-        raw: '#33',
+        raw: '* #33',
         prefix: '#'
       }, {
         action: null,
