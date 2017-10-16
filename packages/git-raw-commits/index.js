@@ -6,45 +6,60 @@ var stream = require('stream');
 var template = require('lodash.template');
 var through = require('through2');
 
-function gitRawCommits(options) {
+var DELIMITER = '------------------------ >8 ------------------------';
+
+function normalizeExecOpts(execOpts) {
+  execOpts = execOpts || {};
+  execOpts.cwd = execOpts.cwd || process.cwd();
+  return execOpts;
+}
+
+function normalizeGitOpts(gitOpts) {
+  gitOpts = gitOpts || {};
+  gitOpts.format = gitOpts.format || '%B';
+  gitOpts.from = gitOpts.from || '';
+  gitOpts.to = gitOpts.to || 'HEAD';
+  return gitOpts;
+}
+
+function getGitArgs(gitOpts) {
+  var gitFormat = template('--format=<%= format %>%n' + DELIMITER)(gitOpts);
+  var gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..');
+
+  var gitArgs = ['log', gitFormat, gitFromTo];
+
+  // allow commits to focus on a single directory
+  // this is useful for monorepos.
+  if (gitOpts.path) {
+    gitArgs.push('--', gitOpts.path);
+  }
+
+  return gitArgs.concat(dargs(gitOpts, {
+    excludes: ['debug', 'from', 'to', 'format', 'path']
+  }));
+}
+
+function gitRawCommits(rawGitOpts, rawExecOpts) {
   var readable = new stream.Readable();
   readable._read = function() {};
 
-  options = options || {};
-  options.format = options.format || '%B';
-  options.from = options.from || '';
-  options.to = options.to || 'HEAD';
+  var gitOpts = normalizeGitOpts(rawGitOpts);
+  var execOpts = normalizeExecOpts(rawExecOpts);
+  var args = getGitArgs(gitOpts);
 
-  var gitFormat = template('--format=<%= format %>%n' +
-    '------------------------ >8 ------------------------'
-  )(options);
-  var gitFromTo = template('<%- from ? [from, to].join("..") : to %>')(options);
-
-  var args = dargs(options, {
-    excludes: ['from', 'to', 'format', 'path']
-  });
-
-  var argsPrefix = [gitFormat, gitFromTo];
-  // allow commits to focus on a single directory
-  // this is useful for monorepos.
-  if (options.path) {
-    argsPrefix.push('--', options.path);
-  }
-
-  args = ['log'].concat(argsPrefix, args);
-
-  if (options.debug) {
-    options.debug('Your git-log command is:\ngit ' + args.join(' '));
+  if (gitOpts.debug) {
+    gitOpts.debug('Your git-log command is:\ngit ' + args.join(' '));
   }
 
   var isError = false;
 
   var child = execFile('git', args, {
+    cwd: execOpts.cwd,
     maxBuffer: Infinity
   });
 
   child.stdout
-    .pipe(split('------------------------ >8 ------------------------\n'))
+    .pipe(split(DELIMITER + '\n'))
     .pipe(through(function(chunk, enc, cb) {
       readable.push(chunk);
       isError = false;
