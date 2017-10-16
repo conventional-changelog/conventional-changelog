@@ -22,46 +22,58 @@ gitRawCommits(options)
 
 ## API
 
-### gitRawCommits([options])
+### gitRawCommits(gitOpts, [execOpts])
 
 Returns a readable stream. Stream is split to break on each commit.
 
-#### options
+#### gitOpts
 
 Type: `object`
 
 Please check the available options at http://git-scm.com/docs/git-log.
 **NOTE:** Single dash arguments are not supported because of https://github.com/sindresorhus/dargs/blob/master/index.js#L5.
 
-*NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this patter:
+*NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this pattern:
 
-##### from
+##### gitOpts.from
 
 Type: `string` Default: `''`
 
-##### to
+##### gitOpts.to
 
 Type: `string` Default: `'HEAD'`
 
 This module also have the following additions:
 
-##### format
+##### gitOpts.format
 
 Type: `string` Default: `'%B'`
 
 Please check http://git-scm.com/docs/git-log for format options.
 
-##### debug
+##### gitOpts.debug
 
 Type: `function`
 
 A function to get debug information.
 
-##### path
+##### gitOpts.path
 
 Type: `string`
 
-Filter commits to the path provided. 
+Filter commits to the path provided.
+
+##### execOpts
+
+Options to pass to `git` `childProcess`
+
+Type: `object`
+
+##### execOpts.cwd
+
+Type: `string`
+
+Current working directory to execute git in
 
 
 ## CLI
