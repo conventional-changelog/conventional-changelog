@@ -250,7 +250,7 @@ describe('conventionalChangelogCore', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include('## 0.0.17');
+        expect(chunk).to.include('## <small>0.0.17');
         expect(chunk).to.include('Second commit');
         expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)');
 
@@ -269,7 +269,7 @@ describe('conventionalChangelogCore', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include('## 0.0.17');
+        expect(chunk).to.include('## <small>0.0.17');
         expect(chunk).to.include('Second commit');
 
         done();
@@ -330,7 +330,7 @@ describe('conventionalChangelogCore', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include('## v0.0.17');
+        expect(chunk).to.include('## <small>v0.0.17');
         expect(chunk).to.include('Second commit');
         expect(chunk).to.include('closes [#1](https://github.com/a/b/issues/1)');
 
@@ -367,7 +367,7 @@ describe('conventionalChangelogCore', function() {
     }).pipe(through(function(chunk) {
       chunk = chunk.toString();
 
-      expect(chunk).to.include('## 0.0.17');
+      expect(chunk).to.include('## <small>0.0.17');
       expect(chunk).to.include('closes [#1](github/a/b/issues/1)');
 
       done();

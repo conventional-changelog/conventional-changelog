@@ -1,11 +1,10 @@
 <a name="{{version}}"></a>
-{{#if isPatch~}}
-  ##
-{{~else~}}
-  #
-{{~/if}} {{version}}
+## {{#if isPatch~}} <small>
+  {{~/if~}} {{version}}
   {{~#if title}} "{{title}}"
-  {{~/if}}
+  {{~/if~}}
   {{~#if date}} ({{date}})
+  {{~/if~}}
+  {{~#if isPatch~}} </small>
   {{~/if}}
 
