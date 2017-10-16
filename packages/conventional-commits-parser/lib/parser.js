@@ -33,7 +33,9 @@ function parser(raw, options, regex) {
   var mentionsMatch;
   var revertMatch;
   var otherFields = {};
-  var lines = trimOffNewlines(raw).split(/\r?\n/);
+  var lines = trimOffNewlines(raw).split(/\r?\n/).filter(function(line) {
+    return line[0] !== '#';
+  });
   var continueNote = false;
   var isBody = true;
   var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
@@ -50,17 +52,37 @@ function parser(raw, options, regex) {
   var reReferenceParts = regex.referenceParts;
   var reReferences = regex.references;
 
-  // msg parts
-  var merge = lines.shift();
-  var mergeParts = {};
-  var header;
-  var headerParts = {};
-  var body = '';
-  var footer = '';
+  var body = null;
+  var footer = null;
+  var header = null;
+  var mentions = [];
+  var merge = null;
   var notes = [];
   var references = [];
-  var mentions = [];
-  var revert;
+  var revert = null;
+
+  if (lines.length === 0) {
+    return {
+      body: body,
+      footer: footer,
+      header: header,
+      mentions: mentions,
+      merge: merge,
+      notes: notes,
+      references: references,
+      revert: revert,
+      scope: null,
+      subject: null,
+      type: null
+    };
+  }
+
+  // msg parts
+  merge = lines.shift();
+  var mergeParts = {};
+  var headerParts = {};
+  body = '';
+  footer = '';
 
   mergeMatch = merge.match(options.mergePattern);
   if (mergeMatch && options.mergePattern) {

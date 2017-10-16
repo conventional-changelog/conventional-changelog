@@ -178,6 +178,50 @@ describe('parser', function() {
     });
   });
 
+  it('should ignore comments', function() {
+    expect(parser('# comment', options, reg)).to.eql({
+      merge: null,
+      header: null,
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser(' # non-comment', options, reg)).to.eql({
+      merge: null,
+      header: ' # non-comment',
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser('header\n# comment\n\nbody', options, reg)).to.eql({
+      merge: null,
+      header: 'header',
+      body: 'body',
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+  });
+
   describe('mentions', function() {
     it('should mention someone in the commit', function() {
       var options = {
@@ -616,8 +660,8 @@ describe('parser', function() {
         'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
         'Kills #1, gh-123\n' +
         'what\n' +
-        '#25\n' +
-        '#33, maybe gh-100, not sure about #3\n',
+        '* #25\n' +
+        '* #33, maybe gh-100, not sure about #3\n',
         options, reg
       );
 
@@ -640,14 +684,14 @@ describe('parser', function() {
         owner: null,
         repository: null,
         issue: '25',
-        raw: '#25',
+        raw: '* #25',
         prefix: '#'
       }, {
         action: null,
         owner: null,
         repository: null,
         issue: '33',
-        raw: '#33',
+        raw: '* #33',
         prefix: '#'
       }, {
         action: null,
