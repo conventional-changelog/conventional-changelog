@@ -1,7 +1,7 @@
 'use strict';
 var concat = require('concat-stream');
 var conventionalCommitsFilter = require('conventional-commits-filter');
-var conventionalCommitsParser = require('conventional-commits-parser');
+var conventionalCommitsParser = require('@marionebl/conventional-commits-parser');
 var gitSemverTags = require('git-semver-tags');
 var gitRawCommits = require('git-raw-commits');
 var objectAssign = require('object-assign');

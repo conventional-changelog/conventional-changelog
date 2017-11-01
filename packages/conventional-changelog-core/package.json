@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "conventional-changelog-writer": "^2.0.1",
-    "conventional-commits-parser": "^2.0.0",
+    "@marionebl/conventional-commits-parser": "^2.0.0",
     "dateformat": "^1.0.12",
     "get-pkg-repo": "^1.0.0",
     "git-raw-commits": "^1.2.0",

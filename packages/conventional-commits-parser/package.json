@@ -1,5 +1,5 @@
 {
-  "name": "conventional-commits-parser",
+  "name": "@marionebl/conventional-commits-parser",
   "version": "2.0.0",
   "description": "Parse raw conventional commits",
   "homepage": "https://github.com/conventional-changelog/conventional-commits-parser",
@@ -7,6 +7,9 @@
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": "conventional-changelog/conventional-commits-parser",
   "license": "MIT",

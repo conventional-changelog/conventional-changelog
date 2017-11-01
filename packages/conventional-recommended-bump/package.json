@@ -24,7 +24,7 @@
   "dependencies": {
     "concat-stream": "^1.4.10",
     "conventional-commits-filter": "^1.0.0",
-    "conventional-commits-parser": "^2.0.0",
+    "@marionebl/conventional-commits-parser": "^2.0.0",
     "git-semver-tags": "^1.2.2",
     "git-raw-commits": "^1.2.0",
     "meow": "^3.3.0",
