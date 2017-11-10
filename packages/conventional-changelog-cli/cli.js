@@ -47,7 +47,8 @@ var cli = meow({
     '',
     '  -c, --context             A filepath of a json that is used to define template variables',
     '  -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)',
-    '  --commit-path             Generate a changelog scoped to a specific directory'
+    '  --commit-path             Generate a changelog scoped to a specific directory',
+    '  -f --from                 Commit-ish to start generating changelog entries from'
   ]
 }, {
   alias: {
@@ -62,7 +63,8 @@ var cli = meow({
     v: 'verbose',
     n: 'config',
     c: 'context',
-    l: 'lernaPackage'
+    l: 'lernaPackage',
+    f: 'from'
   }
 });
 
@@ -122,6 +124,8 @@ try {
 
 var gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {});
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath;
+
+if (flags.from) gitRawCommitsOpts.from = flags.from;
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
   .on('error', function (err) {
