@@ -40,7 +40,7 @@ Returns a readable stream.
 
 #### options
 
-See the [conventional-changelog-core](https://github.com/conventional-changelog/conventional-changelog-core) docs. The API is the same with the following changes or additions:
+See the [conventional-changelog-core](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core) docs. The API is the same with the following changes or additions:
 
 ##### preset
 
