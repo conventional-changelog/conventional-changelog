@@ -80,7 +80,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
       }
 
       if (commit.committerDate) {
-        commit.committerDate = dateFormat(commit.committerDate, 'yyyy-mm-dd', true);
+        commit.committerDate = dateFormat(commit.committerDate, 'yyyy-mm-dd HH:MM:ss', true);
       }
 
       cb(null, commit);
