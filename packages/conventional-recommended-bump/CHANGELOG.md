@@ -1,7 +1,15 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.0.2...conventional-recommended-bump@1.0.3) (2017-11-13)
+
+
+
+
+**Note:** Version bump only for package conventional-recommended-bump
 
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.0.1...conventional-recommended-bump@1.0.2) (2017-10-01)

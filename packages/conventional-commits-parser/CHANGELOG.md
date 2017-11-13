@@ -1,9 +1,20 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-      <a name="2.0.0"></a>
+  <a name="2.0.1"></a>
+## [2.0.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.0.0...conventional-commits-parser@2.0.1) (2017-11-13)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** ignore comments  ([#231](https://github.com/conventional-changelog/conventional-commits-parser/issues/231)) ([9db53e3](https://github.com/conventional-changelog/conventional-commits-parser/commit/9db53e3)), closes [#224](https://github.com/conventional-changelog/conventional-commits-parser/issues/224)
+
+
+
+
+  <a name="2.0.0"></a>
 # 2.0.0 (2017-07-17)
 
 
@@ -106,7 +117,7 @@ The detection of notes, closes, continueNote and isBody are mutually exclusive.
 * **stream:** It no longer skips the chunk if commit cannot be parsed. An empty string is passed to down stream
 * **correspondence:** body and footer will be null if they are not found. type and subject are nullable too.
 
-      <a name="1.3.0"></a>
+<a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.3...v1.3.0) (2016-10-15)
 
 

@@ -1,7 +1,15 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+<a name="1.9.3"></a>
+## [1.9.3](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.9.2...conventional-changelog-core@1.9.3) (2017-11-13)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-core
 
 <a name="1.9.2"></a>
 ## [1.9.2](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.9.1...conventional-changelog-core@1.9.2) (2017-10-01)

@@ -1,12 +1,20 @@
 # Change Log
 
 All notable changes to this project will be documented in this file.
-See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-  <a name="2.0.1"></a>
+      <a name="2.0.2"></a>
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.1...conventional-changelog-writer@2.0.2) (2017-11-13)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+      <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.0...conventional-changelog-writer@2.0.1) (2017-09-01)
 
-  <a name="2.0.0"></a>
+<a name="2.0.0"></a>
 # 2.0.0 (2017-07-17)
 
 

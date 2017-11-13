@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/conventional-changelog/git-raw-commits/compare/git-raw-commits@1.2.0...git-raw-commits@1.3.0) (2017-11-13)
+
+
+### Features
+
+* **git-raw-commits:** add execOpts.cwd ([2631213](https://github.com/conventional-changelog/git-raw-commits/commit/2631213))
+
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@1.1.2...v1.2.0) (2017-03-10)
 
