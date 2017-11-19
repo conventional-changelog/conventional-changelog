@@ -82,7 +82,7 @@ By adding a `.npmrc` you could also automate your commit message and set your ta
 
 ```
 tag-version-prefix=""
-message="chore(release): %s :tada:"
+message="build(release): %s :tada:"
 ```
 
 

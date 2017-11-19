@@ -50,16 +50,52 @@ If the commit reverts a previous commit, it should begin with `revert: `, follow
 
 ### Type
 
-If the prefix is `feat`, `fix` or `perf`, it will appear in the changelog. However if there is any [BREAKING CHANGE](#footer), the commit will always appear in the changelog.
+Must be one of the following:
 
-Other prefixes are up to your discretion. Suggested prefixes are `docs`, `chore`, `style`, `refactor`, and `test` for non-changelog related tasks.
+* build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+* ci: Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+* docs: Documentation only changes
+* feat: A new feature
+* fix: A bug fix
+* perf: A code change that improves performance
+* refactor: A code change that neither fixes a bug nor adds a feature
+* revert: Reversal of another change
+* style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+* test: Adding missing tests or correcting existing tests
+
+Relevant for changelogs are:
+
+* feat
+* fix
+* perf
+* all commits with BREAKING CHANGE
 
 ### Scope
 
-The scope could be anything specifying place of the commit change. For example `$location`,
-`$browser`, `$compile`, `$rootScope`, `ngHref`, `ngClick`, `ngView`, etc...
+The scope could be anything specifying place of the commit change, e.g.
 
-### Subject
+* animations
+* common
+* compiler
+* compiler-cli
+* core
+* forms
+* http
+* language-service
+* platform-browser
+* platform-browser-dynamic
+* platform-server
+* platform-webworker
+* platform-webworker-dynamic
+* router
+* service-worker
+* upgrade
+* packaging
+* changelog
+* aio
+
+
+##* Subject
 
 The subject contains succinct description of the change:
 
