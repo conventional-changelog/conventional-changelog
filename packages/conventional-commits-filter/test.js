@@ -8,8 +8,39 @@ it('should error if `commits` is not `array`', function () {
   });
 });
 
-it('should filter reverted commits', function () {
+it('should filter reverted commits that exist in the commits array', function () {
   var commits = [{
+    type: 'revert',
+    scope: null,
+    subject: 'feat(): a very important feature',
+    header: 'revert: feat(): a very important feature\n',
+    body: 'This reverts commit 048fe156c9eddbe566f040f64ca6be1f55b16a23.\n',
+    footer: null,
+    notes: [],
+    references: [],
+    revert: {
+      header: 'feat(): amazing new module',
+      hash: '048fe156c9eddbe566f040f64ca6be1f55b16a23',
+      body: null
+    },
+    hash: '207abfa16885ef5ff88dfc6cdde694bb3fd03104\n',
+    raw: {
+      type: 'revert',
+      scope: null,
+      subject: 'feat(): a very important feature',
+      header: 'revert: feat(): a very important feature\n',
+      body: 'This reverts commit 048fe156c9eddbe566f040f64ca6be1f55b16a23.\n',
+      footer: null,
+      notes: [],
+      references: [],
+      revert: {
+        header: 'feat(): a very important feature',
+        hash: '048fe156c9eddbe566f040f64ca6be1f55b16a23',
+        body: null
+      },
+      hash: '207abfa16885ef5ff88dfc6cdde694bb3fd03104\n'
+    }
+  }, {
     type: 'revert',
     scope: null,
     subject: 'feat(): amazing new module',
@@ -113,9 +144,40 @@ it('should filter reverted commits', function () {
 
   commits = conventionalCommitsFilter(commits);
 
-  assert.equal(commits.length, 2);
+  assert.equal(commits.length, 3);
 
   assert.deepEqual(commits, [{
+    type: 'revert',
+    scope: null,
+    subject: 'feat(): a very important feature',
+    header: 'revert: feat(): a very important feature\n',
+    body: 'This reverts commit 048fe156c9eddbe566f040f64ca6be1f55b16a23.\n',
+    footer: null,
+    notes: [],
+    references: [],
+    revert: {
+      header: 'feat(): amazing new module',
+      hash: '048fe156c9eddbe566f040f64ca6be1f55b16a23',
+      body: null
+    },
+    hash: '207abfa16885ef5ff88dfc6cdde694bb3fd03104\n',
+    raw: {
+      type: 'revert',
+      scope: null,
+      subject: 'feat(): a very important feature',
+      header: 'revert: feat(): a very important feature\n',
+      body: 'This reverts commit 048fe156c9eddbe566f040f64ca6be1f55b16a23.\n',
+      footer: null,
+      notes: [],
+      references: [],
+      revert: {
+        header: 'feat(): a very important feature',
+        hash: '048fe156c9eddbe566f040f64ca6be1f55b16a23',
+        body: null
+      },
+      hash: '207abfa16885ef5ff88dfc6cdde694bb3fd03104\n'
+    }
+  }, {
     type: 'What',
     scope: null,
     subject: 'new feature',
