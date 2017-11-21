@@ -13,7 +13,7 @@ betterThanBefore.setups([
     shell.cd('angular');
     shell.exec('git init');
     writeFileSync('test1', '');
-    shell.exec('git add --all && git commit -m "chore: first commit"');
+    shell.exec('git add --all && git commit -m "build: first commit"');
     writeFileSync('test2', '');
     shell.exec('git add --all && git commit -m "feat($compile): new feature"');
     writeFileSync('test3', '');
