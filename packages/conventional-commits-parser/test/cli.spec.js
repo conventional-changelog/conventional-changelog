@@ -79,9 +79,44 @@ describe('cli', function() {
     });
     cp.stdout
       .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('"scope":"category","type":"fix:subcategory","subject":"My subject"');
-        expect(chunk.toString()).to.include('"references":[{"action":"Close","owner":null,"repository":null,"issue":"10036","raw":"#10036","prefix":"#"},{"action":"fix","owner":null,"repository":null,"issue":"9338","raw":"#9338","prefix":"#"}]');
-        expect(chunk.toString()).to.include('"notes":[{"title":"BREAKING NEWS","text":"A lot of changes!"}]');
+        var data = JSON.parse(chunk.toString())[0];
+        expect(data.scope).to.equal('category');
+        expect(data.type).to.equal('fix:subcategory');
+        expect(data.subject).to.equal('My subject');
+
+        expect(data.references).to.eql([
+          {
+            action: 'Close',
+            owner: null,
+            repository: null,
+            issue: '10036',
+            raw: '#10036',
+            prefix: '#'
+          },
+          {
+            action: null,
+            issue: '13233',
+            owner: null,
+            prefix: '#',
+            raw: 'Fixed #13233',
+            repository: null
+          },
+          {
+            action: 'fix',
+            owner: null,
+            repository: null,
+            issue: '9338',
+            raw: '#9338',
+            prefix: '#'
+          }
+        ]);
+
+        expect(data.notes).to.eql([
+          {
+            title: 'BREAKING NEWS',
+            text: 'A lot of changes!'
+          }
+        ]);
 
         done();
       }));
