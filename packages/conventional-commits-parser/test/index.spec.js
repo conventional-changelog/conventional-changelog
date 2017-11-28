@@ -171,6 +171,13 @@ describe('conventionalCommitsParser', function() {
             raw: '#123',
             prefix: '#'
           }, {
+            action: null,
+            owner: null,
+            repository: null,
+            issue: '25',
+            raw: 'Closes #25',
+            prefix: '#'
+          }, {
             action: 'fix',
             owner: null,
             repository: null,
@@ -178,7 +185,8 @@ describe('conventionalCommitsParser', function() {
             raw: '#33',
             prefix: '#'
           }]);
-        } else if (i === 1) {
+        }
+        if (i === 1) {
           expect(chunk.type).to.equal('fix');
           expect(chunk.scope).to.equal('ng-list');
           expect(chunk.subject).to.equal('Another custom separator');
@@ -232,6 +240,13 @@ describe('conventionalCommitsParser', function() {
             raw: '#123',
             prefix: '#'
           }, {
+            action: null,
+            owner: null,
+            repository: null,
+            issue: '25',
+            raw: 'Closes #25',
+            prefix: '#'
+          }, {
             action: 'fix',
             owner: null,
             repository: null,
@@ -272,5 +287,45 @@ describe('sync', function() {
 
     expect(result.header).to.equal('feat(ng-list): Allow custom separator');
     expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33');
+    expect(result.references).to.eql([
+      {
+        action: 'Closes',
+        issue: '123',
+        owner: null,
+        prefix: '#',
+        raw: '#123',
+        repository: null
+      },
+      {
+        action: 'Closes',
+        issue: '25',
+        owner: null,
+        prefix: '#',
+        raw: '#25',
+        repository: null
+      },
+      {
+        action: 'Fixes',
+        issue: '33',
+        owner: null,
+        prefix: '#',
+        raw: '#33',
+        repository: null
+      }
+    ]);
+  });
+
+  it('should parse references from header', function() {
+    var commit = 'Subject #1';
+    var result = conventionalCommitsParser.sync(commit);
+
+    expect(result.references).to.eql([{
+      action: null,
+      issue: '1',
+      owner: null,
+      prefix: '#',
+      raw: 'Subject #1',
+      repository: null
+    }]);
   });
 });

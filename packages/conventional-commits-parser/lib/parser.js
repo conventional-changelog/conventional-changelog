@@ -2,6 +2,8 @@
 var trimOffNewlines = require('trim-off-newlines');
 var _ = require('lodash');
 
+var CATCH_ALL = /()(.+)/gi;
+
 function append(src, line) {
   if (src) {
     src += '\n' + line;
@@ -16,6 +18,45 @@ function getCommentFilter(char) {
   return function(line) {
     return line.charAt(0) !== char;
   };
+}
+
+function getReferences(input, regex) {
+  var references = [];
+  var referenceSentences;
+  var referenceMatch;
+
+  var reApplicable = input.match(regex.references) !== null ?
+    regex.references :
+    CATCH_ALL;
+
+  while (referenceSentences = reApplicable.exec(input)) {
+    var action = referenceSentences[1] || null;
+    var sentence = referenceSentences[2];
+
+    while (referenceMatch = regex.referenceParts.exec(sentence)) {
+      var owner = null;
+      var repository = referenceMatch[1] || '';
+      var ownerRepo = repository.split('/');
+
+      if (ownerRepo.length > 1) {
+        owner = ownerRepo.shift();
+        repository = ownerRepo.join('/');
+      }
+
+      var reference = {
+        action: action,
+        owner: owner,
+        repository: repository || null,
+        issue: referenceMatch[3],
+        raw: referenceMatch[0],
+        prefix: referenceMatch[2]
+      };
+
+      references.push(reference);
+    }
+  }
+
+  return references;
 }
 
 function passTrough() {
@@ -37,8 +78,6 @@ function parser(raw, options, regex) {
 
   var headerMatch;
   var mergeMatch;
-  var referenceSentences;
-  var referenceMatch;
   var currentProcessedField;
   var mentionsMatch;
   var revertMatch;
@@ -60,10 +99,6 @@ function parser(raw, options, regex) {
   var mergeCorrespondence = _.map(options.mergeCorrespondence, function(field) {
     return field.trim();
   });
-
-  var reNotes = regex.notes;
-  var reReferenceParts = regex.referenceParts;
-  var reReferences = regex.references;
 
   var body = null;
   var footer = null;
@@ -131,35 +166,10 @@ function parser(raw, options, regex) {
     });
   }
 
-  // incase people reference an issue in the header
-  while (referenceSentences = reReferences.exec(header)) {
-    var action = referenceSentences[1] || null;
-    var sentence = referenceSentences[2];
-    while (referenceMatch = reReferenceParts.exec(sentence)) {
-      var owner = null;
-      var repository = referenceMatch[1];
-
-      if (repository) {
-        var ownerRepo = repository.split('/');
-        if (ownerRepo.length > 1) {
-          owner = ownerRepo.shift();
-          repository = ownerRepo.join('/');
-        }
-      } else {
-        repository = null;
-      }
-
-      var reference = {
-        action: action,
-        owner: owner,
-        repository: repository,
-        issue: referenceMatch[3],
-        raw: referenceMatch[0],
-        prefix: referenceMatch[2]
-      };
-      references.push(reference);
-    }
-  }
+  Array.prototype.push.apply(references, getReferences(header, {
+    references: regex.references,
+    referenceParts: regex.referenceParts
+  }));
 
   // body or footer
   _.forEach(lines, function(line) {
@@ -182,7 +192,7 @@ function parser(raw, options, regex) {
     var referenceMatched;
 
     // this is a new important note
-    var notesMatch = line.match(reNotes);
+    var notesMatch = line.match(regex.notes);
     if (notesMatch) {
       continueNote = true;
       isBody = false;
@@ -198,39 +208,18 @@ function parser(raw, options, regex) {
       return;
     }
 
-    // this references an issue
-    while (referenceSentences = reReferences.exec(line)) {
-      var action = referenceSentences[1] || null;
-      var sentence = referenceSentences[2];
-      while (referenceMatch = reReferenceParts.exec(sentence)) {
-        referenceMatched = true;
-        continueNote = false;
-        isBody = false;
+    var lineReferences = getReferences(line, {
+      references: regex.references,
+      referenceParts: regex.referenceParts
+    });
 
-        var owner = null;
-        var repository = referenceMatch[1];
-
-        if (repository) {
-          var ownerRepo = repository.split('/');
-          if (ownerRepo.length > 1) {
-            owner = ownerRepo.shift();
-            repository = ownerRepo.join('/');
-          }
-        } else {
-          repository = null;
-        }
-
-        var reference = {
-          action: action,
-          owner: owner,
-          repository: repository,
-          issue: referenceMatch[3],
-          raw: referenceMatch[0],
-          prefix: referenceMatch[2]
-        };
-        references.push(reference);
-      }
+    if (lineReferences.length > 0) {
+      isBody = false;
+      referenceMatched = true;
+      continueNote = false;
     }
+
+    Array.prototype.push.apply(references, lineReferences);
 
     if (referenceMatched) {
       footer = append(footer, line);
@@ -238,7 +227,6 @@ function parser(raw, options, regex) {
       return;
     }
 
-    // this is the continued important note
     if (continueNote) {
       notes[notes.length - 1].text = append(notes[notes.length - 1].text, line);
       footer = append(footer, line);
@@ -246,13 +234,9 @@ function parser(raw, options, regex) {
       return;
     }
 
-    // this is the body
     if (isBody) {
       body = append(body, line);
-    }
-
-    // this is the continued footer
-    else {
+    } else {
       footer = append(footer, line);
     }
   });
