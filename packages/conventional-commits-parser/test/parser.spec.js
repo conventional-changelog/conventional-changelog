@@ -1,5 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
+var _ = require('lodash');
 var parser = require('../lib/parser');
 var regex = require('../lib/regex');
 
@@ -178,8 +179,10 @@ describe('parser', function() {
     });
   });
 
-  it('should ignore comments', function() {
-    expect(parser('# comment', options, reg)).to.eql({
+  it('should ignore comments according to commentChar', function() {
+    var commentOptions = _.assign({}, options, {commentChar: '#'});
+
+    expect(parser('# comment', commentOptions, reg)).to.eql({
       merge: null,
       header: null,
       body: null,
@@ -193,7 +196,7 @@ describe('parser', function() {
       type: null
     });
 
-    expect(parser(' # non-comment', options, reg)).to.eql({
+    expect(parser(' # non-comment', commentOptions, reg)).to.eql({
       merge: null,
       header: ' # non-comment',
       body: null,
@@ -207,7 +210,67 @@ describe('parser', function() {
       type: null
     });
 
-    expect(parser('header\n# comment\n\nbody', options, reg)).to.eql({
+    expect(parser('header\n# comment\n\nbody', commentOptions, reg)).to.eql({
+      merge: null,
+      header: 'header',
+      body: 'body',
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+  });
+
+  it('should respect commentChar config', function() {
+    var commentOptions = _.assign({}, options, {commentChar: '*'});
+
+    expect(parser('* comment', commentOptions, reg)).to.eql({
+      merge: null,
+      header: null,
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser('# non-comment', commentOptions, reg)).to.eql({
+      merge: null,
+      header: '# non-comment',
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser(' * non-comment', commentOptions, reg)).to.eql({
+      merge: null,
+      header: ' * non-comment',
+      body: null,
+      footer: null,
+      notes: [],
+      references: [],
+      mentions: [],
+      revert: null,
+      scope: null,
+      subject: null,
+      type: null
+    });
+
+    expect(parser('header\n* comment\n\nbody', commentOptions, reg)).to.eql({
       merge: null,
       header: 'header',
       body: 'body',

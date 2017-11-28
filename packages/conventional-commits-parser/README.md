@@ -225,7 +225,7 @@ Revert "throw an error if a callback is passed"
 This reverts commit 9bb4d6c.
 ```
 
-If configured correctly, the parsed result would be 
+If configured correctly, the parsed result would be
 
 ```js
 {
@@ -239,6 +239,15 @@ If configured correctly, the parsed result would be
 It implies that this commit reverts a commit with header `'throw an error if a callback is passed'` and hash `'9bb4d6c'`.
 
 If it's a `string` it will be converted to an `array` separated by a comma.
+
+##### commentChar
+
+Type: `string` or `null` Default: null
+
+What commentChar to use. By default it is `null`, so no comments are stripped.
+Set to `#` if you pass the contents of `.git/COMMIT_EDITMSG` directly.
+
+If you have configured the git commentchar via `git config core.commentchar` you'll want to pass what you have set there.
 
 ##### warn
 

@@ -12,6 +12,16 @@ function append(src, line) {
   return src;
 }
 
+function getCommentFilter(char) {
+  return function(line) {
+    return line.charAt(0) !== char;
+  };
+}
+
+function passTrough() {
+  return true;
+}
+
 function parser(raw, options, regex) {
   if (!raw || !raw.trim()) {
     throw new TypeError('Expected a raw commit');
@@ -33,9 +43,12 @@ function parser(raw, options, regex) {
   var mentionsMatch;
   var revertMatch;
   var otherFields = {};
-  var lines = trimOffNewlines(raw).split(/\r?\n/).filter(function(line) {
-    return line[0] !== '#';
-  });
+  var commentFilter = typeof options.commentChar === 'string' ?
+    getCommentFilter(options.commentChar) :
+    passTrough;
+
+  var lines = trimOffNewlines(raw).split(/\r?\n/).filter(commentFilter);
+
   var continueNote = false;
   var isBody = true;
   var headerCorrespondence = _.map(options.headerCorrespondence, function(part) {
