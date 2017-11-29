@@ -312,6 +312,18 @@ describe('cli', function () {
       }));
   });
 
+  it('--config should work with a return promise', function (done) {
+    var cp = spawn(cliPath, ['--config', '../test/fixtures/promise-config.js'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.equal('template');
+        done();
+      }));
+  });
+
   it('--config should work with relative path', function (done) {
     var cp = spawn(cliPath, ['--config', '../test/fixtures/config.js'], {
       stdio: [process.stdin, null, null]
