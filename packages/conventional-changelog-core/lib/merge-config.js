@@ -199,7 +199,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
         var type;
 
         if (context.type) {
-          type = context.type
+          type = context.type;
         } else if (context.host) {
           var match = context.host.match(rhosts);
           if (match) {
