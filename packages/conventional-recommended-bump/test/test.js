@@ -47,6 +47,13 @@ betterThanBefore.setups([
     fs.writeFileSync('test/packages/foo/foo2.txt', 'change');
     shell.exec('git add --all && git commit -m"fix: I made a slight change to foo2.txt"');
   },
+  function() { // 8
+    fs.writeFileSync('test3', '');
+    shell.exec('git add --all && git commit -m"feat: should not be taken into account\nBREAKING CHANGE: I break the API"');
+    shell.exec('git tag ms/1.0.0');
+    fs.writeFileSync('test4', '');
+    shell.exec('git add --all && git commit -m"feat: this should have been working"');
+  },
 ]);
 
 betterThanBefore.tearsWithJoy(function() {
@@ -198,6 +205,20 @@ describe('conventional-recommended-bump', function() {
         path: 'test/packages/foo'
       }, function(err, recommendation) {
         equal(recommendation.releaseType, 'patch');
+        done();
+      });
+    });
+  });
+
+  describe('repo with tag prefix', function() {
+    it('should recommends a minor release if appropriate', function(done) {
+      preparing(8);
+
+      conventionalRecommendedBump({
+        tagPrefix: 'ms/',
+        preset: 'angular'
+      }, function(err, recommendation) {
+        equal(recommendation.releaseType, 'minor');
         done();
       });
     });

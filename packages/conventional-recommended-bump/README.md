@@ -97,6 +97,11 @@ Type: `string` Possible values: `'major'`, `'minor'` and `'patch'`
 
 The value of what it should release as.
 
+##### tagPrefix
+
+Type: `string`
+
+Specify a prefix for the git tag that will be taken into account during the comparison.
 
 ## Related
 

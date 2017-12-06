@@ -9,7 +9,8 @@ var args = meow({
     '  git-semver-tags',
     'Options',
     ' --lerna parse lerna style git tags',
-    ' --package when listing lerna style tags, filter by a package'
+    ' --package when listing lerna style tags, filter by a package',
+    ' --tagPrefix prefix to remove from the tag during their processing'
   ]
 });
 
@@ -22,5 +23,6 @@ gitSemverTags(function(err, tags) {
   console.log(tags.join('\n'));
 }, {
   lernaTags: args.flags.lerna,
-  package: args.flags.package
+  package: args.flags.package,
+  tagPrefix: args.flags.tagPrefix
 });

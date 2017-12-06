@@ -38,6 +38,12 @@ module.exports = function(callback, opts) {
           if (lernaTag(tag, opts.package)) {
             tags.push(tag);
           }
+        } else if (opts.tagPrefix) {
+          if ((new RegExp('^' + opts.tagPrefix)).test(tag)) {
+            if (semverValid(tag.replace(new RegExp('^' + opts.tagPrefix), ''))) {
+              tags.push(tag);
+            }
+          }
         } else if (semverValid(tag)) {
           tags.push(tag);
         }

@@ -83,7 +83,7 @@ function conventionalRecommendedBump(options, parserOpts, cb) {
 
         cb(null, result);
       }));
-  }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage});
+  }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix});
 }
 
 module.exports = conventionalRecommendedBump;
