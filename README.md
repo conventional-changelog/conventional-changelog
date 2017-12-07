@@ -34,5 +34,4 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 - [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 - [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
-- [validate-commit-msg](https://github.com/conventional-changelog/validate-commit-msg) - Githook to validate commit messages are up to standard
 - [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
