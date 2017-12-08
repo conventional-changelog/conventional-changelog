@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.0.3...conventional-recommended-bump@1.1.0) (2017-12-08)
+
+
+### Features
+
+* **recommended-bump:** add `eslint` preset ([#256](https://github.com/conventional-changelog/conventional-recommended-bump/issues/256)) ([64abf07](https://github.com/conventional-changelog/conventional-recommended-bump/commit/64abf07))
+
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.0.2...conventional-recommended-bump@1.0.3) (2017-11-13)
 
