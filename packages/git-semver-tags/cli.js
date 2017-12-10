@@ -10,7 +10,7 @@ var args = meow({
     'Options',
     ' --lerna parse lerna style git tags',
     ' --package when listing lerna style tags, filter by a package',
-    ' --tagPrefix prefix to remove from the tag during their processing'
+    ' --tagPrefix prefix to remove from the tags during their processing'
   ]
 });
 

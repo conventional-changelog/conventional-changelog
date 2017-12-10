@@ -29,7 +29,10 @@ module.exports = function(callback, opts) {
     }
 
     var tags = [];
-
+    var tagPrefixRegexp;
+    if (opts.tagPrefix) {
+      tagPrefixRegexp = new RegExp('^' + opts.tagPrefix);
+    }
     data.split('\n').forEach(function(decorations) {
       var match;
       while (match = regex.exec(decorations)) {
@@ -39,8 +42,8 @@ module.exports = function(callback, opts) {
             tags.push(tag);
           }
         } else if (opts.tagPrefix) {
-          if ((new RegExp('^' + opts.tagPrefix)).test(tag)) {
-            if (semverValid(tag.replace(new RegExp('^' + opts.tagPrefix), ''))) {
+          if (tagPrefixRegexp.test(tag)) {
+            if (semverValid(tag.replace(tagPrefixRegexp, ''))) {
               tags.push(tag);
             }
           }
