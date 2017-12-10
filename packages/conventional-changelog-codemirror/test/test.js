@@ -1,12 +1,12 @@
 'use strict';
 var conventionalChangelogCore = require('conventional-changelog-core');
-var config = require('./');
+var config = require('../');
 var expect = require('chai').expect;
 var shell = require('shelljs');
 var through = require('through2');
 var writeFileSync = require('fs').writeFileSync;
 
-describe('atom preset', function() {
+describe('codemirror preset', function() {
   before(function() {
     shell.config.silent = true;
     shell.rm('-rf', 'tmp');
@@ -16,15 +16,15 @@ describe('atom preset', function() {
     shell.exec('git init --template=./git-templates');
 
     writeFileSync('test1', '');
-    shell.exec('git add --all && git commit -m":arrow_down: exception-reporting"');
+    shell.exec('git add --all && git commit -m"[tern addon] Use correct primary when selecting variables"');
     writeFileSync('test2', '');
-    shell.exec('git add --all && git commit -m\':bug: `updateContentDimensions` when model changes\'');
+    shell.exec('git add --all && git commit -m"[tern addon] Fix patch bc026f1 "');
     writeFileSync('test3', '');
-    shell.exec('git add --all && git commit -m"Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17"');
+    shell.exec('git add --all && git commit -m"[css mode] Add values for property flex-direction"');
     writeFileSync('test4', '');
-    shell.exec('git add --all && git commit -m":arrow_up: language-gfm@0.79.0"');
+    shell.exec('git add --all && git commit -m"[stylus mode] Fix highlight class after a $var"');
     writeFileSync('test5', '');
-    shell.exec('git add --all && git commit -m":arrow_up: one-dark/light-ui@v1.0.1"');
+    shell.exec('git add --all && git commit -m"Bad commit"');
   });
 
   it('should work if there is no semver tag', function(done) {
@@ -37,12 +37,13 @@ describe('atom preset', function() {
       .pipe(through(function(chunk) {
         chunk = chunk.toString();
 
-        expect(chunk).to.include(':arrow_down:');
-        expect(chunk).to.include('`updateContentDimensions` when model changes');
-        expect(chunk).to.include(':arrow_up:');
-        expect(chunk).to.include('one-dark/light-ui@v1.0.1');
+        expect(chunk).to.include('### tern');
+        expect(chunk).to.include('Use correct primary when selecting variables');
+        expect(chunk).to.include('**addon**');
+        expect(chunk).to.include('Add values for property flex-direction');
+        expect(chunk).to.include('### stylus');
 
-        expect(chunk).to.not.include('7881');
+        expect(chunk).to.not.include('Bad');
 
         done();
       }));

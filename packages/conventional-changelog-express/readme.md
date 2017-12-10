@@ -2,6 +2,7 @@
 
 > [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [express](https://github.com/strongloop/express) preset
 
+**Issues with the convention itself should be reported on the Express issue tracker.**
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-express.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-express

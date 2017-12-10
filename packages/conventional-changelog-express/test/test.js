@@ -1,7 +1,7 @@
 'use strict';
 var child = require('child_process');
 var conventionalChangelogCore = require('conventional-changelog-core');
-var config = require('./');
+var config = require('../');
 var expect = require('chai').expect;
 var shell = require('shelljs');
 var through = require('through2');

@@ -18,7 +18,11 @@
     "preset"
   ],
   "files": [
+    "conventional-changelog.js",
+    "conventional-recommended-bump.js",
     "index.js",
+    "parser-opts.js",
+    "writer-opts.js",
     "templates"
   ],
   "author": "Steve Mao",
