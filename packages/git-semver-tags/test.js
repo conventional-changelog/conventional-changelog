@@ -167,6 +167,8 @@ it('should work with tag prefix option', function(done) {
   shell.exec('git tag ms/6.0.0');
   shell.exec('git add --all && git commit -m"tenth commit"');
   shell.exec('git tag ms/7.0.0');
+  shell.exec('git add --all && git commit -m"eleventh commit"');
+  shell.exec('git tag notms/7.0.0');
 
   gitSemverTags(function(err, tags) {
     equal(tags, ['ms/7.0.0', 'ms/6.0.0']);

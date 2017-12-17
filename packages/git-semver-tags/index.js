@@ -31,7 +31,7 @@ module.exports = function(callback, opts) {
     var tags = [];
     var tagPrefixRegexp;
     if (opts.tagPrefix) {
-      tagPrefixRegexp = new RegExp('^' + opts.tagPrefix);
+      tagPrefixRegexp = new RegExp('^' + opts.tagPrefix + '(.*)');
     }
     data.split('\n').forEach(function(decorations) {
       var match;
@@ -42,10 +42,9 @@ module.exports = function(callback, opts) {
             tags.push(tag);
           }
         } else if (opts.tagPrefix) {
-          if (tagPrefixRegexp.test(tag)) {
-            if (semverValid(tag.replace(tagPrefixRegexp, ''))) {
-              tags.push(tag);
-            }
+          var matches = tag.match(tagPrefixRegexp);
+          if (matches && semverValid(matches[1])) {
+            tags.push(tag);
           }
         } else if (semverValid(tag)) {
           tags.push(tag);
