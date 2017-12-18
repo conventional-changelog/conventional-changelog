@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/stevemao/conventional-changelog-ember/compare/conventional-changelog-ember@0.2.10...conventional-changelog-ember@0.3.0) (2017-12-18)
+
+
+### Features
+
+* **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/stevemao/conventional-changelog-ember/commit/60815b5)), closes [#241](https://github.com/stevemao/conventional-changelog-ember/issues/241)
+
+
+
+
 <a name="0.2.10"></a>
 ## [0.2.10](https://github.com/stevemao/conventional-changelog-ember/compare/conventional-changelog-ember@0.2.9...conventional-changelog-ember@0.2.10) (2017-12-08)
 

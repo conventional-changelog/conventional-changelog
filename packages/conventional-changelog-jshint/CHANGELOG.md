@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/stevemao/conventional-changelog-jshint/compare/conventional-changelog-jshint@0.2.1...conventional-changelog-jshint@0.3.0) (2017-12-18)
+
+
+### Features
+
+* **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/stevemao/conventional-changelog-jshint/commit/60815b5)), closes [#241](https://github.com/stevemao/conventional-changelog-jshint/issues/241)
+
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/stevemao/conventional-changelog-jshint/compare/conventional-changelog-jshint@0.2.0...conventional-changelog-jshint@0.2.1) (2017-11-13)
 

@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "1.9.4",
+  "version": "1.9.5",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "chai": "^3.4.1",
-    "conventional-changelog-angular": "^1.5.3",
+    "conventional-changelog-angular": "^1.6.0",
     "git-dummy-commit": "^1.1.0",
     "git-tails": "^1.0.0",
     "istanbul": "^0.4.1",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.5.3...conventional-changelog-angular@1.6.0) (2017-12-18)
+
+
+### Features
+
+* **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/conventional-changelog/conventional-changelog-angular/commit/60815b5)), closes [#241](https://github.com/conventional-changelog/conventional-changelog-angular/issues/241)
+
+
+
+
 <a name="1.5.3"></a>
 ## [1.5.3](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.5.2...conventional-changelog-angular@1.5.3) (2017-12-08)
 
