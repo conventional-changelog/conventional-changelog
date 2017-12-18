@@ -1,6 +1,6 @@
 'use strict';
 var conventionalChangelogCore = require('conventional-changelog-core');
-var config = require('./');
+var config = require('../');
 var expect = require('chai').expect;
 var gitDummyCommit = require('git-dummy-commit');
 var shell = require('shelljs');
