@@ -3,6 +3,7 @@ var trimOffNewlines = require('trim-off-newlines');
 var _ = require('lodash');
 
 var CATCH_ALL = /()(.+)/gi;
+var SCISSOR = '# ------------------------ >8 ------------------------';
 
 function append(src, line) {
   if (src) {
@@ -86,7 +87,13 @@ function parser(raw, options, regex) {
     getCommentFilter(options.commentChar) :
     passTrough;
 
-  var lines = trimOffNewlines(raw).split(/\r?\n/).filter(commentFilter);
+  var rawLines = trimOffNewlines(raw).split(/\r?\n/);
+  var scissorIndex = rawLines.indexOf(SCISSOR);
+  var truncatedLines = scissorIndex > -1 ?
+    rawLines.slice(0, scissorIndex) :
+    rawLines;
+
+  var lines = truncatedLines.filter(commentFilter);
 
   var continueNote = false;
   var isBody = true;

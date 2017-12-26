@@ -285,6 +285,17 @@ describe('parser', function() {
     });
   });
 
+  it.only('should truncate from scissors line', function() {
+    var msg = parser(
+      'this is some subject before a scissors-line\n' +
+      '# ------------------------ >8 ------------------------\n' +
+      'this is a line that should be truncated\n',
+      options,
+      reg
+    );
+    expect(msg.body).to.equal(null);
+  });
+
   describe('mentions', function() {
     it('should mention someone in the commit', function() {
       var options = {
