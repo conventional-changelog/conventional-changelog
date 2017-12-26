@@ -285,7 +285,7 @@ describe('parser', function() {
     });
   });
 
-  it.only('should truncate from scissors line', function() {
+  it('should truncate from scissors line', function() {
     var msg = parser(
       'this is some subject before a scissors-line\n' +
       '# ------------------------ >8 ------------------------\n' +
