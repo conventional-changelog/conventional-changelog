@@ -24,6 +24,8 @@ describe('eslint preset', function() {
     writeFileSync('test4', '');
     shell.exec('git add --all && git commit -m"Docs: Fix unmatched paren in rule description"');
     writeFileSync('test5', '');
+    shell.exec('git add --all && git commit -m"Fix:        Commit with trailing spaces in the beginning"');
+    writeFileSync('test6', '');
     shell.exec('git add --all && git commit -m"Merge pull request #3033 from gcochard/patch-3 "');
   });
 
@@ -40,6 +42,7 @@ describe('eslint preset', function() {
         expect(chunk).to.include('the `no-class-assign` rule');
         expect(chunk).to.include('### Fix');
         expect(chunk).to.include('indent rule should recognize single line statements with ASI');
+        expect(chunk).to.include('* Commit with trailing spaces in the beginning');
         expect(chunk).to.include('### Docs');
 
         expect(chunk).to.not.include('3033');
