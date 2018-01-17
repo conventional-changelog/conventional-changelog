@@ -287,13 +287,36 @@ describe('parser', function() {
 
   it('should truncate from scissors line', function() {
     var msg = parser(
-      'this is some subject before a scissors-line\n' +
+      'this is some header before a scissors-line\n' +
       '# ------------------------ >8 ------------------------\n' +
       'this is a line that should be truncated\n',
       options,
       reg
     );
     expect(msg.body).to.equal(null);
+  });
+
+  it('should keep header before scissor line', function() {
+    var msg = parser(
+      'this is some header before a scissors-line\n' +
+      '# ------------------------ >8 ------------------------\n' +
+      'this is a line that should be truncated\n',
+      options,
+      reg
+    );
+    expect(msg.header).to.equal('this is some header before a scissors-line');
+  });
+
+  it('should keep body before scissor line', function() {
+    var msg = parser(
+      'this is some subject before a scissors-line\n' +
+      'this is some body before a scissors-line\n' +
+      '# ------------------------ >8 ------------------------\n' +
+      'this is a line that should be truncated\n',
+      options,
+      reg
+    );
+    expect(msg.body).to.equal('this is some body before a scissors-line');
   });
 
   describe('mentions', function() {
