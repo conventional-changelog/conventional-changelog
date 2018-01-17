@@ -21,6 +21,16 @@ function getCommentFilter(char) {
   };
 }
 
+function truncateToScissor(lines) {
+  var scissorIndex = lines.indexOf(SCISSOR);
+
+  if (scissorIndex === -1) {
+    return lines;
+  }
+
+  return lines.slice(0, scissorIndex);
+}
+
 function getReferences(input, regex) {
   var references = [];
   var referenceSentences;
@@ -88,12 +98,7 @@ function parser(raw, options, regex) {
     passTrough;
 
   var rawLines = trimOffNewlines(raw).split(/\r?\n/);
-  var scissorIndex = rawLines.indexOf(SCISSOR);
-  var truncatedLines = scissorIndex > -1 ?
-    rawLines.slice(0, scissorIndex) :
-    rawLines;
-
-  var lines = truncatedLines.filter(commentFilter);
+  var lines = truncateToScissor(rawLines).filter(commentFilter);
 
   var continueNote = false;
   var isBody = true;
