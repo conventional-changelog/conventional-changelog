@@ -15,7 +15,6 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
         name = parts.join('');
       }
       
-      console.log('scope', scope, 'name', name);
       options.config = require(scope + 'conventional-changelog-' + name);
     } catch (err) {
       options.warn('Preset: "' + options.preset + '" does not exist');
