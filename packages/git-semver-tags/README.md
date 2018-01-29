@@ -36,6 +36,7 @@ v1.0.0
   git history, rather than `v1.0.0` format.
 * `opts.package`: what package should lerna style tags be listed for, e.g.,
   `foo-package`.
+* `opts.tagPrefix`: specify a prefix for the git tag to be ignored from the semver checks
 
 ## License
 

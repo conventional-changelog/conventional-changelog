@@ -23,6 +23,7 @@ var cli = meow({
     '  -f, --field-pattern            Regex to match other fields',
     '  -v, --verbose                  Verbose output',
     '  -l, --lerna-package            Recommend a bump for a specific lerna package (:pkg-name@1.0.0)',
+    '  -t, --tag-prefix               Tag prefix to consider when reading the tags',
     '  --commit-path                  Recommend a bump scoped to a specific directory'
   ]
 }, {
@@ -36,13 +37,15 @@ var cli = meow({
     n: 'noteKeywords',
     f: 'fieldPattern',
     v: 'verbose',
-    l: 'lernaPackage'
+    l: 'lernaPackage',
+    t: 'tagPrefix'
   }
 });
 
 var options = {
   path: cli.flags.commitPath,
-  lernaPackage: cli.flags.lernaPackage
+  lernaPackage: cli.flags.lernaPackage,
+  tagPrefix: cli.flags.tagPrefix
 };
 var flags = cli.flags;
 var preset = flags.preset;

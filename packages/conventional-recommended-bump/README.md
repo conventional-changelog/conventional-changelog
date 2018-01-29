@@ -77,6 +77,15 @@ An array of parsed commits. The commits are from last semver tag to `HEAD` and i
 
 If it returns with `level` `0` it will be a `major` bump. If `1`, `minor` bump. If `2`, `patch`.
 
+##### tagPrefix
+
+Type: `string`
+
+Specify a prefix for the git tag that will be taken into account during the comparison.
+
+For instance if your version tag is prefixed by `version/` instead of `v` you would specify `--tagPrefix=version/`
+
+
 #### parserOpts
 
 See the [conventional-commits-parser](https://github.com/conventional-changelog/conventional-commits-parser) docs.
@@ -96,7 +105,6 @@ Object includes what's returned by `whatBump` and
 Type: `string` Possible values: `'major'`, `'minor'` and `'patch'`
 
 The value of what it should release as.
-
 
 ## Related
 

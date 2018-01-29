@@ -29,13 +29,21 @@ module.exports = function(callback, opts) {
     }
 
     var tags = [];
-
+    var tagPrefixRegexp;
+    if (opts.tagPrefix) {
+      tagPrefixRegexp = new RegExp('^' + opts.tagPrefix + '(.*)');
+    }
     data.split('\n').forEach(function(decorations) {
       var match;
       while (match = regex.exec(decorations)) {
         var tag = match[1];
         if (opts.lernaTags) {
           if (lernaTag(tag, opts.package)) {
+            tags.push(tag);
+          }
+        } else if (opts.tagPrefix) {
+          var matches = tag.match(tagPrefixRegexp);
+          if (matches && semverValid(matches[1])) {
             tags.push(tag);
           }
         } else if (semverValid(tag)) {
