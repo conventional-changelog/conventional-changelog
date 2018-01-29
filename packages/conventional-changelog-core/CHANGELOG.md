@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.9.5...conventional-changelog-core@2.0.0) (2018-01-29)
+
+
+### Bug Fixes
+
+* **writer:** normalize release headings ([#237](https://github.com/conventional-changelog/conventional-changelog-core/issues/237)) ([9e87dc3](https://github.com/conventional-changelog/conventional-changelog-core/commit/9e87dc3)), closes [/github.com/conventional-changelog/conventional-changelog/issues/214#issuecomment-326681934](https://github.com//github.com/conventional-changelog/conventional-changelog/issues/214/issues/issuecomment-326681934)
+
+
+### BREAKING CHANGES
+
+* **writer:** Logic for generating release headings has been changed to make all
+heading levels the same (`##`/`h2`) for better compatibility with
+screen readers and parsers, and to conform to HTML semantics. Patch
+release titles are now wrapped in a `<small>` tag to maintain the
+visual hierarchy of the previous style.
+
+Fixes https://github.com/conventional-changelog/conventional-changelog/issues/214
+
+
+
+
 <a name="1.9.5"></a>
 ## [1.9.5](https://github.com/conventional-changelog/conventional-changelog-core/compare/conventional-changelog-core@1.9.4...conventional-changelog-core@1.9.5) (2017-12-18)
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.2.3...git-semver-tags@1.3.0) (2018-01-29)
+
+
+### Features
+
+* allow to specify a tagPrefix in conventional-recommended-bump ([f60f86f](https://github.com/stevemao/git-semver-tags/commit/f60f86f))
+
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.2.2...git-semver-tags@1.2.3) (2017-11-13)
 

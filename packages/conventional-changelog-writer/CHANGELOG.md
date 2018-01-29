@@ -3,7 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-  <a name="2.0.3"></a>
+      <a name="3.0.0"></a>
+# [3.0.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.3...conventional-changelog-writer@3.0.0) (2018-01-29)
+
+
+### Bug Fixes
+
+* **writer:** normalize release headings ([#237](https://github.com/conventional-changelog/conventional-changelog-writer/issues/237)) ([9e87dc3](https://github.com/conventional-changelog/conventional-changelog-writer/commit/9e87dc3)), closes [/github.com/conventional-changelog/conventional-changelog/issues/214#issuecomment-326681934](https://github.com//github.com/conventional-changelog/conventional-changelog/issues/214/issues/issuecomment-326681934)
+
+
+### BREAKING CHANGES
+
+* **writer:** Logic for generating release headings has been changed to make all
+heading levels the same (`##`/`h2`) for better compatibility with
+screen readers and parsers, and to conform to HTML semantics. Patch
+release titles are now wrapped in a `<small>` tag to maintain the
+visual hierarchy of the previous style.
+
+Fixes https://github.com/conventional-changelog/conventional-changelog/issues/214
+
+
+
+
+      <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.2...conventional-changelog-writer@2.0.3) (2017-12-08)
 
 
@@ -11,7 +33,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package conventional-changelog-writer
 
-  <a name="2.0.2"></a>
+<a name="2.0.2"></a>
 ## [2.0.2](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.1...conventional-changelog-writer@2.0.2) (2017-11-13)
 
 

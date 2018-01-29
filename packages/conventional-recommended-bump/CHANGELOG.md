@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.1.0...conventional-recommended-bump@1.2.0) (2018-01-29)
+
+
+### Features
+
+* allow to specify a tagPrefix in conventional-recommended-bump ([f60f86f](https://github.com/conventional-changelog/conventional-recommended-bump/commit/f60f86f))
+
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.0.3...conventional-recommended-bump@1.1.0) (2017-12-08)
 
