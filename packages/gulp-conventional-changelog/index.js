@@ -3,7 +3,8 @@ var addStream = require('add-stream');
 var assign = require('object-assign');
 var concat = require('concat-stream');
 var conventionalChangelog = require('conventional-changelog');
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
+var fancyLog = require('fancy-log');
 var through = require('through2');
 
 module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOpts) {
@@ -13,7 +14,7 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
   }, opts);
 
   if (opts.verbose) {
-    opts.debug = gutil.log;
+    opts.debug = fancyLog;
   }
 
   return through.obj(function(file, enc, cb) {
@@ -24,7 +25,7 @@ module.exports = function(opts, context, gitRawCommitsOpts, parserOpts, writerOp
 
     var stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts)
       .on('error', function(err) {
-        cb(new gutil.PluginError('gulp-conventional-changelog', err));
+        cb(new PluginError('gulp-conventional-changelog', err));
       });
 
     if (file.isStream()) {

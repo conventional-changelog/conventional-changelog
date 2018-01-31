@@ -2,7 +2,7 @@
 var concat = require('concat-stream');
 var conventionalChangelog = require('./');
 var expect = require('chai').expect;
-var gutil = require('gulp-util');
+var Vinyl = require('vinyl');
 var join = require('path').join;
 var shell = require('shelljs');
 var through = require('through2');
@@ -29,7 +29,7 @@ describe('error', function() {
       cb(file);
     });
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -65,7 +65,7 @@ describe('stream', function() {
         }));
     });
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -93,7 +93,7 @@ describe('stream', function() {
         }));
     });
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -119,7 +119,7 @@ describe('stream', function() {
         }));
     });
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -142,7 +142,7 @@ describe('buffer', function() {
 
     stream.on('end', cb);
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -164,7 +164,7 @@ describe('buffer', function() {
 
     stream.on('end', cb);
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -186,7 +186,7 @@ describe('buffer', function() {
 
     stream.on('end', cb);
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -210,7 +210,7 @@ describe('buffer', function() {
 
     stream.on('end', cb);
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       cwd: __dirname,
       base: join(__dirname, 'fixtures'),
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
@@ -237,7 +237,7 @@ describe('null', function() {
       done();
     }));
 
-    stream.write(new gutil.File({
+    stream.write(new Vinyl({
       path: 'null.md',
       contents: null
     }));
@@ -256,7 +256,7 @@ it('should verbose', function(cb) {
     cb();
   });
 
-  stream.write(new gutil.File({
+  stream.write(new Vinyl({
     cwd: __dirname,
     base: join(__dirname, 'fixtures'),
     path: join(__dirname, 'fixtures/CHANGELOG.md'),
