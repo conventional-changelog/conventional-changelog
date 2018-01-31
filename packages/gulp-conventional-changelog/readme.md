@@ -109,7 +109,7 @@ There are some changes:
 
 #### warn
 
-If the cli contains flag `--verbose` it is `gutil.log`.
+If the cli contains flag `--verbose` it is `fancyLog`.
 
 
 ## License
