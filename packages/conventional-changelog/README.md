@@ -48,6 +48,8 @@ Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'esli
 
 It's recommended to use a preset so you don't have to define everything yourself. Presets are names of built-in `config`.
 
+A scoped preset package such as `@scope/conventional-changelog-custom-preset` can be used by passing `@scope/custom-preset` to this option.
+
 **NOTE:** `options.config` will be overwritten by the values of preset. You should use either `preset` or `config`, but not both.
 
 
