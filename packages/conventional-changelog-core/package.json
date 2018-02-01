@@ -46,7 +46,8 @@
     "mocha": "*",
     "pinkie-promise": "^2.0.0",
     "semver": "^5.1.0",
-    "shelljs": "^0.7.0"
+    "shelljs": "^0.7.0",
+    "tmp": "0.0.33"
   },
   "scripts": {
     "lint": "jshint . --exclude node_modules && jscs .",

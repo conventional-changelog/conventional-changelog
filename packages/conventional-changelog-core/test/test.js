@@ -11,15 +11,20 @@ var betterThanBefore = require('better-than-before')();
 var preparing = betterThanBefore.preparing;
 var mkdirp = require('mkdirp');
 var writeFileSync = require('fs').writeFileSync;
+var tmp = require('tmp');
+
+var dir = '';
 
 betterThanBefore.setups([
   function() { // 1
     shell.config.silent = true;
-    shell.rm('-rf', 'tmp');
-    shell.mkdir('tmp');
-    shell.cd('tmp');
+    dir = process.cwd();
+    var tmpDir = tmp.dirSync().name;
+    shell.mkdir(tmpDir);
+    shell.cd(tmpDir);
     shell.mkdir('git-templates');
     shell.exec('git init --template=./git-templates');
+    writeFileSync('package.json', '{ "name": "conventional-changelog-core", "repository": { "type": "git", "url": "https://github.com/conventional-changelog/conventional-changelog-core.git" } }');
     gitDummyCommit('First commit');
   },
   function() { // 2
@@ -105,8 +110,7 @@ betterThanBefore.setups([
 ]);
 
 betterThanBefore.tearsWithJoy(function() {
-  shell.cd('../');
-  shell.rm('-rf', 'tmp');
+  shell.cd(dir);
 });
 
 describe('conventionalChangelogCore', function() {
