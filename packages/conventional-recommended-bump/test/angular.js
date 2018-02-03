@@ -18,6 +18,10 @@ betterThanBefore.setups([
     shell.exec('git add --all && git commit -m "feat($compile): new feature"');
     writeFileSync('test3', '');
     shell.exec('git add --all && git commit -m "perf(ngOptions): make it faster"');
+    writeFileSync('test3.1', '');
+    shell.exec('git add --all && git commit -m "fix: typo"');
+    writeFileSync('test3.2', '');
+    shell.exec('git add --all && git commit -m "fix: flip-flopped condition"');
   },
   function() { // 2
     writeFileSync('test4', '');
@@ -55,8 +59,13 @@ describe('preset', function() {
       conventionalRecommendedBump(opts, function(err, releaseType) {
         equal(releaseType, {
           level: 1,
-          reason: 'There are 0 BREAKING CHANGES and 1 features',
-          releaseType: 'minor'
+          reason: 'There are 0 BREAKING CHANGES, 1 features, and 2 fixes',
+          releaseType: 'minor',
+          changes: {
+            breaking: 0,
+            features: 1,
+            fixes: 2
+          }
         });
 
         done();
@@ -71,8 +80,13 @@ describe('preset', function() {
       }, function(err, releaseType) {
         equal(releaseType, {
           level: 2,
-          reason: 'There are 0 BREAKING CHANGES and 0 features',
-          releaseType: 'patch'
+          reason: 'There are 0 BREAKING CHANGES, 0 features, and 2 fixes',
+          releaseType: 'patch',
+          changes: {
+            breaking: 0,
+            features: 0,
+            fixes: 2
+          }
         });
 
         done();
@@ -85,8 +99,13 @@ describe('preset', function() {
       conventionalRecommendedBump(opts, function(err, releaseType) {
         equal(releaseType, {
           level: 0,
-          reason: 'There are 1 BREAKING CHANGES and 1 features',
-          releaseType: 'major'
+          reason: 'There are 1 BREAKING CHANGES, 1 features, and 2 fixes',
+          releaseType: 'major',
+          changes: {
+            breaking: 1,
+            features: 1,
+            fixes: 2
+          }
         });
 
         done();
@@ -99,8 +118,13 @@ describe('preset', function() {
       conventionalRecommendedBump(opts, function(err, releaseType) {
         equal(releaseType, {
           level: 0,
-          reason: 'There are 1 BREAKING CHANGES and 2 features',
-          releaseType: 'major'
+          reason: 'There are 1 BREAKING CHANGES, 2 features, and 2 fixes',
+          releaseType: 'major',
+          changes: {
+            breaking: 1,
+            features: 2,
+            fixes: 2
+          }
         });
 
         done();
@@ -113,8 +137,13 @@ describe('preset', function() {
       conventionalRecommendedBump(opts, function(err, releaseType) {
         equal(releaseType, {
           level: 1,
-          reason: 'There are 0 BREAKING CHANGES and 2 features',
-          releaseType: 'minor'
+          reason: 'There are 0 BREAKING CHANGES, 2 features, and 2 fixes',
+          releaseType: 'minor',
+          changes: {
+            breaking: 0,
+            features: 2,
+            fixes: 2
+          }
         });
 
         done();
@@ -130,8 +159,13 @@ describe('preset', function() {
       }, function(err, releaseType) {
         equal(releaseType, {
           level: 0,
-          reason: 'There are 1 BREAKING CHANGES and 2 features',
-          releaseType: 'major'
+          reason: 'There are 1 BREAKING CHANGES, 2 features, and 2 fixes',
+          releaseType: 'major',
+          changes: {
+            breaking: 1,
+            features: 2,
+            fixes: 2
+          }
         });
 
         done();
@@ -144,8 +178,13 @@ describe('preset', function() {
       conventionalRecommendedBump(opts, function(err, releaseType) {
         equal(releaseType, {
           level: 1,
-          reason: 'There are 0 BREAKING CHANGES and 3 features',
-          releaseType: 'minor'
+          reason: 'There are 0 BREAKING CHANGES, 3 features, and 2 fixes',
+          releaseType: 'minor',
+          changes: {
+            breaking: 0,
+            features: 3,
+            fixes: 2
+          }
         });
 
         done();
