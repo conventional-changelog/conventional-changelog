@@ -3,6 +3,7 @@ var trimOffNewlines = require('trim-off-newlines');
 var _ = require('lodash');
 
 var CATCH_ALL = /()(.+)/gi;
+var SCISSOR = '# ------------------------ >8 ------------------------';
 
 function append(src, line) {
   if (src) {
@@ -18,6 +19,16 @@ function getCommentFilter(char) {
   return function(line) {
     return line.charAt(0) !== char;
   };
+}
+
+function truncateToScissor(lines) {
+  var scissorIndex = lines.indexOf(SCISSOR);
+
+  if (scissorIndex === -1) {
+    return lines;
+  }
+
+  return lines.slice(0, scissorIndex);
 }
 
 function getReferences(input, regex) {
@@ -86,7 +97,8 @@ function parser(raw, options, regex) {
     getCommentFilter(options.commentChar) :
     passTrough;
 
-  var lines = trimOffNewlines(raw).split(/\r?\n/).filter(commentFilter);
+  var rawLines = trimOffNewlines(raw).split(/\r?\n/);
+  var lines = truncateToScissor(rawLines).filter(commentFilter);
 
   var continueNote = false;
   var isBody = true;
