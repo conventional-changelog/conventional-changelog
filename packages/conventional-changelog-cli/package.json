@@ -29,6 +29,7 @@
     "jscs": "^2.7.0",
     "jshint": "^2.8.0",
     "mocha": "*",
+    "q": "^1.5.1",
     "shelljs": "^0.6.0"
   },
   "dependencies": {
