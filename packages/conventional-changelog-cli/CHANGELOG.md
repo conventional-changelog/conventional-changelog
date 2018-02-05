@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.9"></a>
+## [1.3.9](https://github.com/conventional-changelog/conventional-changelog-cli/compare/conventional-changelog-cli@1.3.8...conventional-changelog-cli@1.3.9) (2018-02-05)
+
+
+### Bug Fixes
+
+* **cli:** set options.config to loaded custom config for processing ([3d8b243](https://github.com/conventional-changelog/conventional-changelog-cli/commit/3d8b243)), closes [#227](https://github.com/conventional-changelog/conventional-changelog-cli/issues/227)
+
+
+
+
 <a name="1.3.8"></a>
 ## [1.3.8](https://github.com/conventional-changelog/conventional-changelog-cli/compare/conventional-changelog-cli@1.3.7...conventional-changelog-cli@1.3.8) (2018-01-29)
 

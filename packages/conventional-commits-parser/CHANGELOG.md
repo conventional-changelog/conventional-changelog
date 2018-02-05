@@ -3,7 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-      <a name="2.1.0"></a>
+  <a name="2.1.1"></a>
+## [2.1.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.1.0...conventional-commits-parser@2.1.1) (2018-02-05)
+
+
+### Bug Fixes
+
+* truncate after scissors line ([#267](https://github.com/conventional-changelog/conventional-commits-parser/issues/267)) ([e09df10](https://github.com/conventional-changelog/conventional-commits-parser/commit/e09df10))
+
+
+
+
+  <a name="2.1.0"></a>
 # [2.1.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.0.1...conventional-commits-parser@2.1.0) (2017-12-08)
 
 
@@ -19,7 +30,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-      <a name="2.0.1"></a>
+<a name="2.0.1"></a>
 ## [2.0.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.0.0...conventional-commits-parser@2.0.1) (2017-11-13)
 
 

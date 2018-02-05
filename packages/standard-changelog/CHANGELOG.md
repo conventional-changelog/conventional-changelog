@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.9"></a>
+## [1.0.9](https://github.com/stevemao/standard-changelog/compare/standard-changelog@1.0.8...standard-changelog@1.0.9) (2018-02-05)
+
+
+
+
+**Note:** Version bump only for package standard-changelog
+
 <a name="1.0.8"></a>
 ## [1.0.8](https://github.com/stevemao/standard-changelog/compare/standard-changelog@1.0.7...standard-changelog@1.0.8) (2018-01-29)
 
