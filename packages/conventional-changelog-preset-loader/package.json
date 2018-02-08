@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-preset-loader",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Configuration preset loader for `conventional-changelog`.",
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
     "sinon": "^4.2.2",
     "sinon-chai": "^2.14.0"
   },
-  "devDependencies": {},
   "scripts": {
     "lint": "jshint . --exclude node_modules && jscs .",
     "test": "mocha --timeout 30000 && npm run-script lint",
