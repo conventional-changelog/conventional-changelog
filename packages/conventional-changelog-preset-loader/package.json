@@ -1,0 +1,32 @@
+{
+  "name": "conventional-changelog-preset-loader",
+  "version": "1.0.0",
+  "description": "Configuration preset loader for `conventional-changelog`.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "preset",
+    "loader"
+  ],
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "chai": "^4.1.2",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.5",
+    "mocha": "^5.0.0",
+    "sinon": "^4.2.2",
+    "sinon-chai": "^2.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "lint": "jshint . --exclude node_modules && jscs .",
+    "test": "mocha --timeout 30000 && npm run-script lint",
+    "test-windows": "mocha --timeout 30000"
+  }
+}
