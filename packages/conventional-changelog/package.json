@@ -37,7 +37,8 @@
     "conventional-changelog-express": "^0.3.0",
     "conventional-changelog-jquery": "^0.1.0",
     "conventional-changelog-jscs": "^0.1.0",
-    "conventional-changelog-jshint": "^0.3.0"
+    "conventional-changelog-jshint": "^0.3.0",
+    "conventional-changelog-preset-loader": "^1.1.2"
   },
   "devDependencies": {
     "chai": "^3.0.0",
