@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@2.0.0...conventional-recommended-bump@2.0.1) (2018-02-12)
+
+
+### Bug Fixes
+
+* **conventional-recommended-bump:** include missing file in publishing ([1481c05](https://github.com/conventional-changelog/conventional-recommended-bump/commit/1481c05))
+
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/conventional-changelog/conventional-recommended-bump/compare/conventional-recommended-bump@1.2.0...conventional-recommended-bump@1.2.1) (2018-02-05)
 
