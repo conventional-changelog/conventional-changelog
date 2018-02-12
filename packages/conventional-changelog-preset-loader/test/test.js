@@ -1,7 +1,7 @@
 'use strict';
 
 const chai = require(`chai`);
-const presetLoader = require(`../`).presetLoader.presetLoader;
+const presetLoader = require(`../`).presetLoader;
 const sinon = require(`sinon`);
 const sinonChai = require(`sinon-chai`);
 

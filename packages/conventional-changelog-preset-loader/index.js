@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports.presetLoader = presetLoader(require);
-module.exports.presetLoader.presetLoader = presetLoader;
+module.exports = presetLoader(require);
+module.exports.presetLoader = presetLoader;
 
 function presetLoader(requireMethod) {
   return path => {
