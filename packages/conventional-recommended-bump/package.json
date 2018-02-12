@@ -13,7 +13,7 @@
   "files": [
     "index.js",
     "cli.js",
-    "presets"
+    "preset-resolver.js"
   ],
   "keywords": [
     "conventional-recommended-bump",
