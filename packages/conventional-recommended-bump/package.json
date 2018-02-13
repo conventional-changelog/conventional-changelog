@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "concat-stream": "^1.4.10",
-    "conventional-changelog-preset-loader": "^1.1.3",
+    "conventional-changelog-preset-loader": "^1.1.2",
     "conventional-commits-filter": "^1.1.3",
     "conventional-commits-parser": "^2.1.3",
     "git-raw-commits": "^1.3.2",
