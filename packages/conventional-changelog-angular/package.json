@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-angular",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "chai": "^3.4.1",
-    "conventional-changelog-core": "^2.0.2",
+    "conventional-changelog-core": "^2.0.3",
     "git-dummy-commit": "^1.1.1",
     "istanbul": "^0.4.1",
     "jscs": "^3.0.7",

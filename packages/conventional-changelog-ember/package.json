@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-ember",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "conventional-changelog ember preset",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,7 @@
   "homepage": "https://github.com/stevemao/conventional-changelog-ember#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "conventional-changelog-core": "^2.0.2",
+    "conventional-changelog-core": "^2.0.3",
     "git-dummy-commit": "^1.2.0",
     "istanbul": "^0.4.2",
     "jscs": "^2.9.0",
