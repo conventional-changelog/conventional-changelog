@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = presetLoader(require);
 module.exports.presetLoader = presetLoader;
 
