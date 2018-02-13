@@ -72,7 +72,6 @@ A scoped preset package such as `@scope/conventional-changelog-custom-preset` ca
 
 MIT
 
-
 [npm-image]: https://badge.fury.io/js/conventional-changelog.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog
 [travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+
 var addStream = require('add-stream');
 var conventionalChangelog = require('conventional-changelog');
 var fs = require('fs');

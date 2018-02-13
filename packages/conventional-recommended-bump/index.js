@@ -1,5 +1,4 @@
 'use strict';
-
 const concat = require(`concat-stream`);
 const conventionalCommitsFilter = require(`conventional-commits-filter`);
 const conventionalCommitsParser = require(`conventional-commits-parser`);

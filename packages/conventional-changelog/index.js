@@ -1,4 +1,5 @@
 'use strict';
+
 var conventionalChangelogCore = require('conventional-changelog-core');
 var conventionalChangelogPresetLoader = require('conventional-changelog-preset-loader');
 

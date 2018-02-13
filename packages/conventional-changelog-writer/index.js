@@ -1,4 +1,5 @@
 'use strict';
+
 var dateFormat = require('dateformat');
 var join = require('path').join;
 var readFileSync = require('fs').readFileSync;

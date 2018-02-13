@@ -1,4 +1,5 @@
 'use strict';
+
 var addStream = require('add-stream');
 var assign = require('object-assign');
 var concat = require('concat-stream');

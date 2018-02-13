@@ -2,3 +2,4 @@ node_modules
 tmp
 .nyc_output
 lerna-debug.log
+package-lock.json

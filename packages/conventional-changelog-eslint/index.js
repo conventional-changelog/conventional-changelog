@@ -1,5 +1,4 @@
 'use strict';
-
 const Q = require(`q`);
 const conventionalChangelog = require(`./conventional-changelog`);
 const parserOpts = require(`./parser-opts`);

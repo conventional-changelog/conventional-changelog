@@ -1,4 +1,5 @@
 'use strict';
+
 var isSubset = require('is-subset');
 var modifyValues = require('modify-values');
 

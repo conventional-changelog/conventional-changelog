@@ -1,4 +1,5 @@
 'use strict';
+
 var conventionalChangelogCore = require('conventional-changelog-core');
 var angular = require('conventional-changelog-angular');
 var fs = require('fs');

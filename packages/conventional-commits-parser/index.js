@@ -1,4 +1,5 @@
 'use strict';
+
 var parser = require('./lib/parser');
 var regex = require('./lib/regex');
 var through = require('through2');
