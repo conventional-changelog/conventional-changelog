@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.1"></a>
+## [0.3.1](https://github.com/stevemao/conventional-changelog-jshint/compare/conventional-changelog-jshint@0.3.0...conventional-changelog-jshint@0.3.1) (2018-02-13)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-jshint
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/stevemao/conventional-changelog-jshint/compare/conventional-changelog-jshint@0.2.1...conventional-changelog-jshint@0.3.0) (2017-12-18)
 
