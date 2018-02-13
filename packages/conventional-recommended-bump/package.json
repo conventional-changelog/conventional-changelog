@@ -1,6 +1,6 @@
 {
   "name": "conventional-recommended-bump",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Get a recommended version bump based on conventional commits",
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump",
   "author": {
@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "concat-stream": "^1.4.10",
-    "conventional-changelog-preset-loader": "^1.1.3",
+    "conventional-changelog-preset-loader": "^1.1.4",
     "conventional-commits-filter": "^1.1.3",
     "conventional-commits-parser": "^2.1.3",
     "git-raw-commits": "^1.3.2",
