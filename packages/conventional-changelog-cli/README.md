@@ -36,7 +36,7 @@ To fully customize the tool, please checkout [conventional-changelog](https://gi
 
 ## Example output
 
-- https://github.com/ajoslin/conventional-changelog/blob/master/CHANGELOG.md
+- https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog/CHANGELOG.md
 - https://github.com/karma-runner/karma/blob/master/CHANGELOG.md
 - https://github.com/btford/grunt-conventional-changelog/blob/master/CHANGELOG.md
 
