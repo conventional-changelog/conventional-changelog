@@ -7,4 +7,5 @@ node_js:
 before_script:
   - git config --global user.name 'Travis-CI'
   - git config --global user.email 'dummy@example.org'
+  - if [ $(npm --version | head -c 1) -eq "2" ]; then npm install --global npm@3; fi
 after_script: nyc report --reporter=text-lcov | coveralls
