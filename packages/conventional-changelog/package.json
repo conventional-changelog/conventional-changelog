@@ -27,10 +27,6 @@
       "name": "Andrew Joslin"
     }
   ],
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
   "dependencies": {
     "conventional-changelog-angular": "^1.6.4",
     "conventional-changelog-atom": "^0.2.2",

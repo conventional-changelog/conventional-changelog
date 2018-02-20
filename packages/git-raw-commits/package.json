@@ -2,19 +2,13 @@
   "name": "git-raw-commits",
   "version": "1.3.2",
   "description": "Get raw git commits out of your repository using git-log(1)",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-raw-commits#readme",
+  "homepage": "https://github.com/conventional-changelog/git-latest-tag",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
-  },
+  "repository": "conventional-changelog/git-raw-commits",
   "license": "MIT",
   "files": [
     "index.js",

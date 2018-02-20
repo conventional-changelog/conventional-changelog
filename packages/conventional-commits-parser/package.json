@@ -2,19 +2,13 @@
   "name": "conventional-commits-parser",
   "version": "2.1.3",
   "description": "Parse raw conventional commits",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-commits-parser#readme",
+  "homepage": "https://github.com/conventional-changelog/conventional-commits-parser",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
-  },
+  "repository": "conventional-changelog/conventional-commits-parser",
   "license": "MIT",
   "files": [
     "index.js",

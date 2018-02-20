@@ -15,10 +15,6 @@
   "files": [
     "index.js"
   ],
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "devDependencies": {
     "chai": "^4.1.2",
     "jscs": "^3.0.7",

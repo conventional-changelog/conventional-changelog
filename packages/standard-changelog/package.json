@@ -2,13 +2,9 @@
   "name": "standard-changelog",
   "version": "1.0.11",
   "description": "Generate a changelog from git metadata with Angular commit convention",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/standard-changelog#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/stevemao/standard-changelog.git"
   },
   "keywords": [
     "conventional-changelog",

@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "git+https://github.com/conventional-changelog/conventional-changelog-angular.git"
   },
   "keywords": [
     "conventional-changelog",
@@ -28,9 +28,9 @@
   "author": "Steve Mao",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+    "url": "https://github.com/conventional-changelog/conventional-changelog-angular/issues"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog-angular#readme",
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "chai": "^3.4.1",
