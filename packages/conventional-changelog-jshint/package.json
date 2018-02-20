@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-jshint",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "conventional-changelog jshint preset",
   "main": "index.js",
   "scripts": {
