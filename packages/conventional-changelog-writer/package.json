@@ -2,13 +2,19 @@
   "name": "conventional-changelog-writer",
   "version": "3.0.2",
   "description": "Write logs based on conventional commits and templates",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog-writer",
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  },
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-writer#readme",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
-  "repository": "conventional-changelog/conventional-changelog-writer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+  },
   "license": "MIT",
   "files": [
     "index.js",
