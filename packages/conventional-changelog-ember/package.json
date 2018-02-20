@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevemao/conventional-changelog-ember.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
   },
   "keywords": [
     "conventional-changelog",
@@ -28,9 +28,9 @@
     "templates"
   ],
   "bugs": {
-    "url": "https://github.com/stevemao/conventional-changelog-ember/issues"
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "homepage": "https://github.com/stevemao/conventional-changelog-ember#readme",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-ember#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "conventional-changelog-core": "^2.0.3",

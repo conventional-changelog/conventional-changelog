@@ -40,11 +40,11 @@ describe('jquery preset', function() {
         chunk = chunk.toString();
 
         expect(chunk).to.include('Create jQuery.ajax');
-        expect(chunk).to.include(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog-jquery/issues/100)');
+        expect(chunk).to.include(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog/issues/100)');
         expect(chunk).to.include(')\n* Make jQuery objects iterable');
         expect(chunk).to.include('### CSS');
         expect(chunk).to.include('Remove an internal argument to the on method');
-        expect(chunk).to.include(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog-jquery/issues/200)');
+        expect(chunk).to.include(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog/issues/200)');
         expect(chunk).to.include('### Manipulation');
 
         expect(chunk).to.not.include('Bad');

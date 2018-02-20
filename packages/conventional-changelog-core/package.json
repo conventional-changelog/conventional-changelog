@@ -4,7 +4,7 @@
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog-core.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
   },
   "keywords": [
     "conventional-changelog",
@@ -18,6 +18,10 @@
     "lib",
     "hosts"
   ],
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  },
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
     "conventional-changelog-writer": "^3.0.2",
     "conventional-commits-parser": "^2.1.3",
