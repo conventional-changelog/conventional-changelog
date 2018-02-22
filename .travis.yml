@@ -1,12 +1,24 @@
-sudo: false
 language: node_js
+
 node_js:
-  - '4'
-  - '6'
-  - '8'
+  - 4
+  - 6
+  - 8
+
+cache:
+  directories:
+    - node_modules/
+    - ${HOME}/.npm
+
 before_install:
   - if [ $(npm --version | head -c 1) -eq "2" ]; then npm install --global npm@3; fi
+
 before_script:
-  - git config --global user.name 'Travis-CI'
+  - git config --global user.name 'CI'
   - git config --global user.email 'dummy@example.org'
-after_script: nyc report --reporter=text-lcov | coveralls
+
+matrix:
+  fast_finish: true
+
+after_script:
+  - nyc report --reporter=text-lcov | coveralls
