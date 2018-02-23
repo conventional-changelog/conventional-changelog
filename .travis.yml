@@ -5,20 +5,23 @@ node_js:
   - 6
   - 8
 
+matrix:
+  fast_finish: true
+
 cache:
   directories:
     - node_modules/
     - ${HOME}/.npm
 
 before_install:
-  - if [ $(npm --version | head -c 1) -eq "2" ]; then npm install --global npm@3; fi
+  - npm install --global npm@latest
 
 before_script:
   - git config --global user.name 'CI'
   - git config --global user.email 'dummy@example.org'
 
-matrix:
-  fast_finish: true
+script:
+  - npm test
 
 after_script:
   - nyc report --reporter=text-lcov | coveralls
