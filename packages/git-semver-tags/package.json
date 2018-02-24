@@ -33,7 +33,7 @@
     "semver": "^5.0.1"
   },
   "devDependencies": {
-    "git-dummy-commit": "^1.1.0",
+    "git-dummy-commit": "^1.2.0",
     "shelljs": "^0.8.0"
   },
   "scripts": {

@@ -37,7 +37,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "^1.1.16",
-    "lodash": "^4.1.0",
+    "lodash": "^4.2.1",
     "meow": "^3.7.0",
     "tempfile": "^1.1.1"
   },
