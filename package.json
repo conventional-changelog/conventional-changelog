@@ -1,29 +1,38 @@
 {
-  "name": "conventional-changelog",
-  "version": "1.0.0",
-  "private": true,
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
+  "bin": "",
+  "bugs": "https://github.com/conventional-changelog/conventional-changelog/issues",
   "description": "Generate a changelog from git metadata",
+  "engines": {
+    "node": ">=4.2.0",
+    "npm": ">=2.1.9"
+  },
+  "files": [],
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog#readme",
+  "keywords": [
+    "conventional-changelog",
+    "readme",
+    "generation"
+  ],
+  "license": "ISC",
+  "main": "",
+  "name": "conventional-changelog",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+  },
   "scripts": {
     "test": "nyc lerna exec npm test",
     "test-windows": "lerna exec npm run test-windows",
     "postinstall": "lerna bootstrap --hoist",
     "release": "lerna publish --conventional-commits -m 'chore(release): publish'"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
-  },
-  "keywords": [
-    "conventional-changelog",
-    "readme",
-    "generation"
-  ],
-  "author": "Steve Mao",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog#readme",
+  "version": "1.0.0",
   "devDependencies": {
     "coveralls": "^3.0.0",
     "lerna": "^2.2.0",
