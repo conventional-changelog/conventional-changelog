@@ -28,7 +28,6 @@
   },
   "scripts": {
     "test": "nyc lerna exec npm test",
-    "test-windows": "lerna exec npm run test-windows",
     "postinstall": "lerna bootstrap --hoist",
     "release": "lerna publish --conventional-commits -m 'chore(release): publish'"
   },

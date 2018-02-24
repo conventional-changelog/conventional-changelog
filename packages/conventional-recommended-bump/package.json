@@ -48,8 +48,7 @@
   },
   "scripts": {
     "lint": "jshint *.js --exclude node_modules && jscs *.js",
-    "test": "npm run-script lint && mocha --timeout 30000 *.spec.js",
-    "test-windows": "mocha --timeout 30000 preset-resolver.spec.js"
+    "test": "npm run-script lint && mocha --timeout 30000 *.spec.js"
   },
   "bin": "cli.js"
 }
