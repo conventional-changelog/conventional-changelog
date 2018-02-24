@@ -36,10 +36,8 @@
     "tempfile": "^1.1.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
-    "mocha": "*",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },

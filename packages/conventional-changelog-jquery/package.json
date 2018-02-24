@@ -32,11 +32,9 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-jquery#readme",
   "devDependencies": {
-    "chai": "^3.5.0",
     "conventional-changelog-core": "1.3.2",
     "jscs": "^3.0.3",
     "jshint": "^2.9.1",
-    "mocha": "*",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },

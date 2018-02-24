@@ -36,7 +36,6 @@
     "git-dummy-commit": "^1.1.0",
     "jscs": "^2.9.0",
     "jshint": "^2.8.0",
-    "mocha": "*",
     "shelljs": "^0.5.1"
   },
   "scripts": {

@@ -45,10 +45,8 @@
     "conventional-changelog-preset-loader": "^1.1.5"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
-    "mocha": "*",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },

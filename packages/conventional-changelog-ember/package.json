@@ -32,12 +32,10 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-ember#readme",
   "devDependencies": {
-    "chai": "^3.5.0",
     "conventional-changelog-core": "^2.0.4",
     "git-dummy-commit": "^1.2.0",
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
-    "mocha": "*",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },

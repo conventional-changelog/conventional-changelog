@@ -44,10 +44,8 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
     "jscs": "^2.0.0",
     "jshint": "^2.8.0",
-    "mocha": "*",
     "shelljs": "^0.6.0",
     "vinyl": "^2.1.0"
   }

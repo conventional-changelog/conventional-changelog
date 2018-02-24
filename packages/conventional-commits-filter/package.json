@@ -30,8 +30,7 @@
   },
   "devDependencies": {
     "jscs": "^2.9.0",
-    "jshint": "^2.8.0",
-    "mocha": "*"
+    "jshint": "^2.8.0"
   },
   "scripts": {
     "lint": "jshint *.js && jscs *.js",

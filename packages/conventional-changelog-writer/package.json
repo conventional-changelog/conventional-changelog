@@ -45,11 +45,9 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "chai": "^3.0.0",
     "concat-stream": "^1.4.8",
     "jscs": "^3.0.3",
-    "jshint": "^2.9.1-rc3",
-    "mocha": "*"
+    "jshint": "^2.9.1-rc3"
   },
   "scripts": {
     "lint": "jshint *.js lib test && jscs *.js lib test",
