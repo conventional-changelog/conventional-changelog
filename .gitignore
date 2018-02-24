@@ -1,4 +1,5 @@
-node_modules
-tmp
-.nyc_output
-lerna-debug.log
+/.nyc_output/
+/coverage/
+**/node_modules/
+**/tmp/
+/lerna-debug.log
