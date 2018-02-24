@@ -33,7 +33,7 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-express#readme",
   "devDependencies": {
     "conventional-changelog-core": "0.0.2",
-    "shelljs": "^0.5.3",
+    "shelljs": "^0.8.0",
     "through2": "^2.0.0"
   },
   "dependencies": {

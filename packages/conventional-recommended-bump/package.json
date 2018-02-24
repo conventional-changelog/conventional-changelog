@@ -40,7 +40,7 @@
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "core-assert": "^0.2.0",
-    "shelljs": "^0.7.3",
+    "shelljs": "^0.8.0",
     "temp": "^0.8.3"
   },
   "scripts": {

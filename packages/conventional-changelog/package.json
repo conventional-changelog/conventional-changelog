@@ -45,7 +45,7 @@
     "conventional-changelog-preset-loader": "^1.1.5"
   },
   "devDependencies": {
-    "shelljs": "^0.6.0",
+    "shelljs": "^0.8.0",
     "through2": "^2.0.0"
   },
   "scripts": {

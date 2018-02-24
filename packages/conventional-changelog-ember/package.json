@@ -34,7 +34,7 @@
   "devDependencies": {
     "conventional-changelog-core": "^2.0.4",
     "git-dummy-commit": "^1.2.0",
-    "shelljs": "^0.6.0",
+    "shelljs": "^0.8.0",
     "through2": "^2.0.0"
   },
   "dependencies": {

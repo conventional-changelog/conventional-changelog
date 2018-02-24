@@ -35,7 +35,7 @@
     "better-than-before": "^1.0.0",
     "conventional-changelog-core": "^2.0.4",
     "git-dummy-commit": "^1.1.1",
-    "shelljs": "^0.7.3",
+    "shelljs": "^0.8.0",
     "through2": "^2.0.0"
   },
   "dependencies": {

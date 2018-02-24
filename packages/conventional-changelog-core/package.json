@@ -45,7 +45,7 @@
     "mkdirp": "^0.5.1",
     "pinkie-promise": "^2.0.0",
     "semver": "^5.1.0",
-    "shelljs": "^0.7.0",
+    "shelljs": "^0.8.0",
     "tmp": "0.0.33"
   },
   "scripts": {
