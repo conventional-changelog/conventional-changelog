@@ -25,19 +25,42 @@ const cli = meow(`
       -v, --verbose                  Verbose output
       -l, --lerna-package            Recommend a bump for a specific lerna package (:pkg-name@1.0.0)
       -t, --tag-prefix               Tag prefix to consider when reading the tags
-      --commit-path                  Recommend a bump scoped to a specific directory`, {
-  alias: {
-    p: `preset`,
-    g: `config`,
-    h: `headerPattern`,
-    c: `headerCorrespondence`,
-    r: `referenceActions`,
-    i: `issuePrefixes`,
-    n: `noteKeywords`,
-    f: `fieldPattern`,
-    v: `verbose`,
-    l: `lernaPackage`,
-    t: `tagPrefix`
+      --commit-path                  Recommend a bump scoped to a specific directory
+`, {
+  flags: {
+    'preset': {
+      alias: `p`
+    },
+    'config': {
+      alias: `g`
+    },
+    'header-pattern': {
+      alias: `h`
+    },
+    'header-correspondence': {
+      alias: `c`
+    },
+    'reference-actions': {
+      alias: `r`
+    },
+    'issue-prefixes': {
+      alias: `i`
+    },
+    'note-keywords': {
+      alias: `n`
+    },
+    'field-pattern': {
+      alias: `f`
+    },
+    'verbose': {
+      alias: `v`
+    },
+    'lerna-package': {
+      alias: `l`
+    },
+    'tag-prefix': {
+      alias: `t`
+    }
   }
 });
 

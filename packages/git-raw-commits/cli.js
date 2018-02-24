@@ -3,15 +3,13 @@
 var meow = require('meow');
 var gitRawCommits = require('./');
 
-var cli = meow({
-  help: [
-    'Usage',
-    '  git-raw-commits [<git-log(1)-options>]',
-    '',
-    'Example',
-    '  git-raw-commits --from HEAD~2 --to HEAD^'
-  ]
-});
+var cli = meow(`
+  Usage
+    git-raw-commits [<git-log(1)-options>]
+
+  Example
+    git-raw-commits --from HEAD~2 --to HEAD^`
+);
 
 gitRawCommits(cli.flags)
   .on('error', function(err) {

@@ -13,44 +13,56 @@ var through = require('through2');
 var filePaths = [];
 var separator = '\n\n\n';
 
-var cli = meow({
-  help: [
-    'Practice writing commit messages or parse messages from files.',
-    'If used without specifying a text file path, you will enter an interactive shell.',
-    'Otherwise the commit messages in the files are parsed and printed',
-    'By default, commits will be split by three newlines (`\\n\\n\\n`) or you can specify a separator.',
-    '',
-    'Usage',
-    '  conventional-commits-parser [<commit-separator>]',
-    '  conventional-commits-parser [<commit-separator>] <path> [<path> ...]',
-    '  cat <path> | conventional-commits-parser [<commit-separator>]',
-    '',
-    'Example',
-    '  conventional-commits-parser',
-    '  conventional-commits-parser log.txt',
-    '  cat log.txt | conventional-commits-parser',
-    '  conventional-commits-parser log2.txt \'===\' >> parsed.txt',
-    '',
-    'Options',
-    '  -p, --header-pattern           Regex to match header pattern',
-    '  -c, --header-correspondence    Comma separated parts used to define what capturing group of `headerPattern` captures what',
-    '  -r, --reference-actions        Comma separated keywords that used to reference issues',
-    '  -i, --issue-prefixes           Comma separated prefixes of an issue',
-    '  -n, --note-keywords            Comma separated keywords for important notes',
-    '  -f, --field-pattern            Regex to match other fields',
-    '  --revert-pattern               Regex to match revert pattern',
-    '  --revert-correspondence        Comma separated fields used to define what the commit reverts',
-    '  -v, --verbose                  Verbose output'
-  ]
-}, {
-  alias: {
-    p: 'headerPattern',
-    c: 'headerCorrespondence',
-    r: 'referenceActions',
-    i: 'issuePrefixes',
-    n: 'noteKeywords',
-    f: 'fieldPattern',
-    v: 'verbose'
+var cli = meow(`
+    Practice writing commit messages or parse messages from files.
+    If used without specifying a text file path, you will enter an interactive shell.
+    Otherwise the commit messages in the files are parsed and printed
+    By default, commits will be split by three newlines ('\\n\\n\\n') or you can specify a separator.
+
+    Usage
+      conventional-commits-parser [<commit-separator>]
+      conventional-commits-parser [<commit-separator>] <path> [<path> ...]
+      cat <path> | conventional-commits-parser [<commit-separator>]
+
+    Example
+      conventional-commits-parser
+      conventional-commits-parser log.txt
+      cat log.txt | conventional-commits-parser
+      conventional-commits-parser log2.txt \'===\' >> parsed.txt
+
+    Options
+      -p, --header-pattern           Regex to match header pattern
+      -c, --header-correspondence    Comma separated parts used to define what capturing group of 'headerPattern' captures what
+      -r, --reference-actions        Comma separated keywords that used to reference issues
+      -i, --issue-prefixes           Comma separated prefixes of an issue
+      -n, --note-keywords            Comma separated keywords for important notes
+      -f, --field-pattern            Regex to match other fields
+      --revert-pattern               Regex to match revert pattern
+      --revert-correspondence        Comma separated fields used to define what the commit reverts
+      -v, --verbose                  Verbose output
+`, {
+  flags: {
+    'header-pattern': {
+      alias: `p`
+    },
+    'header-correspondence': {
+      alias: `c`
+    },
+    'reference-actions': {
+      alias: `r`
+    },
+    'issue-prefixes': {
+      alias: `i`
+    },
+    'note-keywords': {
+      alias: `n`
+    },
+    'field-pattern': {
+      alias: `f`
+    },
+    verbose: {
+      alias: `v`
+    }
   }
 });
 

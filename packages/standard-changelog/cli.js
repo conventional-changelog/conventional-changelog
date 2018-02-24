@@ -11,43 +11,65 @@ var resolve = require('path').resolve;
 var Readable = require('stream').Readable;
 var rimraf = require('rimraf');
 
-var cli = meow({
-  help: [
-    'Usage',
-    '  standard-changelog',
-    '',
-    'Options',
-    '  -i, --infile              Read the CHANGELOG from this file',
-    '  -f, --first-release       Generate the CHANGELOG for the first time',
-    '  -o, --outfile             Write the CHANGELOG to this file. If unspecified (default: CHANGELOG.md)',
-    '  -s, --same-file           Overwrite the infile (default: true)',
-    '  -p, --preset              Name of the preset you want to use (default: angular)',
-    '  -k, --pkg                 A filepath of where your package.json is located',
-    '  -a, --append              Should the generated block be appended',
-    '  -r, --release-count       How many releases to be generated from the latest',
-    '  -v, --verbose             Verbose output',
-    '  -c, --context             A filepath of a json that is used to define template variables',
-    '  -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)',
-    '  --commit-path             Generate a changelog scoped to a specific directory'
-  ]
-}, {
-  alias: {
-    i: 'infile',
-    h: 'help',
-    o: 'outfile',
-    s: 'same-file',
-    p: 'preset',
-    k: 'pkg',
-    a: 'append',
-    r: 'releaseCount',
-    v: 'verbose',
-    c: 'context',
-    f: 'firstRelease',
-    l: 'lernaPackage'
-  },
-  default: {
-    i: 'CHANGELOG.md',
-    s: true
+var cli = meow(`
+  Usage
+    standard-changelog
+
+  Options
+    -i, --infile              Read the CHANGELOG from this file
+    -f, --first-release       Generate the CHANGELOG for the first time
+    -o, --outfile             Write the CHANGELOG to this file. If unspecified (default: CHANGELOG.md)
+    -s, --same-file           Overwrite the infile (default: true)
+    -p, --preset              Name of the preset you want to use (default: angular)
+    -k, --pkg                 A filepath of where your package.json is located
+    -a, --append              Should the generated block be appended
+    -r, --release-count       How many releases to be generated from the latest
+    -v, --verbose             Verbose output
+    -c, --context             A filepath of a json that is used to define template variables
+    -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
+    --commit-path             Generate a changelog scoped to a specific directory
+`, {
+  flags: {
+    'infile': {
+      alias: `i`,
+      default: `CHANGELOG.md`,
+      type: `string`
+    },
+    'help': {
+      alias: `h`
+    },
+    'outfile': {
+      alias: `o`
+    },
+    'same-file': {
+      alias: `s`,
+      default: true,
+      type: `boolean`
+    },
+    'preset': {
+      alias: `p`
+    },
+    'pkg': {
+      alias: `k`
+    },
+    'append': {
+      alias: `a`
+    },
+    'release-count': {
+      alias: `r`
+    },
+    'verbose': {
+      alias: `v`
+    },
+    'context': {
+      alias: `c`
+    },
+    'first-release': {
+      alias: `f`
+    },
+    'lerna-package': {
+      alias: `l`
+    }
   }
 });
 

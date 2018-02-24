@@ -9,61 +9,80 @@ var tempfile = require('tempfile');
 var _ = require('lodash');
 var resolve = require('path').resolve;
 
-var cli = meow({
-  help: [
-    'Usage',
-    '  conventional-changelog',
-    '',
-    'Example',
-    '  conventional-changelog -i CHANGELOG.md --same-file',
-    '',
-    'Options',
-    '  -i, --infile              Read the CHANGELOG from this file',
-    '',
-    '  -o, --outfile             Write the CHANGELOG to this file',
-    '                            If unspecified, it prints to stdout',
-    '',
-    '  -s, --same-file           Outputting to the infile so you don\'t need to specify the same file as outfile',
-    '',
-    '  -p, --preset              Name of the preset you want to use. Must be one of the following:',
-    '                            angular, atom, codemirror, ember, eslint, express, jquery, jscs or jshint',
-    '',
-    '  -k, --pkg                 A filepath of where your package.json is located',
-    '                            Default is the closest package.json from cwd',
-    '',
-    '  -a, --append              Should the newer release be appended to the older release',
-    '                            Default: false',
-    '',
-    '  -r, --release-count       How many releases to be generated from the latest',
-    '                            If 0, the whole changelog will be regenerated and the outfile will be overwritten',
-    '                            Default: 1',
-    '',
-    '  -u, --output-unreleased   Output unreleased changelog',
-    '',
-    '  -v, --verbose             Verbose output. Use this for debugging',
-    '                            Default: false',
-    '',
-    '  -n, --config              A filepath of your config script',
-    '                            Example of a config script: https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/index.js',
-    '',
-    '  -c, --context             A filepath of a json that is used to define template variables',
-    '  -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)',
-    '  --commit-path             Generate a changelog scoped to a specific directory'
-  ]
-}, {
-  alias: {
-    i: 'infile',
-    o: 'outfile',
-    s: 'sameFile',
-    p: 'preset',
-    k: 'pkg',
-    a: 'append',
-    r: 'releaseCount',
-    u: 'outputUnreleased',
-    v: 'verbose',
-    n: 'config',
-    c: 'context',
-    l: 'lernaPackage'
+var cli = meow(`
+    Usage
+      conventional-changelog
+
+    Example
+      conventional-changelog -i CHANGELOG.md --same-file
+
+    Options
+      -i, --infile              Read the CHANGELOG from this file
+
+      -o, --outfile             Write the CHANGELOG to this file
+                                If unspecified, it prints to stdout
+
+      -s, --same-file           Outputting to the infile so you don\'t need to specify the same file as outfile
+
+      -p, --preset              Name of the preset you want to use. Must be one of the following:
+                                angular, atom, codemirror, ember, eslint, express, jquery, jscs or jshint
+
+      -k, --pkg                 A filepath of where your package.json is located
+                                Default is the closest package.json from cwd
+
+      -a, --append              Should the newer release be appended to the older release
+                                Default: false
+
+      -r, --release-count       How many releases to be generated from the latest
+                                If 0, the whole changelog will be regenerated and the outfile will be overwritten
+                                Default: 1
+
+      -u, --output-unreleased   Output unreleased changelog
+
+      -v, --verbose             Verbose output. Use this for debugging
+                                Default: false
+
+      -n, --config              A filepath of your config script
+                                Example of a config script: https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/index.js
+
+      -c, --context             A filepath of a json that is used to define template variables
+      -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
+      --commit-path             Generate a changelog scoped to a specific directory
+`, {
+  flags: {
+    infile: {
+      alias: `i`
+    },
+    outfile: {
+      alias: `o`
+    },
+    'same-file': {
+      alias: `s`
+    },
+    preset: {
+      alias: `p`
+    },
+    pkg: {
+      alias: `k`
+    },
+    append: {
+      alias: `a`
+    },
+    'release-count': {
+      alias: `r`
+    },
+    'output-unreleased': {
+      alias: `u`
+    },
+    verbose: {
+      alias: `v`
+    },
+    config: {
+      alias: `n`
+    },
+    'lerna-package': {
+      alias: `l`
+    }
   }
 });
 

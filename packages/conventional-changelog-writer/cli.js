@@ -7,24 +7,26 @@ var meow = require('meow');
 var path = require('path');
 var split = require('split');
 
-var cli = meow({
-  help: [
-    'Usage',
-    '  conventional-changelog-writer <path> [<path> ...]',
-    '  cat <path> | conventional-changelog-writer',
-    '',
-    'Example',
-    '  conventional-changelog-writer commits.ldjson',
-    '  cat commits.ldjson | conventional-changelog-writer',
-    '',
-    'Options',
-    '  -c, --context    A filepath of a json that is used to define template variables',
-    '  -o, --options    A filepath of a javascript object that is used to define options'
-  ]
-}, {
-  alias: {
-    c: 'context',
-    o: 'options'
+var cli = meow(`
+    Usage
+      conventional-changelog-writer <path> [<path> ...]
+      cat <path> | conventional-changelog-writer
+    ,
+    Example
+      conventional-changelog-writer commits.ldjson
+      cat commits.ldjson | conventional-changelog-writer
+    ,
+    Options
+      -c, --context    A filepath of a json that is used to define template variables
+      -o, --options    A filepath of a javascript object that is used to define options
+`, {
+  flags: {
+    context: {
+      alias: `c`
+    },
+    options: {
+      alias: `o`
+    }
   }
 });
 

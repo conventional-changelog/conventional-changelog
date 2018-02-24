@@ -1,6 +1,6 @@
 {
   "node": true,
-  "esnext": true,
+  "esversion": 6,
   "camelcase": true,
   "immed": true,
   "newcap": true,

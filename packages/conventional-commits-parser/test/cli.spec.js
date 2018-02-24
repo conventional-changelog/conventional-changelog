@@ -80,6 +80,7 @@ describe('cli', function() {
     cp.stdout
       .pipe(concat(function(chunk) {
         var data = JSON.parse(chunk.toString())[0];
+        console.log(`data`, data);
         expect(data.scope).to.equal('category');
         expect(data.type).to.equal('fix:subcategory');
         expect(data.subject).to.equal('My subject');

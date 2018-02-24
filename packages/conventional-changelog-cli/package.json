@@ -30,7 +30,7 @@
     "log"
   ],
   "devDependencies": {
-    "concat-stream": "^1.5.1",
+    "concat-stream": "^1.6.0",
     "q": "^1.5.1",
     "shelljs": "^0.8.0"
   },
@@ -38,7 +38,7 @@
     "add-stream": "^1.0.0",
     "conventional-changelog": "^1.1.16",
     "lodash": "^4.2.1",
-    "meow": "^3.7.0",
+    "meow": "^4.0.0",
     "tempfile": "^1.1.1"
   },
   "scripts": {

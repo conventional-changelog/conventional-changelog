@@ -29,8 +29,8 @@
     "git"
   ],
   "dependencies": {
-    "meow": "^3.3.0",
-    "semver": "^5.0.1"
+    "meow": "^4.0.0",
+    "semver": "^5.5.0"
   },
   "devDependencies": {
     "git-dummy-commit": "^1.2.0",

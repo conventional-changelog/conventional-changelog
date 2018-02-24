@@ -33,13 +33,13 @@
     "JSONStream": "^1.0.4",
     "is-text-path": "^1.0.0",
     "lodash": "^4.2.1",
-    "meow": "^3.3.0",
+    "meow": "^4.0.0",
     "split2": "^2.0.0",
     "through2": "^2.0.0",
     "trim-off-newlines": "^1.0.0"
   },
   "devDependencies": {
-    "concat-stream": "^1.4.7"
+    "concat-stream": "^1.6.0"
   },
   "scripts": {
     "lint": "jshint *.js lib test && jscs *.js lib test",
