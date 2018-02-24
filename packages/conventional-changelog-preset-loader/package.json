@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "devDependencies": {
-    "jscs": "^3.0.7",
-    "jshint": "^2.9.5",
     "sinon": "^4.2.2",
     "sinon-chai": "^2.14.0"
   },

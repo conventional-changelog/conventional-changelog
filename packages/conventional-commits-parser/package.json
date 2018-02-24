@@ -39,9 +39,7 @@
     "trim-off-newlines": "^1.0.0"
   },
   "devDependencies": {
-    "concat-stream": "^1.4.7",
-    "jscs": "^3.0.7",
-    "jshint": "^2.7.0"
+    "concat-stream": "^1.4.7"
   },
   "scripts": {
     "lint": "jshint *.js lib test && jscs *.js lib test",

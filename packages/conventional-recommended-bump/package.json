@@ -40,8 +40,6 @@
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "core-assert": "^0.2.0",
-    "jscs": "^3.0.7",
-    "jshint": "^2.6.3",
     "shelljs": "^0.7.3",
     "temp": "^0.8.3"
   },
