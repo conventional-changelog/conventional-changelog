@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-filter",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Filter out reverted commits parsed by conventional-commits-parser",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -28,7 +28,6 @@
     "is-subset": "^0.1.1",
     "modify-values": "^1.0.0"
   },
-  "devDependencies": {},
   "scripts": {
     "lint": "jshint *.js && jscs *.js",
     "test": "npm run lint && mocha --timeout=30000",

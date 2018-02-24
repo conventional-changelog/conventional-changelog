@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-atom@0.2.3...conventional-changelog-atom@0.2.4) (2018-02-24)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-atom
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-atom@0.2.2...conventional-changelog-atom@0.2.3) (2018-02-20)
 

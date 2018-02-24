@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.4"></a>
+## [1.3.4](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@1.3.3...git-raw-commits@1.3.4) (2018-02-24)
+
+
+
+
+**Note:** Version bump only for package git-raw-commits
+
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@1.3.2...git-raw-commits@1.3.3) (2018-02-20)
 

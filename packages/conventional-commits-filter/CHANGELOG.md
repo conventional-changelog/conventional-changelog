@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.5"></a>
+## [1.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@1.1.4...conventional-commits-filter@1.1.5) (2018-02-24)
+
+
+
+
+**Note:** Version bump only for package conventional-commits-filter
+
 <a name="1.1.4"></a>
 ## [1.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@1.1.3...conventional-commits-filter@1.1.4) (2018-02-20)
 
