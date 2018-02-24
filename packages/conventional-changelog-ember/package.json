@@ -35,7 +35,6 @@
     "chai": "^3.5.0",
     "conventional-changelog-core": "^2.0.4",
     "git-dummy-commit": "^1.2.0",
-    "istanbul": "^0.4.2",
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
     "mocha": "*",

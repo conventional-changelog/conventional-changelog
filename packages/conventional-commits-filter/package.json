@@ -29,7 +29,6 @@
     "modify-values": "^1.0.0"
   },
   "devDependencies": {
-    "istanbul": "^0.4.2",
     "jscs": "^2.9.0",
     "jshint": "^2.8.0",
     "mocha": "*"

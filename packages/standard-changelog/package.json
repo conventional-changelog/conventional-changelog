@@ -37,11 +37,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "concat-stream": "^1.5.1",
     "jscs": "^2.9.0",
     "jshint": "^2.9.1",
     "mocha": "*",
-    "mock-spawn": "^0.2.6",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0"
   },

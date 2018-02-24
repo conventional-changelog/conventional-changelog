@@ -40,7 +40,6 @@
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "core-assert": "^0.2.0",
-    "coveralls": "^2.11.2",
     "jscs": "^3.0.7",
     "jshint": "^2.6.3",
     "mocha": "*",

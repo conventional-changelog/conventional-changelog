@@ -47,7 +47,6 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "concat-stream": "^1.4.8",
-    "istanbul": "^0.4.2",
     "jscs": "^3.0.3",
     "jshint": "^2.9.1-rc3",
     "mocha": "*"
