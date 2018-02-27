@@ -32,6 +32,39 @@ function semverTagsPromise(options) {
   });
 }
 
+/**
+ * Generates a compare url on the respective repository host
+ *
+ * @param {any} context the same context object as the one that's used in the templates
+ * @returns {string} compare url for gitlab | github | bitbucket
+ */
+function generateCompareUrl(context) {
+  var generatedUrl = '';
+  if (context.repository) {
+    if (context.host) {
+      generatedUrl += context.host + '/';
+    }
+    if (context.owner) {
+      generatedUrl += context.owner + '/';
+    }
+    generatedUrl += context.repository;
+  } else {
+    generatedUrl = context.repoUrl;
+  }
+  switch (context.type) {
+    case 'gitlab':
+    case 'github':
+      generatedUrl += '/compare/' + context.previousTag + '...' + context.currentTag;
+      break;
+    case 'bitbucket':
+      generatedUrl += '/compare/' + context.currentTag + '..' + context.previousTag;
+      break;
+    default:
+      generatedUrl += '/compare';
+  }
+  return generatedUrl;
+}
+
 function guessNextTag(previousTag, version) {
   if (previousTag) {
     if (previousTag[0] === 'v' && version[0] !== 'v') {
@@ -212,7 +245,8 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
 
           context = _.assign({
             issue: hostOpts.issue,
-            commit: hostOpts.commit
+            commit: hostOpts.commit,
+            type: type // add extracted type to context
           }, context);
         } else {
           options.warn('Host: "' + context.host + '" does not exist');
@@ -296,7 +330,7 @@ function mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts
             }
 
             if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
-              context.linkCompare = true;
+              context.linkCompare = generateCompareUrl(context);
             }
 
             return context;

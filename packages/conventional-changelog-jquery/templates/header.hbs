@@ -4,11 +4,7 @@
 {{~else~}}
   #
 {{~/if}} {{#if @root.linkCompare~}}
-  [{{version}}]({{@root.host}}/
-  {{~#if @root.owner}}
-    {{~@root.owner}}/
-  {{~/if}}
-  {{~@root.repository}}/compare/{{previousTag}}...{{currentTag}})
+  [{{version}}]({{linkCompare}})
 {{~else}}
   {{~version}}
 {{~/if}}
