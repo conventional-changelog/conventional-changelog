@@ -1,89 +1,92 @@
-'use strict';
-var concat = require('concat-stream');
-var expect = require('chai').expect;
-var fs = require('fs');
-var spawn = require('child_process').spawn;
-var through = require('through2');
+'use strict'
+var concat = require('concat-stream')
+var expect = require('chai').expect
+var mocha = require('mocha')
+var describe = mocha.describe
+var it = mocha.it
+var fs = require('fs')
+var spawn = require('child_process').spawn
+var through = require('through2')
 
-var cliPath = './cli.js';
+var cliPath = './cli.js'
 
-describe('cli', function() {
-  it('should parse commits in a file', function(done) {
+describe('cli', function () {
+  it('should parse commits in a file', function (done) {
     var cp = spawn(cliPath, ['test/fixtures/log1.txt'], {
       stdio: [process.stdin, null, null]
-    });
+    })
     cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"');
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"')
 
-        done();
-      }));
-  });
+        done()
+      }))
+  })
 
-  it('should work with a separator', function(done) {
+  it('should work with a separator', function (done) {
     var cp = spawn(cliPath, ['test/fixtures/log2.txt', '==='], {
       stdio: [process.stdin, null, null]
-    });
+    })
     cp.stdout
-      .pipe(concat(function(chunk) {
-        chunk = chunk.toString();
+      .pipe(concat(function (chunk) {
+        chunk = chunk.toString()
 
-        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"');
-        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"');
+        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"')
+        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"')
 
-        done();
-      }));
-  });
+        done()
+      }))
+  })
 
-  it('should work with two files', function(done) {
+  it('should work with two files', function (done) {
     var cp = spawn(cliPath, ['test/fixtures/log1.txt', 'test/fixtures/log2.txt', '==='], {
       stdio: [process.stdin, null, null]
-    });
+    })
     cp.stdout
-      .pipe(concat(function(chunk) {
-        chunk = chunk.toString();
+      .pipe(concat(function (chunk) {
+        chunk = chunk.toString()
 
-        expect(chunk).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"');
-        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"');
-        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"');
+        expect(chunk).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"')
+        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"')
+        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"')
 
-        done();
-      }));
-  });
+        done()
+      }))
+  })
 
-  it('should error if files cannot be found', function(done) {
-    var i = 0;
+  it('should error if files cannot be found', function (done) {
+    var i = 0
     var cp = spawn(cliPath, ['test/fixtures/log1.txt', 'test/fixtures/log4.txt', 'test/fixtures/log2.txt', 'test/fixtures/log5.txt', '==='], {
       stdio: [process.stdin, null, null]
-    });
+    })
     cp.stderr
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
 
         if (i === 0) {
-          expect(chunk).to.contain('Failed to read file test/fixtures/log4.txt');
+          expect(chunk).to.contain('Failed to read file test/fixtures/log4.txt')
         } else {
-          expect(chunk).to.contain('Failed to read file test/fixtures/log5.txt');
+          expect(chunk).to.contain('Failed to read file test/fixtures/log5.txt')
         }
 
-        i++;
-        cb();
-      }, function() {
-        done();
-      }));
-  });
+        i++
+        cb()
+      }, function () {
+        done()
+      }))
+  })
 
-  it('should work with options', function(done) {
+  it('should work with options', function (done) {
     var cp = spawn(cliPath, ['test/fixtures/log3.txt', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
       stdio: [process.stdin, null, null]
-    });
+    })
     cp.stdout
-      .pipe(concat(function(chunk) {
-        var data = JSON.parse(chunk.toString())[0];
-        console.log(`data`, data);
-        expect(data.scope).to.equal('category');
-        expect(data.type).to.equal('fix:subcategory');
-        expect(data.subject).to.equal('My subject');
+      .pipe(concat(function (chunk) {
+        var data = JSON.parse(chunk.toString())[0]
+        console.log(`data`, data)
+        expect(data.scope).to.equal('category')
+        expect(data.type).to.equal('fix:subcategory')
+        expect(data.subject).to.equal('My subject')
 
         expect(data.references).to.eql([
           {
@@ -110,40 +113,40 @@ describe('cli', function() {
             raw: '#9338',
             prefix: '#'
           }
-        ]);
+        ])
 
         expect(data.notes).to.eql([
           {
             title: 'BREAKING NEWS',
             text: 'A lot of changes!'
           }
-        ]);
+        ])
 
-        done();
-      }));
-  });
+        done()
+      }))
+  })
 
-  it('should work if it is not a tty', function(done) {
+  it('should work if it is not a tty', function (done) {
     var cp = spawn(cliPath, [], {
       stdio: [fs.openSync('test/fixtures/log1.txt', 'r'), null, null]
-    });
+    })
     cp.stdout
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"');
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.include('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"')
 
-        done();
-      }));
-  });
+        done()
+      }))
+  })
 
-  it('should error if it is not a tty and commit cannot be parsed', function(done) {
+  it('should error if it is not a tty and commit cannot be parsed', function (done) {
     var cp = spawn(cliPath, [], {
       stdio: [fs.openSync('test/fixtures/bad_commit.txt', 'r'), null, null]
-    });
+    })
     cp.stderr
-      .pipe(concat(function(chunk) {
-        expect(chunk.toString()).to.equal('TypeError: Expected a raw commit\n');
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.equal('TypeError: Expected a raw commit\n')
 
-        done();
-      }));
-  });
-});
+        done()
+      }))
+  })
+})

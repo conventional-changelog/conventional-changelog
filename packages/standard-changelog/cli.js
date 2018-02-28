@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-'use strict';
-var addStream = require('add-stream');
-var chalk = require('chalk');
-var standardChangelog = require('./');
-var fs = require('fs');
-var meow = require('meow');
-var tempfile = require('tempfile');
-var _ = require('lodash');
-var resolve = require('path').resolve;
-var Readable = require('stream').Readable;
-var rimraf = require('rimraf');
+'use strict'
+var addStream = require('add-stream')
+var chalk = require('chalk')
+var standardChangelog = require('./')
+var fs = require('fs')
+var meow = require('meow')
+var tempfile = require('tempfile')
+var _ = require('lodash')
+var resolve = require('path').resolve
+var Readable = require('stream').Readable
+var rimraf = require('rimraf')
 
 var cli = meow(`
   Usage
@@ -71,14 +71,14 @@ var cli = meow(`
       alias: `l`
     }
   }
-});
+})
 
-var flags = cli.flags;
-var infile = flags.infile;
-var sameFile = flags.sameFile;
-var outfile = sameFile ? (flags.outfile || infile) : flags.outfile;
-var append = flags.append;
-var releaseCount = flags.firstRelease ? 0 : flags.releaseCount;
+var flags = cli.flags
+var infile = flags.infile
+var sameFile = flags.sameFile
+var outfile = sameFile ? (flags.outfile || infile) : flags.outfile
+var append = flags.append
+var releaseCount = flags.firstRelease ? 0 : flags.releaseCount
 
 var options = _.omit({
   preset: flags.preset,
@@ -88,47 +88,47 @@ var options = _.omit({
   append: append,
   releaseCount: releaseCount,
   lernaPackage: flags.lernaPackage
-}, _.isUndefined);
+}, _.isUndefined)
 
 if (flags.verbose) {
-  options.warn = console.warn.bind(console);
+  options.warn = console.warn.bind(console)
 }
 
-var templateContext;
+var templateContext
 
-function outputError(err) {
+function outputError (err) {
   if (flags.verbose) {
-    console.error(chalk.grey(err.stack));
+    console.error(chalk.grey(err.stack))
   } else {
-    console.error(chalk.red(err.toString()));
+    console.error(chalk.red(err.toString()))
   }
-  process.exit(1);
+  process.exit(1)
 }
 
 try {
   if (flags.context) {
-    templateContext = require(resolve(process.cwd(), flags.context));
+    templateContext = require(resolve(process.cwd(), flags.context))
   }
 } catch (err) {
-  outputError(err);
+  outputError(err)
 }
 
 var changelogStream = standardChangelog(options, templateContext, flags.commitPath ? {path: flags.commitPath} : {})
-  .on('error', function(err) {
-    outputError(err);
-  });
+  .on('error', function (err) {
+    outputError(err)
+  })
 
-standardChangelog.createIfMissing(infile);
+standardChangelog.createIfMissing(infile)
 
-var readStream = null;
+var readStream = null
 if (releaseCount !== 0) {
   readStream = fs.createReadStream(infile)
-    .on('error', function(err) {
-      outputError(err);
-    });
+    .on('error', function (err) {
+      outputError(err)
+    })
 } else {
-  readStream = new Readable();
-  readStream.push(null);
+  readStream = new Readable()
+  readStream.push(null)
 }
 
 if (options.append) {
@@ -136,21 +136,21 @@ if (options.append) {
     .pipe(fs.createWriteStream(outfile, {
       flags: 'a'
     }))
-    .on('finish', function() {
-      standardChangelog.checkpoint('appended changes to %s', [outfile]);
-    });
+    .on('finish', function () {
+      standardChangelog.checkpoint('appended changes to %s', [outfile])
+    })
 } else {
-  var tmp = tempfile();
+  var tmp = tempfile()
 
   changelogStream
     .pipe(addStream(readStream))
     .pipe(fs.createWriteStream(tmp))
-    .on('finish', function() {
+    .on('finish', function () {
       fs.createReadStream(tmp)
         .pipe(fs.createWriteStream(outfile))
-        .on('finish', function() {
-          standardChangelog.checkpoint('output changes to %s', [outfile]);
-          rimraf.sync(tmp);
-        });
-    });
+        .on('finish', function () {
+          standardChangelog.checkpoint('output changes to %s', [outfile])
+          rimraf.sync(tmp)
+        })
+    })
 }

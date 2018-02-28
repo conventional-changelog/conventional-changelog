@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   headerPattern: /^\[\[(.*)]] (.*)$/,
@@ -7,4 +7,4 @@ module.exports = {
     `shortDesc`
   ],
   noteKeywords: `BREAKING CHANGE`
-};
+}

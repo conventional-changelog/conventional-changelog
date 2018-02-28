@@ -1,48 +1,48 @@
-'use strict';
+'use strict'
 
-const Q = require(`q`);
-const readFile = Q.denodeify(require(`fs`).readFile);
-const resolve = require(`path`).resolve;
+const Q = require(`q`)
+const readFile = Q.denodeify(require(`fs`).readFile)
+const resolve = require(`path`).resolve
 
 module.exports = Q.all([
   readFile(resolve(__dirname, `./templates/template.hbs`), `utf-8`),
   readFile(resolve(__dirname, `./templates/header.hbs`), `utf-8`),
   readFile(resolve(__dirname, `./templates/commit.hbs`), `utf-8`)
 ])
-.spread((template, header, commit) => {
-  const writerOpts = getWriterOpts();
+  .spread((template, header, commit) => {
+    const writerOpts = getWriterOpts()
 
-  writerOpts.mainTemplate = template;
-  writerOpts.headerPartial = header;
-  writerOpts.commitPartial = commit;
+    writerOpts.mainTemplate = template
+    writerOpts.headerPartial = header
+    writerOpts.commitPartial = commit
 
-  return writerOpts;
-});
+    return writerOpts
+  })
 
-function getWriterOpts() {
+function getWriterOpts () {
   return {
     transform: (commit) => {
-      let emojiLength;
+      let emojiLength
 
       if (!commit.emoji || typeof commit.emoji !== `string`) {
-        return;
+        return
       }
 
-      commit.emoji = commit.emoji.substring(0, 72);
-      emojiLength = commit.emoji.length;
+      commit.emoji = commit.emoji.substring(0, 72)
+      emojiLength = commit.emoji.length
 
       if (typeof commit.hash === `string`) {
-        commit.hash = commit.hash.substring(0, 7);
+        commit.hash = commit.hash.substring(0, 7)
       }
 
       if (typeof commit.shortDesc === `string`) {
-        commit.shortDesc = commit.shortDesc.substring(0, 72 - emojiLength);
+        commit.shortDesc = commit.shortDesc.substring(0, 72 - emojiLength)
       }
 
-      return commit;
+      return commit
     },
     groupBy: `emoji`,
     commitGroupsSort: `title`,
     commitsSort: [`emoji`, `shortDesc`]
-  };
+  }
 }

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   headerPattern: /^(:.*?:) (.*)$/,
@@ -6,4 +6,4 @@ module.exports = {
     `emoji`,
     `shortDesc`
   ]
-};
+}

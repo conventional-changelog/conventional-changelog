@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   mergePattern: /^Merge pull request #(.*) from .*$/,
@@ -9,4 +9,4 @@ module.exports = {
     `taggedAs`,
     `message`
   ]
-};
+}

@@ -44,6 +44,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
+    "safe-buffer": "5.1.1",
     "shelljs": "^0.8.0",
     "vinyl": "^2.1.0"
   }
