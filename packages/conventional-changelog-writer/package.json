@@ -48,7 +48,7 @@
     "concat-stream": "^1.6.0"
   },
   "scripts": {
-    "lint": "jshint *.js lib test && jscs *.js lib test",
+    "lint": "eslint --fix .",
     "test": "npm run lint && mocha --timeout 30000",
     "test-windows": "echo 'make work on windows'"
   },

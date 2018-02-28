@@ -24,7 +24,7 @@
     "sinon-chai": "^2.14.0"
   },
   "scripts": {
-    "lint": "jshint . --exclude node_modules && jscs .",
+    "lint": "eslint --fix .",
     "test": "mocha --timeout 30000 && npm run-script lint",
     "test-windows": "mocha --timeout 30000"
   }

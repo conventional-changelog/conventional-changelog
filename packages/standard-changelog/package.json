@@ -41,7 +41,7 @@
   },
   "scripts": {
     "test": "mocha --timeout 30000 && npm run-script lint",
-    "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
+    "lint": "eslint --fix .",
     "test-windows": "echo 'make work on windows'"
   },
   "bin": "cli.js"
