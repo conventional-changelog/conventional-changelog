@@ -1,16 +1,20 @@
 'use strict';
 
 module.exports = {
-  whatBump: (commits) => {
+  whatBump: commits => {
     let level = 2;
     let breakings = 0;
     let features = 0;
 
     commits.forEach(commit => {
-      if (commit.notes.length > 0) {
-        breakings += commit.notes.length;
+      if (!commit.type) {
+        return;
+      }
+
+      if (commit.type.toLowerCase() === 'breaking') {
+        breakings += 1;
         level = 0;
-      } else if (commit.type === `feat`) {
+      } else if (commit.type.toLowerCase() === 'new') {
         features += 1;
         if (level === 2) {
           level = 1;
@@ -20,19 +24,16 @@ module.exports = {
 
     return {
       level: level,
-      reason: `There are ${breakings} BREAKING CHANGES and ${features} features`
+      reason: `There are ${breakings} breaking changes and ${features} features`
     };
   },
-
   parserOpts: {
-    headerPattern: /^(\w*)(?:\((.*)\))?\: (.*)$/,
+    headerPattern: /^(\w*): (.*)$/,
     headerCorrespondence: [
-      `type`,
-      `scope`,
-      `subject`
+      'type',
+      'subject'
     ],
-    noteKeywords: `BREAKING CHANGE`,
-    revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
-    revertCorrespondence: [`header`, `hash`]
+    revertPattern: /^[rR]evert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
+    revertCorrespondence: ['header', 'hash']
   }
 };
