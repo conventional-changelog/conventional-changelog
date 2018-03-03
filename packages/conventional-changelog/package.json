@@ -49,7 +49,7 @@
     "through2": "^2.0.0"
   },
   "scripts": {
-    "lint": "jshint test *.js --exclude node_modules && jscs test *.js",
+    "lint": "eslint --fix .",
     "test": "npm run-script lint && mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   }

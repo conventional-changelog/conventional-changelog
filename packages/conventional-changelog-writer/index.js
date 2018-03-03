@@ -1,27 +1,27 @@
-'use strict';
+'use strict'
 
-var dateFormat = require('dateformat');
-var join = require('path').join;
-var readFileSync = require('fs').readFileSync;
-var semverValid = require('semver').valid;
-var through = require('through2');
-var util = require('./lib/util');
-var _ = require('lodash');
+var dateFormat = require('dateformat')
+var join = require('path').join
+var readFileSync = require('fs').readFileSync
+var semverValid = require('semver').valid
+var through = require('through2')
+var util = require('./lib/util')
+var _ = require('lodash')
 
-function conventionalChangelogWriter(context, options) {
-  var savedKeyCommit;
-  var commits = [];
-  var firstRelease = true;
-  var neverGenerated = true;
+function conventionalChangelogWriter (context, options) {
+  var savedKeyCommit
+  var commits = []
+  var firstRelease = true
+  var neverGenerated = true
 
   context = _.extend({
     commit: 'commits',
     issue: 'issues',
     date: dateFormat(new Date(), 'yyyy-mm-dd', true)
-  }, context);
+  }, context)
 
   if (!_.isBoolean(context.linkReferences) && (context.repository || context.repoUrl) && context.commit && context.issue) {
-    context.linkReferences = true;
+    context.linkReferences = true
   }
 
   options = _.assign({
@@ -29,13 +29,13 @@ function conventionalChangelogWriter(context, options) {
     commitsSort: 'header',
     noteGroupsSort: 'title',
     notesSort: 'text',
-    generateOn: function(commit) {
-      return semverValid(commit.version);
+    generateOn: function (commit) {
+      return semverValid(commit.version)
     },
-    finalizeContext: function(context) {
-      return context;
+    finalizeContext: function (context) {
+      return context
     },
-    debug: function() {},
+    debug: function () {},
     reverse: false,
     includeDetails: false,
     ignoreReverted: true,
@@ -44,123 +44,123 @@ function conventionalChangelogWriter(context, options) {
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
     footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
-  }, options);
+  }, options)
 
-  if (!_.isFunction(options.transform) && _.isObject(options.transform) || _.isUndefined(options.transform)) {
+  if ((!_.isFunction(options.transform) && _.isObject(options.transform)) || _.isUndefined(options.transform)) {
     options.transform = _.assign({
-      hash: function(hash) {
+      hash: function (hash) {
         if (_.isString(hash)) {
-          return hash.substring(0, 7);
+          return hash.substring(0, 7)
         }
       },
-      header: function(header) {
-        return header.substring(0, 100);
+      header: function (header) {
+        return header.substring(0, 100)
       },
-      committerDate: function(date) {
+      committerDate: function (date) {
         if (!date) {
-          return;
+          return
         }
 
-        return dateFormat(date, 'yyyy-mm-dd', true);
+        return dateFormat(date, 'yyyy-mm-dd', true)
       }
-    }, options.transform);
+    }, options.transform)
   }
 
-  var generateOn = options.generateOn;
+  var generateOn = options.generateOn
   if (_.isString(generateOn)) {
-    generateOn = function(commit) {
-      return !_.isUndefined(commit[options.generateOn]);
-    };
+    generateOn = function (commit) {
+      return !_.isUndefined(commit[options.generateOn])
+    }
   } else if (!_.isFunction(generateOn)) {
-    generateOn = function() {
-      return false;
-    };
+    generateOn = function () {
+      return false
+    }
   }
 
-  options.commitGroupsSort = util.functionify(options.commitGroupsSort);
-  options.commitsSort = util.functionify(options.commitsSort);
-  options.noteGroupsSort = util.functionify(options.noteGroupsSort);
-  options.notesSort = util.functionify(options.notesSort);
+  options.commitGroupsSort = util.functionify(options.commitGroupsSort)
+  options.commitsSort = util.functionify(options.commitsSort)
+  options.noteGroupsSort = util.functionify(options.noteGroupsSort)
+  options.notesSort = util.functionify(options.notesSort)
 
-  return through.obj(function(chunk, enc, cb) {
+  return through.obj(function (chunk, enc, cb) {
     try {
-      var result;
-      var commit = util.processCommit(chunk, options.transform, context);
-      var keyCommit = commit || chunk;
+      var result
+      var commit = util.processCommit(chunk, options.transform, context)
+      var keyCommit = commit || chunk
 
       // previous blocks of logs
       if (options.reverse) {
         if (commit) {
-          commits.push(commit);
+          commits.push(commit)
         }
 
         if (generateOn(keyCommit, commits, context, options)) {
-          neverGenerated = false;
-          result = util.generate(options, commits, context, keyCommit);
+          neverGenerated = false
+          result = util.generate(options, commits, context, keyCommit)
           if (options.includeDetails) {
             this.push({
               log: result,
               keyCommit: keyCommit
-            });
+            })
           } else {
-            this.push(result);
+            this.push(result)
           }
 
-          commits = [];
+          commits = []
         }
       } else {
         if (generateOn(keyCommit, commits, context, options)) {
-          neverGenerated = false;
-          result = util.generate(options, commits, context, savedKeyCommit);
+          neverGenerated = false
+          result = util.generate(options, commits, context, savedKeyCommit)
 
           if (!firstRelease || options.doFlush) {
             if (options.includeDetails) {
               this.push({
                 log: result,
                 keyCommit: savedKeyCommit
-              });
+              })
             } else {
-              this.push(result);
+              this.push(result)
             }
           }
 
-          firstRelease = false;
-          commits = [];
-          savedKeyCommit = keyCommit;
+          firstRelease = false
+          commits = []
+          savedKeyCommit = keyCommit
         }
 
         if (commit) {
-          commits.push(commit);
+          commits.push(commit)
         }
       }
 
-      cb();
+      cb()
     } catch (err) {
-      cb(err);
+      cb(err)
     }
-  }, function(cb) {
+  }, function (cb) {
     if (!options.doFlush && (options.reverse || neverGenerated)) {
-      cb(null);
-      return;
+      cb(null)
+      return
     }
 
     try {
-      var result = util.generate(options, commits, context, savedKeyCommit);
+      var result = util.generate(options, commits, context, savedKeyCommit)
 
       if (options.includeDetails) {
         this.push({
           log: result,
           keyCommit: savedKeyCommit
-        });
+        })
       } else {
-        this.push(result);
+        this.push(result)
       }
 
-      cb();
+      cb()
     } catch (err) {
-      cb(err);
+      cb(err)
     }
-  });
+  })
 }
 
-module.exports = conventionalChangelogWriter;
+module.exports = conventionalChangelogWriter

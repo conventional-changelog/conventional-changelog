@@ -1,12 +1,15 @@
-'use strict';
-var conventionalCommitsParser = require('../');
-var expect = require('chai').expect;
-var forEach = require('lodash').forEach;
-var through = require('through2');
+'use strict'
+var conventionalCommitsParser = require('../')
+var mocha = require('mocha')
+var describe = mocha.describe
+var it = mocha.it
+var expect = require('chai').expect
+var forEach = require('lodash').forEach
+var through = require('through2')
 
-describe('conventionalCommitsParser', function() {
-  it('should parse raw commits', function(done) {
-    var stream = through();
+describe('conventionalCommitsParser', function () {
+  it('should parse raw commits', function (done) {
+    var stream = through()
     var commits = [
       'feat(ng-list): Allow custom separator\n' +
       'bla bla bla\n\n' +
@@ -29,46 +32,46 @@ describe('conventionalCommitsParser', function() {
       'This reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.\n\n' +
       '-hash-\n' +
       'd7a40a29214f37d469e57d730dfd042b639d4d1f'
-    ];
+    ]
 
-    forEach(commits, function(commit) {
-      stream.write(commit);
-    });
-    stream.end();
+    forEach(commits, function (commit) {
+      stream.write(commit)
+    })
+    stream.end()
 
-    var i = 0;
+    var i = 0
 
     stream
       .pipe(conventionalCommitsParser())
-      .pipe(through.obj(function(chunk, enc, cb) {
+      .pipe(through.obj(function (chunk, enc, cb) {
         if (i === 0) {
-          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator');
+          expect(chunk.header).to.equal('feat(ng-list): Allow custom separator')
         } else if (i === 1) {
           expect(chunk.notes).to.eql([{
             title: 'BREAKING CHANGE',
             text: 'some breaking change'
-          }]);
+          }])
         } else if (i === 2) {
-          expect(chunk.header).to.equal('fix(zzz): Very cool commit');
+          expect(chunk.header).to.equal('fix(zzz): Very cool commit')
         } else if (i === 3) {
-          expect(chunk.header).to.equal('chore(scope with spaces): some chore');
+          expect(chunk.header).to.equal('chore(scope with spaces): some chore')
         } else if (i === 4) {
           expect(chunk.revert).to.eql({
             header: 'throw an error if a callback is passed to animate methods',
             hash: '9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca'
-          });
+          })
         }
 
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(5);
-        done();
-      }));
-  });
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(5)
+        done()
+      }))
+  })
 
-  it('should ignore malformed commits', function(done) {
-    var stream = through();
+  it('should ignore malformed commits', function (done) {
+    var stream = through()
     var commits = [
       'chore(scope with spaces): some chore\n',
 
@@ -77,61 +80,61 @@ describe('conventionalCommitsParser', function() {
 
       'fix(zzz): Very cool commit\n' +
       'bla bla bla\n\n'
-    ];
+    ]
 
-    forEach(commits, function(commit) {
-      stream.write(commit);
-    });
-    stream.end();
+    forEach(commits, function (commit) {
+      stream.write(commit)
+    })
+    stream.end()
 
-    var i = 0;
+    var i = 0
 
     stream
       .pipe(conventionalCommitsParser())
-      .pipe(through.obj(function(chunk, enc, cb) {
-        ++i;
-        cb();
-      }, function() {
-        expect(i).to.equal(3);
-        done();
-      }));
-  });
+      .pipe(through.obj(function (chunk, enc, cb) {
+        ++i
+        cb()
+      }, function () {
+        expect(i).to.equal(3)
+        done()
+      }))
+  })
 
-  it('should warn if malformed commits found', function(done) {
-    var stream = through();
-    var commit = ' \n\n';
+  it('should warn if malformed commits found', function (done) {
+    var stream = through()
+    var commit = ' \n\n'
 
-    stream.write(commit);
-    stream.end();
+    stream.write(commit)
+    stream.end()
 
     stream
       .pipe(conventionalCommitsParser({
-        warn: function(warning) {
-          expect(warning).to.equal('TypeError: Expected a raw commit');
-          done();
+        warn: function (warning) {
+          expect(warning).to.equal('TypeError: Expected a raw commit')
+          done()
         }
       }))
-      .pipe(through.obj(function(chunk, enc, cb) {
-        cb();
-      }));
-  });
+      .pipe(through.obj(function (chunk, enc, cb) {
+        cb()
+      }))
+  })
 
-  it('should error if malformed commits found and `options.warn === true`', function(done) {
-    var stream = through();
-    var commit = ' \n\n';
+  it('should error if malformed commits found and `options.warn === true`', function (done) {
+    var stream = through()
+    var commit = ' \n\n'
 
-    stream.write(commit);
-    stream.end();
+    stream.write(commit)
+    stream.end()
 
     stream
       .pipe(conventionalCommitsParser({
         warn: true
       }))
-      .on('error', function(err) {
-        expect(err.toString()).to.equal('TypeError: Expected a raw commit');
-        done();
-      });
-  });
+      .on('error', function (err) {
+        expect(err.toString()).to.equal('TypeError: Expected a raw commit')
+        done()
+      })
+  })
 
   var commits = [
     'feat(ng-list) Allow custom separator\n' +
@@ -141,28 +144,28 @@ describe('conventionalCommitsParser', function() {
     'fix(ng-list) Another custom separator\n' +
     'bla bla bla\n\n' +
     'BREAKING CHANGES: some breaking changes\n'
-  ];
+  ]
 
-  it('should take options', function(done) {
-    var stream = through();
-    var i = 0;
+  it('should take options', function (done) {
+    var stream = through()
+    var i = 0
 
-    forEach(commits, function(commit) {
-      stream.write(commit);
-    });
-    stream.end();
+    forEach(commits, function (commit) {
+      stream.write(commit)
+    })
+    stream.end()
 
     stream
       .pipe(conventionalCommitsParser({
-        headerPattern: /^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\ (.*)$/,
+        headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))? (.*)$/,
         noteKeywords: ['BREAKING CHANGES'],
         referenceActions: ['fix']
       }))
-      .pipe(through.obj(function(chunk, enc, cb) {
+      .pipe(through.obj(function (chunk, enc, cb) {
         if (i === 0) {
-          expect(chunk.type).to.equal('feat');
-          expect(chunk.scope).to.equal('ng-list');
-          expect(chunk.subject).to.equal('Allow custom separator');
+          expect(chunk.type).to.equal('feat')
+          expect(chunk.scope).to.equal('ng-list')
+          expect(chunk.subject).to.equal('Allow custom separator')
           expect(chunk.references).to.eql([{
             action: 'Fix',
             owner: null,
@@ -184,36 +187,36 @@ describe('conventionalCommitsParser', function() {
             issue: '33',
             raw: '#33',
             prefix: '#'
-          }]);
+          }])
         }
         if (i === 1) {
-          expect(chunk.type).to.equal('fix');
-          expect(chunk.scope).to.equal('ng-list');
-          expect(chunk.subject).to.equal('Another custom separator');
+          expect(chunk.type).to.equal('fix')
+          expect(chunk.scope).to.equal('ng-list')
+          expect(chunk.subject).to.equal('Another custom separator')
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
             text: 'some breaking changes'
-          });
+          })
         }
 
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(2);
-        done();
-      }));
-  });
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(2)
+        done()
+      }))
+  })
 
-  it('should take string options', function(done) {
-    var stream = through();
-    var i = 0;
+  it('should take string options', function (done) {
+    var stream = through()
+    var i = 0
 
-    forEach(commits, function(commit) {
-      stream.write(commit);
-    });
-    stream.write('blabla\n-hash-\n9b1aff905b638aa274a5fc8f88662df446d374bd');
-    stream.write('Revert "throw an error if a callback is passed to animate methods"\n\nThis reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.');
-    stream.end();
+    forEach(commits, function (commit) {
+      stream.write(commit)
+    })
+    stream.write('blabla\n-hash-\n9b1aff905b638aa274a5fc8f88662df446d374bd')
+    stream.write('Revert "throw an error if a callback is passed to animate methods"\n\nThis reverts commit 9bb4d6ccbe80b7704c6b7f53317ca8146bc103ca.')
+    stream.end()
 
     stream
       .pipe(conventionalCommitsParser({
@@ -227,11 +230,11 @@ describe('conventionalCommitsParser', function() {
         mergePattern: '/^Merge pull request #(\\d+) from (.*)$/',
         revertCorrespondence: ' header'
       }))
-      .pipe(through.obj(function(chunk, enc, cb) {
+      .pipe(through.obj(function (chunk, enc, cb) {
         if (i === 0) {
-          expect(chunk.subject).to.equal('feat');
-          expect(chunk.type).to.equal('ng-list');
-          expect(chunk.scope).to.equal('Allow custom separator');
+          expect(chunk.subject).to.equal('feat')
+          expect(chunk.type).to.equal('ng-list')
+          expect(chunk.scope).to.equal('Allow custom separator')
           expect(chunk.references).to.eql([{
             action: 'Fix',
             owner: null,
@@ -253,40 +256,40 @@ describe('conventionalCommitsParser', function() {
             issue: '33',
             raw: '#33',
             prefix: '#'
-          }]);
+          }])
         } else if (i === 1) {
-          expect(chunk.type).to.equal('ng-list');
-          expect(chunk.scope).to.equal('Another custom separator');
-          expect(chunk.subject).to.equal('fix');
+          expect(chunk.type).to.equal('ng-list')
+          expect(chunk.scope).to.equal('Another custom separator')
+          expect(chunk.subject).to.equal('fix')
           expect(chunk.notes[0]).to.eql({
             title: 'BREAKING CHANGES',
             text: 'some breaking changes'
-          });
+          })
         } else if (i === 2) {
-          expect(chunk.header).to.equal('blabla');
-          expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd');
+          expect(chunk.header).to.equal('blabla')
+          expect(chunk.hash).to.equal('9b1aff905b638aa274a5fc8f88662df446d374bd')
         } else if (i === 3) {
-          expect(chunk.revert.header).to.equal('throw an error if a callback is passed to animate methods');
+          expect(chunk.revert.header).to.equal('throw an error if a callback is passed to animate methods')
         }
 
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(4);
-        done();
-      }));
-  });
-});
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(4)
+        done()
+      }))
+  })
+})
 
-describe('sync', function() {
-  it('should work', function() {
+describe('sync', function () {
+  it('should work', function () {
     var commit = 'feat(ng-list): Allow custom separator\n' +
       'bla bla bla\n\n' +
-      'Closes #123\nCloses #25\nFixes #33\n';
-    var result = conventionalCommitsParser.sync(commit);
+      'Closes #123\nCloses #25\nFixes #33\n'
+    var result = conventionalCommitsParser.sync(commit)
 
-    expect(result.header).to.equal('feat(ng-list): Allow custom separator');
-    expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33');
+    expect(result.header).to.equal('feat(ng-list): Allow custom separator')
+    expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33')
     expect(result.references).to.eql([
       {
         action: 'Closes',
@@ -312,12 +315,12 @@ describe('sync', function() {
         raw: '#33',
         repository: null
       }
-    ]);
-  });
+    ])
+  })
 
-  it('should parse references from header', function() {
-    var commit = 'Subject #1';
-    var result = conventionalCommitsParser.sync(commit);
+  it('should parse references from header', function () {
+    var commit = 'Subject #1'
+    var result = conventionalCommitsParser.sync(commit)
 
     expect(result.references).to.eql([{
       action: null,
@@ -326,6 +329,6 @@ describe('sync', function() {
       prefix: '#',
       raw: 'Subject #1',
       repository: null
-    }]);
-  });
-});
+    }])
+  })
+})

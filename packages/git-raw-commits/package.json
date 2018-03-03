@@ -41,7 +41,7 @@
     "shelljs": "^0.8.0"
   },
   "scripts": {
-    "lint": "jshint . --exclude node_modules && jscs .",
+    "lint": "eslint --fix .",
     "test": "npm run-script lint && mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },

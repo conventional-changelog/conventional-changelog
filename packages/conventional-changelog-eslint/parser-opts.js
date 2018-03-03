@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   headerPattern: /^(\w*):\s*(.*)$/,
@@ -6,4 +6,4 @@ module.exports = {
     `tag`,
     `message`
   ]
-};
+}

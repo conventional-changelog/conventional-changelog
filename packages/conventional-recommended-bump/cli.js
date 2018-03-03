@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-'use strict';
+'use strict'
 
-const meow = require(`meow`);
-const conventionalRecommendedBump = require(`./`);
-const path = require(`path`);
+const meow = require(`meow`)
+const conventionalRecommendedBump = require(`./`)
+const path = require(`path`)
 
 const cli = meow(`
     Usage
@@ -62,40 +62,40 @@ const cli = meow(`
       alias: `t`
     }
   }
-});
+})
 
 const options = {
   path: cli.flags.commitPath,
   lernaPackage: cli.flags.lernaPackage,
   tagPrefix: cli.flags.tagPrefix
-};
-const flags = cli.flags;
-const preset = flags.preset;
-const config = flags.config;
+}
+const flags = cli.flags
+const preset = flags.preset
+const config = flags.config
 
 if (preset) {
-  options.preset = preset;
-  delete flags.preset;
+  options.preset = preset
+  delete flags.preset
 } else if (config) {
-  options.config = require(path.resolve(process.cwd(), config));
-  delete flags.config;
+  options.config = require(path.resolve(process.cwd(), config))
+  delete flags.config
 }
 
 if (flags.verbose) {
-  options.warn = console.warn.bind(console);
+  options.warn = console.warn.bind(console)
 }
 
-conventionalRecommendedBump(options, flags, function(err, data) {
+conventionalRecommendedBump(options, flags, function (err, data) {
   if (err) {
-    console.error(err.toString());
-    process.exit(1);
+    console.error(err.toString())
+    process.exit(1)
   }
 
   if (data.releaseType) {
-    console.log(data.releaseType);
+    console.log(data.releaseType)
   }
 
   if (flags.verbose && data.reason) {
-    console.log(`Reason: ${data.reason}`);
+    console.log(`Reason: ${data.reason}`)
   }
-});
+})

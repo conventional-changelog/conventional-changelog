@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-'use strict';
-var meow = require('meow');
-var gitRawCommits = require('./');
+'use strict'
+var meow = require('meow')
+var gitRawCommits = require('./')
 
 var cli = meow(`
   Usage
@@ -9,11 +9,11 @@ var cli = meow(`
 
   Example
     git-raw-commits --from HEAD~2 --to HEAD^`
-);
+)
 
 gitRawCommits(cli.flags)
-  .on('error', function(err) {
-    process.stderr.write(err);
-    process.exit(1);
+  .on('error', function (err) {
+    process.stderr.write(err)
+    process.exit(1)
   })
-  .pipe(process.stdout);
+  .pipe(process.stdout)

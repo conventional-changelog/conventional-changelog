@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
 module.exports = {
-  headerPattern: /^(\w*)\: (.*)$/,
+  headerPattern: /^(\w*): (.*)$/,
   headerCorrespondence: [
     'component',
     'shortDesc'
   ]
-};
+}

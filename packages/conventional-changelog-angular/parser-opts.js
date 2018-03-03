@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
 module.exports = {
-  headerPattern: /^(\w*)(?:\((.*)\))?\: (.*)$/,
+  headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/,
   headerCorrespondence: [
     `type`,
     `scope`,
@@ -10,4 +10,4 @@ module.exports = {
   noteKeywords: [`BREAKING CHANGE`, `BREAKING CHANGES`],
   revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
   revertCorrespondence: [`header`, `hash`]
-};
+}

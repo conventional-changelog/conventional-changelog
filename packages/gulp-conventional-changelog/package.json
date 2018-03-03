@@ -20,7 +20,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "lint": "jshint *.js --exclude node_modules && jscs *.js",
+    "lint": "eslint --fix .",
     "test": "npm run-script lint && mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },
@@ -44,6 +44,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
+    "safe-buffer": "5.1.1",
     "shelljs": "^0.8.0",
     "vinyl": "^2.1.0"
   }

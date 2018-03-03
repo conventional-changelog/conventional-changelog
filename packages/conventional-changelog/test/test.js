@@ -1,116 +1,121 @@
-'use strict';
-var conventionalChangelog = require('../');
-var expect = require('chai').expect;
-var shell = require('shelljs');
-var through = require('through2');
-var writeFileSync = require('fs').writeFileSync;
+'use strict'
+var conventionalChangelog = require('../')
+var expect = require('chai').expect
+var mocha = require('mocha')
+var describe = mocha.describe
+var it = mocha.it
+var after = mocha.after
+var before = mocha.before
+var shell = require('shelljs')
+var through = require('through2')
+var writeFileSync = require('fs').writeFileSync
 
-describe('conventionalChangelog', function() {
-  before(function() {
-    shell.config.silent = true;
-    shell.rm('-rf', 'tmp');
-    shell.mkdir('tmp');
-    shell.cd('tmp');
-    shell.mkdir('git-templates');
-    shell.exec('git init --template=../git-templates');
-    writeFileSync('test1', '');
-    shell.exec('git add --all && git commit -m"First commit"');
-  });
+describe('conventionalChangelog', function () {
+  before(function () {
+    shell.config.silent = true
+    shell.rm('-rf', 'tmp')
+    shell.mkdir('tmp')
+    shell.cd('tmp')
+    shell.mkdir('git-templates')
+    shell.exec('git init --template=../git-templates')
+    writeFileSync('test1', '')
+    shell.exec('git add --all && git commit -m"First commit"')
+  })
 
-  after(function() {
-    shell.cd('../');
-  });
+  after(function () {
+    shell.cd('../')
+  })
 
-  it('should not warn if preset is found', function(done) {
-    var i = 0;
+  it('should not warn if preset is found', function (done) {
+    var i = 0
 
     conventionalChangelog({
       preset: 'angular',
-      warn: function(warning) {
-        done(warning);
+      warn: function (warning) {
+        done(warning)
       }
     })
-      .on('error', function(err) {
-        done(err);
+      .on('error', function (err) {
+        done(err)
       })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
 
-        expect(chunk).to.include('#');
+        expect(chunk).to.include('#')
 
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(1);
-        done();
-      }));
-  });
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(1)
+        done()
+      }))
+  })
 
-  it('should work with mixed case', function(done) {
-    var i = 0;
+  it('should work with mixed case', function (done) {
+    var i = 0
 
     conventionalChangelog({
       preset: 'aNgular',
-      warn: function(warning) {
-        done(warning);
+      warn: function (warning) {
+        done(warning)
       }
     })
-      .on('error', function(err) {
-        done(err);
+      .on('error', function (err) {
+        done(err)
       })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
 
-        expect(chunk).to.include('#');
+        expect(chunk).to.include('#')
 
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(1);
-        done();
-      }));
-  });
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(1)
+        done()
+      }))
+  })
 
-  it('should warn if preset is not found', function(done) {
-    var i = 0;
+  it('should warn if preset is not found', function (done) {
+    var i = 0
 
     conventionalChangelog({
       preset: 'no',
-      warn: function(warning) {
+      warn: function (warning) {
         if (i > 0) {
-          return;
+          return
         }
 
-        expect(warning).to.equal('Preset: "no" does not exist');
+        expect(warning).to.equal('Preset: "no" does not exist')
 
-        i++;
-        done();
+        i++
+        done()
       }
     })
-      .on('error', function(err) {
-        done(err);
-      });
-  });
+      .on('error', function (err) {
+        done(err)
+      })
+  })
 
-  it('should still work if preset is not found', function(done) {
-    var i = 0;
+  it('should still work if preset is not found', function (done) {
+    var i = 0
 
     conventionalChangelog({
       preset: 'no'
     })
-      .on('error', function(err) {
-        done(err);
+      .on('error', function (err) {
+        done(err)
       })
-      .pipe(through(function(chunk, enc, cb) {
-        chunk = chunk.toString();
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
 
-        expect(chunk).to.include('#');
+        expect(chunk).to.include('#')
 
-        i++;
-        cb();
-      }, function() {
-        expect(i).to.equal(1);
-        done();
-      }));
-  });
-});
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(1)
+        done()
+      }))
+  })
+})

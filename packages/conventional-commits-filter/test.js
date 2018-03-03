@@ -1,12 +1,14 @@
-'use strict';
-var conventionalCommitsFilter = require('./');
-var assert = require('assert');
+'use strict'
+var conventionalCommitsFilter = require('./')
+var mocha = require('mocha')
+var it = mocha.it
+var assert = require('assert')
 
 it('should error if `commits` is not `array`', function () {
   assert.throws(function () {
-    conventionalCommitsFilter();
-  });
-});
+    conventionalCommitsFilter()
+  })
+})
 
 it('should filter reverted commits that exist in the commits array', function () {
   var commits = [{
@@ -140,11 +142,11 @@ it('should filter reverted commits that exist in the commits array', function ()
       revert: null,
       hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
     }
-  }];
+  }]
 
-  commits = conventionalCommitsFilter(commits);
+  commits = conventionalCommitsFilter(commits)
 
-  assert.equal(commits.length, 3);
+  assert.equal(commits.length, 3)
 
   assert.deepEqual(commits, [{
     type: 'revert',
@@ -223,8 +225,8 @@ it('should filter reverted commits that exist in the commits array', function ()
       revert: null,
       hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
     }
-  }]);
-});
+  }])
+})
 
 it('should fall back on commit if raw is undefined', function () {
   var commits = [{
@@ -241,7 +243,7 @@ it('should fall back on commit if raw is undefined', function () {
       hash: '56185b7356766d2b30cfa2406b257080272e0b7a',
       body: null
     },
-    hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n',
+    hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
   }, {
     type: 'feat',
     scope: null,
@@ -299,11 +301,11 @@ it('should fall back on commit if raw is undefined', function () {
       revert: null,
       hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
     }
-  }];
+  }]
 
-  commits = conventionalCommitsFilter(commits);
+  commits = conventionalCommitsFilter(commits)
 
-  assert.equal(commits.length, 2);
+  assert.equal(commits.length, 2)
 
   assert.deepEqual(commits, [{
     type: 'What',
@@ -351,5 +353,5 @@ it('should fall back on commit if raw is undefined', function () {
       revert: null,
       hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
     }
-  }]);
-});
+  }])
+})
