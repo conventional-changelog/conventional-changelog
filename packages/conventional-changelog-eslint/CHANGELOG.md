@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@1.0.4...conventional-changelog-eslint@1.0.5) (2018-03-03)
+
+
+### Bug Fixes
+
+* **preset:** recommended-bump ESLint preset ([#295](https://github.com/conventional-changelog/conventional-changelog/issues/295)) ([acf9c19](https://github.com/conventional-changelog/conventional-changelog/commit/acf9c19)), closes [#270](https://github.com/conventional-changelog/conventional-changelog/issues/270) [#241](https://github.com/conventional-changelog/conventional-changelog/issues/241)
+
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@1.0.3...conventional-changelog-eslint@1.0.4) (2018-02-24)
 
