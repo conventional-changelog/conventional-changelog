@@ -74,13 +74,13 @@ describe('angular preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
 
-        except(chunk).to.include('first build setup')
-        except(chunk).to.include('**circle:** Continuously integrated.')
+        expect(chunk).to.include('first build setup')
+        expect(chunk).to.include('**circle:** Continuously integrated.')
         expect(chunk).to.include('amazing new module')
         expect(chunk).to.include('**compile:** avoid a bug')
         expect(chunk).to.include('make it faster')
         expect(chunk).to.include(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
-        except(chunk).to.include('New build system.')
+        expect(chunk).to.include('New build system.')
         expect(chunk).to.include('Not backward compatible.')
         expect(chunk).to.include('**compile:** The Change is huge.')
         expect(chunk).to.include('Build System')
@@ -93,7 +93,7 @@ describe('angular preset', function () {
         expect(chunk).to.include('BREAKING CHANGE')
 
         expect(chunk).to.not.include('first build setup')
-        except(chunk).to.not.include('ci')
+        expect(chunk).to.not.include('ci')
         expect(chunk).to.not.include('feat')
         expect(chunk).to.not.include('fix')
         expect(chunk).to.not.include('perf')
@@ -167,7 +167,7 @@ describe('angular preset', function () {
         chunk = chunk.toString()
 
         expect(chunk).to.include('Continuous Integration')
-        except(chunk).to.include('Build System')
+        expect(chunk).to.include('Build System')
         expect(chunk).to.include('Documentation')
         expect(chunk).to.include('Styles')
         expect(chunk).to.include('Code Refactoring')
