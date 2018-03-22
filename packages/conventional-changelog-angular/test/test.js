@@ -21,7 +21,8 @@ betterThanBefore.setups([
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
 
-    gitDummyCommit('chore: first commit')
+    gitDummyCommit(['build: first build setup', 'BREAKING CHANGE: New build system.'])
+    gitDummyCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
     gitDummyCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
     gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
@@ -38,14 +39,12 @@ betterThanBefore.setups([
     gitDummyCommit(['feat(awesome): issue brought up by @bcoe! on Friday'])
   },
   function () {
+    gitDummyCommit(['build(npm): edit build script', 'BREAKING CHANGE: The Change is huge.'])
+    gitDummyCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])    
     gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
-    gitDummyCommit(['chore(deps): bump', 'BREAKING CHANGE: The Change is huge.'])
-  },
-  function () {
-    gitDummyCommit(['feat(deps): bump', 'BREAKING CHANGES: Also works :)'])
   },
   function () {
     shell.exec('git tag v1.0.0')
@@ -72,20 +71,26 @@ describe('angular preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
 
+        expect(chunk).to.include('first build setup')
+        expect(chunk).to.include('**travis:** add TravisCI pipeline')
+        expect(chunk).to.include('**travis:** Continuously integrated.')
         expect(chunk).to.include('amazing new module')
         expect(chunk).to.include('**compile:** avoid a bug')
         expect(chunk).to.include('make it faster')
         expect(chunk).to.include(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
+        expect(chunk).to.include('New build system.')
         expect(chunk).to.include('Not backward compatible.')
         expect(chunk).to.include('**compile:** The Change is huge.')
+        expect(chunk).to.include('Build System')
+        expect(chunk).to.include('Continuous Integration')
         expect(chunk).to.include('Features')
         expect(chunk).to.include('Bug Fixes')
         expect(chunk).to.include('Performance Improvements')
         expect(chunk).to.include('Reverts')
         expect(chunk).to.include('bad commit')
-        expect(chunk).to.include('BREAKING CHANGES')
+        expect(chunk).to.include('BREAKING CHANGE')
 
-        expect(chunk).to.not.include('first commit')
+        expect(chunk).to.not.include('ci')
         expect(chunk).to.not.include('feat')
         expect(chunk).to.not.include('fix')
         expect(chunk).to.not.include('perf')
@@ -158,36 +163,19 @@ describe('angular preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
 
+        expect(chunk).to.include('Continuous Integration')
+        expect(chunk).to.include('Build System')
         expect(chunk).to.include('Documentation')
         expect(chunk).to.include('Styles')
         expect(chunk).to.include('Code Refactoring')
         expect(chunk).to.include('Tests')
-        expect(chunk).to.include('Chores')
-
-        done()
-      }))
-  })
-
-  it('should BREAKING CHANGES the same as BREAKING CHANGE', function (done) {
-    preparing(6)
-
-    conventionalChangelogCore({
-      config: preset
-    })
-      .on('error', function (err) {
-        done(err)
-      })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
-
-        expect(chunk).to.include('Also works :)')
 
         done()
       }))
   })
 
   it('should work if there is a semver tag', function (done) {
-    preparing(7)
+    preparing(6)
     var i = 0
 
     conventionalChangelogCore({
@@ -212,7 +200,7 @@ describe('angular preset', function () {
   })
 
   it('should work with unknown host', function (done) {
-    preparing(7)
+    preparing(6)
     var i = 0
 
     conventionalChangelogCore({
@@ -239,7 +227,7 @@ describe('angular preset', function () {
   })
 
   it('should work specifying where to find a package.json using conventional-changelog-core', function (done) {
-    preparing(8)
+    preparing(7)
     var i = 0
 
     conventionalChangelogCore({
@@ -267,7 +255,7 @@ describe('angular preset', function () {
   })
 
   it('should fallback to the closest package.json when not providing a location for a package.json', function (done) {
-    preparing(8)
+    preparing(7)
     var i = 0
 
     conventionalChangelogCore({
@@ -292,7 +280,7 @@ describe('angular preset', function () {
   })
 
   it('should support non public GitHub repository locations', function (done) {
-    preparing(8)
+    preparing(7)
 
     conventionalChangelogCore({
       config: preset,
@@ -317,7 +305,7 @@ describe('angular preset', function () {
   })
 
   it('should only replace with link to user if it is an username', function (done) {
-    preparing(9)
+    preparing(8)
 
     conventionalChangelogCore({
       config: preset

@@ -51,8 +51,10 @@ function getWriterOpts () {
         commit.type = `Code Refactoring`
       } else if (commit.type === `test`) {
         commit.type = `Tests`
-      } else if (commit.type === `chore`) {
-        commit.type = `Chores`
+      } else if (commit.type === `build`) {
+        commit.type = `Build System`
+      } else if (commit.type === `ci`) {
+        commit.type = `Continuous Integration`
       }
 
       if (commit.scope === `*`) {
