@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-  <a name="2.1.5"></a>
+      <a name="2.1.6"></a>
+## [2.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.5...conventional-commits-parser@2.1.6) (2018-03-22)
+
+
+
+
+**Note:** Version bump only for package conventional-commits-parser
+
+      <a name="2.1.5"></a>
 ## [2.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.4...conventional-commits-parser@2.1.5) (2018-02-24)
 
 
@@ -11,7 +19,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package conventional-commits-parser
 
-  <a name="2.1.4"></a>
+<a name="2.1.4"></a>
 ## [2.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.3...conventional-commits-parser@2.1.4) (2018-02-20)
 
 
