@@ -11,6 +11,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package conventional-changelog-angular
 
+<a name="3.0.0"></a>
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@1.6.6...conventional-changelog-angular@3.0.0) (2018-03-22)
+
+### Features
+
+* **angular:** use latest [Angular Commit Conventions](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type) ([03f0210e42dff58689ddf182694a8a6ca26e526b](https://github.com/conventional-changelog/conventional-changelog/commit/03f0210e42dff58689ddf182694a8a6ca26e526b))
+
+### BREAKING CHANGES
+
+The Angular conventions specifically say that breaking changes must start with "BREAKING CHANGE", not the plural form. Therefore the  previous plural form "CHANGES" has been corrected to singular "CHANGE".
+
+Former "chore" type has been replaced by a type "build" for commits on the build system and "ci" for commits regarding CI
+
 <a name="1.6.6"></a>
 ## [1.6.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@1.6.5...conventional-changelog-angular@1.6.6) (2018-02-24)
 
