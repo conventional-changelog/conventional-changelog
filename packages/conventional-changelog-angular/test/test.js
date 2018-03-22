@@ -22,7 +22,7 @@ betterThanBefore.setups([
     shell.exec('git init --template=./git-templates')
 
     gitDummyCommit(['build: first build setup', 'BREAKING CHANGE: New build system.'])
-    gitDummyCommit(['ci(circle): add CircleCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
+    gitDummyCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
     gitDummyCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
     gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
@@ -72,7 +72,8 @@ describe('angular preset', function () {
         chunk = chunk.toString()
 
         expect(chunk).to.include('first build setup')
-        expect(chunk).to.include('**circle:** Continuously integrated.')
+        expect(chunk).to.include('**travis:** add TravisCI pipeline')
+        expect(chunk).to.include('**travis:** Continuously integrated.')
         expect(chunk).to.include('amazing new module')
         expect(chunk).to.include('**compile:** avoid a bug')
         expect(chunk).to.include('make it faster')
@@ -89,7 +90,6 @@ describe('angular preset', function () {
         expect(chunk).to.include('bad commit')
         expect(chunk).to.include('BREAKING CHANGE')
 
-        expect(chunk).to.not.include('first build setup')
         expect(chunk).to.not.include('ci')
         expect(chunk).to.not.include('feat')
         expect(chunk).to.not.include('fix')
@@ -175,7 +175,7 @@ describe('angular preset', function () {
   })
 
   it('should work if there is a semver tag', function (done) {
-    preparing(7)
+    preparing(6)
     var i = 0
 
     conventionalChangelogCore({
@@ -200,7 +200,7 @@ describe('angular preset', function () {
   })
 
   it('should work with unknown host', function (done) {
-    preparing(7)
+    preparing(6)
     var i = 0
 
     conventionalChangelogCore({
@@ -227,7 +227,7 @@ describe('angular preset', function () {
   })
 
   it('should work specifying where to find a package.json using conventional-changelog-core', function (done) {
-    preparing(8)
+    preparing(7)
     var i = 0
 
     conventionalChangelogCore({
@@ -255,7 +255,7 @@ describe('angular preset', function () {
   })
 
   it('should fallback to the closest package.json when not providing a location for a package.json', function (done) {
-    preparing(8)
+    preparing(7)
     var i = 0
 
     conventionalChangelogCore({
@@ -280,7 +280,7 @@ describe('angular preset', function () {
   })
 
   it('should support non public GitHub repository locations', function (done) {
-    preparing(8)
+    preparing(7)
 
     conventionalChangelogCore({
       config: preset,
@@ -305,7 +305,7 @@ describe('angular preset', function () {
   })
 
   it('should only replace with link to user if it is an username', function (done) {
-    preparing(9)
+    preparing(8)
 
     conventionalChangelogCore({
       config: preset
