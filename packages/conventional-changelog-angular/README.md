@@ -6,6 +6,8 @@
 
 ## Angular Convention
 
+Angular's [commit message guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).
+
 ### Examples
 
 Appears under "Features" header, pencil subheader:
@@ -90,10 +92,6 @@ reference GitHub issues that this commit **Closes**.
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
 A detailed explanation can be found in this [document][commit-message-format].
-
-Based on https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit
-
-[commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-angular
