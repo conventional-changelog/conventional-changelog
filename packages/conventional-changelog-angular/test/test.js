@@ -47,9 +47,6 @@ betterThanBefore.setups([
     gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   function () {
-    gitDummyCommit(['feat(deps): bump', 'BREAKING CHANGES: Also works :)'])
-  },
-  function () {
     shell.exec('git tag v1.0.0')
     gitDummyCommit('feat: some more features')
   },
@@ -172,24 +169,6 @@ describe('angular preset', function () {
         expect(chunk).to.include('Styles')
         expect(chunk).to.include('Code Refactoring')
         expect(chunk).to.include('Tests')
-
-        done()
-      }))
-  })
-
-  it('should BREAKING CHANGES the same as BREAKING CHANGE', function (done) {
-    preparing(6)
-
-    conventionalChangelogCore({
-      config: preset
-    })
-      .on('error', function (err) {
-        done(err)
-      })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
-
-        expect(chunk).to.include('Also works :)')
 
         done()
       }))
