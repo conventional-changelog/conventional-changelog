@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -23,13 +23,13 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
-    "conventional-changelog-writer": "^3.0.6",
-    "conventional-commits-parser": "^2.1.6",
+    "conventional-changelog-writer": "^3.0.7",
+    "conventional-commits-parser": "^2.1.7",
     "dateformat": "^3.0.0",
     "get-pkg-repo": "^1.0.0",
-    "git-raw-commits": "^1.3.5",
+    "git-raw-commits": "^1.3.6",
     "git-remote-origin-url": "^2.0.0",
-    "git-semver-tags": "^1.3.5",
+    "git-semver-tags": "^1.3.6",
     "lodash": "^4.2.1",
     "normalize-package-data": "^2.3.5",
     "q": "^1.5.1",
