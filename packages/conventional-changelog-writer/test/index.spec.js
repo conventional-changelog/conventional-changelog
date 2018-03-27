@@ -401,7 +401,6 @@ describe('conventionalChangelogWriter', function () {
               expect(chunk).to.not.include('## 1.0.1 (2015-04-07)')
             } else if (i === 1) {
               expect(chunk).to.include('feat(scope): broadcast $destroy event on scope destruction')
-
             } else if (i === 2) {
               expect(chunk).to.include('fix(ng-list): Allow custom separator')
               expect(chunk).to.include('perf(template): tweak')

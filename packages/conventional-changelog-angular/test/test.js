@@ -40,7 +40,7 @@ betterThanBefore.setups([
   },
   function () {
     gitDummyCommit(['build(npm): edit build script', 'BREAKING CHANGE: The Change is huge.'])
-    gitDummyCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])    
+    gitDummyCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
