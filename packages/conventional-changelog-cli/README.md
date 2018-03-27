@@ -91,7 +91,7 @@ message="chore(release): %s :tada:"
 - Used by AngularJS, JSHint and related projects.
 - Easy fully automate changelog generation. You could still add more points on top of it.
 - Ignoring reverted commits, templating with [handlebars.js](https://github.com/wycats/handlebars.js) and links to references, etc. Open an [issue](../../issues/new) if you want more reasonable features.
-- Intelligently setup defaults but yet fully configurable with presets of [popular projects](https://github.com/ajoslin/conventional-changelog#preset).
+- Intelligently setup defaults but yet fully configurable with presets of [popular projects](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#preset).
 - Everything internally or externally is pluggable.
 - A lot of tests and actively maintained.
 
