@@ -48,7 +48,6 @@ Each chunk should be a commit. Json object is also **valid**. Parts of the objec
 The downstream might look something like this:
 
 ```js
-<a name="0.0.1"></a>
 ## 0.0.1 "this is a title" (2015-05-29)
 
 
@@ -341,7 +340,6 @@ $ conventional-changelog-writer commits.ldjson -o options.js
 The output might look something like this
 
 ```md
-<a name="1.0.0"></a>
 # 1.0.0 (2015-04-09)
 
 
