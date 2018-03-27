@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.6"></a>
+## [0.3.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@0.3.5...conventional-changelog-codemirror@0.3.6) (2018-03-27)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-codemirror
+
 <a name="0.3.5"></a>
 ## [0.3.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@0.3.4...conventional-changelog-codemirror@0.3.5) (2018-03-22)
 

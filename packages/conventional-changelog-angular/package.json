@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-angular",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,7 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
   "devDependencies": {
     "better-than-before": "^1.0.0",
-    "conventional-changelog-core": "^2.0.6",
+    "conventional-changelog-core": "^2.0.7",
     "git-dummy-commit": "^1.2.0",
     "shelljs": "^0.8.0",
     "through2": "^2.0.0"
