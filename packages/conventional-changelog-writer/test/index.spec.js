@@ -78,7 +78,7 @@ describe('conventionalChangelogWriter', function () {
       upstream
         .pipe(conventionalChangelogWriter())
         .pipe(through(function (chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('##  (' + today + ')\n\n\n\n\n')
+          expect(chunk.toString()).to.equal('<a name=""></a>\n##  (' + today + ')\n\n\n\n\n')
 
           i++
           cb(null)
@@ -239,7 +239,7 @@ describe('conventionalChangelogWriter', function () {
           }
         }))
         .pipe(through(function (chunk, enc, cb) {
-          expect(chunk.toString()).to.equal('##  (' + today + ')\n\n\n\n\n')
+          expect(chunk.toString()).to.equal('<a name=""></a>\n##  (' + today + ')\n\n\n\n\n')
 
           i++
           cb(null)
@@ -324,18 +324,20 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.include('##  (' + today)
+              expect(chunk).to.include('<a name=""></a>\n##  (' + today)
               expect(chunk).to.include('feat(scope): ')
 
+              expect(chunk).to.not.include('<a name="1.0.1"></a>')
               expect(chunk).to.not.include('fix(ng-list): ')
               expect(chunk).to.not.include('perf(template): ')
               expect(chunk).to.not.include('refactor(name): ')
             } else {
-              expect(chunk).to.include('## <small>1.0.1 (2015-04-07)</small>')
+              expect(chunk).to.include('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07)</small>')
               expect(chunk).to.include('fix(ng-list): ')
               expect(chunk).to.include('perf(template): ')
               expect(chunk).to.include('refactor(name): ')
 
+              expect(chunk).to.not.include('<a name=""></a>')
               expect(chunk).to.not.include('feat(scope): ')
             }
 
@@ -396,15 +398,18 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.include('##  (' + today)
+              expect(chunk).to.include('<a name=""></a>\n##  (' + today)
 
-              expect(chunk).to.not.include('## 1.0.1 (2015-04-07)')
+              expect(chunk).to.not.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)')
             } else if (i === 1) {
+              expect(chunk).to.include('<a name="1.0.1"></a>')
               expect(chunk).to.include('feat(scope): broadcast $destroy event on scope destruction')
             } else if (i === 2) {
+              expect(chunk).to.include('<a name="2.0.1"></a>')
               expect(chunk).to.include('fix(ng-list): Allow custom separator')
               expect(chunk).to.include('perf(template): tweak')
             } else if (i === 3) {
+              expect(chunk).to.include('<a name="4.0.1"></a>')
               expect(chunk).to.include('refactor(name): rename this module to conventional-changelog-writer')
 
               expect(chunk).to.not.include('perf(template): tweak')
@@ -435,8 +440,11 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.include('##  (' + today)
-              expect(chunk).to.not.include('## 1.0.1 (2015-04-07)')
+              expect(chunk).to.include('<a name=""></a>\n##  (' + today)
+              expect(chunk).to.not.include('<a name="1.0.1"></a>\n## 1.0.1 (2015-04-07)')
+            } else {
+              expect(chunk).to.include('<a name="1.0.1"></a>')
+              expect(chunk).to.not.include('<a name=""></a>')
             }
 
             i++
@@ -457,7 +465,7 @@ describe('conventionalChangelogWriter', function () {
           .pipe(through(function (chunk, enc, cb) {
             chunk = chunk.toString()
 
-            expect(chunk).to.include('##  (' + today)
+            expect(chunk).to.include('<a name=""></a>\n##  (' + today)
 
             i++
             cb(null)
@@ -479,9 +487,11 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.include('## <small>0.0.1 (2015-01-01)</small>')
+              expect(chunk).to.include('<a name="0.0.1"></a>\n## <small>0.0.1 (2015-01-01)</small>')
+              expect(chunk).to.not.include('<a name="1.0.1"></a>')
             } else {
-              expect(chunk).to.include('## <small>1.0.1 (2015-04-07)</small>')
+              expect(chunk).to.include('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07)</small>')
+              expect(chunk).to.not.include('<a name="0.0.1"></a>')
             }
 
             i++
@@ -505,9 +515,9 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.equal('##  (' + today + ')\n\n\n\n\n')
+              expect(chunk).to.equal('<a name=""></a>\n##  (' + today + ')\n\n\n\n\n')
             } else {
-              expect(chunk).to.equal('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
+              expect(chunk).to.equal('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
             }
 
             i++
@@ -527,11 +537,11 @@ describe('conventionalChangelogWriter', function () {
           }))
           .pipe(through.obj(function (chunk, enc, cb) {
             if (i === 0) {
-              expect(chunk.log).to.include('##  (' + today + ')\n\n')
+              expect(chunk.log).to.include('<a name=""></a>\n##  (' + today + ')\n\n')
               expect(chunk.log).to.include('feat(scope): broadcast $destroy event on scope destruction')
               expect(chunk.keyCommit).to.eql()
             } else {
-              expect(chunk.log).to.include('## <small>1.0.1 (2015-04-07)</small>\n\n')
+              expect(chunk.log).to.include('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07)</small>\n\n')
               expect(chunk.log).to.include('fix(ng-list): Allow custom separator')
               expect(chunk.log).to.include('perf(template): tweak')
               expect(chunk.log).to.include('refactor(name): rename this module to conventional-changelog-writer')
@@ -681,22 +691,24 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.include('## <small>1.0.1 (2015-04-07)</small>')
+              expect(chunk).to.include('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07)</small>')
               expect(chunk).to.include('feat(scope): ')
 
+              expect(chunk).to.not.include('<a name=""></a>')
               expect(chunk).to.not.include('perf(template): ')
               expect(chunk).to.not.include('refactor(name): ')
             } else if (i === 1) {
-              expect(chunk).to.include('## <small>2.0.1 (2015-04-07)</small>')
+              expect(chunk).to.include('<a name="2.0.1"></a>\n## <small>2.0.1 (2015-04-07)</small>')
               expect(chunk).to.include('fix(ng-list): ')
 
+              expect(chunk).to.not.include('<a name="1.0.1"></a>')
               expect(chunk).to.not.include('feat(scope): ')
             } else if (i === 2) {
-              expect(chunk).to.include('#')
+              expect(chunk).to.include('<a name="4.0.1"></a>\n#')
               expect(chunk).to.include('perf(template): ')
               expect(chunk).to.include('refactor(name): ')
             } else if (i === 3) {
-              expect(chunk).to.include('##  (' + today)
+              expect(chunk).to.include('<a name=""></a>\n##  (' + today)
             }
 
             i++
@@ -721,9 +733,9 @@ describe('conventionalChangelogWriter', function () {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).to.equal('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
+              expect(chunk).to.equal('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
             } else {
-              expect(chunk).to.equal('##  (' + today + ')\n\n\n\n\n')
+              expect(chunk).to.equal('<a name=""></a>\n##  (' + today + ')\n\n\n\n\n')
             }
 
             i++
@@ -744,13 +756,13 @@ describe('conventionalChangelogWriter', function () {
           }))
           .pipe(through.obj(function (chunk, enc, cb) {
             if (i === 0) {
-              expect(chunk.log).to.include('## <small>1.0.1 (2015-04-07)</small>\n\n')
+              expect(chunk.log).to.include('<a name="1.0.1"></a>\n## <small>1.0.1 (2015-04-07)</small>\n\n')
               expect(chunk.log).to.include('broadcast $destroy event on scope destruction')
               expect(chunk.log).to.include('fix(ng-list):')
               expect(chunk.keyCommit.version).to.equal('1.0.1')
               expect(chunk.keyCommit.committerDate).to.equal('2015-04-07')
             } else {
-              expect(chunk.log).to.include('##  (' + today + ')\n\n')
+              expect(chunk.log).to.include('<a name=""></a>\n##  (' + today + ')\n\n')
               expect(chunk.log).to.include('perf(template): tweak')
               expect(chunk.log).to.include('refactor(name): rename this module to conventional-changelog-writer')
               expect(chunk.keyCommit).to.eql()
@@ -864,7 +876,7 @@ describe('conventionalChangelogWriter', function () {
     upstream
       .pipe(conventionalChangelogWriter())
       .pipe(through(function (chunk, enc, cb) {
-        expect(chunk.toString()).to.equal('##  (' + today + ')\n\n* bla \n\n\n\n')
+        expect(chunk.toString()).to.equal('<a name=""></a>\n##  (' + today + ')\n\n* bla \n\n\n\n')
 
         i++
         cb(null)
