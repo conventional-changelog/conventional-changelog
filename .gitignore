@@ -1,5 +1,5 @@
-/.nyc_output/
-/coverage/
+**/.nyc_output/
+**/coverage/
 **/node_modules/
 **/tmp/
 /lerna-debug.log
