@@ -47,7 +47,5 @@
     "nyc": "^11.2.1",
     "standard-version": "^4.0.0"
   },
-  "dependencies": {
-    "codecov": "^3.0.0"
-  }
+  "dependencies": {}
 }
