@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
-    "conventional-changelog-writer": "^3.0.8",
+    "conventional-changelog-writer": "^3.0.9",
     "conventional-commits-parser": "^2.1.7",
     "dateformat": "^3.0.0",
     "get-pkg-repo": "^1.0.0",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.11"></a>
+## [0.3.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-ember@0.3.10...conventional-changelog-ember@0.3.11) (2018-03-28)
+
+
+### Bug Fixes
+
+* revert previous change ([2f4530f](https://github.com/conventional-changelog/conventional-changelog/commit/2f4530f))
+
+
+
+
 <a name="0.3.10"></a>
 ## [0.3.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-ember@0.3.9...conventional-changelog-ember@0.3.10) (2018-03-27)
 
