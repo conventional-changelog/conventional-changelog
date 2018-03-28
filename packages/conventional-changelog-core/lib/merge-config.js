@@ -28,7 +28,7 @@ function semverTagsPromise (options) {
       } else {
         resolve(result)
       }
-    }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage})
+    }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix})
   })
 }
 

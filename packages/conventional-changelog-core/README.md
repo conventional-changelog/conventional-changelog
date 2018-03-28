@@ -115,6 +115,11 @@ Specify a package in lerna-style monorepo that the CHANGELOG should be generated
 Lerna tags releases in the format `foo-package@1.0.0` and assumes that packages
 are stored in the directory structure `./packages/foo-package`.
 
+##### tagPrefix
+
+Specify a prefix for the git tag that will be taken into account during the comparison.
+For instance if your version tag is prefixed by `version/` instead of `v` you would specify `--tagPrefix=version/`
+
 #### context
 
 See the [conventional-changelog-writer](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-writer) docs. There are some defaults or changes:
