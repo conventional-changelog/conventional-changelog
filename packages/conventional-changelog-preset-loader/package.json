@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "devDependencies": {
-    "sinon": "^4.2.2",
+    "sinon": "^5.0.0",
     "sinon-chai": "^2.14.0"
   },
   "scripts": {
