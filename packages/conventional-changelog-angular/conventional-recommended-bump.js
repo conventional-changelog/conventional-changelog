@@ -1,6 +1,6 @@
 'use strict'
 
-const parserOpts = require('./parserOpts')
+const parserOpts = require('./parser-opts')
 
 module.exports = {
   whatBump: (commits) => {
