@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.12"></a>
+## [0.3.12](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-ember@0.3.11...conventional-changelog-ember@0.3.12) (2018-04-16)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-ember
+
 <a name="0.3.11"></a>
 ## [0.3.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-ember@0.3.10...conventional-changelog-ember@0.3.11) (2018-03-28)
 

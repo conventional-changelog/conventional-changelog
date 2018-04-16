@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.22"></a>
+## [1.3.22](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@1.3.21...conventional-changelog-cli@1.3.22) (2018-04-16)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-cli
+
 <a name="1.3.21"></a>
 ## [1.3.21](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@1.3.20...conventional-changelog-cli@1.3.21) (2018-03-28)
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.7"></a>
+## [3.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.6...conventional-changelog-angular@3.0.7) (2018-04-16)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog-angular
+
 <a name="3.0.6"></a>
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.5...conventional-changelog-angular@3.0.6) (2018-03-28)
 
