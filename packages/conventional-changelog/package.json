@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "1.1.24",
+  "version": "2.0.0",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
@@ -36,16 +36,16 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
   "dependencies": {
     "conventional-changelog-angular": "^1.6.6",
-    "conventional-changelog-atom": "^0.2.8",
-    "conventional-changelog-codemirror": "^0.3.8",
-    "conventional-changelog-core": "^2.0.11",
-    "conventional-changelog-ember": "^0.3.12",
-    "conventional-changelog-eslint": "^1.0.9",
-    "conventional-changelog-express": "^0.3.6",
+    "conventional-changelog-atom": "^1.0.0",
+    "conventional-changelog-codemirror": "^1.0.0",
+    "conventional-changelog-core": "^3.0.0",
+    "conventional-changelog-ember": "^1.0.0",
+    "conventional-changelog-eslint": "^2.0.0",
+    "conventional-changelog-express": "^1.0.0",
     "conventional-changelog-jquery": "^0.1.0",
     "conventional-changelog-jscs": "^0.1.0",
-    "conventional-changelog-jshint": "^0.3.8",
-    "conventional-changelog-preset-loader": "^1.1.8"
+    "conventional-changelog-jshint": "^1.0.0",
+    "conventional-changelog-preset-loader": "^2.0.0"
   },
   "devDependencies": {
     "shelljs": "^0.8.0",

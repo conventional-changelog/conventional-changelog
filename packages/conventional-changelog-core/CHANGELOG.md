@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@2.0.11...conventional-changelog-core@3.0.0) (2018-05-29)
+
+
+### Chores
+
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
+
+
+### BREAKING CHANGES
+
+* **package:** Set the package's minimum required Node version to be the oldest LTS
+currently supported by the Node Release working group. At this time,
+that is Node 6 (which is in its Maintenance LTS phase).
+
+
+
+
 <a name="2.0.11"></a>
 ## [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@2.0.10...conventional-changelog-core@2.0.11) (2018-04-16)
 

@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-eslint",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "conventional-changelog eslint preset",
   "main": "index.js",
   "scripts": {

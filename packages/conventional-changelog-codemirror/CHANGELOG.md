@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@0.3.8...conventional-changelog-codemirror@1.0.0) (2018-05-29)
+
+
+### Chores
+
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
+
+
+### Code Refactoring
+
+* remove anchor from header templates ([#301](https://github.com/conventional-changelog/conventional-changelog/issues/301)) ([346f24f](https://github.com/conventional-changelog/conventional-changelog/commit/346f24f)), closes [#186](https://github.com/conventional-changelog/conventional-changelog/issues/186)
+
+
+### BREAKING CHANGES
+
+* **package:** Set the package's minimum required Node version to be the oldest LTS
+currently supported by the Node Release working group. At this time,
+that is Node 6 (which is in its Maintenance LTS phase).
+* Anchor tags are removed from the changelog header templates. The
+rendered Markdown will no longer contain anchor tags proceeding the
+version number header that constitutes the changelog header. This means
+that consumers of rendered markdown will not be able to use a URL that
+has been constructed to contain a version number anchor tag reference,
+since the anchor tag won't exist in the rendered markdown.
+
+It's stronly recomended consumers use the full URL path to the release
+page for a given version, as that URL is a permalink to that verison,
+contains all relavent release information, and does not, otherwise, rely
+on the anchor tag being excessible from the current page view.
+
+As an example, for version `2.0.0` of a GitHub project, the following
+URL should be used:
+- https://github.com/conventional-changelog/releaser-tools/releases/tag/v2.0.0
+
+
+
+
 <a name="0.3.8"></a>
 ## [0.3.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@0.3.7...conventional-changelog-codemirror@0.3.8) (2018-03-28)
 

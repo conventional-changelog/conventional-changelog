@@ -3,7 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-  <a name="2.1.7"></a>
+      <a name="3.0.0"></a>
+# [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.7...conventional-commits-parser@3.0.0) (2018-05-29)
+
+
+### Chores
+
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
+
+
+### BREAKING CHANGES
+
+* **package:** Set the package's minimum required Node version to be the oldest LTS
+currently supported by the Node Release working group. At this time,
+that is Node 6 (which is in its Maintenance LTS phase).
+
+
+
+
+      <a name="2.1.7"></a>
 ## [2.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.6...conventional-commits-parser@2.1.7) (2018-03-27)
 
 
@@ -11,7 +29,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package conventional-commits-parser
 
-  <a name="2.1.6"></a>
+<a name="2.1.6"></a>
 ## [2.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.5...conventional-commits-parser@2.1.6) (2018-03-22)
 
 

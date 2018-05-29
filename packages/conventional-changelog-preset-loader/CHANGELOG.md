@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@1.1.8...conventional-changelog-preset-loader@2.0.0) (2018-05-29)
+
+
+### Chores
+
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
+
+
+### BREAKING CHANGES
+
+* **package:** Set the package's minimum required Node version to be the oldest LTS
+currently supported by the Node Release working group. At this time,
+that is Node 6 (which is in its Maintenance LTS phase).
+
+
+
+
 <a name="1.1.8"></a>
 ## [1.1.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@1.1.7...conventional-changelog-preset-loader@1.1.8) (2018-03-27)
 
