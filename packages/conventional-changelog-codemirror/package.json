@@ -18,6 +18,9 @@
     "preset"
   ],
   "author": "Steve Mao",
+  "engines": {
+    "node": ">=6.9.0"
+  },
   "license": "ISC",
   "files": [
     "conventional-changelog.js",

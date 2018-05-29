@@ -17,7 +17,7 @@
     "url": "https://github.com/stevemao"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.9.0"
   },
   "scripts": {
     "lint": "eslint --fix .",

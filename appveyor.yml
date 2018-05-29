@@ -6,22 +6,22 @@ environment:
 matrix:
   fast_finish: true
 
-build: off
-
 cache:
   - node_modules/
   - '%APPDATA%\npm-cache'
 
-init:
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+
+build: off
+
+before_test:
   - git config --global user.name 'CI'
   - git config --global user.email 'dummy@example.org'
   - npm install --global npm@latest
   - node --version
   - npm --version
-
-install:
-  - ps: Install-Product node $env:nodejs_version
-  - npm install
 
 test_script:
   - npm run test-windows
