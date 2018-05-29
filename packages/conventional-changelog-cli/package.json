@@ -29,6 +29,9 @@
     "changelog",
     "log"
   ],
+  "engines": {
+    "node": ">=6.9.0"
+  },
   "devDependencies": {
     "concat-stream": "^1.6.0",
     "q": "^1.5.1",

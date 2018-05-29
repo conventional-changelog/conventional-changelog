@@ -16,6 +16,9 @@
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
   },
   "license": "MIT",
+  "engines": {
+    "node": ">=6.9.0"
+  },
   "files": [
     "index.js",
     "cli.js",

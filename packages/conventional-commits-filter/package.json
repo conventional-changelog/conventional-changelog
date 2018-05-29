@@ -15,6 +15,9 @@
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
+  "engines": {
+    "node": ">=6.9.0"
+  },
   "files": [
     "index.js"
   ],
