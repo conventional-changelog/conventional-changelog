@@ -21,7 +21,7 @@ module.exports = {
     return {
       level: level,
       reason: breakings === 1
-        ? `There are ${breakings} BREAKING CHANGE and ${features} features`
+        ? `There is ${breakings} BREAKING CHANGE and ${features} features`
         : `There are ${breakings} BREAKING CHANGES and ${features} features`
     }
   },
