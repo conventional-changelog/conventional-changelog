@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="4.0.1"></a>
+## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@4.0.0...conventional-changelog-angular@4.0.1) (2018-06-02)
+
+
+### Bug Fixes
+
+* Fix plurality of "are" vs. "is" ([#331](https://github.com/conventional-changelog/conventional-changelog/issues/331)) ([027e778](https://github.com/conventional-changelog/conventional-changelog/commit/027e778))
+
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.7...conventional-changelog-angular@4.0.0) (2018-05-29)
 

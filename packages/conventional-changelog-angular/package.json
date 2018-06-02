@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-angular",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
   "scripts": {
