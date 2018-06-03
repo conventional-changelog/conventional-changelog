@@ -17,7 +17,7 @@ var readPkgUp = require('read-pkg-up')
 var url = require('url')
 var _ = require('lodash')
 
-var rhosts = /github|bitbucket|gitlab/i
+var rhosts = /github|bitbucket|gitlab|visualstudio/i
 var rtag = /tag:\s*[v=]?(.+?)[,)]/gi
 
 function semverTagsPromise (options) {

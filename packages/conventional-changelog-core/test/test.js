@@ -500,6 +500,23 @@ describe('conventionalChangelogCore', function () {
     }))
   })
 
+  it('should read visualstudio\'s host configs', function (done) {
+    preparing(5)
+
+    conventionalChangelogCore({}, {
+      host: 'visualstudio',
+      owner: 'b',
+      repository: 'a'
+    }, {}, {}).pipe(through(function (chunk) {
+      chunk = chunk.toString()
+
+      expect(chunk).to.include('](visualstudio/b/a/commit/')
+      expect(chunk).to.include('closes [#1](visualstudio/b/a/_workitems/edit/1)')
+
+      done()
+    }))
+  })
+
   it('should transform the commit', function (done) {
     preparing(5)
 

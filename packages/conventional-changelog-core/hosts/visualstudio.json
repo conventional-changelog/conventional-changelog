@@ -1,0 +1,18 @@
+{
+ "issue": "_workitems/edit",
+ "commit": "commit",
+ "referenceActions": [
+   "close",
+   "closes",
+   "closed",
+   "fix",
+   "fixes",
+   "fixed",
+   "resolve",
+   "resolves",
+   "resolved"
+ ],
+ "issuePrefixes": [
+   "#"
+ ]
+}
