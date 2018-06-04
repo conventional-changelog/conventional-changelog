@@ -1,26 +1,6 @@
 language: node_js
 
 node_js:
-  - 6
-  - 8
-
-matrix:
-  fast_finish: true
-
-cache:
-  directories:
-    - node_modules/
-    - ${HOME}/.npm
-
-before_install:
-  - npm install --global npm@latest
-
-before_script:
-  - git config --global user.name 'CI'
-  - git config --global user.email 'dummy@example.org'
-
-script:
-  - npm test
-
-after_script:
-  - nyc report --reporter=text-lcov | coveralls
+  - '8'
+  - '6'
+  - '10'
