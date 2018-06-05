@@ -1,6 +1,10 @@
 'use strict'
 
+const parserOpts = require(`./parser-opts`)
+
 module.exports = {
+  parserOpts,
+
   whatBump: (commits) => {
     let level = 2
     let breakings = 0
@@ -22,16 +26,5 @@ module.exports = {
       level: level,
       reason: `There are ${breakings} BREAKING CHANGES and ${features} features`
     }
-  },
-  parserOpts: {
-    headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/,
-    headerCorrespondence: [
-      `type`,
-      `scope`,
-      `subject`
-    ],
-    noteKeywords: `BREAKING CHANGE`,
-    revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
-    revertCorrespondence: [`header`, `hash`]
   }
 }
