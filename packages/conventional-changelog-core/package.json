@@ -36,7 +36,7 @@
     "lodash": "^4.2.1",
     "normalize-package-data": "^2.3.5",
     "q": "^1.5.1",
-    "read-pkg": "^1.1.0",
+    "read-pkg": "^3.0.0",
     "read-pkg-up": "^1.0.1",
     "through2": "^2.0.0"
   },
