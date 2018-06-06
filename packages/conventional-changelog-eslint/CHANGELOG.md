@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@2.0.0...conventional-changelog-eslint@3.0.0) (2018-06-06)
+
+
+### Features
+
+* re-use parser options within each preset ([#335](https://github.com/conventional-changelog/conventional-changelog/issues/335)) ([d3eaacf](https://github.com/conventional-changelog/conventional-changelog/commit/d3eaacf)), closes [#241](https://github.com/conventional-changelog/conventional-changelog/issues/241)
+
+
+### BREAKING CHANGES
+
+* Re-use parser options object between components of a preset. For some
+presets this may change the behavior of `conventional-recommended-bump`
+as the parser options object for the `conventional-recommended-bump` options
+within a preset were different than the parser options object for the
+`conventional-changelog` options within a preset.
+
+If you are not using `conventional-recommended-bump`, then this is
+**not** a breaking change for you.
+
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@1.0.9...conventional-changelog-eslint@2.0.0) (2018-05-29)
 

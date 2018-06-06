@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
- <a name="2.0.0"></a>
+       <a name="2.0.1"></a>
+## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@2.0.0...conventional-changelog@2.0.1) (2018-06-06)
+
+
+
+
+**Note:** Version bump only for package conventional-changelog
+
+       <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.24...conventional-changelog@2.0.0) (2018-05-29)
 
 
@@ -21,7 +29,7 @@ that is Node 6 (which is in its Maintenance LTS phase).
 
 
 
- <a name="1.1.24"></a>
+<a name="1.1.24"></a>
 ## [1.1.24](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@1.1.23...conventional-changelog@1.1.24) (2018-04-16)
 
 
