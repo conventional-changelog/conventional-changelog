@@ -221,6 +221,10 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         hostOpts = {}
       }
 
+      if (context.resetChangelog) {
+        fromTag = null;
+      }
+
       gitRawCommitsOpts = _.assign({
         format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
         from: fromTag,
