@@ -80,6 +80,9 @@ var cli = meow(`
     config: {
       alias: `n`
     },
+    context: {
+      alias: `c`
+    },
     'lerna-package': {
       alias: `l`
     }
