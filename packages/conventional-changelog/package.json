@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "conventional-changelog-jquery": "^0.1.0",
     "conventional-changelog-jscs": "^0.1.0",
     "conventional-changelog-jshint": "^2.0.0",
-    "conventional-changelog-preset-loader": "^2.0.0"
+    "conventional-changelog-preset-loader": "^2.0.1"
   },
   "devDependencies": {
     "shelljs": "^0.8.0",

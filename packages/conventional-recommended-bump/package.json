@@ -1,6 +1,6 @@
 {
   "name": "conventional-recommended-bump",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Get a recommended version bump based on conventional commits",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "concat-stream": "^1.6.0",
-    "conventional-changelog-preset-loader": "^2.0.0",
+    "conventional-changelog-preset-loader": "^2.0.1",
     "conventional-commits-filter": "^2.0.0",
     "conventional-commits-parser": "^3.0.0",
     "git-raw-commits": "^2.0.0",

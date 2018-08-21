@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.1...conventional-changelog-cli@2.0.2) (2018-08-21)
+
+
+### Bug Fixes
+
+* add missing context flag ([#361](https://github.com/conventional-changelog/conventional-changelog/issues/361)) ([0cf43f4](https://github.com/conventional-changelog/conventional-changelog/commit/0cf43f4)), closes [#355](https://github.com/conventional-changelog/conventional-changelog/issues/355)
+
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.0...conventional-changelog-cli@2.0.1) (2018-06-06)
 
