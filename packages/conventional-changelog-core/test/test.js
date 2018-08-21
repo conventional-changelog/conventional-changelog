@@ -47,7 +47,7 @@ betterThanBefore.setups([
     gitDummyCommit('Custom prefix closes @42')
   },
   function () { // 5
-    gitDummyCommit('Custom prefix closes @42')
+    gitDummyCommit('Custom prefix closes @43')
     gitDummyCommit('Old prefix closes #71')
   },
   function () { // 6
@@ -782,6 +782,43 @@ describe('conventionalChangelogCore', function () {
         expect(chunk).to.include('* test9')
         expect(chunk).to.include('### Release note\n\n* super release!')
 
+        cb()
+      }, function () {
+        done()
+      }))
+  })
+
+  it('should recreate the changelog from scratch', function (done) {
+    preparing(10)
+
+    const context = {
+      resetChangelog: true,
+      version: '2.0.0'
+    };
+
+    let chunkNumber = 0
+
+    conventionalChangelogCore({}, context)
+      .pipe(through(function (chunk, enc, cb) {
+        chunkNumber += 1
+        chunk = chunk.toString()
+
+        if (chunkNumber === 1) {
+          expect(chunk).to.include('## 2.0.0')
+          expect(chunk).to.include('Custom prefix closes @42')
+          expect(chunk).to.include('Custom prefix closes @43')
+          expect(chunk).to.include('Old prefix closes #71')
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('some more features')
+          expect(chunk).to.include('Third commit closes #1')
+          expect(chunk).to.include('This commit is from feature branch')
+          expect(chunk).to.include('This commit is from master branch')
+          expect(chunk).to.not.include('test8')
+          expect(chunk).to.not.include('test9')
+        } else if (chunkNumber === 2) {
+          expect(chunk).to.include('## 0.1.0')
+          expect(chunk).to.include('First commit')
+        }
         cb()
       }, function () {
         done()
