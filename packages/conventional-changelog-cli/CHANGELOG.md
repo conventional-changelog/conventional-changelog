@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.3...conventional-changelog-cli@2.0.4) (2018-08-21)
+
+
+### Bug Fixes
+
+* **cli:** pass `--tag-prefix` option to core ([#345](https://github.com/conventional-changelog/conventional-changelog/issues/345)) ([2151fce](https://github.com/conventional-changelog/conventional-changelog/commit/2151fce))
+
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.2...conventional-changelog-cli@2.0.3) (2018-08-21)
 
