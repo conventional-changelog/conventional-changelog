@@ -47,6 +47,7 @@ var cli = meow(`
 
       -c, --context             A filepath of a json that is used to define template variables
       -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
+      -t, --tag-prefix          Tag prefix to consider when reading the tags
       --commit-path             Generate a changelog scoped to a specific directory
 `, {
   flags: {
@@ -85,6 +86,9 @@ var cli = meow(`
     },
     'lerna-package': {
       alias: `l`
+    },
+    'tag-prefix': {
+      alias: `t`
     }
   }
 })
@@ -116,7 +120,8 @@ var options = _.omit({
   append: append,
   releaseCount: releaseCount,
   outputUnreleased: flags.outputUnreleased,
-  lernaPackage: flags.lernaPackage
+  lernaPackage: flags.lernaPackage,
+  tagPrefix: flags.tagPrefix
 }, _.isUndefined)
 
 if (flags.verbose) {
