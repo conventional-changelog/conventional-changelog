@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-jquery",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "conventional-changelog jquery preset",
   "main": "index.js",
   "scripts": {
