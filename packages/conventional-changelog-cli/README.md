@@ -72,7 +72,7 @@ You could follow the following workflow
 1. Make changes
 1. Commit those changes
 1. Pull all the tags
-1. Run the [`npm version [path|minor|major]`](https://docs.npmjs.com/cli/version) command
+1. Run the [`npm version [patch|minor|major]`](https://docs.npmjs.com/cli/version) command
 1. Push
 
 You could optionally add a `preversion` script to package your project or running a full suit of test.
