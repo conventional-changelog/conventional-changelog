@@ -11,14 +11,12 @@ module.exports = {
     let features = 0
 
     commits.forEach(commit => {
-      if (!commit.type) {
-        return
-      }
+      if (!commit.tag) return
 
-      if (commit.type.toLowerCase() === 'breaking') {
+      if (commit.tag.toLowerCase() === 'breaking') {
         breakings += 1
         level = 0
-      } else if (commit.type.toLowerCase() === 'new') {
+      } else if (commit.tag.toLowerCase() === 'new') {
         features += 1
         if (level === 2) {
           level = 1
