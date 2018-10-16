@@ -141,6 +141,7 @@ try {
   if (flags.config) {
     config = require(resolve(process.cwd(), flags.config))
     options.config = config
+    options = _.merge(options, config.options)
   } else {
     config = {}
   }
