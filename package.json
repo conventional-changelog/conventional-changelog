@@ -19,7 +19,7 @@
   ],
   "license": "ISC",
   "main": "",
-  "name": "conventional-changelog",
+  "name": "conventional-changelog-monorepo",
   "private": true,
   "repository": {
     "type": "git",

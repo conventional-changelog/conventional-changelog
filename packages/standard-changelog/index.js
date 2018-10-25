@@ -6,7 +6,7 @@ var fs = require('fs')
 var accessSync = require('fs-access').sync
 var chalk = require('chalk')
 var figures = require('figures')
-var sprintf = require('sprintf')
+var sprintf = require('sprintf-js').sprintf
 
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   options = options || {}
