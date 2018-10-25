@@ -2,6 +2,10 @@
   "command": {
     "bootstrap": {
       "hoist": true
+    },
+    "publish": {
+      "conventionalCommmits": true,
+      "message": "chore(release): publish"
     }
   },
   "packages": [
