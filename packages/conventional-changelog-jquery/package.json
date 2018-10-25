@@ -34,11 +34,6 @@
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-jquery#readme",
-  "devDependencies": {
-    "conventional-changelog-core": "1.3.2",
-    "shelljs": "^0.8.0",
-    "through2": "^2.0.0"
-  },
   "dependencies": {
     "q": "^1.5.1"
   }
