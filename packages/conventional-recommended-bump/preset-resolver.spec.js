@@ -25,19 +25,19 @@ describe(`preset-resolver`, () => {
   })
 
   it(`resolves an object as a promise`, done => {
-    const result = presetResolver({answer: 42})
+    const result = presetResolver({ answer: 42 })
     result.then(value => {
-      assert.deepEqual(value, {answer: 42})
+      assert.deepEqual(value, { answer: 42 })
       done()
     })
   })
 
   it(`resolves a callback function as a promise`, done => {
-    const presetPackage = cb => cb(null, {answer: 42})
+    const presetPackage = cb => cb(null, { answer: 42 })
     const result = presetResolver(presetPackage)
 
     result.then(value => {
-      assert.deepEqual(value, {answer: 42})
+      assert.deepEqual(value, { answer: 42 })
       done()
     })
   })

@@ -146,9 +146,9 @@ it('should filter reverted commits that exist in the commits array', function ()
 
   commits = conventionalCommitsFilter(commits)
 
-  assert.equal(commits.length, 3)
+  assert.strictEqual(commits.length, 3)
 
-  assert.deepEqual(commits, [{
+  assert.deepStrictEqual(commits, [{
     type: 'revert',
     scope: null,
     subject: 'feat(): a very important feature',
@@ -305,9 +305,9 @@ it('should fall back on commit if raw is undefined', function () {
 
   commits = conventionalCommitsFilter(commits)
 
-  assert.equal(commits.length, 2)
+  assert.strictEqual(commits.length, 2)
 
-  assert.deepEqual(commits, [{
+  assert.deepStrictEqual(commits, [{
     type: 'What',
     scope: null,
     subject: 'new feature',

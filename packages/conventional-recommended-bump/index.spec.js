@@ -146,10 +146,10 @@ describe(`conventional-recommended-bump API`, () => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: () => { return {test: `test`} }
+        whatBump: () => { return { test: `test` } }
       }, (err, recommendation) => {
         if (err) done(err)
-        assert.deepStrictEqual(recommendation, {test: `test`})
+        assert.deepStrictEqual(recommendation, { test: `test` })
         done()
       })
     })
@@ -158,10 +158,10 @@ describe(`conventional-recommended-bump API`, () => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: () => { return {level: `test`} }
+        whatBump: () => { return { level: `test` } }
       }, (err, recommendation) => {
         if (err) done(err)
-        assert.deepStrictEqual(recommendation, {level: `test`, releaseType: undefined})
+        assert.deepStrictEqual(recommendation, { level: `test`, releaseType: undefined })
         done()
       })
     })
@@ -171,7 +171,7 @@ describe(`conventional-recommended-bump API`, () => {
     it(`will ignore 'warn' option if it's not a function`, done => {
       preparing(3)
 
-      conventionalRecommendedBump({}, {warn: `invalid`}, done)
+      conventionalRecommendedBump({}, { warn: `invalid` }, done)
     })
 
     it(`should warn if there is no new commits since last release`, done => {

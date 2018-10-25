@@ -10,6 +10,6 @@ module.exports = presetOpts
 function presetOpts (cb) {
   Q.all([conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts])
     .spread((conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts) => {
-      cb(null, {conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts})
+      cb(null, { conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts })
     })
 }

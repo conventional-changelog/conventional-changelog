@@ -113,7 +113,7 @@ try {
   outputError(err)
 }
 
-var changelogStream = standardChangelog(options, templateContext, flags.commitPath ? {path: flags.commitPath} : {})
+var changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
   .on('error', function (err) {
     outputError(err)
   })

@@ -1,6 +1,5 @@
 'use strict'
 var assert = require('assert')
-var equal = assert.deepEqual
 var gitSemverTags = require('./')
 var mocha = require('mocha')
 var it = mocha.it
@@ -29,7 +28,7 @@ it('should get no semver tags', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, [])
+    assert.deepStrictEqual(tags, [])
 
     done()
   })
@@ -45,7 +44,7 @@ it('should get the semver tag', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['v2.0.0'])
+    assert.deepStrictEqual(tags, ['v2.0.0'])
 
     done()
   })
@@ -56,7 +55,7 @@ it('should get both semver tags', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['v3.0.0', 'v2.0.0'])
+    assert.deepStrictEqual(tags, ['v3.0.0', 'v2.0.0'])
 
     done()
   })
@@ -67,7 +66,7 @@ it('should get all semver tags if two tags on the same commit', function (done) 
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
+    assert.deepStrictEqual(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
 
     done()
   })
@@ -76,7 +75,7 @@ it('should get all semver tags if two tags on the same commit', function (done) 
 it('should still work if I run it again', function (done) {
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
+    assert.deepStrictEqual(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
 
     done()
   })
@@ -89,7 +88,7 @@ it('should be in reverse chronological order', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
+    assert.deepStrictEqual(tags, ['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
 
     done()
   })
@@ -102,7 +101,7 @@ it('should work with prerelease', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
+    assert.deepStrictEqual(tags, ['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
 
     done()
   })
@@ -119,7 +118,7 @@ it('should work with empty commit', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['v1.1.0'])
+    assert.deepStrictEqual(tags, ['v1.1.0'])
 
     done()
   })
@@ -134,9 +133,9 @@ it('should work with lerna style tags', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
+    assert.deepStrictEqual(tags, ['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
     done()
-  }, {lernaTags: true})
+  }, { lernaTags: true })
 })
 
 it('should work with lerna style tags with multiple digits', function (done) {
@@ -150,9 +149,9 @@ it('should work with lerna style tags with multiple digits', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['foobar-project@10.0.0', 'foobar-project@0.10.0', 'foobar-project@0.0.10', 'foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
+    assert.deepStrictEqual(tags, ['foobar-project@10.0.0', 'foobar-project@0.10.0', 'foobar-project@0.0.10', 'foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
     done()
-  }, {lernaTags: true})
+  }, { lernaTags: true })
 })
 
 it('should allow lerna style tags to be filtered by package', function (done) {
@@ -162,16 +161,16 @@ it('should allow lerna style tags to be filtered by package', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['bar-project@5.0.0'])
+    assert.deepStrictEqual(tags, ['bar-project@5.0.0'])
     done()
-  }, {lernaTags: true, package: 'bar-project'})
+  }, { lernaTags: true, package: 'bar-project' })
 })
 
 it('should not allow package filter without lernaTags=true', function (done) {
   gitSemverTags(function (err) {
-    equal(err.message, 'opts.package should only be used when running in lerna mode')
+    assert.deepStrictEqual(err.message, 'opts.package should only be used when running in lerna mode')
     done()
-  }, {package: 'bar-project'})
+  }, { package: 'bar-project' })
 })
 
 it('should work with tag prefix option', function (done) {
@@ -185,7 +184,7 @@ it('should work with tag prefix option', function (done) {
 
   gitSemverTags(function (err, tags) {
     if (err) done(err)
-    equal(tags, ['ms/7.0.0', 'ms/6.0.0'])
+    assert.deepStrictEqual(tags, ['ms/7.0.0', 'ms/6.0.0'])
     done()
-  }, {tagPrefix: 'ms/'})
+  }, { tagPrefix: 'ms/' })
 })
