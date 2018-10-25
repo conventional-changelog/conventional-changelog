@@ -1,10 +1,9 @@
 {
-  "commands": {
+  "command": {
     "bootstrap": {
       "hoist": true
     }
   },
-  "lerna": "2.2.0",
   "packages": [
     "packages/*"
   ],
