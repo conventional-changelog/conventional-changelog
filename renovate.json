@@ -1,18 +1,6 @@
 {
-  "automerge": true,
-  "labels": ["refactor"],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
+  "extends": ["@hbetts"],
   "major": {
     "automerge": false
-  },
-  "node": {
-    "enabled": true,
-    "supportPolicy": ["lts", "current"]
-  },
-  "pinVersions": false,
-  "prCreation": "not-pending",
-  "rebaseStalePrs": true,
-  "unpublishSafe": true
+  }
 }
