@@ -4,8 +4,7 @@
   "description": "conventional-changelog angular preset",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "mocha --timeout 30000 && npm run-script lint",
+    "test": "mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },
   "repository": {

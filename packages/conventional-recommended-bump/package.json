@@ -41,8 +41,7 @@
     "q": "^1.5.1"
   },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run-script lint && mocha --timeout 30000 *.spec.js",
+    "test": "mocha --timeout 30000 *.spec.js",
     "test-windows": "mocha --timeout 30000 preset-resolver.spec.js"
   },
   "bin": "cli.js"

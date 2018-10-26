@@ -4,8 +4,7 @@
   "description": "conventional-changelog jshint preset",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "mocha --timeout 30000 && npm run-script lint",
+    "test": "mocha --timeout 30000",
     "test-windows": "echo 'make work on windows'"
   },
   "repository": {

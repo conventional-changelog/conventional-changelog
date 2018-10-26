@@ -39,8 +39,7 @@
     "tempfile": "^1.1.1"
   },
   "scripts": {
-    "test": "mocha --timeout 30000 && npm run-script lint",
-    "lint": "eslint --fix .",
+    "test": "mocha --timeout 30000",
     "test-windows": "echo 'make work on windows'"
   },
   "bin": "cli.js"

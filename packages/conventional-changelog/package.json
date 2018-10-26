@@ -47,8 +47,7 @@
     "conventional-changelog-preset-loader": "file:../conventional-changelog-preset-loader"
   },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run-script lint && mocha --timeout 30000",
+    "test": "mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   }
 }
