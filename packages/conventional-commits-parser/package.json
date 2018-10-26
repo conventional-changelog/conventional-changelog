@@ -36,7 +36,7 @@
     "JSONStream": "^1.0.4",
     "is-text-path": "^1.0.0",
     "lodash": "^4.2.1",
-    "meow": "^4.0.0",
+    "meow": "^5.0.0",
     "split2": "^2.0.0",
     "through2": "^2.0.0",
     "trim-off-newlines": "^1.0.0"

@@ -42,7 +42,7 @@
     "handlebars": "^4.0.2",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.2.1",
-    "meow": "^4.0.0",
+    "meow": "^5.0.0",
     "semver": "^5.5.0",
     "split": "^1.0.0",
     "through2": "^2.0.0"

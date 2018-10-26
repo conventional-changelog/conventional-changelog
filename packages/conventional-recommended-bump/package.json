@@ -37,7 +37,7 @@
     "conventional-commits-parser": "^3.0.0",
     "git-raw-commits": "^2.0.0",
     "git-semver-tags": "^2.0.0",
-    "meow": "^4.0.0",
+    "meow": "^5.0.0",
     "q": "^1.5.1"
   },
   "devDependencies": {
