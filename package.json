@@ -40,7 +40,7 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-standard": "^4.0.0",
     "lerna": "^2.2.0",
     "mocha": "^5.0.1",
     "nyc": "^11.2.1",
