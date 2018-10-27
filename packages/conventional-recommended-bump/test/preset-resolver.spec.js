@@ -7,48 +7,45 @@ const describe = mocha.describe
 const it = mocha.it
 
 describe(`preset-resolver`, () => {
-  it(`rejects if preset package is not a promise, function, or object`, done => {
+  it(`rejects if preset package is not a promise, function, or object`, () => {
     const result = presetResolver(`invalid preset package`)
 
-    result.catch(error => {
-      assert.strictEqual(error.message, `preset package must be a promise, funciton, or object`)
-      done()
+    return result.catch(error => {
+      assert.strictEqual(error.message, `preset package must be a promise, function, or object`)
     })
   })
 
-  it(`resolves a promise as a promise`, done => {
+  it(`resolves a promise as a promise`, () => {
     const result = presetResolver(Promise.resolve(true))
-    result.then(value => {
+
+    return result.then(value => {
       assert.strictEqual(value, true)
-      done()
     })
   })
 
-  it(`resolves an object as a promise`, done => {
+  it(`resolves an object as a promise`, () => {
     const result = presetResolver({ answer: 42 })
-    result.then(value => {
-      assert.strictDeepEqual(value, { answer: 42 })
-      done()
+
+    return result.then(value => {
+      assert.deepStrictEqual(value, { answer: 42 })
     })
   })
 
-  it(`resolves a callback function as a promise`, done => {
+  it(`resolves a callback function as a promise`, () => {
     const presetPackage = cb => cb(null, { answer: 42 })
     const result = presetResolver(presetPackage)
 
-    result.then(value => {
-      assert.strictDeepEqual(value, { answer: 42 })
-      done()
+    return result.then(value => {
+      assert.deepStrictEqual(value, { answer: 42 })
     })
   })
 
-  it(`fails promise if callback function returns error`, done => {
+  it(`fails promise if callback function returns error`, () => {
     const presetPackage = cb => cb(new Error(`an error happened`))
     const result = presetResolver(presetPackage)
 
-    result.catch(error => {
-      assert.strictDeepEqual(error.message, `an error happened`)
-      done()
+    return result.catch(error => {
+      assert.deepStrictEqual(error.message, `an error happened`)
     })
   })
 })
