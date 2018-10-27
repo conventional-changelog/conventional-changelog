@@ -9,7 +9,6 @@ matrix:
 
 cache:
   directories:
-    - node_modules/
     - ${HOME}/.npm
 
 before_install:
