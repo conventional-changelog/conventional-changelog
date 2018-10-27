@@ -21,7 +21,8 @@ var dir = ''
 
 betterThanBefore.setups([
   function () { // 1
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     dir = process.cwd()
     var tmpDir = tmp.dirSync().name
     shell.mkdir(tmpDir)

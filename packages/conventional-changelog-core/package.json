@@ -41,7 +41,6 @@
     "through2": "^2.0.0"
   },
   "scripts": {
-    "test": "mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   }
 }

@@ -14,7 +14,8 @@ var preparing = betterThanBefore.preparing
 
 betterThanBefore.setups([
   function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')

@@ -20,7 +20,6 @@
     "node": ">=6.9.0"
   },
   "scripts": {
-    "test": "mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },
   "files": [

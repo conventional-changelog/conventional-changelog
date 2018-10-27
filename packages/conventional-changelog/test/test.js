@@ -4,7 +4,6 @@ var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
 var it = mocha.it
-var after = mocha.after
 var before = mocha.before
 var shell = require('shelljs')
 var through = require('through2')
@@ -12,7 +11,8 @@ var writeFileSync = require('fs').writeFileSync
 
 describe('conventionalChangelog', function () {
   before(function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')
@@ -20,10 +20,6 @@ describe('conventionalChangelog', function () {
     shell.exec('git init --template=../git-templates')
     writeFileSync('test1', '')
     shell.exec('git add --all && git commit -m"First commit"')
-  })
-
-  after(function () {
-    shell.cd('../')
   })
 
   it('should not warn if preset is found', function (done) {

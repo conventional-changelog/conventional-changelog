@@ -42,7 +42,6 @@
     "trim-off-newlines": "^1.0.0"
   },
   "scripts": {
-    "test": "mocha --timeout 30000",
     "test-windows": "echo 'make work on windows'"
   },
   "bin": {

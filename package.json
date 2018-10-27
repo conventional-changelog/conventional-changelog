@@ -28,8 +28,8 @@
   "scripts": {
     "lint": "eslint . --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "pretest": "npm run lint",
-    "test": "nyc lerna exec npm test",
-    "test-windows": "lerna exec npm run test-windows",
+    "test": "nyc mocha --timeout 30000 packages/*/test{,/*}.js",
+    "test-windows": "lerna exec --concurrency 1 -- npm run test-windows",
     "release": "lerna publish"
   },
   "version": "1.0.0",
