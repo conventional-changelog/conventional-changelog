@@ -9,7 +9,6 @@
 $ npm install --save conventional-changelog-writer
 ```
 
-
 ## Usage
 
 ```js
