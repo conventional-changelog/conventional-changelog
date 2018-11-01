@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.2...conventional-changelog-core@3.1.3) (2018-11-01)
+
+
+### Bug Fixes
+
+* pin git-raw-commits until I have publication rights ([e41777c](https://github.com/conventional-changelog/conventional-changelog/commit/e41777c))
+
+
+
+
+
 ## [3.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.1...conventional-changelog-core@3.1.2) (2018-11-01)
 
 **Note:** Version bump only for package conventional-changelog-core
