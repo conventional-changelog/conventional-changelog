@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.1...conventional-changelog-writer@4.0.2) (2018-11-01)
+
+
+### Bug Fixes
+
+* bad release of conventional-changelog-writer ([b5da9af](https://github.com/conventional-changelog/conventional-changelog/commit/b5da9af))
+
+
+
+
+
 ## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.0...conventional-changelog-writer@4.0.1) (2018-11-01)
 
 
