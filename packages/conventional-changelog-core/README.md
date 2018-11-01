@@ -18,7 +18,6 @@ conventionalChangelogCore()
   .pipe(process.stdout); // or any writable stream
 ```
 
-
 ## API
 
 ### conventionalChangelogCore([options, [context, [gitRawCommitsOpts, [parserOpts, [writerOpts]]]]])
