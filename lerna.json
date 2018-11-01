@@ -1,10 +1,4 @@
 {
-  "command": {
-    "publish": {
-      "conventionalCommmits": true,
-      "message": "chore(release): publish"
-    }
-  },
   "packages": ["packages/*"],
   "version": "independent"
 }
