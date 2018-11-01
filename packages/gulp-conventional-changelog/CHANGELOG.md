@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.3...gulp-conventional-changelog@2.0.4) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.2...gulp-conventional-changelog@2.0.3) (2018-08-21)
 

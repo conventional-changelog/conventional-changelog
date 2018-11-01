@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.0...conventional-changelog-eslint@3.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* **preset:** ESLint recommended-bump is always "patch" ([#371](https://github.com/conventional-changelog/conventional-changelog/issues/371)) ([35e279d](https://github.com/conventional-changelog/conventional-changelog/commit/35e279d)), closes [/github.com/conventional-changelog/conventional-changelog/blob/ce1fd981f88ce201e996dfa833e4682de3aafcdd/packages/conventional-changelog-eslint/conventional-recommended-bump.js#L32-L35](https://github.com//github.com/conventional-changelog/conventional-changelog/blob/ce1fd981f88ce201e996dfa833e4682de3aafcdd/packages/conventional-changelog-eslint/conventional-recommended-bump.js/issues/L32-L35)
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@2.0.0...conventional-changelog-eslint@3.0.0) (2018-06-06)
 

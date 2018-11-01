@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.5...conventional-changelog-cli@2.0.6) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.4...conventional-changelog-cli@2.0.5) (2018-08-21)
 
