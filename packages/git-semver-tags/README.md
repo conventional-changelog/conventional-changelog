@@ -11,7 +11,6 @@
 $ npm install --save git-semver-tags
 ```
 
-
 ## Usage
 
 ```js
