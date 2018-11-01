@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.3...conventional-recommended-bump@4.0.4) (2018-11-01)
+
+
+### Bug Fixes
+
+* fix broken release of conventional-recommended-bump ([d9267e8](https://github.com/conventional-changelog/conventional-changelog/commit/d9267e8))
+
+
+
+
+
 ## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.2...conventional-recommended-bump@4.0.3) (2018-11-01)
 
 **Note:** Version bump only for package conventional-recommended-bump

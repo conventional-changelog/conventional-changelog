@@ -1,6 +1,6 @@
 {
   "name": "conventional-recommended-bump",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Get a recommended version bump based on conventional commits",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
