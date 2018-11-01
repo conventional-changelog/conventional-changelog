@@ -4,8 +4,6 @@
   "description": "conventional-changelog ember preset",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "mocha --timeout 30000 && npm run-script lint",
     "test-windows": "mocha --timeout 30000"
   },
   "repository": {
@@ -34,12 +32,6 @@
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-ember#readme",
-  "devDependencies": {
-    "conventional-changelog-core": "^3.1.0",
-    "git-dummy-commit": "^1.2.0",
-    "shelljs": "^0.8.0",
-    "through2": "^2.0.0"
-  },
   "dependencies": {
     "q": "^1.5.1"
   }

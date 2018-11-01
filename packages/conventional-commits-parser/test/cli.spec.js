@@ -3,16 +3,22 @@ var concat = require('concat-stream')
 var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
+var before = mocha.before
 var it = mocha.it
 var fs = require('fs')
 var spawn = require('child_process').spawn
 var through = require('through2')
+var path = require('path')
 
-var cliPath = './cli.js'
+var cliPath = path.join(__dirname, '../cli.js')
 
-describe('cli', function () {
+describe('changelog-parser cli', function () {
+  before(function () {
+    process.chdir(__dirname)
+  })
+
   it('should parse commits in a file', function (done) {
-    var cp = spawn(cliPath, ['test/fixtures/log1.txt'], {
+    var cp = spawn(cliPath, ['./fixtures/log1.txt'], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -24,7 +30,7 @@ describe('cli', function () {
   })
 
   it('should work with a separator', function (done) {
-    var cp = spawn(cliPath, ['test/fixtures/log2.txt', '==='], {
+    var cp = spawn(cliPath, ['./fixtures/log2.txt', '==='], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -39,7 +45,7 @@ describe('cli', function () {
   })
 
   it('should work with two files', function (done) {
-    var cp = spawn(cliPath, ['test/fixtures/log1.txt', 'test/fixtures/log2.txt', '==='], {
+    var cp = spawn(cliPath, ['./fixtures/log1.txt', './fixtures/log2.txt', '==='], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -56,7 +62,7 @@ describe('cli', function () {
 
   it('should error if files cannot be found', function (done) {
     var i = 0
-    var cp = spawn(cliPath, ['test/fixtures/log1.txt', 'test/fixtures/log4.txt', 'test/fixtures/log2.txt', 'test/fixtures/log5.txt', '==='], {
+    var cp = spawn(cliPath, ['./fixtures/log1.txt', './fixtures/log4.txt', './fixtures/log2.txt', './fixtures/log5.txt', '==='], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
@@ -64,9 +70,9 @@ describe('cli', function () {
         chunk = chunk.toString()
 
         if (i === 0) {
-          expect(chunk).to.contain('Failed to read file test/fixtures/log4.txt')
+          expect(chunk).to.contain('Failed to read file ./fixtures/log4.txt')
         } else {
-          expect(chunk).to.contain('Failed to read file test/fixtures/log5.txt')
+          expect(chunk).to.contain('Failed to read file ./fixtures/log5.txt')
         }
 
         i++
@@ -77,13 +83,13 @@ describe('cli', function () {
   })
 
   it('should work with options', function (done) {
-    var cp = spawn(cliPath, ['test/fixtures/log3.txt', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
+    var cp = spawn(cliPath, ['./fixtures/log3.txt', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
       .pipe(concat(function (chunk) {
         var data = JSON.parse(chunk.toString())[0]
-        console.log(`data`, data)
+
         expect(data.scope).to.equal('category')
         expect(data.type).to.equal('fix:subcategory')
         expect(data.subject).to.equal('My subject')
@@ -128,7 +134,7 @@ describe('cli', function () {
 
   it('should work if it is not a tty', function (done) {
     var cp = spawn(cliPath, [], {
-      stdio: [fs.openSync('test/fixtures/log1.txt', 'r'), null, null]
+      stdio: [fs.openSync('./fixtures/log1.txt', 'r'), null, null]
     })
     cp.stdout
       .pipe(concat(function (chunk) {
@@ -140,7 +146,7 @@ describe('cli', function () {
 
   it('should error if it is not a tty and commit cannot be parsed', function (done) {
     var cp = spawn(cliPath, [], {
-      stdio: [fs.openSync('test/fixtures/bad_commit.txt', 'r'), null, null]
+      stdio: [fs.openSync('./fixtures/bad_commit.txt', 'r'), null, null]
     })
     cp.stderr
       .pipe(concat(function (chunk) {

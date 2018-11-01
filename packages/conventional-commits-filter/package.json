@@ -32,8 +32,6 @@
     "modify-values": "^1.0.0"
   },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run lint && mocha --timeout=30000",
     "test-windows": "mocha --timeout 30000"
   },
   "license": "MIT"

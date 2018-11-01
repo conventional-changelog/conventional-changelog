@@ -28,7 +28,7 @@ function semverTagsPromise (options) {
       } else {
         resolve(result)
       }
-    }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix})
+    }, { lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix })
   })
 }
 
@@ -222,7 +222,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       }
 
       if (context.resetChangelog) {
-        fromTag = null;
+        fromTag = null
       }
 
       gitRawCommitsOpts = _.assign({

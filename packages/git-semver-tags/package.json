@@ -35,13 +35,7 @@
     "meow": "^4.0.0",
     "semver": "^5.5.0"
   },
-  "devDependencies": {
-    "git-dummy-commit": "^1.2.0",
-    "shelljs": "^0.8.0"
-  },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run-script lint && mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },
   "bin": {

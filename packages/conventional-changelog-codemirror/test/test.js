@@ -12,7 +12,8 @@ var writeFileSync = require('fs').writeFileSync
 
 describe('codemirror preset', function () {
   before(function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')

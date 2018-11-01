@@ -21,7 +21,8 @@ var dir = ''
 
 betterThanBefore.setups([
   function () { // 1
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     dir = process.cwd()
     var tmpDir = tmp.dirSync().name
     shell.mkdir(tmpDir)
@@ -794,7 +795,7 @@ describe('conventionalChangelogCore', function () {
     const context = {
       resetChangelog: true,
       version: '2.0.0'
-    };
+    }
 
     let chunkNumber = 0
 
@@ -1265,7 +1266,7 @@ describe('conventionalChangelogCore', function () {
 
       conventionalChangelogCore({
         lernaPackage: 'foo'
-      }, {}, {path: './packages/foo'})
+      }, {}, { path: './packages/foo' })
         .pipe(through(function (chunk, enc, cb) {
           chunk = chunk.toString()
           expect(chunk).to.include('first lerna style commit hooray')
@@ -1284,7 +1285,7 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         lernaPackage: 'foo',
         config: require('conventional-changelog-angular')
-      }, {}, {path: './packages/foo'})
+      }, {}, { path: './packages/foo' })
         .pipe(through(function (chunk, enc, cb) {
           chunk = chunk.toString()
           // confirm that context.currentTag behaves differently when
@@ -1302,7 +1303,7 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         lernaPackage: 'foo',
         releaseCount: 2
-      }, {}, {path: './packages/foo'})
+      }, {}, { path: './packages/foo' })
         .pipe(through(function (chunk, enc, cb) {
           chunk = chunk.toString()
           expect(chunk).to.include('first lerna style commit hooray')

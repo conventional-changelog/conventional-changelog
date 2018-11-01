@@ -3,17 +3,22 @@ var concat = require('concat-stream')
 var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
+var before = mocha.before
 var it = mocha.it
 var fs = require('fs')
 var spawn = require('child_process').spawn
 var path = require('path')
 
-var cliPath = './cli.js'
-var commitsPath = 'test/fixtures/commits.ldjson'
-var optionsPath = 'test/fixtures/options.js'
-var contextPath = 'test/fixtures/context.json'
+var cliPath = path.join(__dirname, '../cli.js')
+var commitsPath = './fixtures/commits.ldjson'
+var optionsPath = './fixtures/options.js'
+var contextPath = './fixtures/context.json'
 
-describe('cli', function () {
+describe('changelog-writer cli', function () {
+  before(function () {
+    process.chdir(__dirname)
+  })
+
   it('should work without context and options', function (done) {
     var cp = spawn(cliPath, [commitsPath], {
       stdio: [process.stdin, null, null]
@@ -142,19 +147,19 @@ describe('cli', function () {
   })
 
   it('should error when commit input file is invalid line delimited json', function (done) {
-    var cp = spawn(cliPath, ['test/fixtures/invalid_line_delimited.json'], {
+    var cp = spawn(cliPath, ['fixtures/invalid_line_delimited.json'], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
       .pipe(concat(function (err) {
-        expect(err.toString()).to.contain('Failed to split commits in file test/fixtures/invalid_line_delimited.json\n')
+        expect(err.toString()).to.contain('Failed to split commits in file fixtures/invalid_line_delimited.json\n')
         done()
       }))
   })
 
   it('should error when commit input file is invalid line delimited json if it is not tty', function (done) {
     var cp = spawn(cliPath, [], {
-      stdio: [fs.openSync('test/fixtures/invalid_line_delimited.json', 'r'), null, null]
+      stdio: [fs.openSync('fixtures/invalid_line_delimited.json', 'r'), null, null]
     })
     cp.stderr
       .pipe(concat(function (err) {

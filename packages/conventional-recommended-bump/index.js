@@ -16,7 +16,7 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
     throw new Error(`The 'options' argument must be an object.`)
   }
 
-  const options = Object.assign({ignoreReverted: true}, optionsArgument)
+  const options = Object.assign({ ignoreReverted: true }, optionsArgument)
 
   const cb = typeof parserOptsArgument === `function` ? parserOptsArgument : cbArgument
 

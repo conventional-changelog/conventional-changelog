@@ -184,7 +184,7 @@ describe('parser', function () {
   })
 
   it('should ignore comments according to commentChar', function () {
-    var commentOptions = _.assign({}, options, {commentChar: '#'})
+    var commentOptions = _.assign({}, options, { commentChar: '#' })
 
     expect(parser('# comment', commentOptions, reg)).to.eql({
       merge: null,
@@ -230,7 +230,7 @@ describe('parser', function () {
   })
 
   it('should respect commentChar config', function () {
-    var commentOptions = _.assign({}, options, {commentChar: '*'})
+    var commentOptions = _.assign({}, options, { commentChar: '*' })
 
     expect(parser('* comment', commentOptions, reg)).to.eql({
       merge: null,

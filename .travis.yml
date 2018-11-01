@@ -1,15 +1,15 @@
 language: node_js
 
 node_js:
-  - 6
-  - 8
+  - '6'
+  - '8'
+  - '10'
 
 matrix:
   fast_finish: true
 
 cache:
   directories:
-    - node_modules/
     - ${HOME}/.npm
 
 before_install:

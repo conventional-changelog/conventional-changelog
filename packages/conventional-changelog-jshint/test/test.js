@@ -13,7 +13,8 @@ var writeFileSync = require('fs').writeFileSync
 
 describe('jshint preset', function () {
   before(function (done) {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')

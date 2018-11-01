@@ -6,13 +6,14 @@ var it = mocha.it
 var beforeEach = mocha.beforeEach
 var describe = mocha.describe
 var fs = require('fs')
+var path = require('path')
 var Handlebars = require('handlebars')
 
 var template
 var templateContext
 
 before(function (done) {
-  fs.readFile('templates/commit.hbs', function (err, data) {
+  fs.readFile(path.resolve(__dirname, '../templates/commit.hbs'), function (err, data) {
     if (err) done(err)
     template = data.toString()
     done()

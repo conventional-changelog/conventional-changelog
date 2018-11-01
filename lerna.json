@@ -1,12 +1,10 @@
 {
-  "commands": {
-    "bootstrap": {
-      "hoist": true
+  "command": {
+    "publish": {
+      "conventionalCommmits": true,
+      "message": "chore(release): publish"
     }
   },
-  "lerna": "2.2.0",
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "version": "independent"
 }

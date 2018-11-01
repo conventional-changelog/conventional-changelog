@@ -39,13 +39,7 @@
     "split2": "^2.0.0",
     "through2": "^2.0.0"
   },
-  "devDependencies": {
-    "mkdirp": "^0.5.1",
-    "shelljs": "^0.8.0"
-  },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run-script lint && mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },
   "bin": {

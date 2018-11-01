@@ -32,24 +32,16 @@
   ],
   "dependencies": {
     "concat-stream": "^1.6.0",
-    "conventional-changelog-preset-loader": "^2.0.1",
-    "conventional-commits-filter": "^2.0.0",
-    "conventional-commits-parser": "^3.0.0",
-    "git-raw-commits": "^2.0.0",
-    "git-semver-tags": "^2.0.0",
+    "conventional-changelog-preset-loader": "file:../conventional-changelog-preset-loader",
+    "conventional-commits-filter": "file:../conventional-commits-filter",
+    "conventional-commits-parser": "file:../conventional-commits-parser",
+    "git-raw-commits": "file:../git-raw-commits",
+    "git-semver-tags": "file:../git-semver-tags",
     "meow": "^4.0.0",
     "q": "^1.5.1"
   },
-  "devDependencies": {
-    "better-than-before": "^1.0.0",
-    "core-assert": "^0.2.0",
-    "shelljs": "^0.8.0",
-    "temp": "^0.8.3"
-  },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run-script lint && mocha --timeout 30000 *.spec.js",
-    "test-windows": "mocha --timeout 30000 preset-resolver.spec.js"
+    "test-windows": "mocha --timeout 30000 ./test/preset-resolver.spec.js"
   },
   "bin": "cli.js"
 }

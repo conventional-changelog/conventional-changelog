@@ -1,8 +1,8 @@
 'use strict'
 
-const assert = require(`core-assert`)
+const assert = require(`assert`)
 const betterThanBefore = require(`better-than-before`)()
-const conventionalRecommendedBump = require(`./index`)
+const conventionalRecommendedBump = require(`../index`)
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
@@ -80,7 +80,7 @@ describe(`conventional-recommended-bump API`, () => {
         preset: `does-not-exist`
       }, {}, err => {
         assert.ok(err)
-        assert.equal(err.message, `Unable to load the "does-not-exist" preset package. Please make sure it's installed.`)
+        assert.strictEqual(err.message, `Unable to load the "does-not-exist" preset package. Please make sure it's installed.`)
         done()
       })
     })
@@ -103,7 +103,7 @@ describe(`conventional-recommended-bump API`, () => {
         whatBump: `invalid`
       }, {}, err => {
         assert.ok(err)
-        assert.equal(err.message, `whatBump must be a function`)
+        assert.strictEqual(err.message, `whatBump must be a function`)
         done()
       })
     })
@@ -146,10 +146,10 @@ describe(`conventional-recommended-bump API`, () => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: () => { return {test: `test`} }
+        whatBump: () => { return { test: `test` } }
       }, (err, recommendation) => {
         if (err) done(err)
-        assert.deepStrictEqual(recommendation, {test: `test`})
+        assert.deepStrictEqual(recommendation, { test: `test` })
         done()
       })
     })
@@ -158,10 +158,10 @@ describe(`conventional-recommended-bump API`, () => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: () => { return {level: `test`} }
+        whatBump: () => { return { level: `test` } }
       }, (err, recommendation) => {
         if (err) done(err)
-        assert.deepStrictEqual(recommendation, {level: `test`, releaseType: undefined})
+        assert.deepStrictEqual(recommendation, { level: `test`, releaseType: undefined })
         done()
       })
     })
@@ -171,7 +171,7 @@ describe(`conventional-recommended-bump API`, () => {
     it(`will ignore 'warn' option if it's not a function`, done => {
       preparing(3)
 
-      conventionalRecommendedBump({}, {warn: `invalid`}, done)
+      conventionalRecommendedBump({}, { warn: `invalid` }, done)
     })
 
     it(`should warn if there is no new commits since last release`, done => {
@@ -192,7 +192,7 @@ describe(`conventional-recommended-bump API`, () => {
 
       conventionalRecommendedBump({
         whatBump: commits => {
-          assert.equal(commits.length, 0)
+          assert.strictEqual(commits.length, 0)
           done()
         }
       }, () => {})
@@ -204,7 +204,7 @@ describe(`conventional-recommended-bump API`, () => {
       conventionalRecommendedBump({
         ignoreReverted: false,
         whatBump: commits => {
-          assert.equal(commits.length, 2)
+          assert.strictEqual(commits.length, 2)
           done()
         }
       }, () => {})
@@ -218,8 +218,8 @@ describe(`conventional-recommended-bump API`, () => {
       conventionalRecommendedBump({
         tagPrefix: `ms/`,
         whatBump: commits => {
-          assert.equal(commits.length, 1)
-          assert.equal(commits[0].type, `feat`)
+          assert.strictEqual(commits.length, 1)
+          assert.strictEqual(commits[0].type, `feat`)
           done()
         }
       }, () => {})
@@ -232,7 +232,7 @@ describe(`conventional-recommended-bump API`, () => {
 
       conventionalRecommendedBump({
         whatBump: commits => {
-          assert.equal(commits.length, 3)
+          assert.strictEqual(commits.length, 3)
           done()
         }
       }, () => {})
@@ -244,8 +244,8 @@ describe(`conventional-recommended-bump API`, () => {
       conventionalRecommendedBump({
         lernaPackage: `my-package`,
         whatBump: commits => {
-          assert.equal(commits.length, 1)
-          assert.equal(commits[0].type, `feat`)
+          assert.strictEqual(commits.length, 1)
+          assert.strictEqual(commits[0].type, `feat`)
           done()
         }
       }, () => {})

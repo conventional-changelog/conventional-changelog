@@ -6,5 +6,5 @@ const writerOpts = require(`./writer-opts`)
 
 module.exports = Q.all([parserOpts, writerOpts])
   .spread((parserOpts, writerOpts) => {
-    return {parserOpts, writerOpts}
+    return { parserOpts, writerOpts }
   })

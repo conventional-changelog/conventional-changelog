@@ -1,25 +1,24 @@
 environment:
   matrix:
-    - nodejs_version: 6
-    - nodejs_version: 8
+    - nodejs_version: '8'
+    - nodejs_version: '10'
 
 matrix:
   fast_finish: true
 
 cache:
-  - node_modules/
   - '%APPDATA%\npm-cache'
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install
+  - npm install --global npm@latest
+  - npm ci
 
 build: off
 
 before_test:
   - git config --global user.name 'CI'
   - git config --global user.email 'dummy@example.org'
-  - npm install --global npm@latest
   - node --version
   - npm --version
 

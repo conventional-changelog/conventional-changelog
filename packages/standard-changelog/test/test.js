@@ -5,14 +5,14 @@ var mocha = require('mocha')
 var describe = mocha.describe
 var it = mocha.it
 var before = mocha.before
-var after = mocha.after
 var shell = require('shelljs')
 var through = require('through2')
 var writeFileSync = require('fs').writeFileSync
 
 describe('standardChangelog', function () {
   before(function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')
@@ -20,10 +20,6 @@ describe('standardChangelog', function () {
     shell.exec('git init --template=../git-templates')
     writeFileSync('test1', '')
     shell.exec('git add --all && git commit -m"feat: first commit"')
-  })
-
-  after(function () {
-    shell.cd('../')
   })
 
   it('should generate angular changelog', function (done) {

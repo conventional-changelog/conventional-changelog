@@ -41,12 +41,7 @@
     "through2": "^2.0.0",
     "trim-off-newlines": "^1.0.0"
   },
-  "devDependencies": {
-    "concat-stream": "^1.6.0"
-  },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run lint && mocha --timeout=30000",
     "test-windows": "echo 'make work on windows'"
   },
   "bin": {

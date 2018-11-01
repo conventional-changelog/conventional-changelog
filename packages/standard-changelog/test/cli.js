@@ -21,9 +21,10 @@ function originalChangelog () {
   writeFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'Some previous changelog.\n')
 }
 
-describe('cli', function () {
+describe('standard-changelog cli', function () {
   before(function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')
@@ -36,7 +37,6 @@ describe('cli', function () {
   })
 
   after(function () {
-    shell.cd('../')
     originalChangelog()
   })
 
@@ -118,27 +118,27 @@ describe('cli', function () {
   })
 
   it('should work if `infile` is missing but `outfile` presets', function (done) {
-    var cp = spawn(cliPath, ['-o', path.join(__dirname, '../tmp/_CHANGELOG.md')], {
+    var cp = spawn(cliPath, ['-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
 
-      var modified = readFileSync(path.join(__dirname, '../tmp/_CHANGELOG.md'), 'utf8')
+      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
       done()
     })
   })
 
   it('should work if both `infile` and `outfile` presets when not appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, '../tmp/_CHANGELOG.md')], {
+    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, '../tmp/_CHANGELOG.md'), 'utf8')
+      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/First commit(\s|.)*Some previous changelog./)
 
       done()
@@ -146,13 +146,13 @@ describe('cli', function () {
   })
 
   it('should work if both `infile` and `outfile` presets when appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, '../tmp/_CHANGELOG.md'), '--append'], {
+    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, '../tmp/_CHANGELOG.md'), 'utf8')
+      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
       done()
     })
@@ -165,7 +165,7 @@ describe('cli', function () {
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, '../tmp/_CHANGELOG.md'), 'utf8')
+      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       done()
@@ -179,7 +179,7 @@ describe('cli', function () {
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, '../tmp/_CHANGELOG.md'), 'utf8')
+      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       done()
@@ -217,13 +217,13 @@ describe('cli', function () {
   })
 
   it('should create `infile` if `infile` is ENOENT and overwrite infile', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, '../tmp/no-such-file.md'), '-s'], {
+    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, '../tmp/no-such-file.md'), 'utf8')
+      var modified = readFileSync(path.join(__dirname, 'tmp/no-such-file.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
 
@@ -260,7 +260,7 @@ describe('cli', function () {
   })
 
   it('--context should work with relative path', function (done) {
-    var cp = spawn(cliPath, ['--context', '../test/fixtures/context.json', '--config', '../test/fixtures/config.js'], {
+    var cp = spawn(cliPath, ['--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -273,7 +273,7 @@ describe('cli', function () {
   })
 
   it('--context should work with absolute path', function (done) {
-    var cp = spawn(cliPath, ['--context', '../test/fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
+    var cp = spawn(cliPath, ['--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
