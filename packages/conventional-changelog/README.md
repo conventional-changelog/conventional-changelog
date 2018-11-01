@@ -6,7 +6,6 @@ It's recommended to use high level [standard-version](https://github.com/convent
 Alternatively, you are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) module.
 Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom).
 
-
 ## Usage
 
 ```sh
