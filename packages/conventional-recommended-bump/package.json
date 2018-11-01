@@ -35,7 +35,7 @@
     "conventional-changelog-preset-loader": "file:../conventional-changelog-preset-loader",
     "conventional-commits-filter": "file:../conventional-commits-filter",
     "conventional-commits-parser": "file:../conventional-commits-parser",
-    "git-raw-commits": "file:../git-raw-commits",
+    "git-raw-commits": "2.0.0",
     "git-semver-tags": "file:../git-semver-tags",
     "meow": "^4.0.0",
     "q": "^1.5.1"
