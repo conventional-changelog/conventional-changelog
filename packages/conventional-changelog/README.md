@@ -66,7 +66,6 @@ A scoped preset package such as `@scope/conventional-changelog-custom-preset` ca
 - [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
 - [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
 
-
 ## License
 
 MIT
