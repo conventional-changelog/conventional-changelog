@@ -13,7 +13,11 @@ function lernaTag (tag, pkg) {
   }
 }
 
-module.exports = function (callback, opts) {
+module.exports = function (opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts
+    opts = {}
+  }
   opts = opts || {}
 
   if (opts.package && !opts.lernaTags) {
@@ -23,6 +27,7 @@ module.exports = function (callback, opts) {
 
   exec(cmd, {
     maxBuffer: Infinity
+    cwd: opts.cwd
   }, function (err, data) {
     if (err) {
       callback(err)
