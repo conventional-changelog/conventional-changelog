@@ -55,7 +55,11 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
 
     const warn = typeof parserOpts.warn === `function` ? parserOpts.warn : noop
 
-    gitSemverTags((err, tags) => {
+    gitSemverTags({
+      lernaTags: !!options.lernaPackage,
+      package: options.lernaPackage,
+      tagPrefix: options.tagPrefix
+    }, (err, tags) => {
       if (err) {
         return cb(err)
       }
@@ -83,11 +87,6 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
 
           cb(null, result)
         }))
-    },
-    {
-      lernaTags: !!options.lernaPackage,
-      package: options.lernaPackage,
-      tagPrefix: options.tagPrefix
     })
   }).catch(err => cb(err))
 }

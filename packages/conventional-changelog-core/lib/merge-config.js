@@ -22,13 +22,13 @@ var rtag = /tag:\s*[v=]?(.+?)[,)]/gi
 
 function semverTagsPromise (options) {
   return Q.Promise(function (resolve, reject) {
-    gitSemverTags(function (err, result) {
+    gitSemverTags({ lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix }, function (err, result) {
       if (err) {
         reject(err)
       } else {
         resolve(result)
       }
-    }, { lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix })
+    })
   })
 }
 

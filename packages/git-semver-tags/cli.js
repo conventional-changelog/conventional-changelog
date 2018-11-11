@@ -12,15 +12,15 @@ var args = meow(`
     --tagPrefix prefix to remove from the tags during their processing`
 )
 
-gitSemverTags(function (err, tags) {
+gitSemverTags({
+  lernaTags: args.flags.lerna,
+  package: args.flags.package,
+  tagPrefix: args.flags.tagPrefix
+}, function (err, tags) {
   if (err) {
     console.error(err.toString())
     process.exit(1)
   }
 
   console.log(tags.join('\n'))
-}, {
-  lernaTags: args.flags.lerna,
-  package: args.flags.package,
-  tagPrefix: args.flags.tagPrefix
 })
