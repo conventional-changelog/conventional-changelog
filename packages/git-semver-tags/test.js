@@ -195,3 +195,26 @@ describe('git-semver-tags', function () {
     }, { tagPrefix: 'ms/' })
   })
 })
+
+describe('git semver tags on different cwd', function () {
+  it('getting semver tag on cwd', (done) => {
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
+    shell.rm('-rf', 'tmp')
+    shell.mkdir('tmp')
+    shell.cd('tmp')
+    shell.mkdir('foobar')
+    shell.cd('foobar')
+    shell.exec('git init')
+
+    writeFileSync('test2', '')
+    shell.exec('git add --all && git commit -m "First commit"')
+    shell.exec('git tag v1.1.0')
+
+    gitSemverTags(function (err, tags) {
+      if (err) done(err)
+      assert.deepStrictEqual(tags, ['v1.1.0'])
+      done()
+    })
+  })
+})
