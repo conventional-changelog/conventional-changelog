@@ -32,7 +32,7 @@
     "test-windows": "lerna exec --concurrency 1 -- npm run test-windows",
     "release": "lerna publish --conventional-commits"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "chai": "^4.2.0",
