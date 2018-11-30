@@ -36,7 +36,8 @@ function getReferences (input, regex) {
   var referenceSentences
   var referenceMatch
 
-  var reApplicable = input.match(regex.references) !== null
+  var inputMatch = input ? input.match(regex.reference) : null
+  var reApplicable = inputMatch
     ? regex.references
     : CATCH_ALL
 
@@ -138,17 +139,17 @@ function parser (raw, options, regex) {
   }
 
   // msg parts
-  merge = lines.shift()
+  var inputLine = lines.shift()
   var mergeParts = {}
   var headerParts = {}
   body = ''
   footer = ''
 
-  mergeMatch = merge.match(options.mergePattern)
+  mergeMatch = inputLine.match(options.mergePattern)
   if (mergeMatch && options.mergePattern) {
     merge = mergeMatch[0]
 
-    header = lines.shift()
+    header = inputLine.replace(merge, '').trim()
     while (!header.trim()) {
       header = lines.shift()
     }
@@ -166,7 +167,7 @@ function parser (raw, options, regex) {
     })
   }
 
-  headerMatch = header.match(options.headerPattern)
+  headerMatch = header ? header.match(options.headerPattern) : null
   if (headerMatch) {
     _.forEach(headerCorrespondence, function (partName, index) {
       var partValue = headerMatch[index + 1] || null

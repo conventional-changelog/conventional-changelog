@@ -357,14 +357,14 @@ describe('parser', function () {
     var mergeOptions = {
       headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
       headerCorrespondence: ['type', 'scope', 'subject'],
-      mergePattern: /^Merge branch '(\w+)'$/,
+      mergePattern: /^Merge branch '(\w+)'/,
       mergeCorrespondence: ['source', 'issueId']
     }
 
     var mergeRegex = regex(mergeOptions)
 
     var mergeMsg = parser(
-      'Merge branch \'feature\'\nHEADER',
+      'Merge branch \'feature\' feat(scope): this is a message',
       mergeOptions,
       mergeRegex
     )
