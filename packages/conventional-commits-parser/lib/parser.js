@@ -159,7 +159,7 @@ function parser (raw, options, regex) {
       mergeParts[partName] = partValue
     })
   } else {
-    header = merge
+    header = inputLine
     merge = null
 
     _.forEach(mergeCorrespondence, function (partName) {
