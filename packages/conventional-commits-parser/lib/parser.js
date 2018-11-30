@@ -36,7 +36,7 @@ function getReferences (input, regex) {
   var referenceSentences
   var referenceMatch
 
-  var inputMatch = input ? input.match(regex.reference) : null
+  var inputMatch = input ? input.match(regex.references) : null
   var reApplicable = inputMatch
     ? regex.references
     : CATCH_ALL
