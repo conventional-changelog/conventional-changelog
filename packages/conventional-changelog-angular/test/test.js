@@ -56,6 +56,7 @@ betterThanBefore.setups([
   },
   function () {
     gitDummyCommit(['fix: use npm@5 (@username)'])
+    gitDummyCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
   }
 ])
 
@@ -320,6 +321,8 @@ describe('angular preset', function () {
         expect(chunk).to.not.include('(https://github.com/5')
         expect(chunk).to.include('(https://github.com/username')
 
+        expect(chunk).to.not.include('[@dummy](https://github.com/dummy)/package')
+        expect(chunk).to.include('bump @dummy/package from')
         done()
       }))
   })
