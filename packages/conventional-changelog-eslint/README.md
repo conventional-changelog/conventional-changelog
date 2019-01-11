@@ -26,6 +26,7 @@ The `Tag` is one of the following:
 * `Build` - changes to build process only.
 * `New` - implemented a new feature.
 * `Upgrade` - for a dependency upgrade.
+* `Chore` - for anything else (e.g.: refactoring).
 
 The message summary should be a one-sentence description of the change. The issue number should be mentioned at the end. * The commit message should say "(fixes #1234)" at the end of the description if it closes out an existing issue (replace 1234 with the issue number). If the commit doesn't completely fix the issue, then use `(refs #1234)` instead of `(fixes #1234)`.
 
