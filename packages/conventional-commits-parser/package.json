@@ -38,7 +38,7 @@
     "lodash": "^4.2.1",
     "meow": "^4.0.0",
     "split2": "^2.0.0",
-    "through2": "^2.0.0",
+    "through2": "^3.0.0",
     "trim-off-newlines": "^1.0.0"
   },
   "scripts": {
