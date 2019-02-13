@@ -25,12 +25,10 @@ module.exports = Q.all([
 function getWriterOpts () {
   return {
     transform: (commit, context) => {
-      let discard = true
       const issues = []
 
       commit.notes.forEach(note => {
         note.title = `BREAKING CHANGES`
-        discard = false
       })
 
       if (commit.type === `feat`) {
@@ -41,8 +39,6 @@ function getWriterOpts () {
         commit.type = `Performance Improvements`
       } else if (commit.type === `revert`) {
         commit.type = `Reverts`
-      } else if (discard) {
-        return
       } else if (commit.type === `docs`) {
         commit.type = `Documentation`
       } else if (commit.type === `style`) {
@@ -55,6 +51,8 @@ function getWriterOpts () {
         commit.type = `Build System`
       } else if (commit.type === `ci`) {
         commit.type = `Continuous Integration`
+      } else {
+        return
       }
 
       if (commit.scope === `*`) {
