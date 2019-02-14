@@ -30,7 +30,7 @@
     "pretest": "npm run lint",
     "test": "nyc mocha --timeout 30000 packages/*/test{,/*}.js",
     "test-windows": "lerna exec --concurrency 1 -- npm run test-windows",
-    "release": "lerna publish --conventional-commits"
+    "release": "lerna publish --conventional-commits --npm-tag=next"
   },
   "version": "1.0.0",
   "devDependencies": {
@@ -49,7 +49,7 @@
     "lerna": "^3.4.3",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
+    "nyc": "^13.3.0",
     "pinkie-promise": "^2.0.0",
     "q": "^1.5.1",
     "safe-buffer": "5.1.2",
