@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.2...conventional-changelog-angular@5.0.3) (2019-02-14)
+
+
+### Bug Fixes
+
+* **preset:angular:** scoped npm packages should not be seen as GitHub username ([#394](https://github.com/conventional-changelog/conventional-changelog/issues/394)) ([e332ef0](https://github.com/conventional-changelog/conventional-changelog/commit/e332ef0))
+
+
+
+
+
 ## [5.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.1...conventional-changelog-angular@5.0.2) (2018-11-01)
 
 
