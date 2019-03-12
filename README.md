@@ -24,7 +24,9 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 
 ## Plugins Supporting Conventional Changelog
 
-[grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
+- [grunt](https://github.com/btford/grunt-conventional-changelog)
+- [gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)
+- [atom](https://github.com/conventional-changelog/atom-conventional-changelog)
 
 ## Modules Important to Conventional Changelog Ecosystem
 
