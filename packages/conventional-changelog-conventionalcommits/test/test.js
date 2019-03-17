@@ -1,6 +1,6 @@
 'use strict'
 var conventionalChangelogCore = require('conventional-changelog-core')
-var preset = require('../')
+var preset = require('../')()
 var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
@@ -60,7 +60,7 @@ betterThanBefore.setups([
   }
 ])
 
-describe('angular preset', function () {
+describe('conventionalcommits.org preset', function () {
   it('should work if there is no semver tag', function (done) {
     preparing(1)
 

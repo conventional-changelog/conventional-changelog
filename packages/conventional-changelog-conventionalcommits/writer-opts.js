@@ -5,24 +5,30 @@ const Q = require(`q`)
 const readFile = Q.denodeify(require(`fs`).readFile)
 const resolve = require(`path`).resolve
 
-module.exports = Q.all([
-  readFile(resolve(__dirname, `./templates/template.hbs`), `utf-8`),
-  readFile(resolve(__dirname, `./templates/header.hbs`), `utf-8`),
-  readFile(resolve(__dirname, `./templates/commit.hbs`), `utf-8`),
-  readFile(resolve(__dirname, `./templates/footer.hbs`), `utf-8`)
-])
-  .spread((template, header, commit, footer) => {
-    const writerOpts = getWriterOpts()
+let memo = null
+module.exports = function (config) {
+  if (!memo) {
+    memo = Q.all([
+      readFile(resolve(__dirname, `./templates/template.hbs`), `utf-8`),
+      readFile(resolve(__dirname, `./templates/header.hbs`), `utf-8`),
+      readFile(resolve(__dirname, `./templates/commit.hbs`), `utf-8`),
+      readFile(resolve(__dirname, `./templates/footer.hbs`), `utf-8`)
+    ])
+      .spread((template, header, commit, footer) => {
+        const writerOpts = getWriterOpts(config)
 
-    writerOpts.mainTemplate = template
-    writerOpts.headerPartial = header
-    writerOpts.commitPartial = commit
-    writerOpts.footerPartial = footer
+        writerOpts.mainTemplate = template
+        writerOpts.headerPartial = header
+        writerOpts.commitPartial = commit
+        writerOpts.footerPartial = footer
 
-    return writerOpts
-  })
+        return writerOpts
+      })
+  }
+  return memo
+}
 
-function getWriterOpts () {
+function getWriterOpts (config) {
   return {
     transform: (commit, context) => {
       let discard = true
