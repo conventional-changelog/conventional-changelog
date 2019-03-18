@@ -48,7 +48,7 @@ betterThanBefore.setups([
     gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   function () {
-    shell.exec('git tag v1.0.0')
+    shell.exec('git tag v0.1.0')
     gitDummyCommit('feat: some more features')
   },
   function () {
@@ -104,7 +104,33 @@ describe('conventionalcommits.org preset', function () {
       }))
   })
 
-  it('should replace #[0-9]+ with GitHub issue URL', function (done) {
+  it('should allow alternative "types" configuration to be provided', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: []
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('first build setup')
+        expect(chunk).to.include('**travis:** add TravisCI pipeline')
+        expect(chunk).to.include('**travis:** Continuously integrated.')
+        expect(chunk).to.include('amazing new module')
+        expect(chunk).to.include('**compile:** avoid a bug')
+        expect(chunk).to.include('feat')
+
+        expect(chunk).to.not.include('make it faster')
+        expect(chunk).to.not.include('Reverts')
+        done()
+      }))
+  })
+
+  it('should replace #[0-9]+ with GitHub format issue URL by default', function (done) {
     preparing(2)
 
     conventionalChangelogCore({
@@ -206,7 +232,10 @@ describe('conventionalcommits.org preset', function () {
     var i = 0
 
     conventionalChangelogCore({
-      config: preset,
+      config: require('../')({
+        commitUrlFormat: 'http://unknown/commit/{{hash}}',
+        compareUrlFormat: 'http://unknown/compare/{{previousTag}}...{{currentTag}}'
+      }),
       pkg: {
         path: path.join(__dirname, 'fixtures/_unknown-host.json')
       }
@@ -218,7 +247,7 @@ describe('conventionalcommits.org preset', function () {
         chunk = chunk.toString()
 
         expect(chunk).to.include('(http://unknown/compare')
-        expect(chunk).to.include('](http://unknown/commits/')
+        expect(chunk).to.include('](http://unknown/commit/')
 
         i++
         cb()
@@ -264,6 +293,7 @@ describe('conventionalcommits.org preset', function () {
       config: preset
     })
       .on('error', function (err) {
+        console.info(err)
         done(err)
       })
       .pipe(through(function (chunk, enc, cb) {
