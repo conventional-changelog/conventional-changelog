@@ -1,0 +1,6 @@
+{
+    "writerOpts": {
+        "host": "https://hosted-scm.biz"
+    },
+    "extend": ["preset:conventionalcommits", "../invalid/local/path/.changelogrc"]
+}

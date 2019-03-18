@@ -1,0 +1,3 @@
+{
+    "extend": ["preset:conventionalcommits"]
+}
