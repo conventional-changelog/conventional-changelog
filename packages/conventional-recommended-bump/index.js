@@ -73,7 +73,7 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
             warn(`No commits since last release`)
           }
 
-          let result = whatBump(commits)
+          let result = whatBump(commits, options)
 
           if (result && result.level != null) {
             result.releaseType = VERSIONS[result.level]
