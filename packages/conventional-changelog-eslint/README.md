@@ -39,7 +39,7 @@ Upgrade: Esprima to 1.2, switch to using Esprima comment attachment (fixes #730)
 
 The commit message format is important because these messages are used to create a changelog for each release. The tag and issue number help to create more consistent and useful changelogs.
 
-Based on https://github.com/eslint/eslint.github.io/blob/master/docs/developer-guide/contributing.md#step-2-make-your-changes
+Based on https://github.com/eslint/eslint.github.io/blob/master/docs/developer-guide/contributing/pull-requests.md
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-eslint.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-eslint
