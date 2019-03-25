@@ -1,6 +1,6 @@
 'use strict'
 
-var isSubset = require('is-subset')
+var isMatch = require('lodash.ismatch')
 var modifyValues = require('modify-values')
 
 function modifyValue (val) {
@@ -36,7 +36,7 @@ function conventionalCommitsFilter (commits) {
     ignores.some(function (ignoreCommit) {
       var ignore = modifyValues(ignoreCommit.revert, modifyValue)
 
-      ignoreThis = isSubset(commit, ignore)
+      ignoreThis = isMatch(commit, ignore)
 
       if (ignoreThis) {
         remove.push(ignoreCommit.hash)
