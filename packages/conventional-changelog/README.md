@@ -2,11 +2,10 @@
 
 > Generate a changelog from git metadata
 
-It's recommended to use high level [standard-version](https://github.com/conventional-changelog/standard-version).
-Alternatively, you are probably looking for the [cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) module.
-Or use one of the plugins if you are already using the tool:  [grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom).
 
 ## Usage
+
+Only use this module to build your Node.js app. See [Get started](https://github.com/conventional-changelog/conventional-changelog#get-started) if you're an end-user.
 
 ```sh
 $ npm install --save conventional-changelog
@@ -54,17 +53,6 @@ A scoped preset package such as `@scope/conventional-changelog-custom-preset` ca
 
 ## [Notes for parent modules](https://github.com/conventional-changelog/conventional-changelog-core#notes-for-parent-modules)
 
-
-## Related
-
-- [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) - cli of this module
-- [standard-changelog](https://github.com/conventional-changelog/standard-changelog) - Similar to this module but only with angular convention
-- [conventional-github-releaser](https://github.com/conventional-changelog/conventional-github-releaser) - Make a new GitHub release from git metadata
-- [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
-- [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
-- [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
-- [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
-- [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
 
 ## License
 
