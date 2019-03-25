@@ -37,7 +37,7 @@
     "lodash.template": "^4.0.2",
     "meow": "^4.0.0",
     "split2": "^2.0.0",
-    "through2": "^2.0.0"
+    "through2": "^3.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"

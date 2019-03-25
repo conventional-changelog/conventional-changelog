@@ -38,7 +38,7 @@
     "q": "^1.5.1",
     "read-pkg": "^3.0.0",
     "read-pkg-up": "^3.0.0",
-    "through2": "^2.0.0"
+    "through2": "^3.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
