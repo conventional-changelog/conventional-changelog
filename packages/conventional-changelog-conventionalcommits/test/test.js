@@ -12,6 +12,8 @@ var path = require('path')
 var betterThanBefore = require('better-than-before')()
 var preparing = betterThanBefore.preparing
 
+const EOL = require('os').EOL
+
 betterThanBefore.setups([
   function () {
     shell.config.resetForTesting()
@@ -60,7 +62,7 @@ betterThanBefore.setups([
     gitDummyCommit([
       'feat: complex new feature',
       'this is a complex new feature with many reviewers',
-      'Reviewer: @hutson\nFixes: #99\nRefs: #100\nBREAKING CHANGE: this completely changes the API'
+      `Reviewer: @hutson${EOL}Fixes: #99${EOL}Refs: #100${EOL}BREAKING CHANGE: this completely changes the API`
     ])
     gitDummyCommit(['FEAT(foo): incredible new flag FIXES: #33'])
   }
