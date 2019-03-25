@@ -16,12 +16,11 @@ The conventional-changelog repo is managed as a [monorepo](https://github.com/ba
 The original `conventional-changelog/conventional-changelog` API repo can be
 found in [packages/conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog).
 
-## Get started
+## Getting started
 
-It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which handles the entire tagging and CHANGELOG
-generation process.
+It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which is a drop-in replacement for npm's `version` command, handling automated version bumping, tagging and CHANGELOG generation.
 
-Alternatively, the [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) allows you to generate a CHANGELOG from the command line.
+Alternatively, if you'd like to move towards completely automating your release process as an output from CI/CD, consider using [semantic-release](https://github.com/semantic-release/semantic-release).
 
 You can also use one of the plugins if you are already using the tool:
 

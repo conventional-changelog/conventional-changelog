@@ -5,7 +5,7 @@
 
 ## Usage
 
-Only use this module to build your Node.js app. See [Get started](https://github.com/conventional-changelog/conventional-changelog#get-started) if you're an end-user.
+You most likely only need to use this module if you're building a library that provides an abstraction on top of conventional commits,  See [Getting started](https://github.com/conventional-changelog/conventional-changelog#getting-started) if you're an end-user.
 
 ```sh
 $ npm install --save conventional-changelog
