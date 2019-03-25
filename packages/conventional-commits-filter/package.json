@@ -28,7 +28,7 @@
     "commits"
   ],
   "dependencies": {
-    "is-subset": "^0.1.1",
+    "lodash.ismatch": "^4.4.0",
     "modify-values": "^1.0.0"
   },
   "scripts": {

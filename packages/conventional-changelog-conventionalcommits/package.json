@@ -1,7 +1,7 @@
 {
-  "name": "conventional-changelog-angular",
-  "version": "5.0.3",
-  "description": "conventional-changelog angular preset",
+  "name": "conventional-changelog-conventionalcommits",
+  "version": "1.0.0",
+  "description": "conventional-changelog conventionalcommits.org preset",
   "main": "index.js",
   "scripts": {
     "test-windows": "mocha --timeout 30000"
@@ -12,7 +12,7 @@
   },
   "keywords": [
     "conventional-changelog",
-    "angular",
+    "conventionalcommits.org",
     "preset"
   ],
   "files": [
@@ -23,9 +23,9 @@
     "writer-opts.js",
     "templates"
   ],
-  "author": "Steve Mao",
+  "author": "Ben Coe",
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10.0.0"
   },
   "license": "ISC",
   "bugs": {

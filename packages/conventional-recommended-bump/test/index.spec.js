@@ -154,6 +154,19 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
+    it(`should send options to 'whatBump'`, done => {
+      preparing(2)
+
+      conventionalRecommendedBump({
+        lernaPackage: 'test',
+        whatBump: (commits, options) => { return options.lernaPackage }
+      }, (err, recommendation) => {
+        if (err) done(err)
+        assert.deepStrictEqual(recommendation, 'test')
+        done()
+      })
+    })
+
     it(`should return 'releaseType' as undefined if 'level' is not valid`, done => {
       preparing(2)
 

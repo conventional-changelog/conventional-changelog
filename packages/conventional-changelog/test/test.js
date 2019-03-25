@@ -72,6 +72,33 @@ describe('conventionalChangelog', function () {
       }))
   })
 
+  it('should allow object for preset', function (done) {
+    var i = 0
+
+    conventionalChangelog({
+      preset: {
+        name: 'conventionalcommits'
+      },
+      warn: function (warning) {
+        done(warning)
+      }
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('#')
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(1)
+        done()
+      }))
+  })
+
   it('should warn if preset is not found', function (done) {
     var i = 0
 

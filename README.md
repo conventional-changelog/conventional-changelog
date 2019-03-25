@@ -24,7 +24,9 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 
 ## Plugins Supporting Conventional Changelog
 
-[grunt](https://github.com/btford/grunt-conventional-changelog)/[gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)/[atom](https://github.com/conventional-changelog/atom-conventional-changelog).
+- [grunt](https://github.com/btford/grunt-conventional-changelog)
+- [gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)
+- [atom](https://github.com/conventional-changelog/atom-conventional-changelog)
 
 ## Modules Important to Conventional Changelog Ecosystem
 
@@ -35,6 +37,7 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 - [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
 - [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
+- [vscode-changelog-generator](https://github.com/axetroy/vscode-changelog-generator) - vscode extension
 
 ## Node Support Policy
 
