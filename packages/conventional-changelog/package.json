@@ -39,6 +39,7 @@
     "conventional-changelog-atom": "file:../conventional-changelog-atom",
     "conventional-changelog-codemirror": "file:../conventional-changelog-codemirror",
     "conventional-changelog-core": "file:../conventional-changelog-core",
+    "conventional-changelog-conventionalcommits": "file:../conventional-changelog-conventionalcommits",
     "conventional-changelog-ember": "file:../conventional-changelog-ember",
     "conventional-changelog-eslint": "file:../conventional-changelog-eslint",
     "conventional-changelog-express": "file:../conventional-changelog-express",
