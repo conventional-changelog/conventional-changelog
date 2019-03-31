@@ -65,9 +65,9 @@ function getWriterOpts (config) {
 
       // breaking changes attached to any type are still displayed.
       if (discard && (typesLookup[typeKey] === undefined ||
-          typesLookup[typeKey].hide)) return
+          typesLookup[typeKey].hidden)) return
 
-      if (typesLookup[typeKey]) commit.type = typesLookup[typeKey].name
+      if (typesLookup[typeKey]) commit.type = typesLookup[typeKey].section
 
       if (commit.scope === `*`) {
         commit.scope = ``
@@ -134,17 +134,17 @@ function getWriterOpts (config) {
 function defaultConfig (config) {
   config = config || {}
   config.types = config.types || [
-    { type: 'feat', name: 'Features' },
-    { type: 'fix', name: 'Bug Fixes' },
-    { type: 'perf', name: 'Performance Improvements' },
-    { type: 'revert', name: 'Reverts' },
-    { type: 'docs', name: 'Documentation', hide: true },
-    { type: 'style', name: 'Styles', hide: true },
-    { type: 'chore', name: 'Miscellaneous Chores', hide: true },
-    { type: 'refactor', name: 'Code Refactoring', hide: true },
-    { type: 'test', name: 'Tests', hide: true },
-    { type: 'build', name: 'Build System', hide: true },
-    { type: 'ci', name: 'Continuous Integration', hide: true }
+    { type: 'feat', section: 'Features' },
+    { type: 'fix', section: 'Bug Fixes' },
+    { type: 'perf', section: 'Performance Improvements' },
+    { type: 'revert', section: 'Reverts' },
+    { type: 'docs', section: 'Documentation', hidden: true },
+    { type: 'style', section: 'Styles', hidden: true },
+    { type: 'chore', section: 'Miscellaneous Chores', hidden: true },
+    { type: 'refactor', section: 'Code Refactoring', hidden: true },
+    { type: 'test', section: 'Tests', hidden: true },
+    { type: 'build', section: 'Build System', hidden: true },
+    { type: 'ci', section: 'Continuous Integration', hidden: true }
   ]
   config.issueUrlFormat = config.issueUrlFormat ||
     '{{host}}/{{owner}}/{{repository}}/issues/{{id}}'
