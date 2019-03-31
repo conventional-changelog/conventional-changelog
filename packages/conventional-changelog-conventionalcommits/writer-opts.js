@@ -56,6 +56,7 @@ function getWriterOpts (config) {
     transform: (commit, context) => {
       let discard = true
       const issues = []
+      const typeKey = (commit.type || '').toLowerCase()
 
       commit.notes.forEach(note => {
         note.title = `BREAKING CHANGES`
@@ -63,10 +64,10 @@ function getWriterOpts (config) {
       })
 
       // breaking changes attached to any type are still displayed.
-      if (discard && (typesLookup[commit.type] === undefined ||
-          typesLookup[commit.type].hide)) return
+      if (discard && (typesLookup[typeKey] === undefined ||
+          typesLookup[typeKey].hide)) return
 
-      if (typesLookup[commit.type]) commit.type = typesLookup[commit.type].name
+      if (typesLookup[typeKey]) commit.type = typesLookup[typeKey].name
 
       if (commit.scope === `*`) {
         commit.scope = ``
@@ -92,12 +93,20 @@ function getWriterOpts (config) {
         }
         if (context.host) {
           // User URLs.
-          commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, username) => {
-            if (username.includes('/')) {
-              return `@${username}`
+          commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
+            // TODO: investigate why this code exists.
+            if (user.includes('/')) {
+              return `@${user}`
             }
 
-            return `[@${username}](${context.host}/${username})`
+            const usernameUrl = expandTemplate(config.userUrlFormat, {
+              host: context.host,
+              owner: context.owner,
+              repository: context.repository,
+              user: user
+            })
+
+            return `[@${user}](${usernameUrl})`
           })
         }
       }
@@ -143,6 +152,9 @@ function defaultConfig (config) {
     '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}'
   config.compareUrlFormat = config.compareUrlFormat ||
     '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}'
+  config.userUrlFormat = config.userUrlFormat ||
+    '{{host}}/{{user}}'
+
   return config
 }
 
