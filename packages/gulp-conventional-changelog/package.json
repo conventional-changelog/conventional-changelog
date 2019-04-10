@@ -1,6 +1,6 @@
 {
   "name": "gulp-conventional-changelog",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Generate a changelog using conventional-changelog",
   "license": "MIT",
   "bugs": {

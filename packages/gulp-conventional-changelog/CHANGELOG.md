@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.10...gulp-conventional-changelog@2.0.11) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency concat-stream to v2 ([#401](https://github.com/conventional-changelog/conventional-changelog/issues/401)) ([4c09bfc](https://github.com/conventional-changelog/conventional-changelog/commit/4c09bfc))
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
 ## [2.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.9...gulp-conventional-changelog@2.0.10) (2019-02-14)
 
 **Note:** Version bump only for package gulp-conventional-changelog

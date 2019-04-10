@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.6...conventional-changelog@3.1.0) (2019-04-10)
+
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe))
+* creating highly configurable preset, based on conventionalcommits.org ([#421](https://github.com/conventional-changelog/conventional-changelog/issues/421)) ([f2fb240](https://github.com/conventional-changelog/conventional-changelog/commit/f2fb240))
+
+
+
+
+
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.5...conventional-changelog@3.0.6) (2019-02-14)
 
 **Note:** Version bump only for package conventional-changelog

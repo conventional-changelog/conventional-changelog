@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.4...conventional-recommended-bump@4.1.0) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency concat-stream to v2 ([#401](https://github.com/conventional-changelog/conventional-changelog/issues/401)) ([4c09bfc](https://github.com/conventional-changelog/conventional-changelog/commit/4c09bfc))
+
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe))
+* **conventional-recommended-bump:** send options to whatBump ([#409](https://github.com/conventional-changelog/conventional-changelog/issues/409)) ([508d6d6](https://github.com/conventional-changelog/conventional-changelog/commit/508d6d6)), closes [/github.com/lerna/lerna/blob/a6733a2b864cf9d082d080bbd3bfedb04e59b0ab/core/conventional-commits/lib/recommend-version.js#L13-L21](https://github.com//github.com/lerna/lerna/blob/a6733a2b864cf9d082d080bbd3bfedb04e59b0ab/core/conventional-commits/lib/recommend-version.js/issues/L13-L21)
+
+
+
+
+
 ## [4.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.3...conventional-recommended-bump@4.0.4) (2018-11-01)
 
 
