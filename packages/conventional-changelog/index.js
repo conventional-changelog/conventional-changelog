@@ -8,25 +8,15 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
 
   if (options.preset) {
     try {
-      let presetConfig = null
-      if (typeof options.preset === 'object' && options.preset.name) {
-        // Rather than a string preset name, options.preset can be an object
-        // with a "name" key indicating the preset to load; additinoal key/value
-        // pairs are assumed to be configuration for the preset. See the documentation
-        // for a given preset for configuration available.
-        presetConfig = options.preset
-        options.config = conventionalChangelogPresetLoader(options.preset.name.toLowerCase())
-      } else {
-        options.config = conventionalChangelogPresetLoader(options.preset.toLowerCase())
-      }
-      // rather than returning a promise, presets can return a builder function
-      // which accepts a config object (allowing for customization) and returns
-      // a promise.
-      if (!options.config.then && presetConfig) {
-        options.config = options.config(presetConfig)
-      }
+      options.config = conventionalChangelogPresetLoader(options.preset)
     } catch (err) {
-      options.warn('Preset: "' + options.preset + '" does not exist')
+      if (typeof options.preset === 'object') {
+        options.warn(`Preset: "${options.preset.name}" ${err.message}`)
+      } else if (typeof options.preset === 'string') {
+        options.warn(`Preset: "${options.preset}" ${err.message}`)
+      } else {
+        options.warn(`Preset: ${err.message}`)
+      }
     }
   }
 
