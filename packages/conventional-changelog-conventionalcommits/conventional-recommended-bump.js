@@ -14,7 +14,11 @@ module.exports = function (config) {
       commits.forEach(commit => {
         if (commit.notes.length > 0) {
           breakings += commit.notes.length
-          level = 0
+          if (config.preMajor) {
+            level = 1
+          } else {
+            level = 0
+          }
         } else if (commit.type === `feat`) {
           features += 1
           if (level === 2) {

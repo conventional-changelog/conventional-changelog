@@ -72,20 +72,6 @@ describe(`conventional-recommended-bump API`, () => {
     })
   })
 
-  describe(`loading a preset package`, () => {
-    it(`throw an error if unable to load a preset package`, done => {
-      preparing(1)
-
-      conventionalRecommendedBump({
-        preset: `does-not-exist`
-      }, {}, err => {
-        assert.ok(err)
-        assert.strictEqual(err.message, `Unable to load the "does-not-exist" preset package. Please make sure it's installed.`)
-        done()
-      })
-    })
-  })
-
   it(`should return an error if there are no commits in the repository`, done => {
     preparing(1)
 
@@ -221,6 +207,49 @@ describe(`conventional-recommended-bump API`, () => {
           done()
         }
       }, () => {})
+    })
+  })
+
+  describe(`loading a preset package`, () => {
+    it(`throws an error if unable to load a preset package`, done => {
+      preparing(5)
+
+      conventionalRecommendedBump({
+        preset: `does-not-exist`
+      }, {}, err => {
+        assert.ok(err)
+        assert.strictEqual(err.message, `Unable to load the "does-not-exist" preset package. Please make sure it's installed.`)
+        done()
+      })
+    })
+
+    it('recommends a minor release when preMajor=true', done => {
+      preparing(5)
+
+      conventionalRecommendedBump({
+        preset: {
+          name: 'conventionalcommits',
+          preMajor: true
+        }
+      }, {}, (_, recommendation) => {
+        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
+        assert.strictEqual(recommendation.releaseType, 'minor')
+        done()
+      })
+    })
+
+    it('recommends a major release when preMajor=false', done => {
+      preparing(5)
+
+      conventionalRecommendedBump({
+        preset: {
+          name: 'conventionalcommits'
+        }
+      }, {}, (_, recommendation) => {
+        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
+        assert.strictEqual(recommendation.releaseType, 'major')
+        done()
+      })
     })
   })
 
