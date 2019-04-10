@@ -232,7 +232,7 @@ describe(`conventional-recommended-bump API`, () => {
           preMajor: true
         }
       }, {}, (_, recommendation) => {
-        assert.strict.notEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
+        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
         assert.strictEqual(recommendation.releaseType, 'minor')
         done()
       })
@@ -246,7 +246,7 @@ describe(`conventional-recommended-bump API`, () => {
           name: 'conventionalcommits'
         }
       }, {}, (_, recommendation) => {
-        assert.strict.notEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
+        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
         assert.strictEqual(recommendation.releaseType, 'major')
         done()
       })
