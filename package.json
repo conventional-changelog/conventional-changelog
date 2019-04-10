@@ -68,6 +68,7 @@
     "conventional-changelog-atom": "file:packages/conventional-changelog-atom",
     "conventional-changelog-cli": "file:packages/conventional-changelog-cli",
     "conventional-changelog-codemirror": "file:packages/conventional-changelog-codemirror",
+    "conventional-changelog-conventionalcommits": "file:packages/conventional-changelog-conventionalcommits",
     "conventional-changelog-core": "file:packages/conventional-changelog-core",
     "conventional-changelog-ember": "file:packages/conventional-changelog-ember",
     "conventional-changelog-eslint": "file:packages/conventional-changelog-eslint",
