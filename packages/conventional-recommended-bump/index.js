@@ -30,7 +30,8 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
       presetPackage = conventionalChangelogPresetLoader(options.preset)
     } catch (err) {
       if (err.message === 'does not exist') {
-        return cb(new Error(`Unable to load the "${options.preset}" preset package. Please make sure it's installed.`))
+        const preset = typeof options.preset === 'object' ? options.preset.name : options.preset
+        return cb(new Error(`Unable to load the "${preset}" preset package. Please make sure it's installed.`))
       } else {
         return cb(err)
       }
