@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.1.0...conventional-recommended-bump@4.1.1) (2019-04-11)
+
+
+### Bug Fixes
+
+* preset load error message should handle objects ([fb4a8d1](https://github.com/conventional-changelog/conventional-changelog/commit/fb4a8d1))
+
+
+
+
+
 # [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.4...conventional-recommended-bump@4.1.0) (2019-04-10)
 
 

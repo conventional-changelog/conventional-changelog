@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@2.1.0...conventional-changelog-preset-loader@2.1.1) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-preset-loader
+
+
+
+
+
 # [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@2.0.2...conventional-changelog-preset-loader@2.1.0) (2019-04-10)
 
 
