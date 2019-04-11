@@ -6,7 +6,7 @@ A concrete implementation of the specification described at
 [conventionalcommits.org](https://conventionalcommits.org/) for automated
 CHANGELOG generation and version management.
 
-See [conventional-changelog-config-spec](https://github.com/conventional-changelog/conventional-changelog-config-spec]) for available
+See [conventional-changelog-config-spec](https://github.com/conventional-changelog/conventional-changelog-config-spec) for available
 configuration options.
 
 
