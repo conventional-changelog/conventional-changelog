@@ -54,7 +54,6 @@ A scoped preset package such as `@scope/conventional-changelog-custom-preset` ca
 
 ## [Notes for parent modules](https://github.com/conventional-changelog/conventional-changelog-core#notes-for-parent-modules)
 
-
 ## Related
 
 - [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) - cli of this module
