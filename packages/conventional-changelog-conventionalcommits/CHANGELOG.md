@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@1.1.1...conventional-changelog-conventionalcommits@1.1.2) (2019-04-24)
+
+
+### Bug Fixes
+
+* Downgrade node 10.x dependency to 6.9.0 dependency ([#437](https://github.com/conventional-changelog/conventional-changelog/issues/437)) ([ded5a30](https://github.com/conventional-changelog/conventional-changelog/commit/ded5a30))
+
+
+
+
+
 ## [1.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@1.1.0...conventional-changelog-conventionalcommits@1.1.1) (2019-04-11)
 
 **Note:** Version bump only for package conventional-changelog-conventionalcommits
