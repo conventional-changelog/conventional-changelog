@@ -45,7 +45,7 @@ betterThanBefore.setups([
     gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
-    gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
+    gitDummyCommit(['test!(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   function () {
     shell.exec('git tag v0.1.0')
@@ -208,6 +208,25 @@ describe('conventionalcommits.org preset', function () {
         expect(chunk).to.include('Styles')
         expect(chunk).to.include('Code Refactoring')
         expect(chunk).to.include('Tests')
+
+        done()
+      }))
+  })
+
+  it('should omit optional ! in breaking commit', function (done) {
+    preparing(5)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Tests')
+        expect(chunk).to.include('* more tests')
 
         done()
       }))

@@ -2,7 +2,7 @@
 
 module.exports = function (config) {
   return {
-    headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/,
+    headerPattern: /^(\w*)!?(?:\((.*)\))?: (.*)$/,
     headerCorrespondence: [
       `type`,
       `scope`,
