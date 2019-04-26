@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@1.1.2...conventional-changelog-conventionalcommits@2.0.0) (2019-04-26)
+
+
+### Bug Fixes
+
+* don't use multiple H1 tags ([#440](https://github.com/conventional-changelog/conventional-changelog/issues/440)) ([3d79263](https://github.com/conventional-changelog/conventional-changelog/commit/3d79263))
+
+
+### Features
+
+* add support for ! ([#441](https://github.com/conventional-changelog/conventional-changelog/issues/441)) ([0887940](https://github.com/conventional-changelog/conventional-changelog/commit/0887940))
+
+
+### BREAKING CHANGES
+
+* a ! character at the end of type will now be omitted
+
+
+
+
+
 ## [1.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@1.1.1...conventional-changelog-conventionalcommits@1.1.2) (2019-04-24)
 
 
