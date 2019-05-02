@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.16...gulp-conventional-changelog@2.0.17) (2019-05-02)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
 ## [2.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.15...gulp-conventional-changelog@2.0.16) (2019-04-26)
 
 **Note:** Version bump only for package gulp-conventional-changelog
