@@ -1,5 +1,6 @@
 'use strict'
 
+const addBangNotes = require('./add-bang-notes')
 const compareFunc = require(`compare-func`)
 const Q = require(`q`)
 const readFile = Q.denodeify(require(`fs`).readFile)
@@ -57,6 +58,11 @@ function getWriterOpts (config) {
       let discard = true
       const issues = []
       const typeKey = (commit.type || '').toLowerCase()
+
+      // adds additional breaking change notes
+      // for the special case, test(system)!: hello world, where there is
+      // a '!' but no 'BREAKING CHANGE' in body:
+      addBangNotes(commit)
 
       commit.notes.forEach(note => {
         note.title = `BREAKING CHANGES`

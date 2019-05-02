@@ -21,7 +21,7 @@ betterThanBefore.setups([
   },
   () => { // 2
     fs.writeFileSync(`test1`, ``)
-    shell.exec(`git add --all && git commit -m 'feat: my first commit'`)
+    shell.exec(`git add --all && git commit -m 'feat!: my first commit'`)
   },
   () => { // 3
     shell.exec(`git tag v1.0.0`)
@@ -78,6 +78,22 @@ describe(`conventional-recommended-bump API`, () => {
     conventionalRecommendedBump({}, {}, err => {
       assert.ok(err)
       done()
+    })
+  })
+
+  describe('conventionalcommits ! in isolation', () => {
+    it('recommends major if ! is used in isolation', done => {
+      preparing(2)
+
+      conventionalRecommendedBump({
+        preset: {
+          name: 'conventionalcommits'
+        }
+      }, {}, (_, recommendation) => {
+        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
+        assert.strictEqual(recommendation.releaseType, 'major')
+        done()
+      })
     })
   })
 
