@@ -63,7 +63,7 @@ function getWriterOpts (config) {
       // for the special case, test(system)!: hello world, where there is
       // a '!' but no 'BREAKING CHANGE' in body:
       addBangNotes(commit)
-      
+
       commit.notes.forEach(note => {
         note.title = `BREAKING CHANGES`
         discard = false

@@ -1,4 +1,4 @@
-const {breakingHeaderPattern} = require('./parser-opts')()
+const { breakingHeaderPattern } = require('./parser-opts')()
 
 module.exports = (commit) => {
   const match = commit.header.match(breakingHeaderPattern)
