@@ -16,6 +16,7 @@
     "preset"
   ],
   "files": [
+    "add-bang-notes.js",
     "conventional-changelog.js",
     "conventional-recommended-bump.js",
     "index.js",
