@@ -1,5 +1,6 @@
 'use strict'
 
+const addBangNotes = require('./add-bang-notes')
 const parserOpts = require(`./parser-opts`)
 
 module.exports = function (config) {
@@ -12,6 +13,10 @@ module.exports = function (config) {
       let features = 0
 
       commits.forEach(commit => {
+        // adds additional breaking change notes
+        // for the special case, test(system)!: hello world, where there is
+        // a '!' but no 'BREAKING CHANGE' in body:
+        addBangNotes(commit)
         if (commit.notes.length > 0) {
           breakings += commit.notes.length
           if (config.preMajor) {

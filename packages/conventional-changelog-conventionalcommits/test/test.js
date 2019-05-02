@@ -45,7 +45,7 @@ betterThanBefore.setups([
     gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
-    gitDummyCommit(['test!(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
+    gitDummyCommit(['test(*)!: more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   function () {
     shell.exec('git tag v0.1.0')
@@ -65,7 +65,7 @@ betterThanBefore.setups([
       'Refs: #100',
       'BREAKING CHANGE: this completely changes the API'
     ])
-    gitDummyCommit(['FEAT(foo): incredible new flag FIXES: #33'])
+    gitDummyCommit(['FEAT(foo)!: incredible new flag FIXES: #33'])
   }
 ])
 
@@ -417,6 +417,22 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
         expect(chunk).to.include('incredible new flag')
+        done()
+      }))
+  })
+
+  it('populates breaking change if ! is present', function (done) {
+    preparing(8)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.match(/incredible new flag FIXES: #33\n/)
         done()
       }))
   })
