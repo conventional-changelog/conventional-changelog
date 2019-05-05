@@ -22,7 +22,7 @@ betterThanBefore.setups([
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
 
-    gitDummyCommit(['build: first build setup', 'BREAKING CHANGE: New build system.'])
+    gitDummyCommit(['build!: first build setup', 'BREAKING CHANGE: New build system.'])
     gitDummyCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
     gitDummyCommit(['Feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
     gitDummyCommit(['Fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
@@ -109,6 +109,22 @@ describe('conventionalcommits.org preset', function () {
         expect(chunk).to.not.include('***:**')
         expect(chunk).to.not.include(': Not backward compatible.')
 
+        done()
+      }))
+  })
+
+  it('should not list breaking change twice if ! is used', function (done) {
+    preparing(1)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.not.match(/\* first build setup\r?\n/)
         done()
       }))
   })
@@ -432,7 +448,7 @@ describe('conventionalcommits.org preset', function () {
       })
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
-        expect(chunk).to.match(/incredible new flag FIXES: #33\n/)
+        expect(chunk).to.match(/incredible new flag FIXES: #33\r?\n/)
         done()
       }))
   })
