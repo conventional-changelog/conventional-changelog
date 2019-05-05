@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.6...conventional-changelog@3.1.7) (2019-05-02)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.5...conventional-changelog@3.1.6) (2019-05-02)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.4...conventional-changelog@3.1.5) (2019-04-26)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.3...conventional-changelog@3.1.4) (2019-04-24)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.2...conventional-changelog@3.1.3) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.1...conventional-changelog@3.1.2) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.0...conventional-changelog@3.1.1) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.6...conventional-changelog@3.1.0) (2019-04-10)
+
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe))
+* creating highly configurable preset, based on conventionalcommits.org ([#421](https://github.com/conventional-changelog/conventional-changelog/issues/421)) ([f2fb240](https://github.com/conventional-changelog/conventional-changelog/commit/f2fb240))
+
+
+
+
+
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.5...conventional-changelog@3.0.6) (2019-02-14)
 
 **Note:** Version bump only for package conventional-changelog

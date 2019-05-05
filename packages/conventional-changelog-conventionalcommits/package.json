@@ -1,10 +1,10 @@
 {
-  "name": "conventional-changelog-eslint",
-  "version": "3.0.2",
-  "description": "conventional-changelog eslint preset",
+  "name": "conventional-changelog-conventionalcommits",
+  "version": "3.0.1",
+  "description": "conventional-changelog conventionalcommits.org preset",
   "main": "index.js",
   "scripts": {
-    "test-windows": "echo 'make work on windows'"
+    "test-windows": "mocha --timeout 30000"
   },
   "repository": {
     "type": "git",
@@ -12,15 +12,11 @@
   },
   "keywords": [
     "conventional-changelog",
-    "eslint",
+    "conventionalcommits.org",
     "preset"
   ],
-  "author": "Steve Mao",
-  "engines": {
-    "node": ">=6.9.0"
-  },
-  "license": "ISC",
   "files": [
+    "add-bang-notes.js",
     "conventional-changelog.js",
     "conventional-recommended-bump.js",
     "index.js",
@@ -28,11 +24,17 @@
     "writer-opts.js",
     "templates"
   ],
+  "author": "Ben Coe",
+  "engines": {
+    "node": ">=6.9.0"
+  },
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-eslint#readme",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
   "dependencies": {
+    "compare-func": "^1.3.1",
     "q": "^1.5.1"
   }
 }

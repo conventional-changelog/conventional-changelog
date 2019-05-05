@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.1...git-raw-commits@2.0.2) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
 ## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.0...git-raw-commits@2.0.1) (2018-11-01)
 
 

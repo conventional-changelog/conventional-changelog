@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.4...conventional-changelog-writer@4.0.5) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+
+
+
+
+## [4.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.3...conventional-changelog-writer@4.0.4) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
 ## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.2...conventional-changelog-writer@4.0.3) (2019-02-14)
 
 **Note:** Version bump only for package conventional-changelog-writer

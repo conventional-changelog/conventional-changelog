@@ -4,8 +4,19 @@ module.exports.presetLoader = presetLoader
 
 function presetLoader (requireMethod) {
   return path => {
-    let scope = ``
-    let name = path.toLowerCase()
+    let name = ''
+    let scope = ''
+    if (typeof path === 'string') {
+      name = path.toLowerCase()
+    } else if (typeof path === 'object' && path.name) {
+      // Rather than a string preset name, options.preset can be an object
+      // with a "name" key indicating the preset to load; additinoal key/value
+      // pairs are assumed to be configuration for the preset. See the documentation
+      // for a given preset for configuration available.
+      name = path.name.toLowerCase()
+    } else {
+      throw Error('preset must be string or object with key name')
+    }
 
     if (name[0] === `@`) {
       const parts = name.split(`/`)
@@ -13,6 +24,19 @@ function presetLoader (requireMethod) {
       name = parts.join(`/`)
     }
 
-    return requireMethod(`${scope}conventional-changelog-${name}`)
+    try {
+      const config = requireMethod(`${scope}conventional-changelog-${name}`)
+      // rather than returning a promise, presets can return a builder function
+      // which accepts a config object (allowing for customization) and returns
+      // a promise.
+      if (config && !config.then && typeof path === 'object') {
+        return config(path)
+      } else {
+        // require returned a promise that resolves to a config object.
+        return config
+      }
+    } catch (_) {
+      throw Error('does not exist')
+    }
   }
 }

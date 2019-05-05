@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-writer",
-  "version": "4.0.3",
+  "version": "4.0.5",
   "description": "Write logs based on conventional commits and templates",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -45,7 +45,7 @@
     "meow": "^4.0.0",
     "semver": "^5.5.0",
     "split": "^1.0.0",
-    "through2": "^2.0.0"
+    "through2": "^3.0.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"

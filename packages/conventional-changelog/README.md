@@ -50,9 +50,7 @@ A scoped preset package such as `@scope/conventional-changelog-custom-preset` ca
 
 **NOTE:** `options.config` will be overwritten by the values of preset. You should use either `preset` or `config`, but not both.
 
-
 ## [Notes for parent modules](https://github.com/conventional-changelog/conventional-changelog-core#notes-for-parent-modules)
-
 
 ## License
 

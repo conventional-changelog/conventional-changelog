@@ -36,7 +36,7 @@
   "devDependencies": {
     "better-than-before": "^1.0.0",
     "chai": "^4.2.0",
-    "concat-stream": "^1.6.0",
+    "concat-stream": "^2.0.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.7.0",
     "eslint-config-standard": "^12.0.0",
@@ -58,7 +58,7 @@
     "sinon": "^5.1.0",
     "sinon-chai": "^3.1.0",
     "temp": "^0.9.0",
-    "through2": "^2.0.0",
+    "through2": "^3.0.0",
     "tmp": "0.0.33",
     "vinyl": "^2.1.0"
   },
@@ -68,6 +68,7 @@
     "conventional-changelog-atom": "file:packages/conventional-changelog-atom",
     "conventional-changelog-cli": "file:packages/conventional-changelog-cli",
     "conventional-changelog-codemirror": "file:packages/conventional-changelog-codemirror",
+    "conventional-changelog-conventionalcommits": "file:packages/conventional-changelog-conventionalcommits",
     "conventional-changelog-core": "file:packages/conventional-changelog-core",
     "conventional-changelog-ember": "file:packages/conventional-changelog-ember",
     "conventional-changelog-eslint": "file:packages/conventional-changelog-eslint",

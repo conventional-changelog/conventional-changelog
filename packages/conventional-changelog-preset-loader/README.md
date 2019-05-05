@@ -14,6 +14,7 @@ var conventionalChangelogPresetLoader = require('conventional-changelog-preset-l
 configuration = conventionalChangelogPresetLoader(`angular`);
 ```
 
+
 The string that is passed to the preset loader is manipulated by prepending `conventional-changelog` to the name.
 
 For example:

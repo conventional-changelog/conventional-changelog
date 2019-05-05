@@ -1,12 +1,11 @@
 'use strict'
 
-var gitRawCommits = require('git-raw-commits')
-var conventionalCommitsParser = require('conventional-commits-parser')
-var conventionalChangelogWriter = require('conventional-changelog-writer')
-var stream = require('stream')
-var through = require('through2')
-var mergeConfig = require('./lib/merge-config')
-
+const gitRawCommits = require('git-raw-commits')
+const conventionalCommitsParser = require('conventional-commits-parser')
+const conventionalChangelogWriter = require('conventional-changelog-writer')
+const stream = require('stream')
+const through = require('through2')
+const mergeConfig = require('./lib/merge-config')
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   writerOpts = writerOpts || {}
 

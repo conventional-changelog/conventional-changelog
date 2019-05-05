@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.2.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.1...conventional-changelog-core@3.2.2) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.0...conventional-changelog-core@3.2.1) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+# [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.6...conventional-changelog-core@3.2.0) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+### Features
+
+* creating highly configurable preset, based on conventionalcommits.org ([#421](https://github.com/conventional-changelog/conventional-changelog/issues/421)) ([f2fb240](https://github.com/conventional-changelog/conventional-changelog/commit/f2fb240))
+
+
+
+
+
 ## [3.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.5...conventional-changelog-core@3.1.6) (2019-02-14)
 
 **Note:** Version bump only for package conventional-changelog-core
