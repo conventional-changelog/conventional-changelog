@@ -84,37 +84,33 @@ function getWriterOpts (config) {
       }
 
       if (typeof commit.subject === `string`) {
-        if (context.repository) {
-          // Issue URLs.
-          commit.subject = commit.subject.replace(/#([0-9]+)/g, (_, issue) => {
-            issues.push(issue)
-            const url = expandTemplate(config.issueUrlFormat, {
-              host: context.host,
-              owner: context.owner,
-              repository: context.repository,
-              id: issue
-            })
-            return `[#${issue}](${url})`
+        // Issue URLs.
+        commit.subject = commit.subject.replace(/#([0-9]+)/g, (_, issue) => {
+          issues.push(issue)
+          const url = expandTemplate(config.issueUrlFormat, {
+            host: context.host,
+            owner: context.owner,
+            repository: context.repository,
+            id: issue
           })
-        }
-        if (context.host) {
-          // User URLs.
-          commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
-            // TODO: investigate why this code exists.
-            if (user.includes('/')) {
-              return `@${user}`
-            }
+          return `[#${issue}](${url})`
+        })
+        // User URLs.
+        commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
+          // TODO: investigate why this code exists.
+          if (user.includes('/')) {
+            return `@${user}`
+          }
 
-            const usernameUrl = expandTemplate(config.userUrlFormat, {
-              host: context.host,
-              owner: context.owner,
-              repository: context.repository,
-              user: user
-            })
-
-            return `[@${user}](${usernameUrl})`
+          const usernameUrl = expandTemplate(config.userUrlFormat, {
+            host: context.host,
+            owner: context.owner,
+            repository: context.repository,
+            user: user
           })
-        }
+
+          return `[@${user}](${usernameUrl})`
+        })
       }
 
       // remove references that already appear in the subject
