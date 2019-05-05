@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@3.0.1...conventional-changelog-conventionalcommits@3.0.2) (2019-05-05)
+
+
+### Bug Fixes
+
+* don't require 'host' and 'repository' when deciding whether to render URLs ([#447](https://github.com/conventional-changelog/conventional-changelog/issues/447)) ([83dff7a](https://github.com/conventional-changelog/conventional-changelog/commit/83dff7a))
+* if ! and BREAKING CHANGE were used, notes would populate twice ([#446](https://github.com/conventional-changelog/conventional-changelog/issues/446)) ([63d8cbe](https://github.com/conventional-changelog/conventional-changelog/commit/63d8cbe))
+
+
+
+
+
 ## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@3.0.0...conventional-changelog-conventionalcommits@3.0.1) (2019-05-02)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.7...conventional-changelog@3.1.8) (2019-05-05)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
 ## [3.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.6...conventional-changelog@3.1.7) (2019-05-02)
 
 **Note:** Version bump only for package conventional-changelog

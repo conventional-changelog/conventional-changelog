@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.21](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.20...conventional-changelog-cli@2.0.21) (2019-05-05)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
 ## [2.0.20](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.19...conventional-changelog-cli@2.0.20) (2019-05-02)
 
 **Note:** Version bump only for package conventional-changelog-cli
