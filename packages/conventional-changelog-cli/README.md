@@ -62,7 +62,7 @@ Using the npm scripts to our advantage with the following hooks:
 ```json
 {
   "scripts": {
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   }
 }
 ```
