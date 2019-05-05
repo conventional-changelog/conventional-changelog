@@ -50,15 +50,6 @@ $ standard-changelog --help
 
 See the [conventional-changelog](https://github.com/ajoslin/conventional-changelog) docs with the angular preset.
 
-## Related
-
-- [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) - Generate a changelog from git metadata
-- [conventional-github-releaser](https://github.com/conventional-changelog/conventional-github-releaser) - Make a new GitHub release from git metadata
-- [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
-- [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
-- [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
-- [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
-
 ## License
 
 MIT

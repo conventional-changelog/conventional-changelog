@@ -9,12 +9,6 @@ _Having problems? want to contribute? join our [community slack](http://devtools
 
 > Generate a CHANGELOG from git metadata
 
-It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which handles the entire tagging and CHANGELOG
-generation process.
-
-Alternatively, the [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli) allows you to generate a CHANGELOG from the
-command line.
-
 ## About this Repo
 
 The conventional-changelog repo is managed as a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md); it's composed of many npm packages.
@@ -22,11 +16,20 @@ The conventional-changelog repo is managed as a [monorepo](https://github.com/ba
 The original `conventional-changelog/conventional-changelog` API repo can be
 found in [packages/conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog).
 
+## Getting started
+
+It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which is a drop-in replacement for npm's `version` command, handling automated version bumping, tagging and CHANGELOG generation.
+
+Alternatively, if you'd like to move towards completely automating your release process as an output from CI/CD, consider using [semantic-release](https://github.com/semantic-release/semantic-release).
+
+You can also use one of the plugins if you are already using the tool:
+
 ## Plugins Supporting Conventional Changelog
 
 - [grunt](https://github.com/btford/grunt-conventional-changelog)
 - [gulp](https://github.com/conventional-changelog/gulp-conventional-changelog)
 - [atom](https://github.com/conventional-changelog/atom-conventional-changelog)
+- [vscode](https://github.com/axetroy/vscode-changelog-generator)
 
 ## Modules Important to Conventional Changelog Ecosystem
 
@@ -36,8 +39,7 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 - [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
 - [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
 - [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
-- [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
-- [vscode-changelog-generator](https://github.com/axetroy/vscode-changelog-generator) - vscode extension
+- [commitlint](https://github.com/conventional-changelog/commitlint) - Lint commit messages
 
 ## Node Support Policy
 
