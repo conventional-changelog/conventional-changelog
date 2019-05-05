@@ -46,7 +46,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "git-dummy-commit": "^1.2.0",
     "git-tails": "^1.0.0",
-    "lerna": "^3.4.3",
+    "lerna": "^3.13.4",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
     "nyc": "^13.3.0",
