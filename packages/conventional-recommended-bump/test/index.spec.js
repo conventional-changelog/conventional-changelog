@@ -227,6 +227,35 @@ describe(`conventional-recommended-bump API`, () => {
   })
 
   describe(`loading a preset package`, () => {
+    it('recommends a patch release for a feature when preMajor=true', done => {
+      preparing(4)
+
+      conventionalRecommendedBump({
+        preset: {
+          name: 'conventionalcommits',
+          preMajor: true
+        }
+      }, {}, (_, recommendation) => {
+        assert.notStrictEqual(recommendation.reason.indexOf('1 features'), -1)
+        assert.strictEqual(recommendation.releaseType, 'patch')
+        done()
+      })
+    })
+
+    it('recommends a minor release for a feature when preMajor=false', done => {
+      preparing(4)
+
+      conventionalRecommendedBump({
+        preset: {
+          name: 'conventionalcommits'
+        }
+      }, {}, (_, recommendation) => {
+        assert.notStrictEqual(recommendation.reason.indexOf('1 features'), -1)
+        assert.strictEqual(recommendation.releaseType, 'minor')
+        done()
+      })
+    })
+
     it(`throws an error if unable to load a preset package`, done => {
       preparing(5)
 
@@ -239,7 +268,7 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it('recommends a minor release when preMajor=true', done => {
+    it('recommends a minor release for a breaking change when preMajor=true', done => {
       preparing(5)
 
       conventionalRecommendedBump({
@@ -254,7 +283,7 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it('recommends a major release when preMajor=false', done => {
+    it('recommends a major release for a breaking change when preMajor=false', done => {
       preparing(5)
 
       conventionalRecommendedBump({
