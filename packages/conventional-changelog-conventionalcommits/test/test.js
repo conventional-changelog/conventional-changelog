@@ -27,6 +27,7 @@ betterThanBefore.setups([
     gitDummyCommit(['Feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
     gitDummyCommit(['Fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
+    gitDummyCommit(['fix(changelog): proper issue links', ' see #1, conventional-changelog/standard-version#358'])
     gitDummyCommit('revert(ngOptions): bad commit')
     gitDummyCommit('fix(*): oops')
   },
@@ -151,6 +152,22 @@ describe('conventionalcommits.org preset', function () {
 
         expect(chunk).to.not.include('make it faster')
         expect(chunk).to.not.include('Reverts')
+        done()
+      }))
+  })
+
+  it('should properly format cross-repository issues', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.include('[#1](https://github.com/conventional-changelog/conventional-changelog/issues/1)')
+        expect(chunk).to.include('[conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
         done()
       }))
   })
