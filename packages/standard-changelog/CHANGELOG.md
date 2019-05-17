@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.10...standard-changelog@2.0.11) (2019-05-05)
+
+**Note:** Version bump only for package standard-changelog
+
+
+
+
+
+## [2.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.9...standard-changelog@2.0.10) (2019-04-11)
+
+**Note:** Version bump only for package standard-changelog
+
+
+
+
+
+## [2.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.8...standard-changelog@2.0.9) (2019-04-11)
+
+**Note:** Version bump only for package standard-changelog
+
+
+
+
+
+## [2.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.7...standard-changelog@2.0.8) (2019-04-10)
+
+**Note:** Version bump only for package standard-changelog
+
+
+
+
+
+## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.6...standard-changelog@2.0.7) (2019-02-14)
+
+**Note:** Version bump only for package standard-changelog
+
+
+
+
+
 ## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.5...standard-changelog@2.0.6) (2018-11-01)
 
 **Note:** Version bump only for package standard-changelog

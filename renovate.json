@@ -1,6 +1,0 @@
-{
-  "extends": ["@hbetts"],
-  "major": {
-    "automerge": false
-  }
-}

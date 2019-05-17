@@ -2,7 +2,6 @@
 
 > Write logs based on conventional commits and templates
 
-
 ## Install
 
 ```sh

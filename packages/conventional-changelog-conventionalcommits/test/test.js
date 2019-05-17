@@ -1,6 +1,6 @@
 'use strict'
 var conventionalChangelogCore = require('conventional-changelog-core')
-var preset = require('../')
+var preset = require('../')()
 var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
@@ -22,10 +22,10 @@ betterThanBefore.setups([
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
 
-    gitDummyCommit(['build: first build setup', 'BREAKING CHANGE: New build system.'])
+    gitDummyCommit(['build!: first build setup', 'BREAKING CHANGE: New build system.'])
     gitDummyCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
-    gitDummyCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
-    gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
+    gitDummyCommit(['Feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
+    gitDummyCommit(['Fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
     gitDummyCommit('revert(ngOptions): bad commit')
     gitDummyCommit('fix(*): oops')
@@ -45,10 +45,10 @@ betterThanBefore.setups([
     gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
     gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
-    gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
+    gitDummyCommit(['test(*)!: more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   function () {
-    shell.exec('git tag v1.0.0')
+    shell.exec('git tag v0.1.0')
     gitDummyCommit('feat: some more features')
   },
   function () {
@@ -57,10 +57,19 @@ betterThanBefore.setups([
   function () {
     gitDummyCommit(['fix: use npm@5 (@username)'])
     gitDummyCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
+    gitDummyCommit([
+      'feat: complex new feature',
+      'this is a complex new feature with many reviewers',
+      'Reviewer: @hutson',
+      'Fixes: #99',
+      'Refs: #100',
+      'BREAKING CHANGE: this completely changes the API'
+    ])
+    gitDummyCommit(['FEAT(foo)!: incredible new flag FIXES: #33'])
   }
 ])
 
-describe('angular preset', function () {
+describe('conventionalcommits.org preset', function () {
   it('should work if there is no semver tag', function (done) {
     preparing(1)
 
@@ -104,7 +113,49 @@ describe('angular preset', function () {
       }))
   })
 
-  it('should replace #[0-9]+ with GitHub issue URL', function (done) {
+  it('should not list breaking change twice if ! is used', function (done) {
+    preparing(1)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.not.match(/\* first build setup\r?\n/)
+        done()
+      }))
+  })
+
+  it('should allow alternative "types" configuration to be provided', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: []
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('first build setup')
+        expect(chunk).to.include('**travis:** add TravisCI pipeline')
+        expect(chunk).to.include('**travis:** Continuously integrated.')
+        expect(chunk).to.include('amazing new module')
+        expect(chunk).to.include('**compile:** avoid a bug')
+        expect(chunk).to.include('Feat')
+
+        expect(chunk).to.not.include('make it faster')
+        expect(chunk).to.not.include('Reverts')
+        done()
+      }))
+  })
+
+  it('should replace #[0-9]+ with GitHub format issue URL by default', function (done) {
     preparing(2)
 
     conventionalChangelogCore({
@@ -137,18 +188,20 @@ describe('angular preset', function () {
       }))
   })
 
-  it('should replace @username with GitHub user URL', function (done) {
+  it('should replace @user with configured userUrlFormat', function (done) {
     preparing(4)
 
     conventionalChangelogCore({
-      config: preset
+      config: require('../')({
+        userUrlFormat: 'https://foo/{{user}}'
+      })
     })
       .on('error', function (err) {
         done(err)
       })
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
-        expect(chunk).to.include('[@bcoe](https://github.com/bcoe)')
+        expect(chunk).to.include('[@bcoe](https://foo/bcoe)')
         done()
       }))
   })
@@ -171,6 +224,25 @@ describe('angular preset', function () {
         expect(chunk).to.include('Styles')
         expect(chunk).to.include('Code Refactoring')
         expect(chunk).to.include('Tests')
+
+        done()
+      }))
+  })
+
+  it('should omit optional ! in breaking commit', function (done) {
+    preparing(5)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Tests')
+        expect(chunk).to.include('* more tests')
 
         done()
       }))
@@ -206,7 +278,10 @@ describe('angular preset', function () {
     var i = 0
 
     conventionalChangelogCore({
-      config: preset,
+      config: require('../')({
+        commitUrlFormat: 'http://unknown/commit/{{hash}}',
+        compareUrlFormat: 'http://unknown/compare/{{previousTag}}...{{currentTag}}'
+      }),
       pkg: {
         path: path.join(__dirname, 'fixtures/_unknown-host.json')
       }
@@ -218,7 +293,7 @@ describe('angular preset', function () {
         chunk = chunk.toString()
 
         expect(chunk).to.include('(http://unknown/compare')
-        expect(chunk).to.include('](http://unknown/commits/')
+        expect(chunk).to.include('](http://unknown/commit/')
 
         i++
         cb()
@@ -264,6 +339,7 @@ describe('angular preset', function () {
       config: preset
     })
       .on('error', function (err) {
+        console.info(err)
         done(err)
       })
       .pipe(through(function (chunk, enc, cb) {
@@ -323,6 +399,56 @@ describe('angular preset', function () {
 
         expect(chunk).to.not.include('[@dummy](https://github.com/dummy)/package')
         expect(chunk).to.include('bump @dummy/package from')
+        done()
+      }))
+  })
+
+  it('supports multiple lines of footer information', function (done) {
+    preparing(8)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.include('closes [#99]')
+        expect(chunk).to.include('[#100]')
+        expect(chunk).to.include('this completely changes the API')
+        done()
+      }))
+  })
+
+  it('does not require that types are case sensitive', function (done) {
+    preparing(8)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.include('incredible new flag')
+        done()
+      }))
+  })
+
+  it('populates breaking change if ! is present', function (done) {
+    preparing(8)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.match(/incredible new flag FIXES: #33\r?\n/)
         done()
       }))
   })

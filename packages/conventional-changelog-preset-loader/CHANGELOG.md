@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@2.1.0...conventional-changelog-preset-loader@2.1.1) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-preset-loader
+
+
+
+
+
+# [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@2.0.2...conventional-changelog-preset-loader@2.1.0) (2019-04-10)
+
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe))
+
+
+
+
+
 ## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@2.0.1...conventional-changelog-preset-loader@2.0.2) (2018-11-01)
 
 

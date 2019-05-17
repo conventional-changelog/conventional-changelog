@@ -8,9 +8,15 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
 
   if (options.preset) {
     try {
-      options.config = conventionalChangelogPresetLoader(options.preset.toLowerCase())
+      options.config = conventionalChangelogPresetLoader(options.preset)
     } catch (err) {
-      options.warn('Preset: "' + options.preset + '" does not exist')
+      if (typeof options.preset === 'object') {
+        options.warn(`Preset: "${options.preset.name}" ${err.message}`)
+      } else if (typeof options.preset === 'string') {
+        options.warn(`Preset: "${options.preset}" ${err.message}`)
+      } else {
+        options.warn(`Preset: ${err.message}`)
+      }
     }
   }
 
