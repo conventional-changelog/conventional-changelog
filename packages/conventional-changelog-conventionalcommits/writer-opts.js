@@ -10,7 +10,7 @@ const resolve = require(`path`).resolve
  * Handlebar partials for various property substitutions based on commit context.
  */
 const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
-const host = '{{#if this.host}}{{~this.host}}{{else}}{{~@root.host}}{{/if}}'
+const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
 module.exports = function (config) {
