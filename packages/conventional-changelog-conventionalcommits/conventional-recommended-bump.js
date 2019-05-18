@@ -19,11 +19,7 @@ module.exports = function (config) {
         addBangNotes(commit)
         if (commit.notes.length > 0) {
           breakings += commit.notes.length
-          if (config.preMajor) {
-            level = 1
-          } else {
-            level = 0
-          }
+          level = 0
         } else if (commit.type === `feat`) {
           features += 1
           if (level === 2) {
@@ -31,6 +27,10 @@ module.exports = function (config) {
           }
         }
       })
+
+      if (config.preMajor && level < 2) {
+        level++
+      }
 
       return {
         level: level,
