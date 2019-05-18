@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.22](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.21...conventional-changelog-cli@2.0.22) (2019-05-18)
+
+
+### Bug Fixes
+
+* **cli.js:** fix issue where standard conventional-changelog options are not passed into options object ([#380](https://github.com/conventional-changelog/conventional-changelog/issues/380)) ([86ae571](https://github.com/conventional-changelog/conventional-changelog/commit/86ae571))
+
+
+
+
+
 ## [2.0.21](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.20...conventional-changelog-cli@2.0.21) (2019-05-05)
 
 **Note:** Version bump only for package conventional-changelog-cli

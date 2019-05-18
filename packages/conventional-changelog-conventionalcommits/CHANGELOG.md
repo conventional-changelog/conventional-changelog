@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@3.0.2...conventional-changelog-conventionalcommits@4.0.0) (2019-05-18)
+
+
+### Bug Fixes
+
+* Recommend a patch bump for features when preMajor is enabled ([#452](https://github.com/conventional-changelog/conventional-changelog/issues/452)) ([3d0a520](https://github.com/conventional-changelog/conventional-changelog/commit/3d0a520))
+
+
+* feat!: BREAKING CHANGES are important and should be prioritized (#464) ([f8adba2](https://github.com/conventional-changelog/conventional-changelog/commit/f8adba2)), closes [#464](https://github.com/conventional-changelog/conventional-changelog/issues/464)
+
+
+### BREAKING CHANGES
+
+* moved BREAKING CHANGES to top of template.
+
+
+
+
+
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@3.0.1...conventional-changelog-conventionalcommits@3.0.2) (2019-05-05)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.5...conventional-changelog-writer@4.0.6) (2019-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency semver to v6 ([#458](https://github.com/conventional-changelog/conventional-changelog/issues/458)) ([efaa7bb](https://github.com/conventional-changelog/conventional-changelog/commit/efaa7bb))
+
+
+
+
+
 ## [4.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.4...conventional-changelog-writer@4.0.5) (2019-04-11)
 
 **Note:** Version bump only for package conventional-changelog-writer

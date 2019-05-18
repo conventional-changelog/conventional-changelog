@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.2...conventional-commits-parser@3.0.3) (2019-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency is-text-path to v2 ([#455](https://github.com/conventional-changelog/conventional-changelog/issues/455)) ([0f40ec3](https://github.com/conventional-changelog/conventional-changelog/commit/0f40ec3))
+
+
+
+
+
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.1...conventional-commits-parser@3.0.2) (2019-04-10)
 
 

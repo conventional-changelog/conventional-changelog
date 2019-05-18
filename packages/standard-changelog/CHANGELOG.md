@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.12](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.11...standard-changelog@2.0.12) (2019-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency figures to v3 ([#453](https://github.com/conventional-changelog/conventional-changelog/issues/453)) ([099b5b5](https://github.com/conventional-changelog/conventional-changelog/commit/099b5b5))
+
+
+
+
+
 ## [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.10...standard-changelog@2.0.11) (2019-05-05)
 
 **Note:** Version bump only for package standard-changelog
