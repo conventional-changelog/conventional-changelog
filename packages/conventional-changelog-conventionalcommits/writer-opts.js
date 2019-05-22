@@ -6,22 +6,29 @@ const Q = require(`q`)
 const readFile = Q.denodeify(require(`fs`).readFile)
 const resolve = require(`path`).resolve
 
+/**
+ * Handlebar partials for various property substitutions based on commit context.
+ */
+const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
+const host = '{{~@root.host}}'
+const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
+
 module.exports = function (config) {
   config = defaultConfig(config)
   const commitUrlFormat = expandTemplate(config.commitUrlFormat, {
-    host: '{{~@root.host}}',
-    owner: '{{~@root.owner}}',
-    repository: '{{~@root.repository}}'
+    host,
+    owner,
+    repository
   })
   const compareUrlFormat = expandTemplate(config.compareUrlFormat, {
-    host: '{{~@root.host}}',
-    owner: '{{~@root.owner}}',
-    repository: '{{~@root.repository}}'
+    host,
+    owner,
+    repository
   })
   const issueUrlFormat = expandTemplate(config.issueUrlFormat, {
-    host: '{{~@root.host}}',
-    owner: '{{~@root.owner}}',
-    repository: '{{~@root.repository}}',
+    host,
+    owner,
+    repository,
     id: '{{this.issue}}'
   })
 
