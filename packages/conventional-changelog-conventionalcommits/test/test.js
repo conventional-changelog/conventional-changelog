@@ -1,6 +1,7 @@
 'use strict'
 var conventionalChangelogCore = require('conventional-changelog-core')
-var preset = require('../')()
+var getPreset = require('../')
+var preset = getPreset()
 var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
@@ -156,7 +157,7 @@ describe('conventionalcommits.org preset', function () {
       }))
   })
 
-  it('should properly format cross-repository issues', function (done) {
+  it('should properly format external repository issues', function (done) {
     preparing(1)
     conventionalChangelogCore({
       config: preset
@@ -168,6 +169,24 @@ describe('conventionalcommits.org preset', function () {
         chunk = chunk.toString()
         expect(chunk).to.include('[#1](https://github.com/conventional-changelog/conventional-changelog/issues/1)')
         expect(chunk).to.include('[conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
+        done()
+      }))
+  })
+
+  it('should properly format external repository issues given an `issueUrlFormat`', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: getPreset({
+        issueUrlFormat: 'issues://{{repository}}/issues/{{id}}'
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.include('[#1](issues://conventional-changelog/issues/1)')
+        expect(chunk).to.include('[conventional-changelog/standard-version#358](issues://standard-version/issues/358)')
         done()
       }))
   })
