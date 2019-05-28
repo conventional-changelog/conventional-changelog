@@ -1,4 +1,6 @@
 'use strict'
+
+var path = require('path')
 var assert = require('assert')
 var gitSemverTags = require('./')
 var mocha = require('mocha')
@@ -137,11 +139,11 @@ describe('git-semver-tags', function () {
     shell.exec('git add --all && git commit -m"seventh commit"')
     shell.exec('git tag foo-project@5.0.0')
 
-    gitSemverTags(function (err, tags) {
+    gitSemverTags({ lernaTags: true }, function (err, tags) {
       if (err) done(err)
       assert.deepStrictEqual(tags, ['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
       done()
-    }, { lernaTags: true })
+    })
   })
 
   it('should work with lerna style tags with multiple digits', function (done) {
@@ -153,11 +155,11 @@ describe('git-semver-tags', function () {
     shell.exec('git add --all && git commit -m"seventh commit"')
     shell.exec('git tag foobar-project@10.0.0')
 
-    gitSemverTags(function (err, tags) {
+    gitSemverTags({ lernaTags: true }, function (err, tags) {
       if (err) done(err)
       assert.deepStrictEqual(tags, ['foobar-project@10.0.0', 'foobar-project@0.10.0', 'foobar-project@0.0.10', 'foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
       done()
-    }, { lernaTags: true })
+    })
   })
 
   it('should allow lerna style tags to be filtered by package', function (done) {
@@ -165,18 +167,18 @@ describe('git-semver-tags', function () {
     shell.exec('git add --all && git commit -m"seventh commit"')
     shell.exec('git tag bar-project@5.0.0')
 
-    gitSemverTags(function (err, tags) {
+    gitSemverTags({ lernaTags: true, package: 'bar-project' }, function (err, tags) {
       if (err) done(err)
       assert.deepStrictEqual(tags, ['bar-project@5.0.0'])
       done()
-    }, { lernaTags: true, package: 'bar-project' })
+    })
   })
 
   it('should not allow package filter without lernaTags=true', function (done) {
-    gitSemverTags(function (err) {
+    gitSemverTags({ package: 'bar-project' }, function (err) {
       assert.deepStrictEqual(err.message, 'opts.package should only be used when running in lerna mode')
       done()
-    }, { package: 'bar-project' })
+    })
   })
 
   it('should work with tag prefix option', function (done) {
@@ -188,10 +190,36 @@ describe('git-semver-tags', function () {
     shell.exec('git add --all && git commit -m"eleventh commit"')
     shell.exec('git tag notms/7.0.0')
 
-    gitSemverTags(function (err, tags) {
+    gitSemverTags({ tagPrefix: 'ms/' }, function (err, tags) {
       if (err) done(err)
       assert.deepStrictEqual(tags, ['ms/7.0.0', 'ms/6.0.0'])
       done()
-    }, { tagPrefix: 'ms/' })
+    })
+  })
+})
+
+describe('git semver tags on different cwd', function () {
+  it('getting semver tag on cwd', (done) => {
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
+    shell.rm('-rf', 'tmp')
+    shell.mkdir('tmp')
+    shell.cd('tmp')
+    shell.mkdir('foobar')
+    shell.cd('foobar')
+    shell.exec('git init')
+
+    writeFileSync('test2', '')
+    shell.exec('git add --all && git commit -m "First commit"')
+    shell.exec('git tag v1.1.0')
+
+    shell.cd('cd ' + path.join(__dirname, 'tmp'))
+
+    var cwd = path.join(__dirname, 'tmp', 'foobar')
+    gitSemverTags({ cwd: cwd }, function (err, tags) {
+      if (err) done(err)
+      assert.deepStrictEqual(tags, ['v1.1.0'])
+      done()
+    })
   })
 })

@@ -1,5 +1,6 @@
 'use strict'
 
+var proc = require('process')
 var exec = require('child_process').exec
 var semverValid = require('semver').valid
 var regex = /tag:\s*(.+?)[,)]/gi
@@ -13,17 +14,19 @@ function lernaTag (tag, pkg) {
   }
 }
 
-module.exports = function (callback, opts) {
-  opts = opts || {}
+module.exports = function gitSemverTags (opts, callback) {
+  if (typeof opts === 'function') {
+    callback = opts
+    opts = {}
+  }
+  var options = Object.assign({ maxBuffer: Infinity, cwd: proc.cwd() }, opts)
 
-  if (opts.package && !opts.lernaTags) {
-    callback(Error('opts.package should only be used when running in lerna mode'))
+  if (options.package && !options.lernaTags) {
+    callback(new Error('opts.package should only be used when running in lerna mode'))
     return
   }
 
-  exec(cmd, {
-    maxBuffer: Infinity
-  }, function (err, data) {
+  exec(cmd, options, function (err, data) {
     if (err) {
       callback(err)
       return
@@ -31,18 +34,18 @@ module.exports = function (callback, opts) {
 
     var tags = []
     var tagPrefixRegexp
-    if (opts.tagPrefix) {
-      tagPrefixRegexp = new RegExp('^' + opts.tagPrefix + '(.*)')
+    if (options.tagPrefix) {
+      tagPrefixRegexp = new RegExp('^' + options.tagPrefix + '(.*)')
     }
     data.split('\n').forEach(function (decorations) {
       var match
       while ((match = regex.exec(decorations))) {
         var tag = match[1]
-        if (opts.lernaTags) {
-          if (lernaTag(tag, opts.package)) {
+        if (options.lernaTags) {
+          if (lernaTag(tag, options.package)) {
             tags.push(tag)
           }
-        } else if (opts.tagPrefix) {
+        } else if (options.tagPrefix) {
           var matches = tag.match(tagPrefixRegexp)
           if (matches && semverValid(matches[1])) {
             tags.push(tag)
