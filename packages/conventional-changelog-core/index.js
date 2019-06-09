@@ -21,7 +21,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       gitRawCommitsOpts = data.gitRawCommitsOpts
       parserOpts = data.parserOpts
       writerOpts = data.writerOpts
-      gitRawExecOpts = data.gitRawExecOpts;
+      gitRawExecOpts = data.gitRawExecOpts
 
       gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
         .on('error', function (err) {

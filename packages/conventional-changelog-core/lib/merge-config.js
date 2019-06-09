@@ -320,7 +320,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         gitRawCommitsOpts: gitRawCommitsOpts,
         parserOpts: parserOpts,
         writerOpts: writerOpts,
-        gitRawExecOpts: gitRawExecOpts,
+        gitRawExecOpts: gitRawExecOpts
       }
     })
 }
