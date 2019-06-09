@@ -7,7 +7,7 @@ var stream = require('stream')
 var template = require('lodash.template')
 var through = require('through2')
 
-var DELIMITER = '------------------------ >8 ------------------------'
+var DELIMITER = '____________________________________________________'
 
 function normalizeExecOpts (execOpts) {
   execOpts = execOpts || {}
