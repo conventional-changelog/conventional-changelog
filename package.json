@@ -40,7 +40,9 @@
     "pretest": "npm run lint",
     "test": "nyc mocha --timeout 30000 packages/*/test{,/*}.js",
     "test-windows": "lerna exec --concurrency 1 -- npm run test-windows",
-    "release": "lerna publish --conventional-commits --npm-tag=next"
+    "release": "lerna publish --conventional-commits --npm-tag=next",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "version": "1.0.0",
   "devDependencies": {
@@ -93,6 +95,8 @@
     "git-raw-commits": "file:packages/git-raw-commits",
     "git-semver-tags": "file:packages/git-semver-tags",
     "gulp-conventional-changelog": "file:packages/gulp-conventional-changelog",
-    "standard-changelog": "file:packages/standard-changelog"
-  }
+    "standard-changelog": "file:packages/standard-changelog",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }

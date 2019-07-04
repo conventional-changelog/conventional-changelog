@@ -1,0 +1,46 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - standard-changelog > conventional-changelog-core > conventional-changelog-writer > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-writer > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-cli > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-core > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-recommended-bump > conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-core > conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-core > conventional-changelog-writer > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - standard-changelog > conventional-changelog-core > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog > conventional-changelog-core > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - standard-changelog > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - standard-changelog > conventional-changelog-core > conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog > conventional-changelog-core > conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - gulp-conventional-changelog > conventional-changelog > conventional-changelog-core > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog > conventional-changelog-core > conventional-changelog-writer > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-cli > conventional-changelog > conventional-changelog-core > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-cli > conventional-changelog > conventional-changelog-core > conventional-changelog-writer > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - gulp-conventional-changelog > conventional-changelog > conventional-changelog-core > conventional-changelog-writer > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - conventional-changelog-cli > conventional-changelog > conventional-changelog-core > conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
+    - gulp-conventional-changelog > conventional-changelog > conventional-changelog-core > conventional-commits-parser > lodash:
+        patched: '2019-07-04T00:42:57.642Z'
