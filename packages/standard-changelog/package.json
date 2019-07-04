@@ -36,10 +36,14 @@
     "meow": "^4.0.0",
     "rimraf": "^2.5.2",
     "sprintf-js": "^1.1.1",
-    "tempfile": "^1.1.1"
+    "tempfile": "^1.1.1",
+    "snyk": "^1.189.0"
   },
   "scripts": {
-    "test-windows": "echo 'make work on windows'"
+    "test-windows": "echo 'make work on windows'",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
-  "bin": "cli.js"
+  "bin": "cli.js",
+  "snyk": true
 }
