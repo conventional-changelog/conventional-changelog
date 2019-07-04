@@ -45,12 +45,16 @@
     "meow": "^4.0.0",
     "semver": "^6.0.0",
     "split": "^1.0.0",
-    "through2": "^3.0.0"
+    "through2": "^3.0.0",
+    "snyk": "^1.189.0"
   },
   "scripts": {
-    "test-windows": "echo 'make work on windows'"
+    "test-windows": "echo 'make work on windows'",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bin": {
     "conventional-changelog-writer": "cli.js"
-  }
+  },
+  "snyk": true
 }
