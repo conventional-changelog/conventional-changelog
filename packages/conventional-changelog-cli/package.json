@@ -37,10 +37,14 @@
     "conventional-changelog": "file:../conventional-changelog",
     "lodash": "^4.2.1",
     "meow": "^4.0.0",
-    "tempfile": "^1.1.1"
+    "tempfile": "^1.1.1",
+    "snyk": "^1.189.0"
   },
   "scripts": {
-    "test-windows": "echo 'make work on windows'"
+    "test-windows": "echo 'make work on windows'",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "snyk": true
 }
