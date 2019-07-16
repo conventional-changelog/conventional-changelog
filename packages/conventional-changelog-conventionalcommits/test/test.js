@@ -68,6 +68,10 @@ betterThanBefore.setups([
       'BREAKING CHANGE: this completely changes the API'
     ])
     gitDummyCommit(['FEAT(foo)!: incredible new flag FIXES: #33'])
+  },
+  function () {
+    gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1'])
+    gitDummyCommit(['feat(awesome): fix GH-2'])
   }
 ])
 
@@ -485,6 +489,25 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
         expect(chunk).to.match(/incredible new flag FIXES: #33\r?\n/)
+        done()
+      }))
+  })
+
+  it('should properly format external repository issues given an `issueUrlFormat` with prefix', function (done) {
+    preparing(9)
+    conventionalChangelogCore({
+      config: getPreset({
+        issueUrlFormat: 'issues://{{repository}}/issues/{{prefix}}{{id}}',
+        issuePrefixes: ['#', 'GH-']
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.include('[#1](issues://conventional-changelog/issues/#1)')
+        expect(chunk).to.include('[GH-2](issues://conventional-changelog/issues/GH-2)')
         done()
       }))
   })
