@@ -31,6 +31,8 @@ betterThanBefore.setups([
     gitDummyCommit(['fix(changelog): proper issue links', ' see #1, conventional-changelog/standard-version#358'])
     gitDummyCommit('revert(ngOptions): bad commit')
     gitDummyCommit('fix(*): oops')
+    gitDummyCommit(['fix(changelog): proper issue links', ' see GH-1'])
+    gitDummyCommit(['feat(awesome): adress EXAMPLE-1'])
   },
   function () {
     gitDummyCommit(['feat(awesome): addresses the issue brought up in #133'])
@@ -177,6 +179,7 @@ describe('conventionalcommits.org preset', function () {
     preparing(1)
     conventionalChangelogCore({
       config: getPreset({
+        issuePrefixes: ['#', 'GH-'],
         issueUrlFormat: 'issues://{{repository}}/issues/{{id}}'
       })
     })
@@ -187,6 +190,25 @@ describe('conventionalcommits.org preset', function () {
         chunk = chunk.toString()
         expect(chunk).to.include('[#1](issues://conventional-changelog/issues/1)')
         expect(chunk).to.include('[conventional-changelog/standard-version#358](issues://standard-version/issues/358)')
+        expect(chunk).to.include('[GH-1](issues://conventional-changelog/issues/1)')
+        done()
+      }))
+  })
+
+  it('should properly format issues in external issue tracker given an `issueUrlFormat` with `prefix`', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: getPreset({
+        issueUrlFormat: 'https://example.com/browse/{{prefix}}{{id}}',
+        issuePrefixes: ['EXAMPLE-']
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.include('[EXAMPLE-1](https://example.com/browse/EXAMPLE-1)')
         done()
       }))
   })

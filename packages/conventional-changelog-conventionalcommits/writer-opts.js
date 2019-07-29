@@ -29,7 +29,8 @@ module.exports = function (config) {
     host,
     owner,
     repository,
-    id: '{{this.issue}}'
+    id: '{{this.issue}}',
+    prefix: '{{this.prefix}}'
   })
 
   return Q.all([
@@ -92,15 +93,20 @@ function getWriterOpts (config) {
 
       if (typeof commit.subject === `string`) {
         // Issue URLs.
-        commit.subject = commit.subject.replace(/#([0-9]+)/g, (_, issue) => {
-          issues.push(issue)
+        config.issuePrefixes.join('|')
+        let issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([0-9]+)'
+        let re = new RegExp(issueRegEx, 'g')
+
+        commit.subject = commit.subject.replace(re, (_, prefix, issue) => {
+          issues.push(prefix + issue)
           const url = expandTemplate(config.issueUrlFormat, {
             host: context.host,
             owner: context.owner,
             repository: context.repository,
-            id: issue
+            id: issue,
+            prefix: prefix
           })
-          return `[#${issue}](${url})`
+          return `[${prefix}${issue}](${url})`
         })
         // User URLs.
         commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
@@ -122,7 +128,7 @@ function getWriterOpts (config) {
 
       // remove references that already appear in the subject
       commit.references = commit.references.filter(reference => {
-        if (issues.indexOf(reference.issue) === -1) {
+        if (issues.indexOf(reference.prefix + reference.issue) === -1) {
           return true
         }
 
@@ -163,6 +169,7 @@ function defaultConfig (config) {
     '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}'
   config.userUrlFormat = config.userUrlFormat ||
     '{{host}}/{{user}}'
+  config.issuePrefixes = config.issuePrefixes || ['#']
 
   return config
 }
