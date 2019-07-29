@@ -24,8 +24,12 @@ function presetLoader (requireMethod) {
       name = parts.join(`/`)
     }
 
+    if (!name.startsWith('conventional-changelog-')) {
+      name = `conventional-changelog-${name}`
+    }
+
     try {
-      const config = requireMethod(`${scope}conventional-changelog-${name}`)
+      const config = requireMethod(`${scope}${name}`)
       // rather than returning a promise, presets can return a builder function
       // which accepts a config object (allowing for customization) and returns
       // a promise.
