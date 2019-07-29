@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.23](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.22...conventional-changelog-cli@2.0.23) (2019-07-29)
+
+
+### Bug Fixes
+
+* **deps, cli:** bumps (minor + patch) lodash in conventional-changelog-cli ([#501](https://github.com/conventional-changelog/conventional-changelog/issues/501)) ([50212e6](https://github.com/conventional-changelog/conventional-changelog/commit/50212e6)), closes [#486](https://github.com/conventional-changelog/conventional-changelog/issues/486)
+
+
+
+
+
 ## [2.0.22](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.21...conventional-changelog-cli@2.0.22) (2019-05-18)
 
 

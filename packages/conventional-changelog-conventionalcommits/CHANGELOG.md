@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.0.0...conventional-changelog-conventionalcommits@4.1.0) (2019-07-29)
+
+
+### Bug Fixes
+
+* **preset, conventionalcommits:** Ensure proper substitutions for the conventionalcommit preset by using commit context for values where possible. ([#463](https://github.com/conventional-changelog/conventional-changelog/issues/463)) ([0b7ed0b](https://github.com/conventional-changelog/conventional-changelog/commit/0b7ed0b))
+
+
+### Features
+
+* **preset, conventionalcommits:** add handling of issue prefixes ([#498](https://github.com/conventional-changelog/conventional-changelog/issues/498)) ([85c17bb](https://github.com/conventional-changelog/conventional-changelog/commit/85c17bb))
+
+
+
+
+
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@3.0.2...conventional-changelog-conventionalcommits@4.0.0) (2019-05-18)
 
 

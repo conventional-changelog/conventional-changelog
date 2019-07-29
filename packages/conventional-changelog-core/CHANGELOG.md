@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.3...conventional-changelog-core@4.0.0) (2019-07-29)
+
+
+* refactor!: modify gitSemverTags to take options first (#390) ([dc8aeda](https://github.com/conventional-changelog/conventional-changelog/commit/dc8aeda)), closes [#390](https://github.com/conventional-changelog/conventional-changelog/issues/390)
+
+
+### BREAKING CHANGES
+
+* gitSemverTags now takes options followed by callback.
+
+
+
+
+
 ## [3.2.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.2...conventional-changelog-core@3.2.3) (2019-05-18)
 
 **Note:** Version bump only for package conventional-changelog-core

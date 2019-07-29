@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.6...conventional-changelog-writer@4.0.7) (2019-07-29)
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+
+
+
+
 ## [4.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.5...conventional-changelog-writer@4.0.6) (2019-05-18)
 
 
