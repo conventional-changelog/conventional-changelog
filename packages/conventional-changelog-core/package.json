@@ -31,7 +31,7 @@
     "dateformat": "^3.0.0",
     "get-pkg-repo": "^1.0.0",
     "git-raw-commits": "2.0.0",
-    "git-remote-origin-url": "^2.0.0",
+    "git-remote-origin-url": "^3.0.0",
     "git-semver-tags": "file:../git-semver-tags",
     "lodash": "^4.2.1",
     "normalize-package-data": "^2.3.5",
