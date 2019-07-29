@@ -62,7 +62,7 @@
     "nyc": "^13.3.0",
     "pinkie-promise": "^2.0.0",
     "q": "^1.5.1",
-    "safe-buffer": "5.1.2",
+    "safe-buffer": "5.2.0",
     "semver": "^6.0.0",
     "shelljs": "^0.8.0",
     "sinon": "^5.1.0",
