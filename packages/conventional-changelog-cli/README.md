@@ -17,15 +17,15 @@ $ cd my-project
 $ conventional-changelog -p angular -i CHANGELOG.md -s
 ```
 
-This will *not* overwrite any previous changelog. The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+This will *not* overwrite any previous changelogs. The above generates a changelog based on commits since the last semver tag that matches the pattern of "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
 
-If you first time use this tool and want to generate all previous changelog, you could do
+If this is your first time using this tool and you want to generate all previous changelogs, you could do
 
 ```sh
 $ conventional-changelog -p angular -i CHANGELOG.md -s -r 0
 ```
 
-This *will* overwrite any previous changelog if exist.
+This *will* overwrite any previous changelogs if they exist.
 
 All available command line parameters can be listed using CLI: `conventional-changelog --help`.
 
