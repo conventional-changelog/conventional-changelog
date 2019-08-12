@@ -37,7 +37,7 @@
     "conventional-changelog": "file:../conventional-changelog",
     "lodash": "^4.14.14",
     "meow": "^4.0.0",
-    "tempfile": "^1.1.1"
+    "tempfile": "^3.0.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"
