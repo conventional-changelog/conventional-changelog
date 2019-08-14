@@ -141,13 +141,13 @@ function getWriterOpts (config) {
     // the groupings of commit messages, e.g., Features vs., Bug Fixes, are
     // sorted based on their probable importance:
     commitGroupsSort: (a, b) => {
-      const commitGroupOrder = ['Reverts', 'Performance Improvements', 'Bug Fixes', 'Features'];
-      const gRankA = commitGroupOrder.indexOf(a.title);
-      const gRankB = commitGroupOrder.indexOf(b.title);
+      const commitGroupOrder = ['Reverts', 'Performance Improvements', 'Bug Fixes', 'Features']
+      const gRankA = commitGroupOrder.indexOf(a.title)
+      const gRankB = commitGroupOrder.indexOf(b.title)
       if (gRankA >= gRankB) {
-        return -1;
+        return -1
       } else {
-        return 1;
+        return 1
       }
     },
     commitsSort: [`scope`, `subject`],

@@ -119,7 +119,7 @@ describe('conventionalcommits.org preset', function () {
           chunk.indexOf('Features') < chunk.indexOf('Bug Fixes') &&
           chunk.indexOf('Bug Fixes') < chunk.indexOf('Performance Improvements') &&
           chunk.indexOf('Performance Improvements') < chunk.indexOf('Reverts')
-        ).to.be.true;
+        ).to.equal(true)
 
         done()
       }))
