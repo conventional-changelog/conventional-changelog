@@ -26,6 +26,8 @@ function getWriterOpts () {
         return
       }
 
+      commit.shortHash = commit.hash.substring(0, 7)
+
       return commit
     },
     groupBy: `tag`,
