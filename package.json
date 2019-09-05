@@ -37,6 +37,7 @@
   },
   "scripts": {
     "lint": "eslint . --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
+    "fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "pretest": "npm run lint",
     "test": "nyc mocha --timeout 30000 packages/*/test{,/*}.js",
     "test-windows": "lerna exec --concurrency 1 -- npm run test-windows",

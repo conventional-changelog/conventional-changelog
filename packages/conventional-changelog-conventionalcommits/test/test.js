@@ -113,6 +113,14 @@ describe('conventionalcommits.org preset', function () {
         expect(chunk).to.not.include('***:**')
         expect(chunk).to.not.include(': Not backward compatible.')
 
+        // CHANGELOG should group sections in order of importance:
+        expect(
+          chunk.indexOf('BREAKING CHANGE') < chunk.indexOf('Features') &&
+          chunk.indexOf('Features') < chunk.indexOf('Bug Fixes') &&
+          chunk.indexOf('Bug Fixes') < chunk.indexOf('Performance Improvements') &&
+          chunk.indexOf('Performance Improvements') < chunk.indexOf('Reverts')
+        ).to.equal(true)
+
         done()
       }))
   })
