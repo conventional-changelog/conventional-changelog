@@ -367,6 +367,19 @@ describe('cli', function () {
         done()
       }))
   })
+  it('--preset "conventionalcommits" should work', function (done) {
+    writeFileSync('angular', '')
+    shell.exec('git add --all && git commit -m"fix: fix it!"')
+    var cp = spawn(cliPath, ['--preset', 'conventionalcommits'], {
+      stdio: [process.stdin, null, null]
+    })
+
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        expect(chunk.toString()).to.include('Bug Fixes')
+        done()
+      }))
+  })
 
   it('--config should work with --preset', function (done) {
     var cp = spawn(cliPath, ['--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')], {
