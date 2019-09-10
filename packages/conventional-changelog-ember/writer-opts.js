@@ -41,7 +41,7 @@ function getWriterOpts () {
       }
 
       if (typeof commit.hash === `string`) {
-        commit.hash = commit.hash.substring(0, 7)
+        commit.shortHash = commit.hash.substring(0, 7)
       }
 
       return commit
