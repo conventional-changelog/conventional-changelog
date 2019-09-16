@@ -6,9 +6,9 @@
 {{~/if}}
 
 {{~!-- commit link --}} {{#if @root.linkReferences~}}
-  ([{{hash}}]({{commitUrlFormat}}))
+  ([{{shortHash}}]({{commitUrlFormat}}))
 {{~else}}
-  {{~hash}}
+  {{~shortHash}}
 {{~/if}}
 
 {{~!-- commit references --}}
