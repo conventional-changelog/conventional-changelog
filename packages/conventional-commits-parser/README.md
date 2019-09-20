@@ -129,7 +129,7 @@ Type: `object`
 
 Type: `regex` or `string` Default: null
 
-Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventionnal header parsing.
+Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventional header parsing.
 
 For example, if we have a commit
 
