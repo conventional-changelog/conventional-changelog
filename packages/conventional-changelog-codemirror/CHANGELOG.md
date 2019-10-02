@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@2.0.1...conventional-changelog-codemirror@2.0.2) (2019-10-02)
+
+
+### Bug Fixes
+
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+
+
+
 ## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@2.0.0...conventional-changelog-codemirror@2.0.1) (2018-11-01)
 
 

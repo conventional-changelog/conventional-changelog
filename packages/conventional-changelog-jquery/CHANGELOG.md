@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jquery@3.0.4...conventional-changelog-jquery@3.0.5) (2019-10-02)
+
+
+### Bug Fixes
+
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+
+
+
 ## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jquery@3.0.3...conventional-changelog-jquery@3.0.4) (2018-11-01)
 
 

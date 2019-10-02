@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.24](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.23...conventional-changelog-cli@2.0.24) (2019-10-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency tempfile to v3 ([#459](https://github.com/conventional-changelog/conventional-changelog/issues/459)) ([c0bac28](https://github.com/conventional-changelog/conventional-changelog/commit/c0bac28))
+* **preset-loader:** fix handling conventionalcommits preset without config object ([6425972](https://github.com/conventional-changelog/conventional-changelog/commit/6425972)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+* **preset, conventionalcommits:** fix handling conventionalcommits preset without config object ([c0566ce](https://github.com/conventional-changelog/conventional-changelog/commit/c0566ce)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+
+
+### Reverts
+
+* "fix(preset-loader): fix handling conventionalcommits preset without config object" ([#520](https://github.com/conventional-changelog/conventional-changelog/issues/520)) ([417139c](https://github.com/conventional-changelog/conventional-changelog/commit/417139c))
+
+
+
+
+
 ## [2.0.23](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.22...conventional-changelog-cli@2.0.23) (2019-07-29)
 
 

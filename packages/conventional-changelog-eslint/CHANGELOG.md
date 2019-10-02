@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.2...conventional-changelog-eslint@3.0.3) (2019-10-02)
+
+
+### Bug Fixes
+
+* **preset, eslint:** display short tag in release notes ([b63a5ff](https://github.com/conventional-changelog/conventional-changelog/commit/b63a5ff)), closes [#313](https://github.com/conventional-changelog/conventional-changelog/issues/313)
+
+
+
+
+
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.1...conventional-changelog-eslint@3.0.2) (2019-04-10)
 
 **Note:** Version bump only for package conventional-changelog-eslint

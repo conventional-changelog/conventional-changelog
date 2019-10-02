@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.3...conventional-changelog-angular@5.0.4) (2019-10-02)
+
+
+### Bug Fixes
+
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+
+
+
 ## [5.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.2...conventional-changelog-angular@5.0.3) (2019-02-14)
 
 

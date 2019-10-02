@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.1.0...conventional-changelog-conventionalcommits@4.2.0) (2019-10-02)
+
+
+### Bug Fixes
+
+* **preset, conventionalcommits:** fix handling conventionalcommits preset without config object ([c0566ce](https://github.com/conventional-changelog/conventional-changelog/commit/c0566ce)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+* **preset, conventionalcommits:** pass issuePrefixes to parser ([#510](https://github.com/conventional-changelog/conventional-changelog/issues/510)) ([958d243](https://github.com/conventional-changelog/conventional-changelog/commit/958d243))
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+### Features
+
+* sort sections of CHANGELOG based on priority ([#513](https://github.com/conventional-changelog/conventional-changelog/issues/513)) ([a3acc32](https://github.com/conventional-changelog/conventional-changelog/commit/a3acc32))
+
+
+
+
+
 # [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.0.0...conventional-changelog-conventionalcommits@4.1.0) (2019-07-29)
 
 
