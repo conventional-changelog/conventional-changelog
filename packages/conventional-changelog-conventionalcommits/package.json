@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-conventionalcommits",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "conventional-changelog conventionalcommits.org preset",
   "main": "index.js",
   "scripts": {
