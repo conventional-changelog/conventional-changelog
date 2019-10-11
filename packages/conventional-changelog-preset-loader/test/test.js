@@ -91,4 +91,15 @@ describe(`presetLoader`, () => {
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith(`@scope/conventional-changelog-angular/preset/path`)
   })
+
+  it(`loads package with an absolute file path`, () => {
+    const requireMethod = sinon.spy()
+    const load = presetLoader(requireMethod)
+    const filePath = require.resolve(`conventional-changelog-angular`)
+
+    load(filePath)
+
+    expect(requireMethod).to.have.been.calledOnce
+      .and.to.have.been.calledWith(filePath)
+  })
 })

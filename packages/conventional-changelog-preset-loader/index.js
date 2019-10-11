@@ -1,13 +1,19 @@
 'use strict'
+
+const nodePath = require('path')
+
 module.exports = presetLoader(require)
 module.exports.presetLoader = presetLoader
 
 function presetLoader (requireMethod) {
   return path => {
+    let isAbsolute = false
     let name = ''
     let scope = ''
+
     if (typeof path === 'string') {
       name = path.toLowerCase()
+      isAbsolute = nodePath.isAbsolute(path)
     } else if (typeof path === 'object' && path.name) {
       // Rather than a string preset name, options.preset can be an object
       // with a "name" key indicating the preset to load; additinoal key/value
@@ -18,18 +24,20 @@ function presetLoader (requireMethod) {
       throw Error('preset must be string or object with key name')
     }
 
-    if (name[0] === `@`) {
-      const parts = name.split(`/`)
-      scope = parts.shift() + `/`
-      name = parts.join(`/`)
-    }
+    if (!isAbsolute) {
+      if (name[0] === `@`) {
+        const parts = name.split(`/`)
+        scope = parts.shift() + `/`
+        name = parts.join(`/`)
+      }
 
-    if (!name.startsWith('conventional-changelog-')) {
-      name = `conventional-changelog-${name}`
+      if (!name.startsWith('conventional-changelog-')) {
+        name = `conventional-changelog-${name}`
+      }
     }
 
     try {
-      const config = requireMethod(`${scope}${name}`)
+      const config = requireMethod(isAbsolute ? path : `${scope}${name}`)
       // rather than returning a promise, presets can return a builder function
       // which accepts a config object (allowing for customization) and returns
       // a promise.
