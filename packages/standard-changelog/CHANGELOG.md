@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.15...standard-changelog@2.0.16) (2019-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency rimraf to v3 ([#514](https://github.com/conventional-changelog/conventional-changelog/issues/514)) ([c7e1706](https://github.com/conventional-changelog/conventional-changelog/commit/c7e17062a7a38a194164c47d0e88fcbe3fb6490c))
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
 ## [2.0.14](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.13...standard-changelog@2.0.14) (2019-10-02)
 
 

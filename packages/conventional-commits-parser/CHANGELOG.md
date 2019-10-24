@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.5...conventional-commits-parser@3.0.6) (2019-10-24)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** downgrade is-text-path due to node 6 incompatibility ([#536](https://github.com/conventional-changelog/conventional-changelog/issues/536)) ([3aa2637](https://github.com/conventional-changelog/conventional-changelog/commit/3aa2637a1c65bb4db3d8bf2c6ce17e6f5abe1ca1))
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
 ## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.3...conventional-commits-parser@3.0.4) (2019-10-02)
 
 **Note:** Version bump only for package conventional-commits-parser

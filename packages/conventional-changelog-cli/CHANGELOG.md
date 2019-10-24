@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.26](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.25...conventional-changelog-cli@2.0.26) (2019-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
 ## [2.0.24](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.23...conventional-changelog-cli@2.0.24) (2019-10-02)
 
 
