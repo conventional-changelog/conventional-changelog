@@ -164,8 +164,16 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
         if (repo.browse) {
           var browse = repo.browse()
-          var parsedBrowse = new URL(browse)
-          context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null)
+          if (!context.host) {
+            if (repo.domain) {
+              var parsedBrowse = new URL(browse)
+              var host = new URL(repo.domain)
+              host.protocol = parsedBrowse.protocol
+              context.host = host.href
+            } else {
+              context.host = null
+            }
+          }
           context.owner = context.owner || repo.user || ''
           context.repository = context.repository || repo.project
           context.repoUrl = browse
