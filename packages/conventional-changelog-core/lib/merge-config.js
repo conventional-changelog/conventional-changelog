@@ -167,9 +167,9 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
           if (!context.host) {
             if (repo.domain) {
               var parsedBrowse = new URL(browse)
-              var host = new URL(repo.domain)
+              var host = new URL('http://' + repo.domain)
               host.protocol = parsedBrowse.protocol
-              context.host = host.href
+              context.host = host.href.substr(0, host.href.lastIndexOf('/'))
             } else {
               context.host = null
             }
