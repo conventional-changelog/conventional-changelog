@@ -14,6 +14,7 @@ try {
 }
 var readPkg = require('read-pkg')
 var readPkgUp = require('read-pkg-up')
+var URL = require('url').URL
 var _ = require('lodash')
 
 var rhosts = /github|bitbucket|gitlab/i
