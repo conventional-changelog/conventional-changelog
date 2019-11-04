@@ -14,7 +14,7 @@ try {
 }
 var readPkg = require('read-pkg')
 var readPkgUp = require('read-pkg-up')
-var url = require('url')
+var URL = require('url').URL
 var _ = require('lodash')
 
 var rhosts = /github|bitbucket|gitlab/i
@@ -164,8 +164,18 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
         if (repo.browse) {
           var browse = repo.browse()
-          var parsedBrowse = url.parse(browse)
-          context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null)
+          if (!context.host) {
+            if (repo.domain) {
+              var parsedBrowse = new URL(browse)
+              if (parsedBrowse.origin.indexOf('//') !== -1) {
+                context.host = parsedBrowse.protocol + '//' + repo.domain
+              } else {
+                context.host = parsedBrowse.protocol + repo.domain
+              }
+            } else {
+              context.host = null
+            }
+          }
           context.owner = context.owner || repo.user || ''
           context.repository = context.repository || repo.project
           context.repoUrl = browse
