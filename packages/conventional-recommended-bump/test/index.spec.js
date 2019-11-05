@@ -29,16 +29,18 @@ betterThanBefore.setups([
   () => { // 4
     fs.writeFileSync(`test2`, ``)
     shell.exec(`git add --all && git commit -m 'feat: my second commit'`)
-    shell.exec(`git revert HEAD`)
   },
   () => { // 5
+    shell.exec(`git revert HEAD`)
+  },
+  () => { // 6
     fs.writeFileSync(`test3`, ``)
     shell.exec(`git add --all && git commit -m 'feat: should not be taken into account\nBREAKING CHANGE: I broke the API'`)
     shell.exec(`git tag ms/1.0.0`)
     fs.writeFileSync(`test4`, ``)
     shell.exec(`git add --all && git commit -m 'feat: this should have been working'`)
   },
-  () => { // 6
+  () => { // 7
     shell.exec(`git tag my-package@1.0.0`)
     fs.writeFileSync(`test6`, ``)
     shell.exec(`git add --all && git commit -m 'feat: this should have been working'`)
@@ -201,31 +203,6 @@ describe(`conventional-recommended-bump API`, () => {
     })
   })
 
-  describe(`ignoreReverted option`, () => {
-    it(`should ignore reverted commits`, done => {
-      preparing(4)
-
-      conventionalRecommendedBump({
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 0)
-          done()
-        }
-      }, () => {})
-    })
-
-    it(`should include reverted commits`, done => {
-      preparing(4)
-
-      conventionalRecommendedBump({
-        ignoreReverted: false,
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 2)
-          done()
-        }
-      }, () => {})
-    })
-  })
-
   describe(`loading a preset package`, () => {
     it('recommends a patch release for a feature when preMajor=true', done => {
       preparing(4)
@@ -256,8 +233,31 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it(`throws an error if unable to load a preset package`, done => {
+    it(`should ignore reverted commits`, done => {
       preparing(5)
+
+      conventionalRecommendedBump({
+        whatBump: commits => {
+          assert.strictEqual(commits.length, 0)
+          done()
+        }
+      }, () => {})
+    })
+
+    it(`should include reverted commits`, done => {
+      preparing(5)
+
+      conventionalRecommendedBump({
+        ignoreReverted: false,
+        whatBump: commits => {
+          assert.strictEqual(commits.length, 2)
+          done()
+        }
+      }, () => {})
+    })
+
+    it(`throws an error if unable to load a preset package`, done => {
+      preparing(6)
 
       conventionalRecommendedBump({
         preset: `does-not-exist`
@@ -269,7 +269,7 @@ describe(`conventional-recommended-bump API`, () => {
     })
 
     it('recommends a minor release for a breaking change when preMajor=true', done => {
-      preparing(5)
+      preparing(6)
 
       conventionalRecommendedBump({
         preset: {
@@ -284,7 +284,7 @@ describe(`conventional-recommended-bump API`, () => {
     })
 
     it('recommends a major release for a breaking change when preMajor=false', done => {
-      preparing(5)
+      preparing(6)
 
       conventionalRecommendedBump({
         preset: {
@@ -300,7 +300,7 @@ describe(`conventional-recommended-bump API`, () => {
 
   describe(`repository with custom tag prefix`, () => {
     it(`should recommends a minor release if appropriate`, done => {
-      preparing(5)
+      preparing(6)
 
       conventionalRecommendedBump({
         tagPrefix: `ms/`,
@@ -315,7 +315,7 @@ describe(`conventional-recommended-bump API`, () => {
 
   describe(`repository with lerna tags`, () => {
     it(`should recommend 'major' version bump when not using lerna tags`, done => {
-      preparing(6)
+      preparing(7)
 
       conventionalRecommendedBump({
         whatBump: commits => {
@@ -326,7 +326,7 @@ describe(`conventional-recommended-bump API`, () => {
     })
 
     it(`should recommend 'minor' version bump when lerna tag option is enabled`, done => {
-      preparing(6)
+      preparing(7)
 
       conventionalRecommendedBump({
         lernaPackage: `my-package`,
