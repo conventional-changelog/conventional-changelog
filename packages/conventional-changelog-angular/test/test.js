@@ -57,6 +57,10 @@ betterThanBefore.setups([
   function () {
     gitDummyCommit(['fix: use npm@5 (@username)'])
     gitDummyCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
+  },
+  function () {
+    gitDummyCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
+    gitDummyCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
   }
 ])
 
@@ -323,6 +327,23 @@ describe('angular preset', function () {
 
         expect(chunk).to.not.include('[@dummy](https://github.com/dummy)/package')
         expect(chunk).to.include('bump @dummy/package from')
+        done()
+      }))
+  })
+
+  it('parses both default (Revert "<subject>") and custom (revert: <subject>) revert commits', function (done) {
+    preparing(9)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.match(/custom revert format/)
+        expect(chunk).to.match(/default revert format/)
         done()
       }))
   })

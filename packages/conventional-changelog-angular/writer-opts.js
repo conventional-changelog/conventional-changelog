@@ -39,7 +39,7 @@ function getWriterOpts () {
         commit.type = `Bug Fixes`
       } else if (commit.type === `perf`) {
         commit.type = `Performance Improvements`
-      } else if (commit.type === `revert`) {
+      } else if (commit.type === `revert` || commit.revert) {
         commit.type = `Reverts`
       } else if (discard) {
         return
