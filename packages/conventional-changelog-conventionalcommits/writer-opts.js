@@ -65,7 +65,7 @@ function getWriterOpts (config) {
     transform: (commit, context) => {
       let discard = true
       const issues = []
-      const typeKey = (commit.type || '').toLowerCase()
+      const typeKey = (commit.revert ? 'revert' : (commit.type || '')).toLowerCase()
 
       // adds additional breaking change notes
       // for the special case, test(system)!: hello world, where there is

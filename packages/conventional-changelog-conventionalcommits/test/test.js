@@ -70,6 +70,10 @@ betterThanBefore.setups([
       'BREAKING CHANGE: this completely changes the API'
     ])
     gitDummyCommit(['FEAT(foo)!: incredible new flag FIXES: #33'])
+  },
+  function () {
+    gitDummyCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
+    gitDummyCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
   }
 ])
 
@@ -515,6 +519,23 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
         expect(chunk).to.match(/incredible new flag FIXES: #33\r?\n/)
+        done()
+      }))
+  })
+
+  it('parses both default (Revert "<subject>") and custom (revert: <subject>) revert commits', function (done) {
+    preparing(9)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.match(/custom revert format/)
+        expect(chunk).to.match(/default revert format/)
         done()
       }))
   })
