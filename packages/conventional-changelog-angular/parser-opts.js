@@ -8,6 +8,6 @@ module.exports = {
     `subject`
   ],
   noteKeywords: [`BREAKING CHANGE`],
-  revertPattern: /^revert:\s([\s\S]*?)\s*This reverts commit (\w*)\./,
+  revertPattern: /^(?:Revert|revert:)\s"?([\s\S]+?)"?\s*This reverts commit (\w*)\./i,
   revertCorrespondence: [`header`, `hash`]
 }
