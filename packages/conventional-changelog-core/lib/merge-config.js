@@ -52,13 +52,14 @@ function guessNextTag (previousTag, version) {
   return version
 }
 
-function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   var configPromise
   var pkgPromise
   var gitRemoteOriginUrlPromise
 
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
+  gitRawExecOpts = gitRawExecOpts || {}
 
   options = _.merge({
     pkg: {
@@ -328,7 +329,8 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         context: context,
         gitRawCommitsOpts: gitRawCommitsOpts,
         parserOpts: parserOpts,
-        writerOpts: writerOpts
+        writerOpts: writerOpts,
+        gitRawExecOpts: gitRawExecOpts
       }
     })
 }

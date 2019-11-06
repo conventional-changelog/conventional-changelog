@@ -6,7 +6,7 @@ const conventionalChangelogWriter = require('conventional-changelog-writer')
 const stream = require('stream')
 const through = require('through2')
 const mergeConfig = require('./lib/merge-config')
-function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   writerOpts = writerOpts || {}
 
   var readable = new stream.Readable({
@@ -14,15 +14,16 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
   })
   readable._read = function () {}
 
-  mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts)
+  mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts)
     .then(function (data) {
       options = data.options
       context = data.context
       gitRawCommitsOpts = data.gitRawCommitsOpts
       parserOpts = data.parserOpts
       writerOpts = data.writerOpts
+      gitRawExecOpts = data.gitRawExecOpts
 
-      gitRawCommits(gitRawCommitsOpts)
+      gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
         .on('error', function (err) {
           err.message = 'Error in git-raw-commits: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)
