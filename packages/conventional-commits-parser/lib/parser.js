@@ -253,6 +253,17 @@ function parser (raw, options, regex) {
     }
   })
 
+  if (options.breakingHeaderPattern && notes.length === 0) {
+    var breakingHeader = header.match(options.breakingHeaderPattern)
+    if (breakingHeader) {
+      const noteText = breakingHeader[3] // the description of the change.
+      notes.push({
+        title: 'BREAKING CHANGE',
+        text: noteText
+      })
+    }
+  }
+
   while ((mentionsMatch = regex.mentions.exec(raw))) {
     mentions.push(mentionsMatch[1])
   }

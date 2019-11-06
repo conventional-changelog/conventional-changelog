@@ -925,6 +925,42 @@ describe('parser', function () {
       }])
       expect(msg.footer).to.equal('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change')
     })
+
+    it('should add the subject as note if it match breakingHeaderPattern', function () {
+      var options = {
+        headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
+        breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject']
+      }
+      var msg = parser(
+        'feat!: breaking change feature',
+        options,
+        reg
+      )
+      expect(msg.notes[0]).to.eql({
+        title: 'BREAKING CHANGE',
+        text: 'breaking change feature'
+      })
+    })
+
+    it('should not duplicate notes if the subject match breakingHeaderPattern', function () {
+      var options = {
+        headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
+        breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        noteKeywords: ['BREAKING AMEND']
+      }
+      var msg = parser(
+        'feat!: breaking change feature\nBREAKING AMEND: some breaking change',
+        options,
+        reg
+      )
+      expect(msg.notes[0]).to.eql({
+        title: 'BREAKING AMEND',
+        text: 'some breaking change'
+      })
+      expect(msg.notes.length).to.eql(1)
+    })
   })
 
   describe('others', function () {
