@@ -137,6 +137,7 @@ if (process.stdin.isTTY) {
 } else {
   options.warn = true
   process.stdin
+    .pipe(split(separator))
     .pipe(conventionalCommitsParser(options))
     .on('error', function (err) {
       console.error(err.toString())
