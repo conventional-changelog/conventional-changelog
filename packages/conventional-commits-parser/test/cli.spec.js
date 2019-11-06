@@ -144,6 +144,22 @@ describe('changelog-parser cli', function () {
       }))
   })
 
+  it('should seperate if it is not a tty', function (done) {
+    var cp = spawn(cliPath, ['==='], {
+      stdio: [fs.openSync('./fixtures/log2.txt', 'r'), null, null]
+    })
+
+    cp.stdout
+      .pipe(concat(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"')
+        expect(chunk).to.include('"type":"fix","scope":"$animate","subject":"applyStyles from options on leave"')
+
+        done()
+      }))
+  })
+
   it('should error if it is not a tty and commit cannot be parsed', function (done) {
     var cp = spawn(cliPath, [], {
       stdio: [fs.openSync('./fixtures/bad_commit.txt', 'r'), null, null]
