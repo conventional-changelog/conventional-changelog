@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.0.3...conventional-changelog-core@4.1.0) (2019-11-07)
+
+
+### Features
+
+* **conventional-changelog-core:** provide facility to define gitExecOpts. ([#480](https://github.com/conventional-changelog/conventional-changelog/issues/480)) ([814f878](https://github.com/conventional-changelog/conventional-changelog/commit/814f878054ca3c9ec00c3147478eb1e6a2762e9a))
+
+
+
+
+
 ## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.0.2...conventional-changelog-core@4.0.3) (2019-10-24)
 
 

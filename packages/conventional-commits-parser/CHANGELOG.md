@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.6...conventional-commits-parser@3.0.7) (2019-11-07)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** add breaking change notes if header match `breakingHeaderPattern` ([#544](https://github.com/conventional-changelog/conventional-changelog/issues/544)) ([efdf3cb](https://github.com/conventional-changelog/conventional-changelog/commit/efdf3cbc9de3278b180a48beebb74e596e3c5f94))
+* **conventional-commits-parser:** add missing separator pipe to non tty parser ([#546](https://github.com/conventional-changelog/conventional-changelog/issues/546)) ([c522743](https://github.com/conventional-changelog/conventional-changelog/commit/c5227437b0b300f30a57e8ba5df2a8ab8d163af0))
+
+
+
+
+
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.5...conventional-commits-parser@3.0.6) (2019-10-24)
 
 
