@@ -29,46 +29,56 @@ var cli = meow(`
     -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
     --commit-path             Generate a changelog scoped to a specific directory
 `, {
+  booleanDefault: undefined,
   flags: {
     'infile': {
-      alias: `i`,
-      default: `CHANGELOG.md`,
-      type: `string`
+      alias: 'i',
+      default: 'CHANGELOG.md',
+      type: 'string'
     },
     'help': {
-      alias: `h`
+      alias: 'h'
     },
     'outfile': {
-      alias: `o`
+      alias: 'o',
+      type: 'string'
     },
     'same-file': {
-      alias: `s`,
+      alias: 's',
       default: true,
-      type: `boolean`
+      type: 'boolean'
     },
     'preset': {
-      alias: `p`
+      alias: 'p',
+      type: 'string'
     },
     'pkg': {
-      alias: `k`
+      alias: 'k',
+      type: 'string'
     },
     'append': {
-      alias: `a`
+      alias: 'a',
+      type: 'boolean'
     },
     'release-count': {
-      alias: `r`
+      alias: 'r',
+      type: 'number'
     },
     'verbose': {
-      alias: `v`
+      alias: 'v',
+      type: 'boolean'
     },
     'context': {
-      alias: `c`
+      alias: 'c',
+      type: 'string'
     },
     'first-release': {
-      alias: `f`
+      alias: `f`,
+      type: 'boolean'
     },
     'lerna-package': {
-      alias: `l`
+      alias: 'l',
+      type: 'string'
     }
   }
 })
@@ -80,7 +90,7 @@ var outfile = sameFile ? (flags.outfile || infile) : flags.outfile
 var append = flags.append
 var releaseCount = flags.firstRelease ? 0 : flags.releaseCount
 
-var options = _.omit({
+var options = _.omitBy({
   preset: flags.preset,
   pkg: {
     path: flags.pkg

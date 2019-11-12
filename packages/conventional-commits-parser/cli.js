@@ -43,25 +43,38 @@ var cli = meow(`
 `, {
   flags: {
     'header-pattern': {
-      alias: `p`
+      alias: 'p',
+      type: 'string'
     },
     'header-correspondence': {
-      alias: `c`
+      alias: 'c',
+      type: 'string'
     },
     'reference-actions': {
-      alias: `r`
+      alias: 'r',
+      type: 'string'
     },
     'issue-prefixes': {
-      alias: `i`
+      alias: 'i',
+      type: 'string'
     },
     'note-keywords': {
-      alias: `n`
+      alias: 'n',
+      type: 'string'
     },
     'field-pattern': {
-      alias: `f`
+      alias: 'f',
+      type: 'string'
+    },
+    'revert-pattern': {
+      type: 'string'
+    },
+    'revert-correspondence': {
+      type: 'string'
     },
     verbose: {
-      alias: `v`
+      alias: 'v',
+      type: 'boolean'
     }
   }
 })

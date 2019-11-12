@@ -50,45 +50,59 @@ var cli = meow(`
       -t, --tag-prefix          Tag prefix to consider when reading the tags
       --commit-path             Generate a changelog scoped to a specific directory
 `, {
+  booleanDefault: undefined,
   flags: {
     infile: {
-      alias: `i`
+      alias: 'i',
+      type: 'string'
     },
     outfile: {
-      alias: `o`
+      alias: 'o',
+      type: 'string'
     },
     'same-file': {
-      alias: `s`
+      alias: 's',
+      type: 'boolean'
     },
     preset: {
-      alias: `p`
+      alias: 'p',
+      type: 'string'
     },
     pkg: {
-      alias: `k`
+      alias: 'k',
+      type: 'string'
     },
     append: {
-      alias: `a`
+      alias: 'a',
+      type: 'boolean'
     },
     'release-count': {
-      alias: `r`
+      alias: 'r',
+      type: 'number'
     },
     'output-unreleased': {
-      alias: `u`
+      alias: 'u',
+      type: 'boolean'
     },
     verbose: {
-      alias: `v`
+      alias: 'v',
+      type: 'boolean'
     },
     config: {
-      alias: `n`
+      alias: 'n',
+      type: 'string'
     },
     context: {
-      alias: `c`
+      alias: 'c',
+      type: 'string'
     },
     'lerna-package': {
-      alias: `l`
+      alias: 'l',
+      type: 'string'
     },
     'tag-prefix': {
-      alias: `t`
+      alias: 't',
+      type: 'string'
     }
   }
 })
@@ -112,7 +126,7 @@ if (infile && infile === outfile) {
   }
 }
 
-var options = _.omit({
+var options = _.omitBy({
   preset: flags.preset,
   pkg: {
     path: flags.pkg
