@@ -180,7 +180,7 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `releaseCount` is `0` (file)', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--releaseCount', 0, '-s'], {
+    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0, '-s'], {
       stdio: [process.stdin, null, null]
     })
 
