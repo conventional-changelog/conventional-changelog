@@ -41,7 +41,7 @@
     "pretest": "npm run lint",
     "test": "nyc mocha --timeout 30000 packages/*/test{,/*}.js",
     "test-windows": "lerna exec --concurrency 1 -- npm run test-windows",
-    "release": "lerna publish --conventional-commits --npm-tag=next"
+    "release": "lerna publish --conventional-commits --dist-tag=next"
   },
   "version": "1.0.0",
   "devDependencies": {
