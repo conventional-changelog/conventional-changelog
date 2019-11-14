@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@3.0.0...git-semver-tags@3.0.1) (2019-11-14)
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+
+
+
+
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.3...git-semver-tags@3.0.0) (2019-07-29)
 
 

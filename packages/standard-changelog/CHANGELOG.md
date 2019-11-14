@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.17...standard-changelog@2.0.18) (2019-11-14)
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+
+
+
+
 ## [2.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.16...standard-changelog@2.0.17) (2019-11-07)
 
 **Note:** Version bump only for package standard-changelog
