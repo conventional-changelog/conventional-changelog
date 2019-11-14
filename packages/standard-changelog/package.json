@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=8"
   },
   "files": [
     "index.js",
