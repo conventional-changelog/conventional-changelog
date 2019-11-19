@@ -25,51 +25,72 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       writerOpts = data.writerOpts
       gitRawExecOpts = data.gitRawExecOpts
 
-      var from = gitRawCommitsOpts.from || ''
-      var partialStream
-      var commitsStream
-      for (var to of context.gitSemverTags.reverse()) {
-        partialStream = gitRawCommits(_.merge({}, gitRawCommitsOpts, {
-          from: from,
-          to: to
-        }), gitRawExecOpts)
+      var reverseTags = context.gitSemverTags.slice(0).reverse()
+      reverseTags.push('HEAD')
+      var commitsErrorThrown = false
 
-        if (!commitsStream) {
-          commitsStream = partialStream
+      const streams = reverseTags.map((to, i) => {
+        let from = i > 0
+          ? reverseTags[i - 1]
+          : gitRawCommitsOpts.from || ''
+        if (gitRawCommitsOpts.from) {
+          let hasData = false
+          return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+            from: gitRawCommitsOpts.from,
+            to: to
+          }))
+            .on('data', function () {
+              hasData = true
+            })
+            .on('error', function (err) {
+              err.message = 'Error in git-raw-commits: ' + err.message
+              if (!commitsErrorThrown) {
+                setImmediate(readable.emit.bind(readable), 'error', err)
+                commitsErrorThrown = true
+              }
+            })
+            .pipe(addStream(() => {
+              if (!hasData) {
+                const s = new stream.Readable()
+                s._read = function () { }
+                s.push(null)
+                return s
+              } else {
+                return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+                  from: from,
+                  to: to
+                }))
+                  .on('error', function (err) {
+                    err.message = 'Error in git-raw-commits: ' + err.message
+                    if (!commitsErrorThrown) {
+                      setImmediate(readable.emit.bind(readable), 'error', err)
+                      commitsErrorThrown = true
+                    }
+                  })
+              }
+            }))
         } else {
-          if (gitRawCommitsOpts.reverse) {
-            commitsStream = commitsStream
-              .pipe(addStream(partialStream))
-          } else {
-            commitsStream = partialStream
-              .pipe(addStream(commitsStream))
-          }
+          return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+            from: from,
+            to: to
+          }))
+            .on('error', function (err) {
+              err.message = 'Error in git-raw-commits: ' + err.message
+              if (!commitsErrorThrown) {
+                setImmediate(readable.emit.bind(readable), 'error', err)
+                commitsErrorThrown = true
+              }
+            })
         }
-        from = to
+      })
+
+      if (gitRawCommitsOpts.reverse) {
+        streams.reverse()
       }
 
-      partialStream = gitRawCommits(_.merge({}, gitRawCommitsOpts, {
-        from: from,
-        to: 'HEAD'
-      }), gitRawExecOpts)
-
-      if (!commitsStream) {
-        commitsStream = partialStream
-      } else {
-        if (gitRawCommitsOpts.reverse) {
-          commitsStream = commitsStream
-            .pipe(addStream(partialStream))
-        } else {
-          commitsStream = partialStream
-            .pipe(addStream(commitsStream))
-        }
-      }
+      var commitsStream = streams.reduce((prev, next) => next.pipe(addStream(prev)))
 
       commitsStream
-        .on('error', function (err) {
-          err.message = 'Error in git-raw-commits: ' + err.message
-          setImmediate(readable.emit.bind(readable), 'error', err)
-        })
         .pipe(conventionalCommitsParser(parserOpts))
         .on('error', function (err) {
           err.message = 'Error in conventional-commits-parser: ' + err.message
