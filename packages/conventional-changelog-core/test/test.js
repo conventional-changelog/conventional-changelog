@@ -866,6 +866,36 @@ describe('conventionalChangelogCore', function () {
       }))
   })
 
+  it('should respect merge order', function (done) {
+    preparing(19)
+    var i = 0
+
+    conventionalChangelogCore({
+      releaseCount: 0,
+      append: true,
+      outputUnreleased: true
+    }, {}, {}, {}, {})
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        if (i === 4) {
+          expect(chunk).to.contain('included in 4.0.0')
+          expect(chunk).to.not.contain('included in 5.0.0')
+        } else if (i === 5) {
+          expect(chunk).to.contain('included in 5.0.0')
+          expect(chunk).to.not.contain('merged, unreleased')
+        } else if (i === 6) {
+          expect(chunk).to.contain('merged, unreleased')
+        }
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(7)
+        done()
+      }))
+  })
+
   describe('finalizeContext', function () {
     it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', function (done) {
       var tail = preparing(11).tail
@@ -1019,36 +1049,6 @@ describe('conventionalChangelogCore', function () {
           cb()
         }, function () {
           expect(i).to.equal(3)
-          done()
-        }))
-    })
-
-    it('should respect merge order', function (done) {
-      preparing(19)
-      var i = 0
-
-      conventionalChangelogCore({
-        releaseCount: 0,
-        append: true,
-        outputUnreleased: true
-      }, {}, {}, {}, {})
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
-
-          if (i === 4) {
-            expect(chunk).to.contain('included in 4.0.0')
-            expect(chunk).to.not.contain('included in 5.0.0')
-          } else if (i === 5) {
-            expect(chunk).to.contain('included in 5.0.0')
-            expect(chunk).to.not.contain('merged, unreleased')
-          } else if (i === 6) {
-            expect(chunk).to.contain('merged, unreleased')
-          }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(7)
           done()
         }))
     })
