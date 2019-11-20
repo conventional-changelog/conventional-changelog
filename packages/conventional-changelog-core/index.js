@@ -8,7 +8,7 @@ const _ = require('lodash')
 const stream = require('stream')
 const through = require('through2')
 const mergeConfig = require('./lib/merge-config')
-function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
+function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   writerOpts = writerOpts || {}
 
   var readable = new stream.Readable({
@@ -34,7 +34,7 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
       })
       commitsStream._read = function () { }
 
-      function commitsRange(from, to) {
+      function commitsRange (from, to) {
         return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
           from: from,
           to: to
