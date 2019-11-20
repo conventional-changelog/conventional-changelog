@@ -119,11 +119,11 @@ betterThanBefore.setups([
     gitDummyCommit('merged, unreleased')
     shell.exec('git checkout master')
     gitDummyCommit('included in 4.0.0')
-    shell.exec('git tag 4.0.0')
+    shell.exec('git tag v4.0.0')
     shell.exec('git merge feature -m"Merge branch \'feature\'"')
     writeFileSync('./package.json', '{"version": "5.0.0"}') // required by angular preset.
     shell.exec('git add --all && git commit -m"5.0.0"')
-    shell.exec('git tag 5.0.0')
+    shell.exec('git tag v5.0.0')
     shell.exec('git merge feature2 -m"Merge branch \'feature2\'"')
   }
 ])

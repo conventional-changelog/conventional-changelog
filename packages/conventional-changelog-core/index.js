@@ -29,6 +29,11 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       reverseTags.push('HEAD')
       var commitsErrorThrown = false
 
+      var commitsStream = new stream.Readable({
+        objectMode: true
+      })
+      commitsStream._read = function () { }
+
       const streams = reverseTags.map((to, i) => {
         let from = i > 0
           ? reverseTags[i - 1]
@@ -43,9 +48,8 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
               hasData = true
             })
             .on('error', function (err) {
-              err.message = 'Error in git-raw-commits: ' + err.message
               if (!commitsErrorThrown) {
-                setImmediate(readable.emit.bind(readable), 'error', err)
+                setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
                 commitsErrorThrown = true
               }
             })
@@ -61,9 +65,8 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
                   to: to
                 }))
                   .on('error', function (err) {
-                    err.message = 'Error in git-raw-commits: ' + err.message
                     if (!commitsErrorThrown) {
-                      setImmediate(readable.emit.bind(readable), 'error', err)
+                      setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
                       commitsErrorThrown = true
                     }
                   })
@@ -75,9 +78,8 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
             to: to
           }))
             .on('error', function (err) {
-              err.message = 'Error in git-raw-commits: ' + err.message
               if (!commitsErrorThrown) {
-                setImmediate(readable.emit.bind(readable), 'error', err)
+                setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
                 commitsErrorThrown = true
               }
             })
@@ -88,9 +90,19 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
         streams.reverse()
       }
 
-      var commitsStream = streams.reduce((prev, next) => next.pipe(addStream(prev)))
+      streams.reduce((prev, next) => next.pipe(addStream(prev)))
+        .on('data', function (data) {
+          setImmediate(commitsStream.emit.bind(commitsStream), 'data', data)
+        })
+        .on('end', function () {
+          setImmediate(commitsStream.emit.bind(commitsStream), 'end')
+        })
 
       commitsStream
+        .on('error', function (err) {
+          err.message = 'Error in git-raw-commits: ' + err.message
+          setImmediate(readable.emit.bind(readable), 'error', err)
+        })
         .pipe(conventionalCommitsParser(parserOpts))
         .on('error', function (err) {
           err.message = 'Error in conventional-commits-parser: ' + err.message
