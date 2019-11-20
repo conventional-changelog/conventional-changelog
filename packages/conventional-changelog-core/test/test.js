@@ -111,6 +111,20 @@ betterThanBefore.setups([
   function () { // 18
     gitDummyCommit()
     shell.exec('git tag 3.0.0')
+  },
+  function () { // 19
+    shell.exec('git checkout feature')
+    gitDummyCommit('included in 5.0.0')
+    shell.exec('git checkout -b feature2')
+    gitDummyCommit('merged, unreleased')
+    shell.exec('git checkout master')
+    gitDummyCommit('included in 4.0.0')
+    shell.exec('git tag v4.0.0')
+    shell.exec('git merge feature -m"Merge branch \'feature\'"')
+    writeFileSync('./package.json', '{"version": "5.0.0"}') // required by angular preset.
+    shell.exec('git add --all && git commit -m"5.0.0"')
+    shell.exec('git tag v5.0.0')
+    shell.exec('git merge feature2 -m"Merge branch \'feature2\'"')
   }
 ])
 
@@ -848,6 +862,36 @@ describe('conventionalChangelogCore', function () {
 
         cb()
       }, function () {
+        done()
+      }))
+  })
+
+  it('should respect merge order', function (done) {
+    preparing(19)
+    var i = 0
+
+    conventionalChangelogCore({
+      releaseCount: 0,
+      append: true,
+      outputUnreleased: true
+    }, {}, {}, {}, {})
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        if (i === 4) {
+          expect(chunk).to.contain('included in 4.0.0')
+          expect(chunk).to.not.contain('included in 5.0.0')
+        } else if (i === 5) {
+          expect(chunk).to.contain('included in 5.0.0')
+          expect(chunk).to.not.contain('merged, unreleased')
+        } else if (i === 6) {
+          expect(chunk).to.contain('merged, unreleased')
+        }
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(7)
         done()
       }))
   })

@@ -1,8 +1,10 @@
 'use strict'
 
+const addStream = require('add-stream')
 const gitRawCommits = require('git-raw-commits')
 const conventionalCommitsParser = require('conventional-commits-parser')
 const conventionalChangelogWriter = require('conventional-changelog-writer')
+const _ = require('lodash')
 const stream = require('stream')
 const through = require('through2')
 const mergeConfig = require('./lib/merge-config')
@@ -12,7 +14,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
   var readable = new stream.Readable({
     objectMode: writerOpts.includeDetails
   })
-  readable._read = function () {}
+  readable._read = function () { }
 
   mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts)
     .then(function (data) {
@@ -23,7 +25,66 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       writerOpts = data.writerOpts
       gitRawExecOpts = data.gitRawExecOpts
 
-      gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
+      var reverseTags = context.gitSemverTags.slice(0).reverse()
+      reverseTags.push('HEAD')
+      var commitsErrorThrown = false
+
+      var commitsStream = new stream.Readable({
+        objectMode: true
+      })
+      commitsStream._read = function () { }
+
+      function commitsRange (from, to) {
+        return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+          from: from,
+          to: to
+        }))
+          .on('error', function (err) {
+            if (!commitsErrorThrown) {
+              setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
+              commitsErrorThrown = true
+            }
+          })
+      }
+
+      const streams = reverseTags.map((to, i) => {
+        let from = i > 0
+          ? reverseTags[i - 1]
+          : gitRawCommitsOpts.from || ''
+        if (gitRawCommitsOpts.from) {
+          let hasData = false
+          return commitsRange(gitRawCommitsOpts.from, to)
+            .on('data', function () {
+              hasData = true
+            })
+            .pipe(addStream(() => {
+              if (!hasData) {
+                const s = new stream.Readable()
+                s._read = function () { }
+                s.push(null)
+                return s
+              } else {
+                return commitsRange(from, to)
+              }
+            }))
+        } else {
+          return commitsRange(from, to)
+        }
+      })
+
+      if (gitRawCommitsOpts.reverse) {
+        streams.reverse()
+      }
+
+      streams.reduce((prev, next) => next.pipe(addStream(prev)))
+        .on('data', function (data) {
+          setImmediate(commitsStream.emit.bind(commitsStream), 'data', data)
+        })
+        .on('end', function () {
+          setImmediate(commitsStream.emit.bind(commitsStream), 'end')
+        })
+
+      commitsStream
         .on('error', function (err) {
           err.message = 'Error in git-raw-commits: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)
