@@ -8,7 +8,7 @@ const _ = require('lodash')
 const stream = require('stream')
 const through = require('through2')
 const mergeConfig = require('./lib/merge-config')
-function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
+function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   writerOpts = writerOpts || {}
 
   var readable = new stream.Readable({
@@ -34,24 +34,28 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       })
       commitsStream._read = function () { }
 
+      function commitsRange(from, to) {
+        return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+          from: from,
+          to: to
+        }))
+          .on('error', function (err) {
+            if (!commitsErrorThrown) {
+              setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
+              commitsErrorThrown = true
+            }
+          })
+      }
+
       const streams = reverseTags.map((to, i) => {
         let from = i > 0
           ? reverseTags[i - 1]
           : gitRawCommitsOpts.from || ''
         if (gitRawCommitsOpts.from) {
           let hasData = false
-          return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
-            from: gitRawCommitsOpts.from,
-            to: to
-          }))
+          return commitsRange(gitRawCommitsOpts.from, to)
             .on('data', function () {
               hasData = true
-            })
-            .on('error', function (err) {
-              if (!commitsErrorThrown) {
-                setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
-                commitsErrorThrown = true
-              }
             })
             .pipe(addStream(() => {
               if (!hasData) {
@@ -60,29 +64,11 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
                 s.push(null)
                 return s
               } else {
-                return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
-                  from: from,
-                  to: to
-                }))
-                  .on('error', function (err) {
-                    if (!commitsErrorThrown) {
-                      setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
-                      commitsErrorThrown = true
-                    }
-                  })
+                return commitsRange(from, to)
               }
             }))
         } else {
-          return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
-            from: from,
-            to: to
-          }))
-            .on('error', function (err) {
-              if (!commitsErrorThrown) {
-                setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
-                commitsErrorThrown = true
-              }
-            })
+          return commitsRange(from, to)
         }
       })
 
