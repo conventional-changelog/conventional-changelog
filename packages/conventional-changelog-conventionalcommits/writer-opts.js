@@ -1,10 +1,10 @@
 'use strict'
 
 const addBangNotes = require('./add-bang-notes')
-const compareFunc = require(`compare-func`)
-const Q = require(`q`)
-const readFile = Q.denodeify(require(`fs`).readFile)
-const resolve = require(`path`).resolve
+const compareFunc = require('compare-func')
+const Q = require('q')
+const readFile = Q.denodeify(require('fs').readFile)
+const resolve = require('path').resolve
 
 /**
  * Handlebar partials for various property substitutions based on commit context.
@@ -34,10 +34,10 @@ module.exports = function (config) {
   })
 
   return Q.all([
-    readFile(resolve(__dirname, `./templates/template.hbs`), `utf-8`),
-    readFile(resolve(__dirname, `./templates/header.hbs`), `utf-8`),
-    readFile(resolve(__dirname, `./templates/commit.hbs`), `utf-8`),
-    readFile(resolve(__dirname, `./templates/footer.hbs`), `utf-8`)
+    readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, './templates/commit.hbs'), 'utf-8'),
+    readFile(resolve(__dirname, './templates/footer.hbs'), 'utf-8')
   ])
     .spread((template, header, commit, footer) => {
       const writerOpts = getWriterOpts(config)
@@ -73,7 +73,7 @@ function getWriterOpts (config) {
       addBangNotes(commit)
 
       commit.notes.forEach(note => {
-        note.title = `BREAKING CHANGES`
+        note.title = 'BREAKING CHANGES'
         discard = false
       })
 
@@ -83,19 +83,19 @@ function getWriterOpts (config) {
 
       if (typesLookup[typeKey]) commit.type = typesLookup[typeKey].section
 
-      if (commit.scope === `*`) {
-        commit.scope = ``
+      if (commit.scope === '*') {
+        commit.scope = ''
       }
 
-      if (typeof commit.hash === `string`) {
+      if (typeof commit.hash === 'string') {
         commit.shortHash = commit.hash.substring(0, 7)
       }
 
-      if (typeof commit.subject === `string`) {
+      if (typeof commit.subject === 'string') {
         // Issue URLs.
         config.issuePrefixes.join('|')
-        let issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([0-9]+)'
-        let re = new RegExp(issueRegEx, 'g')
+        const issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([0-9]+)'
+        const re = new RegExp(issueRegEx, 'g')
 
         commit.subject = commit.subject.replace(re, (_, prefix, issue) => {
           issues.push(prefix + issue)
@@ -137,7 +137,7 @@ function getWriterOpts (config) {
 
       return commit
     },
-    groupBy: `type`,
+    groupBy: 'type',
     // the groupings of commit messages, e.g., Features vs., Bug Fixes, are
     // sorted based on their probable importance:
     commitGroupsSort: (a, b) => {
@@ -150,8 +150,8 @@ function getWriterOpts (config) {
         return 1
       }
     },
-    commitsSort: [`scope`, `subject`],
-    noteGroupsSort: `title`,
+    commitsSort: ['scope', 'subject'],
+    noteGroupsSort: 'title',
     notesSort: compareFunc
   }
 }

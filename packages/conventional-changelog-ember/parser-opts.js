@@ -2,11 +2,11 @@
 
 module.exports = {
   mergePattern: /^Merge pull request #(.*) from .*$/,
-  mergeCorrespondence: [`pr`],
+  mergeCorrespondence: ['pr'],
   headerPattern: /^\[(.*) (.*)] (.*)$/,
   headerCorrespondence: [
-    `tag`,
-    `taggedAs`,
-    `message`
+    'tag',
+    'taggedAs',
+    'message'
   ]
 }

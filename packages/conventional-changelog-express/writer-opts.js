@@ -1,13 +1,13 @@
 'use strict'
 
-const Q = require(`q`)
-const readFile = Q.denodeify(require(`fs`).readFile)
-const resolve = require(`path`).resolve
+const Q = require('q')
+const readFile = Q.denodeify(require('fs').readFile)
+const resolve = require('path').resolve
 
 module.exports = Q.all([
-  readFile(resolve(__dirname, `./templates/template.hbs`), `utf-8`),
-  readFile(resolve(__dirname, `./templates/header.hbs`), `utf-8`),
-  readFile(resolve(__dirname, `./templates/commit.hbs`), `utf-8`)
+  readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
+  readFile(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
+  readFile(resolve(__dirname, './templates/commit.hbs'), 'utf-8')
 ])
   .spread((template, header, commit) => {
     const writerOpts = getWriterOpts()
@@ -22,18 +22,18 @@ module.exports = Q.all([
 function getWriterOpts () {
   return {
     transform: (commit) => {
-      if (commit.component === `perf`) {
-        commit.component = `Performance`
-      } else if (commit.component === `deps`) {
-        commit.component = `Dependencies`
+      if (commit.component === 'perf') {
+        commit.component = 'Performance'
+      } else if (commit.component === 'deps') {
+        commit.component = 'Dependencies'
       } else {
         return
       }
 
       return commit
     },
-    groupBy: `component`,
-    commitGroupsSort: `title`,
-    commitsSort: [`component`, `shortDesc`]
+    groupBy: 'component',
+    commitGroupsSort: 'title',
+    commitsSort: ['component', 'shortDesc']
   }
 }
