@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "add-stream": "^1.0.0",
-    "chalk": "^2.0.0",
+    "chalk": "^3.0.0",
     "conventional-changelog-angular": "file:../conventional-changelog-angular",
     "conventional-changelog-core": "file:../conventional-changelog-core",
     "figures": "^3.0.0",
