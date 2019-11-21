@@ -30,7 +30,7 @@
     "log"
   ],
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=8"
   },
   "dependencies": {
     "add-stream": "^1.0.0",
