@@ -50,7 +50,7 @@
     "concat-stream": "^2.0.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.7.0",
-    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard": "^14.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
