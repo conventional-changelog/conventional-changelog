@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.1...conventional-changelog-core@4.1.2) (2019-11-21)
+
+
+### Bug Fixes
+
+* call gitRawCommits with ranges [tag1..tag2, tag2..tag3, ..., tagX..HEAD] to make sure commits are returned in right order. ([2fba5c7](https://github.com/conventional-changelog/conventional-changelog/commit/2fba5c7a02e0e34093a6bd9a01109457db9b84c5)), closes [#408](https://github.com/conventional-changelog/conventional-changelog/issues/408)
+
+
+
+
+
 ## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.0...conventional-changelog-core@4.1.1) (2019-11-14)
 
 **Note:** Version bump only for package conventional-changelog-core
