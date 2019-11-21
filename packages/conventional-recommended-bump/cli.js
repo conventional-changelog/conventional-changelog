@@ -2,9 +2,9 @@
 
 'use strict'
 
-const meow = require(`meow`)
-const conventionalRecommendedBump = require(`./`)
-const path = require(`path`)
+const meow = require('meow')
+const conventionalRecommendedBump = require('./')
+const path = require('path')
 
 const cli = meow(`
     Usage
@@ -28,38 +28,38 @@ const cli = meow(`
       --commit-path                  Recommend a bump scoped to a specific directory
 `, {
   flags: {
-    'preset': {
-      alias: `p`
+    preset: {
+      alias: 'p'
     },
-    'config': {
-      alias: `g`
+    config: {
+      alias: 'g'
     },
     'header-pattern': {
-      alias: `h`
+      alias: 'h'
     },
     'header-correspondence': {
-      alias: `c`
+      alias: 'c'
     },
     'reference-actions': {
-      alias: `r`
+      alias: 'r'
     },
     'issue-prefixes': {
-      alias: `i`
+      alias: 'i'
     },
     'note-keywords': {
-      alias: `n`
+      alias: 'n'
     },
     'field-pattern': {
-      alias: `f`
+      alias: 'f'
     },
-    'verbose': {
-      alias: `v`
+    verbose: {
+      alias: 'v'
     },
     'lerna-package': {
-      alias: `l`
+      alias: 'l'
     },
     'tag-prefix': {
-      alias: `t`
+      alias: 't'
     }
   }
 })

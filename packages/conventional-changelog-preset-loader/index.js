@@ -30,10 +30,10 @@ function presetLoader (requireMethod) {
     }
 
     if (!absolutePath) {
-      if (name[0] === `@`) {
-        const parts = name.split(`/`)
-        scope = parts.shift() + `/`
-        name = parts.join(`/`)
+      if (name[0] === '@') {
+        const parts = name.split('/')
+        scope = parts.shift() + '/'
+        name = parts.join('/')
       }
 
       if (!name.startsWith('conventional-changelog-')) {

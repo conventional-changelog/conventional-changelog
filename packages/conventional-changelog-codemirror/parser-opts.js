@@ -3,8 +3,8 @@
 module.exports = {
   headerPattern: /^\[(.*?)(?: (.*))?] (.*)$/,
   headerCorrespondence: [
-    `language`,
-    `type`,
-    `message`
+    'language',
+    'type',
+    'message'
   ]
 }

@@ -1,14 +1,14 @@
 'use strict'
 
-const assert = require(`assert`)
-const betterThanBefore = require(`better-than-before`)()
-const conventionalRecommendedBump = require(`../index`)
+const assert = require('assert')
+const betterThanBefore = require('better-than-before')()
+const conventionalRecommendedBump = require('../index')
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const fs = require(`fs`)
-const shell = require(`shelljs`)
-const temp = require(`temp`)
+const fs = require('fs')
+const shell = require('shelljs')
+const temp = require('temp')
 
 const preparing = betterThanBefore.preparing
 shell.config.silent = true
@@ -17,54 +17,54 @@ betterThanBefore.setups([
   () => { // 1
     const tempDirectory = temp.mkdirSync()
     shell.cd(tempDirectory)
-    shell.exec(`git init`)
+    shell.exec('git init')
   },
   () => { // 2
-    fs.writeFileSync(`test1`, ``)
-    shell.exec(`git add --all && git commit -m 'feat!: my first commit'`)
+    fs.writeFileSync('test1', '')
+    shell.exec('git add --all && git commit -m \'feat!: my first commit\'')
   },
   () => { // 3
-    shell.exec(`git tag v1.0.0`)
+    shell.exec('git tag v1.0.0')
   },
   () => { // 4
-    fs.writeFileSync(`test2`, ``)
-    shell.exec(`git add --all && git commit -m 'feat: my second commit'`)
+    fs.writeFileSync('test2', '')
+    shell.exec('git add --all && git commit -m \'feat: my second commit\'')
   },
   () => { // 5
-    shell.exec(`git revert HEAD`)
+    shell.exec('git revert HEAD')
   },
   () => { // 6
-    fs.writeFileSync(`test3`, ``)
-    shell.exec(`git add --all && git commit -m 'feat: should not be taken into account\nBREAKING CHANGE: I broke the API'`)
-    shell.exec(`git tag ms/1.0.0`)
-    fs.writeFileSync(`test4`, ``)
-    shell.exec(`git add --all && git commit -m 'feat: this should have been working'`)
+    fs.writeFileSync('test3', '')
+    shell.exec('git add --all && git commit -m \'feat: should not be taken into account\nBREAKING CHANGE: I broke the API\'')
+    shell.exec('git tag ms/1.0.0')
+    fs.writeFileSync('test4', '')
+    shell.exec('git add --all && git commit -m \'feat: this should have been working\'')
   },
   () => { // 7
-    shell.exec(`git tag my-package@1.0.0`)
-    fs.writeFileSync(`test6`, ``)
-    shell.exec(`git add --all && git commit -m 'feat: this should have been working'`)
+    shell.exec('git tag my-package@1.0.0')
+    fs.writeFileSync('test6', '')
+    shell.exec('git add --all && git commit -m \'feat: this should have been working\'')
   }
 ])
 
-describe(`conventional-recommended-bump API`, () => {
-  describe(`options object`, () => {
-    it(`should throw an error if an 'options' object is not provided`, done => {
+describe('conventional-recommended-bump API', () => {
+  describe('options object', () => {
+    it('should throw an error if an \'options\' object is not provided', done => {
       assert.throws(() => conventionalRecommendedBump())
-      assert.throws(() => conventionalRecommendedBump(`invalid options object`))
+      assert.throws(() => conventionalRecommendedBump('invalid options object'))
       done()
     })
   })
 
-  describe(`callback`, () => {
-    it(`should throw an error if no, or an invalid, callback function is provided`, done => {
+  describe('callback', () => {
+    it('should throw an error if no, or an invalid, callback function is provided', done => {
       assert.throws(() => conventionalRecommendedBump({}))
       assert.throws(() => conventionalRecommendedBump({}, {}))
       assert.throws(() => conventionalRecommendedBump({}, {}, {}))
       done()
     })
 
-    it(`should allow callback function in the 'parserOpts' argument spot`, done => {
+    it('should allow callback function in the \'parserOpts\' argument spot', done => {
       preparing(1)
 
       conventionalRecommendedBump({}, err => {
@@ -74,7 +74,7 @@ describe(`conventional-recommended-bump API`, () => {
     })
   })
 
-  it(`should return an error if there are no commits in the repository`, done => {
+  it('should return an error if there are no commits in the repository', done => {
     preparing(1)
 
     conventionalRecommendedBump({}, {}, err => {
@@ -99,20 +99,20 @@ describe(`conventional-recommended-bump API`, () => {
     })
   })
 
-  describe(`optional 'whatBump'`, () => {
-    it(`should throw an error if 'whatBump' is defined but not a function`, done => {
+  describe('optional \'whatBump\'', () => {
+    it('should throw an error if \'whatBump\' is defined but not a function', done => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: `invalid`
+        whatBump: 'invalid'
       }, {}, err => {
         assert.ok(err)
-        assert.strictEqual(err.message, `whatBump must be a function`)
+        assert.strictEqual(err.message, 'whatBump must be a function')
         done()
       })
     })
 
-    it(`should return '{}' if no 'whatBump'`, done => {
+    it('should return \'{}\' if no \'whatBump\'', done => {
       preparing(2)
 
       conventionalRecommendedBump({}, {}, (err, recommendation) => {
@@ -122,7 +122,7 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it(`should return '{}' if 'whatBump' returns 'null'`, done => {
+    it('should return \'{}\' if \'whatBump\' returns \'null\'', done => {
       preparing(2)
 
       conventionalRecommendedBump({
@@ -134,7 +134,7 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it(`should return '{}' if 'whatBump' returns 'undefined'`, done => {
+    it('should return \'{}\' if \'whatBump\' returns \'undefined\'', done => {
       preparing(2)
 
       conventionalRecommendedBump({
@@ -146,19 +146,19 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it(`should return what is returned by 'whatBump'`, done => {
+    it('should return what is returned by \'whatBump\'', done => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: () => { return { test: `test` } }
+        whatBump: () => { return { test: 'test' } }
       }, (err, recommendation) => {
         if (err) done(err)
-        assert.deepStrictEqual(recommendation, { test: `test` })
+        assert.deepStrictEqual(recommendation, { test: 'test' })
         done()
       })
     })
 
-    it(`should send options to 'whatBump'`, done => {
+    it('should send options to \'whatBump\'', done => {
       preparing(2)
 
       conventionalRecommendedBump({
@@ -171,27 +171,27 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it(`should return 'releaseType' as undefined if 'level' is not valid`, done => {
+    it('should return \'releaseType\' as undefined if \'level\' is not valid', done => {
       preparing(2)
 
       conventionalRecommendedBump({
-        whatBump: () => { return { level: `test` } }
+        whatBump: () => { return { level: 'test' } }
       }, (err, recommendation) => {
         if (err) done(err)
-        assert.deepStrictEqual(recommendation, { level: `test`, releaseType: undefined })
+        assert.deepStrictEqual(recommendation, { level: 'test', releaseType: undefined })
         done()
       })
     })
   })
 
-  describe(`warn logging`, () => {
-    it(`will ignore 'warn' option if it's not a function`, done => {
+  describe('warn logging', () => {
+    it('will ignore \'warn\' option if it\'s not a function', done => {
       preparing(3)
 
-      conventionalRecommendedBump({}, { warn: `invalid` }, done)
+      conventionalRecommendedBump({}, { warn: 'invalid' }, done)
     })
 
-    it(`should warn if there is no new commits since last release`, done => {
+    it('should warn if there is no new commits since last release', done => {
       preparing(3)
 
       conventionalRecommendedBump({}, {
@@ -203,7 +203,7 @@ describe(`conventional-recommended-bump API`, () => {
     })
   })
 
-  describe(`loading a preset package`, () => {
+  describe('loading a preset package', () => {
     it('recommends a patch release for a feature when preMajor=true', done => {
       preparing(4)
 
@@ -233,7 +233,7 @@ describe(`conventional-recommended-bump API`, () => {
       })
     })
 
-    it(`should ignore reverted commits`, done => {
+    it('should ignore reverted commits', done => {
       preparing(5)
 
       conventionalRecommendedBump({
@@ -244,7 +244,7 @@ describe(`conventional-recommended-bump API`, () => {
       }, () => {})
     })
 
-    it(`should include reverted commits`, done => {
+    it('should include reverted commits', done => {
       preparing(5)
 
       conventionalRecommendedBump({
@@ -256,14 +256,14 @@ describe(`conventional-recommended-bump API`, () => {
       }, () => {})
     })
 
-    it(`throws an error if unable to load a preset package`, done => {
+    it('throws an error if unable to load a preset package', done => {
       preparing(6)
 
       conventionalRecommendedBump({
-        preset: `does-not-exist`
+        preset: 'does-not-exist'
       }, {}, err => {
         assert.ok(err)
-        assert.strictEqual(err.message, `Unable to load the "does-not-exist" preset package. Please make sure it's installed.`)
+        assert.strictEqual(err.message, 'Unable to load the "does-not-exist" preset package. Please make sure it\'s installed.')
         done()
       })
     })
@@ -298,23 +298,23 @@ describe(`conventional-recommended-bump API`, () => {
     })
   })
 
-  describe(`repository with custom tag prefix`, () => {
-    it(`should recommends a minor release if appropriate`, done => {
+  describe('repository with custom tag prefix', () => {
+    it('should recommends a minor release if appropriate', done => {
       preparing(6)
 
       conventionalRecommendedBump({
-        tagPrefix: `ms/`,
+        tagPrefix: 'ms/',
         whatBump: commits => {
           assert.strictEqual(commits.length, 1)
-          assert.strictEqual(commits[0].type, `feat`)
+          assert.strictEqual(commits[0].type, 'feat')
           done()
         }
       }, () => {})
     })
   })
 
-  describe(`repository with lerna tags`, () => {
-    it(`should recommend 'major' version bump when not using lerna tags`, done => {
+  describe('repository with lerna tags', () => {
+    it('should recommend \'major\' version bump when not using lerna tags', done => {
       preparing(7)
 
       conventionalRecommendedBump({
@@ -325,14 +325,14 @@ describe(`conventional-recommended-bump API`, () => {
       }, () => {})
     })
 
-    it(`should recommend 'minor' version bump when lerna tag option is enabled`, done => {
+    it('should recommend \'minor\' version bump when lerna tag option is enabled', done => {
       preparing(7)
 
       conventionalRecommendedBump({
-        lernaPackage: `my-package`,
+        lernaPackage: 'my-package',
         whatBump: commits => {
           assert.strictEqual(commits.length, 1)
-          assert.strictEqual(commits[0].type, `feat`)
+          assert.strictEqual(commits[0].type, 'feat')
           done()
         }
       }, () => {})

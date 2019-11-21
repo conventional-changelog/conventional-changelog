@@ -1,10 +1,10 @@
 'use strict'
-const Q = require(`q`)
-const _ = require(`lodash`)
-const conventionalChangelog = require(`./conventional-changelog`)
-const parserOpts = require(`./parser-opts`)
-const recommendedBumpOpts = require(`./conventional-recommended-bump`)
-const writerOpts = require(`./writer-opts`)
+const Q = require('q')
+const _ = require('lodash')
+const conventionalChangelog = require('./conventional-changelog')
+const parserOpts = require('./parser-opts')
+const recommendedBumpOpts = require('./conventional-recommended-bump')
+const writerOpts = require('./writer-opts')
 
 module.exports = function (parameter) {
   // parameter passed can be either a config object or a callback function

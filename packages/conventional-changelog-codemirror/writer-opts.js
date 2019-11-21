@@ -1,8 +1,8 @@
 'use strict'
 
-const Q = require(`q`)
-const readFile = Q.denodeify(require(`fs`).readFile)
-const resolve = require(`path`).resolve
+const Q = require('q')
+const readFile = Q.denodeify(require('fs').readFile)
+const resolve = require('path').resolve
 
 module.exports = Q.all([
   readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
@@ -26,14 +26,14 @@ function getWriterOpts () {
         return
       }
 
-      if (typeof commit.hash === `string`) {
+      if (typeof commit.hash === 'string') {
         commit.shortHash = commit.hash.substring(0, 7)
       }
 
       return commit
     },
-    groupBy: `language`,
-    commitGroupsSort: `title`,
-    commitsSort: [`language`, `type`, `message`]
+    groupBy: 'language',
+    commitGroupsSort: 'title',
+    commitsSort: ['language', 'type', 'message']
   }
 }

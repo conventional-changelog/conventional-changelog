@@ -48,7 +48,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       }
 
       const streams = reverseTags.map((to, i) => {
-        let from = i > 0
+        const from = i > 0
           ? reverseTags[i - 1]
           : gitRawCommitsOpts.from || ''
         if (gitRawCommitsOpts.from) {

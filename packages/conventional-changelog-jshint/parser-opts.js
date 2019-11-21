@@ -3,8 +3,8 @@
 module.exports = {
   headerPattern: /^\[\[(.*)]] (.*)$/,
   headerCorrespondence: [
-    `type`,
-    `shortDesc`
+    'type',
+    'shortDesc'
   ],
-  noteKeywords: `BREAKING CHANGE`
+  noteKeywords: 'BREAKING CHANGE'
 }

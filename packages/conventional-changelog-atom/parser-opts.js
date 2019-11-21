@@ -3,7 +3,7 @@
 module.exports = {
   headerPattern: /^(:.*?:) (.*)$/,
   headerCorrespondence: [
-    `emoji`,
-    `shortDesc`
+    'emoji',
+    'shortDesc'
   ]
 }

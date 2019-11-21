@@ -31,15 +31,15 @@ var cli = meow(`
 `, {
   booleanDefault: undefined,
   flags: {
-    'infile': {
+    infile: {
       alias: 'i',
       default: 'CHANGELOG.md',
       type: 'string'
     },
-    'help': {
+    help: {
       alias: 'h'
     },
-    'outfile': {
+    outfile: {
       alias: 'o',
       type: 'string'
     },
@@ -48,15 +48,15 @@ var cli = meow(`
       default: true,
       type: 'boolean'
     },
-    'preset': {
+    preset: {
       alias: 'p',
       type: 'string'
     },
-    'pkg': {
+    pkg: {
       alias: 'k',
       type: 'string'
     },
-    'append': {
+    append: {
       alias: 'a',
       type: 'boolean'
     },
@@ -64,16 +64,16 @@ var cli = meow(`
       alias: 'r',
       type: 'number'
     },
-    'verbose': {
+    verbose: {
       alias: 'v',
       type: 'boolean'
     },
-    'context': {
+    context: {
       alias: 'c',
       type: 'string'
     },
     'first-release': {
-      alias: `f`,
+      alias: 'f',
       type: 'boolean'
     },
     'lerna-package': {
