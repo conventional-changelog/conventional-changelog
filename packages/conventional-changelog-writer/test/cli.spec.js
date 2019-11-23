@@ -20,7 +20,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should work without context and options', function (done) {
-    var cp = spawn(cliPath, [commitsPath], {
+    var cp = spawn(process.execPath, [cliPath, commitsPath], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -31,7 +31,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should take context', function (done) {
-    var cp = spawn(cliPath, ['-c', contextPath, commitsPath], {
+    var cp = spawn(process.execPath, [cliPath, '-c', contextPath, commitsPath], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -44,7 +44,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should take absolute context path', function (done) {
-    var cp = spawn(cliPath, ['-c', path.join(__dirname, 'fixtures/context.json'), commitsPath], {
+    var cp = spawn(process.execPath, [cliPath, '-c', path.join(__dirname, 'fixtures/context.json'), commitsPath], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -57,7 +57,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should take options', function (done) {
-    var cp = spawn(cliPath, ['-o', optionsPath, commitsPath], {
+    var cp = spawn(process.execPath, [cliPath, '-o', optionsPath, commitsPath], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -68,7 +68,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should take absolute options path', function (done) {
-    var cp = spawn(cliPath, ['-o', path.join(__dirname, 'fixtures/options.js'), commitsPath], {
+    var cp = spawn(process.execPath, [cliPath, '-o', path.join(__dirname, 'fixtures/options.js'), commitsPath], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -79,7 +79,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should take both context and options', function (done) {
-    var cp = spawn(cliPath, ['-o', optionsPath, '-c', contextPath, commitsPath], {
+    var cp = spawn(process.execPath, [cliPath, '-o', optionsPath, '-c', contextPath, commitsPath], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -90,7 +90,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should work if it is not tty', function (done) {
-    var cp = spawn(cliPath, ['-o', optionsPath, '-c', contextPath], {
+    var cp = spawn(process.execPath, [cliPath, '-o', optionsPath, '-c', contextPath], {
       stdio: [fs.openSync(commitsPath, 'r'), null, null]
     })
     cp.stdout
@@ -112,7 +112,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when options file doesnt exist', function (done) {
-    var cp = spawn(cliPath, ['-o', 'nofile'], {
+    var cp = spawn(process.execPath, [cliPath, '-o', 'nofile'], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
@@ -123,7 +123,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when context file doesnt exist', function (done) {
-    var cp = spawn(cliPath, ['--context', 'nofile'], {
+    var cp = spawn(process.execPath, [cliPath, '--context', 'nofile'], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
@@ -134,7 +134,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when commit input files dont exist', function (done) {
-    var cp = spawn(cliPath, ['nofile', 'fakefile'], {
+    var cp = spawn(process.execPath, [cliPath, 'nofile', 'fakefile'], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
@@ -147,7 +147,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when commit input file is invalid line delimited json', function (done) {
-    var cp = spawn(cliPath, ['fixtures/invalid_line_delimited.json'], {
+    var cp = spawn(process.execPath, [cliPath, 'fixtures/invalid_line_delimited.json'], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
@@ -158,7 +158,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when commit input file is invalid line delimited json if it is not tty', function (done) {
-    var cp = spawn(cliPath, [], {
+    var cp = spawn(process.execPath, [cliPath, ], {
       stdio: [fs.openSync('fixtures/invalid_line_delimited.json', 'r'), null, null]
     })
     cp.stderr

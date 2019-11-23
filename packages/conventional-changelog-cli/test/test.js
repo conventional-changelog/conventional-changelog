@@ -37,7 +37,7 @@ describe('cli', function () {
   })
 
   it('should work without any arguments', function (done) {
-    var cp = spawn(cliPath, {
+    var cp = spawn(process.execPath, [cliPath], {
       stdio: [process.stdin, null, null]
     })
 

@@ -21,7 +21,8 @@ betterThanBefore.setups([
   },
   () => { // 2
     fs.writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m \'feat!: my first commit\'')
+    shell.exec('git add --all')
+    shell.exec('git commit -m \'feat!: my first commit\'')
   },
   () => { // 3
     shell.exec('git tag v1.0.0')
