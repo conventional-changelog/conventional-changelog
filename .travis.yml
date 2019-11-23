@@ -20,7 +20,7 @@ cache:
     - ${HOME}/.npm
 
 before_install:
-  - npm install --global npm@latest
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then  npm install --global npm@latest ; fi
 
 before_script:
   - git config --global user.name 'CI'
