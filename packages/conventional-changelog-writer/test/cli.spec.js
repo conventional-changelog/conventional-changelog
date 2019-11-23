@@ -158,7 +158,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when commit input file is invalid line delimited json if it is not tty', function (done) {
-    var cp = spawn(process.execPath, [cliPath, ], {
+    var cp = spawn(process.execPath, [cliPath], {
       stdio: [fs.openSync('fixtures/invalid_line_delimited.json', 'r'), null, null]
     })
     cp.stderr
