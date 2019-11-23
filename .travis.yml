@@ -7,6 +7,11 @@ node_js:
   - '12'
   - '13'
 
+os:
+  - linux
+  - osx
+  - windows
+
 matrix:
   fast_finish: true
 
