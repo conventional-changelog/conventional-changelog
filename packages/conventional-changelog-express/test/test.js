@@ -20,8 +20,8 @@ describe('express preset', function () {
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
     gitDummyCommit(['deps: type-is@~1.6.3', '', ' - deps: mime-types@~2.1.1',
-                    ' - perf: reduce try block size',
-                    ' - perf: remove bitwise operations'])
+      ' - perf: reduce try block size',
+      ' - perf: remove bitwise operations'])
     gitDummyCommit(['perf: use saved reference to http.STATUS_CODES', '', 'closes #2602'])
     gitDummyCommit(['docs: add license comments'])
     gitDummyCommit(['deps: path-to-regexp@0.1.4'])
