@@ -9,7 +9,6 @@ var expect = require('chai').expect
 var gitDummyCommit = require('git-dummy-commit')
 var shell = require('shelljs')
 var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
 
 describe('atom preset', function () {
   before(function () {
