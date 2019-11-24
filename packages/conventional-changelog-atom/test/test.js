@@ -20,7 +20,13 @@ describe('atom preset', function () {
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
     gitDummyCommit([':arrow_down: exception-reporting'])
-    gitDummyCommit([':bug: `updateContentDimensions` when model changes'])
+    if (process.platform !== 'win32') {
+      // we need to escape backtick for bash but not for windows
+      // probably this should be done in git-dummy-commit or shelljs
+      gitDummyCommit([':bug: \\`updateContentDimensions\\` when model changes'])
+    } else {
+      gitDummyCommit([':bug: `updateContentDimensions` when model changes'])
+    }
     gitDummyCommit(['Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17'])
     gitDummyCommit([':arrow_up: language-gfm@0.79.0'])
     gitDummyCommit([':arrow_up: one-dark/light-ui@v1.0.1'])
