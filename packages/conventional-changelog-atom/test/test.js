@@ -23,7 +23,7 @@ describe('atom preset', function () {
     writeFileSync('test1', '')
     shell.exec('git add --all && git commit -m":arrow_down: exception-reporting"')
     writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m\':bug: `updateContentDimensions` when model changes\'')
+    shell.exec('git add --all && git commit -m\':bug: "updateContentDimensions" when model changes\'')
     writeFileSync('test3', '')
     shell.exec('git add --all && git commit -m"Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17"')
     writeFileSync('test4', '')
@@ -43,7 +43,7 @@ describe('atom preset', function () {
         chunk = chunk.toString()
 
         expect(chunk).to.include(':arrow_down:')
-        expect(chunk).to.include('`updateContentDimensions` when model changes')
+        expect(chunk).to.include('"updateContentDimensions" when model changes')
         expect(chunk).to.include(':arrow_up:')
         expect(chunk).to.include('one-dark/light-ui@v1.0.1')
 
