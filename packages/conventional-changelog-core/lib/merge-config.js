@@ -18,7 +18,6 @@ var URL = require('url').URL
 var _ = require('lodash')
 
 var rhosts = /github|bitbucket|gitlab/i
-var rtag = /tag:\s*[v=]?(.+?)[,)]/gi
 
 function semverTagsPromise (options) {
   return Q.Promise(function (resolve, reject) {
@@ -60,6 +59,8 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
   gitRawExecOpts = gitRawExecOpts || {}
+
+  var rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
 
   options = _.merge({
     pkg: {
@@ -303,6 +304,8 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
             } else if (!context.currentTag) {
               if (options.lernaPackage) {
                 context.currentTag = options.lernaPackage + '@' + context.version
+              } else if (options.tagPrefix) {
+                context.currentTag = options.tagPrefix + context.version
               } else {
                 context.currentTag = guessNextTag(gitSemverTags[0], context.version)
               }

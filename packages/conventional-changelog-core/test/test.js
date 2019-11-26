@@ -1190,6 +1190,24 @@ describe('conventionalChangelogCore', function () {
           done()
         }))
     })
+
+    it('takes into account tagPrefix option', function (done) {
+      preparing(16)
+
+      conventionalChangelogCore({
+        tagPrefix: 'foo@',
+        config: require('conventional-changelog-angular')
+      }, {}, { path: './packages/foo' })
+        .pipe(through(function (chunk, enc, cb) {
+          chunk = chunk.toString()
+          // confirm that context.currentTag behaves differently when
+          // tagPrefix is used
+          expect(chunk).to.include('foo@1.0.0...foo@2.0.0')
+          cb()
+        }, function () {
+          done()
+        }))
+    })
   })
 
   describe('config', function () {
