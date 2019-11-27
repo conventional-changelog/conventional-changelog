@@ -10,9 +10,9 @@ var spawn = require('child_process').spawn
 var path = require('path')
 
 var cliPath = path.join(__dirname, '../cli.js')
-var commitsPath = './fixtures/commits.ldjson'
-var optionsPath = './fixtures/options.js'
-var contextPath = './fixtures/context.json'
+var commitsPath = path.join(__dirname, './fixtures/commits.ldjson')
+var optionsPath = path.join(__dirname,'./fixtures/options.js')
+var contextPath = path.join(__dirname,'./fixtures/context.json')
 
 describe('changelog-writer cli', function () {
   before(function () {
@@ -159,7 +159,7 @@ describe('changelog-writer cli', function () {
 
   it('should error when commit input file is invalid line delimited json if it is not tty', function (done) {
     var cp = spawn(process.execPath, [cliPath], {
-      stdio: [fs.openSync('fixtures/invalid_line_delimited.json', 'r'), null, null]
+      stdio: [fs.openSync(path.join(__dirname, 'fixtures/invalid_line_delimited.json'), 'r'), null, null]
     })
     cp.stderr
       .pipe(concat(function (err) {

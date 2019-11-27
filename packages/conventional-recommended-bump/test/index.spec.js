@@ -35,7 +35,7 @@ betterThanBefore.setups([
     shell.exec('git revert HEAD')
   },
   () => { // 6
-    gitDummyCommit(['feat: should not be taken into account\nBREAKING CHANGE: I broke the API'])
+    gitDummyCommit(['feat: should not be taken into account', 'BREAKING CHANGE: I broke the API'])
     shell.exec('git tag ms/1.0.0')
     gitDummyCommit(['feat: this should have been working'])
   },
