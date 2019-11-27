@@ -18,7 +18,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should parse commits in a file', function (done) {
-    var cp = spawn(process.execPath, [cliPath, './fixtures/log1.txt'], {
+    var cp = spawn(process.execPath, [cliPath, path.join(__dirname, 'fixtures/log1.txt')], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -30,7 +30,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work with a separator', function (done) {
-    var cp = spawn(process.execPath, [cliPath, './fixtures/log2.txt', '==='], {
+    var cp = spawn(process.execPath, [cliPath, path.join(__dirname, 'fixtures/log2.txt'), '==='], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -45,7 +45,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work with two files', function (done) {
-    var cp = spawn(process.execPath, [cliPath, './fixtures/log1.txt', './fixtures/log2.txt', '==='], {
+    var cp = spawn(process.execPath, [cliPath, path.join(__dirname, 'fixtures/log1.txt'), path.join(__dirname, 'fixtures/log2.txt'), '==='], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -62,7 +62,7 @@ describe('changelog-parser cli', function () {
 
   it('should error if files cannot be found', function (done) {
     var i = 0
-    var cp = spawn(process.execPath, [cliPath, './fixtures/log1.txt', './fixtures/log4.txt', './fixtures/log2.txt', './fixtures/log5.txt', '==='], {
+    var cp = spawn(process.execPath, [cliPath, path.join(__dirname, 'fixtures/log1.txt'), path.join(__dirname, 'fixtures/log4.txt'), path.join(__dirname, 'fixtures/log2.txt'), path.join(__dirname, 'fixtures/log5.txt'), '==='], {
       stdio: [process.stdin, null, null]
     })
     cp.stderr
@@ -70,9 +70,9 @@ describe('changelog-parser cli', function () {
         chunk = chunk.toString()
 
         if (i === 0) {
-          expect(chunk).to.contain('Failed to read file ./fixtures/log4.txt')
+          expect(chunk).to.contain(`Failed to read file ${path.join(__dirname, 'fixtures/log4.txt')}`)
         } else {
-          expect(chunk).to.contain('Failed to read file ./fixtures/log5.txt')
+          expect(chunk).to.contain(`Failed to read file ${path.join(__dirname, 'fixtures/log5.txt')}`)
         }
 
         i++
@@ -83,7 +83,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work with options', function (done) {
-    var cp = spawn(process.execPath, [cliPath, './fixtures/log3.txt', '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
+    var cp = spawn(process.execPath, [cliPath, path.join(__dirname, 'fixtures/log3.txt'), '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
       stdio: [process.stdin, null, null]
     })
     cp.stdout
@@ -134,7 +134,7 @@ describe('changelog-parser cli', function () {
 
   it('should work if it is not a tty', function (done) {
     var cp = spawn(process.execPath, [cliPath], {
-      stdio: [fs.openSync('./fixtures/log1.txt', 'r'), null, null]
+      stdio: [fs.openSync(path.join(__dirname, 'fixtures/log1.txt'), 'r'), null, null]
     })
     cp.stdout
       .pipe(concat(function (chunk) {
@@ -146,7 +146,7 @@ describe('changelog-parser cli', function () {
 
   it('should seperate if it is not a tty', function (done) {
     var cp = spawn(process.execPath, [cliPath, '==='], {
-      stdio: [fs.openSync('./fixtures/log2.txt', 'r'), null, null]
+      stdio: [fs.openSync(path.join(__dirname, 'fixtures/log2.txt'), 'r'), null, null]
     })
 
     cp.stdout
@@ -162,7 +162,7 @@ describe('changelog-parser cli', function () {
 
   it('should error if it is not a tty and commit cannot be parsed', function (done) {
     var cp = spawn(process.execPath, [cliPath], {
-      stdio: [fs.openSync('./fixtures/bad_commit.txt', 'r'), null, null]
+      stdio: [fs.openSync(path.join(__dirname, 'fixtures/bad_commit.txt'), 'r'), null, null]
     })
     cp.stderr
       .pipe(concat(function (chunk) {
