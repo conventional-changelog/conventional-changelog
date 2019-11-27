@@ -139,7 +139,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
           if (options.pkg.path) {
             pkg = pkgObj.value
           } else {
-            pkg = pkgObj.value.pkg || {}
+            pkg = pkgObj.value.packageJson || {}
           }
 
           pkg = options.pkg.transform(pkg)
