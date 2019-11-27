@@ -11,8 +11,8 @@ var path = require('path')
 
 var cliPath = path.join(__dirname, '../cli.js')
 var commitsPath = path.join(__dirname, './fixtures/commits.ldjson')
-var optionsPath = path.join(__dirname,'./fixtures/options.js')
-var contextPath = path.join(__dirname,'./fixtures/context.json')
+var optionsPath = path.join(__dirname, './fixtures/options.js')
+var contextPath = path.join(__dirname, './fixtures/context.json')
 
 describe('changelog-writer cli', function () {
   before(function () {
