@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.2...conventional-changelog-core@4.1.3) (2019-11-27)
+
+
+### Bug Fixes
+
+* **conventional-changelog-core:** read current version properly when tagPrefix is provided ([5e7cc75](https://github.com/conventional-changelog/conventional-changelog/commit/5e7cc759cca4557f8ed3b48ed9d4dfb9c701785f)), closes [#562](https://github.com/conventional-changelog/conventional-changelog/issues/562) [#337](https://github.com/conventional-changelog/conventional-changelog/issues/337)
+
+
+
+
+
 ## [4.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.1...conventional-changelog-core@4.1.2) (2019-11-21)
 
 
