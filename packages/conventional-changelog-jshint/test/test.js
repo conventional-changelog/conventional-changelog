@@ -23,7 +23,7 @@ describe('jshint preset', function () {
     gitDummyCommit(['[[Test]] Add test for gh-985. Fixes #985'])
     gitDummyCommit(['[[FIX]] catch params are scoped to the catch only'])
     gitDummyCommit(['[[Fix]] accidentally use lower-case'])
-    gitDummyCommit(['[[FEAT]] Option to assume strict mode\n\nBREAKING CHANGE: Not backward compatible.'])
+    gitDummyCommit(['[[FEAT]] Option to assume strict mode', '', 'BREAKING CHANGE: Not backward compatible.'])
     done()
   })
 
