@@ -18,13 +18,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: update npm
+      run: npm install --upgrade npm
     - name: run git config
       run: |
         git config --global user.name 'CI'
         git config --global user.email 'dummy@example.org'
     - name: npm install and test
       run: |
-        npm install
+        npm ci
         npm test
       shell: cmd
       env:
