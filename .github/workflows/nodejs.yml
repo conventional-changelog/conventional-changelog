@@ -18,10 +18,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install and test
+    - name: run git config
       run: |
         git config --global user.name 'CI'
         git config --global user.email 'dummy@example.org'
+    - name: npm install and test
+      run: |
         npm install
         npm test
       env:
