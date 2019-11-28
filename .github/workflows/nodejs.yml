@@ -26,6 +26,6 @@ jobs:
         git config --global user.email 'dummy@example.org'
         npm ci
         npm test
-      shell: bash
+      shell: cmd
       env:
         CI: true
