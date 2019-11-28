@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: update npm
-      run: npm install --upgrade npm
+      run: npm install --global --update npm
     - name: run git config
       run: |
         git config --global user.name 'CI'
