@@ -2,6 +2,7 @@ environment:
   matrix:
     - nodejs_version: '8'
     - nodejs_version: '10'
+    - nodejs_version: '12'
 
 matrix:
   fast_finish: true
@@ -23,4 +24,4 @@ before_test:
   - npm --version
 
 test_script:
-  - npm run test-windows
+  - npm test
