@@ -21,7 +21,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: prepare
       run: |
-        npm install --global --update npm
+        npm install --global npm@latest
         git config --global user.name 'CI'
         git config --global user.email 'dummy@example.org'
     - name: npm ci
