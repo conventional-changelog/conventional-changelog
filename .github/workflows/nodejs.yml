@@ -24,6 +24,9 @@ jobs:
         npm install --global npm@latest
         git config --global user.name 'CI'
         git config --global user.email 'dummy@example.org'
+        node --version
+        npm --version
+        git --version
     - name: npm ci
       run: npm ci
       shell: cmd
