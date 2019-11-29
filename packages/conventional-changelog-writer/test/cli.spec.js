@@ -17,6 +17,7 @@ var contextPath = path.join(__dirname, './fixtures/context.json')
 describe('changelog-writer cli', function () {
   before(function () {
     process.chdir(__dirname)
+    process.stdin.isTTY = true
   })
 
   it('should work without context and options', function (done) {
