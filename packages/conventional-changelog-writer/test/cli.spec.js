@@ -101,6 +101,7 @@ describe('changelog-writer cli', function () {
   })
 
   it('should error when there is no commit input', function (done) {
+    console.log('DEBUG: ' + process.stdin.isTTY)
     var cp = spawn(process.execPath, [cliPath], {
       stdio: [process.stdin, null, null]
     })
