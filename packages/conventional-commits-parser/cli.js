@@ -9,6 +9,7 @@ var meow = require('meow')
 var readline = require('readline')
 var split = require('split2')
 var through = require('through2')
+require('forceable-tty').override()
 
 var filePaths = []
 var separator = '\n\n\n'
