@@ -32,8 +32,8 @@ jobs:
       shell: cmd
       env:
         CI: true
-    - name: npm test
-      run: npm test
+    - name: npm test-windows
+      run: npm test-windows
       shell: cmd
       env:
         CI: true
