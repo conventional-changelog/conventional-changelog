@@ -10,7 +10,7 @@ var spawn = require('child_process').fork
 var through = require('through2')
 var path = require('path')
 
-var cliPath = path.join(__dirname, 'test-cli.js')
+var cliPath = path.join(__dirname, '../test-cli.js')
 
 describe('changelog-parser cli', function () {
   before(function () {
