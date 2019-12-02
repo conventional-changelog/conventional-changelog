@@ -9,7 +9,7 @@ var fs = require('fs')
 var spawn = require('child_process').fork
 var path = require('path')
 
-var cliPath = path.join(__dirname, '../../test-cli.js')
+var cliPath = path.join(__dirname, '../test-cli.js')
 var commitsPath = 'fixtures/commits.ldjson'
 var optionsPath = 'fixtures/options.js'
 var contextPath = 'fixtures/context.json'
