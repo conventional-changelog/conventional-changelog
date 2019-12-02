@@ -34,13 +34,15 @@
   ],
   "dependencies": {
     "JSONStream": "^1.0.4",
-    "forceable-tty": "^0.1.0",
     "is-text-path": "^1.0.1",
     "lodash": "^4.17.15",
     "meow": "^5.0.0",
     "split2": "^2.0.0",
     "through2": "^3.0.0",
     "trim-off-newlines": "^1.0.0"
+  },
+  "devDependencies": {
+    "forceable-tty": "^0.1.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"

@@ -6,7 +6,6 @@ var fs = require('fs')
 var meow = require('meow')
 var path = require('path')
 var split = require('split')
-require('forceable-tty').override()
 
 var cli = meow(`
     Usage
