@@ -41,13 +41,13 @@
     "through2": "^3.0.0",
     "trim-off-newlines": "^1.0.0"
   },
-  "devDependencies": {
-    "forceable-tty": "^0.1.0"
-  },
   "scripts": {
     "test-windows": "echo 'make work on windows'"
   },
   "bin": {
     "conventional-commits-parser": "cli.js"
+  },
+  "devDependencies": {
+    "forceable-tty": "^0.1.0"
   }
 }
