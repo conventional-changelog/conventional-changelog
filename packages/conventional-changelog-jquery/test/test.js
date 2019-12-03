@@ -24,7 +24,7 @@ describe('jquery preset', function () {
     gitDummyCommit(['Event: Remove an internal argument to the on method" -m"Fixes #2, #4, gh-200'])
     gitDummyCommit(['Manipulation: Remove an internal argument to the remove method" -m"Closes #22'])
     gitDummyCommit(['Bad commit'])
-    gitDummyCommit(['Core: Create jQuery.ajax" -m"Closes gh-100'])
+    gitDummyCommit(['Core: Create jQuery.ajax', 'Closes gh-100'])
   })
 
   it('should generate a changelog', function (done) {
