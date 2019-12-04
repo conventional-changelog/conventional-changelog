@@ -58,7 +58,6 @@
     "forceable-tty": "^0.1.0",
     "git-dummy-commit": "^1.2.0",
     "git-tails": "^1.0.0",
-    "husky": "^3.1.0",
     "lerna": "^3.18.5",
     "lint-staged": "^9.4.3",
     "mkdirp": "^0.5.1",
@@ -98,16 +97,5 @@
     "git-semver-tags": "file:packages/git-semver-tags",
     "gulp-conventional-changelog": "file:packages/gulp-conventional-changelog",
     "standard-changelog": "file:packages/standard-changelog"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
-      "git add"
-    ]
   }
 }
