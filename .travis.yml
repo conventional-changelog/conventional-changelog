@@ -17,9 +17,6 @@ cache:
   directories:
     - ${HOME}/.npm
 
-before_install:
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then  npm install --global npm@latest ; fi
-
 before_script:
   - git config --global user.name 'CI'
   - git config --global user.email 'dummy@example.org'
