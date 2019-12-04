@@ -59,7 +59,6 @@
     "git-dummy-commit": "^1.2.0",
     "git-tails": "^1.0.0",
     "lerna": "^3.18.5",
-    "lint-staged": "^9.4.3",
     "mkdirp": "^0.5.1",
     "mocha": "^6.0.0",
     "nyc": "^14.1.1",
