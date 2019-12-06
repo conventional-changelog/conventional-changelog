@@ -6,9 +6,9 @@ var describe = mocha.describe
 var it = mocha.it
 var before = mocha.before
 var expect = require('chai').expect
+var gitDummyCommit = require('git-dummy-commit')
 var shell = require('shelljs')
 var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
 
 describe('atom preset', function () {
   before(function () {
@@ -19,17 +19,17 @@ describe('atom preset', function () {
     shell.cd('tmp')
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
-
-    writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m":arrow_down: exception-reporting"')
-    writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m\':bug: `updateContentDimensions` when model changes\'')
-    writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m"Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17"')
-    writeFileSync('test4', '')
-    shell.exec('git add --all && git commit -m":arrow_up: language-gfm@0.79.0"')
-    writeFileSync('test5', '')
-    shell.exec('git add --all && git commit -m":arrow_up: one-dark/light-ui@v1.0.1"')
+    gitDummyCommit([':arrow_down: exception-reporting'])
+    if (process.platform !== 'win32') {
+      // we need to escape backtick for bash but not for windows
+      // probably this should be done in git-dummy-commit or shelljs
+      gitDummyCommit([':bug: \\`updateContentDimensions\\` when model changes'])
+    } else {
+      gitDummyCommit([':bug: `updateContentDimensions` when model changes'])
+    }
+    gitDummyCommit(['Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17'])
+    gitDummyCommit([':arrow_up: language-gfm@0.79.0'])
+    gitDummyCommit([':arrow_up: one-dark/light-ui@v1.0.1'])
   })
 
   it('should work if there is no semver tag', function (done) {

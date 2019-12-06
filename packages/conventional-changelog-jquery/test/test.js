@@ -6,9 +6,9 @@ var describe = mocha.describe
 var it = mocha.it
 var before = mocha.before
 var expect = require('chai').expect
+var gitDummyCommit = require('git-dummy-commit')
 var shell = require('shelljs')
 var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
 
 describe('jquery preset', function () {
   before(function () {
@@ -19,19 +19,12 @@ describe('jquery preset', function () {
     shell.cd('tmp')
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
-
-    writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m"Core: Make jQuery objects iterable"')
-    writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m"CSS: Don\'t name the anonymous swap function"')
-    writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m"Event: Remove an internal argument to the on method" -m"Fixes #2, #4, gh-200"')
-    writeFileSync('test4', '')
-    shell.exec('git add --all && git commit -m"Manipulation: Remove an internal argument to the remove method" -m"Closes #22"')
-    writeFileSync('test5', '')
-    shell.exec('git add --all && git commit -m"Bad commit"')
-    writeFileSync('test6', '')
-    shell.exec('git add --all && git commit -m"Core: Create jQuery.ajax" -m"Closes gh-100"')
+    gitDummyCommit(['Core: Make jQuery objects iterable'])
+    gitDummyCommit(['CSS: Don\'t name the anonymous swap function'])
+    gitDummyCommit(['Event: Remove an internal argument to the on method', 'Fixes #2, #4, gh-200'])
+    gitDummyCommit(['Manipulation: Remove an internal argument to the remove method', 'Closes #22'])
+    gitDummyCommit(['Bad commit'])
+    gitDummyCommit(['Core: Create jQuery.ajax', 'Closes gh-100'])
   })
 
   it('should generate a changelog', function (done) {

@@ -37,7 +37,7 @@ describe('cli', function () {
   })
 
   it('should work without any arguments', function (done) {
-    var cp = spawn(cliPath, {
+    var cp = spawn(process.execPath, [cliPath], {
       stdio: [process.stdin, null, null]
     })
 
@@ -50,7 +50,7 @@ describe('cli', function () {
   })
 
   it('should output to the same file if `-s` presents when appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s', '--append'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s', '--append'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -65,7 +65,7 @@ describe('cli', function () {
   })
 
   it('should output to the same file if `-s` presents when not appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -80,7 +80,7 @@ describe('cli', function () {
   })
 
   it('should output to the same file if `infile` and `outfile` are the same', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -96,7 +96,7 @@ describe('cli', function () {
   })
 
   it('should work if `infile` is missing but `outfile` presets', function (done) {
-    var cp = spawn(cliPath, ['-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
+    var cp = spawn(process.execPath, [cliPath, '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -110,7 +110,7 @@ describe('cli', function () {
   })
 
   it('should work if both `infile` and `outfile` presets when not appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -124,7 +124,7 @@ describe('cli', function () {
   })
 
   it('should work if both `infile` and `outfile` presets when appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -138,7 +138,7 @@ describe('cli', function () {
   })
 
   it('should work if `infile` presets but `outfile` is missing when not appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -151,7 +151,7 @@ describe('cli', function () {
   })
 
   it('should work if `infile` presets but `outfile` is missing when appending', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--append'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -164,7 +164,7 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `releaseCount` is `0` (stdout)', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0], {
       stdio: [process.stdin, null, null]
     })
 
@@ -180,7 +180,7 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `releaseCount` is `0` (file)', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0, '-s'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0, '-s'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -196,7 +196,7 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `infile` is ENOENT', function (done) {
-    var cp = spawn(cliPath, ['-i', 'no-such-file.md'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -213,7 +213,7 @@ describe('cli', function () {
   })
 
   it('should warn if `infile` is ENOENT', function (done) {
-    var cp = spawn(cliPath, ['-i', 'no-such-file.md', '-v'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md', '-v'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -228,7 +228,7 @@ describe('cli', function () {
   })
 
   it('should create `infile` if `infile` is ENOENT and output to the same file', function (done) {
-    var cp = spawn(cliPath, ['-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
+    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -244,7 +244,7 @@ describe('cli', function () {
   })
 
   it('should error if `-s` presents but `-i` is missing', function (done) {
-    var cp = spawn(cliPath, ['-s'], {
+    var cp = spawn(process.execPath, [cliPath, '-s'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -261,7 +261,7 @@ describe('cli', function () {
   })
 
   it('should error if it fails to get any options file', function (done) {
-    var cp = spawn(cliPath, ['--config', 'no'], {
+    var cp = spawn(process.execPath, [cliPath, '--config', 'no'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -278,7 +278,7 @@ describe('cli', function () {
   })
 
   it('-k should work', function (done) {
-    var cp = spawn(cliPath, ['-k', path.join(__dirname, 'fixtures/_package.json')], {
+    var cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -295,7 +295,7 @@ describe('cli', function () {
   })
 
   it('--context should work with relative path', function (done) {
-    var cp = spawn(cliPath, ['--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
+    var cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -307,7 +307,7 @@ describe('cli', function () {
   })
 
   it('--context should work with absolute path', function (done) {
-    var cp = spawn(cliPath, ['--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
+    var cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -319,7 +319,7 @@ describe('cli', function () {
   })
 
   it('--config should work with a return promise', function (done) {
-    var cp = spawn(cliPath, ['--config', '../fixtures/promise-config.js'], {
+    var cp = spawn(process.execPath, [cliPath, '--config', '../fixtures/promise-config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -331,7 +331,7 @@ describe('cli', function () {
   })
 
   it('--config should work with relative path', function (done) {
-    var cp = spawn(cliPath, ['--config', '../fixtures/config.js'], {
+    var cp = spawn(process.execPath, [cliPath, '--config', '../fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -343,7 +343,7 @@ describe('cli', function () {
   })
 
   it('--config should work with absolute path', function (done) {
-    var cp = spawn(cliPath, ['--config', path.join(__dirname, 'fixtures/config.js')], {
+    var cp = spawn(process.execPath, [cliPath, '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -357,7 +357,7 @@ describe('cli', function () {
   it('--preset should work', function (done) {
     writeFileSync('angular', '')
     shell.exec('git add --all && git commit -m"fix: fix it!"')
-    var cp = spawn(cliPath, ['--preset', 'angular'], {
+    var cp = spawn(process.execPath, [cliPath, '--preset', 'angular'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -370,7 +370,7 @@ describe('cli', function () {
   it('--preset "conventionalcommits" should work', function (done) {
     writeFileSync('angular', '')
     shell.exec('git add --all && git commit -m"fix: fix it!"')
-    var cp = spawn(cliPath, ['--preset', 'conventionalcommits'], {
+    var cp = spawn(process.execPath, [cliPath, '--preset', 'conventionalcommits'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -382,7 +382,7 @@ describe('cli', function () {
   })
 
   it('--config should work with --preset', function (done) {
-    var cp = spawn(cliPath, ['--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')], {
+    var cp = spawn(process.execPath, [cliPath, '--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -394,7 +394,7 @@ describe('cli', function () {
   })
 
   it('should be verbose', function (done) {
-    var cp = spawn(cliPath, ['-v', '-p', 'no'], {
+    var cp = spawn(process.execPath, [cliPath, '-v', '-p', 'no'], {
       stdio: [process.stdin, null, null]
     })
 

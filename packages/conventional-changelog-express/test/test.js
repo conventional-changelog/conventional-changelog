@@ -1,5 +1,4 @@
 'use strict'
-var child = require('child_process')
 var conventionalChangelogCore = require('conventional-changelog-core')
 var config = require('../')
 var mocha = require('mocha')
@@ -7,9 +6,9 @@ var describe = mocha.describe
 var it = mocha.it
 var before = mocha.before
 var expect = require('chai').expect
+var gitDummyCommit = require('git-dummy-commit')
 var shell = require('shelljs')
 var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
 
 describe('express preset', function () {
   before(function (done) {
@@ -20,22 +19,14 @@ describe('express preset', function () {
     shell.cd('tmp')
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
-
-    writeFileSync('test1', '')
-    child.exec('git add --all && git commit -m"deps: type-is@~1.6.3\n\n - deps: mime-types@~2.1.1\n - perf: reduce try block size\n - perf: remove bitwise operations"', function () {
-      writeFileSync('test2', '')
-      child.exec('git add --all && git commit -m"perf: use saved reference to http.STATUS_CODES\n\ncloses #2602"', function () {
-        writeFileSync('test3', '')
-        shell.exec('git add --all && git commit -m"docs: add license comments"')
-        writeFileSync('test4', '')
-        child.exec('git add --all && git commit -m"deps: path-to-regexp@0.1.4"', function () {
-          writeFileSync('test5', '')
-          shell.exec('git add --all && git commit -m"Bad commit"')
-
-          done()
-        })
-      })
-    })
+    gitDummyCommit(['deps: type-is@~1.6.3', '', ' - deps: mime-types@~2.1.1',
+      ' - perf: reduce try block size',
+      ' - perf: remove bitwise operations'])
+    gitDummyCommit(['perf: use saved reference to http.STATUS_CODES', '', 'closes #2602'])
+    gitDummyCommit(['docs: add license comments'])
+    gitDummyCommit(['deps: path-to-regexp@0.1.4'])
+    gitDummyCommit(['Bad commit'])
+    done()
   })
 
   it('should work if there is no semver tag', function (done) {

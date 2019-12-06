@@ -6,7 +6,7 @@ const conventionalRecommendedBump = require('../index')
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const fs = require('fs')
+const gitDummyCommit = require('git-dummy-commit')
 const shell = require('shelljs')
 const temp = require('temp')
 
@@ -20,30 +20,28 @@ betterThanBefore.setups([
     shell.exec('git init')
   },
   () => { // 2
-    fs.writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m \'feat!: my first commit\'')
+    gitDummyCommit(['feat!: my first commit'])
   },
   () => { // 3
     shell.exec('git tag v1.0.0')
   },
   () => { // 4
-    fs.writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m \'feat: my second commit\'')
+    // we need non-empty commit, so we can revert it
+    shell.touch('file1')
+    shell.exec('git add file1')
+    gitDummyCommit(['feat: my second commit'])
   },
   () => { // 5
     shell.exec('git revert HEAD')
   },
   () => { // 6
-    fs.writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m \'feat: should not be taken into account\nBREAKING CHANGE: I broke the API\'')
+    gitDummyCommit(['feat: should not be taken into account', 'BREAKING CHANGE: I broke the API'])
     shell.exec('git tag ms/1.0.0')
-    fs.writeFileSync('test4', '')
-    shell.exec('git add --all && git commit -m \'feat: this should have been working\'')
+    gitDummyCommit(['feat: this should have been working'])
   },
   () => { // 7
     shell.exec('git tag my-package@1.0.0')
-    fs.writeFileSync('test6', '')
-    shell.exec('git add --all && git commit -m \'feat: this should have been working\'')
+    gitDummyCommit(['feat: this should have been working'])
   }
 ])
 

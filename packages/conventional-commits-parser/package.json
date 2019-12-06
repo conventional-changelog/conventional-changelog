@@ -46,5 +46,8 @@
   },
   "bin": {
     "conventional-commits-parser": "cli.js"
+  },
+  "devDependencies": {
+    "forceable-tty": "^0.1.0"
   }
 }

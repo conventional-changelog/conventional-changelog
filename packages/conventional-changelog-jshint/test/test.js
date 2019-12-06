@@ -1,5 +1,4 @@
 'use strict'
-var child = require('child_process')
 var conventionalChangelogCore = require('conventional-changelog-core')
 var config = require('../')
 var mocha = require('mocha')
@@ -7,9 +6,9 @@ var describe = mocha.describe
 var it = mocha.it
 var before = mocha.before
 var expect = require('chai').expect
+var gitDummyCommit = require('git-dummy-commit')
 var shell = require('shelljs')
 var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
 
 describe('jshint preset', function () {
   before(function (done) {
@@ -20,21 +19,12 @@ describe('jshint preset', function () {
     shell.cd('tmp')
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
-
-    writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m"[[Chore]] Move scope-manager to external file"')
-    writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m"[[Test]] Add test for gh-985. Fixes #985"')
-    writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m"[[FIX]] catch params are scoped to the catch only"')
-    shell.exec('git commit --allow-empty -m"[[Fix]] accidentally use lower-case"')
-    writeFileSync('test4', '')
-    child.exec('git add --all && git commit -m"[[FEAT]] Option to assume strict mode\n\nBREAKING CHANGE: Not backward compatible."', function () {
-      writeFileSync('test5', '')
-      shell.exec('git add --all && git commit -m"Bad commit"')
-
-      done()
-    })
+    gitDummyCommit(['[[Chore]] Move scope-manager to external file'])
+    gitDummyCommit(['[[Test]] Add test for gh-985. Fixes #985'])
+    gitDummyCommit(['[[FIX]] catch params are scoped to the catch only'])
+    gitDummyCommit(['[[Fix]] accidentally use lower-case'])
+    gitDummyCommit(['[[FEAT]] Option to assume strict mode', '', 'BREAKING CHANGE: Not backward compatible.'])
+    done()
   })
 
   it('should work if there is no semver tag', function (done) {

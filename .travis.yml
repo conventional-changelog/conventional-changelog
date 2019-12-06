@@ -3,9 +3,12 @@ language: node_js
 node_js:
   - '8'
   - '10'
-  - '11'
   - '12'
-  - '13'
+  
+os:
+  - windows
+  - linux
+  - osx
 
 matrix:
   fast_finish: true
@@ -14,15 +17,13 @@ cache:
   directories:
     - ${HOME}/.npm
 
-before_install:
-  - npm install --global npm@latest
-
 before_script:
   - git config --global user.name 'CI'
   - git config --global user.email 'dummy@example.org'
 
 script:
-  - npm test
+  - if [ "$TRAVIS_OS_NAME" == "windows" ]; then npm run test-windows ; else npm test ; fi
 
 after_script:
-  - nyc report --reporter=text-lcov | coveralls
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then nyc report --reporter=text-lcov | coveralls ; fi
+  
