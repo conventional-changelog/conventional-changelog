@@ -10,7 +10,7 @@ var args = meow(`
     --cwd                  path to git repository to be searched
     --lerna                parse lerna style git tags
     --package <name>       when listing lerna style tags, filter by a package
-    --tagPrefix <prefix>   prefix to remove from the tags during their processing`,
+    --tag-prefix <prefix>  prefix to remove from the tags during their processing`,
 {
   booleanDefault: undefined,
   flags: {
