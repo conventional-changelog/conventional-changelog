@@ -51,7 +51,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
         const from = i > 0
           ? reverseTags[i - 1]
           : gitRawCommitsOpts.from || ''
-        if (gitRawCommitsOpts.from) {
+        if (gitRawCommitsOpts.from && gitRawCommitsOpts.from !== from) {
           let hasData = false
           return commitsRange(gitRawCommitsOpts.from, to)
             .on('data', function () {
