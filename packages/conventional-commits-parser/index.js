@@ -7,7 +7,7 @@ var _ = require('lodash')
 
 function assignOpts (options) {
   options = _.extend({
-    headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
+    headerPattern: /^(\w*)(?:\(([\w$.\-*/ ]*)\))?: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
     referenceActions: [
       'close',
