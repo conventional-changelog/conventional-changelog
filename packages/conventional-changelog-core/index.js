@@ -27,6 +27,15 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
 
       var reverseTags = context.gitSemverTags.slice(0).reverse()
       reverseTags.push('HEAD')
+
+      if (gitRawCommitsOpts.from) {
+        if (reverseTags.indexOf(gitRawCommitsOpts.from) !== -1) {
+          reverseTags = reverseTags.slice(reverseTags.indexOf(gitRawCommitsOpts.from))
+        } else {
+          reverseTags = [gitRawCommitsOpts.from, 'HEAD']
+        }
+      }
+
       var commitsErrorThrown = false
 
       var commitsStream = new stream.Readable({
@@ -47,30 +56,16 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
           })
       }
 
-      const streams = reverseTags.map((to, i) => {
+      var streams = reverseTags.map((to, i) => {
         const from = i > 0
           ? reverseTags[i - 1]
-          : gitRawCommitsOpts.from || ''
-        if (gitRawCommitsOpts.from) {
-          let hasData = false
-          return commitsRange(gitRawCommitsOpts.from, to)
-            .on('data', function () {
-              hasData = true
-            })
-            .pipe(addStream(() => {
-              if (!hasData) {
-                const s = new stream.Readable()
-                s._read = function () { }
-                s.push(null)
-                return s
-              } else {
-                return commitsRange(from, to)
-              }
-            }))
-        } else {
-          return commitsRange(from, to)
-        }
+          : ''
+        return commitsRange(from, to)
       })
+
+      if (gitRawCommitsOpts.from) {
+        streams = streams.splice(1)
+      }
 
       if (gitRawCommitsOpts.reverse) {
         streams.reverse()

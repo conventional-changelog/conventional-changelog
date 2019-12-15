@@ -803,6 +803,28 @@ describe('conventionalChangelogCore', function () {
       }))
   })
 
+  it('should read each commit range exactly once', function (done) {
+    preparing(9)
+
+    conventionalChangelogCore({
+      preset: {
+        compareUrlFormat: '/compare/{{previousTag}}...{{currentTag}}'
+      }
+    }, {}, {}, {}, {
+      headerPartial: '',
+      commitPartial: '* {{header}}\n'
+    })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.equal('\n* test8\n* test8\n* test9\n\n\n\n')
+
+        cb()
+      }, function () {
+        done()
+      }))
+  })
+
   it('should recreate the changelog from scratch', function (done) {
     preparing(10)
 
