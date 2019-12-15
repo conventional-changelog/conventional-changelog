@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.3...conventional-changelog-core@4.1.4) (2019-12-15)
+
+
+### Bug Fixes
+
+* **conventional-changelog-core:** fix duplicated commits when `from` is specified ([#573](https://github.com/conventional-changelog/conventional-changelog/issues/573)) ([f1feeab](https://github.com/conventional-changelog/conventional-changelog/commit/f1feeab86ed28f1e75c8f3a6b072c9dc18111c65)), closes [#567](https://github.com/conventional-changelog/conventional-changelog/issues/567)
+
+
+
+
+
 ## [4.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.2...conventional-changelog-core@4.1.3) (2019-11-27)
 
 
