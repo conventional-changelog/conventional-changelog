@@ -210,6 +210,32 @@ describe('conventionalChangelogCore', function () {
       }))
   })
 
+  it('should work when there is no `HEAD` ref', function (done) {
+    preparing(2)
+    shell.rm('.git/refs/HEAD')
+    var i = 0
+
+    conventionalChangelogCore({
+      releaseCount: 100
+    })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        if (i === 0) {
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('Third commit')
+        } else if (i === 1) {
+          expect(chunk).to.include('First commit')
+        }
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(2)
+        done()
+      }))
+  })
+
   it('should honour `gitRawCommitsOpts.from`', function (done) {
     preparing(2)
 

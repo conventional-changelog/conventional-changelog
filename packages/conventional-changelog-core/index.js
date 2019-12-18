@@ -7,6 +7,8 @@ const conventionalChangelogWriter = require('conventional-changelog-writer')
 const _ = require('lodash')
 const stream = require('stream')
 const through = require('through2')
+const shell = require('shelljs')
+
 const mergeConfig = require('./lib/merge-config')
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   writerOpts = writerOpts || {}
@@ -15,6 +17,26 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
     objectMode: writerOpts.includeDetails
   })
   readable._read = function () { }
+
+  var commitsErrorThrown = false
+
+  var commitsStream = new stream.Readable({
+    objectMode: true
+  })
+  commitsStream._read = function () { }
+
+  function commitsRange (from, to) {
+    return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+      from: from,
+      to: to
+    }))
+      .on('error', function (err) {
+        if (!commitsErrorThrown) {
+          setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
+          commitsErrorThrown = true
+        }
+      })
+  }
 
   mergeConfig(options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts)
     .then(function (data) {
@@ -25,59 +47,43 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       writerOpts = data.writerOpts
       gitRawExecOpts = data.gitRawExecOpts
 
-      var reverseTags = context.gitSemverTags.slice(0).reverse()
-      reverseTags.push('HEAD')
+      if (shell.exec('git rev-parse --verify HEAD', { silent: true }).code === 0) {
+        var reverseTags = context.gitSemverTags.slice(0).reverse()
+        reverseTags.push('HEAD')
 
-      if (gitRawCommitsOpts.from) {
-        if (reverseTags.indexOf(gitRawCommitsOpts.from) !== -1) {
-          reverseTags = reverseTags.slice(reverseTags.indexOf(gitRawCommitsOpts.from))
-        } else {
-          reverseTags = [gitRawCommitsOpts.from, 'HEAD']
+        if (gitRawCommitsOpts.from) {
+          if (reverseTags.indexOf(gitRawCommitsOpts.from) !== -1) {
+            reverseTags = reverseTags.slice(reverseTags.indexOf(gitRawCommitsOpts.from))
+          } else {
+            reverseTags = [gitRawCommitsOpts.from, 'HEAD']
+          }
         }
-      }
 
-      var commitsErrorThrown = false
+        var streams = reverseTags.map((to, i) => {
+          const from = i > 0
+            ? reverseTags[i - 1]
+            : ''
+          return commitsRange(from, to)
+        })
 
-      var commitsStream = new stream.Readable({
-        objectMode: true
-      })
-      commitsStream._read = function () { }
+        if (gitRawCommitsOpts.from) {
+          streams = streams.splice(1)
+        }
 
-      function commitsRange (from, to) {
-        return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
-          from: from,
-          to: to
-        }))
-          .on('error', function (err) {
-            if (!commitsErrorThrown) {
-              setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
-              commitsErrorThrown = true
-            }
+        if (gitRawCommitsOpts.reverse) {
+          streams.reverse()
+        }
+
+        streams.reduce((prev, next) => next.pipe(addStream(prev)))
+          .on('data', function (data) {
+            setImmediate(commitsStream.emit.bind(commitsStream), 'data', data)
           })
+          .on('end', function () {
+            setImmediate(commitsStream.emit.bind(commitsStream), 'end')
+          })
+      } else {
+        commitsStream = gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
       }
-
-      var streams = reverseTags.map((to, i) => {
-        const from = i > 0
-          ? reverseTags[i - 1]
-          : ''
-        return commitsRange(from, to)
-      })
-
-      if (gitRawCommitsOpts.from) {
-        streams = streams.splice(1)
-      }
-
-      if (gitRawCommitsOpts.reverse) {
-        streams.reverse()
-      }
-
-      streams.reduce((prev, next) => next.pipe(addStream(prev)))
-        .on('data', function (data) {
-          setImmediate(commitsStream.emit.bind(commitsStream), 'data', data)
-        })
-        .on('end', function () {
-          setImmediate(commitsStream.emit.bind(commitsStream), 'end')
-        })
 
       commitsStream
         .on('error', function (err) {
