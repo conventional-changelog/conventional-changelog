@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.4...conventional-changelog-core@4.1.5) (2019-12-24)
+
+
+### Bug Fixes
+
+* **conventional-changelog-core:** check if HEAD ref exists before using it ([#578](https://github.com/conventional-changelog/conventional-changelog/issues/578)) ([dcb4b22](https://github.com/conventional-changelog/conventional-changelog/commit/dcb4b22970c4d15ab9c3fed97951dc2d38814982))
+
+
+
+
+
 ## [4.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.3...conventional-changelog-core@4.1.4) (2019-12-15)
 
 
