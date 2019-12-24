@@ -39,6 +39,7 @@
     "q": "^1.5.1",
     "read-pkg": "^3.0.0",
     "read-pkg-up": "^3.0.0",
+    "shelljs": "^0.8.3",
     "through2": "^3.0.0"
   },
   "scripts": {
