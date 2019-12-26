@@ -259,6 +259,20 @@ describe('regex', function () {
       expect(match[3]).to.equal('3')
     })
 
+    it('should be case sensitve if set in options', function () {
+      var string = 'closes gh-1, amends GH-2, fixes #3'
+      reReferenceParts = regex({
+        issuePrefixes: ['GH-'],
+        issuePrefixesCaseSensitive: true
+      }).referenceParts
+
+      var match = reReferenceParts.exec(string)
+      expect(match[0]).to.equal('closes gh-1, amends GH-2')
+      expect(match[1]).to.equal(undefined)
+      expect(match[2]).to.equal('GH-')
+      expect(match[3]).to.equal('2')
+    })
+
     it('should match nothing if there is no customized prefix', function () {
       var string = 'closes gh-1, amends #2, fixes prefix-3'
       reReferenceParts = regex().referenceParts

@@ -31,15 +31,16 @@ var cli = meow(`
       conventional-commits-parser log2.txt '===' >> parsed.txt
 
     Options
-      -p, --header-pattern           Regex to match header pattern
-      -c, --header-correspondence    Comma separated parts used to define what capturing group of 'headerPattern' captures what
-      -r, --reference-actions        Comma separated keywords that used to reference issues
-      -i, --issue-prefixes           Comma separated prefixes of an issue
-      -n, --note-keywords            Comma separated keywords for important notes
-      -f, --field-pattern            Regex to match other fields
-      --revert-pattern               Regex to match revert pattern
-      --revert-correspondence        Comma separated fields used to define what the commit reverts
-      -v, --verbose                  Verbose output
+      -p, --header-pattern              Regex to match header pattern
+      -c, --header-correspondence       Comma separated parts used to define what capturing group of 'headerPattern' captures what
+      -r, --reference-actions           Comma separated keywords that used to reference issues
+      -i, --issue-prefixes              Comma separated prefixes of an issue
+      --issue-prefixes-case-sensitive   Treat issue prefixes as case sensitive
+      -n, --note-keywords               Comma separated keywords for important notes
+      -f, --field-pattern               Regex to match other fields
+      --revert-pattern                  Regex to match revert pattern
+      --revert-correspondence           Comma separated fields used to define what the commit reverts
+      -v, --verbose                     Verbose output
 `, {
   flags: {
     'header-pattern': {
@@ -57,6 +58,9 @@ var cli = meow(`
     'issue-prefixes': {
       alias: 'i',
       type: 'string'
+    },
+    'issue-prefixes-case-sensitive': {
+      type: 'boolean'
     },
     'note-keywords': {
       alias: 'n',
