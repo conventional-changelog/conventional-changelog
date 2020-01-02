@@ -20,7 +20,7 @@ module.exports = function (config) {
         if (commit.notes.length > 0) {
           breakings += commit.notes.length
           level = 0
-        } else if (commit.type === 'feat') {
+        } else if (commit.type === 'feat' || commit.type === 'feature') {
           features += 1
           if (level === 2) {
             level = 1
