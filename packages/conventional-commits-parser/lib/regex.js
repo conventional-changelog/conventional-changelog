@@ -21,12 +21,13 @@ function getNotesRegex (noteKeywords) {
   return new RegExp('^[\\s|*]*(' + join(noteKeywords, '|') + ')[:\\s]+(.*)', 'i')
 }
 
-function getReferencePartsRegex (issuePrefixes) {
+function getReferencePartsRegex (issuePrefixes, issuePrefixesCaseSensitive) {
   if (!issuePrefixes) {
     return reNomatch
   }
 
-  return new RegExp('(?:.*?)??\\s*([\\w-\\.\\/]*?)??(' + join(issuePrefixes, '|') + ')([\\w-]*\\d+)', 'gi')
+  var flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
+  return new RegExp('(?:.*?)??\\s*([\\w-\\.\\/]*?)??(' + join(issuePrefixes, '|') + ')([\\w-]*\\d+)', flags)
 }
 
 function getReferencesRegex (referenceActions) {
@@ -42,7 +43,7 @@ function getReferencesRegex (referenceActions) {
 module.exports = function (options) {
   options = options || {}
   var reNotes = getNotesRegex(options.noteKeywords)
-  var reReferenceParts = getReferencePartsRegex(options.issuePrefixes)
+  var reReferenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)
   var reReferences = getReferencesRegex(options.referenceActions)
 
   return {

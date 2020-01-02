@@ -193,6 +193,12 @@ Type: `array` of `string` or `string` Default: `['#']`
 
 The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
 
+##### issuePrefixesCaseSensitive
+
+Type: `boolean` Default: false
+
+Used to define if `issuePrefixes` should be considered case sensitive.
+
 ##### noteKeywords
 
 Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
