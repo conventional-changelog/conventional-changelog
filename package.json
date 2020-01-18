@@ -41,6 +41,7 @@
     "pretest": "npm run lint",
     "test": "nyc mocha --timeout 30000 packages/*/test{,/*}.js",
     "test-windows": "mocha --timeout 60000 packages/*/test{,/*}.js",
+    "test-angularx": "nyc mocha --timeout 30000 packages/conventional-changelog-angularx/test{,/*}.js",
     "release": "lerna publish --conventional-commits --dist-tag=next"
   },
   "version": "1.0.0",
