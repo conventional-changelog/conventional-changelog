@@ -59,7 +59,7 @@
     "git-dummy-commit": "^1.2.0",
     "git-tails": "^1.0.0",
     "lerna": "^3.18.5",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.0",
     "mocha": "^6.0.0",
     "nyc": "^15.0.0",
     "pinkie-promise": "^2.0.0",
