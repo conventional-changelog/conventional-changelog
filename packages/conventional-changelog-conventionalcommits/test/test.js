@@ -346,7 +346,7 @@ describe('conventionalcommits.org preset', function () {
         done()
       }))
   })
-  
+
   it('should support "feature" as alias for "feat"', function (done) {
     preparing(7)
     var i = 0
