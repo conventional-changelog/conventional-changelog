@@ -46,8 +46,14 @@ var cli = meow(`
                                 Example of a config script: https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog-cli/test/fixtures/config.js
 
       -c, --context             A filepath of a json that is used to define template variables
+
       -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
+
       -t, --tag-prefix          Tag prefix to consider when reading the tags
+
+      -l, --loose-semver        Validate with semver with a loose option - allowing flexibility in the version format
+                                Default: false
+
       --commit-path             Generate a changelog scoped to a specific directory
 `, {
   booleanDefault: undefined,
@@ -103,6 +109,10 @@ var cli = meow(`
     'tag-prefix': {
       alias: 't',
       type: 'string'
+    },
+    'loose-semver': {
+      alias: 'l',
+      type: 'boolean'
     }
   }
 })

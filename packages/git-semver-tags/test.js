@@ -196,6 +196,30 @@ describe('git-semver-tags', function () {
       done()
     })
   })
+
+  it('should work with loose tag value and looseSemver option', function (done) {
+    writeFileSync('test7', '')
+    shell.exec('git add --all && git commit -m"Twelfth commit"')
+    shell.exec('git tag 99309570.3.011-1')
+
+    gitSemverTags({ looseSemver: true }, function (err, tags) {
+      if (err) done(err)
+      assert.deepStrictEqual(tags, ['99309570.3.011-1', 'v1.1.0'])
+      done()
+    })
+  })
+
+  it('should not work with loose tag value and no looseSemver option', function (done) {
+    writeFileSync('test8', '')
+    shell.exec('git add --all && git commit -m"Twelfth commit"')
+    shell.exec('git tag 99309570.3.011-1')
+
+    gitSemverTags(function (err, tags) {
+      if (err) done(err)
+      assert.deepStrictEqual(tags, ['v1.1.0'])
+      done()
+    })
+  })
 })
 
 describe('git semver tags on different cwd', function () {

@@ -37,6 +37,10 @@ module.exports = function gitSemverTags (opts, callback) {
     if (options.tagPrefix) {
       tagPrefixRegexp = new RegExp('^' + options.tagPrefix + '(.*)')
     }
+    var semverOptions
+    if (options.looseSemver) {
+      semverOptions = { loose: true }
+    }
     data.split('\n').forEach(function (decorations) {
       var match
       while ((match = regex.exec(decorations))) {
@@ -47,10 +51,10 @@ module.exports = function gitSemverTags (opts, callback) {
           }
         } else if (options.tagPrefix) {
           var matches = tag.match(tagPrefixRegexp)
-          if (matches && semverValid(matches[1])) {
+          if (matches && semverValid(matches[1], semverOptions)) {
             tags.push(tag)
           }
-        } else if (semverValid(tag)) {
+        } else if (semverValid(tag, semverOptions)) {
           tags.push(tag)
         }
       }

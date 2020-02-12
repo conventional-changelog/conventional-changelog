@@ -860,5 +860,38 @@ describe('util', function () {
         hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
       }])
     })
+
+    it('should set isPatch to true with loose semver option', function () {
+      var log = util.generate({
+        mainTemplate: '{{isPatch}} {{version}}',
+        finalizeContext: function (context) {
+          return context
+        },
+        debug: function () {},
+        looseSemver: true
+      }, [], {
+        version: '1.0.0'
+      }, {
+        version: '1.0.01-1'
+      })
+
+      expect(log).to.equal('true 1.0.01-1')
+    })
+
+    it('should not set isPatch with loose semver but no option provided', function () {
+      var log = util.generate({
+        mainTemplate: '{{isPatch}} {{version}}',
+        finalizeContext: function (context) {
+          return context
+        },
+        debug: function () {}
+      }, [], {
+        version: '1.0.0'
+      }, {
+        version: '1.0.01-1'
+      })
+
+      expect(log).to.equal(' 1.0.01-1')
+    })
   })
 })

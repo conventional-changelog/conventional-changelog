@@ -305,6 +305,7 @@ describe('conventionalChangelogWriter', function () {
         }))
         .pipe(through(function (chunk, enc, cb) {
           expect(chunk.toString()).to.contain('# 1.0.0 ')
+          console.log(chunk.toString())
 
           i++
           cb(null)
@@ -846,6 +847,70 @@ describe('conventionalChangelogWriter', function () {
         .pipe(through(function () {
           done(new Error('should not flush when it is the only potential release'))
         }, function () {
+          done()
+        }))
+    })
+  })
+
+  describe('generate loose semver', function () {
+    function getStream () {
+      var upstream = through.obj()
+      upstream.write({
+        header: 'feat(scope): broadcast $destroy event on scope destruction',
+        body: null,
+        footer: null,
+        notes: [],
+        references: [],
+        committerDate: '2015-04-07 14:17:05 +1000'
+      })
+      upstream.write({
+        header: 'fix(ng-list): Allow custom separator',
+        body: 'bla bla bla',
+        footer: null,
+        notes: [],
+        references: [],
+        version: '1.0.01-1',
+        committerDate: '2015-04-07 15:00:44 +1000'
+      })
+      upstream.write({
+        header: 'perf(template): tweak',
+        body: 'My body.',
+        footer: null,
+        notes: [],
+        references: [],
+        committerDate: '2015-04-07 15:01:30 +1000'
+      })
+      upstream.end()
+
+      return upstream
+    }
+
+    it('should generate on `\'version\'` if it\'s at least a valid loose semver and loose option is passed', function (done) {
+      var i = 0
+
+      getStream()
+        .pipe(conventionalChangelogWriter({ version: '1.1.01-1' }, { looseSemver: true }))
+        .pipe(through(function (chunk, enc, cb) {
+          chunk = chunk.toString()
+
+          if (i === 0) {
+            expect(chunk).to.include('## <small>1.1.01-1 (' + today)
+            expect(chunk).to.include('feat(scope): ')
+
+            expect(chunk).to.not.include('fix(ng-list): ')
+            expect(chunk).to.not.include('perf(template): ')
+          } else {
+            expect(chunk).to.include('## <small>1.0.01-1 (2015-04-07)</small>')
+            expect(chunk).to.include('fix(ng-list): ')
+            expect(chunk).to.include('perf(template): ')
+
+            expect(chunk).to.not.include('feat(scope): ')
+          }
+
+          i++
+          cb(null)
+        }, function () {
+          expect(i).to.equal(2)
           done()
         }))
     })
