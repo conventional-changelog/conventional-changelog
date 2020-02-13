@@ -145,7 +145,8 @@ var options = _.omitBy({
   releaseCount: releaseCount,
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
-  tagPrefix: flags.tagPrefix
+  tagPrefix: flags.tagPrefix,
+  looseSemver: flags.looseSemver
 }, _.isUndefined)
 
 if (flags.verbose) {
