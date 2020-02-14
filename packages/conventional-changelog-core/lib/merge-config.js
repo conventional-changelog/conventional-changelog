@@ -322,7 +322,8 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       },
       config.writerOpts, {
         reverse: options.append,
-        doFlush: options.outputUnreleased
+        doFlush: options.outputUnreleased,
+        looseSemver: options.looseSemver
       },
       writerOpts
       )
