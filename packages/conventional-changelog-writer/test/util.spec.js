@@ -861,6 +861,24 @@ describe('util', function () {
       }])
     })
 
+    it('should allow passed in context to override isPatch', function () {
+      var log = util.generate({
+        mainTemplate: '{{isPatch}} {{version}}',
+        finalizeContext: function (context) {
+          return context
+        },
+        debug: function () {},
+        looseSemver: true
+      }, [], {
+        version: '1.0.01',
+        isPatch: false
+      }, {
+        version: '1.0.01'
+      })
+
+      expect(log).to.equal('false 1.0.01')
+    })
+
     it('should set isPatch to true with loose semver option', function () {
       var log = util.generate({
         mainTemplate: '{{isPatch}} {{version}}',

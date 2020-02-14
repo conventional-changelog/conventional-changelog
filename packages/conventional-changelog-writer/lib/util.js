@@ -186,8 +186,8 @@ function generate (options, commits, context, keyCommit) {
   if (options.looseSemver) {
     semverOptions = { loose: true }
   }
-  if (context.version && semver.valid(context.version, semverOptions)) {
-    context.isPatch = context.isPatch || semver.patch(context.version, options.looseSemver) !== 0
+  if (context.version && semver.valid(context.version, semverOptions) && typeof context.isPatch === 'undefined') {
+    context.isPatch = semver.patch(context.version, options.looseSemver) !== 0
   }
 
   context = options.finalizeContext(context, options, filteredCommits, keyCommit, commits)
