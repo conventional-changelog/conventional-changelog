@@ -24,6 +24,11 @@ var cli = meow(`
     -k, --pkg                 A filepath of where your package.json is located
     -a, --append              Should the generated block be appended
     -r, --release-count       How many releases to be generated from the latest
+    -m, --merge-commit-filter Configure how to handle merge commits. Must be one of the following:
+                                exclude: Merge commits will be ignored.
+                                include: Merge commits will be included. 
+                                only-merges: Only merge commits will be processed. 
+                                Default: exclude
     -v, --verbose             Verbose output
     -c, --context             A filepath of a json that is used to define template variables
     -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
@@ -63,6 +68,10 @@ var cli = meow(`
     'release-count': {
       alias: 'r',
       type: 'number'
+    },
+    'merge-commit-filter': {
+      alias: 'm',
+      type: 'string'
     },
     verbose: {
       alias: 'v',

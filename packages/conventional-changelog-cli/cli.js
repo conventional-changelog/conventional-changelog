@@ -36,6 +36,12 @@ var cli = meow(`
       -r, --release-count       How many releases to be generated from the latest
                                 If 0, the whole changelog will be regenerated and the outfile will be overwritten
                                 Default: 1
+                                
+      -m, --merge-commit-filter Configure how to handle merge commits. Must be one of the following:
+                                exclude: Merge commits will be ignored.
+                                include: Merge commits will be included. 
+                                only-merges: Only merge commits will be processed. 
+                                Default: exclude
 
       -u, --output-unreleased   Output unreleased changelog
 
@@ -79,6 +85,10 @@ var cli = meow(`
     'release-count': {
       alias: 'r',
       type: 'number'
+    },
+    'merge-commit-filter': {
+      alias: 'm',
+      type: 'string'
     },
     'output-unreleased': {
       alias: 'u',
