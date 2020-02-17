@@ -53,7 +53,11 @@ betterThanBefore.setups([
   },
   function () {
     shell.exec('git tag v0.1.0')
-    gitDummyCommit('feat: some more features')
+    gitDummyCommit('feat: some more feats')
+  },
+  function () {
+    shell.exec('git tag v0.2.0')
+    gitDummyCommit('feature: some more features')
   },
   function () {
     gitDummyCommit(['feat(*): implementing #5 by @dlmr', ' closes #10'])
@@ -332,6 +336,31 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk, enc, cb) {
         chunk = chunk.toString()
 
+        expect(chunk).to.include('some more feats')
+        expect(chunk).to.not.include('BREAKING')
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(1)
+        done()
+      }))
+  })
+
+  it('should support "feature" as alias for "feat"', function (done) {
+    preparing(7)
+    var i = 0
+
+    conventionalChangelogCore({
+      config: preset,
+      outputUnreleased: true
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
         expect(chunk).to.include('some more features')
         expect(chunk).to.not.include('BREAKING')
 
@@ -344,7 +373,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('should work with unknown host', function (done) {
-    preparing(6)
+    preparing(7)
     var i = 0
 
     conventionalChangelogCore({
@@ -374,7 +403,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('should work specifying where to find a package.json using conventional-changelog-core', function (done) {
-    preparing(7)
+    preparing(8)
     var i = 0
 
     conventionalChangelogCore({
@@ -402,7 +431,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('should fallback to the closest package.json when not providing a location for a package.json', function (done) {
-    preparing(7)
+    preparing(8)
     var i = 0
 
     conventionalChangelogCore({
@@ -428,7 +457,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('should support non public GitHub repository locations', function (done) {
-    preparing(7)
+    preparing(8)
 
     conventionalChangelogCore({
       config: preset,
@@ -453,7 +482,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('should only replace with link to user if it is an username', function (done) {
-    preparing(8)
+    preparing(9)
 
     conventionalChangelogCore({
       config: preset
@@ -474,7 +503,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('supports multiple lines of footer information', function (done) {
-    preparing(8)
+    preparing(9)
 
     conventionalChangelogCore({
       config: preset
@@ -492,7 +521,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('does not require that types are case sensitive', function (done) {
-    preparing(8)
+    preparing(9)
 
     conventionalChangelogCore({
       config: preset
@@ -508,7 +537,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('populates breaking change if ! is present', function (done) {
-    preparing(8)
+    preparing(9)
 
     conventionalChangelogCore({
       config: preset
@@ -524,7 +553,7 @@ describe('conventionalcommits.org preset', function () {
   })
 
   it('parses both default (Revert "<subject>") and custom (revert: <subject>) revert commits', function (done) {
-    preparing(9)
+    preparing(10)
 
     conventionalChangelogCore({
       config: preset
