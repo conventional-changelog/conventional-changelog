@@ -64,7 +64,8 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
       tagPrefix: options.tagPrefix,
-      skipUnstable: options.skipUnstable
+      skipUnstable: options.skipUnstable,
+      cwd: options.path
     }, (err, tags) => {
       if (err) {
         return cb(err)
