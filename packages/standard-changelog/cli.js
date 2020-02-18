@@ -26,8 +26,8 @@ const cli = meow(`
     -r, --release-count       How many releases to be generated from the latest
     -m, --merge-commit-filter Configure how to handle merge commits. Must be one of the following:
                                 exclude: Merge commits will be ignored.
-                                include: Merge commits will be included. 
-                                only-merges: Only merge commits will be processed. 
+                                include: Merge commits will be included.
+                                only-merges: Only merge commits will be processed.
                                 Default: exclude
     -v, --verbose             Verbose output
     -c, --context             A filepath of a json that is used to define template variables
@@ -98,6 +98,7 @@ const sameFile = flags.sameFile
 const outfile = sameFile ? (flags.outfile || infile) : flags.outfile
 const append = flags.append
 const releaseCount = flags.firstRelease ? 0 : flags.releaseCount
+const mergeCommitFilter = flags.mergeCommitFilter || 'exclude'
 
 const options = _.omitBy({
   preset: flags.preset,
@@ -106,6 +107,7 @@ const options = _.omitBy({
   },
   append: append,
   releaseCount: releaseCount,
+  mergeCommitFilter: mergeCommitFilter,
   lernaPackage: flags.lernaPackage
 }, _.isUndefined)
 
@@ -132,7 +134,21 @@ try {
   outputError(err)
 }
 
-const changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
+const gitRawCommitsOpts = {}
+
+if (options.mergeCommitFilter) {
+  if (options.mergeCommitFilter === 'include') {
+    gitRawCommitsOpts.merges = null
+  } else if (options.mergeCommitFilter === 'only-merges') {
+    gitRawCommitsOpts.merges = true
+  } else { // default to options.mergeCommitFilter === 'exclude'
+    gitRawCommitsOpts.merges = false
+  }
+}
+
+if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
+
+const changelogStream = standardChangelog(options, templateContext, gitRawCommitsOpts)
   .on('error', function (err) {
     outputError(err)
   })
