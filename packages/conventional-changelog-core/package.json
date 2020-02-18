@@ -13,7 +13,7 @@
     "log"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "license": "MIT",
   "files": [

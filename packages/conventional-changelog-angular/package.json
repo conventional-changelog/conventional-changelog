@@ -25,7 +25,7 @@
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "license": "ISC",
   "bugs": {
