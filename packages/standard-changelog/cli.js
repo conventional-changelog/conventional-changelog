@@ -98,6 +98,7 @@ var sameFile = flags.sameFile
 var outfile = sameFile ? (flags.outfile || infile) : flags.outfile
 var append = flags.append
 var releaseCount = flags.firstRelease ? 0 : flags.releaseCount
+var mergeCommitFilter = flags.mergeCommitFilter || 'exclude'
 
 var options = _.omitBy({
   preset: flags.preset,
@@ -106,6 +107,7 @@ var options = _.omitBy({
   },
   append: append,
   releaseCount: releaseCount,
+  mergeCommitFilter: mergeCommitFilter,
   lernaPackage: flags.lernaPackage
 }, _.isUndefined)
 
@@ -132,7 +134,21 @@ try {
   outputError(err)
 }
 
-var changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
+var gitRawCommitsOpts = {}
+
+if (options.mergeCommitFilter) {
+  if (options.mergeCommitFilter === 'include') {
+    gitRawCommitsOpts.merges = null
+  } else if (options.mergeCommitFilter === 'only-merges') {
+    gitRawCommitsOpts.merges = true
+  } else { // default to options.mergeCommitFilter === 'exclude'
+    gitRawCommitsOpts.merges = false
+  }
+}
+
+if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
+
+var changelogStream = standardChangelog(options, templateContext, gitRawCommitsOpts)
   .on('error', function (err) {
     outputError(err)
   })

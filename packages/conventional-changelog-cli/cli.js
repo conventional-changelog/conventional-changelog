@@ -124,6 +124,7 @@ var outfile = flags.outfile
 var sameFile = flags.sameFile
 var append = flags.append
 var releaseCount = flags.releaseCount
+var mergeCommitFilter = flags.mergeCommitFilter || 'exclude'
 
 if (infile && infile === outfile) {
   sameFile = true
@@ -143,6 +144,7 @@ var options = _.omitBy({
   },
   append: append,
   releaseCount: releaseCount,
+  mergeCommitFilter: mergeCommitFilter,
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
   tagPrefix: flags.tagPrefix
@@ -175,6 +177,17 @@ try {
 }
 
 var gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {})
+
+if (options.mergeCommitFilter) {
+  if (options.mergeCommitFilter === 'include') {
+    gitRawCommitsOpts.merges = null
+  } else if (options.mergeCommitFilter === 'only-merges') {
+    gitRawCommitsOpts.merges = true
+  } else { // default to options.mergeCommitFilter === 'exclude'
+    gitRawCommitsOpts.merges = false
+  }
+}
+
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)

@@ -69,7 +69,6 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       }
     },
     append: false,
-    mergeCommitFilter: 'exclude',
     releaseCount: 1,
     debug: function () {},
     transform: function (commit, cb) {
@@ -241,6 +240,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       gitRawCommitsOpts = _.assign({
         format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
         from: fromTag,
+        merges: false,
         debug: options.debug
       },
       config.gitRawCommitsOpts,
@@ -249,16 +249,6 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
       if (options.append) {
         gitRawCommitsOpts.reverse = gitRawCommitsOpts.reverse || true
-      }
-
-      if (options.mergeCommitFilter) {
-        if (options.mergeCommitFilter === 'exclude') {
-          gitRawCommitsOpts.merges = false
-        } else if (options.mergeCommitFilter === 'only-merges') {
-          gitRawCommitsOpts.merges = true
-        } else if (options.mergeCommitFilter === 'include') {
-          // noop; just not set `merges` option in rawCommitOpts
-        }
       }
 
       parserOpts = _.assign(
