@@ -74,7 +74,7 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
         format: '%B%n-hash-%n%H',
         from: tags[0] || '',
         path: options.path
-      })
+      }, { cwd: options.path })
         .pipe(conventionalCommitsParser(parserOpts))
         .pipe(concat(data => {
           const commits = options.ignoreReverted ? conventionalCommitsFilter(data) : data
