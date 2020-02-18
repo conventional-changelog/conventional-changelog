@@ -136,14 +136,12 @@ try {
 
 const gitRawCommitsOpts = {}
 
-if (options.mergeCommitFilter) {
-  if (options.mergeCommitFilter === 'include') {
-    gitRawCommitsOpts.merges = null
-  } else if (options.mergeCommitFilter === 'only-merges') {
-    gitRawCommitsOpts.merges = true
-  } else { // default to options.mergeCommitFilter === 'exclude'
-    gitRawCommitsOpts.merges = false
-  }
+if (options.mergeCommitFilter === 'include') {
+  gitRawCommitsOpts.merges = null
+} else if (options.mergeCommitFilter === 'only-merges') {
+  gitRawCommitsOpts.merges = true
+} else { // default to 'exclude'
+  gitRawCommitsOpts.merges = false
 }
 
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
