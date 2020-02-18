@@ -303,6 +303,7 @@ describe('standard-changelog cli', function () {
 
   describe('generates changelog respecting --merge-commit-filter', function () {
     function doGitFlow () {
+      shell.rm('-rf', 'CHANGELOG.md')
       shell.exec('git tag -a v0.0.17 -m "old release"')
       shell.exec('git checkout -b "feature/some-feature"')
       shell.exec('> test.txt && git add test.txt')
@@ -324,7 +325,7 @@ describe('standard-changelog cli', function () {
       doGitFlow()
 
       var cp = spawn(process.execPath, [cliPath, '-m', 'include', '--first-release'], {
-        stdio: [process.stdin, process.stdout, null]
+        stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
@@ -343,7 +344,7 @@ describe('standard-changelog cli', function () {
       doGitFlow()
 
       var cp = spawn(process.execPath, [cliPath, '-m', 'only-merges', '--first-release'], {
-        stdio: [process.stdin, process.stdout, null]
+        stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
@@ -362,7 +363,7 @@ describe('standard-changelog cli', function () {
       doGitFlow()
 
       var cp = spawn(process.execPath, [cliPath, '-m', 'exclude', '--first-release'], {
-        stdio: [process.stdin, process.stdout, null]
+        stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
@@ -370,7 +371,7 @@ describe('standard-changelog cli', function () {
         var modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.include('First commit')
         expect(modified).to.include('[0.0.17]')
-        expect(modified).to.include('Test commit') // will still be added to the initial
+        expect(modified).to.include('Test commit') // will still be added under the current date but not tag
         expect(modified).to.not.include('[0.0.18]')
         undoGitFlow()
         done()
