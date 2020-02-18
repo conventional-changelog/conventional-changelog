@@ -305,30 +305,35 @@ describe('standard-changelog cli', function () {
     function doGitFlow () {
       shell.exec('git tag -a v0.0.17 -m "old release"')
       shell.exec('git checkout -b "feature/some-feature"')
-      shell.exec('git add --all && git commit --allow-empty -m "feat: Test commit"')
+      shell.exec('> test.txt && git add test.txt')
+      shell.exec('git commit -m "feat: Test commit"')
       shell.exec('git checkout master')
       shell.exec('git merge feature/some-feature --no-ff')
-      shell.exec('git tag -a v0.0.18 -m "other old release"')
+      shell.exec('git tag v0.0.18 -m "other old release"')
     }
 
     function undoGitFlow () {
       shell.exec('git tag -d v0.0.17')
       shell.exec('git tag -d v0.0.18')
       shell.exec('git branch -d feature/some-feature')
+      shell.exec('git rm test.txt')
+      shell.exec('git checkout master')
     }
 
     it('include', function (done) {
       doGitFlow()
 
       var cp = spawn(process.execPath, [cliPath, '-m', 'include', '--first-release'], {
-        stdio: [process.stdin, null, null]
+        stdio: [process.stdin, process.stdout, null]
       })
 
       cp.on('close', function (code) {
         expect(code).to.equal(0)
         var modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.include('First commit')
+        expect(modified).to.include('[0.0.17]')
         expect(modified).to.include('Test commit')
+        expect(modified).to.include('[0.0.18]')
         undoGitFlow()
         done()
       })
@@ -338,14 +343,16 @@ describe('standard-changelog cli', function () {
       doGitFlow()
 
       var cp = spawn(process.execPath, [cliPath, '-m', 'only-merges', '--first-release'], {
-        stdio: [process.stdin, null, null]
+        stdio: [process.stdin, process.stdout, null]
       })
 
       cp.on('close', function (code) {
         expect(code).to.equal(0)
         var modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.not.include('First commit')
+        expect(modified).to.not.include('[0.0.17]')
         expect(modified).to.include('Test commit')
+        expect(modified).to.include('[0.0.18]')
         undoGitFlow()
         done()
       })
@@ -355,14 +362,16 @@ describe('standard-changelog cli', function () {
       doGitFlow()
 
       var cp = spawn(process.execPath, [cliPath, '-m', 'exclude', '--first-release'], {
-        stdio: [process.stdin, null, null]
+        stdio: [process.stdin, process.stdout, null]
       })
 
       cp.on('close', function (code) {
         expect(code).to.equal(0)
         var modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.include('First commit')
-        expect(modified).to.not.include('Test commit')
+        expect(modified).to.include('[0.0.17]')
+        expect(modified).to.include('Test commit') // will still be added to the initial
+        expect(modified).to.not.include('[0.0.18]')
         undoGitFlow()
         done()
       })
