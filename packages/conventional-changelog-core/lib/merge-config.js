@@ -108,7 +108,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
     }
   }
 
-  const gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl())
+  const gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl(options.path))
 
   return Q.allSettled([configPromise, pkgPromise, semverTagsPromise(options), gitRemoteOriginUrlPromise])
     .spread(function (configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj) {
