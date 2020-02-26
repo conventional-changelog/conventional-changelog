@@ -305,7 +305,6 @@ describe('conventionalChangelogWriter', function () {
         }))
         .pipe(through(function (chunk, enc, cb) {
           expect(chunk.toString()).to.contain('# 1.0.0 ')
-          console.log(chunk.toString())
 
           i++
           cb(null)
@@ -885,7 +884,7 @@ describe('conventionalChangelogWriter', function () {
       return upstream
     }
 
-    it('should generate on `\'version\'` if it\'s at least a valid loose semver and loose option is passed', function (done) {
+    it('should generate on `\'version\'` and existing commit version if a valid loose semver and loose option is passed', function (done) {
       var i = 0
 
       getStream()
@@ -911,6 +910,29 @@ describe('conventionalChangelogWriter', function () {
           cb(null)
         }, function () {
           expect(i).to.equal(2)
+          done()
+        }))
+    })
+
+    it('should generate only on `\'version\'` if it\'s a loose semver and loose option is not passed', function (done) {
+      var i = 0
+
+      getStream()
+        .pipe(conventionalChangelogWriter({ version: '1.1.01-1' }, { looseSemver: false }))
+        .pipe(through(function (chunk, enc, cb) {
+          chunk = chunk.toString()
+
+          if (i === 0) {
+            expect(chunk).to.include('## 1.1.01-1 (' + today)
+            expect(chunk).to.include('feat(scope): ')
+            expect(chunk).to.include('fix(ng-list): ')
+            expect(chunk).to.include('perf(template): ')
+          }
+
+          i++
+          cb(null)
+        }, function () {
+          expect(i).to.equal(1)
           done()
         }))
     })
