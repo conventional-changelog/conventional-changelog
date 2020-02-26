@@ -182,10 +182,7 @@ function generate (options, commits, context, keyCommit) {
     context.date = keyCommit.committerDate
   }
 
-  var semverOptions = {}
-  if (options.looseSemver) {
-    semverOptions = { loose: true }
-  }
+  var semverOptions = { loose: !!options.looseSemver }
   if (context.version && semver.valid(context.version, semverOptions) && typeof context.isPatch === 'undefined') {
     context.isPatch = semver.patch(context.version, options.looseSemver) !== 0
   }

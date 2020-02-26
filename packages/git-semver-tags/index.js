@@ -37,10 +37,7 @@ module.exports = function gitSemverTags (opts, callback) {
     if (options.tagPrefix) {
       tagPrefixRegexp = new RegExp('^' + options.tagPrefix + '(.*)')
     }
-    var semverOptions
-    if (options.looseSemver) {
-      semverOptions = { loose: true }
-    }
+    var semverOptions = { loose: !!options.looseSemver }
     data.split('\n').forEach(function (decorations) {
       var match
       while ((match = regex.exec(decorations))) {
