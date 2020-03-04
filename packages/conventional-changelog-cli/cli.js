@@ -51,7 +51,7 @@ var cli = meow(`
 
       -t, --tag-prefix          Tag prefix to consider when reading the tags
 
-      -l, --loose-semver        Validate with semver with a loose option - allowing flexibility in the version format
+      --loose-semver            Validate with semver with a loose option - allowing flexibility in the version format
                                 Default: false
 
       --commit-path             Generate a changelog scoped to a specific directory
@@ -111,7 +111,6 @@ var cli = meow(`
       type: 'string'
     },
     'loose-semver': {
-      alias: 'l',
       type: 'boolean'
     }
   }
