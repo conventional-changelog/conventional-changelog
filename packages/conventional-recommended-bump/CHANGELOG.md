@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.5...conventional-recommended-bump@6.0.9) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
 ## [6.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.4...conventional-recommended-bump@6.0.5) (2019-11-14)
 
 **Note:** Version bump only for package conventional-recommended-bump

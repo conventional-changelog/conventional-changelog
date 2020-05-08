@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.23](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.19...standard-changelog@2.0.23) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
 ## [2.0.19](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.18...standard-changelog@2.0.19) (2019-11-21)
 
 **Note:** Version bump only for package standard-changelog

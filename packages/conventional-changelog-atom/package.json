@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-atom",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "conventional-changelog atom preset",
   "main": "index.js",
   "scripts": {

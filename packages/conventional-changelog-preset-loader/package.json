@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-preset-loader",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Configuration preset loader for `conventional-changelog`.",
   "repository": {
     "type": "git",
