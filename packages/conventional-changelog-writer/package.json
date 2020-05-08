@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-writer",
-  "version": "4.0.13",
+  "version": "4.0.14",
   "description": "Write logs based on conventional commits and templates",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
