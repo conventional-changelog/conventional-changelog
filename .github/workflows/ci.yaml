@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 12
       - run: npm install
-      - run: npm test-windows
+      - run: npm run test-windows
       - name: coverage
         uses: codecov/codecov-action@v1
         with:
