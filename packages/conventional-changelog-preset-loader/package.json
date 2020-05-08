@@ -24,5 +24,8 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "scripts": {
     "test-windows": "mocha --timeout 30000"
+  },
+  "devDependencies": {
+    "sinon": "^9.0.2"
   }
 }
