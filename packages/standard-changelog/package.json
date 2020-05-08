@@ -27,13 +27,13 @@
   ],
   "dependencies": {
     "add-stream": "^1.0.0",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "conventional-changelog-angular": "file:../conventional-changelog-angular",
     "conventional-changelog-core": "file:../conventional-changelog-core",
     "figures": "^3.0.0",
     "fs-access": "^1.0.0",
     "lodash": "^4.17.15",
-    "meow": "^6.1.1",
+    "meow": "^7.0.0",
     "rimraf": "^3.0.0",
     "sprintf-js": "^1.1.1",
     "tempfile": "^3.0.0"
