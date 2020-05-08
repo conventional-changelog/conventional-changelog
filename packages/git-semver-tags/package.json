@@ -1,6 +1,6 @@
 {
   "name": "git-semver-tags",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Get all git semver tags of your repository in reverse chronological order",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -32,7 +32,7 @@
     "git"
   ],
   "dependencies": {
-    "meow": "^6.1.1",
+    "meow": "^7.0.0",
     "semver": "^6.0.0"
   },
   "scripts": {
