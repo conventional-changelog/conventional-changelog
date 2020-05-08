@@ -1,6 +1,5 @@
 {
   "name": "git-raw-commits",
-  "version": "2.0.3",
   "description": "Get raw git commits out of your repository using git-log(1)",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
