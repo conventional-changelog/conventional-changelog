@@ -1,6 +1,6 @@
 {
   "name": "standard-changelog",
-  "version": "2.0.19",
+  "version": "2.0.24",
   "description": "Generate a changelog from git metadata with Angular commit convention",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "files": [
     "index.js",
@@ -27,13 +27,13 @@
   ],
   "dependencies": {
     "add-stream": "^1.0.0",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "conventional-changelog-angular": "file:../conventional-changelog-angular",
     "conventional-changelog-core": "file:../conventional-changelog-core",
     "figures": "^3.0.0",
     "fs-access": "^1.0.0",
     "lodash": "^4.17.15",
-    "meow": "^5.0.0",
+    "meow": "^7.0.0",
     "rimraf": "^3.0.0",
     "sprintf-js": "^1.1.1",
     "tempfile": "^3.0.0"

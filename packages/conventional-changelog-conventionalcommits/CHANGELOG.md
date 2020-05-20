@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.2.3...conventional-changelog-conventionalcommits@4.3.0) (2020-05-08)
+
+
+### Features
+
+* add support for 'feature' as alias for 'feat' ([#582](https://github.com/conventional-changelog/conventional-changelog/issues/582)) ([94c40f7](https://github.com/conventional-changelog/conventional-changelog/commit/94c40f755e6c329311d89a47c634b91cf0276da3))
+
+
+
+
+
 ## [4.2.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.2.2...conventional-changelog-conventionalcommits@4.2.3) (2019-11-07)
 
 

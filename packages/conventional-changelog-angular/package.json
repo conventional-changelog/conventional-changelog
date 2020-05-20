@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-angular",
-  "version": "5.0.6",
+  "version": "5.0.10",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "license": "ISC",
   "bugs": {

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.6...conventional-changelog-angular@5.0.10) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog-angular
+
+
+
+
+
 ## [5.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.5...conventional-changelog-angular@5.0.6) (2019-11-07)
 
 

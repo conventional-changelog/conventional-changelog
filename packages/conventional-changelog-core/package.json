@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "4.1.2",
+  "version": "4.1.7",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
     "log"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "license": "MIT",
   "files": [

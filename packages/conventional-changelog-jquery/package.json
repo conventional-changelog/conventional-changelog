@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-jquery",
-  "version": "3.0.6",
+  "version": "3.0.10",
   "description": "conventional-changelog jquery preset",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "license": "ISC",
   "files": [

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.15...conventional-changelog-writer@4.0.16) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** address CVE in meow ([#642](https://github.com/conventional-changelog/conventional-changelog/issues/642)) ([46311d2](https://github.com/conventional-changelog/conventional-changelog/commit/46311d2932b367f370d06c4e447b8dcf4bc4e83f))
+
+
+
+
+
+## [4.0.15](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.11...conventional-changelog-writer@4.0.15) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
 ## [4.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.10...conventional-changelog-writer@4.0.11) (2019-11-14)
 
 
