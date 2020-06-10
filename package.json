@@ -61,7 +61,7 @@
     "git-tails": "^1.0.0",
     "lerna": "^3.20.2",
     "mkdirp": "^1.0.0",
-    "mocha": "^7.1.2",
+    "mocha": "^8.0.0",
     "pinkie-promise": "^2.0.0",
     "q": "^1.5.1",
     "safe-buffer": "5.2.0",
