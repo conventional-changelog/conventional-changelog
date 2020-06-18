@@ -50,7 +50,7 @@
     "chai": "^4.2.0",
     "concat-stream": "^2.0.0",
     "coveralls": "^3.0.2",
-    "eslint": "^6.6.0",
+    "eslint": "^7.0.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",

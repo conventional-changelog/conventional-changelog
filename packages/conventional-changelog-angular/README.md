@@ -91,7 +91,7 @@ reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
-A detailed explanation can be found in this [document][commit-message-format].
+A detailed explanation can be found in this [document](#commit-message-format).
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-angular
