@@ -196,6 +196,27 @@ describe('git-semver-tags', function () {
       done()
     })
   })
+
+  it('should skip unstable tags', function (done) {
+    writeFileSync('test7', '')
+    shell.exec('git add --all && git commit -m"twelfth commit"')
+    shell.exec('git tag skip/8.0.0')
+    writeFileSync('test8', '')
+    shell.exec('git add --all && git commit -m"thirteenth commit"')
+    shell.exec('git tag skip/9.0.0-alpha.1')
+    writeFileSync('test9', '')
+    shell.exec('git add --all && git commit -m"fourteenth commit"')
+    shell.exec('git tag skip/9.0.0-rc.1')
+    writeFileSync('test10', '')
+    shell.exec('git add --all && git commit -m"fifteenth commit"')
+    shell.exec('git tag skip/9.0.0')
+
+    gitSemverTags({ tagPrefix: 'skip/', skipUnstable: true }, function (err, tags) {
+      if (err) done(err)
+      assert.deepStrictEqual(tags, ['skip/9.0.0', 'skip/8.0.0'])
+      done()
+    })
+  })
 })
 
 describe('git semver tags on different cwd', function () {

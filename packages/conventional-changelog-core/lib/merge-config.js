@@ -21,7 +21,7 @@ var rhosts = /github|bitbucket|gitlab/i
 
 function semverTagsPromise (options) {
   return Q.Promise(function (resolve, reject) {
-    gitSemverTags({ lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix }, function (err, result) {
+    gitSemverTags({ lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix, skipUnstable: options.skipUnstable }, function (err, result) {
       if (err) {
         reject(err)
       } else {
@@ -70,6 +70,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
     },
     append: false,
     releaseCount: 1,
+    skipUnstable: false,
     debug: function () {},
     transform: function (commit, cb) {
       if (_.isString(commit.gitTags)) {
