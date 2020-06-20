@@ -85,7 +85,7 @@ Type: `string`
 
 Type: `boolean` Default: `semver.patch(context.version) !== 0`
 
-By default, this value is true if `version`'s patch is `0`.
+By default, this value is true if `version`'s patch is not `0`.
 
 ##### host
 
@@ -189,6 +189,12 @@ Type: `function`, `string` or `array` Default: `'text'`
 A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
 The string can be a dot path to a nested object property.
+
+##### looseSemver
+
+Type: `boolean`
+
+Indicator for SemVer to use either strict or loose SemVer regex validation.
 
 ##### generateOn
 

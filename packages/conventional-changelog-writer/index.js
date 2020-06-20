@@ -30,7 +30,8 @@ function conventionalChangelogWriter (context, options) {
     noteGroupsSort: 'title',
     notesSort: 'text',
     generateOn: function (commit) {
-      return semverValid(commit.version)
+      var semverOptions = { loose: !!options.looseSemver }
+      return semverValid(commit.version, semverOptions)
     },
     finalizeContext: function (context) {
       return context
