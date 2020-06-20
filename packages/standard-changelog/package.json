@@ -1,6 +1,6 @@
 {
   "name": "standard-changelog",
-  "version": "2.0.24",
+  "version": "2.0.25",
   "description": "Generate a changelog from git metadata with Angular commit convention",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"

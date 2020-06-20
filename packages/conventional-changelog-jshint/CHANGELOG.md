@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jshint@2.0.7...conventional-changelog-jshint@2.0.8) (2020-06-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
+
+
+
+
+
 ## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jshint@2.0.3...conventional-changelog-jshint@2.0.7) (2020-05-08)
 
 **Note:** Version bump only for package conventional-changelog-jshint

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.10...conventional-changelog-angular@5.0.11) (2020-06-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
+
+
+
+
+
 ## [5.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.6...conventional-changelog-angular@5.0.10) (2020-05-08)
 
 **Note:** Version bump only for package conventional-changelog-angular

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.16...conventional-changelog-writer@4.0.17) (2020-06-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
+
+
+
+
+
 ## [4.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.15...conventional-changelog-writer@4.0.16) (2020-05-08)
 
 
