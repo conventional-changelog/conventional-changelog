@@ -36,6 +36,12 @@ var cli = meow(`
       -r, --release-count       How many releases to be generated from the latest
                                 If 0, the whole changelog will be regenerated and the outfile will be overwritten
                                 Default: 1
+                                
+      -m, --merge-commit-filter Configure how to handle merge commits. Must be one of the following:
+                                exclude: Merge commits will be ignored.
+                                include: Merge commits will be included. 
+                                only-merges: Only merge commits will be processed. 
+                                Default: exclude
 
       -u, --output-unreleased   Output unreleased changelog
 
@@ -80,6 +86,10 @@ var cli = meow(`
       alias: 'r',
       type: 'number'
     },
+    'merge-commit-filter': {
+      alias: 'm',
+      type: 'string'
+    },
     'output-unreleased': {
       alias: 'u',
       type: 'boolean'
@@ -114,6 +124,7 @@ var outfile = flags.outfile
 var sameFile = flags.sameFile
 var append = flags.append
 var releaseCount = flags.releaseCount
+var mergeCommitFilter = flags.mergeCommitFilter || 'exclude'
 
 if (infile && infile === outfile) {
   sameFile = true
@@ -133,6 +144,7 @@ var options = _.omitBy({
   },
   append: append,
   releaseCount: releaseCount,
+  mergeCommitFilter: mergeCommitFilter,
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
   tagPrefix: flags.tagPrefix
@@ -165,6 +177,15 @@ try {
 }
 
 var gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {})
+
+if (options.mergeCommitFilter === 'include') {
+  gitRawCommitsOpts.merges = null
+} else if (options.mergeCommitFilter === 'only-merges') {
+  gitRawCommitsOpts.merges = true
+} else { // default to 'exclude'
+  gitRawCommitsOpts.merges = false
+}
+
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
 
 var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
