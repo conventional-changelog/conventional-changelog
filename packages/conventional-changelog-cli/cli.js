@@ -37,6 +37,8 @@ var cli = meow(`
                                 If 0, the whole changelog will be regenerated and the outfile will be overwritten
                                 Default: 1
 
+      --skip-unstable           If given, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
+
       -u, --output-unreleased   Output unreleased changelog
 
       -v, --verbose             Verbose output. Use this for debugging
@@ -80,6 +82,9 @@ var cli = meow(`
       alias: 'r',
       type: 'number'
     },
+    'skip-unstable': {
+      type: 'boolean'
+    },
     'output-unreleased': {
       alias: 'u',
       type: 'boolean'
@@ -114,6 +119,7 @@ var outfile = flags.outfile
 var sameFile = flags.sameFile
 var append = flags.append
 var releaseCount = flags.releaseCount
+var skipUnstable = flags.skipUnstable
 
 if (infile && infile === outfile) {
   sameFile = true
@@ -133,6 +139,7 @@ var options = _.omitBy({
   },
   append: append,
   releaseCount: releaseCount,
+  skipUnstable: skipUnstable,
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
   tagPrefix: flags.tagPrefix
