@@ -5,11 +5,11 @@
   {{~header}}
 {{~/if}}
 
-{{~!-- commit link --}} {{#if @root.linkReferences~}}
-  {{~#if hash}}([{{shortHash}}]({{commitUrlFormat}})){{~/if}}
+{{~!-- commit link --}}{{~#if hash}} {{#if @root.linkReferences~}}
+  ([{{shortHash}}]({{commitUrlFormat}}))
 {{~else}}
-  {{~#if hash}}{{~shortHash}}{{~/if}}
-{{~/if}}
+  {{~shortHash}}
+{{~/if}}{{~/if}}
 
 {{~!-- commit references --}}
 {{~#if references~}}
