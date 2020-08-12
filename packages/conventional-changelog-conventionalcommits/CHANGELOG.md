@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.1...conventional-changelog-conventionalcommits@4.4.0) (2020-08-12)
+
+
+### Features
+
+* **templates:** if hash is nullish, do not display in CHANGELOG ([#664](https://github.com/conventional-changelog/conventional-changelog/issues/664)) ([f10256c](https://github.com/conventional-changelog/conventional-changelog/commit/f10256c635687de0a85c4db2bf06292902924f77))
+
+
+
+
+
 ## [4.3.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.0...conventional-changelog-conventionalcommits@4.3.1) (2020-06-20)
 
 

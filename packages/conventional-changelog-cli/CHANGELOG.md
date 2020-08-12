@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.35...conventional-changelog-cli@2.1.0) (2020-08-12)
+
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+
+
+
+
+
 ## [2.0.35](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.34...conventional-changelog-cli@2.0.35) (2020-06-20)
 
 **Note:** Version bump only for package conventional-changelog-cli

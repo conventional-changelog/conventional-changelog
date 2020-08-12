@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.0.0...git-semver-tags@4.1.0) (2020-08-12)
+
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+
+
+
+
+
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@3.0.1...git-semver-tags@4.0.0) (2020-05-08)
 
 
