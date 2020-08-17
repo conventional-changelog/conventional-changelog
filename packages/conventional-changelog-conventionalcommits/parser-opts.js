@@ -13,7 +13,8 @@ module.exports = function (config) {
     noteKeywords: ['BREAKING CHANGE'],
     revertPattern: /^(?:Revert|revert:)\s"?([\s\S]+?)"?\s*This reverts commit (\w*)\./i,
     revertCorrespondence: ['header', 'hash'],
-    issuePrefixes: config.issuePrefixes
+    issuePrefixes: config.issuePrefixes,
+    referenceActions: config.referenceActions
   }
 }
 
@@ -21,5 +22,6 @@ module.exports = function (config) {
 function defaultConfig (config) {
   config = config || {}
   config.issuePrefixes = config.issuePrefixes || ['#']
+  config.referenceActions = config.issuePrefixes || ['close', 'closes', 'closed', 'fix', 'fixes', 'fixed', 'resolve', 'resolves', 'resolved']
   return config
 }
