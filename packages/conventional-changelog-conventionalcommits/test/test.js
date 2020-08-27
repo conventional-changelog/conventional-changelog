@@ -33,6 +33,8 @@ betterThanBefore.setups([
     gitDummyCommit('fix(*): oops')
     gitDummyCommit(['fix(changelog): proper issue links', ' see GH-1'])
     gitDummyCommit(['feat(awesome): adress EXAMPLE-1'])
+    gitDummyCommit(['chore(deps): upgrade example from 1 to 2'])
+    gitDummyCommit(['chore(release): release 0.0.0'])
   },
   function () {
     gitDummyCommit(['feat(awesome): addresses the issue brought up in #133'])
@@ -171,6 +173,29 @@ describe('conventionalcommits.org preset', function () {
 
         expect(chunk).to.not.include('make it faster')
         expect(chunk).to.not.include('Reverts')
+        done()
+      }))
+  })
+
+  it('should allow matching "scope" to configuration', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { type: 'chore', scope: 'deps', section: 'Dependencies' }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Dependencies')
+        expect(chunk).to.include('**deps:** upgrade example from 1 to 2')
+
+        expect(chunk).to.not.include('release 0.0.0')
         done()
       }))
   })
