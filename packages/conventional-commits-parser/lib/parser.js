@@ -96,9 +96,10 @@ function parser (raw, options, regex) {
   var commentFilter = typeof options.commentChar === 'string'
     ? getCommentFilter(options.commentChar)
     : passTrough
+  var gpgFilter = line => !line.match(/^\s*gpg:/)
 
   var rawLines = trimOffNewlines(raw).split(/\r?\n/)
-  var lines = truncateToScissor(rawLines).filter(commentFilter)
+  var lines = truncateToScissor(rawLines).filter(commentFilter).filter(gpgFilter)
 
   var continueNote = false
   var isBody = true
