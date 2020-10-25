@@ -183,6 +183,43 @@ describe('parser', function () {
     })
   })
 
+  it('should ignore gpg signature lines', function () {
+    expect(parser(
+      'gpg: Signature made Thu Oct 22 12:19:30 2020 EDT\n' +
+      'gpg:                using RSA key ABCDEF1234567890\n' +
+      'gpg: Good signature from "Author <author@example.com>" [ultimate]\n' +
+      'feat(scope): broadcast $destroy event on scope destruction\n' +
+      'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+      'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
+      'BREAKING AMEND: some breaking change\n' +
+      'Kills #1\n',
+      options,
+      reg
+    )).to.eql({
+      merge: null,
+      header: 'feat(scope): broadcast $destroy event on scope destruction',
+      body: 'perf testing shows that in chrome this change adds 5-15% overhead\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
+      footer: 'BREAKING AMEND: some breaking change\nKills #1',
+      notes: [{
+        title: 'BREAKING AMEND',
+        text: 'some breaking change'
+      }],
+      references: [{
+        action: 'Kills',
+        owner: null,
+        repository: null,
+        issue: '1',
+        raw: '#1',
+        prefix: '#'
+      }],
+      mentions: ['example'],
+      revert: null,
+      scope: 'scope',
+      subject: 'broadcast $destroy event on scope destruction',
+      type: 'feat'
+    })
+  })
+
   it('should ignore comments according to commentChar', function () {
     var commentOptions = _.assign({}, options, { commentChar: '#' })
 
