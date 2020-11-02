@@ -40,7 +40,7 @@
     "read-pkg": "^3.0.0",
     "read-pkg-up": "^3.0.0",
     "shelljs": "^0.8.3",
-    "through2": "^3.0.0"
+    "through2": "^4.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
