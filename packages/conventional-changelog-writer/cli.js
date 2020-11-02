@@ -22,10 +22,12 @@ var cli = meow(`
 `, {
   flags: {
     context: {
-      alias: `c`
+      alias: 'c',
+      type: 'string'
     },
     options: {
-      alias: `o`
+      alias: 'o',
+      type: 'string'
     }
   }
 })

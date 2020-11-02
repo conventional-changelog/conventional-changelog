@@ -17,15 +17,15 @@ $ cd my-project
 $ conventional-changelog -p angular -i CHANGELOG.md -s
 ```
 
-This will *not* overwrite any previous changelog. The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+This will *not* overwrite any previous changelogs. The above generates a changelog based on commits since the last semver tag that matches the pattern of "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
 
-If you first time use this tool and want to generate all previous changelog, you could do
+If this is your first time using this tool and you want to generate all previous changelogs, you could do
 
 ```sh
 $ conventional-changelog -p angular -i CHANGELOG.md -s -r 0
 ```
 
-This *will* overwrite any previous changelog if exist.
+This *will* overwrite any previous changelogs if they exist.
 
 All available command line parameters can be listed using CLI: `conventional-changelog --help`.
 
@@ -62,7 +62,7 @@ Using the npm scripts to our advantage with the following hooks:
 ```json
 {
   "scripts": {
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   }
 }
 ```
@@ -108,16 +108,9 @@ message="chore(release): %s :tada:"
 - No or few task runner or build tool integrations.
 
 
-## Related
+## API
 
-- [conventional-changelog](https://github.com/ajoslin/conventional-changelog) - API of this module
-- [standard-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/standard-changelog) - Similar to this module but only with angular convention
-- [conventional-github-releaser](https://github.com/conventional-changelog/conventional-github-releaser) - Make a new GitHub release from git metadata
-- [conventional-recommended-bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) - Get a recommended version bump based on conventional commits
-- [conventional-commits-detector](https://github.com/conventional-changelog/conventional-commits-detector) - Detect what commit message convention your repository is using
-- [commitizen](https://github.com/commitizen/cz-cli) - Simple commit conventions for internet citizens.
-- [angular-precommit](https://github.com/ajoslin/angular-precommit) - Pre commit with angular conventions
-- [commitlint](https://github.com/marionebl/commitlint) - Lint commit messages
+Please use [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) 
 
 
 ## License

@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.10...conventional-changelog-angular@5.0.11) (2020-06-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
+
+
+
+
+
+## [5.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.6...conventional-changelog-angular@5.0.10) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog-angular
+
+
+
+
+
+## [5.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.5...conventional-changelog-angular@5.0.6) (2019-11-07)
+
+
+### Bug Fixes
+
+* revertPattern match default git revert format ([#545](https://github.com/conventional-changelog/conventional-changelog/issues/545)) ([fe449f8](https://github.com/conventional-changelog/conventional-changelog/commit/fe449f899567574a36d1819b313e2caa899052ff))
+
+
+
+
+
+## [5.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.3...conventional-changelog-angular@5.0.4) (2019-10-02)
+
+
+### Bug Fixes
+
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+
+
+
+## [5.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.2...conventional-changelog-angular@5.0.3) (2019-02-14)
+
+
+### Bug Fixes
+
+* **preset:angular:** scoped npm packages should not be seen as GitHub username ([#394](https://github.com/conventional-changelog/conventional-changelog/issues/394)) ([e332ef0](https://github.com/conventional-changelog/conventional-changelog/commit/e332ef0))
+
+
+
+
+
+## [5.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.1...conventional-changelog-angular@5.0.2) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.0...conventional-changelog-angular@5.0.1) (2018-08-21)
 

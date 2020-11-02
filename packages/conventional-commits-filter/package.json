@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-filter",
-  "version": "2.0.0",
+  "version": "2.0.6",
   "description": "Filter out reverted commits parsed by conventional-commits-parser",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -16,7 +16,7 @@
     "url": "https://github.com/stevemao"
   },
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10"
   },
   "files": [
     "index.js"
@@ -28,12 +28,10 @@
     "commits"
   ],
   "dependencies": {
-    "is-subset": "^0.1.1",
+    "lodash.ismatch": "^4.4.0",
     "modify-values": "^1.0.0"
   },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run lint && mocha --timeout=30000",
     "test-windows": "mocha --timeout 30000"
   },
   "license": "MIT"

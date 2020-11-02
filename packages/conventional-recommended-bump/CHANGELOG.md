@@ -3,6 +3,159 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.9...conventional-recommended-bump@6.0.10) (2020-08-12)
+
+**Note:** Version bump only for package conventional-recommended-bump
+
+
+
+
+
+## [6.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.5...conventional-recommended-bump@6.0.9) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
+## [6.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.4...conventional-recommended-bump@6.0.5) (2019-11-14)
+
+**Note:** Version bump only for package conventional-recommended-bump
+
+
+
+
+
+## [6.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.3...conventional-recommended-bump@6.0.4) (2019-11-07)
+
+
+### Bug Fixes
+
+* revertPattern match default git revert format ([#545](https://github.com/conventional-changelog/conventional-changelog/issues/545)) ([fe449f8](https://github.com/conventional-changelog/conventional-changelog/commit/fe449f899567574a36d1819b313e2caa899052ff))
+
+
+
+
+
+## [6.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.2...conventional-recommended-bump@6.0.3) (2019-10-24)
+
+**Note:** Version bump only for package conventional-recommended-bump
+
+
+
+
+
+## [6.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.0...conventional-recommended-bump@6.0.1) (2019-10-02)
+
+**Note:** Version bump only for package conventional-recommended-bump
+
+
+
+
+
+# [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@5.0.1...conventional-recommended-bump@6.0.0) (2019-07-29)
+
+
+* refactor!: modify gitSemverTags to take options first (#390) ([dc8aeda](https://github.com/conventional-changelog/conventional-changelog/commit/dc8aeda)), closes [#390](https://github.com/conventional-changelog/conventional-changelog/issues/390)
+
+
+### BREAKING CHANGES
+
+* gitSemverTags now takes options followed by callback.
+
+
+
+
+
+## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@5.0.0...conventional-recommended-bump@5.0.1) (2019-05-18)
+
+
+### Bug Fixes
+
+* Recommend a patch bump for features when preMajor is enabled ([#452](https://github.com/conventional-changelog/conventional-changelog/issues/452)) ([3d0a520](https://github.com/conventional-changelog/conventional-changelog/commit/3d0a520))
+
+
+
+
+
+# [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.1.1...conventional-recommended-bump@5.0.0) (2019-05-02)
+
+
+### Features
+
+* ! without BREAKING CHANGE should be treated as major ([#443](https://github.com/conventional-changelog/conventional-changelog/issues/443)) ([cf22d70](https://github.com/conventional-changelog/conventional-changelog/commit/cf22d70))
+
+
+### BREAKING CHANGES
+
+* if ! is in the commit header, it now indicates a BREAKING CHANGE, and the description is used as the body.
+
+
+
+
+
+## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.1.0...conventional-recommended-bump@4.1.1) (2019-04-11)
+
+
+### Bug Fixes
+
+* preset load error message should handle objects ([fb4a8d1](https://github.com/conventional-changelog/conventional-changelog/commit/fb4a8d1))
+
+
+
+
+
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.4...conventional-recommended-bump@4.1.0) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency concat-stream to v2 ([#401](https://github.com/conventional-changelog/conventional-changelog/issues/401)) ([4c09bfc](https://github.com/conventional-changelog/conventional-changelog/commit/4c09bfc))
+
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe))
+* **conventional-recommended-bump:** send options to whatBump ([#409](https://github.com/conventional-changelog/conventional-changelog/issues/409)) ([508d6d6](https://github.com/conventional-changelog/conventional-changelog/commit/508d6d6)), closes [/github.com/lerna/lerna/blob/a6733a2b864cf9d082d080bbd3bfedb04e59b0ab/core/conventional-commits/lib/recommend-version.js#L13-L21](https://github.com//github.com/lerna/lerna/blob/a6733a2b864cf9d082d080bbd3bfedb04e59b0ab/core/conventional-commits/lib/recommend-version.js/issues/L13-L21)
+
+
+
+
+
+## [4.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.3...conventional-recommended-bump@4.0.4) (2018-11-01)
+
+
+### Bug Fixes
+
+* fix broken release of conventional-recommended-bump ([d9267e8](https://github.com/conventional-changelog/conventional-changelog/commit/d9267e8))
+
+
+
+
+
+## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.2...conventional-recommended-bump@4.0.3) (2018-11-01)
+
+**Note:** Version bump only for package conventional-recommended-bump
+
+
+
+
+
+## [4.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.1...conventional-recommended-bump@4.0.2) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@4.0.0...conventional-recommended-bump@4.0.1) (2018-08-21)
 

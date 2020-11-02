@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.4...conventional-changelog-eslint@3.0.8) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog-eslint
+
+
+
+
+
+## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.2...conventional-changelog-eslint@3.0.3) (2019-10-02)
+
+
+### Bug Fixes
+
+* **preset, eslint:** display short tag in release notes ([b63a5ff](https://github.com/conventional-changelog/conventional-changelog/commit/b63a5ff)), closes [#313](https://github.com/conventional-changelog/conventional-changelog/issues/313)
+
+
+
+
+
+## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.1...conventional-changelog-eslint@3.0.2) (2019-04-10)
+
+**Note:** Version bump only for package conventional-changelog-eslint
+
+
+
+
+
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.0...conventional-changelog-eslint@3.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* **preset:** ESLint recommended-bump is always "patch" ([#371](https://github.com/conventional-changelog/conventional-changelog/issues/371)) ([35e279d](https://github.com/conventional-changelog/conventional-changelog/commit/35e279d)), closes [/github.com/conventional-changelog/conventional-changelog/blob/ce1fd981f88ce201e996dfa833e4682de3aafcdd/packages/conventional-changelog-eslint/conventional-recommended-bump.js#L32-L35](https://github.com//github.com/conventional-changelog/conventional-changelog/blob/ce1fd981f88ce201e996dfa833e4682de3aafcdd/packages/conventional-changelog-eslint/conventional-recommended-bump.js/issues/L32-L35)
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@2.0.0...conventional-changelog-eslint@3.0.0) (2018-06-06)
 

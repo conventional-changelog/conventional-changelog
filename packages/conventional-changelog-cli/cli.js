@@ -37,58 +37,77 @@ var cli = meow(`
                                 If 0, the whole changelog will be regenerated and the outfile will be overwritten
                                 Default: 1
 
+      --skip-unstable           If given, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
+
       -u, --output-unreleased   Output unreleased changelog
 
       -v, --verbose             Verbose output. Use this for debugging
                                 Default: false
 
       -n, --config              A filepath of your config script
-                                Example of a config script: https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/index.js
+                                Example of a config script: https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog-cli/test/fixtures/config.js
 
       -c, --context             A filepath of a json that is used to define template variables
       -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
       -t, --tag-prefix          Tag prefix to consider when reading the tags
       --commit-path             Generate a changelog scoped to a specific directory
 `, {
+  booleanDefault: undefined,
   flags: {
     infile: {
-      alias: `i`
+      alias: 'i',
+      type: 'string'
     },
     outfile: {
-      alias: `o`
+      alias: 'o',
+      type: 'string'
     },
     'same-file': {
-      alias: `s`
+      alias: 's',
+      type: 'boolean'
     },
     preset: {
-      alias: `p`
+      alias: 'p',
+      type: 'string'
     },
     pkg: {
-      alias: `k`
+      alias: 'k',
+      type: 'string'
     },
     append: {
-      alias: `a`
+      alias: 'a',
+      type: 'boolean'
     },
     'release-count': {
-      alias: `r`
+      alias: 'r',
+      type: 'number'
+    },
+    'skip-unstable': {
+      type: 'boolean'
     },
     'output-unreleased': {
-      alias: `u`
+      alias: 'u',
+      type: 'boolean'
     },
     verbose: {
-      alias: `v`
+      alias: 'v',
+      type: 'boolean'
     },
     config: {
-      alias: `n`
+      alias: 'n',
+      type: 'string'
     },
     context: {
-      alias: `c`
+      alias: 'c',
+      type: 'string'
     },
     'lerna-package': {
-      alias: `l`
+      alias: 'l',
+      type: 'string'
     },
     'tag-prefix': {
-      alias: `t`
+      alias: 't',
+      type: 'string'
     }
   }
 })
@@ -100,6 +119,7 @@ var outfile = flags.outfile
 var sameFile = flags.sameFile
 var append = flags.append
 var releaseCount = flags.releaseCount
+var skipUnstable = flags.skipUnstable
 
 if (infile && infile === outfile) {
   sameFile = true
@@ -112,13 +132,14 @@ if (infile && infile === outfile) {
   }
 }
 
-var options = _.omit({
+var options = _.omitBy({
   preset: flags.preset,
   pkg: {
     path: flags.pkg
   },
   append: append,
   releaseCount: releaseCount,
+  skipUnstable: skipUnstable,
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
   tagPrefix: flags.tagPrefix
@@ -141,6 +162,7 @@ try {
   if (flags.config) {
     config = require(resolve(process.cwd(), flags.config))
     options.config = config
+    options = _.merge(options, config.options)
   } else {
     config = {}
   }

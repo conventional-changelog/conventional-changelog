@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-parser",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Parse raw conventional commits",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10"
   },
   "files": [
     "index.js",
@@ -34,22 +34,20 @@
   ],
   "dependencies": {
     "JSONStream": "^1.0.4",
-    "is-text-path": "^1.0.0",
-    "lodash": "^4.2.1",
-    "meow": "^4.0.0",
+    "is-text-path": "^1.0.1",
+    "lodash": "^4.17.15",
+    "meow": "^7.0.0",
     "split2": "^2.0.0",
-    "through2": "^2.0.0",
+    "through2": "^3.0.0",
     "trim-off-newlines": "^1.0.0"
   },
-  "devDependencies": {
-    "concat-stream": "^1.6.0"
-  },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run lint && mocha --timeout=30000",
     "test-windows": "echo 'make work on windows'"
   },
   "bin": {
     "conventional-commits-parser": "cli.js"
+  },
+  "devDependencies": {
+    "forceable-tty": "^0.1.0"
   }
 }

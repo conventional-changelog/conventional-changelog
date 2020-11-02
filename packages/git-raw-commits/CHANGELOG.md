@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.3...git-raw-commits@2.0.7) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
+## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.2...git-raw-commits@2.0.3) (2019-11-14)
+
+**Note:** Version bump only for package git-raw-commits
+
+
+
+
+
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.1...git-raw-commits@2.0.2) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
+## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.0...git-raw-commits@2.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@1.3.6...git-raw-commits@2.0.0) (2018-05-29)
 

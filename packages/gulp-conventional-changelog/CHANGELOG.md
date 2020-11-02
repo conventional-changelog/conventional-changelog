@@ -3,6 +3,229 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.34](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.33...gulp-conventional-changelog@2.0.34) (2020-08-12)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.33](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.32...gulp-conventional-changelog@2.0.33) (2020-06-20)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.32](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.31...gulp-conventional-changelog@2.0.32) (2020-05-08)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.31](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.27...gulp-conventional-changelog@2.0.31) (2020-05-08)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.27](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.26...gulp-conventional-changelog@2.0.27) (2019-11-21)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.26](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.25...gulp-conventional-changelog@2.0.26) (2019-11-14)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.25](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.24...gulp-conventional-changelog@2.0.25) (2019-11-07)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.24](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.23...gulp-conventional-changelog@2.0.24) (2019-10-24)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.22](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.21...gulp-conventional-changelog@2.0.22) (2019-10-02)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.21](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.20...gulp-conventional-changelog@2.0.21) (2019-07-29)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.20](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.19...gulp-conventional-changelog@2.0.20) (2019-05-18)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.19](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.18...gulp-conventional-changelog@2.0.19) (2019-05-05)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.18](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.17...gulp-conventional-changelog@2.0.18) (2019-05-02)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.16...gulp-conventional-changelog@2.0.17) (2019-05-02)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.15...gulp-conventional-changelog@2.0.16) (2019-04-26)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.15](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.14...gulp-conventional-changelog@2.0.15) (2019-04-24)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.14](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.13...gulp-conventional-changelog@2.0.14) (2019-04-11)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.13](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.12...gulp-conventional-changelog@2.0.13) (2019-04-11)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.12](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.11...gulp-conventional-changelog@2.0.12) (2019-04-11)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.10...gulp-conventional-changelog@2.0.11) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency concat-stream to v2 ([#401](https://github.com/conventional-changelog/conventional-changelog/issues/401)) ([4c09bfc](https://github.com/conventional-changelog/conventional-changelog/commit/4c09bfc))
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
+## [2.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.9...gulp-conventional-changelog@2.0.10) (2019-02-14)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.8...gulp-conventional-changelog@2.0.9) (2018-11-01)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.7...gulp-conventional-changelog@2.0.8) (2018-11-01)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.6...gulp-conventional-changelog@2.0.7) (2018-11-01)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.5...gulp-conventional-changelog@2.0.6) (2018-11-01)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.4...gulp-conventional-changelog@2.0.5) (2018-11-01)
+
+**Note:** Version bump only for package gulp-conventional-changelog
+
+
+
+
+
+## [2.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.3...gulp-conventional-changelog@2.0.4) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.2...gulp-conventional-changelog@2.0.3) (2018-08-21)
 

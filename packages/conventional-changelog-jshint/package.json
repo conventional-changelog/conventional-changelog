@@ -1,11 +1,9 @@
 {
   "name": "conventional-changelog-jshint",
-  "version": "2.0.0",
+  "version": "2.0.8",
   "description": "conventional-changelog jshint preset",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "mocha --timeout 30000 && npm run-script lint",
     "test-windows": "echo 'make work on windows'"
   },
   "repository": {
@@ -19,7 +17,7 @@
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10"
   },
   "license": "ISC",
   "files": [
@@ -34,13 +32,8 @@
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-jshint#readme",
-  "devDependencies": {
-    "conventional-changelog-core": "0.0.2",
-    "shelljs": "^0.8.0",
-    "through2": "^2.0.0"
-  },
   "dependencies": {
-    "compare-func": "^1.3.1",
+    "compare-func": "^2.0.0",
     "q": "^1.5.1"
   }
 }

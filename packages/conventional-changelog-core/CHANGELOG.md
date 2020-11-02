@@ -3,6 +3,203 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.8...conventional-changelog-core@4.2.0) (2020-08-12)
+
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+
+
+
+
+
+## [4.1.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.7...conventional-changelog-core@4.1.8) (2020-06-20)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [4.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.6...conventional-changelog-core@4.1.7) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [4.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.2...conventional-changelog-core@4.1.6) (2020-05-08)
+
+
+### Bug Fixes
+
+* **conventional-changelog-core:** check if HEAD ref exists before using it ([#578](https://github.com/conventional-changelog/conventional-changelog/issues/578)) ([a49b19a](https://github.com/conventional-changelog/conventional-changelog/commit/a49b19a8c4b1d13559ebb02020d4f623189fae6a))
+* **conventional-changelog-core:** fix duplicated commits when `from` is specified ([#573](https://github.com/conventional-changelog/conventional-changelog/issues/573)) ([287a801](https://github.com/conventional-changelog/conventional-changelog/commit/287a801ecde0a3856b6531cef53474d3a8b808b3)), closes [#567](https://github.com/conventional-changelog/conventional-changelog/issues/567)
+* **conventional-changelog-core:** read current version properly when tagPrefix is provided ([#563](https://github.com/conventional-changelog/conventional-changelog/issues/563)) ([1deb63f](https://github.com/conventional-changelog/conventional-changelog/commit/1deb63fff9a07848c3964264c5ef4d082d654223)), closes [#562](https://github.com/conventional-changelog/conventional-changelog/issues/562) [#337](https://github.com/conventional-changelog/conventional-changelog/issues/337)
+
+
+
+
+
+## [4.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.1...conventional-changelog-core@4.1.2) (2019-11-21)
+
+
+### Bug Fixes
+
+* call gitRawCommits with ranges [tag1..tag2, tag2..tag3, ..., tagX..HEAD] to make sure commits are returned in right order. ([2fba5c7](https://github.com/conventional-changelog/conventional-changelog/commit/2fba5c7a02e0e34093a6bd9a01109457db9b84c5)), closes [#408](https://github.com/conventional-changelog/conventional-changelog/issues/408)
+
+
+
+
+
+## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.1.0...conventional-changelog-core@4.1.1) (2019-11-14)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.0.3...conventional-changelog-core@4.1.0) (2019-11-07)
+
+
+### Features
+
+* **conventional-changelog-core:** provide facility to define gitExecOpts. ([#480](https://github.com/conventional-changelog/conventional-changelog/issues/480)) ([814f878](https://github.com/conventional-changelog/conventional-changelog/commit/814f878054ca3c9ec00c3147478eb1e6a2762e9a))
+
+
+
+
+
+## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.0.2...conventional-changelog-core@4.0.3) (2019-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
+## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.0.0...conventional-changelog-core@4.0.1) (2019-10-02)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+# [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.3...conventional-changelog-core@4.0.0) (2019-07-29)
+
+
+* refactor!: modify gitSemverTags to take options first (#390) ([dc8aeda](https://github.com/conventional-changelog/conventional-changelog/commit/dc8aeda)), closes [#390](https://github.com/conventional-changelog/conventional-changelog/issues/390)
+
+
+### BREAKING CHANGES
+
+* gitSemverTags now takes options followed by callback.
+
+
+
+
+
+## [3.2.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.2...conventional-changelog-core@3.2.3) (2019-05-18)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.2.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.1...conventional-changelog-core@3.2.2) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.2.0...conventional-changelog-core@3.2.1) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+# [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.6...conventional-changelog-core@3.2.0) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+### Features
+
+* creating highly configurable preset, based on conventionalcommits.org ([#421](https://github.com/conventional-changelog/conventional-changelog/issues/421)) ([f2fb240](https://github.com/conventional-changelog/conventional-changelog/commit/f2fb240))
+
+
+
+
+
+## [3.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.5...conventional-changelog-core@3.1.6) (2019-02-14)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.4...conventional-changelog-core@3.1.5) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.3...conventional-changelog-core@3.1.4) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.2...conventional-changelog-core@3.1.3) (2018-11-01)
+
+
+### Bug Fixes
+
+* pin git-raw-commits until I have publication rights ([e41777c](https://github.com/conventional-changelog/conventional-changelog/commit/e41777c))
+
+
+
+
+
+## [3.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.1...conventional-changelog-core@3.1.2) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-core
+
+
+
+
+
+## [3.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.1.0...conventional-changelog-core@3.1.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@3.0.0...conventional-changelog-core@3.1.0) (2018-08-21)
 

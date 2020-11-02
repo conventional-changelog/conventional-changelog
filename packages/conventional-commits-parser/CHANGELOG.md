@@ -3,6 +3,99 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+### Features
+
+* **conventional-commits-parser:** add issuePrefixesCaseSensitive parser option ([#580](https://github.com/conventional-changelog/conventional-changelog/issues/580)) ([526b282](https://github.com/conventional-changelog/conventional-changelog/commit/526b28214d12c55158eb2e4d44408378587ceb97))
+* support slash in headerPattern default options ([93a547d](https://github.com/conventional-changelog/conventional-changelog/commit/93a547d742634d8676f499cfa2a274bc3792d020))
+
+
+
+
+
+## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.7...conventional-commits-parser@3.0.8) (2019-11-14)
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+
+
+
+
+## [3.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.6...conventional-commits-parser@3.0.7) (2019-11-07)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** add breaking change notes if header match `breakingHeaderPattern` ([#544](https://github.com/conventional-changelog/conventional-changelog/issues/544)) ([efdf3cb](https://github.com/conventional-changelog/conventional-changelog/commit/efdf3cbc9de3278b180a48beebb74e596e3c5f94))
+* **conventional-commits-parser:** add missing separator pipe to non tty parser ([#546](https://github.com/conventional-changelog/conventional-changelog/issues/546)) ([c522743](https://github.com/conventional-changelog/conventional-changelog/commit/c5227437b0b300f30a57e8ba5df2a8ab8d163af0))
+
+
+
+
+
+## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.5...conventional-commits-parser@3.0.6) (2019-10-24)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** downgrade is-text-path due to node 6 incompatibility ([#536](https://github.com/conventional-changelog/conventional-changelog/issues/536)) ([3aa2637](https://github.com/conventional-changelog/conventional-changelog/commit/3aa2637a1c65bb4db3d8bf2c6ce17e6f5abe1ca1))
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
+## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.3...conventional-commits-parser@3.0.4) (2019-10-02)
+
+**Note:** Version bump only for package conventional-commits-parser
+
+
+
+
+
+## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.2...conventional-commits-parser@3.0.3) (2019-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency is-text-path to v2 ([#455](https://github.com/conventional-changelog/conventional-changelog/issues/455)) ([0f40ec3](https://github.com/conventional-changelog/conventional-changelog/commit/0f40ec3))
+
+
+
+
+
+## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.1...conventional-commits-parser@3.0.2) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.0...conventional-commits-parser@3.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
       <a name="3.0.0"></a>
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.7...conventional-commits-parser@3.0.0) (2018-05-29)
 

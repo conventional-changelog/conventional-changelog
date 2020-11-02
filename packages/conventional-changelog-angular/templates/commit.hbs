@@ -6,7 +6,7 @@
 {{~/if}}
 
 {{~!-- commit link --}} {{#if @root.linkReferences~}}
-  ([{{hash}}](
+  ([{{shortHash}}](
   {{~#if @root.repository}}
     {{~#if @root.host}}
       {{~@root.host}}/
@@ -20,7 +20,7 @@
   {{~/if}}/
   {{~@root.commit}}/{{hash}}))
 {{~else}}
-  {{~hash}}
+  {{~shortHash}}
 {{~/if}}
 
 {{~!-- commit references --}}

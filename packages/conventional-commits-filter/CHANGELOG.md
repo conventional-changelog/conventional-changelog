@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@2.0.2...conventional-commits-filter@2.0.6) (2020-05-08)
+
+**Note:** Version bump only for package conventional-commits-filter
+
+
+
+
+
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@2.0.1...conventional-commits-filter@2.0.2) (2019-04-10)
+
+
+### Bug Fixes
+
+* **filter:** replace `is-subset` with `lodash.ismatch` ([#377](https://github.com/conventional-changelog/conventional-changelog/issues/377)) ([fbcc92e](https://github.com/conventional-changelog/conventional-changelog/commit/fbcc92e))
+
+
+
+
+
+## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@2.0.0...conventional-commits-filter@2.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@1.1.6...conventional-commits-filter@2.0.0) (2018-05-29)
 

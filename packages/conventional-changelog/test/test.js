@@ -4,7 +4,6 @@ var expect = require('chai').expect
 var mocha = require('mocha')
 var describe = mocha.describe
 var it = mocha.it
-var after = mocha.after
 var before = mocha.before
 var shell = require('shelljs')
 var through = require('through2')
@@ -12,7 +11,8 @@ var writeFileSync = require('fs').writeFileSync
 
 describe('conventionalChangelog', function () {
   before(function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')
@@ -20,10 +20,6 @@ describe('conventionalChangelog', function () {
     shell.exec('git init --template=../git-templates')
     writeFileSync('test1', '')
     shell.exec('git add --all && git commit -m"First commit"')
-  })
-
-  after(function () {
-    shell.cd('../')
   })
 
   it('should not warn if preset is found', function (done) {
@@ -56,6 +52,33 @@ describe('conventionalChangelog', function () {
 
     conventionalChangelog({
       preset: 'aNgular',
+      warn: function (warning) {
+        done(warning)
+      }
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('#')
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(1)
+        done()
+      }))
+  })
+
+  it('should allow object for preset', function (done) {
+    var i = 0
+
+    conventionalChangelog({
+      preset: {
+        name: 'conventionalcommits'
+      },
       warn: function (warning) {
         done(warning)
       }

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@2.0.3...conventional-changelog-codemirror@2.0.7) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog-codemirror
+
+
+
+
+
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@2.0.1...conventional-changelog-codemirror@2.0.2) (2019-10-02)
+
+
+### Bug Fixes
+
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+
+
+
+## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@2.0.0...conventional-changelog-codemirror@2.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-codemirror@1.0.0...conventional-changelog-codemirror@2.0.0) (2018-06-06)
 

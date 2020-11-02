@@ -21,7 +21,8 @@ var dir = ''
 
 betterThanBefore.setups([
   function () { // 1
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     dir = process.cwd()
     var tmpDir = tmp.dirSync().name
     shell.mkdir(tmpDir)
@@ -110,6 +111,20 @@ betterThanBefore.setups([
   function () { // 18
     gitDummyCommit()
     shell.exec('git tag 3.0.0')
+  },
+  function () { // 19
+    shell.exec('git checkout feature')
+    gitDummyCommit('included in 5.0.0')
+    shell.exec('git checkout -b feature2')
+    gitDummyCommit('merged, unreleased')
+    shell.exec('git checkout master')
+    gitDummyCommit('included in 4.0.0')
+    shell.exec('git tag v4.0.0')
+    shell.exec('git merge feature -m"Merge branch \'feature\'"')
+    writeFileSync('./package.json', '{"version": "5.0.0"}') // required by angular preset.
+    shell.exec('git add --all && git commit -m"5.0.0"')
+    shell.exec('git tag v5.0.0')
+    shell.exec('git merge feature2 -m"Merge branch \'feature2\'"')
   }
 ])
 
@@ -172,6 +187,32 @@ describe('conventionalChangelogCore', function () {
 
   it('should generate the changelog of the last two releases even if release count exceeds the limit', function (done) {
     preparing(2)
+    var i = 0
+
+    conventionalChangelogCore({
+      releaseCount: 100
+    })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        if (i === 0) {
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('Third commit')
+        } else if (i === 1) {
+          expect(chunk).to.include('First commit')
+        }
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(2)
+        done()
+      }))
+  })
+
+  it('should work when there is no `HEAD` ref', function (done) {
+    preparing(2)
+    shell.rm('.git/refs/HEAD')
     var i = 0
 
     conventionalChangelogCore({
@@ -788,13 +829,35 @@ describe('conventionalChangelogCore', function () {
       }))
   })
 
+  it('should read each commit range exactly once', function (done) {
+    preparing(9)
+
+    conventionalChangelogCore({
+      preset: {
+        compareUrlFormat: '/compare/{{previousTag}}...{{currentTag}}'
+      }
+    }, {}, {}, {}, {
+      headerPartial: '',
+      commitPartial: '* {{header}}\n'
+    })
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.equal('\n* test8\n* test8\n* test9\n\n\n\n')
+
+        cb()
+      }, function () {
+        done()
+      }))
+  })
+
   it('should recreate the changelog from scratch', function (done) {
     preparing(10)
 
     const context = {
       resetChangelog: true,
       version: '2.0.0'
-    };
+    }
 
     let chunkNumber = 0
 
@@ -847,6 +910,36 @@ describe('conventionalChangelogCore', function () {
 
         cb()
       }, function () {
+        done()
+      }))
+  })
+
+  it('should respect merge order', function (done) {
+    preparing(19)
+    var i = 0
+
+    conventionalChangelogCore({
+      releaseCount: 0,
+      append: true,
+      outputUnreleased: true
+    }, {}, {}, {}, {})
+      .pipe(through(function (chunk, enc, cb) {
+        chunk = chunk.toString()
+
+        if (i === 4) {
+          expect(chunk).to.contain('included in 4.0.0')
+          expect(chunk).to.not.contain('included in 5.0.0')
+        } else if (i === 5) {
+          expect(chunk).to.contain('included in 5.0.0')
+          expect(chunk).to.not.contain('merged, unreleased')
+        } else if (i === 6) {
+          expect(chunk).to.contain('merged, unreleased')
+        }
+
+        i++
+        cb()
+      }, function () {
+        expect(i).to.equal(7)
         done()
       }))
   })
@@ -1145,6 +1238,24 @@ describe('conventionalChangelogCore', function () {
           done()
         }))
     })
+
+    it('takes into account tagPrefix option', function (done) {
+      preparing(16)
+
+      conventionalChangelogCore({
+        tagPrefix: 'foo@',
+        config: require('conventional-changelog-angular')
+      }, {}, { path: './packages/foo' })
+        .pipe(through(function (chunk, enc, cb) {
+          chunk = chunk.toString()
+          // confirm that context.currentTag behaves differently when
+          // tagPrefix is used
+          expect(chunk).to.include('foo@1.0.0...foo@2.0.0')
+          cb()
+        }, function () {
+          done()
+        }))
+    })
   })
 
   describe('config', function () {
@@ -1265,7 +1376,7 @@ describe('conventionalChangelogCore', function () {
 
       conventionalChangelogCore({
         lernaPackage: 'foo'
-      }, {}, {path: './packages/foo'})
+      }, {}, { path: './packages/foo' })
         .pipe(through(function (chunk, enc, cb) {
           chunk = chunk.toString()
           expect(chunk).to.include('first lerna style commit hooray')
@@ -1284,7 +1395,7 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         lernaPackage: 'foo',
         config: require('conventional-changelog-angular')
-      }, {}, {path: './packages/foo'})
+      }, {}, { path: './packages/foo' })
         .pipe(through(function (chunk, enc, cb) {
           chunk = chunk.toString()
           // confirm that context.currentTag behaves differently when
@@ -1302,7 +1413,7 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         lernaPackage: 'foo',
         releaseCount: 2
-      }, {}, {path: './packages/foo'})
+      }, {}, { path: './packages/foo' })
         .pipe(through(function (chunk, enc, cb) {
           chunk = chunk.toString()
           expect(chunk).to.include('first lerna style commit hooray')

@@ -3,6 +3,239 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.23](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.22...conventional-changelog@3.1.23) (2020-08-12)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.22](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.21...conventional-changelog@3.1.22) (2020-06-20)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.21](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.20...conventional-changelog@3.1.21) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.20](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.16...conventional-changelog@3.1.20) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.16](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.15...conventional-changelog@3.1.16) (2019-11-21)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.15](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.14...conventional-changelog@3.1.15) (2019-11-14)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.14](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.13...conventional-changelog@3.1.14) (2019-11-07)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.13](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.12...conventional-changelog@3.1.13) (2019-10-24)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.10...conventional-changelog@3.1.11) (2019-10-02)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.9...conventional-changelog@3.1.10) (2019-07-29)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.8...conventional-changelog@3.1.9) (2019-05-18)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.7...conventional-changelog@3.1.8) (2019-05-05)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.6...conventional-changelog@3.1.7) (2019-05-02)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.5...conventional-changelog@3.1.6) (2019-05-02)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.4...conventional-changelog@3.1.5) (2019-04-26)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.3...conventional-changelog@3.1.4) (2019-04-24)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.2...conventional-changelog@3.1.3) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.1...conventional-changelog@3.1.2) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.0...conventional-changelog@3.1.1) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.6...conventional-changelog@3.1.0) (2019-04-10)
+
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe))
+* creating highly configurable preset, based on conventionalcommits.org ([#421](https://github.com/conventional-changelog/conventional-changelog/issues/421)) ([f2fb240](https://github.com/conventional-changelog/conventional-changelog/commit/f2fb240))
+
+
+
+
+
+## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.5...conventional-changelog@3.0.6) (2019-02-14)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.4...conventional-changelog@3.0.5) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.3...conventional-changelog@3.0.4) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.2...conventional-changelog@3.0.3) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.1...conventional-changelog@3.0.2) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.0.0...conventional-changelog@3.0.1) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog
+
+
+
+
+
+# [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@2.0.3...conventional-changelog@3.0.0) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+### chore
+
+* force breaking change ([f6d506d](https://github.com/conventional-changelog/conventional-changelog/commit/f6d506d))
+
+
+### BREAKING CHANGES
+
+* forcing a breaking semver change based on https://github.com/conventional-changelog/conventional-changelog/pull/385
+
+
+
+
+
        <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@2.0.2...conventional-changelog@2.0.3) (2018-08-21)
 

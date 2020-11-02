@@ -6,31 +6,33 @@ var describe = mocha.describe
 var it = mocha.it
 var before = mocha.before
 var expect = require('chai').expect
+var gitDummyCommit = require('git-dummy-commit')
 var shell = require('shelljs')
 var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
 
 describe('eslint preset', function () {
   before(function () {
-    shell.config.silent = true
+    shell.config.resetForTesting()
+    shell.cd(__dirname)
     shell.rm('-rf', 'tmp')
     shell.mkdir('tmp')
     shell.cd('tmp')
     shell.mkdir('git-templates')
     shell.exec('git init --template=./git-templates')
 
-    writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m\'Fix: the `no-class-assign` rule (fixes #2718)\'')
-    writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m"Update: Handle CRLF line endings in spaced-comment rule - 2 (fixes #3005)"')
-    writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m"Fix: indent rule should recognize single line statements with ASI (fixes #3001, fixes #3000)"')
-    writeFileSync('test4', '')
-    shell.exec('git add --all && git commit -m"Docs: Fix unmatched paren in rule description"')
-    writeFileSync('test5', '')
-    shell.exec('git add --all && git commit -m"Fix:        Commit with trailing spaces in the beginning"')
-    writeFileSync('test6', '')
-    shell.exec('git add --all && git commit -m"Merge pull request #3033 from gcochard/patch-3 "')
+    if (process.platform !== 'win32') {
+      // we need to escape backtick for bash but not for windows
+      // probably this should be done in git-dummy-commit or shelljs
+      gitDummyCommit(['Fix: the \\`no-class-assign\\` rule (fixes #2718)'])
+    } else {
+      gitDummyCommit(['Fix: the `no-class-assign` rule (fixes #2718)'])
+    }
+    gitDummyCommit([])
+    gitDummyCommit(['Update: Handle CRLF line endings in spaced-comment rule - 2 (fixes #3005)'])
+    gitDummyCommit(['Fix: indent rule should recognize single line statements with ASI (fixes #3001, fixes #3000)'])
+    gitDummyCommit(['Docs: Fix unmatched paren in rule description'])
+    gitDummyCommit(['Fix:        Commit with trailing spaces in the beginning'])
+    gitDummyCommit(['Merge pull request #3033 from gcochard/patch-3 '])
   })
 
   it('should work if there is no semver tag', function (done) {

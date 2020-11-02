@@ -1,6 +1,6 @@
 {
   "name": "git-raw-commits",
-  "version": "2.0.0",
+  "version": "2.0.7",
   "description": "Get raw git commits out of your repository using git-log(1)",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10"
   },
   "files": [
     "index.js",
@@ -33,19 +33,13 @@
     "git-log"
   ],
   "dependencies": {
-    "dargs": "^4.0.1",
+    "dargs": "^7.0.0",
     "lodash.template": "^4.0.2",
-    "meow": "^4.0.0",
+    "meow": "^7.0.0",
     "split2": "^2.0.0",
-    "through2": "^2.0.0"
-  },
-  "devDependencies": {
-    "mkdirp": "^0.5.1",
-    "shelljs": "^0.8.0"
+    "through2": "^3.0.0"
   },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "npm run-script lint && mocha --timeout 30000",
     "test-windows": "mocha --timeout 30000"
   },
   "bin": {

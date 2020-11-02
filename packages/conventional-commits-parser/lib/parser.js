@@ -96,9 +96,10 @@ function parser (raw, options, regex) {
   var commentFilter = typeof options.commentChar === 'string'
     ? getCommentFilter(options.commentChar)
     : passTrough
+  var gpgFilter = line => !line.match(/^\s*gpg:/)
 
   var rawLines = trimOffNewlines(raw).split(/\r?\n/)
-  var lines = truncateToScissor(rawLines).filter(commentFilter)
+  var lines = truncateToScissor(rawLines).filter(commentFilter).filter(gpgFilter)
 
   var continueNote = false
   var isBody = true
@@ -252,6 +253,17 @@ function parser (raw, options, regex) {
       footer = append(footer, line)
     }
   })
+
+  if (options.breakingHeaderPattern && notes.length === 0) {
+    var breakingHeader = header.match(options.breakingHeaderPattern)
+    if (breakingHeader) {
+      const noteText = breakingHeader[3] // the description of the change.
+      notes.push({
+        title: 'BREAKING CHANGE',
+        text: noteText
+      })
+    }
+  }
 
   while ((mentionsMatch = regex.mentions.exec(raw))) {
     mentions.push(mentionsMatch[1])

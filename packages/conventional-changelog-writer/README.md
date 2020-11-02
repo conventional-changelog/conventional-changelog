@@ -2,13 +2,11 @@
 
 > Write logs based on conventional commits and templates
 
-
 ## Install
 
 ```sh
 $ npm install --save conventional-changelog-writer
 ```
-
 
 ## Usage
 

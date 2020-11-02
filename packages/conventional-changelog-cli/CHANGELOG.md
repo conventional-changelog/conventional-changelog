@@ -3,6 +3,256 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.35...conventional-changelog-cli@2.1.0) (2020-08-12)
+
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+
+
+
+
+
+## [2.0.35](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.34...conventional-changelog-cli@2.0.35) (2020-06-20)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.34](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.33...conventional-changelog-cli@2.0.34) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** address CVE in meow ([#642](https://github.com/conventional-changelog/conventional-changelog/issues/642)) ([46311d2](https://github.com/conventional-changelog/conventional-changelog/commit/46311d2932b367f370d06c4e447b8dcf4bc4e83f))
+
+
+
+
+
+## [2.0.33](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.29...conventional-changelog-cli@2.0.33) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
+## [2.0.29](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.28...conventional-changelog-cli@2.0.29) (2019-11-21)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.28](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.27...conventional-changelog-cli@2.0.28) (2019-11-14)
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+
+
+
+
+## [2.0.27](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.26...conventional-changelog-cli@2.0.27) (2019-11-07)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.26](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.25...conventional-changelog-cli@2.0.26) (2019-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
+## [2.0.24](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.23...conventional-changelog-cli@2.0.24) (2019-10-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency tempfile to v3 ([#459](https://github.com/conventional-changelog/conventional-changelog/issues/459)) ([c0bac28](https://github.com/conventional-changelog/conventional-changelog/commit/c0bac28))
+* **preset-loader:** fix handling conventionalcommits preset without config object ([6425972](https://github.com/conventional-changelog/conventional-changelog/commit/6425972)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+* **preset, conventionalcommits:** fix handling conventionalcommits preset without config object ([c0566ce](https://github.com/conventional-changelog/conventional-changelog/commit/c0566ce)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+
+
+### Reverts
+
+* "fix(preset-loader): fix handling conventionalcommits preset without config object" ([#520](https://github.com/conventional-changelog/conventional-changelog/issues/520)) ([417139c](https://github.com/conventional-changelog/conventional-changelog/commit/417139c))
+
+
+
+
+
+## [2.0.23](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.22...conventional-changelog-cli@2.0.23) (2019-07-29)
+
+
+### Bug Fixes
+
+* **deps, cli:** bumps (minor + patch) lodash in conventional-changelog-cli ([#501](https://github.com/conventional-changelog/conventional-changelog/issues/501)) ([50212e6](https://github.com/conventional-changelog/conventional-changelog/commit/50212e6)), closes [#486](https://github.com/conventional-changelog/conventional-changelog/issues/486)
+
+
+
+
+
+## [2.0.22](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.21...conventional-changelog-cli@2.0.22) (2019-05-18)
+
+
+### Bug Fixes
+
+* **cli.js:** fix issue where standard conventional-changelog options are not passed into options object ([#380](https://github.com/conventional-changelog/conventional-changelog/issues/380)) ([86ae571](https://github.com/conventional-changelog/conventional-changelog/commit/86ae571))
+
+
+
+
+
+## [2.0.21](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.20...conventional-changelog-cli@2.0.21) (2019-05-05)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.20](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.19...conventional-changelog-cli@2.0.20) (2019-05-02)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.19](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.18...conventional-changelog-cli@2.0.19) (2019-05-02)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.18](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.17...conventional-changelog-cli@2.0.18) (2019-04-26)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.16...conventional-changelog-cli@2.0.17) (2019-04-24)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.15...conventional-changelog-cli@2.0.16) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.15](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.14...conventional-changelog-cli@2.0.15) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.14](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.13...conventional-changelog-cli@2.0.14) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.13](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.12...conventional-changelog-cli@2.0.13) (2019-04-10)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.12](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.11...conventional-changelog-cli@2.0.12) (2019-02-14)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.10...conventional-changelog-cli@2.0.11) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.9...conventional-changelog-cli@2.0.10) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.8...conventional-changelog-cli@2.0.9) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.7...conventional-changelog-cli@2.0.8) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.6...conventional-changelog-cli@2.0.7) (2018-11-01)
+
+**Note:** Version bump only for package conventional-changelog-cli
+
+
+
+
+
+## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.5...conventional-changelog-cli@2.0.6) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.0.4...conventional-changelog-cli@2.0.5) (2018-08-21)
 

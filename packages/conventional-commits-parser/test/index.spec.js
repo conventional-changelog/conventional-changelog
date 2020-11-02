@@ -331,4 +331,13 @@ describe('sync', function () {
       repository: null
     }])
   })
+
+  it('should parse slash in the header with default headerPattern option', () => {
+    var commit = 'feat(hello/world): message'
+    var result = conventionalCommitsParser.sync(commit)
+
+    expect(result.type).to.equal('feat')
+    expect(result.scope).to.equal('hello/world')
+    expect(result.subject).to.equal('message')
+  })
 })

@@ -31,37 +31,54 @@ var cli = meow(`
       conventional-commits-parser log2.txt '===' >> parsed.txt
 
     Options
-      -p, --header-pattern           Regex to match header pattern
-      -c, --header-correspondence    Comma separated parts used to define what capturing group of 'headerPattern' captures what
-      -r, --reference-actions        Comma separated keywords that used to reference issues
-      -i, --issue-prefixes           Comma separated prefixes of an issue
-      -n, --note-keywords            Comma separated keywords for important notes
-      -f, --field-pattern            Regex to match other fields
-      --revert-pattern               Regex to match revert pattern
-      --revert-correspondence        Comma separated fields used to define what the commit reverts
-      -v, --verbose                  Verbose output
+      -p, --header-pattern              Regex to match header pattern
+      -c, --header-correspondence       Comma separated parts used to define what capturing group of 'headerPattern' captures what
+      -r, --reference-actions           Comma separated keywords that used to reference issues
+      -i, --issue-prefixes              Comma separated prefixes of an issue
+      --issue-prefixes-case-sensitive   Treat issue prefixes as case sensitive
+      -n, --note-keywords               Comma separated keywords for important notes
+      -f, --field-pattern               Regex to match other fields
+      --revert-pattern                  Regex to match revert pattern
+      --revert-correspondence           Comma separated fields used to define what the commit reverts
+      -v, --verbose                     Verbose output
 `, {
   flags: {
     'header-pattern': {
-      alias: `p`
+      alias: 'p',
+      type: 'string'
     },
     'header-correspondence': {
-      alias: `c`
+      alias: 'c',
+      type: 'string'
     },
     'reference-actions': {
-      alias: `r`
+      alias: 'r',
+      type: 'string'
     },
     'issue-prefixes': {
-      alias: `i`
+      alias: 'i',
+      type: 'string'
+    },
+    'issue-prefixes-case-sensitive': {
+      type: 'boolean'
     },
     'note-keywords': {
-      alias: `n`
+      alias: 'n',
+      type: 'string'
     },
     'field-pattern': {
-      alias: `f`
+      alias: 'f',
+      type: 'string'
+    },
+    'revert-pattern': {
+      type: 'string'
+    },
+    'revert-correspondence': {
+      type: 'string'
     },
     verbose: {
-      alias: `v`
+      alias: 'v',
+      type: 'boolean'
     }
   }
 })
@@ -137,6 +154,7 @@ if (process.stdin.isTTY) {
 } else {
   options.warn = true
   process.stdin
+    .pipe(split(separator))
     .pipe(conventionalCommitsParser(options))
     .on('error', function (err) {
       console.error(err.toString())

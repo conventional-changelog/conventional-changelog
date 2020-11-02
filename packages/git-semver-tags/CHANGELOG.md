@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.0.0...git-semver-tags@4.1.0) (2020-08-12)
+
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+
+
+
+
+
+# [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@3.0.1...git-semver-tags@4.0.0) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+* **git-semver-tags:** change --tagPrefix flag to --tag-prefix ([#566](https://github.com/conventional-changelog/conventional-changelog/issues/566)) ([490cda6](https://github.com/conventional-changelog/conventional-changelog/commit/490cda6cff74abe63617f982765b63aebdf3b4b6)), closes [#553](https://github.com/conventional-changelog/conventional-changelog/issues/553)
+
+
+### BREAKING CHANGES
+
+* **git-semver-tags:** --tagPrefix flag was changed to --tag-prefix
+
+
+
+
+
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@3.0.0...git-semver-tags@3.0.1) (2019-11-14)
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+
+
+
+
+# [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.3...git-semver-tags@3.0.0) (2019-07-29)
+
+
+* refactor!: modify gitSemverTags to take options first (#390) ([dc8aeda](https://github.com/conventional-changelog/conventional-changelog/commit/dc8aeda)), closes [#390](https://github.com/conventional-changelog/conventional-changelog/issues/390)
+
+
+### BREAKING CHANGES
+
+* gitSemverTags now takes options followed by callback.
+
+
+
+
+
+## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.2...git-semver-tags@2.0.3) (2019-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency semver to v6 ([#458](https://github.com/conventional-changelog/conventional-changelog/issues/458)) ([efaa7bb](https://github.com/conventional-changelog/conventional-changelog/commit/efaa7bb))
+
+
+
+
+
+## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.1...git-semver-tags@2.0.2) (2018-11-01)
+
+
+### Bug Fixes
+
+* bad release of git-semver-tags ([8827ae4](https://github.com/conventional-changelog/conventional-changelog/commit/8827ae4))
+
+
+
+
+
+## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.0...git-semver-tags@2.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.3.6...git-semver-tags@2.0.0) (2018-05-29)
 

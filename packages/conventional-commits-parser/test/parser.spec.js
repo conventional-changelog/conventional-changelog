@@ -183,8 +183,45 @@ describe('parser', function () {
     })
   })
 
+  it('should ignore gpg signature lines', function () {
+    expect(parser(
+      'gpg: Signature made Thu Oct 22 12:19:30 2020 EDT\n' +
+      'gpg:                using RSA key ABCDEF1234567890\n' +
+      'gpg: Good signature from "Author <author@example.com>" [ultimate]\n' +
+      'feat(scope): broadcast $destroy event on scope destruction\n' +
+      'perf testing shows that in chrome this change adds 5-15% overhead\n' +
+      'when destroying 10k nested scopes where each scope has a $destroy listener\n' +
+      'BREAKING AMEND: some breaking change\n' +
+      'Kills #1\n',
+      options,
+      reg
+    )).to.eql({
+      merge: null,
+      header: 'feat(scope): broadcast $destroy event on scope destruction',
+      body: 'perf testing shows that in chrome this change adds 5-15% overhead\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
+      footer: 'BREAKING AMEND: some breaking change\nKills #1',
+      notes: [{
+        title: 'BREAKING AMEND',
+        text: 'some breaking change'
+      }],
+      references: [{
+        action: 'Kills',
+        owner: null,
+        repository: null,
+        issue: '1',
+        raw: '#1',
+        prefix: '#'
+      }],
+      mentions: ['example'],
+      revert: null,
+      scope: 'scope',
+      subject: 'broadcast $destroy event on scope destruction',
+      type: 'feat'
+    })
+  })
+
   it('should ignore comments according to commentChar', function () {
-    var commentOptions = _.assign({}, options, {commentChar: '#'})
+    var commentOptions = _.assign({}, options, { commentChar: '#' })
 
     expect(parser('# comment', commentOptions, reg)).to.eql({
       merge: null,
@@ -230,7 +267,7 @@ describe('parser', function () {
   })
 
   it('should respect commentChar config', function () {
-    var commentOptions = _.assign({}, options, {commentChar: '*'})
+    var commentOptions = _.assign({}, options, { commentChar: '*' })
 
     expect(parser('* comment', commentOptions, reg)).to.eql({
       merge: null,
@@ -924,6 +961,42 @@ describe('parser', function () {
         prefix: '#'
       }])
       expect(msg.footer).to.equal('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change')
+    })
+
+    it('should add the subject as note if it match breakingHeaderPattern', function () {
+      var options = {
+        headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
+        breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject']
+      }
+      var msg = parser(
+        'feat!: breaking change feature',
+        options,
+        reg
+      )
+      expect(msg.notes[0]).to.eql({
+        title: 'BREAKING CHANGE',
+        text: 'breaking change feature'
+      })
+    })
+
+    it('should not duplicate notes if the subject match breakingHeaderPattern', function () {
+      var options = {
+        headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
+        breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/,
+        headerCorrespondence: ['type', 'scope', 'subject'],
+        noteKeywords: ['BREAKING AMEND']
+      }
+      var msg = parser(
+        'feat!: breaking change feature\nBREAKING AMEND: some breaking change',
+        options,
+        reg
+      )
+      expect(msg.notes[0]).to.eql({
+        title: 'BREAKING AMEND',
+        text: 'some breaking change'
+      })
+      expect(msg.notes.length).to.eql(1)
     })
   })
 

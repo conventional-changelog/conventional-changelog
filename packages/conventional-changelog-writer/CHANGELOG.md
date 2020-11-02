@@ -3,6 +3,137 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.16...conventional-changelog-writer@4.0.17) (2020-06-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
+
+
+
+
+
+## [4.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.15...conventional-changelog-writer@4.0.16) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** address CVE in meow ([#642](https://github.com/conventional-changelog/conventional-changelog/issues/642)) ([46311d2](https://github.com/conventional-changelog/conventional-changelog/commit/46311d2932b367f370d06c4e447b8dcf4bc4e83f))
+
+
+
+
+
+## [4.0.15](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.11...conventional-changelog-writer@4.0.15) (2020-05-08)
+
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+
+
+
+
+## [4.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.10...conventional-changelog-writer@4.0.11) (2019-11-14)
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+
+
+
+
+## [4.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.9...conventional-changelog-writer@4.0.10) (2019-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+
+
+
+
+
+## [4.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.7...conventional-changelog-writer@4.0.8) (2019-10-02)
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+
+
+
+
+## [4.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.6...conventional-changelog-writer@4.0.7) (2019-07-29)
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+
+
+
+
+## [4.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.5...conventional-changelog-writer@4.0.6) (2019-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency semver to v6 ([#458](https://github.com/conventional-changelog/conventional-changelog/issues/458)) ([efaa7bb](https://github.com/conventional-changelog/conventional-changelog/commit/efaa7bb))
+
+
+
+
+
+## [4.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.4...conventional-changelog-writer@4.0.5) (2019-04-11)
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+
+
+
+
+## [4.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.3...conventional-changelog-writer@4.0.4) (2019-04-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
+
+
+
+
+
+## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.2...conventional-changelog-writer@4.0.3) (2019-02-14)
+
+**Note:** Version bump only for package conventional-changelog-writer
+
+
+
+
+
+## [4.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.1...conventional-changelog-writer@4.0.2) (2018-11-01)
+
+
+### Bug Fixes
+
+* bad release of conventional-changelog-writer ([b5da9af](https://github.com/conventional-changelog/conventional-changelog/commit/b5da9af))
+
+
+
+
+
+## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.0...conventional-changelog-writer@4.0.1) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
       <a name="4.0.0"></a>
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.9...conventional-changelog-writer@4.0.0) (2018-05-29)
 

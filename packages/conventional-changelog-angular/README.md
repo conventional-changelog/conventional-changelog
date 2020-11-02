@@ -64,7 +64,7 @@ If the prefix is `feat`, `fix` or `perf`, it will appear in the changelog. Howev
 
 Other prefixes are up to your discretion. Suggested prefixes are `build`, `ci`, `docs` ,`style`, `refactor`, and `test` for non-changelog related tasks.
 
-Details regarding these types can be found in the official [Angular Contributing Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type)
+Details regarding these types can be found in the official [Angular Contributing Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type).
 
 ### Scope
 
@@ -91,7 +91,7 @@ reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
-A detailed explanation can be found in this [document][commit-message-format].
+A detailed explanation can be found in this [document](#commit-message-format).
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
 [npm-url]: https://npmjs.org/package/conventional-changelog-angular

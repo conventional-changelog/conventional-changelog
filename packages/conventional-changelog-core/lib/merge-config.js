@@ -14,21 +14,20 @@ try {
 }
 var readPkg = require('read-pkg')
 var readPkgUp = require('read-pkg-up')
-var url = require('url')
+var URL = require('url').URL
 var _ = require('lodash')
 
 var rhosts = /github|bitbucket|gitlab/i
-var rtag = /tag:\s*[v=]?(.+?)[,)]/gi
 
 function semverTagsPromise (options) {
   return Q.Promise(function (resolve, reject) {
-    gitSemverTags(function (err, result) {
+    gitSemverTags({ lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix, skipUnstable: options.skipUnstable }, function (err, result) {
       if (err) {
         reject(err)
       } else {
         resolve(result)
       }
-    }, {lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix})
+    })
   })
 }
 
@@ -52,13 +51,16 @@ function guessNextTag (previousTag, version) {
   return version
 }
 
-function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   var configPromise
   var pkgPromise
   var gitRemoteOriginUrlPromise
 
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
+  gitRawExecOpts = gitRawExecOpts || {}
+
+  var rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
 
   options = _.merge({
     pkg: {
@@ -68,6 +70,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
     },
     append: false,
     releaseCount: 1,
+    skipUnstable: false,
     debug: function () {},
     transform: function (commit, cb) {
       if (_.isString(commit.gitTags)) {
@@ -164,8 +167,18 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
         if (repo.browse) {
           var browse = repo.browse()
-          var parsedBrowse = url.parse(browse)
-          context.host = context.host || (repo.domain ? (parsedBrowse.protocol + (parsedBrowse.slashes ? '//' : '') + repo.domain) : null)
+          if (!context.host) {
+            if (repo.domain) {
+              var parsedBrowse = new URL(browse)
+              if (parsedBrowse.origin.indexOf('//') !== -1) {
+                context.host = parsedBrowse.protocol + '//' + repo.domain
+              } else {
+                context.host = parsedBrowse.protocol + repo.domain
+              }
+            } else {
+              context.host = null
+            }
+          }
           context.owner = context.owner || repo.user || ''
           context.repository = context.repository || repo.project
           context.repoUrl = browse
@@ -222,7 +235,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       }
 
       if (context.resetChangelog) {
-        fromTag = null;
+        fromTag = null
       }
 
       gitRawCommitsOpts = _.assign({
@@ -292,6 +305,8 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
             } else if (!context.currentTag) {
               if (options.lernaPackage) {
                 context.currentTag = options.lernaPackage + '@' + context.version
+              } else if (options.tagPrefix) {
+                context.currentTag = options.tagPrefix + context.version
               } else {
                 context.currentTag = guessNextTag(gitSemverTags[0], context.version)
               }
@@ -318,7 +333,8 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         context: context,
         gitRawCommitsOpts: gitRawCommitsOpts,
         parserOpts: parserOpts,
-        writerOpts: writerOpts
+        writerOpts: writerOpts,
+        gitRawExecOpts: gitRawExecOpts
       }
     })
 }

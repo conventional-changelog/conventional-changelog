@@ -6,13 +6,14 @@ var it = mocha.it
 var before = mocha.before
 var beforeEach = mocha.beforeEach
 var fs = require('fs')
+var path = require('path')
 var Handlebars = require('handlebars')
 
 var template
 var templateContext
 
 before(function (done) {
-  fs.readFile('templates/template.hbs', function (err, data) {
+  fs.readFile(path.resolve(__dirname, '../templates/template.hbs'), function (err, data) {
     if (err) done(err)
     template = data.toString()
     done()

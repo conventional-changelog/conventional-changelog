@@ -3,7 +3,7 @@
 module.exports = {
   headerPattern: /^(\w*):\s*(.*)$/,
   headerCorrespondence: [
-    `tag`,
-    `message`
+    'tag',
+    'message'
   ]
 }

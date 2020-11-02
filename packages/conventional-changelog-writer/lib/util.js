@@ -54,14 +54,19 @@ function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
       title = false
     }
 
-    commits.sort(commitsSort)
+    if (commitsSort) {
+      commits.sort(commitsSort)
+    }
+
     commitGroups.push({
       title: title,
       commits: commits
     })
   })
 
-  commitGroups.sort(groupsSort)
+  if (groupsSort) {
+    commitGroups.sort(groupsSort)
+  }
 
   return commitGroups
 }
@@ -89,10 +94,15 @@ function getNoteGroups (notes, noteGroupsSort, notesSort) {
     }
   })
 
-  retGroups.sort(noteGroupsSort)
-  _.forEach(retGroups, function (group) {
-    group.notes.sort(notesSort)
-  })
+  if (noteGroupsSort) {
+    retGroups.sort(noteGroupsSort)
+  }
+
+  if (notesSort) {
+    _.forEach(retGroups, function (group) {
+      group.notes.sort(notesSort)
+    })
+  }
 
   return retGroups
 }

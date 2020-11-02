@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "3.1.0",
+  "version": "4.2.0",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
     "log"
   ],
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=10"
   },
   "license": "MIT",
   "files": [
@@ -26,34 +26,23 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
-    "conventional-changelog-writer": "^4.0.0",
-    "conventional-commits-parser": "^3.0.0",
+    "add-stream": "^1.0.0",
+    "conventional-changelog-writer": "file:../conventional-changelog-writer",
+    "conventional-commits-parser": "file:../conventional-commits-parser",
     "dateformat": "^3.0.0",
     "get-pkg-repo": "^1.0.0",
-    "git-raw-commits": "^2.0.0",
+    "git-raw-commits": "2.0.0",
     "git-remote-origin-url": "^2.0.0",
-    "git-semver-tags": "^2.0.0",
-    "lodash": "^4.2.1",
-    "normalize-package-data": "^2.3.5",
+    "git-semver-tags": "file:../git-semver-tags",
+    "lodash": "^4.17.15",
+    "normalize-package-data": "^3.0.0",
     "q": "^1.5.1",
-    "read-pkg": "^1.1.0",
-    "read-pkg-up": "^1.0.1",
-    "through2": "^2.0.0"
-  },
-  "devDependencies": {
-    "better-than-before": "^1.0.0",
-    "conventional-changelog-angular": "^1.6.6",
-    "git-dummy-commit": "^1.2.0",
-    "git-tails": "^1.0.0",
-    "mkdirp": "^0.5.1",
-    "pinkie-promise": "^2.0.0",
-    "semver": "^5.5.0",
-    "shelljs": "^0.8.0",
-    "tmp": "0.0.33"
+    "read-pkg": "^3.0.0",
+    "read-pkg-up": "^3.0.0",
+    "shelljs": "^0.8.3",
+    "through2": "^3.0.0"
   },
   "scripts": {
-    "lint": "eslint --fix .",
-    "test": "mocha --timeout 30000 && npm run-script lint",
     "test-windows": "mocha --timeout 30000"
   }
 }

@@ -129,7 +129,7 @@ Type: `object`
 
 Type: `regex` or `string` Default: null
 
-Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventionnal header parsing.
+Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventional header parsing.
 
 For example, if we have a commit
 
@@ -192,6 +192,12 @@ Set it to `null` to reference an issue without any action.
 Type: `array` of `string` or `string` Default: `['#']`
 
 The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
+
+##### issuePrefixesCaseSensitive
+
+Type: `boolean` Default: false
+
+Used to define if `issuePrefixes` should be considered case sensitive.
 
 ##### noteKeywords
 

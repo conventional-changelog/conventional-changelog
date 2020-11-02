@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jquery@3.0.6...conventional-changelog-jquery@3.0.10) (2020-05-08)
+
+**Note:** Version bump only for package conventional-changelog-jquery
+
+
+
+
+
+## [3.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jquery@3.0.4...conventional-changelog-jquery@3.0.5) (2019-10-02)
+
+
+### Bug Fixes
+
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+
+
+
+## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jquery@3.0.3...conventional-changelog-jquery@3.0.4) (2018-11-01)
+
+
+### Bug Fixes
+
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
+
+
+
+
+
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jquery@3.0.2...conventional-changelog-jquery@3.0.3) (2018-08-21)
 
