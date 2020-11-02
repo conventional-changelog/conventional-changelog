@@ -5,7 +5,7 @@ var exec = require('child_process').exec
 var semverValid = require('semver').valid
 var regex = /tag:\s*(.+?)[,)]/gi
 var cmd = 'git log --decorate --no-color'
-var unstableTagTest = /.*-\w*\.\d$/
+var unstableTagTest = /.+-\w+\.\d+$/
 
 function lernaTag (tag, pkg) {
   if (pkg && !(new RegExp('^' + pkg + '@')).test(tag)) {
