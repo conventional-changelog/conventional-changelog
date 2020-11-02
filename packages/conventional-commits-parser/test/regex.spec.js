@@ -18,6 +18,18 @@ describe('regex', function () {
       expect(match[2]).to.equal('This is so important.')
     })
 
+    it('should match notes with customized pattern', function () {
+      var reNotes = regex({
+        noteKeywords: ['BREAKING CHANGE'],
+        notesPattern: (noteKeywords) => new RegExp('^[\\s|*]*(' + noteKeywords + ')[:\\s]+(?:\\[.*\\] )(.*)', 'i')
+      }).notes
+      var notes = 'BREAKING CHANGE: [Do not match this prefix.] This is so important.'
+      var match = notes.match(reNotes)
+      expect(match[0]).to.equal(notes)
+      expect(match[1]).to.equal('BREAKING CHANGE')
+      expect(match[2]).to.equal('This is so important.')
+    })
+
     it('should be case insensitive', function () {
       var reNotes = regex({
         noteKeywords: ['Breaking News', 'Breaking Change']
