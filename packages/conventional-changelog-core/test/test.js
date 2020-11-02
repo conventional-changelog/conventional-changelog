@@ -28,7 +28,7 @@ betterThanBefore.setups([
     shell.mkdir(tmpDir)
     shell.cd(tmpDir)
     shell.mkdir('git-templates')
-    shell.exec('git init --template=./git-templates')
+    shell.exec('git init --initial-branch master --template=./git-templates')
     writeFileSync('package.json', '{ "name": "conventional-changelog-core", "repository": { "type": "git", "url": "https://github.com/conventional-changelog/conventional-changelog-core.git" } }')
     gitDummyCommit('First commit')
   },

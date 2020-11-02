@@ -19,12 +19,12 @@ describe('regex', function () {
     })
 
     it('should match notes with customized pattern', function () {
-      var reNotes = regex({
+      const reNotes = regex({
         noteKeywords: ['BREAKING CHANGE'],
         notesPattern: (noteKeywords) => new RegExp('^[\\s|*]*(' + noteKeywords + ')[:\\s]+(?:\\[.*\\] )(.*)', 'i')
       }).notes
-      var notes = 'BREAKING CHANGE: [Do not match this prefix.] This is so important.'
-      var match = notes.match(reNotes)
+      const notes = 'BREAKING CHANGE: [Do not match this prefix.] This is so important.'
+      const match = notes.match(reNotes)
       expect(match[0]).to.equal(notes)
       expect(match[1]).to.equal('BREAKING CHANGE')
       expect(match[2]).to.equal('This is so important.')
