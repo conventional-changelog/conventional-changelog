@@ -1,13 +1,13 @@
 'use strict'
-var conventionalChangelog = require('../')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var shell = require('shelljs')
-var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
+const conventionalChangelog = require('../')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const shell = require('shelljs')
+const through = require('through2')
+const writeFileSync = require('fs').writeFileSync
 
 describe('conventionalChangelog', function () {
   before(function () {
@@ -23,7 +23,7 @@ describe('conventionalChangelog', function () {
   })
 
   it('should not warn if preset is found', function (done) {
-    var i = 0
+    let i = 0
 
     conventionalChangelog({
       preset: 'angular',
@@ -48,7 +48,7 @@ describe('conventionalChangelog', function () {
   })
 
   it('should work with mixed case', function (done) {
-    var i = 0
+    let i = 0
 
     conventionalChangelog({
       preset: 'aNgular',
@@ -73,7 +73,7 @@ describe('conventionalChangelog', function () {
   })
 
   it('should allow object for preset', function (done) {
-    var i = 0
+    let i = 0
 
     conventionalChangelog({
       preset: {
@@ -100,7 +100,7 @@ describe('conventionalChangelog', function () {
   })
 
   it('should warn if preset is not found', function (done) {
-    var i = 0
+    let i = 0
 
     conventionalChangelog({
       preset: 'no',
@@ -121,7 +121,7 @@ describe('conventionalChangelog', function () {
   })
 
   it('should still work if preset is not found', function (done) {
-    var i = 0
+    let i = 0
 
     conventionalChangelog({
       preset: 'no'

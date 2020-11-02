@@ -1,19 +1,19 @@
 'use strict'
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var beforeEach = mocha.beforeEach
-var after = mocha.after
-var shell = require('shelljs')
-var spawn = require('child_process').spawn
-var fs = require('fs')
-var path = require('path')
-var readFileSync = fs.readFileSync
-var writeFileSync = fs.writeFileSync
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const beforeEach = mocha.beforeEach
+const after = mocha.after
+const shell = require('shelljs')
+const spawn = require('child_process').spawn
+const fs = require('fs')
+const path = require('path')
+const readFileSync = fs.readFileSync
+const writeFileSync = fs.writeFileSync
 
-var cliPath = path.join(__dirname, '../cli.js')
+const cliPath = path.join(__dirname, '../cli.js')
 
 require('chai').should()
 
@@ -44,13 +44,13 @@ describe('standard-changelog cli', function () {
     it('appends to changelog if it exists', function (done) {
       writeFileSync('CHANGELOG.md', '\nold content', 'utf-8')
 
-      var cp = spawn(process.execPath, [cliPath], {
+      const cp = spawn(process.execPath, [cliPath], {
         stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
         code.should.equal(0)
-        var content = readFileSync('CHANGELOG.md', 'utf-8')
+        const content = readFileSync('CHANGELOG.md', 'utf-8')
         content.should.match(/First commit/)
         content.should.match(/old content/)
         return done()
@@ -58,13 +58,13 @@ describe('standard-changelog cli', function () {
     })
 
     it('generates changelog if it does not exist', function (done) {
-      var cp = spawn(process.execPath, [cliPath], {
+      const cp = spawn(process.execPath, [cliPath], {
         stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
         code.should.equal(0)
-        var content = readFileSync('CHANGELOG.md', 'utf-8')
+        const content = readFileSync('CHANGELOG.md', 'utf-8')
         content.should.match(/First commit/)
         return done()
       })
@@ -72,13 +72,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should overwrite if `-s` presents when appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s', '--append'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s', '--append'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       originalChangelog()
@@ -87,13 +87,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should overwrite if `-s` presents when not appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/First commit(\s|.)*Some previous changelog./)
 
       originalChangelog()
@@ -102,13 +102,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should overwrite if `infile` and `outfile` are the same', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.include('Some previous changelog.\n')
 
@@ -118,27 +118,27 @@ describe('standard-changelog cli', function () {
   })
 
   it('should work if `infile` is missing but `outfile` presets', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
 
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
       done()
     })
   })
 
   it('should work if both `infile` and `outfile` presets when not appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/First commit(\s|.)*Some previous changelog./)
 
       done()
@@ -146,26 +146,26 @@ describe('standard-changelog cli', function () {
   })
 
   it('should work if both `infile` and `outfile` presets when appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
       done()
     })
   })
 
   it('should work if `infile` presets but `outfile` is missing when not appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       done()
@@ -173,13 +173,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should work if `infile` presets but `outfile` is missing when appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--append'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       done()
@@ -187,13 +187,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should ignore `infile` if `releaseCount` is `0` (file)', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--releaseCount', 0], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--releaseCount', 0], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
 
@@ -203,13 +203,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should create `infile` if `infile` is ENOENT', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync('no-such-file.md', 'utf8')
+      const modified = readFileSync('no-such-file.md', 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
       done()
@@ -217,13 +217,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should create `infile` if `infile` is ENOENT and overwrite infile', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/no-such-file.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/no-such-file.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
 
@@ -233,13 +233,13 @@ describe('standard-changelog cli', function () {
   })
 
   it('should default to CHANGELOG.md if `-s` presents but `-i` is missing', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync('CHANGELOG.md', 'utf8')
+      const modified = readFileSync('CHANGELOG.md', 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
       done()
@@ -247,39 +247,39 @@ describe('standard-changelog cli', function () {
   })
 
   it('-k should work', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json')], {
+    const cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync('CHANGELOG.md', 'utf8')
+      const modified = readFileSync('CHANGELOG.md', 'utf8')
       expect(modified).to.include('0.0.17')
       done()
     })
   })
 
   it('--context should work with relative path', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
+    const cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync('CHANGELOG.md', 'utf8')
+      const modified = readFileSync('CHANGELOG.md', 'utf8')
       expect(modified).to.include('my-repo')
       done()
     })
   })
 
   it('--context should work with absolute path', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
+    const cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync('CHANGELOG.md', 'utf8')
+      const modified = readFileSync('CHANGELOG.md', 'utf8')
       expect(modified).to.include('my-repo')
       done()
     })
@@ -288,13 +288,13 @@ describe('standard-changelog cli', function () {
   it('generates full historical changelog on --first-release', function (done) {
     shell.exec('git tag -a v0.0.17 -m "old release"')
 
-    var cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json'), '--first-release'], {
+    const cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json'), '--first-release'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync('CHANGELOG.md', 'utf8')
+      const modified = readFileSync('CHANGELOG.md', 'utf8')
       expect(modified).to.include('First commit')
       shell.exec('git tag -d v0.0.17')
       done()
@@ -302,9 +302,9 @@ describe('standard-changelog cli', function () {
   })
 
   it('outputs an error if context file is not found', function (done) {
-    var output = ''
+    let output = ''
 
-    var cp = spawn(process.execPath, [cliPath, '--context', 'missing-file.txt'], {
+    const cp = spawn(process.execPath, [cliPath, '--context', 'missing-file.txt'], {
       stdio: [process.stdin, null, null]
     })
 

@@ -1,16 +1,16 @@
 'use strict'
-var conventionalCommitsParser = require('../')
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var expect = require('chai').expect
-var forEach = require('lodash').forEach
-var through = require('through2')
+const conventionalCommitsParser = require('../')
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const expect = require('chai').expect
+const forEach = require('lodash').forEach
+const through = require('through2')
 
 describe('conventionalCommitsParser', function () {
   it('should parse raw commits', function (done) {
-    var stream = through()
-    var commits = [
+    const stream = through()
+    const commits = [
       'feat(ng-list): Allow custom separator\n' +
       'bla bla bla\n\n' +
       'Closes #123\nCloses #25\nFixes #33\n',
@@ -39,7 +39,7 @@ describe('conventionalCommitsParser', function () {
     })
     stream.end()
 
-    var i = 0
+    let i = 0
 
     stream
       .pipe(conventionalCommitsParser())
@@ -71,8 +71,8 @@ describe('conventionalCommitsParser', function () {
   })
 
   it('should ignore malformed commits', function (done) {
-    var stream = through()
-    var commits = [
+    const stream = through()
+    const commits = [
       'chore(scope with spaces): some chore\n',
 
       '\n' +
@@ -87,7 +87,7 @@ describe('conventionalCommitsParser', function () {
     })
     stream.end()
 
-    var i = 0
+    let i = 0
 
     stream
       .pipe(conventionalCommitsParser())
@@ -101,8 +101,8 @@ describe('conventionalCommitsParser', function () {
   })
 
   it('should warn if malformed commits found', function (done) {
-    var stream = through()
-    var commit = ' \n\n'
+    const stream = through()
+    const commit = ' \n\n'
 
     stream.write(commit)
     stream.end()
@@ -120,8 +120,8 @@ describe('conventionalCommitsParser', function () {
   })
 
   it('should error if malformed commits found and `options.warn === true`', function (done) {
-    var stream = through()
-    var commit = ' \n\n'
+    const stream = through()
+    const commit = ' \n\n'
 
     stream.write(commit)
     stream.end()
@@ -136,7 +136,7 @@ describe('conventionalCommitsParser', function () {
       })
   })
 
-  var commits = [
+  const commits = [
     'feat(ng-list) Allow custom separator\n' +
     'bla bla bla\n\n' +
     'Fix #123\nCloses #25\nfix #33\n',
@@ -147,8 +147,8 @@ describe('conventionalCommitsParser', function () {
   ]
 
   it('should take options', function (done) {
-    var stream = through()
-    var i = 0
+    const stream = through()
+    let i = 0
 
     forEach(commits, function (commit) {
       stream.write(commit)
@@ -208,8 +208,8 @@ describe('conventionalCommitsParser', function () {
   })
 
   it('should take string options', function (done) {
-    var stream = through()
-    var i = 0
+    const stream = through()
+    let i = 0
 
     forEach(commits, function (commit) {
       stream.write(commit)
@@ -283,10 +283,10 @@ describe('conventionalCommitsParser', function () {
 
 describe('sync', function () {
   it('should work', function () {
-    var commit = 'feat(ng-list): Allow custom separator\n' +
+    const commit = 'feat(ng-list): Allow custom separator\n' +
       'bla bla bla\n\n' +
       'Closes #123\nCloses #25\nFixes #33\n'
-    var result = conventionalCommitsParser.sync(commit)
+    const result = conventionalCommitsParser.sync(commit)
 
     expect(result.header).to.equal('feat(ng-list): Allow custom separator')
     expect(result.footer).to.equal('Closes #123\nCloses #25\nFixes #33')
@@ -319,8 +319,8 @@ describe('sync', function () {
   })
 
   it('should parse references from header', function () {
-    var commit = 'Subject #1'
-    var result = conventionalCommitsParser.sync(commit)
+    const commit = 'Subject #1'
+    const result = conventionalCommitsParser.sync(commit)
 
     expect(result.references).to.eql([{
       action: null,
@@ -333,8 +333,8 @@ describe('sync', function () {
   })
 
   it('should parse slash in the header with default headerPattern option', () => {
-    var commit = 'feat(hello/world): message'
-    var result = conventionalCommitsParser.sync(commit)
+    const commit = 'feat(hello/world): message'
+    const result = conventionalCommitsParser.sync(commit)
 
     expect(result.type).to.equal('feat')
     expect(result.scope).to.equal('hello/world')

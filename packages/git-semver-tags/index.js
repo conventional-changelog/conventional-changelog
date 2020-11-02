@@ -1,11 +1,11 @@
 'use strict'
 
-var proc = require('process')
-var exec = require('child_process').exec
-var semverValid = require('semver').valid
-var regex = /tag:\s*(.+?)[,)]/gi
-var cmd = 'git log --decorate --no-color'
-var unstableTagTest = /.+-\w+\.\d+$/
+const proc = require('process')
+const exec = require('child_process').exec
+const semverValid = require('semver').valid
+const regex = /tag:\s*(.+?)[,)]/gi
+const cmd = 'git log --decorate --no-color'
+const unstableTagTest = /.+-\w+\.\d+$/
 
 function lernaTag (tag, pkg) {
   if (pkg && !(new RegExp('^' + pkg + '@')).test(tag)) {
@@ -20,7 +20,7 @@ module.exports = function gitSemverTags (opts, callback) {
     callback = opts
     opts = {}
   }
-  var options = Object.assign({ maxBuffer: Infinity, cwd: proc.cwd() }, opts)
+  const options = Object.assign({ maxBuffer: Infinity, cwd: proc.cwd() }, opts)
 
   if (options.package && !options.lernaTags) {
     callback(new Error('opts.package should only be used when running in lerna mode'))
@@ -33,15 +33,15 @@ module.exports = function gitSemverTags (opts, callback) {
       return
     }
 
-    var tags = []
-    var tagPrefixRegexp
+    const tags = []
+    let tagPrefixRegexp
     if (options.tagPrefix) {
       tagPrefixRegexp = new RegExp('^' + options.tagPrefix + '(.*)')
     }
     data.split('\n').forEach(function (decorations) {
-      var match
+      let match
       while ((match = regex.exec(decorations))) {
-        var tag = match[1]
+        const tag = match[1]
 
         if (options.skipUnstable && unstableTagTest.test(tag)) {
           // skip unstable tag
@@ -53,7 +53,7 @@ module.exports = function gitSemverTags (opts, callback) {
             tags.push(tag)
           }
         } else if (options.tagPrefix) {
-          var matches = tag.match(tagPrefixRegexp)
+          const matches = tag.match(tagPrefixRegexp)
           if (matches && semverValid(matches[1])) {
             tags.push(tag)
           }

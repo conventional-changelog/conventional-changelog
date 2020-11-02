@@ -1,38 +1,38 @@
 'use strict'
-var util = require('../lib/util')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
+const util = require('../lib/util')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
 
 describe('util', function () {
   describe('compileTemplates', function () {
     it('should compile templates with default partials', function () {
-      var templates = {
+      const templates = {
         mainTemplate: '{{> header}}{{> commit}}{{> footer}}',
         headerPartial: 'header\n',
         commitPartial: 'commit\n',
         footerPartial: 'footer\n'
       }
-      var compiled = util.compileTemplates(templates)
+      const compiled = util.compileTemplates(templates)
 
       expect(compiled()).to.equal('header\ncommit\nfooter\n')
     })
 
     it('should compile templates with default partials if one is an empty string', function () {
-      var templates = {
+      const templates = {
         mainTemplate: '{{> header}}{{> commit}}{{> footer}}',
         headerPartial: '',
         commitPartial: 'commit\n',
         footerPartial: 'footer\n'
       }
-      var compiled = util.compileTemplates(templates)
+      const compiled = util.compileTemplates(templates)
 
       expect(compiled()).to.equal('commit\nfooter\n')
     })
 
     it('should compile templates with customized partials', function () {
-      var templates = {
+      const templates = {
         mainTemplate: '{{> partial1}}{{> partial2}}{{> partial3}}',
         partials: {
           partial1: 'partial1\n',
@@ -41,7 +41,7 @@ describe('util', function () {
           partial4: null
         }
       }
-      var compiled = util.compileTemplates(templates)
+      const compiled = util.compileTemplates(templates)
 
       expect(compiled()).to.equal('partial1\npartial2\npartial3\n')
     })
@@ -49,20 +49,20 @@ describe('util', function () {
 
   describe('functionify', function () {
     it('should turn any truthy value into a function', function () {
-      var func = util.functionify('a')
+      const func = util.functionify('a')
 
       expect(func).to.be.a('function')
     })
 
     it('should not change falsy value', function () {
-      var func = util.functionify(null)
+      const func = util.functionify(null)
 
       expect(func).to.equal(null)
     })
   })
 
   describe('getCommitGroups', function () {
-    var commits = [{
+    const commits = [{
       groupBy: 'A',
       content: 'this is A'
     }, {
@@ -74,7 +74,7 @@ describe('util', function () {
     }]
 
     it('should group but not sort groups', function () {
-      var commitGroups = util.getCommitGroups('groupBy', commits)
+      const commitGroups = util.getCommitGroups('groupBy', commits)
 
       expect(commitGroups).to.eql([{
         title: 'A',
@@ -95,7 +95,7 @@ describe('util', function () {
     })
 
     it('should group if `groupBy` is undefined', function () {
-      var commits = [{
+      const commits = [{
         content: 'this is A'
       }, {
         content: 'this is another A'
@@ -103,7 +103,7 @@ describe('util', function () {
         groupBy: 'Big B',
         content: 'this is B and its a bit longer'
       }]
-      var commitGroups = util.getCommitGroups('groupBy', commits)
+      const commitGroups = util.getCommitGroups('groupBy', commits)
 
       expect(commitGroups).to.eql([{
         title: false,
@@ -122,7 +122,7 @@ describe('util', function () {
     })
 
     it('should group and sort groups', function () {
-      var commitGroups = util.getCommitGroups('groupBy', commits, function (a, b) {
+      const commitGroups = util.getCommitGroups('groupBy', commits, function (a, b) {
         if (a.title.length < b.title.length) {
           return 1
         }
@@ -151,7 +151,7 @@ describe('util', function () {
     })
 
     it('should group and but not sort commits', function () {
-      var commitGroups = util.getCommitGroups('groupBy', commits)
+      const commitGroups = util.getCommitGroups('groupBy', commits)
 
       expect(commitGroups).to.eql([{
         title: 'A',
@@ -172,7 +172,7 @@ describe('util', function () {
     })
 
     it('should group and sort commits', function () {
-      var commitGroups = util.getCommitGroups('groupBy', commits, false, function (a, b) {
+      const commitGroups = util.getCommitGroups('groupBy', commits, false, function (a, b) {
         if (a.content.length < b.content.length) {
           return 1
         }
@@ -202,7 +202,7 @@ describe('util', function () {
   })
 
   describe('getNoteGroups', function () {
-    var notes = [{
+    const notes = [{
       title: 'A title',
       text: 'this is A and its a bit longer'
     }, {
@@ -220,7 +220,7 @@ describe('util', function () {
     }]
 
     it('should group', function () {
-      var noteGroups = util.getNoteGroups(notes)
+      const noteGroups = util.getNoteGroups(notes)
 
       expect(noteGroups).to.eql([{
         title: 'A title',
@@ -250,7 +250,7 @@ describe('util', function () {
     })
 
     it('should group and sort groups', function () {
-      var noteGroups = util.getNoteGroups(notes, function (a, b) {
+      const noteGroups = util.getNoteGroups(notes, function (a, b) {
         if (a.title.length > b.title.length) {
           return 1
         }
@@ -288,7 +288,7 @@ describe('util', function () {
     })
 
     it('should group and sort notes', function () {
-      var noteGroups = util.getNoteGroups(notes, false, function (a, b) {
+      const noteGroups = util.getNoteGroups(notes, false, function (a, b) {
         if (a.text.length < b.text.length) {
           return 1
         }
@@ -326,7 +326,7 @@ describe('util', function () {
     })
 
     it('should work if title does not exist', function () {
-      var notes = [{
+      const notes = [{
         title: '',
         text: 'this is A and its a bit longer'
       }, {
@@ -340,7 +340,7 @@ describe('util', function () {
         text: 'this is another B'
       }]
 
-      var noteGroups = util.getNoteGroups(notes)
+      const noteGroups = util.getNoteGroups(notes)
 
       expect(noteGroups).to.eql([{
         title: '',
@@ -365,7 +365,7 @@ describe('util', function () {
   })
 
   describe('processCommit', function () {
-    var commit = {
+    const commit = {
       hash: '456789uhghi',
       subject: 'my subject!!!',
       replaceThis: 'bad',
@@ -373,7 +373,7 @@ describe('util', function () {
     }
 
     it('should process object commit', function () {
-      var processed = util.processCommit(commit)
+      const processed = util.processCommit(commit)
 
       expect(processed).to.eql({
         hash: '456789uhghi',
@@ -390,7 +390,7 @@ describe('util', function () {
     })
 
     it('should process json commit', function () {
-      var processed = util.processCommit(JSON.stringify(commit))
+      const processed = util.processCommit(JSON.stringify(commit))
 
       expect(processed).to.eql({
         hash: '456789uhghi',
@@ -407,7 +407,7 @@ describe('util', function () {
     })
 
     it('should transform by a function', function () {
-      var processed = util.processCommit(commit, function (commit) {
+      const processed = util.processCommit(commit, function (commit) {
         commit.hash = commit.hash.substring(0, 4)
         commit.subject = commit.subject.substring(0, 5)
         commit.replaceThis = 'replaced'
@@ -429,7 +429,7 @@ describe('util', function () {
     })
 
     it('should transform by an object', function () {
-      var processed = util.processCommit(commit, {
+      const processed = util.processCommit(commit, {
         hash: function (hash) {
           return hash.substring(0, 4)
         },
@@ -454,7 +454,7 @@ describe('util', function () {
     })
 
     it('should transform by an object using dot path', function () {
-      var processed = util.processCommit({
+      const processed = util.processCommit({
         header: {
           subject: 'my subject'
         }
@@ -478,7 +478,7 @@ describe('util', function () {
   })
 
   describe('processContext', function () {
-    var commits = [{
+    const commits = [{
       content: 'this is A'
     }, {
       content: 'this is another A'
@@ -487,7 +487,7 @@ describe('util', function () {
       content: 'this is B and its a bit longer'
     }]
 
-    var notes = [{
+    const notes = [{
       title: 'A',
       text: 'this is A and its a bit longer'
     }, {
@@ -502,7 +502,7 @@ describe('util', function () {
     }]
 
     it('should process context without `options.groupBy`', function () {
-      var extra = util.getExtraContext(commits, notes, {})
+      const extra = util.getExtraContext(commits, notes, {})
 
       expect(extra).to.eql({
         commitGroups: [{
@@ -539,7 +539,7 @@ describe('util', function () {
     })
 
     it('should process context with `options.groupBy` found', function () {
-      var extra = util.getExtraContext(commits, notes, {
+      const extra = util.getExtraContext(commits, notes, {
         groupBy: 'groupBy'
       })
 
@@ -581,7 +581,7 @@ describe('util', function () {
     })
 
     it('should process context with `options.groupBy` not found', function () {
-      var extra = util.getExtraContext(commits, notes, {
+      const extra = util.getExtraContext(commits, notes, {
         groupBy: 'what?'
       })
 
@@ -622,7 +622,7 @@ describe('util', function () {
 
   describe('generate', function () {
     it('should merge with the key commit', function () {
-      var log = util.generate({
+      const log = util.generate({
         mainTemplate: '{{whatever}}',
         finalizeContext: function (context) {
           return context
@@ -638,7 +638,7 @@ describe('util', function () {
     })
 
     it('should attach a copy of the commit to note', function () {
-      var log = util.generate({
+      const log = util.generate({
         mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
         ignoreReverted: true,
         finalizeContext: function (context) {
@@ -677,7 +677,7 @@ describe('util', function () {
     })
 
     it('should not html escape any content', function () {
-      var log = util.generate({
+      const log = util.generate({
         mainTemplate: '{{whatever}}',
         finalizeContext: function (context) {
           return context
@@ -691,7 +691,7 @@ describe('util', function () {
     })
 
     it('should ignore a reverted commit', function () {
-      var log = util.generate({
+      const log = util.generate({
         mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{text}}{{/each}}{{/each}}',
         ignoreReverted: true,
         finalizeContext: function (context) {
@@ -762,7 +762,7 @@ describe('util', function () {
     })
 
     it('should finalize context', function () {
-      var log = util.generate({
+      const log = util.generate({
         mainTemplate: '{{whatever}} {{somethingExtra}}',
         finalizeContext: function (context) {
           context.somethingExtra = 'oh'
@@ -777,7 +777,7 @@ describe('util', function () {
     })
 
     it('should finalize context', function () {
-      var log = util.generate({
+      const log = util.generate({
         mainTemplate: '{{whatever}} {{somethingExtra}} {{opt}} {{commitsLen}} {{whatever}}',
         finalizeContext: function (context, options, commits, keyCommit) {
           context.somethingExtra = 'oh'
