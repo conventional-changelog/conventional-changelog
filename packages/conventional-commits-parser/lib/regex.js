@@ -13,12 +13,18 @@ function join (array, joiner) {
     .join(joiner)
 }
 
-function getNotesRegex (noteKeywords) {
+function getNotesRegex (noteKeywords, notesPattern) {
   if (!noteKeywords) {
     return reNomatch
   }
 
-  return new RegExp('^[\\s|*]*(' + join(noteKeywords, '|') + ')[:\\s]+(.*)', 'i')
+  const noteKeywordsSelection = join(noteKeywords, '|')
+
+  if (!notesPattern) {
+    return new RegExp('^[\\s|*]*(' + noteKeywordsSelection + ')[:\\s]+(.*)', 'i')
+  }
+
+  return notesPattern(noteKeywordsSelection)
 }
 
 function getReferencePartsRegex (issuePrefixes, issuePrefixesCaseSensitive) {
@@ -42,7 +48,7 @@ function getReferencesRegex (referenceActions) {
 
 module.exports = function (options) {
   options = options || {}
-  var reNotes = getNotesRegex(options.noteKeywords)
+  var reNotes = getNotesRegex(options.noteKeywords, options.notesPattern)
   var reReferenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)
   var reReferences = getReferencesRegex(options.referenceActions)
 
