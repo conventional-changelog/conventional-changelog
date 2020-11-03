@@ -1,9 +1,9 @@
 'use strict'
 
-var parser = require('./lib/parser')
-var regex = require('./lib/regex')
-var through = require('through2')
-var _ = require('lodash')
+const parser = require('./lib/parser')
+const regex = require('./lib/regex')
+const through = require('through2')
+const _ = require('lodash')
 
 function assignOpts (options) {
   options = _.extend({
@@ -71,10 +71,10 @@ function assignOpts (options) {
 
 function conventionalCommitsParser (options) {
   options = assignOpts(options)
-  var reg = regex(options)
+  const reg = regex(options)
 
   return through.obj(function (data, enc, cb) {
-    var commit
+    let commit
 
     try {
       commit = parser(data.toString(), options, reg)
@@ -92,7 +92,7 @@ function conventionalCommitsParser (options) {
 
 function sync (commit, options) {
   options = assignOpts(options)
-  var reg = regex(options)
+  const reg = regex(options)
 
   return parser(commit, options, reg)
 }

@@ -1,19 +1,19 @@
 'use strict'
-var concat = require('concat-stream')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var after = mocha.after
-var shell = require('shelljs')
-var spawn = require('child_process').spawn
-var fs = require('fs')
-var path = require('path')
-var readFileSync = fs.readFileSync
-var writeFileSync = fs.writeFileSync
+const concat = require('concat-stream')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const after = mocha.after
+const shell = require('shelljs')
+const spawn = require('child_process').spawn
+const fs = require('fs')
+const path = require('path')
+const readFileSync = fs.readFileSync
+const writeFileSync = fs.writeFileSync
 
-var cliPath = path.join(__dirname, '../cli.js')
+const cliPath = path.join(__dirname, '../cli.js')
 
 function originalChangelog () {
   writeFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'Some previous changelog.\n')
@@ -37,7 +37,7 @@ describe('cli', function () {
   })
 
   it('should work without any arguments', function (done) {
-    var cp = spawn(process.execPath, [cliPath], {
+    const cp = spawn(process.execPath, [cliPath], {
       stdio: [process.stdin, null, null]
     })
 
@@ -50,13 +50,13 @@ describe('cli', function () {
   })
 
   it('should output to the same file if `-s` presents when appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s', '--append'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s', '--append'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       originalChangelog()
@@ -65,13 +65,13 @@ describe('cli', function () {
   })
 
   it('should output to the same file if `-s` presents when not appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/First commit(\s|.)*Some previous changelog./)
 
       originalChangelog()
@@ -80,13 +80,13 @@ describe('cli', function () {
   })
 
   it('should output to the same file if `infile` and `outfile` are the same', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.include('Some previous changelog.\n')
 
@@ -96,13 +96,13 @@ describe('cli', function () {
   })
 
   it('should work if `infile` is missing but `outfile` presets', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
 
       done()
@@ -110,13 +110,13 @@ describe('cli', function () {
   })
 
   it('should work if both `infile` and `outfile` presets when not appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/First commit(\s|.)*Some previous changelog./)
 
       done()
@@ -124,13 +124,13 @@ describe('cli', function () {
   })
 
   it('should work if both `infile` and `outfile` presets when appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '-o', path.join(__dirname, 'tmp/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/_CHANGELOG.md'), 'utf8')
       expect(modified).to.match(/Some previous changelog.(\s|.)*First commit/)
 
       done()
@@ -138,7 +138,7 @@ describe('cli', function () {
   })
 
   it('should work if `infile` presets but `outfile` is missing when not appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -151,7 +151,7 @@ describe('cli', function () {
   })
 
   it('should work if `infile` presets but `outfile` is missing when appending', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--append'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--append'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -164,7 +164,7 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `releaseCount` is `0` (stdout)', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0], {
       stdio: [process.stdin, null, null]
     })
 
@@ -180,13 +180,13 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `releaseCount` is `0` (file)', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0, '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'fixtures/_CHANGELOG.md'), '--release-count', 0, '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'fixtures/_CHANGELOG.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
 
@@ -196,7 +196,7 @@ describe('cli', function () {
   })
 
   it('should ignore `infile` if `infile` is ENOENT', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -213,7 +213,7 @@ describe('cli', function () {
   })
 
   it('should warn if `infile` is ENOENT', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md', '-v'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', 'no-such-file.md', '-v'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -228,13 +228,13 @@ describe('cli', function () {
   })
 
   it('should create `infile` if `infile` is ENOENT and output to the same file', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-i', path.join(__dirname, 'tmp/no-such-file.md'), '-s'], {
       stdio: [process.stdin, null, null]
     })
 
     cp.on('close', function (code) {
       expect(code).to.equal(0)
-      var modified = readFileSync(path.join(__dirname, 'tmp/no-such-file.md'), 'utf8')
+      const modified = readFileSync(path.join(__dirname, 'tmp/no-such-file.md'), 'utf8')
       expect(modified).to.include('First commit')
       expect(modified).to.not.include('previous')
 
@@ -244,7 +244,7 @@ describe('cli', function () {
   })
 
   it('should error if `-s` presents but `-i` is missing', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-s'], {
+    const cp = spawn(process.execPath, [cliPath, '-s'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -261,7 +261,7 @@ describe('cli', function () {
   })
 
   it('should error if it fails to get any options file', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--config', 'no'], {
+    const cp = spawn(process.execPath, [cliPath, '--config', 'no'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -278,7 +278,7 @@ describe('cli', function () {
   })
 
   it('-k should work', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json')], {
+    const cp = spawn(process.execPath, [cliPath, '-k', path.join(__dirname, 'fixtures/_package.json')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -295,7 +295,7 @@ describe('cli', function () {
   })
 
   it('--context should work with relative path', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
+    const cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', '../fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -307,7 +307,7 @@ describe('cli', function () {
   })
 
   it('--context should work with absolute path', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
+    const cp = spawn(process.execPath, [cliPath, '--context', '../fixtures/context.json', '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -319,7 +319,7 @@ describe('cli', function () {
   })
 
   it('--config should work with a return promise', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--config', '../fixtures/promise-config.js'], {
+    const cp = spawn(process.execPath, [cliPath, '--config', '../fixtures/promise-config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -331,7 +331,7 @@ describe('cli', function () {
   })
 
   it('--config should work with relative path', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--config', '../fixtures/config.js'], {
+    const cp = spawn(process.execPath, [cliPath, '--config', '../fixtures/config.js'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -343,7 +343,7 @@ describe('cli', function () {
   })
 
   it('--config should work with absolute path', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--config', path.join(__dirname, 'fixtures/config.js')], {
+    const cp = spawn(process.execPath, [cliPath, '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -357,7 +357,7 @@ describe('cli', function () {
   it('--preset should work', function (done) {
     writeFileSync('angular', '')
     shell.exec('git add --all && git commit -m"fix: fix it!"')
-    var cp = spawn(process.execPath, [cliPath, '--preset', 'angular'], {
+    const cp = spawn(process.execPath, [cliPath, '--preset', 'angular'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -370,7 +370,7 @@ describe('cli', function () {
   it('--preset "conventionalcommits" should work', function (done) {
     writeFileSync('angular', '')
     shell.exec('git add --all && git commit -m"fix: fix it!"')
-    var cp = spawn(process.execPath, [cliPath, '--preset', 'conventionalcommits'], {
+    const cp = spawn(process.execPath, [cliPath, '--preset', 'conventionalcommits'], {
       stdio: [process.stdin, null, null]
     })
 
@@ -382,7 +382,7 @@ describe('cli', function () {
   })
 
   it('--config should work with --preset', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')], {
+    const cp = spawn(process.execPath, [cliPath, '--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')], {
       stdio: [process.stdin, null, null]
     })
 
@@ -394,7 +394,7 @@ describe('cli', function () {
   })
 
   it('should be verbose', function (done) {
-    var cp = spawn(process.execPath, [cliPath, '-v', '-p', 'no'], {
+    const cp = spawn(process.execPath, [cliPath, '-v', '-p', 'no'], {
       stdio: [process.stdin, null, null]
     })
 

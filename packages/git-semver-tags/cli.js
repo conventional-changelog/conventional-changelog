@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 'use strict'
-var meow = require('meow')
-var gitSemverTags = require('./')
+const meow = require('meow')
+const gitSemverTags = require('./')
 
-var args = meow(`
+const args = meow(`
   Usage
     git-semver-tags
   Options

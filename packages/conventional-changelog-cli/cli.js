@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 'use strict'
 
-var addStream = require('add-stream')
-var conventionalChangelog = require('conventional-changelog')
-var fs = require('fs')
-var meow = require('meow')
-var tempfile = require('tempfile')
-var _ = require('lodash')
-var resolve = require('path').resolve
+const addStream = require('add-stream')
+const conventionalChangelog = require('conventional-changelog')
+const fs = require('fs')
+const meow = require('meow')
+const tempfile = require('tempfile')
+const _ = require('lodash')
+const resolve = require('path').resolve
 
-var cli = meow(`
+const cli = meow(`
     Usage
       conventional-changelog
 
@@ -112,14 +112,14 @@ var cli = meow(`
   }
 })
 
-var config
-var flags = cli.flags
-var infile = flags.infile
-var outfile = flags.outfile
-var sameFile = flags.sameFile
-var append = flags.append
-var releaseCount = flags.releaseCount
-var skipUnstable = flags.skipUnstable
+let config
+const flags = cli.flags
+const infile = flags.infile
+let outfile = flags.outfile
+let sameFile = flags.sameFile
+const append = flags.append
+const releaseCount = flags.releaseCount
+const skipUnstable = flags.skipUnstable
 
 if (infile && infile === outfile) {
   sameFile = true
@@ -132,7 +132,7 @@ if (infile && infile === outfile) {
   }
 }
 
-var options = _.omitBy({
+let options = _.omitBy({
   preset: flags.preset,
   pkg: {
     path: flags.pkg
@@ -150,9 +150,9 @@ if (flags.verbose) {
   options.warn = console.warn.bind(console)
 }
 
-var templateContext
+let templateContext
 
-var outStream
+let outStream
 
 try {
   if (flags.context) {
@@ -171,10 +171,10 @@ try {
   process.exit(1)
 }
 
-var gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {})
+const gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {})
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
 
-var changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
+const changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
   .on('error', function (err) {
     if (flags.verbose) {
       console.error(err.stack)
@@ -196,7 +196,7 @@ function noInputFile () {
 }
 
 if (infile && releaseCount !== 0) {
-  var readStream = fs.createReadStream(infile)
+  const readStream = fs.createReadStream(infile)
     .on('error', function () {
       if (flags.verbose) {
         console.warn('infile does not exist.')
@@ -214,7 +214,7 @@ if (infile && releaseCount !== 0) {
           flags: 'a'
         }))
     } else {
-      var tmp = tempfile()
+      const tmp = tempfile()
 
       changelogStream
         .pipe(addStream(readStream))
@@ -231,7 +231,7 @@ if (infile && releaseCount !== 0) {
       outStream = process.stdout
     }
 
-    var stream
+    let stream
 
     if (options.append) {
       stream = readStream

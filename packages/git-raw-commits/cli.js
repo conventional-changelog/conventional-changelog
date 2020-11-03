@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 'use strict'
-var meow = require('meow')
-var gitRawCommits = require('./')
+const meow = require('meow')
+const gitRawCommits = require('./')
 
-var cli = meow(`
+const cli = meow(`
   Usage
     git-raw-commits [<git-log(1)-options>]
 

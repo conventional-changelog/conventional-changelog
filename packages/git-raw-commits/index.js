@@ -1,13 +1,13 @@
 'use strict'
 
-var dargs = require('dargs')
-var execFile = require('child_process').execFile
-var split = require('split2')
-var stream = require('stream')
-var template = require('lodash.template')
-var through = require('through2')
+const dargs = require('dargs')
+const execFile = require('child_process').execFile
+const split = require('split2')
+const stream = require('stream')
+const template = require('lodash.template')
+const through = require('through2')
 
-var DELIMITER = '------------------------ >8 ------------------------'
+const DELIMITER = '------------------------ >8 ------------------------'
 
 function normalizeExecOpts (execOpts) {
   execOpts = execOpts || {}
@@ -24,10 +24,10 @@ function normalizeGitOpts (gitOpts) {
 }
 
 function getGitArgs (gitOpts) {
-  var gitFormat = template('--format=<%= format %>%n' + DELIMITER)(gitOpts)
-  var gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..')
+  const gitFormat = template('--format=<%= format %>%n' + DELIMITER)(gitOpts)
+  const gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..')
 
-  var gitArgs = ['log', gitFormat, gitFromTo]
+  const gitArgs = ['log', gitFormat, gitFromTo]
 
   // allow commits to focus on a single directory
   // this is useful for monorepos.
@@ -41,20 +41,20 @@ function getGitArgs (gitOpts) {
 }
 
 function gitRawCommits (rawGitOpts, rawExecOpts) {
-  var readable = new stream.Readable()
+  const readable = new stream.Readable()
   readable._read = function () {}
 
-  var gitOpts = normalizeGitOpts(rawGitOpts)
-  var execOpts = normalizeExecOpts(rawExecOpts)
-  var args = getGitArgs(gitOpts)
+  const gitOpts = normalizeGitOpts(rawGitOpts)
+  const execOpts = normalizeExecOpts(rawExecOpts)
+  const args = getGitArgs(gitOpts)
 
   if (gitOpts.debug) {
     gitOpts.debug('Your git-log command is:\ngit ' + args.join(' '))
   }
 
-  var isError = false
+  let isError = false
 
-  var child = execFile('git', args, {
+  const child = execFile('git', args, {
     cwd: execOpts.cwd,
     maxBuffer: Infinity
   })

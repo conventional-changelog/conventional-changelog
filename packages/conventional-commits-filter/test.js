@@ -1,9 +1,9 @@
 'use strict'
-var conventionalCommitsFilter = require('./')
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var assert = require('assert')
+const conventionalCommitsFilter = require('./')
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const assert = require('assert')
 
 describe('conventional-commits-filter', function () {
   it('should error if `commits` is not `array`', function () {
@@ -13,7 +13,7 @@ describe('conventional-commits-filter', function () {
   })
 
   it('should filter reverted commits that exist in the commits array', function () {
-    var commits = [{
+    let commits = [{
       type: 'revert',
       scope: null,
       subject: 'feat(): a very important feature',
@@ -231,7 +231,7 @@ describe('conventional-commits-filter', function () {
   })
 
   it('should fall back on commit if raw is undefined', function () {
-    var commits = [{
+    let commits = [{
       type: 'revert',
       scope: null,
       subject: 'feat(): amazing new module',
