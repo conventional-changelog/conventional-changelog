@@ -1,16 +1,16 @@
 'use strict'
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var beforeEach = mocha.beforeEach
-var fs = require('fs')
-var path = require('path')
-var Handlebars = require('handlebars')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const beforeEach = mocha.beforeEach
+const fs = require('fs')
+const path = require('path')
+const Handlebars = require('handlebars')
 
-var template
-var templateContext
+let template
+let templateContext
 
 before(function (done) {
   fs.readFile(path.resolve(__dirname, '../templates/template.hbs'), function (err, data) {
@@ -32,7 +32,7 @@ describe('template', function () {
     templateContext.commitGroups = [{
       commits: [1, 2]
     }]
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('my header\n\nmy commit\nmy commit\n\nmy footer\n\n\n')
   })

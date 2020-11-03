@@ -1,5 +1,5 @@
 'use strict'
-var Q = require('q')
+const Q = require('q')
 const conventionalChangelog = require('./conventional-changelog')
 const parserOpts = require('./parser-opts')
 const recommendedBumpOpts = require('./conventional-recommended-bump')

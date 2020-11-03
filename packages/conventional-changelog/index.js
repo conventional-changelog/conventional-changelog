@@ -1,7 +1,7 @@
 'use strict'
 
-var conventionalChangelogCore = require('conventional-changelog-core')
-var conventionalChangelogPresetLoader = require('conventional-changelog-preset-loader')
+const conventionalChangelogCore = require('conventional-changelog-core')
+const conventionalChangelogPresetLoader = require('conventional-changelog-preset-loader')
 
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   options.warn = options.warn || function () {}
