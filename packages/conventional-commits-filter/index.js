@@ -1,7 +1,7 @@
 'use strict'
 
-var isMatch = require('lodash.ismatch')
-var modifyValues = require('modify-values')
+const isMatch = require('lodash.ismatch')
+const modifyValues = require('modify-values')
 
 function modifyValue (val) {
   if (typeof val === 'string') {
@@ -16,9 +16,9 @@ function conventionalCommitsFilter (commits) {
     throw new TypeError('Expected an array')
   }
 
-  var ret = []
-  var ignores = []
-  var remove = []
+  let ret = []
+  const ignores = []
+  const remove = []
   commits.forEach(function (commit) {
     if (commit.revert) {
       ignores.push(commit)
@@ -29,12 +29,12 @@ function conventionalCommitsFilter (commits) {
 
   // Filter out reverted commits
   ret = ret.filter(function (commit) {
-    var ignoreThis = false
+    let ignoreThis = false
 
     commit = commit.raw ? modifyValues(commit.raw, modifyValue) : modifyValues(commit, modifyValue)
 
     ignores.some(function (ignoreCommit) {
-      var ignore = modifyValues(ignoreCommit.revert, modifyValue)
+      const ignore = modifyValues(ignoreCommit.revert, modifyValue)
 
       ignoreThis = isMatch(commit, ignore)
 

@@ -1,15 +1,15 @@
 'use strict'
 
-var path = require('path')
-var assert = require('assert')
-var gitSemverTags = require('./')
-var mocha = require('mocha')
-var describe = mocha.describe
-var before = mocha.before
-var it = mocha.it
-var shell = require('shelljs')
-var writeFileSync = require('fs').writeFileSync
-var gitDummyCommit = require('git-dummy-commit')
+const path = require('path')
+const assert = require('assert')
+const gitSemverTags = require('./')
+const mocha = require('mocha')
+const describe = mocha.describe
+const before = mocha.before
+const it = mocha.it
+const shell = require('shelljs')
+const writeFileSync = require('fs').writeFileSync
+const gitDummyCommit = require('git-dummy-commit')
 
 describe('git-semver-tags', function () {
   before(function () {
@@ -236,7 +236,7 @@ describe('git semver tags on different cwd', function () {
 
     shell.cd('cd ' + path.join(__dirname, 'tmp'))
 
-    var cwd = path.join(__dirname, 'tmp', 'foobar')
+    const cwd = path.join(__dirname, 'tmp', 'foobar')
     gitSemverTags({ cwd: cwd }, function (err, tags) {
       if (err) done(err)
       assert.deepStrictEqual(tags, ['v1.1.0'])

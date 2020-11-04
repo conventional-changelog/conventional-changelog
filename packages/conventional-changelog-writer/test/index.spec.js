@@ -1,16 +1,16 @@
 'use strict'
-var conventionalChangelogWriter = require('../')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var map = require('lodash').map
-var through = require('through2')
-var today = require('dateformat')(new Date(), 'yyyy-mm-dd', true)
+const conventionalChangelogWriter = require('../')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const map = require('lodash').map
+const through = require('through2')
+const today = require('dateformat')(new Date(), 'yyyy-mm-dd', true)
 
 describe('conventionalChangelogWriter', function () {
   function getStream () {
-    var upstream = through.obj()
+    const upstream = through.obj()
     upstream.write({
       hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
       header: 'feat(scope): broadcast $destroy event on scope destruction',
@@ -71,9 +71,9 @@ describe('conventionalChangelogWriter', function () {
 
   describe('no commits', function () {
     it('should still work if there is no commits', function (done) {
-      var i = 0
+      let i = 0
 
-      var upstream = through.obj()
+      const upstream = through.obj()
       upstream.end()
       upstream
         .pipe(conventionalChangelogWriter())
@@ -91,7 +91,7 @@ describe('conventionalChangelogWriter', function () {
 
   describe('link', function () {
     it('should auto link if `context.repository`, `context.commit` and `context.issue` are truthy', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({
@@ -112,7 +112,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should auto link if `context.repoUrl`, `context.commit` and `context.issue` are truthy', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({
@@ -132,7 +132,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should not auto link', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter())
@@ -148,7 +148,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should not link references', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({
@@ -172,7 +172,7 @@ describe('conventionalChangelogWriter', function () {
 
   describe('transform', function () {
     it('should transform the commit with context', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({}, {
@@ -196,7 +196,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should merge with the provided transform object', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({}, {
@@ -230,7 +230,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should ignore the commit if tranform returns `null`', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({}, {
@@ -252,7 +252,7 @@ describe('conventionalChangelogWriter', function () {
 
   describe('generate', function () {
     function getStream () {
-      var upstream = through.obj()
+      const upstream = through.obj()
       upstream.write({
         header: 'feat(scope): broadcast $destroy event on scope destruction',
         body: null,
@@ -292,7 +292,7 @@ describe('conventionalChangelogWriter', function () {
     }
 
     it('should generate on the transformed commit', function (done) {
-      var i = 0
+      let i = 0
 
       getStream()
         .pipe(conventionalChangelogWriter({
@@ -316,7 +316,7 @@ describe('conventionalChangelogWriter', function () {
 
     describe('when commits are not reversed', function () {
       it('should generate on `\'version\'` if it\'s a valid semver', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter())
@@ -348,9 +348,9 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('`generateOn` could be a string', function (done) {
-        var i = 0
+        let i = 0
 
-        var upstream = through.obj()
+        const upstream = through.obj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -420,7 +420,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('`generateOn` could be a function', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({}, {
@@ -449,7 +449,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('`generateOn` could be a null', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({}, {
@@ -469,7 +469,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('version should fall back on `context.version` and `context.date`', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({
@@ -494,7 +494,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should still generate a block even if the commit is ignored', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({}, {
@@ -520,7 +520,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should include details', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({}, {
@@ -550,9 +550,9 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should not flush when previous release is generated', function (done) {
-        var i = 0
+        let i = 0
 
-        var upstream = through.obj()
+        const upstream = through.obj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -604,7 +604,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should not flush when it is the only potential release', function (done) {
-        var upstream = through.obj()
+        const upstream = through.obj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -634,9 +634,9 @@ describe('conventionalChangelogWriter', function () {
 
     describe('when commits are reversed', function () {
       it('should generate on `\'version\'` if it\'s a valid semver', function (done) {
-        var i = 0
+        let i = 0
 
-        var upstream = through.obj()
+        const upstream = through.obj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -709,7 +709,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should still generate a block even if the commit is ignored', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({}, {
@@ -736,7 +736,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should include details', function (done) {
-        var i = 0
+        let i = 0
 
         getStream()
           .pipe(conventionalChangelogWriter({}, {
@@ -766,9 +766,9 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should not flush when previous release is generated', function (done) {
-        var i = 0
+        let i = 0
 
-        var upstream = through.obj()
+        const upstream = through.obj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -822,7 +822,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should not flush when it is the only potential release', function (done) {
-      var upstream = through.obj()
+      const upstream = through.obj()
       upstream.write({
         header: 'feat(scope): broadcast $destroy event on scope destruction',
         body: null,
@@ -852,9 +852,9 @@ describe('conventionalChangelogWriter', function () {
   })
 
   it('should ignore the field if it doesn\'t exist', function (done) {
-    var i = 0
+    let i = 0
 
-    var upstream = through.obj()
+    const upstream = through.obj()
     upstream.write({
       header: 'bla',
       body: null,
@@ -876,7 +876,7 @@ describe('conventionalChangelogWriter', function () {
   })
 
   it('should sort notes on `text` by default', function (done) {
-    var upstream = through.obj()
+    const upstream = through.obj()
     upstream.write({
       header: 'feat(scope): broadcast $destroy event on scope destruction',
       body: null,

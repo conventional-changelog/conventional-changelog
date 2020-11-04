@@ -1,10 +1,10 @@
 'use strict'
-var dateFormat = require('dateformat')
-var getPkgRepo = require('get-pkg-repo')
-var gitSemverTags = require('git-semver-tags')
-var normalizePackageData = require('normalize-package-data')
-var Q = require('q')
-var gitRemoteOriginUrl
+const dateFormat = require('dateformat')
+const getPkgRepo = require('get-pkg-repo')
+const gitSemverTags = require('git-semver-tags')
+const normalizePackageData = require('normalize-package-data')
+const Q = require('q')
+let gitRemoteOriginUrl
 try {
   gitRemoteOriginUrl = require('git-remote-origin-url')
 } catch (err) {
@@ -12,12 +12,12 @@ try {
     return Q.reject(err)
   }
 }
-var readPkg = require('read-pkg')
-var readPkgUp = require('read-pkg-up')
-var URL = require('url').URL
-var _ = require('lodash')
+const readPkg = require('read-pkg')
+const readPkgUp = require('read-pkg-up')
+const URL = require('url').URL
+const _ = require('lodash')
 
-var rhosts = /github|bitbucket|gitlab/i
+const rhosts = /github|bitbucket|gitlab/i
 
 function semverTagsPromise (options) {
   return Q.Promise(function (resolve, reject) {
@@ -52,15 +52,14 @@ function guessNextTag (previousTag, version) {
 }
 
 function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
-  var configPromise
-  var pkgPromise
-  var gitRemoteOriginUrlPromise
+  let configPromise
+  let pkgPromise
 
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
   gitRawExecOpts = gitRawExecOpts || {}
 
-  var rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
+  const rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
 
   options = _.merge({
     pkg: {
@@ -74,7 +73,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
     debug: function () {},
     transform: function (commit, cb) {
       if (_.isString(commit.gitTags)) {
-        var match = rtag.exec(commit.gitTags)
+        const match = rtag.exec(commit.gitTags)
         rtag.lastIndex = 0
 
         if (match) {
@@ -109,18 +108,18 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
     }
   }
 
-  gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl())
+  const gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl())
 
   return Q.allSettled([configPromise, pkgPromise, semverTagsPromise(options), gitRemoteOriginUrlPromise])
     .spread(function (configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj) {
-      var config
-      var pkg
-      var fromTag
-      var repo
+      let config
+      let pkg
+      let fromTag
+      let repo
 
-      var hostOpts
+      let hostOpts
 
-      var gitSemverTags = []
+      let gitSemverTags = []
 
       if (configPromise) {
         if (configObj.state === 'fulfilled') {
@@ -166,10 +165,10 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         }
 
         if (repo.browse) {
-          var browse = repo.browse()
+          const browse = repo.browse()
           if (!context.host) {
             if (repo.domain) {
-              var parsedBrowse = new URL(browse)
+              const parsedBrowse = new URL(browse)
               if (parsedBrowse.origin.indexOf('//') !== -1) {
                 context.host = parsedBrowse.protocol + '//' + repo.domain
               } else {
@@ -192,7 +191,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       if (tagsObj.state === 'fulfilled') {
         gitSemverTags = context.gitSemverTags = tagsObj.value
         fromTag = gitSemverTags[options.releaseCount - 1]
-        var lastTag = gitSemverTags[0]
+        const lastTag = gitSemverTags[0]
 
         if (lastTag === context.version || lastTag === 'v' + context.version) {
           if (options.outputUnreleased) {
@@ -208,10 +207,10 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       }
 
       if (context.host && (!context.issue || !context.commit || !parserOpts || !parserOpts.referenceActions)) {
-        var type
+        let type
 
         if (context.host) {
-          var match = context.host.match(rhosts)
+          const match = context.host.match(rhosts)
           if (match) {
             type = match[0]
           }
@@ -268,22 +267,22 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
       writerOpts = _.assign({
         finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
-          var firstCommit = originalCommits[0]
-          var lastCommit = originalCommits[originalCommits.length - 1]
-          var firstCommitHash = firstCommit ? firstCommit.hash : null
-          var lastCommitHash = lastCommit ? lastCommit.hash : null
+          const firstCommit = originalCommits[0]
+          const lastCommit = originalCommits[originalCommits.length - 1]
+          const firstCommitHash = firstCommit ? firstCommit.hash : null
+          const lastCommitHash = lastCommit ? lastCommit.hash : null
 
           if ((!context.currentTag || !context.previousTag) && keyCommit) {
-            var match = /tag:\s*(.+?)[,)]/gi.exec(keyCommit.gitTags)
-            var currentTag = context.currentTag
+            const match = /tag:\s*(.+?)[,)]/gi.exec(keyCommit.gitTags)
+            const currentTag = context.currentTag
             context.currentTag = currentTag || match ? match[1] : null
-            var index = gitSemverTags.indexOf(context.currentTag)
+            const index = gitSemverTags.indexOf(context.currentTag)
 
             // if `keyCommit.gitTags` is not a semver
             if (index === -1) {
               context.currentTag = currentTag || null
             } else {
-              var previousTag = context.previousTag = gitSemverTags[index + 1]
+              const previousTag = context.previousTag = gitSemverTags[index + 1]
 
               if (!previousTag) {
                 if (options.append) {

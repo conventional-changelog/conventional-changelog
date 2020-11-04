@@ -101,3 +101,4 @@ A detailed explanation can be found in this [document](#commit-message-format).
 [daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-angular
 [coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-angular/badge.svg
 [coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-angular
+[commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#

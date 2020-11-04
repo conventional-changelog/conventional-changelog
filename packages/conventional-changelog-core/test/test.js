@@ -1,34 +1,34 @@
 'use strict'
-var conventionalChangelogCore = require('../')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var gitTails = require('git-tails').sync
-var shell = require('shelljs')
-var gitDummyCommit = require('git-dummy-commit')
-var through = require('through2')
-var Promise = require('pinkie-promise')
-var semver = require('semver')
-var betterThanBefore = require('better-than-before')()
-var preparing = betterThanBefore.preparing
-var mkdirp = require('mkdirp')
-var writeFileSync = require('fs').writeFileSync
-var path = require('path')
-var tmp = require('tmp')
+const conventionalChangelogCore = require('../')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const gitTails = require('git-tails').sync
+const shell = require('shelljs')
+const gitDummyCommit = require('git-dummy-commit')
+const through = require('through2')
+const Promise = require('pinkie-promise')
+const semver = require('semver')
+const betterThanBefore = require('better-than-before')()
+const preparing = betterThanBefore.preparing
+const mkdirp = require('mkdirp')
+const writeFileSync = require('fs').writeFileSync
+const path = require('path')
+const tmp = require('tmp')
 
-var dir = ''
+let dir = ''
 
 betterThanBefore.setups([
   function () { // 1
     shell.config.resetForTesting()
     shell.cd(__dirname)
     dir = process.cwd()
-    var tmpDir = tmp.dirSync().name
+    const tmpDir = tmp.dirSync().name
     shell.mkdir(tmpDir)
     shell.cd(tmpDir)
     shell.mkdir('git-templates')
-    shell.exec('git init --template=./git-templates')
+    shell.exec('git init --initial-branch master --template=./git-templates')
     writeFileSync('package.json', '{ "name": "conventional-changelog-core", "repository": { "type": "git", "url": "https://github.com/conventional-changelog/conventional-changelog-core.git" } }')
     gitDummyCommit('First commit')
   },
@@ -69,19 +69,19 @@ betterThanBefore.setups([
   },
   function (context) { // 11
     shell.exec('git tag -d v0.1.0')
-    var tails = gitTails()
+    const tails = gitTails()
     context.tail = tails[tails.length - 1].substring(0, 7)
   },
   function (context) { // 12
     shell.exec('git tag not-semver')
     gitDummyCommit()
 
-    var head = shell.exec('git rev-parse HEAD').stdout.trim()
+    const head = shell.exec('git rev-parse HEAD').stdout.trim()
     gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.')
     context.head = shell.exec('git rev-parse HEAD').stdout.substring(0, 7)
   },
   function (context) { // 13
-    var tail = context.tail
+    const tail = context.tail
     shell.exec('git tag v0.0.1 ' + tail)
   },
   function () { // 14
@@ -162,7 +162,7 @@ describe('conventionalChangelogCore', function () {
 
   it('should generate the changelog of the last two releases', function (done) {
     preparing(2)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 2
@@ -187,7 +187,7 @@ describe('conventionalChangelogCore', function () {
 
   it('should generate the changelog of the last two releases even if release count exceeds the limit', function (done) {
     preparing(2)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 100
@@ -213,7 +213,7 @@ describe('conventionalChangelogCore', function () {
   it('should work when there is no `HEAD` ref', function (done) {
     preparing(2)
     shell.rm('.git/refs/HEAD')
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 100
@@ -275,7 +275,7 @@ describe('conventionalChangelogCore', function () {
   it('should spit out some debug info', function (done) {
     preparing(3)
 
-    var first = true
+    let first = true
 
     conventionalChangelogCore({
       debug: function (cmd) {
@@ -562,7 +562,7 @@ describe('conventionalChangelogCore', function () {
 
   it('should generate all log blocks', function (done) {
     preparing(5)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 0
@@ -587,7 +587,7 @@ describe('conventionalChangelogCore', function () {
 
   it('should work if there are two semver tags', function (done) {
     preparing(6)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 0
@@ -611,7 +611,7 @@ describe('conventionalChangelogCore', function () {
 
   it('semverTags should be attached to the `context` object', function (done) {
     preparing(6)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 0
@@ -633,7 +633,7 @@ describe('conventionalChangelogCore', function () {
 
   it('should not link compare', function (done) {
     preparing(6)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 0,
@@ -916,7 +916,7 @@ describe('conventionalChangelogCore', function () {
 
   it('should respect merge order', function (done) {
     preparing(19)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       releaseCount: 0,
@@ -946,8 +946,8 @@ describe('conventionalChangelogCore', function () {
 
   describe('finalizeContext', function () {
     it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', function (done) {
-      var tail = preparing(11).tail
-      var i = 0
+      const tail = preparing(11).tail
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0
@@ -974,8 +974,8 @@ describe('conventionalChangelogCore', function () {
     })
 
     it('should make `context.previousTag` default to a previous semver version of generated log (append)', function (done) {
-      var tail = preparing(11).tail
-      var i = 0
+      const tail = preparing(11).tail
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0,
@@ -1003,8 +1003,8 @@ describe('conventionalChangelogCore', function () {
     })
 
     it('`context.previousTag` and `context.currentTag` should be `null` if `keyCommit.gitTags` is not a semver', function (done) {
-      var tail = preparing(12).tail
-      var i = 0
+      const tail = preparing(12).tail
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0,
@@ -1036,7 +1036,7 @@ describe('conventionalChangelogCore', function () {
 
     it('should still work if first release has no commits (prepend)', function (done) {
       preparing(13)
-      var i = 0
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0
@@ -1069,7 +1069,7 @@ describe('conventionalChangelogCore', function () {
 
     it('should still work if first release has no commits (append)', function (done) {
       preparing(13)
-      var i = 0
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0,
@@ -1102,8 +1102,8 @@ describe('conventionalChangelogCore', function () {
     })
 
     it('should change `context.currentTag` to last commit hash if it is unreleased', function (done) {
-      var head = preparing(13).head
-      var i = 0
+      const head = preparing(13).head
+      let i = 0
 
       conventionalChangelogCore({
         outputUnreleased: true
@@ -1127,7 +1127,7 @@ describe('conventionalChangelogCore', function () {
 
     it('should not prefix with a "v"', function (done) {
       preparing(18)
-      var i = 0
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0
@@ -1152,7 +1152,7 @@ describe('conventionalChangelogCore', function () {
 
     it('should remove the first "v"', function (done) {
       preparing(18)
-      var i = 0
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0
@@ -1207,7 +1207,7 @@ describe('conventionalChangelogCore', function () {
 
     it('should not link compare if previousTag is not truthy', function (done) {
       preparing(13)
-      var i = 0
+      let i = 0
 
       conventionalChangelogCore({
         releaseCount: 0,
@@ -1259,17 +1259,17 @@ describe('conventionalChangelogCore', function () {
   })
 
   describe('config', function () {
-    var config = {
+    const config = {
       context: {
         version: 'v100.0.0'
       }
     }
 
-    var promise = new Promise(function (resolve) {
+    const promise = new Promise(function (resolve) {
       resolve(config)
     })
 
-    var fn = function (cb) {
+    const fn = function (cb) {
       cb(null, config)
     }
 

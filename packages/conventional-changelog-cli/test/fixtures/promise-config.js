@@ -1,5 +1,5 @@
 'use strict'
-var Q = require('q')
+const Q = require('q')
 
 module.exports = Q.resolve({
   writerOpts: {

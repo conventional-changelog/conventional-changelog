@@ -1,16 +1,16 @@
 'use strict'
-var concat = require('concat-stream')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var before = mocha.before
-var it = mocha.it
-var fs = require('fs')
-var spawn = require('child_process').fork
-var through = require('through2')
-var path = require('path')
+const concat = require('concat-stream')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const before = mocha.before
+const it = mocha.it
+const fs = require('fs')
+const spawn = require('child_process').fork
+const through = require('through2')
+const path = require('path')
 
-var cliPath = path.join(__dirname, '../test-cli.js')
+const cliPath = path.join(__dirname, '../test-cli.js')
 
 describe('changelog-parser cli', function () {
   before(function () {
@@ -18,7 +18,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should parse commits in a file', function (done) {
-    var cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log1.txt')], {
+    const cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log1.txt')], {
       stdio: [process.stdin, null, null, 'ipc'],
       env: {
         FORCE_STDIN_TTY: '1'
@@ -33,7 +33,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work with a separator', function (done) {
-    var cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log2.txt'), '==='], {
+    const cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log2.txt'), '==='], {
       stdio: [process.stdin, null, null, 'ipc'],
       env: {
         FORCE_STDIN_TTY: '1'
@@ -51,7 +51,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work with two files', function (done) {
-    var cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log1.txt'), path.join(__dirname, 'fixtures/log2.txt'), '==='], {
+    const cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log1.txt'), path.join(__dirname, 'fixtures/log2.txt'), '==='], {
       stdio: [process.stdin, null, null, 'ipc'],
       env: {
         FORCE_STDIN_TTY: '1'
@@ -70,8 +70,8 @@ describe('changelog-parser cli', function () {
   })
 
   it('should error if files cannot be found', function (done) {
-    var i = 0
-    var cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log1.txt'), path.join(__dirname, 'fixtures/log4.txt'), path.join(__dirname, 'fixtures/log2.txt'), path.join(__dirname, 'fixtures/log5.txt'), '==='], {
+    let i = 0
+    const cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log1.txt'), path.join(__dirname, 'fixtures/log4.txt'), path.join(__dirname, 'fixtures/log2.txt'), path.join(__dirname, 'fixtures/log5.txt'), '==='], {
       stdio: [process.stdin, null, null, 'ipc'],
       env: {
         FORCE_STDIN_TTY: '1'
@@ -95,7 +95,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work with options', function (done) {
-    var cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log3.txt'), '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
+    const cp = spawn(cliPath, [path.join(__dirname, 'fixtures/log3.txt'), '-p', '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$', '--reference-actions', 'close, fix', '-n', 'BREAKING NEWS', '--headerCorrespondence', 'scope, type,subject '], {
       stdio: [process.stdin, null, null, 'ipc'],
       env: {
         FORCE_STDIN_TTY: '1'
@@ -103,7 +103,7 @@ describe('changelog-parser cli', function () {
     })
     cp.stdout
       .pipe(concat(function (chunk) {
-        var data = JSON.parse(chunk.toString())[0]
+        const data = JSON.parse(chunk.toString())[0]
 
         expect(data.scope).to.equal('category')
         expect(data.type).to.equal('fix:subcategory')
@@ -148,7 +148,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should work if it is not a tty', function (done) {
-    var cp = spawn(cliPath, {
+    const cp = spawn(cliPath, {
       stdio: [fs.openSync(path.join(__dirname, 'fixtures/log1.txt'), 'r'), null, null, 'ipc']
     })
     cp.stdout
@@ -160,7 +160,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should seperate if it is not a tty', function (done) {
-    var cp = spawn(cliPath, ['==='], {
+    const cp = spawn(cliPath, ['==='], {
       stdio: [fs.openSync(path.join(__dirname, 'fixtures/log2.txt'), 'r'), null, null, 'ipc']
     })
 
@@ -176,7 +176,7 @@ describe('changelog-parser cli', function () {
   })
 
   it('should error if it is not a tty and commit cannot be parsed', function (done) {
-    var cp = spawn(cliPath, {
+    const cp = spawn(cliPath, {
       stdio: [fs.openSync(path.join(__dirname, 'fixtures/bad_commit.txt'), 'r'), null, null, 'ipc']
     })
     cp.stderr

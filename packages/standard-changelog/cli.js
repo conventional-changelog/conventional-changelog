@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 'use strict'
-var addStream = require('add-stream')
-var chalk = require('chalk')
-var standardChangelog = require('./')
-var fs = require('fs')
-var meow = require('meow')
-var tempfile = require('tempfile')
-var _ = require('lodash')
-var resolve = require('path').resolve
-var Readable = require('stream').Readable
-var rimraf = require('rimraf')
+const addStream = require('add-stream')
+const chalk = require('chalk')
+const standardChangelog = require('./')
+const fs = require('fs')
+const meow = require('meow')
+const tempfile = require('tempfile')
+const _ = require('lodash')
+const resolve = require('path').resolve
+const Readable = require('stream').Readable
+const rimraf = require('rimraf')
 
-var cli = meow(`
+const cli = meow(`
   Usage
     standard-changelog
 
@@ -83,14 +83,14 @@ var cli = meow(`
   }
 })
 
-var flags = cli.flags
-var infile = flags.infile
-var sameFile = flags.sameFile
-var outfile = sameFile ? (flags.outfile || infile) : flags.outfile
-var append = flags.append
-var releaseCount = flags.firstRelease ? 0 : flags.releaseCount
+const flags = cli.flags
+const infile = flags.infile
+const sameFile = flags.sameFile
+const outfile = sameFile ? (flags.outfile || infile) : flags.outfile
+const append = flags.append
+const releaseCount = flags.firstRelease ? 0 : flags.releaseCount
 
-var options = _.omitBy({
+const options = _.omitBy({
   preset: flags.preset,
   pkg: {
     path: flags.pkg
@@ -104,7 +104,7 @@ if (flags.verbose) {
   options.warn = console.warn.bind(console)
 }
 
-var templateContext
+let templateContext
 
 function outputError (err) {
   if (flags.verbose) {
@@ -123,14 +123,14 @@ try {
   outputError(err)
 }
 
-var changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
+const changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
   .on('error', function (err) {
     outputError(err)
   })
 
 standardChangelog.createIfMissing(infile)
 
-var readStream = null
+let readStream = null
 if (releaseCount !== 0) {
   readStream = fs.createReadStream(infile)
     .on('error', function (err) {
@@ -150,7 +150,7 @@ if (options.append) {
       standardChangelog.checkpoint('appended changes to %s', [outfile])
     })
 } else {
-  var tmp = tempfile()
+  const tmp = tempfile()
 
   changelogStream
     .pipe(addStream(readStream))

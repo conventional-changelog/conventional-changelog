@@ -1,14 +1,14 @@
 'use strict'
-var expect = require('chai').expect
-var gitRawCommits = require('./')
-var mocha = require('mocha')
-var describe = mocha.describe
-var before = mocha.before
-var it = mocha.it
-var shell = require('shelljs')
-var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
-var mkdirp = require('mkdirp')
+const expect = require('chai').expect
+const gitRawCommits = require('./')
+const mocha = require('mocha')
+const describe = mocha.describe
+const before = mocha.before
+const it = mocha.it
+const shell = require('shelljs')
+const through = require('through2')
+const writeFileSync = require('fs').writeFileSync
+const mkdirp = require('mkdirp')
 
 describe('git-raw-commits', function () {
   before(function () {
@@ -49,7 +49,7 @@ describe('git-raw-commits', function () {
   })
 
   it('should get commits without `options` (`options.from` defaults to first commit)', function (done) {
-    var i = 0
+    let i = 0
 
     gitRawCommits()
       .pipe(through(function (chunk, enc, cb) {
@@ -72,7 +72,7 @@ describe('git-raw-commits', function () {
   })
 
   it('should honour `options.from`', function (done) {
-    var i = 0
+    let i = 0
 
     gitRawCommits({
       from: 'HEAD~1'
@@ -91,7 +91,7 @@ describe('git-raw-commits', function () {
   })
 
   it('should honour `options.to`', function (done) {
-    var i = 0
+    let i = 0
 
     gitRawCommits({
       to: 'HEAD^'
@@ -114,7 +114,7 @@ describe('git-raw-commits', function () {
   })
 
   it('should honour `options.format`', function (done) {
-    var i = 0
+    let i = 0
 
     gitRawCommits({
       format: 'what%n%B'
@@ -139,8 +139,8 @@ describe('git-raw-commits', function () {
   })
 
   it('should allow commits to be scoped to a specific directory', function (done) {
-    var i = 0
-    var output = ''
+    let i = 0
+    let output = ''
 
     gitRawCommits({
       path: './packages/foo'
@@ -169,7 +169,7 @@ describe('git-raw-commits', function () {
   })
 
   it('should prevent variable expansion on windows', function (done) {
-    var i = 0
+    let i = 0
 
     gitRawCommits({
       format: '%%cd%n%B'

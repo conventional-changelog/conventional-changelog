@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 'use strict'
-var conventionalChangelogWriter = require('./')
-var forEach = require('lodash').forEach
-var fs = require('fs')
-var meow = require('meow')
-var path = require('path')
-var split = require('split')
+const conventionalChangelogWriter = require('./')
+const forEach = require('lodash').forEach
+const fs = require('fs')
+const meow = require('meow')
+const path = require('path')
+const split = require('split')
 
-var cli = meow(`
+const cli = meow(`
     Usage
       conventional-changelog-writer <path> [<path> ...]
       cat <path> | conventional-changelog-writer
@@ -32,17 +32,17 @@ var cli = meow(`
   }
 })
 
-var filePaths = []
-var flags = cli.flags
+const filePaths = []
+const flags = cli.flags
 
 forEach(cli.input, function (input) {
   filePaths.push(input)
 })
 
-var length = filePaths.length
+const length = filePaths.length
 
-var templateContext
-var contextPath = flags.context
+let templateContext
+const contextPath = flags.context
 if (contextPath) {
   try {
     templateContext = require(path.resolve(process.cwd(), contextPath))
@@ -52,8 +52,8 @@ if (contextPath) {
   }
 }
 
-var options
-var optionsPath = flags.options
+let options
+const optionsPath = flags.options
 if (optionsPath) {
   try {
     options = require(path.resolve(process.cwd(), optionsPath))
@@ -63,15 +63,16 @@ if (optionsPath) {
   }
 }
 
+let stream
 try {
-  var stream = conventionalChangelogWriter(templateContext, options)
+  stream = conventionalChangelogWriter(templateContext, options)
 } catch (err) {
   console.error(err.toString())
   process.exit(1)
 }
 
 function processFile (fileIndex) {
-  var filePath = filePaths[fileIndex]
+  const filePath = filePaths[fileIndex]
   fs.createReadStream(filePath)
     .on('error', function (err) {
       console.warn('Failed to read file ' + filePath + '\n' + err)

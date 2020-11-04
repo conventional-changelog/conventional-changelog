@@ -1,18 +1,18 @@
 'use strict'
 
-var dateFormat = require('dateformat')
-var join = require('path').join
-var readFileSync = require('fs').readFileSync
-var semverValid = require('semver').valid
-var through = require('through2')
-var util = require('./lib/util')
-var _ = require('lodash')
+const dateFormat = require('dateformat')
+const join = require('path').join
+const readFileSync = require('fs').readFileSync
+const semverValid = require('semver').valid
+const through = require('through2')
+const util = require('./lib/util')
+const _ = require('lodash')
 
 function conventionalChangelogWriter (context, options) {
-  var savedKeyCommit
-  var commits = []
-  var firstRelease = true
-  var neverGenerated = true
+  let savedKeyCommit
+  let commits = []
+  let firstRelease = true
+  let neverGenerated = true
 
   context = _.extend({
     commit: 'commits',
@@ -66,7 +66,7 @@ function conventionalChangelogWriter (context, options) {
     }, options.transform)
   }
 
-  var generateOn = options.generateOn
+  let generateOn = options.generateOn
   if (_.isString(generateOn)) {
     generateOn = function (commit) {
       return !_.isUndefined(commit[options.generateOn])
@@ -84,9 +84,9 @@ function conventionalChangelogWriter (context, options) {
 
   return through.obj(function (chunk, enc, cb) {
     try {
-      var result
-      var commit = util.processCommit(chunk, options.transform, context)
-      var keyCommit = commit || chunk
+      let result
+      const commit = util.processCommit(chunk, options.transform, context)
+      const keyCommit = commit || chunk
 
       // previous blocks of logs
       if (options.reverse) {
@@ -145,7 +145,7 @@ function conventionalChangelogWriter (context, options) {
     }
 
     try {
-      var result = util.generate(options, commits, context, savedKeyCommit)
+      const result = util.generate(options, commits, context, savedKeyCommit)
 
       if (options.includeDetails) {
         this.push({

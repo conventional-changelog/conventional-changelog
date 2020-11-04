@@ -1,17 +1,17 @@
 'use strict'
-var concat = require('concat-stream')
-var conventionalChangelog = require('./')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var Vinyl = require('vinyl')
-var join = require('path').join
-var shell = require('shelljs')
-var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
-var Buffer = require('safe-buffer').Buffer
+const concat = require('concat-stream')
+const conventionalChangelog = require('./')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const Vinyl = require('vinyl')
+const join = require('path').join
+const shell = require('shelljs')
+const through = require('through2')
+const writeFileSync = require('fs').writeFileSync
+const Buffer = require('safe-buffer').Buffer
 
 describe('gulp-conventional-changelog', function () {
   before(function () {
@@ -25,7 +25,7 @@ describe('gulp-conventional-changelog', function () {
 
   describe('error', function () {
     it('should emit error if any', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular'
       })
 
@@ -58,11 +58,11 @@ describe('gulp-conventional-changelog', function () {
     })
 
     it('should prepend the log', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular'
       })
 
-      var fakeStream = through()
+      const fakeStream = through()
       fakeStream.write(Buffer.from('CHANGELOG'))
       fakeStream.end()
 
@@ -85,12 +85,12 @@ describe('gulp-conventional-changelog', function () {
     })
 
     it('should append the log', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular',
         append: true
       })
 
-      var fakeStream = through()
+      const fakeStream = through()
       fakeStream.write(Buffer.from('CHANGELOG'))
       fakeStream.end()
 
@@ -113,12 +113,12 @@ describe('gulp-conventional-changelog', function () {
     })
 
     it('should generate all blocks', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular',
         releaseCount: 0
       })
 
-      var fakeStream = through()
+      const fakeStream = through()
 
       stream.on('data', function (file) {
         file.contents
@@ -141,7 +141,7 @@ describe('gulp-conventional-changelog', function () {
 
   describe('buffer', function () {
     it('should prepend the log', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular'
       })
 
@@ -162,7 +162,7 @@ describe('gulp-conventional-changelog', function () {
     })
 
     it('should append the log', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular',
         append: true
       })
@@ -184,7 +184,7 @@ describe('gulp-conventional-changelog', function () {
     })
 
     it('should generate all blocks', function (cb) {
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular',
         releaseCount: 0
       })
@@ -207,7 +207,7 @@ describe('gulp-conventional-changelog', function () {
 
     it('output encoding should always be buffer', function (cb) {
       shell.exec('git tag v0.0.0')
-      var stream = conventionalChangelog({
+      const stream = conventionalChangelog({
         preset: 'angular'
       }, {
         version: '0.0.0'
@@ -232,8 +232,8 @@ describe('gulp-conventional-changelog', function () {
 
   describe('null', function () {
     it('should let null files pass through', function (done) {
-      var stream = conventionalChangelog()
-      var n = 0
+      const stream = conventionalChangelog()
+      let n = 0
 
       stream.pipe(through.obj(function (file, enc, cb) {
         expect(file.path).to.equal('null.md')
@@ -256,7 +256,7 @@ describe('gulp-conventional-changelog', function () {
   })
 
   it('should verbose', function (cb) {
-    var stream = conventionalChangelog({
+    const stream = conventionalChangelog({
       verbose: true
     })
 

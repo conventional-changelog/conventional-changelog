@@ -1,12 +1,12 @@
 'use strict'
 
-var addStream = require('add-stream')
-var assign = require('object-assign')
-var concat = require('concat-stream')
-var conventionalChangelog = require('conventional-changelog')
-var PluginError = require('plugin-error')
-var fancyLog = require('fancy-log')
-var through = require('through2')
+const addStream = require('add-stream')
+const assign = require('object-assign')
+const concat = require('concat-stream')
+const conventionalChangelog = require('conventional-changelog')
+const PluginError = require('plugin-error')
+const fancyLog = require('fancy-log')
+const through = require('through2')
 
 module.exports = function (opts, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   opts = assign({
@@ -24,7 +24,7 @@ module.exports = function (opts, context, gitRawCommitsOpts, parserOpts, writerO
       return
     }
 
-    var stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts)
+    const stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts)
       .on('error', function (err) {
         cb(new PluginError('gulp-conventional-changelog', err))
       })
