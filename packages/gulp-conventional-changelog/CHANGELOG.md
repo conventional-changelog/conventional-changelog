@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.35](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.34...gulp-conventional-changelog@2.0.35) (2020-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
+
+
+
+
+
 ## [2.0.34](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.33...gulp-conventional-changelog@2.0.34) (2020-08-12)
 
 **Note:** Version bump only for package gulp-conventional-changelog
