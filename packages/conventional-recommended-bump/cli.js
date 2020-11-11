@@ -26,6 +26,7 @@ const cli = meow(`
       -l, --lerna-package            Recommend a bump for a specific lerna package (:pkg-name@1.0.0)
       -t, --tag-prefix               Tag prefix to consider when reading the tags
       --commit-path                  Recommend a bump scoped to a specific directory
+      --skip-unstable                If given, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
 `, {
   flags: {
     preset: {
@@ -67,7 +68,8 @@ const cli = meow(`
 const options = {
   path: cli.flags.commitPath,
   lernaPackage: cli.flags.lernaPackage,
-  tagPrefix: cli.flags.tagPrefix
+  tagPrefix: cli.flags.tagPrefix,
+  skipUnstable: cli.flags.skipUnstable
 }
 const flags = cli.flags
 const preset = flags.preset
