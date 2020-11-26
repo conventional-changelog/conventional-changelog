@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",
   "dependencies": {
     "compare-func": "^2.0.0",
     "lodash": "^4.17.15",
