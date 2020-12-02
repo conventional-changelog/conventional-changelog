@@ -18,8 +18,8 @@
   ],
   "license": "ISC",
   "main": "",
-  "name": "conventional-changelog-monorepo",
-  "private": true,
+  "name": "greendata-conventional-changelog-monorepo",
+  "private": false,
   "renovate": {
     "extends": [
       "config:base",
