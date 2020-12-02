@@ -10,7 +10,7 @@ const resolve = require('path').resolve
  * Handlebar partials for various property substitutions based on commit context.
  */
 const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
-const host = '{{~@root.host}}'
+const host = "https://gitlab.greendatasoft.ru"
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
 module.exports = function (config) {
@@ -103,15 +103,23 @@ function getWriterOpts (config) {
       if (typeof commit.subject === 'string') {
         // Issue URLs.
         config.issuePrefixes.join('|')
-        const issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([0-9]+)'
-        const re = new RegExp(issueRegEx, 'g')
-
+        let issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([0-9]+)'
+        let re = new RegExp(issueRegEx, 'g')
+        commit.subject = commit.subject.replace("greendata/", "")
+        commit.subject = commit.subject.replace("greendata-core", "")
+        if (commit.subject.match(re) !== null) {
+          let issue_ident = commit.subject.match(re)[0] + " "
+          commit.subject = commit.subject.replace(re, "").replace(/^/, issue_ident).replace(/ +(?= )/g,'')
+          if (commit.subject.endsWith(" ")) {
+            commit.subject = commit.subject.slice(0, -1);
+          }
+        }
         commit.subject = commit.subject.replace(re, (_, prefix, issue) => {
           issues.push(prefix + issue)
           const url = expandTemplate(config.issueUrlFormat, {
-            host: context.host,
+            host: "https://gitlab.greendatasoft.ru",
             owner: context.owner,
-            repository: context.repository,
+            repository: "greendata-core",
             id: issue,
             prefix: prefix
           })

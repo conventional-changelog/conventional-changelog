@@ -15,11 +15,7 @@
 {{~#if references~}}
   , closes
   {{~#each references}} {{#if @root.linkReferences~}}
-    [
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
+    [{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
   {{~else}}
     {{~#if this.owner}}
       {{~this.owner}}/
@@ -27,4 +23,3 @@
     {{~this.repository}}{{this.prefix}}{{this.issue}}
   {{~/if}}{{/each}}
 {{~/if}}
-
