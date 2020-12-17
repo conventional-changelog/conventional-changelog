@@ -81,7 +81,17 @@ function getWriterOpts (config) {
       if (discard && (typesLookup[typeKey] === undefined ||
           typesLookup[typeKey].hidden)) return
 
-      if (typesLookup[typeKey]) commit.type = typesLookup[typeKey].section
+      if (typesLookup[typeKey]) {
+        commit.type = typesLookup[typeKey].section
+
+        // if includedScopes is defined, ignore commits not matching that scope
+        if (typesLookup[typeKey].includedScopes &&
+            typesLookup[typeKey].includedScopes.findIndex(scope => commit.scope.toLowerCase() === scope.toLowerCase()) === -1) return
+
+        // if excludedScopes is defined, ignore commits matching that scope
+        if (typesLookup[typeKey].excludedScopes &&
+            typesLookup[typeKey].excludedScopes.findIndex(scope => commit.scope.toLowerCase() === scope.toLowerCase()) !== -1) return
+      }
 
       if (commit.scope === `*`) {
         commit.scope = ``

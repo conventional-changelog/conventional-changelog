@@ -167,6 +167,60 @@ describe('conventionalcommits.org preset', function () {
       }))
   })
 
+  it('should include only the scopes defined in the inclusion list', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          {
+            type: 'fix',
+            includedScopes: [
+              'changelog'
+            ]
+          }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('proper issue links')
+
+        expect(chunk).to.not.include('oops')
+        done()
+      }))
+  })
+
+  it('should not include the scopes defined in the exclusion list', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          {
+            type: 'fix',
+            excludedScopes: [
+              'changelog'
+            ]
+          }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('oops')
+
+        expect(chunk).to.not.include('proper issue links')
+        done()
+      }))
+  })
+
   it('should properly format external repository issues', function (done) {
     preparing(1)
     conventionalChangelogCore({
