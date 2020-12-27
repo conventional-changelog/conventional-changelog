@@ -193,7 +193,6 @@ conventionalChangelogWriterParseStream.parseArray = (_rawCommits, _context, _opt
   }
   if (options.reverse) {
     entries.reverse()
-    console.info('we reverse')
     return util.generate(options, commits, context, savedKeyCommit) + entries.join('')
   } else {
     return entries.join('') + util.generate(options, commits, context, savedKeyCommit)

@@ -165,7 +165,7 @@ describe('conventionalChangelogWriter', function () {
         repository: 'a/b',
         linkReferences: false
       }
-      const changelog = conventionalChangelogWriter.parseArray(commits, {})
+      const changelog = conventionalChangelogWriter.parseArray(commits, context)
       expect(changelog).to.not.include('https://github.com/a/b/commits/13f3160')
       getStream()
         .pipe(conventionalChangelogWriter(context))
@@ -781,7 +781,7 @@ describe('conventionalChangelogWriter', function () {
         
         
         
-        ##  (2020-12-25)`))
+        ##  (xxxx-xx-xx)`).replace('xxxx-xx-xx', today))
         upstream
           .pipe(conventionalChangelogWriter({}, {
             reverse: true
