@@ -80,8 +80,9 @@ function conventionalChangelogWriterInit (context, options) {
   return { context, options, generateOn }
 }
 
-function conventionalChangelogWriterParseStream (_context, _options) {
-  const { context, options, generateOn } = conventionalChangelogWriterInit(_context, _options)
+function conventionalChangelogWriterParseStream (context, options) {
+  let generateOn
+  ({ context, options, generateOn } = conventionalChangelogWriterInit(context, options))
   let commits = []
   let neverGenerated = true
   let savedKeyCommit
@@ -170,9 +171,10 @@ function conventionalChangelogWriterParseStream (_context, _options) {
 /*
  * Given an array of commits, returns a string representing a CHANGELOG entry.
  */
-conventionalChangelogWriterParseStream.parseArray = (_rawCommits, _context, _options) => {
-  const rawCommits = [..._rawCommits]
-  const { context, options, generateOn } = conventionalChangelogWriterInit(_context, _options)
+conventionalChangelogWriterParseStream.parseArray = (rawCommits, context, options) => {
+  let generateOn
+  rawCommits = [...rawCommits];
+  ({ context, options, generateOn } = conventionalChangelogWriterInit(context, options))
   let commits = []
   let savedKeyCommit
   if (options.reverse) {
