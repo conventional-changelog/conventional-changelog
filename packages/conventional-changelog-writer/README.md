@@ -67,6 +67,11 @@ The downstream might look something like this:
 
 Returns a transform stream.
 
+### conventionalChangelogWriter.parseArray(commits, [context, [options]])
+
+Rather than returning a transform stream for parsing commits,
+parses the array of commits provided generating a CHANGELOG entry.
+
 #### context
 
 Variables that will be interpolated to the template. This object contains, but not limits to the following fields.
@@ -261,6 +266,7 @@ Type: `boolean` Default: `false`
 If this value is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
 
 *NOTE:* The downstream must be in object mode if this is `true`.
+*NOTE:* This is only supported when using streaming mode.
 
 ##### ignoreReverted
 
@@ -273,6 +279,8 @@ If `true`, reverted commits will be ignored.
 Type: `boolean` Default: `true`
 
 If `true`, the stream will flush out the last bit of commits (could be empty) to changelog.
+
+*NOTE:* This is only supported when using streaming mode.
 
 ##### mainTemplate
 
