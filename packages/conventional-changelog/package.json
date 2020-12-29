@@ -35,17 +35,17 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
   "dependencies": {
-    "conventional-changelog-angular": "file:../conventional-changelog-angular",
-    "conventional-changelog-atom": "file:../conventional-changelog-atom",
-    "conventional-changelog-codemirror": "file:../conventional-changelog-codemirror",
-    "conventional-changelog-conventionalcommits": "file:../conventional-changelog-conventionalcommits",
-    "conventional-changelog-core": "file:../conventional-changelog-core",
-    "conventional-changelog-ember": "file:../conventional-changelog-ember",
-    "conventional-changelog-eslint": "file:../conventional-changelog-eslint",
-    "conventional-changelog-express": "file:../conventional-changelog-express",
-    "conventional-changelog-jquery": "file:../conventional-changelog-jquery",
-    "conventional-changelog-jshint": "file:../conventional-changelog-jshint",
-    "conventional-changelog-preset-loader": "file:../conventional-changelog-preset-loader"
+    "conventional-changelog-angular": "^5.0.12",
+    "conventional-changelog-atom": "^2.0.8",
+    "conventional-changelog-codemirror": "^2.0.8",
+    "conventional-changelog-conventionalcommits": "^4.5.0",
+    "conventional-changelog-core": "^4.2.1",
+    "conventional-changelog-ember": "^2.0.9",
+    "conventional-changelog-eslint": "^3.0.9",
+    "conventional-changelog-express": "^2.0.6",
+    "conventional-changelog-jquery": "^3.0.11",
+    "conventional-changelog-jshint": "^2.0.9",
+    "conventional-changelog-preset-loader": "^2.3.4"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
