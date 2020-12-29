@@ -38,7 +38,7 @@
   "dependencies": {
     "compare-func": "^2.0.0",
     "conventional-commits-filter": "file:../conventional-commits-filter",
-    "dateformat": "^3.0.0",
+    "dateformat": "^4.0.0",
     "handlebars": "^4.7.6",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
