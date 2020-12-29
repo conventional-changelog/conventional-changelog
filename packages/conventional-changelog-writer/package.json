@@ -54,6 +54,7 @@
     "conventional-changelog-writer": "cli.js"
   },
   "devDependencies": {
+    "dedent": "^0.7.0",
     "forceable-tty": "^0.1.0"
   }
 }
