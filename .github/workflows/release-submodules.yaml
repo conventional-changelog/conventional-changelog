@@ -76,12 +76,12 @@ jobs:
         if: ${{ steps.tag-release.outputs.release_created }}
         with:
           node-version: 14
-          registry-url: 'https://wombat-dressing-room.appspot.com/'
+          registry-url: 'https://external-dot-oss-automation.appspot.com/'
       - name: publish
         if: ${{ steps.tag-release.outputs.release_created }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          cd src/apis/${{ matrix.package }}
+          cd packages/${{ matrix.package }}
           npm install
           npm publish --access=public
