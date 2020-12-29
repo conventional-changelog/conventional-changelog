@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.4.0...conventional-changelog-conventionalcommits@4.5.0) (2020-11-05)
+
+
+### Features
+
+* **conventionalcommits:** allow matching scope ([#669](https://github.com/conventional-changelog/conventional-changelog/issues/669)) ([e01e027](https://github.com/conventional-changelog/conventional-changelog/commit/e01e027af60f5fa3e9146223b96797793930aeb4))
+
+
+
+
+
 # [4.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.1...conventional-changelog-conventionalcommits@4.4.0) (2020-08-12)
 
 
