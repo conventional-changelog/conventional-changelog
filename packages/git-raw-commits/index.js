@@ -19,6 +19,7 @@ function normalizeGitOpts (gitOpts) {
   gitOpts = gitOpts || {}
   gitOpts.format = gitOpts.format || '%B'
   gitOpts.from = gitOpts.from || ''
+  gitOpts.showSignature = gitOpts.showSignature || false
   gitOpts.to = gitOpts.to || 'HEAD'
   return gitOpts
 }
