@@ -197,7 +197,7 @@ conventionalChangelogWriterParseStream.parseArray = (rawCommits, context, option
     entries.reverse()
     return util.generate(options, commits, context, savedKeyCommit) + entries.join('')
   } else {
-    return entries.join('') + util.generate(options, commits, context, savedKeyCommit)
+    return entries.join('') + util.generate(options, commits, context, savedKeyCommit).trim()
   }
 }
 
