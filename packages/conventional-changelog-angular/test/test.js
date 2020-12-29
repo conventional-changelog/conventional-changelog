@@ -1,16 +1,16 @@
 'use strict'
-var conventionalChangelogCore = require('conventional-changelog-core')
-var preset = require('../')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var gitDummyCommit = require('git-dummy-commit')
-var shell = require('shelljs')
-var through = require('through2')
-var path = require('path')
-var betterThanBefore = require('better-than-before')()
-var preparing = betterThanBefore.preparing
+const conventionalChangelogCore = require('conventional-changelog-core')
+const preset = require('../')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const gitDummyCommit = require('git-dummy-commit')
+const shell = require('shelljs')
+const through = require('through2')
+const path = require('path')
+const betterThanBefore = require('better-than-before')()
+const preparing = betterThanBefore.preparing
 
 betterThanBefore.setups([
   function () {
@@ -182,7 +182,7 @@ describe('angular preset', function () {
 
   it('should work if there is a semver tag', function (done) {
     preparing(6)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset,
@@ -207,7 +207,7 @@ describe('angular preset', function () {
 
   it('should work with unknown host', function (done) {
     preparing(6)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset,
@@ -234,7 +234,7 @@ describe('angular preset', function () {
 
   it('should work specifying where to find a package.json using conventional-changelog-core', function (done) {
     preparing(7)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset,
@@ -262,7 +262,7 @@ describe('angular preset', function () {
 
   it('should fallback to the closest package.json when not providing a location for a package.json', function (done) {
     preparing(7)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset

@@ -1,9 +1,9 @@
 'use strict'
-var trimOffNewlines = require('trim-off-newlines')
-var _ = require('lodash')
+const trimOffNewlines = require('trim-off-newlines')
+const _ = require('lodash')
 
-var CATCH_ALL = /()(.+)/gi
-var SCISSOR = '# ------------------------ >8 ------------------------'
+const CATCH_ALL = /()(.+)/gi
+const SCISSOR = '# ------------------------ >8 ------------------------'
 
 function append (src, line) {
   if (src) {
@@ -22,7 +22,7 @@ function getCommentFilter (char) {
 }
 
 function truncateToScissor (lines) {
-  var scissorIndex = lines.indexOf(SCISSOR)
+  const scissorIndex = lines.indexOf(SCISSOR)
 
   if (scissorIndex === -1) {
     return lines
@@ -32,29 +32,29 @@ function truncateToScissor (lines) {
 }
 
 function getReferences (input, regex) {
-  var references = []
-  var referenceSentences
-  var referenceMatch
+  const references = []
+  let referenceSentences
+  let referenceMatch
 
-  var reApplicable = input.match(regex.references) !== null
+  const reApplicable = input.match(regex.references) !== null
     ? regex.references
     : CATCH_ALL
 
   while ((referenceSentences = reApplicable.exec(input))) {
-    var action = referenceSentences[1] || null
-    var sentence = referenceSentences[2]
+    const action = referenceSentences[1] || null
+    const sentence = referenceSentences[2]
 
     while ((referenceMatch = regex.referenceParts.exec(sentence))) {
-      var owner = null
-      var repository = referenceMatch[1] || ''
-      var ownerRepo = repository.split('/')
+      let owner = null
+      let repository = referenceMatch[1] || ''
+      const ownerRepo = repository.split('/')
 
       if (ownerRepo.length > 1) {
         owner = ownerRepo.shift()
         repository = ownerRepo.join('/')
       }
 
-      var reference = {
+      const reference = {
         action: action,
         owner: owner,
         repository: repository || null,
@@ -87,39 +87,37 @@ function parser (raw, options, regex) {
     throw new TypeError('Expected regex')
   }
 
-  var headerMatch
-  var mergeMatch
-  var currentProcessedField
-  var mentionsMatch
-  var revertMatch
-  var otherFields = {}
-  var commentFilter = typeof options.commentChar === 'string'
+  let currentProcessedField
+  let mentionsMatch
+  const otherFields = {}
+  const commentFilter = typeof options.commentChar === 'string'
     ? getCommentFilter(options.commentChar)
     : passTrough
+  const gpgFilter = line => !line.match(/^\s*gpg:/)
 
-  var rawLines = trimOffNewlines(raw).split(/\r?\n/)
-  var lines = truncateToScissor(rawLines).filter(commentFilter)
+  const rawLines = trimOffNewlines(raw).split(/\r?\n/)
+  const lines = truncateToScissor(rawLines).filter(commentFilter).filter(gpgFilter)
 
-  var continueNote = false
-  var isBody = true
-  var headerCorrespondence = _.map(options.headerCorrespondence, function (part) {
+  let continueNote = false
+  let isBody = true
+  const headerCorrespondence = _.map(options.headerCorrespondence, function (part) {
     return part.trim()
   })
-  var revertCorrespondence = _.map(options.revertCorrespondence, function (field) {
+  const revertCorrespondence = _.map(options.revertCorrespondence, function (field) {
     return field.trim()
   })
-  var mergeCorrespondence = _.map(options.mergeCorrespondence, function (field) {
+  const mergeCorrespondence = _.map(options.mergeCorrespondence, function (field) {
     return field.trim()
   })
 
-  var body = null
-  var footer = null
-  var header = null
-  var mentions = []
-  var merge = null
-  var notes = []
-  var references = []
-  var revert = null
+  let body = null
+  let footer = null
+  let header = null
+  const mentions = []
+  let merge = null
+  const notes = []
+  const references = []
+  let revert = null
 
   if (lines.length === 0) {
     return {
@@ -139,12 +137,12 @@ function parser (raw, options, regex) {
 
   // msg parts
   merge = lines.shift()
-  var mergeParts = {}
-  var headerParts = {}
+  const mergeParts = {}
+  const headerParts = {}
   body = ''
   footer = ''
 
-  mergeMatch = merge.match(options.mergePattern)
+  const mergeMatch = merge.match(options.mergePattern)
   if (mergeMatch && options.mergePattern) {
     merge = mergeMatch[0]
 
@@ -154,7 +152,7 @@ function parser (raw, options, regex) {
     }
 
     _.forEach(mergeCorrespondence, function (partName, index) {
-      var partValue = mergeMatch[index + 1] || null
+      const partValue = mergeMatch[index + 1] || null
       mergeParts[partName] = partValue
     })
   } else {
@@ -166,10 +164,10 @@ function parser (raw, options, regex) {
     })
   }
 
-  headerMatch = header.match(options.headerPattern)
+  const headerMatch = header.match(options.headerPattern)
   if (headerMatch) {
     _.forEach(headerCorrespondence, function (partName, index) {
-      var partValue = headerMatch[index + 1] || null
+      const partValue = headerMatch[index + 1] || null
       headerParts[partName] = partValue
     })
   } else {
@@ -186,7 +184,7 @@ function parser (raw, options, regex) {
   // body or footer
   _.forEach(lines, function (line) {
     if (options.fieldPattern) {
-      var fieldMatch = options.fieldPattern.exec(line)
+      const fieldMatch = options.fieldPattern.exec(line)
 
       if (fieldMatch) {
         currentProcessedField = fieldMatch[1]
@@ -201,16 +199,16 @@ function parser (raw, options, regex) {
       }
     }
 
-    var referenceMatched
+    let referenceMatched
 
     // this is a new important note
-    var notesMatch = line.match(regex.notes)
+    const notesMatch = line.match(regex.notes)
     if (notesMatch) {
       continueNote = true
       isBody = false
       footer = append(footer, line)
 
-      var note = {
+      const note = {
         title: notesMatch[1],
         text: notesMatch[2]
       }
@@ -220,7 +218,7 @@ function parser (raw, options, regex) {
       return
     }
 
-    var lineReferences = getReferences(line, {
+    const lineReferences = getReferences(line, {
       references: regex.references,
       referenceParts: regex.referenceParts
     })
@@ -254,7 +252,7 @@ function parser (raw, options, regex) {
   })
 
   if (options.breakingHeaderPattern && notes.length === 0) {
-    var breakingHeader = header.match(options.breakingHeaderPattern)
+    const breakingHeader = header.match(options.breakingHeaderPattern)
     if (breakingHeader) {
       const noteText = breakingHeader[3] // the description of the change.
       notes.push({
@@ -269,11 +267,11 @@ function parser (raw, options, regex) {
   }
 
   // does this commit revert any other commit?
-  revertMatch = raw.match(options.revertPattern)
+  const revertMatch = raw.match(options.revertPattern)
   if (revertMatch) {
     revert = {}
     _.forEach(revertCorrespondence, function (partName, index) {
-      var partValue = revertMatch[index + 1] || null
+      const partValue = revertMatch[index + 1] || null
       revert[partName] = partValue
     })
   } else {
@@ -286,7 +284,7 @@ function parser (raw, options, regex) {
     return note
   })
 
-  var msg = _.merge(headerParts, mergeParts, {
+  const msg = _.merge(headerParts, mergeParts, {
     merge: merge,
     header: header,
     body: body ? trimOffNewlines(body) : null,

@@ -1,12 +1,12 @@
 'use strict'
 
-var conventionalChangelogCore = require('conventional-changelog-core')
-var angular = require('conventional-changelog-angular')
-var fs = require('fs')
-var accessSync = require('fs-access').sync
-var chalk = require('chalk')
-var figures = require('figures')
-var sprintf = require('sprintf-js').sprintf
+const conventionalChangelogCore = require('conventional-changelog-core')
+const angular = require('conventional-changelog-angular')
+const fs = require('fs')
+const accessSync = require('fs-access').sync
+const chalk = require('chalk')
+const figures = require('figures')
+const sprintf = require('sprintf-js').sprintf
 
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   options = options || {}

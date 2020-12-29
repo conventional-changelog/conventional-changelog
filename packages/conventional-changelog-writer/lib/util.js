@@ -1,17 +1,17 @@
 'use strict'
-var compareFunc = require('compare-func')
-var conventionalCommitsFilter = require('conventional-commits-filter')
-var Handlebars = require('handlebars')
-var semver = require('semver')
-var _ = require('lodash')
-var stringify = require('json-stringify-safe')
+const compareFunc = require('compare-func')
+const conventionalCommitsFilter = require('conventional-commits-filter')
+const Handlebars = require('handlebars')
+const semver = require('semver')
+const _ = require('lodash')
+const stringify = require('json-stringify-safe')
 
 function compileTemplates (templates) {
-  var main = templates.mainTemplate
-  var headerPartial = templates.headerPartial
-  var commitPartial = templates.commitPartial
-  var footerPartial = templates.footerPartial
-  var partials = templates.partials
+  const main = templates.mainTemplate
+  const headerPartial = templates.headerPartial
+  const commitPartial = templates.commitPartial
+  const footerPartial = templates.footerPartial
+  const partials = templates.partials
 
   if (_.isString(headerPartial)) {
     Handlebars.registerPartial('header', headerPartial)
@@ -44,8 +44,8 @@ function functionify (strOrArr) {
 }
 
 function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
-  var commitGroups = []
-  var commitGroupsObj = _.groupBy(commits, function (commit) {
+  const commitGroups = []
+  const commitGroupsObj = _.groupBy(commits, function (commit) {
     return commit[groupBy] || ''
   })
 
@@ -72,11 +72,11 @@ function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
 }
 
 function getNoteGroups (notes, noteGroupsSort, notesSort) {
-  var retGroups = []
+  const retGroups = []
 
   _.forEach(notes, function (note) {
-    var title = note.title
-    var titleExists = false
+    const title = note.title
+    let titleExists = false
 
     _.forEach(retGroups, function (group) {
       if (group.title === title) {
@@ -108,7 +108,7 @@ function getNoteGroups (notes, noteGroupsSort, notesSort) {
 }
 
 function processCommit (chunk, transform, context) {
-  var commit
+  let commit
 
   try {
     chunk = JSON.parse(chunk)
@@ -127,7 +127,7 @@ function processCommit (chunk, transform, context) {
   }
 
   _.forEach(transform, function (el, path) {
-    var value = _.get(commit, path)
+    let value = _.get(commit, path)
 
     if (_.isFunction(el)) {
       value = el(value, path)
@@ -144,7 +144,7 @@ function processCommit (chunk, transform, context) {
 }
 
 function getExtraContext (commits, notes, options) {
-  var context = {}
+  const context = {}
 
   // group `commits` by `options.groupBy`
   context.commitGroups = getCommitGroups(options.groupBy, commits, options.commitGroupsSort, options.commitsSort)
@@ -156,9 +156,9 @@ function getExtraContext (commits, notes, options) {
 }
 
 function generate (options, commits, context, keyCommit) {
-  var notes = []
-  var filteredCommits
-  var compiled = compileTemplates(options)
+  let notes = []
+  let filteredCommits
+  const compiled = compileTemplates(options)
 
   if (options.ignoreReverted) {
     filteredCommits = conventionalCommitsFilter(commits)

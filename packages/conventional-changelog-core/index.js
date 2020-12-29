@@ -13,14 +13,14 @@ const mergeConfig = require('./lib/merge-config')
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   writerOpts = writerOpts || {}
 
-  var readable = new stream.Readable({
+  const readable = new stream.Readable({
     objectMode: writerOpts.includeDetails
   })
   readable._read = function () { }
 
-  var commitsErrorThrown = false
+  let commitsErrorThrown = false
 
-  var commitsStream = new stream.Readable({
+  let commitsStream = new stream.Readable({
     objectMode: true
   })
   commitsStream._read = function () { }
@@ -48,7 +48,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       gitRawExecOpts = data.gitRawExecOpts
 
       if (shell.exec('git rev-parse --verify HEAD', { silent: true }).code === 0) {
-        var reverseTags = context.gitSemverTags.slice(0).reverse()
+        let reverseTags = context.gitSemverTags.slice(0).reverse()
         reverseTags.push('HEAD')
 
         if (gitRawCommitsOpts.from) {
@@ -59,7 +59,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
           }
         }
 
-        var streams = reverseTags.map((to, i) => {
+        let streams = reverseTags.map((to, i) => {
           const from = i > 0
             ? reverseTags[i - 1]
             : ''

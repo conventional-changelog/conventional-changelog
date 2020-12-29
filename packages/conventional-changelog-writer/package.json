@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-writer",
-  "version": "4.0.17",
+  "version": "4.0.18",
   "description": "Write logs based on conventional commits and templates",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -42,10 +42,10 @@
     "handlebars": "^4.7.6",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
-    "meow": "^7.0.0",
+    "meow": "^8.0.0",
     "semver": "^6.0.0",
     "split": "^1.0.0",
-    "through2": "^3.0.0"
+    "through2": "^4.0.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"
@@ -54,6 +54,7 @@
     "conventional-changelog-writer": "cli.js"
   },
   "devDependencies": {
+    "dedent": "^0.7.0",
     "forceable-tty": "^0.1.0"
   }
 }

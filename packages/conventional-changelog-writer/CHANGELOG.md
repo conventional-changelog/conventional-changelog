@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.18](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.17...conventional-changelog-writer@4.0.18) (2020-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
+
+
+
+
+
 ## [4.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.16...conventional-changelog-writer@4.0.17) (2020-06-20)
 
 

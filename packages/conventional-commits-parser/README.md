@@ -205,6 +205,12 @@ Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
 
 Keywords for important notes. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
+##### notesPattern
+
+Type: `function` Default: `noteKeywordsSelection => ^[\\s|*]*(' + noteKeywordsSelection + ')[:\\s]+(.*)` where `noteKeywordsSelection` is `join(noteKeywords, '|')`
+
+A function that takes `noteKeywordsSelection` and returns a `RegExp` to be matched against the notes.
+
 ##### fieldPattern
 
 Type: `regex` or `string` Default: `/^-(.*?)-$/`

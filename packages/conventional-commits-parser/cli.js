@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 'use strict'
-var conventionalCommitsParser = require('./')
-var forEach = require('lodash').forEach
-var fs = require('fs')
-var isTextPath = require('is-text-path')
-var JSONStream = require('JSONStream')
-var meow = require('meow')
-var readline = require('readline')
-var split = require('split2')
-var through = require('through2')
+const conventionalCommitsParser = require('./')
+const forEach = require('lodash').forEach
+const fs = require('fs')
+const isTextPath = require('is-text-path')
+const JSONStream = require('JSONStream')
+const meow = require('meow')
+const readline = require('readline')
+const split = require('split2')
+const through = require('through2')
 
-var filePaths = []
-var separator = '\n\n\n'
+const filePaths = []
+let separator = '\n\n\n'
 
-var cli = meow(`
+const cli = meow(`
     Practice writing commit messages or parse messages from files.
     If used without specifying a text file path, you will enter an interactive shell.
     Otherwise the commit messages in the files are parsed and printed
@@ -91,15 +91,15 @@ forEach(cli.input, function (arg) {
   }
 })
 
-var length = filePaths.length
-var options = cli.flags
+const length = filePaths.length
+const options = cli.flags
 
 if (options.verbose) {
   options.warn = console.log.bind(console)
 }
 
 function processFile (fileIndex) {
-  var filePath = filePaths[fileIndex]
+  const filePath = filePaths[fileIndex]
   fs.createReadStream(filePath)
     .on('error', function (err) {
       console.warn('Failed to read file ' + filePath + '\n' + err)
@@ -122,9 +122,9 @@ if (process.stdin.isTTY) {
   if (length > 0) {
     processFile(0)
   } else {
-    var commit = ''
-    var stream = through()
-    var rl = readline.createInterface({
+    let commit = ''
+    const stream = through()
+    const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
       terminal: true

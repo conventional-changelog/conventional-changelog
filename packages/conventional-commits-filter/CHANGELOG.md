@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@2.0.6...conventional-commits-filter@2.0.7) (2020-11-05)
+
+**Note:** Version bump only for package conventional-commits-filter
+
+
+
+
+
 ## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@2.0.2...conventional-commits-filter@2.0.6) (2020-05-08)
 
 **Note:** Version bump only for package conventional-commits-filter

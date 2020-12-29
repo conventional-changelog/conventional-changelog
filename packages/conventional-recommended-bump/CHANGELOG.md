@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.10...conventional-recommended-bump@6.0.11) (2020-11-05)
+
+**Note:** Version bump only for package conventional-recommended-bump
+
+
+
+
+
 ## [6.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.9...conventional-recommended-bump@6.0.10) (2020-08-12)
 
 **Note:** Version bump only for package conventional-recommended-bump

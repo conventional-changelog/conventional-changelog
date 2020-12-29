@@ -1,19 +1,14 @@
 'use strict'
 
-var dateFormat = require('dateformat')
-var join = require('path').join
-var readFileSync = require('fs').readFileSync
-var semverValid = require('semver').valid
-var through = require('through2')
-var util = require('./lib/util')
-var _ = require('lodash')
+const dateFormat = require('dateformat')
+const join = require('path').join
+const readFileSync = require('fs').readFileSync
+const semverValid = require('semver').valid
+const through = require('through2')
+const util = require('./lib/util')
+const _ = require('lodash')
 
-function conventionalChangelogWriter (context, options) {
-  var savedKeyCommit
-  var commits = []
-  var firstRelease = true
-  var neverGenerated = true
-
+function conventionalChangelogWriterInit (context, options) {
   context = _.extend({
     commit: 'commits',
     issue: 'issues',
@@ -66,7 +61,7 @@ function conventionalChangelogWriter (context, options) {
     }, options.transform)
   }
 
-  var generateOn = options.generateOn
+  let generateOn = options.generateOn
   if (_.isString(generateOn)) {
     generateOn = function (commit) {
       return !_.isUndefined(commit[options.generateOn])
@@ -82,11 +77,21 @@ function conventionalChangelogWriter (context, options) {
   options.noteGroupsSort = util.functionify(options.noteGroupsSort)
   options.notesSort = util.functionify(options.notesSort)
 
-  return through.obj(function (chunk, enc, cb) {
+  return { context, options, generateOn }
+}
+
+function conventionalChangelogWriterParseStream (context, options) {
+  let generateOn
+  ({ context, options, generateOn } = conventionalChangelogWriterInit(context, options))
+  let commits = []
+  let neverGenerated = true
+  let savedKeyCommit
+  let firstRelease = true
+  return through.obj(function (chunk, _enc, cb) {
     try {
-      var result
-      var commit = util.processCommit(chunk, options.transform, context)
-      var keyCommit = commit || chunk
+      let result
+      const commit = util.processCommit(chunk, options.transform, context)
+      const keyCommit = commit || chunk
 
       // previous blocks of logs
       if (options.reverse) {
@@ -145,7 +150,7 @@ function conventionalChangelogWriter (context, options) {
     }
 
     try {
-      var result = util.generate(options, commits, context, savedKeyCommit)
+      const result = util.generate(options, commits, context, savedKeyCommit)
 
       if (options.includeDetails) {
         this.push({
@@ -163,4 +168,37 @@ function conventionalChangelogWriter (context, options) {
   })
 }
 
-module.exports = conventionalChangelogWriter
+/*
+ * Given an array of commits, returns a string representing a CHANGELOG entry.
+ */
+conventionalChangelogWriterParseStream.parseArray = (rawCommits, context, options) => {
+  let generateOn
+  rawCommits = [...rawCommits];
+  ({ context, options, generateOn } = conventionalChangelogWriterInit(context, options))
+  let commits = []
+  let savedKeyCommit
+  if (options.reverse) {
+    rawCommits.reverse()
+  }
+  const entries = []
+  for (const rawCommit of rawCommits) {
+    const commit = util.processCommit(rawCommit, options.transform, context)
+    const keyCommit = commit || rawCommit
+    if (generateOn(keyCommit, commits, context, options)) {
+      entries.push(util.generate(options, commits, context, savedKeyCommit))
+      savedKeyCommit = keyCommit
+      commits = []
+    }
+    if (commit) {
+      commits.push(commit)
+    }
+  }
+  if (options.reverse) {
+    entries.reverse()
+    return util.generate(options, commits, context, savedKeyCommit) + entries.join('')
+  } else {
+    return entries.join('') + util.generate(options, commits, context, savedKeyCommit)
+  }
+}
+
+module.exports = conventionalChangelogWriterParseStream

@@ -1,6 +1,6 @@
 'use strict'
 
-var reNomatch = /(?!.*)/
+const reNomatch = /(?!.*)/
 
 function join (array, joiner) {
   return array
@@ -13,12 +13,18 @@ function join (array, joiner) {
     .join(joiner)
 }
 
-function getNotesRegex (noteKeywords) {
+function getNotesRegex (noteKeywords, notesPattern) {
   if (!noteKeywords) {
     return reNomatch
   }
 
-  return new RegExp('^[\\s|*]*(' + join(noteKeywords, '|') + ')[:\\s]+(.*)', 'i')
+  const noteKeywordsSelection = join(noteKeywords, '|')
+
+  if (!notesPattern) {
+    return new RegExp('^[\\s|*]*(' + noteKeywordsSelection + ')[:\\s]+(.*)', 'i')
+  }
+
+  return notesPattern(noteKeywordsSelection)
 }
 
 function getReferencePartsRegex (issuePrefixes, issuePrefixesCaseSensitive) {
@@ -26,7 +32,7 @@ function getReferencePartsRegex (issuePrefixes, issuePrefixesCaseSensitive) {
     return reNomatch
   }
 
-  var flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
+  const flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
   return new RegExp('(?:.*?)??\\s*([\\w-\\.\\/]*?)??(' + join(issuePrefixes, '|') + ')([\\w-]*\\d+)', flags)
 }
 
@@ -36,15 +42,15 @@ function getReferencesRegex (referenceActions) {
     return /()(.+)/gi
   }
 
-  var joinedKeywords = join(referenceActions, '|')
+  const joinedKeywords = join(referenceActions, '|')
   return new RegExp('(' + joinedKeywords + ')(?:\\s+(.*?))(?=(?:' + joinedKeywords + ')|$)', 'gi')
 }
 
 module.exports = function (options) {
   options = options || {}
-  var reNotes = getNotesRegex(options.noteKeywords)
-  var reReferenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)
-  var reReferences = getReferencesRegex(options.referenceActions)
+  const reNotes = getNotesRegex(options.noteKeywords, options.notesPattern)
+  const reReferenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)
+  const reReferences = getReferencesRegex(options.referenceActions)
 
   return {
     notes: reNotes,

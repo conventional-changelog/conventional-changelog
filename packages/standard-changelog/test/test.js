@@ -1,13 +1,13 @@
 'use strict'
-var standardChangelog = require('../')
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var shell = require('shelljs')
-var through = require('through2')
-var writeFileSync = require('fs').writeFileSync
+const standardChangelog = require('../')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const shell = require('shelljs')
+const through = require('through2')
+const writeFileSync = require('fs').writeFileSync
 
 describe('standardChangelog', function () {
   before(function () {
@@ -23,7 +23,7 @@ describe('standardChangelog', function () {
   })
 
   it('should generate angular changelog', function (done) {
-    var i = 0
+    let i = 0
 
     standardChangelog()
       .on('error', function (err) {

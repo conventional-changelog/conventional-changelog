@@ -1,14 +1,14 @@
 'use strict'
-var conventionalChangelogCore = require('conventional-changelog-core')
-var config = require('../')
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var before = mocha.before
-var expect = require('chai').expect
-var gitDummyCommit = require('git-dummy-commit')
-var shell = require('shelljs')
-var through = require('through2')
+const conventionalChangelogCore = require('conventional-changelog-core')
+const config = require('../')
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const before = mocha.before
+const expect = require('chai').expect
+const gitDummyCommit = require('git-dummy-commit')
+const shell = require('shelljs')
+const through = require('through2')
 
 describe('express preset', function () {
   before(function (done) {

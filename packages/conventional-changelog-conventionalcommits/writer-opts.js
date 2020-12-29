@@ -54,18 +54,27 @@ module.exports = function (config) {
     })
 }
 
+function findTypeEntry (types, commit) {
+  const typeKey = (commit.revert ? 'revert' : (commit.type || '')).toLowerCase()
+  return types.find((entry) => {
+    if (entry.type !== typeKey) {
+      return false
+    }
+    if (entry.scope && entry.scope !== commit.scope) {
+      return false
+    }
+    return true
+  })
+}
+
 function getWriterOpts (config) {
   config = defaultConfig(config)
-  const typesLookup = {}
-  config.types.forEach(type => {
-    typesLookup[type.type] = type
-  })
 
   return {
     transform: (commit, context) => {
       let discard = true
       const issues = []
-      const typeKey = (commit.revert ? 'revert' : (commit.type || '')).toLowerCase()
+      const entry = findTypeEntry(config.types, commit)
 
       // adds additional breaking change notes
       // for the special case, test(system)!: hello world, where there is
@@ -78,10 +87,10 @@ function getWriterOpts (config) {
       })
 
       // breaking changes attached to any type are still displayed.
-      if (discard && (typesLookup[typeKey] === undefined ||
-          typesLookup[typeKey].hidden)) return
+      if (discard && (entry === undefined ||
+          entry.hidden)) return
 
-      if (typesLookup[typeKey]) commit.type = typesLookup[typeKey].section
+      if (entry) commit.type = entry.section
 
       if (commit.scope === '*') {
         commit.scope = ''

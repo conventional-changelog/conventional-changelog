@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.1.0...conventional-commits-parser@3.2.0) (2020-11-05)
+
+
+### Bug Fixes
+
+* ignore gpg lines ([#685](https://github.com/conventional-changelog/conventional-changelog/issues/685)) ([f8fcbc2](https://github.com/conventional-changelog/conventional-changelog/commit/f8fcbc2e8b0834c29178ace6382b438a020ad828))
+* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
+
+
+### Features
+
+* allows notes pattern to be customized ([#586](https://github.com/conventional-changelog/conventional-changelog/issues/586)) ([9c00f32](https://github.com/conventional-changelog/conventional-changelog/commit/9c00f3242d916be1774a618d943f908f8d9699a6))
+
+
+
+
+
 # [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
 
 

@@ -1,17 +1,17 @@
 'use strict'
-var conventionalChangelogCore = require('conventional-changelog-core')
-var getPreset = require('../')
-var preset = getPreset()
-var expect = require('chai').expect
-var mocha = require('mocha')
-var describe = mocha.describe
-var it = mocha.it
-var gitDummyCommit = require('git-dummy-commit')
-var shell = require('shelljs')
-var through = require('through2')
-var path = require('path')
-var betterThanBefore = require('better-than-before')()
-var preparing = betterThanBefore.preparing
+const conventionalChangelogCore = require('conventional-changelog-core')
+const getPreset = require('../')
+const preset = getPreset()
+const expect = require('chai').expect
+const mocha = require('mocha')
+const describe = mocha.describe
+const it = mocha.it
+const gitDummyCommit = require('git-dummy-commit')
+const shell = require('shelljs')
+const through = require('through2')
+const path = require('path')
+const betterThanBefore = require('better-than-before')()
+const preparing = betterThanBefore.preparing
 
 betterThanBefore.setups([
   function () {
@@ -33,6 +33,8 @@ betterThanBefore.setups([
     gitDummyCommit('fix(*): oops')
     gitDummyCommit(['fix(changelog): proper issue links', ' see GH-1'])
     gitDummyCommit(['feat(awesome): adress EXAMPLE-1'])
+    gitDummyCommit(['chore(deps): upgrade example from 1 to 2'])
+    gitDummyCommit(['chore(release): release 0.0.0'])
   },
   function () {
     gitDummyCommit(['feat(awesome): addresses the issue brought up in #133'])
@@ -171,6 +173,29 @@ describe('conventionalcommits.org preset', function () {
 
         expect(chunk).to.not.include('make it faster')
         expect(chunk).to.not.include('Reverts')
+        done()
+      }))
+  })
+
+  it('should allow matching "scope" to configuration', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { type: 'chore', scope: 'deps', section: 'Dependencies' }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Dependencies')
+        expect(chunk).to.include('**deps:** upgrade example from 1 to 2')
+
+        expect(chunk).to.not.include('release 0.0.0')
         done()
       }))
   })
@@ -324,7 +349,7 @@ describe('conventionalcommits.org preset', function () {
 
   it('should work if there is a semver tag', function (done) {
     preparing(6)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset,
@@ -349,7 +374,7 @@ describe('conventionalcommits.org preset', function () {
 
   it('should support "feature" as alias for "feat"', function (done) {
     preparing(7)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset,
@@ -374,7 +399,7 @@ describe('conventionalcommits.org preset', function () {
 
   it('should work with unknown host', function (done) {
     preparing(7)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: require('../')({
@@ -404,7 +429,7 @@ describe('conventionalcommits.org preset', function () {
 
   it('should work specifying where to find a package.json using conventional-changelog-core', function (done) {
     preparing(8)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset,
@@ -432,7 +457,7 @@ describe('conventionalcommits.org preset', function () {
 
   it('should fallback to the closest package.json when not providing a location for a package.json', function (done) {
     preparing(8)
-    var i = 0
+    let i = 0
 
     conventionalChangelogCore({
       config: preset

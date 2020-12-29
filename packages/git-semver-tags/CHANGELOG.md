@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.1.0...git-semver-tags@4.1.1) (2020-11-05)
+
+
+### Bug Fixes
+
+* bug in unstableTagTest causing a mismatch on beta release higher then beta-9 ([#679](https://github.com/conventional-changelog/conventional-changelog/issues/679)) ([cd4c726](https://github.com/conventional-changelog/conventional-changelog/commit/cd4c726b1ca227a132ec2eadac5d0cfdd75d9e81))
+
+
+
+
+
 # [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.0.0...git-semver-tags@4.1.0) (2020-08-12)
 
 

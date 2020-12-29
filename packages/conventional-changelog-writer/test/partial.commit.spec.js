@@ -1,16 +1,16 @@
 'use strict'
-var expect = require('chai').expect
-var mocha = require('mocha')
-var before = mocha.before
-var it = mocha.it
-var beforeEach = mocha.beforeEach
-var describe = mocha.describe
-var fs = require('fs')
-var path = require('path')
-var Handlebars = require('handlebars')
+const expect = require('chai').expect
+const mocha = require('mocha')
+const before = mocha.before
+const it = mocha.it
+const beforeEach = mocha.beforeEach
+const describe = mocha.describe
+const fs = require('fs')
+const path = require('path')
+const Handlebars = require('handlebars')
 
-var template
-var templateContext
+let template
+let templateContext
 
 before(function (done) {
   fs.readFile(path.resolve(__dirname, '../templates/commit.hbs'), function (err, data) {
@@ -34,7 +34,7 @@ beforeEach(function () {
 
 describe('partial.commit', function () {
   it('should ignore host and owner if they do not exist and just use repository to link', function () {
-    var log = Handlebars.compile(template)({
+    const log = Handlebars.compile(template)({
       header: 'my header',
       repository: 'www.myhost.com/a/b',
       commit: 'my commits',
@@ -50,7 +50,7 @@ describe('partial.commit', function () {
   })
 
   it('should ignore owner if it does not exist and use host and repository to link', function () {
-    var log = Handlebars.compile(template)({
+    const log = Handlebars.compile(template)({
       header: 'my header',
       host: 'www.myhost.com',
       repository: 'a/b',
@@ -67,7 +67,7 @@ describe('partial.commit', function () {
   })
 
   it('should just use repoUrl to link', function () {
-    var log = Handlebars.compile(template)({
+    const log = Handlebars.compile(template)({
       header: 'my header',
       host: 'www.myhost.com',
       repoUrl: 'www.myhost.com',
@@ -84,14 +84,14 @@ describe('partial.commit', function () {
   })
 
   it('should not link the commit if `linkReferences` is falsy', function () {
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header hash\n')
   })
 
   it('should link the commit if `linkReferences` is thuthy', function () {
     templateContext.linkReferences = true
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash))\n')
   })
@@ -100,7 +100,7 @@ describe('partial.commit', function () {
     templateContext.linkReferences = true
     templateContext.owner = null
     templateContext.repository = 'a/b'
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash))\n')
   })
@@ -113,7 +113,7 @@ describe('partial.commit', function () {
     }, {
       issue: 3
     }]
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header hash, closes #1 #2 #3\n')
   })
@@ -127,7 +127,7 @@ describe('partial.commit', function () {
     }, {
       issue: 3
     }]
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n')
   })
@@ -143,7 +143,7 @@ describe('partial.commit', function () {
     }, {
       issue: 3
     }]
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n')
   })
@@ -155,7 +155,7 @@ describe('partial.commit', function () {
       repository: 'd',
       issue: 1
     }]
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n')
   })
@@ -166,7 +166,7 @@ describe('partial.commit', function () {
       repository: 'c/d',
       issue: 1
     }]
-    var log = Handlebars.compile(template)(templateContext)
+    const log = Handlebars.compile(template)(templateContext)
 
     expect(log).to.equal('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n')
   })
