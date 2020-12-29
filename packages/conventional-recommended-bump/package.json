@@ -32,16 +32,19 @@
   ],
   "dependencies": {
     "concat-stream": "^2.0.0",
-    "conventional-changelog-preset-loader": "file:../conventional-changelog-preset-loader",
-    "conventional-commits-filter": "file:../conventional-commits-filter",
-    "conventional-commits-parser": "file:../conventional-commits-parser",
+    "conventional-changelog-preset-loader": "^2.3.4",
+    "conventional-commits-filter": "^2.0.7",
+    "conventional-commits-parser": "^3.2.0",
     "git-raw-commits": "2.0.0",
-    "git-semver-tags": "file:../git-semver-tags",
+    "git-semver-tags": "^4.1.1",
     "meow": "^8.0.0",
     "q": "^1.5.1"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000 ./test/preset-resolver.spec.js"
   },
-  "bin": "cli.js"
+  "bin": "cli.js",
+  "devDependencies": {
+    "conventional-changelog-conventionalcommits": "^4.5.0"
+  }
 }

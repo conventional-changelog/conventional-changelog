@@ -40,7 +40,7 @@
     "pretest": "npm run lint",
     "test": "c8 mocha --timeout 30000 packages/*/test{,/*}.js",
     "test-windows": "c8 mocha --timeout 60000 packages/*/test{,/*}.js",
-    "release": "lerna publish --conventional-commits --dist-tag=next"
+    "postinstall": "bash scripts/install.sh"
   },
   "version": "1.0.0",
   "devDependencies": {
@@ -48,6 +48,7 @@
     "c8": "^7.1.2",
     "chai": "^4.2.0",
     "concat-stream": "^2.0.0",
+    "conventional-changelog-core": "^4.2.1",
     "coveralls": "^3.0.2",
     "eslint": "^7.0.0",
     "eslint-config-standard": "^16.0.1",
@@ -58,7 +59,6 @@
     "forceable-tty": "^0.1.0",
     "git-dummy-commit": "^1.2.0",
     "git-tails": "^1.0.0",
-    "lerna": "^3.20.2",
     "mkdirp": "^1.0.0",
     "mocha": "^8.0.0",
     "pinkie-promise": "^2.0.0",
@@ -72,28 +72,5 @@
     "through2": "^4.0.0",
     "tmp": "^0.2.1",
     "vinyl": "^2.1.0"
-  },
-  "dependencies": {
-    "conventional-changelog": "file:packages/conventional-changelog",
-    "conventional-changelog-angular": "file:packages/conventional-changelog-angular",
-    "conventional-changelog-atom": "file:packages/conventional-changelog-atom",
-    "conventional-changelog-cli": "file:packages/conventional-changelog-cli",
-    "conventional-changelog-codemirror": "file:packages/conventional-changelog-codemirror",
-    "conventional-changelog-conventionalcommits": "file:packages/conventional-changelog-conventionalcommits",
-    "conventional-changelog-core": "file:packages/conventional-changelog-core",
-    "conventional-changelog-ember": "file:packages/conventional-changelog-ember",
-    "conventional-changelog-eslint": "file:packages/conventional-changelog-eslint",
-    "conventional-changelog-express": "file:packages/conventional-changelog-express",
-    "conventional-changelog-jquery": "file:packages/conventional-changelog-jquery",
-    "conventional-changelog-jshint": "file:packages/conventional-changelog-jshint",
-    "conventional-changelog-preset-loader": "file:packages/conventional-changelog-preset-loader",
-    "conventional-changelog-writer": "file:packages/conventional-changelog-writer",
-    "conventional-commits-filter": "file:packages/conventional-commits-filter",
-    "conventional-commits-parser": "file:packages/conventional-commits-parser",
-    "conventional-recommended-bump": "file:packages/conventional-recommended-bump",
-    "git-raw-commits": "file:packages/git-raw-commits",
-    "git-semver-tags": "file:packages/git-semver-tags",
-    "gulp-conventional-changelog": "file:packages/gulp-conventional-changelog",
-    "standard-changelog": "file:packages/standard-changelog"
   }
 }

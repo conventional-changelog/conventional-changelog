@@ -27,13 +27,13 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
     "add-stream": "^1.0.0",
-    "conventional-changelog-writer": "file:../conventional-changelog-writer",
-    "conventional-commits-parser": "file:../conventional-commits-parser",
+    "conventional-changelog-writer": "^4.0.18",
+    "conventional-commits-parser": "^3.2.0",
     "dateformat": "^3.0.0",
     "get-pkg-repo": "^1.0.0",
     "git-raw-commits": "2.0.0",
     "git-remote-origin-url": "^2.0.0",
-    "git-semver-tags": "file:../git-semver-tags",
+    "git-semver-tags": "^4.1.1",
     "lodash": "^4.17.15",
     "normalize-package-data": "^3.0.0",
     "q": "^1.5.1",
@@ -44,5 +44,8 @@
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
+  },
+  "devDependencies": {
+    "conventional-changelog-angular": "^5.0.12"
   }
 }
