@@ -8,12 +8,7 @@ const through = require('through2')
 const util = require('./lib/util')
 const _ = require('lodash')
 
-function conventionalChangelogWriter (context, options) {
-  let savedKeyCommit
-  let commits = []
-  let firstRelease = true
-  let neverGenerated = true
-
+function conventionalChangelogWriterInit (context, options) {
   context = _.extend({
     commit: 'commits',
     issue: 'issues',
@@ -82,7 +77,17 @@ function conventionalChangelogWriter (context, options) {
   options.noteGroupsSort = util.functionify(options.noteGroupsSort)
   options.notesSort = util.functionify(options.notesSort)
 
-  return through.obj(function (chunk, enc, cb) {
+  return { context, options, generateOn }
+}
+
+function conventionalChangelogWriterParseStream (context, options) {
+  let generateOn
+  ({ context, options, generateOn } = conventionalChangelogWriterInit(context, options))
+  let commits = []
+  let neverGenerated = true
+  let savedKeyCommit
+  let firstRelease = true
+  return through.obj(function (chunk, _enc, cb) {
     try {
       let result
       const commit = util.processCommit(chunk, options.transform, context)
@@ -163,4 +168,37 @@ function conventionalChangelogWriter (context, options) {
   })
 }
 
-module.exports = conventionalChangelogWriter
+/*
+ * Given an array of commits, returns a string representing a CHANGELOG entry.
+ */
+conventionalChangelogWriterParseStream.parseArray = (rawCommits, context, options) => {
+  let generateOn
+  rawCommits = [...rawCommits];
+  ({ context, options, generateOn } = conventionalChangelogWriterInit(context, options))
+  let commits = []
+  let savedKeyCommit
+  if (options.reverse) {
+    rawCommits.reverse()
+  }
+  const entries = []
+  for (const rawCommit of rawCommits) {
+    const commit = util.processCommit(rawCommit, options.transform, context)
+    const keyCommit = commit || rawCommit
+    if (generateOn(keyCommit, commits, context, options)) {
+      entries.push(util.generate(options, commits, context, savedKeyCommit))
+      savedKeyCommit = keyCommit
+      commits = []
+    }
+    if (commit) {
+      commits.push(commit)
+    }
+  }
+  if (options.reverse) {
+    entries.reverse()
+    return util.generate(options, commits, context, savedKeyCommit) + entries.join('')
+  } else {
+    return entries.join('') + util.generate(options, commits, context, savedKeyCommit)
+  }
+}
+
+module.exports = conventionalChangelogWriterParseStream
