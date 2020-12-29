@@ -43,5 +43,8 @@
   "scripts": {
     "test-windows": "mocha --timeout 30000 ./test/preset-resolver.spec.js"
   },
-  "bin": "cli.js"
+  "bin": "cli.js",
+  "devDependencies": {
+    "conventional-changelog-conventionalcommits": "^4.5.0"
+  }
 }

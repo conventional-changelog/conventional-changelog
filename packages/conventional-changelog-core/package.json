@@ -44,5 +44,8 @@
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
+  },
+  "devDependencies": {
+    "conventional-changelog-angular": "^5.0.12"
   }
 }
