@@ -37,7 +37,7 @@
     "is-text-path": "^1.0.1",
     "lodash": "^4.17.15",
     "meow": "^8.0.0",
-    "split2": "^2.0.0",
+    "split2": "^3.0.0",
     "through2": "^4.0.0",
     "trim-off-newlines": "^1.0.0"
   },
