@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: node --version
-      - run: npm install
+      - run: npm install --engine-strict
       - run: npm test
       - name: coverage
         uses: codecov/codecov-action@v1
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 12
-      - run: npm install
+      - run: npm install --engine-strict
       - run: npm run test-windows
       - name: coverage
         uses: codecov/codecov-action@v1
