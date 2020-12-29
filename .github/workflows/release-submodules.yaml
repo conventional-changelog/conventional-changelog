@@ -85,23 +85,3 @@ jobs:
           cd src/apis/${{ matrix.package }}
           npm install
           npm publish --access=public
-      - uses: actions/github-script@v3
-        id: untag-release
-        if: ${{steps.tag-release.outputs.pr}}
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-            await github.issues.addLabels({
-              owner,
-              repo,
-              issue_number: ${{steps.tag-release.outputs.pr}},
-              labels: ['autorelease: published']
-            });
-            github.issues.removeLabel({
-              owner,
-              repo,
-              issue_number: ${{steps.tag-release.outputs.pr}},
-              name: 'autorelease: tagged',
-            });
-            console.log(`Tagged ${{steps.tag-release.outputs.pr}}`)
