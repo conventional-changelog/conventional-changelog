@@ -18,6 +18,7 @@ Got the idea from https://github.com/conventional-changelog/conventional-changel
       - [config](#config)
       - [whatBump](#whatbump)
       - [tagPrefix](#tagprefix)
+      - [skipUnstable](#skipunstable)
       - [lernaPackage](#lernapackage)
       - [path](#path)
     - [parserOpts](#parseropts)
@@ -111,6 +112,12 @@ This should return an object including but not limited to `level` and `reason`. 
 Specify a prefix for the git tag that will be taken into account during the comparison.
 
 For instance if your version tag is prefixed by `version/` instead of `v` you would specifying `--tagPrefix=version/` using the CLI, or `version/` as the value of the `tagPrefix` option.
+
+##### skipUnstable
+
+**Type:** `boolean`
+
+If true, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
 
 ##### lernaPackage
 
