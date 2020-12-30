@@ -169,15 +169,11 @@ Type: `function`, `string` or `array`
 
 A compare function used to sort commit groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
-The string can be a dot path to a nested object property.
-
 ##### commitsSort
 
 Type: `function`, `string` or `array` Default: `'header'`
 
 A compare function used to sort commits. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
-
-The string can be a dot path to a nested object property.
 
 ##### noteGroupsSort
 
@@ -185,15 +181,11 @@ Type: `function`, `string` or `array` Default: `'title'`
 
 A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
 
-The string can be a dot path to a nested object property.
-
 ##### notesSort
 
 Type: `function`, `string` or `array` Default: `'text'`
 
 A compare function used to sort note groups. If it's a string or array, it sorts on the property(ies) by `localeCompare`. Will not sort if this is a falsy value.
-
-The string can be a dot path to a nested object property.
 
 ##### generateOn
 
