@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/v4.1.0...v5.0.0) (2020-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* nested object properties no longer supported when sorting
+
+### Bug Fixes
+
+* drop compare-func making sort consistent across node versions ([#729](https://www.github.com/conventional-changelog/conventional-changelog/issues/729)) ([e0081a8](https://www.github.com/conventional-changelog/conventional-changelog/commit/e0081a829133891e2def4a7b7ee5fa25f1440049))
+
 ## [4.1.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.18...v4.1.0) (2020-12-29)
 
 
