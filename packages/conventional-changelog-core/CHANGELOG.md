@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.2.2](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.2.1...v4.2.2) (2020-12-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency git-raw-commits to v2.0.8 ([#723](https://www.github.com/conventional-changelog/conventional-changelog/issues/723)) ([9682305](https://www.github.com/conventional-changelog/conventional-changelog/commit/968230536914a680237e830ccc8e125c56b0f0aa))
+
 ## [4.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.2.0...conventional-changelog-core@4.2.1) (2020-11-05)
 
 
