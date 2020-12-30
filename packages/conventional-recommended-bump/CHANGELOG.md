@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [6.0.12](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.11...v6.0.12) (2020-12-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency git-raw-commits to v2.0.8 ([#723](https://www.github.com/conventional-changelog/conventional-changelog/issues/723)) ([9682305](https://www.github.com/conventional-changelog/conventional-changelog/commit/968230536914a680237e830ccc8e125c56b0f0aa))
+
 ## [6.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.10...conventional-recommended-bump@6.0.11) (2020-11-05)
 
 **Note:** Version bump only for package conventional-recommended-bump
