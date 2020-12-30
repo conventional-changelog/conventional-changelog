@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/v6.0.12...v6.1.0) (2020-12-30)
+
+
+### Features
+
+* **conventional-recommended-bump:** support for '--skip-unstable' ([#698](https://www.github.com/conventional-changelog/conventional-changelog/issues/698)) ([3a5b41e](https://www.github.com/conventional-changelog/conventional-changelog/commit/3a5b41e0ccdcdfb81f1b75f295975b0ab0f48683))
+
 ### [6.0.12](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump@6.0.11...v6.0.12) (2020-12-30)
 
 
