@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.0.9](https://www.github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.8...v2.0.9) (2020-12-29)
+
+
+### Bug Fixes
+
+* normalize git show signature option to false ([#671](https://www.github.com/conventional-changelog/conventional-changelog/issues/671)) ([a0b348c](https://www.github.com/conventional-changelog/conventional-changelog/commit/a0b348c7a74ba49bb07053ed1d25c2053a7c3b1a)), closes [conventional-changelog/commitlint#2118](https://www.github.com/conventional-changelog/commitlint/issues/2118)
+
 ## [2.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.7...git-raw-commits@2.0.8) (2020-11-05)
 
 
