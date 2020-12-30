@@ -36,7 +36,6 @@
     "logs"
   ],
   "dependencies": {
-    "compare-func": "^2.0.0",
     "conventional-commits-filter": "^2.0.7",
     "dateformat": "^3.0.0",
     "handlebars": "^4.7.6",
