@@ -63,7 +63,8 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
     gitSemverTags({
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
-      tagPrefix: options.tagPrefix
+      tagPrefix: options.tagPrefix,
+      skipUnstable: options.skipUnstable
     }, (err, tags) => {
       if (err) {
         return cb(err)
