@@ -27,7 +27,7 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
     "add-stream": "^1.0.0",
-    "conventional-changelog-writer": "^4.0.18",
+    "conventional-changelog-writer": "^5.0.0",
     "conventional-commits-parser": "^3.2.0",
     "dateformat": "^3.0.0",
     "get-pkg-repo": "^1.0.0",
