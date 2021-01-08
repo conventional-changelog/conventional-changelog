@@ -4,7 +4,7 @@ const dargs = require('dargs')
 const execFile = require('child_process').execFile
 const split = require('split2')
 const stream = require('stream')
-const template = require('lodash.template')
+const template = require('lodash/template')
 const through = require('through2')
 
 const DELIMITER = '------------------------ >8 ------------------------'

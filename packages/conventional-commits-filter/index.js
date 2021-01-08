@@ -1,6 +1,6 @@
 'use strict'
 
-const isMatch = require('lodash.ismatch')
+const isMatch = require('lodash/isMatch')
 const modifyValues = require('modify-values')
 
 function modifyValue (val) {
