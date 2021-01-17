@@ -14,5 +14,5 @@ function presetResolver (presetPackage) {
     return Promise.resolve(presetPackage)
   }
 
-  throw new Error('preset package must be a promise, function, or object')
+  return Promise.reject(new Error('preset package must be a promise, function, or object'))
 }
