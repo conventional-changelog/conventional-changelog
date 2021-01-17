@@ -1,15 +1,15 @@
 'use strict'
+const promisify = require('util').promisify
 const dateFormat = require('dateformat')
 const getPkgRepo = require('get-pkg-repo')
 const gitSemverTags = require('git-semver-tags')
 const normalizePackageData = require('normalize-package-data')
-const Q = require('q')
 let gitRemoteOriginUrl
 try {
   gitRemoteOriginUrl = require('git-remote-origin-url')
 } catch (err) {
   gitRemoteOriginUrl = function () {
-    return Q.reject(err)
+    return Promise.reject(err)
   }
 }
 const readPkg = require('read-pkg')
@@ -20,7 +20,7 @@ const _ = require('lodash')
 const rhosts = /github|bitbucket|gitlab/i
 
 function semverTagsPromise (options) {
-  return Q.Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     gitSemverTags({ lernaTags: !!options.lernaPackage, package: options.lernaPackage, tagPrefix: options.tagPrefix, skipUnstable: options.skipUnstable }, function (err, result) {
       if (err) {
         reject(err)
@@ -94,24 +94,24 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
   if (options.config) {
     if (_.isFunction(options.config)) {
-      configPromise = Q.nfcall(options.config)
+      configPromise = promisify(options.config)()
     } else {
-      configPromise = Q(options.config)
+      configPromise = Promise.resolve(options.config)
     }
   }
 
   if (options.pkg) {
     if (options.pkg.path) {
-      pkgPromise = Q(readPkg(options.pkg.path))
+      pkgPromise = readPkg(options.pkg.path)
     } else {
-      pkgPromise = Q(readPkgUp())
+      pkgPromise = readPkgUp()
     }
   }
 
-  const gitRemoteOriginUrlPromise = Q(gitRemoteOriginUrl())
+  const gitRemoteOriginUrlPromise = gitRemoteOriginUrl()
 
-  return Q.allSettled([configPromise, pkgPromise, semverTagsPromise(options), gitRemoteOriginUrlPromise])
-    .spread(function (configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj) {
+  return Promise.all([configPromise, pkgPromise, semverTagsPromise(options), gitRemoteOriginUrlPromise])
+    .then(function ([configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj]) {
       let config
       let pkg
       let fromTag
