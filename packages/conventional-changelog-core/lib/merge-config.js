@@ -112,12 +112,15 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
   // TODO: replace with Promise.allSettled for node 12.10+
   return Promise.all([configPromise, pkgPromise, semverTagsPromise(options), gitRemoteOriginUrlPromise]
-    .map((promise) =>
-      promise.then(
+    .map((promise) => {
+      if (!promise) {
+        return Promise.resolve({ status: 'fulfilled', promise })
+      }
+      return promise.then(
         (value) => ({ status: 'fulfilled', value }),
         (reason) => ({ status: 'rejected', reason })
       )
-    )
+    })
   )
     .then(function ([configObj, pkgObj, tagsObj, gitRemoteOriginUrlObj]) {
       let config
