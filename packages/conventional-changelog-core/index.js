@@ -7,7 +7,7 @@ const conventionalChangelogWriter = require('conventional-changelog-writer')
 const _ = require('lodash')
 const stream = require('stream')
 const through = require('through2')
-const shell = require('shelljs')
+const execFileSync = require('child_process').execFileSync
 
 const mergeConfig = require('./lib/merge-config')
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
@@ -47,7 +47,10 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
       writerOpts = data.writerOpts
       gitRawExecOpts = data.gitRawExecOpts
 
-      if (shell.exec('git rev-parse --verify HEAD', { silent: true }).code === 0) {
+      try {
+        execFileSync('git', ['rev-parse', '--verify', 'HEAD'], {
+          stdio: 'ignore'
+        })
         let reverseTags = context.gitSemverTags.slice(0).reverse()
         reverseTags.push('HEAD')
 
@@ -81,7 +84,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
           .on('end', function () {
             setImmediate(commitsStream.emit.bind(commitsStream), 'end')
           })
-      } else {
+      } catch (_e) {
         commitsStream = gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
       }
 
