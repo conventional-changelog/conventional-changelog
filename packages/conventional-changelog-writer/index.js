@@ -15,7 +15,7 @@ function conventionalChangelogWriterInit (context, options) {
     date: dateFormat(new Date(), 'yyyy-mm-dd', true)
   }, context)
 
-  if (!_.isBoolean(context.linkReferences) && (context.repository || context.repoUrl) && context.commit && context.issue) {
+  if (typeof context.linkReferences !== 'boolean' && (context.repository || context.repoUrl) && context.commit && context.issue) {
     context.linkReferences = true
   }
 
