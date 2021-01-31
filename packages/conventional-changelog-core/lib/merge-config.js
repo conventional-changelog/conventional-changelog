@@ -72,7 +72,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
     skipUnstable: false,
     debug: function () {},
     transform: function (commit, cb) {
-      if (_.isString(commit.gitTags)) {
+      if (typeof commit.gitTags === 'string') {
         const match = rtag.exec(commit.gitTags)
         rtag.lastIndex = 0
 

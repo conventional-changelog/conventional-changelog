@@ -44,7 +44,7 @@ function conventionalChangelogWriterInit (context, options) {
   if ((!_.isFunction(options.transform) && _.isObject(options.transform)) || _.isUndefined(options.transform)) {
     options.transform = _.assign({
       hash: function (hash) {
-        if (_.isString(hash)) {
+        if (typeof hash === 'string') {
           return hash.substring(0, 7)
         }
       },
@@ -62,7 +62,7 @@ function conventionalChangelogWriterInit (context, options) {
   }
 
   let generateOn = options.generateOn
-  if (_.isString(generateOn)) {
+  if (typeof generateOn === 'string') {
     generateOn = function (commit) {
       return !_.isUndefined(commit[options.generateOn])
     }

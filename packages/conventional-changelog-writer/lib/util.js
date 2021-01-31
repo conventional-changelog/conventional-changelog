@@ -12,20 +12,20 @@ function compileTemplates (templates) {
   const footerPartial = templates.footerPartial
   const partials = templates.partials
 
-  if (_.isString(headerPartial)) {
+  if (typeof headerPartial === 'string') {
     Handlebars.registerPartial('header', headerPartial)
   }
 
-  if (_.isString(commitPartial)) {
+  if (typeof commitPartial === 'string') {
     Handlebars.registerPartial('commit', commitPartial)
   }
 
-  if (_.isString(footerPartial)) {
+  if (typeof footerPartial === 'string') {
     Handlebars.registerPartial('footer', footerPartial)
   }
 
   _.forEach(partials, function (partial, name) {
-    if (_.isString(partial)) {
+    if (typeof partial === 'string') {
       Handlebars.registerPartial(name, partial)
     }
   })
