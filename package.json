@@ -39,8 +39,7 @@
     "fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "pretest": "npm run lint",
     "test": "c8 mocha --timeout 30000 packages/*/test{,/*}.js",
-    "test-windows": "c8 mocha --timeout 60000 packages/*/test{,/*}.js",
-    "postinstall": "bash scripts/install.sh"
+    "test-windows": "c8 mocha --timeout 60000 packages/*/test{,/*}.js"
   },
   "version": "1.0.0",
   "devDependencies": {
@@ -72,5 +71,8 @@
     "through2": "^4.0.0",
     "tmp": "^0.2.1",
     "vinyl": "^2.1.0"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
