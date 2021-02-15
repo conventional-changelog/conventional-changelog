@@ -511,7 +511,7 @@ describe('parser', function () {
     })
 
     it('does not throw if merge commit has no header', () => {
-      const mergeMsg = parser(
+      parser(
         'Merge branch \'feature\'',
         mergeOptions,
         mergeRegex
