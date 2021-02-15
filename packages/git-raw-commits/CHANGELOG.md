@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.0.10](https://www.github.com/conventional-changelog/conventional-changelog/compare/v2.0.9...v2.0.10) (2021-01-27)
+
+
+### Bug Fixes
+
+* align lodash dependency across packages ([#737](https://www.github.com/conventional-changelog/conventional-changelog/issues/737)) ([d9feeb6](https://www.github.com/conventional-changelog/conventional-changelog/commit/d9feeb605de28c00ef55b5c8e229efd1289dd6e8))
+* revert normalize git show signature option to false ([c4d9042](https://www.github.com/conventional-changelog/conventional-changelog/commit/c4d9042ae83aa2c823dca181dd72e5a8b3163c1e))
+
 ### [2.0.9](https://www.github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits@2.0.8...v2.0.9) (2020-12-29)
 
 
