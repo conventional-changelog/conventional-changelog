@@ -1,6 +1,6 @@
 {
   "name": "conventional-commits-parser",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Parse raw conventional commits",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"

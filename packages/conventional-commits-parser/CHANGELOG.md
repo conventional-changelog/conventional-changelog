@@ -37,6 +37,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### [3.2.1](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.2.0...v3.2.1) (2021-02-15)
+
+
+### Bug Fixes
+
+* handle missing header in merge commit ([#757](https://www.github.com/conventional-changelog/conventional-changelog/issues/757)) ([d189d3e](https://www.github.com/conventional-changelog/conventional-changelog/commit/d189d3e45b82e7141115ce8eccd95c8cf2d7db77))
+
 ## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.7...conventional-commits-parser@3.0.8) (2019-11-14)
 
 
