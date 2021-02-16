@@ -147,8 +147,11 @@ function parser (raw, options, regex) {
     merge = mergeMatch[0]
 
     header = lines.shift()
-    while (!header.trim()) {
+    while (header !== undefined && !header.trim()) {
       header = lines.shift()
+    }
+    if (!header) {
+      header = ''
     }
 
     _.forEach(mergeCorrespondence, function (partName, index) {
