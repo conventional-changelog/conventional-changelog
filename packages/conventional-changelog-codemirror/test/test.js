@@ -4,32 +4,51 @@ const config = require('../')
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const before = mocha.before
+const beforeEach = mocha.beforeEach
+const afterEach = mocha.afterEach
 const expect = require('chai').expect
-const shell = require('shelljs')
 const through = require('through2')
-const writeFileSync = require('fs').writeFileSync
+const fs = require('fs')
+const tmp = require('tmp')
+const { execSync } = require('child_process')
+
+tmp.setGracefulCleanup()
+const oldDir = process.cwd()
+
+function gitCommitAdd (msg) {
+  // we need to escape backtick for bash but not for windows
+  // probably this should be done in git-dummy-commit or shelljs
+  if (process.platform !== 'win32') {
+    msg = msg.replace(/`/g, '\\`')
+  }
+  execSync(`git add --all && git commit -m "${msg}" --no-gpg-sign`, {
+    stdio: 'ignore'
+  })
+}
 
 describe('codemirror preset', function () {
-  before(function () {
-    shell.config.resetForTesting()
-    shell.cd(__dirname)
-    shell.rm('-rf', 'tmp')
-    shell.mkdir('tmp')
-    shell.cd('tmp')
-    shell.mkdir('git-templates')
-    shell.exec('git init --template=./git-templates')
+  beforeEach(() => {
+    const tmpDir = tmp.dirSync()
+    process.chdir(tmpDir.name)
+    fs.mkdirSync('git-templates')
+    execSync('git init --template=./git-templates', {
+      stdio: 'ignore'
+    })
 
-    writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m"[tern addon] Use correct primary when selecting variables"')
-    writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m"[tern addon] Fix patch bc026f1 "')
-    writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m"[css mode] Add values for property flex-direction"')
-    writeFileSync('test4', '')
-    shell.exec('git add --all && git commit -m"[stylus mode] Fix highlight class after a $var"')
-    writeFileSync('test5', '')
-    shell.exec('git add --all && git commit -m"Bad commit"')
+    fs.writeFileSync('test1', '')
+    gitCommitAdd('[tern addon] Use correct primary when selecting variables')
+    fs.writeFileSync('test2', '')
+    gitCommitAdd('[tern addon] Fix patch bc026f1 ')
+    fs.writeFileSync('test3', '')
+    gitCommitAdd('[css mode] Add values for property flex-direction')
+    fs.writeFileSync('test4', '')
+    gitCommitAdd('[stylus mode] Fix highlight class after a $var')
+    fs.writeFileSync('test5', '')
+    gitCommitAdd('Bad commit')
+  })
+
+  afterEach(() => {
+    process.chdir(oldDir)
   })
 
   it('should work if there is no semver tag', function (done) {
