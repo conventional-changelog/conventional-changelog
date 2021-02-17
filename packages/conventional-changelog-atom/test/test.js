@@ -16,7 +16,7 @@ tmp.setGracefulCleanup()
 
 const oldDir = process.cwd()
 
-function gitDummyCommit (msg) {
+function gitCommitEmpty (msg) {
   // we need to escape backtick for bash but not for windows
   // probably this should be done in git-dummy-commit or shelljs
   if (process.platform !== 'win32') {
@@ -35,11 +35,11 @@ describe('atom preset', function () {
     execSync('git init --template=./git-templates', {
       stdio: 'ignore'
     })
-    gitDummyCommit(':arrow_down: exception-reporting')
-    gitDummyCommit(':bug: `updateContentDimensions` when model changes')
-    gitDummyCommit('Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17')
-    gitDummyCommit(':arrow_up: language-gfm@0.79.0')
-    gitDummyCommit(':arrow_up: one-dark/light-ui@v1.0.1')
+    gitCommitEmpty(':arrow_down: exception-reporting')
+    gitCommitEmpty(':bug: `updateContentDimensions` when model changes')
+    gitCommitEmpty('Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17')
+    gitCommitEmpty(':arrow_up: language-gfm@0.79.0')
+    gitCommitEmpty(':arrow_up: one-dark/light-ui@v1.0.1')
   })
 
   afterEach(() => {
