@@ -1,4 +1,3 @@
 {
-  "tempDirectory": ".nyc_output/",
   "reporters": ["lcov", "text"]
 }
