@@ -39,7 +39,7 @@
     "fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "pretest": "npm run lint",
     "test": "c8 -r lcov mocha --timeout 30000 packages/*/test{,/*}.js",
-    "test-windows": "c8 -r lcov mocha --timeout 60000 packages/*/test{,/*}.js"
+    "test-windows": "c8 -r lcov mocha --timeout 60000 packages/*/test{,/*}.js",
     "postinstall": "bash scripts/install.sh"
   },
   "version": "1.0.0",
