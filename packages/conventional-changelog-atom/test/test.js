@@ -4,32 +4,46 @@ const config = require('../')
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const before = mocha.before
+const beforeEach = mocha.beforeEach
+const afterEach = mocha.afterEach
 const expect = require('chai').expect
-const gitDummyCommit = require('git-dummy-commit')
-const shell = require('shelljs')
 const through = require('through2')
+const fs = require('fs')
+const tmp = require('tmp')
+const { execSync } = require('child_process')
+
+tmp.setGracefulCleanup()
+
+const oldDir = process.cwd()
+
+function gitDummyCommit (msg) {
+  // we need to escape backtick for bash but not for windows
+  // probably this should be done in git-dummy-commit or shelljs
+  if (process.platform !== 'win32') {
+    msg = msg.replace(/`/g, '\\`')
+  }
+  execSync(`git commit -m "${msg}" --allow-empty --no-gpg-sign`, {
+    stdio: 'ignore'
+  })
+}
 
 describe('atom preset', function () {
-  before(function () {
-    shell.config.resetForTesting()
-    shell.cd(__dirname)
-    shell.rm('-rf', 'tmp')
-    shell.mkdir('tmp')
-    shell.cd('tmp')
-    shell.mkdir('git-templates')
-    shell.exec('git init --template=./git-templates')
-    gitDummyCommit([':arrow_down: exception-reporting'])
-    if (process.platform !== 'win32') {
-      // we need to escape backtick for bash but not for windows
-      // probably this should be done in git-dummy-commit or shelljs
-      gitDummyCommit([':bug: \\`updateContentDimensions\\` when model changes'])
-    } else {
-      gitDummyCommit([':bug: `updateContentDimensions` when model changes'])
-    }
-    gitDummyCommit(['Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17'])
-    gitDummyCommit([':arrow_up: language-gfm@0.79.0'])
-    gitDummyCommit([':arrow_up: one-dark/light-ui@v1.0.1'])
+  beforeEach(() => {
+    const tmpDir = tmp.dirSync()
+    process.chdir(tmpDir.name)
+    fs.mkdirSync('git-templates')
+    execSync('git init --template=./git-templates', {
+      stdio: 'ignore'
+    })
+    gitDummyCommit(':arrow_down: exception-reporting')
+    gitDummyCommit(':bug: `updateContentDimensions` when model changes')
+    gitDummyCommit('Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17')
+    gitDummyCommit(':arrow_up: language-gfm@0.79.0')
+    gitDummyCommit(':arrow_up: one-dark/light-ui@v1.0.1')
+  })
+
+  afterEach(() => {
+    process.chdir(oldDir)
   })
 
   it('should work if there is no semver tag', function (done) {
