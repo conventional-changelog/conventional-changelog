@@ -3,7 +3,7 @@
 const proc = require('process')
 const exec = require('child_process').exec
 const semverValid = require('semver').valid
-const cmd = 'git tag'
+const cmd = 'git tag --sort=-taggerdate --sort=-committerdate'
 const unstableTagTest = /.+-\w+\.\d+$/
 
 function lernaTag (tag, pkg) {

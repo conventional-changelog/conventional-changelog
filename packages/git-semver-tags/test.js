@@ -61,7 +61,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v2.0.0', 'v3.0.0'])
+      assert.deepStrictEqual(tags, ['v3.0.0', 'v2.0.0'])
 
       done()
     })
@@ -72,7 +72,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v2.0.0', 'v3.0.0', 'v4.0.0'])
+      assert.deepStrictEqual(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
 
       done()
     })
@@ -81,36 +81,42 @@ describe('git-semver-tags', function () {
   it('should still work if I run it again', function (done) {
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v2.0.0', 'v3.0.0', 'v4.0.0'])
+      assert.deepStrictEqual(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
 
       done()
     })
   })
 
   it('should be in reverse chronological order', function (done) {
-    writeFileSync('test4', '')
-    shell.exec('git add --all && git commit -m"Fourth commit"')
-    shell.exec('git tag v1.0.0')
+    // new method is too fast
+    setTimeout(function () {
+      writeFileSync('test4', '')
+      shell.exec('git add --all && git commit -m"Fourth commit"')
+      shell.exec('git tag v1.0.0')
 
-    gitSemverTags(function (err, tags) {
-      if (err) done(err)
-      assert.deepStrictEqual(tags, ['v1.0.0', 'v2.0.0', 'v3.0.0', 'v4.0.0'])
+      gitSemverTags(function (err, tags) {
+        if (err) done(err)
+        assert.deepStrictEqual(tags, ['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
 
-      done()
-    })
+        done()
+      })
+    }, 1e3)
   })
 
   it('should work with prerelease', function (done) {
-    writeFileSync('test5', '')
-    shell.exec('git add --all && git commit -m"Fifth commit"')
-    shell.exec('git tag 5.0.0-pre')
+    // new method is too fast
+    setTimeout(function () {
+      writeFileSync('test5', '')
+      shell.exec('git add --all && git commit -m"Fifth commit"')
+      shell.exec('git tag 5.0.0-pre')
 
-    gitSemverTags(function (err, tags) {
-      if (err) done(err)
-      assert.deepStrictEqual(tags, ['5.0.0-pre', 'v1.0.0', 'v2.0.0', 'v3.0.0', 'v4.0.0'])
+      gitSemverTags(function (err, tags) {
+        if (err) done(err)
+        assert.deepStrictEqual(tags, ['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
 
-      done()
-    })
+        done()
+      })
+    }, 1e3)
   })
 
   it('should work with empty commit', function (done) {
@@ -139,7 +145,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ lernaTags: true }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['blarg-project@1.0.0', 'foo-project@4.0.0', 'foo-project@5.0.0'])
+      assert.deepStrictEqual(tags, ['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
       done()
     })
   })
@@ -155,7 +161,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ lernaTags: true }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['blarg-project@1.0.0', 'foo-project@4.0.0', 'foo-project@5.0.0', 'foobar-project@0.0.10', 'foobar-project@0.10.0', 'foobar-project@10.0.0'])
+      assert.deepStrictEqual(tags, ['foobar-project@10.0.0', 'foobar-project@0.10.0', 'foobar-project@0.0.10', 'foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
       done()
     })
   })
@@ -190,7 +196,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ tagPrefix: 'ms/' }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['ms/6.0.0', 'ms/7.0.0'])
+      assert.deepStrictEqual(tags, ['ms/7.0.0', 'ms/6.0.0'])
       done()
     })
   })
@@ -211,7 +217,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ tagPrefix: 'skip/', skipUnstable: true }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['skip/8.0.0', 'skip/9.0.0'])
+      assert.deepStrictEqual(tags, ['skip/9.0.0', 'skip/8.0.0'])
       done()
     })
   })
