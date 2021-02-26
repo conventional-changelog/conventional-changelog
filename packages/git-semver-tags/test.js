@@ -21,11 +21,9 @@ describe('git-semver-tags', function () {
     shell.exec('git init')
   })
 
-  it('should error if no commits found', function (done) {
+  it('should not error if no commits found', function (done) {
     gitSemverTags(function (err) {
-      assert(err)
-
-      done()
+      done(err)
     })
   })
 
@@ -63,7 +61,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v3.0.0', 'v2.0.0'])
+      assert.deepStrictEqual(tags, ['v2.0.0', 'v3.0.0'])
 
       done()
     })
@@ -74,7 +72,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
+      assert.deepStrictEqual(tags, ['v2.0.0', 'v3.0.0', 'v4.0.0'])
 
       done()
     })
@@ -83,7 +81,7 @@ describe('git-semver-tags', function () {
   it('should still work if I run it again', function (done) {
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v4.0.0', 'v3.0.0', 'v2.0.0'])
+      assert.deepStrictEqual(tags, ['v2.0.0', 'v3.0.0', 'v4.0.0'])
 
       done()
     })
@@ -96,7 +94,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
+      assert.deepStrictEqual(tags, ['v1.0.0', 'v2.0.0', 'v3.0.0', 'v4.0.0'])
 
       done()
     })
@@ -109,7 +107,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags(function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
+      assert.deepStrictEqual(tags, ['5.0.0-pre', 'v1.0.0', 'v2.0.0', 'v3.0.0', 'v4.0.0'])
 
       done()
     })
@@ -141,7 +139,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ lernaTags: true }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
+      assert.deepStrictEqual(tags, ['blarg-project@1.0.0', 'foo-project@4.0.0', 'foo-project@5.0.0'])
       done()
     })
   })
@@ -157,7 +155,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ lernaTags: true }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['foobar-project@10.0.0', 'foobar-project@0.10.0', 'foobar-project@0.0.10', 'foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
+      assert.deepStrictEqual(tags, ['blarg-project@1.0.0', 'foo-project@4.0.0', 'foo-project@5.0.0', 'foobar-project@0.0.10', 'foobar-project@0.10.0', 'foobar-project@10.0.0'])
       done()
     })
   })
@@ -192,7 +190,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ tagPrefix: 'ms/' }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['ms/7.0.0', 'ms/6.0.0'])
+      assert.deepStrictEqual(tags, ['ms/6.0.0', 'ms/7.0.0'])
       done()
     })
   })
@@ -213,7 +211,7 @@ describe('git-semver-tags', function () {
 
     gitSemverTags({ tagPrefix: 'skip/', skipUnstable: true }, function (err, tags) {
       if (err) done(err)
-      assert.deepStrictEqual(tags, ['skip/9.0.0', 'skip/8.0.0'])
+      assert.deepStrictEqual(tags, ['skip/8.0.0', 'skip/9.0.0'])
       done()
     })
   })
