@@ -4,7 +4,7 @@ const proc = require('process')
 const exec = require('child_process').exec
 const semverValid = require('semver').valid
 const regex = /tag:\s*(.+?)[,)]/gi
-const cmd = 'git log --decorate --no-color'
+const cmd = 'git log --decorate --all --no-color'
 const unstableTagTest = /.+-\w+\.\d+$/
 
 function lernaTag (tag, pkg) {
