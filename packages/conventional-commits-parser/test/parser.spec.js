@@ -509,6 +509,14 @@ describe('parser', function () {
       expect(msgWithmergeHeaderWithoutmergePattern.scope).to.equal(null)
       expect(msgWithmergeHeaderWithoutmergePattern.subject).to.equal(null)
     })
+
+    it('does not throw if merge commit has no header', () => {
+      parser(
+        'Merge branch \'feature\'',
+        mergeOptions,
+        mergeRegex
+      )
+    })
   })
 
   describe('header', function () {
