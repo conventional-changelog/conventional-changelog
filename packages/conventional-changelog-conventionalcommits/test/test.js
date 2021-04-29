@@ -82,7 +82,10 @@ betterThanBefore.setups([
     gitDummyCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
   },
   function () {
-    gitDummyCommit(['chore: release at different version\nRelease-As: v3.0.2'])
+    gitDummyCommit([
+      'chore: release at different version',
+      'Release-As: v3.0.2'
+    ])
   }
 ])
 
