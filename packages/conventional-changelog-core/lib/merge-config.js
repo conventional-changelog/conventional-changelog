@@ -180,7 +180,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
           }
           context.owner = context.owner || repo.user || ''
           context.repository = context.repository || repo.project
-          context.repoUrl = browse
+          context.repoUrl = /undefined/i.exec(browse) ? context.host : browse
         }
 
         context.packageData = pkg
