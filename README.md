@@ -1,7 +1,7 @@
 # Conventional Changelog
 
 [![Build Status](https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master)](https://travis-ci.org/conventional-changelog/conventional-changelog)
-[![Codecov](https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg)](https://codecov.io/gh/conventional-changelog/conventional-changelog)p
+[![Codecov](https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg)](https://codecov.io/gh/conventional-changelog/conventional-changelog)
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 [![community slack](http://devtoolscommunity.herokuapp.com/badge.svg)](http://devtoolscommunity.herokuapp.com)
 
