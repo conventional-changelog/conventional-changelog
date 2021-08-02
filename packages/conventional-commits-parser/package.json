@@ -13,7 +13,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-commits-parser"
   },
   "license": "MIT",
   "engines": {
@@ -33,8 +34,8 @@
     "logs"
   ],
   "dependencies": {
-    "JSONStream": "^1.0.4",
     "is-text-path": "^1.0.1",
+    "JSONStream": "^1.0.4",
     "lodash": "^4.17.15",
     "meow": "^8.0.0",
     "split2": "^3.0.0",

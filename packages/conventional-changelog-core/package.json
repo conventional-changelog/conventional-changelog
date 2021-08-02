@@ -4,7 +4,8 @@
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-changelog-core/test/fixtures"
   },
   "keywords": [
     "conventional-changelog",
