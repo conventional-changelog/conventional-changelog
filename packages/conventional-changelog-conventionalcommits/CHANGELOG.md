@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/v5.0.0...v5.0.1)
+
+*Date:* *2021-08-12*
+
+#### Bug Fixes
+
+* remove table and replece to only date string ([7e2792c](https://github.com/conventional-changelog/conventional-changelog/commit/7e2792cbb521395982fd0e3fa283bf1af25992e7))
+* **documentation:** clean up markdown to 79 characters with one line ([3a634db](https://github.com/conventional-changelog/conventional-changelog/commit/3a634db72360631ff20f59ec6514977c5e28a805))
+
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/v1.1.0...v5.0.0)
 
 |Date:|2021-05-27|
