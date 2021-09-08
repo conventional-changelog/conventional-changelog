@@ -1,5 +1,5 @@
 'use strict'
-const trimOffNewlines = require('trim-off-newlines')
+const trimNewlines = require('trim-newlines')
 const _ = require('lodash')
 
 const CATCH_ALL = /()(.+)/gi
@@ -95,7 +95,7 @@ function parser (raw, options, regex) {
     : passTrough
   const gpgFilter = line => !line.match(/^\s*gpg:/)
 
-  const rawLines = trimOffNewlines(raw).split(/\r?\n/)
+  const rawLines = trimNewlines(raw).split(/\r?\n/)
   const lines = truncateToScissor(rawLines).filter(commentFilter).filter(gpgFilter)
 
   let continueNote = false
@@ -282,7 +282,7 @@ function parser (raw, options, regex) {
   }
 
   _.map(notes, function (note) {
-    note.text = trimOffNewlines(note.text)
+    note.text = trimNewlines(note.text)
 
     return note
   })
@@ -290,8 +290,8 @@ function parser (raw, options, regex) {
   const msg = _.merge(headerParts, mergeParts, {
     merge: merge,
     header: header,
-    body: body ? trimOffNewlines(body) : null,
-    footer: footer ? trimOffNewlines(footer) : null,
+    body: body ? trimNewlines(body) : null,
+    footer: footer ? trimNewlines(footer) : null,
     notes: notes,
     references: references,
     mentions: mentions,
