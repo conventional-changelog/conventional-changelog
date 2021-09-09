@@ -25,6 +25,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### [4.6.1](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.0...conventional-changelog-conventionalcommits-v4.6.1) (2021-09-09)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
+
 ## [4.6.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-vconventional-changelog-conventionalcommits@4.5.0...conventional-changelog-conventionalcommits-v4.6.0) (2021-04-30)
 
 
