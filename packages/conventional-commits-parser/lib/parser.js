@@ -1,9 +1,12 @@
 'use strict'
-const trimOffNewlines = require('trim-off-newlines')
 const _ = require('lodash')
 
 const CATCH_ALL = /()(.+)/gi
 const SCISSOR = '# ------------------------ >8 ------------------------'
+
+function trimOffNewlines (input) {
+  return input.replace(/^(?:\r|\n)+|(?:\r|\n)+$/g, '')
+}
 
 function append (src, line) {
   if (src) {
