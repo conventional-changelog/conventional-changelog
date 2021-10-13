@@ -4,7 +4,8 @@
   "description": "Configuration preset loader for `conventional-changelog`.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog",
+    "directory": "packages/conventional-changelog-preset-loader"
   },
   "keywords": [
     "conventional-changelog",
