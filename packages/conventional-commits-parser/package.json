@@ -37,7 +37,7 @@
     "JSONStream": "^1.0.4",
     "lodash": "^4.17.15",
     "meow": "^8.0.0",
-    "split2": "^3.0.0",
+    "split2": "^4.0.0",
     "through2": "^4.0.0"
   },
   "scripts": {
