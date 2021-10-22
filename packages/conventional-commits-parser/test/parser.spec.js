@@ -99,6 +99,14 @@ describe('parser', function () {
     }).to.throw('Expected regex')
   })
 
+  it('should not be subject to ReDos', function () {
+    expect(parser(
+      'b' + '\r\n'.repeat(1000000) + 'b',
+      options,
+      reg
+    ))
+  })
+
   it('should trim extra newlines', function () {
     expect(parser(
       '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
