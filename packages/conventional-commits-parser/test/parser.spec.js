@@ -100,6 +100,7 @@ describe('parser', function () {
   })
 
   it('should not be subject to ReDos', function () {
+    // This test will timeout if the bug is present.
     expect(parser(
       'b' + '\r\n'.repeat(1000000) + 'b',
       options,
