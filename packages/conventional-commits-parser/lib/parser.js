@@ -5,7 +5,16 @@ const CATCH_ALL = /()(.+)/gi
 const SCISSOR = '# ------------------------ >8 ------------------------'
 
 function trimOffNewlines (input) {
-  return input.replace(/^(?:\r|\n)+|(?:\r|\n)+$/g, '')
+  const result = input.match(/[^\r\n]/)
+  if (!result) {
+    return ''
+  }
+  const firstIndex = result.index
+  let lastIndex = input.length - 1
+  while (input[lastIndex] === '\r' || input[lastIndex] === '\n') {
+    lastIndex--
+  }
+  return input.substring(firstIndex, lastIndex + 1)
 }
 
 function append (src, line) {
