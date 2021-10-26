@@ -195,9 +195,19 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
       if (tagsObj.state === 'fulfilled') {
         gitSemverTags = context.gitSemverTags = tagsObj.value
         fromTag = gitSemverTags[options.releaseCount - 1]
-        const lastTag = gitSemverTags[0]
 
-        if (lastTag === context.version || lastTag === 'v' + context.version) {
+        const lastTag = gitSemverTags[0]
+        let compareTagTo
+
+        if (options.lernaPackage) {
+          compareTagTo = options.lernaPackage + '@' + context.version
+        } else if (options.tagPrefix) {
+          compareTagTo = options.tagPrefix + context.version
+        } else {
+          compareTagTo = 'v' + context.version
+        }
+
+        if (lastTag === context.version || lastTag === compareTagTo) {
           if (options.outputUnreleased) {
             context.version = 'Unreleased'
           } else {
