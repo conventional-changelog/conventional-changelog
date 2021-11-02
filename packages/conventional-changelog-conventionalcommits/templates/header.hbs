@@ -1,8 +1,6 @@
-{{#if isPatch~}}
-  ###
-{{~else~}}
-  ##
-{{~/if}} {{#if @root.linkCompare~}}
+## {{#if isPatch~}}
+<small>
+{{~/if}}{{#if @root.linkCompare~}}
   [{{version}}]({{compareUrlFormat}})
 {{~else}}
   {{~version}}
@@ -10,4 +8,6 @@
 {{~#if title}} "{{title}}"
 {{~/if}}
 {{~#if date}} ({{date}})
+{{~/if}}{{#if isPatch~}}
+  </small>
 {{/if}}
