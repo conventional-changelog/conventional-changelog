@@ -1,9 +1,21 @@
 'use strict'
-const trimOffNewlines = require('trim-off-newlines')
 const _ = require('lodash')
 
 const CATCH_ALL = /()(.+)/gi
 const SCISSOR = '# ------------------------ >8 ------------------------'
+
+function trimOffNewlines (input) {
+  const result = input.match(/[^\r\n]/)
+  if (!result) {
+    return ''
+  }
+  const firstIndex = result.index
+  let lastIndex = input.length - 1
+  while (input[lastIndex] === '\r' || input[lastIndex] === '\n') {
+    lastIndex--
+  }
+  return input.substring(firstIndex, lastIndex + 1)
+}
 
 function append (src, line) {
   if (src) {
@@ -147,8 +159,11 @@ function parser (raw, options, regex) {
     merge = mergeMatch[0]
 
     header = lines.shift()
-    while (!header.trim()) {
+    while (header !== undefined && !header.trim()) {
       header = lines.shift()
+    }
+    if (!header) {
+      header = ''
     }
 
     _.forEach(mergeCorrespondence, function (partName, index) {
