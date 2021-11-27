@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.0.13](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-vconventional-changelog-angular@5.0.12...conventional-changelog-angular-v5.0.13) (2021-09-09)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
+
 ## [5.0.12](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.11...conventional-changelog-angular@5.0.12) (2020-11-05)
 
 **Note:** Version bump only for package conventional-changelog-angular

@@ -80,6 +80,12 @@ betterThanBefore.setups([
   function () {
     gitDummyCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
     gitDummyCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
+  },
+  function () {
+    gitDummyCommit([
+      'chore: release at different version',
+      'Release-As: v3.0.2'
+    ])
   }
 ])
 
@@ -590,6 +596,21 @@ describe('conventionalcommits.org preset', function () {
         chunk = chunk.toString()
         expect(chunk).to.match(/custom revert format/)
         expect(chunk).to.match(/default revert format/)
+        done()
+      }))
+  })
+  it('should include commits with "Release-As:" footer in CHANGELOG', function (done) {
+    preparing(11)
+
+    conventionalChangelogCore({
+      config: preset
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        expect(chunk).to.match(/release at different version/)
         done()
       }))
   })
