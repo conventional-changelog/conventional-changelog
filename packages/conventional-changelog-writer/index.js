@@ -19,7 +19,7 @@ function conventionalChangelogWriterInit (context, options) {
     context.linkReferences = true
   }
 
-  options = Object.assign({
+  options = {
     groupBy: 'type',
     commitsSort: 'header',
     noteGroupsSort: 'title',
@@ -38,11 +38,12 @@ function conventionalChangelogWriterInit (context, options) {
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
-    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
-  }, options)
+    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8'),
+    ...options
+  }
 
   if ((!_.isFunction(options.transform) && _.isObject(options.transform)) || _.isUndefined(options.transform)) {
-    options.transform = Object.assign({
+    options.transform = {
       hash: function (hash) {
         if (_.isString(hash)) {
           return hash.substring(0, 7)
@@ -57,8 +58,9 @@ function conventionalChangelogWriterInit (context, options) {
         }
 
         return dateFormat(date, 'yyyy-mm-dd', true)
-      }
-    }, options.transform)
+      },
+      ...options.transform
+    }
   }
 
   let generateOn = options.generateOn

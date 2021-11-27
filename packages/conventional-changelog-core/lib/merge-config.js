@@ -132,7 +132,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         config = {}
       }
 
-      context = Object.assign(context, config.context)
+      context = { ...context, ...config.context }
 
       if (options.pkg) {
         if (pkgObj.state === 'fulfilled') {
@@ -221,10 +221,11 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         if (type) {
           hostOpts = require('../hosts/' + type)
 
-          context = Object.assign({
+          context = {
             issue: hostOpts.issue,
-            commit: hostOpts.commit
-          }, context)
+            commit: hostOpts.commit,
+            ...context
+          }
         } else {
           options.warn('Host: "' + context.host + '" does not exist')
           hostOpts = {}
@@ -237,15 +238,14 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         fromTag = null
       }
 
-      gitRawCommitsOpts = Object.assign({
+      gitRawCommitsOpts = {
         format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
         from: fromTag,
         merges: false,
-        debug: options.debug
-      },
-      config.gitRawCommitsOpts,
-      gitRawCommitsOpts
-      )
+        debug: options.debug,
+        ...config.gitRawCommitsOpts,
+        ...gitRawCommitsOpts
+      }
 
       if (options.append) {
         gitRawCommitsOpts.reverse = gitRawCommitsOpts.reverse || true
@@ -265,7 +265,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         parserOpts.issuePrefixes = hostOpts.issuePrefixes
       }
 
-      writerOpts = Object.assign({
+      writerOpts = {
         finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
           const firstCommit = originalCommits[0]
           const lastCommit = originalCommits[originalCommits.length - 1]
@@ -318,14 +318,12 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
           return context
         },
-        debug: options.debug
-      },
-      config.writerOpts, {
+        debug: options.debug,
+        ...config.writerOpts,
         reverse: options.append,
-        doFlush: options.outputUnreleased
-      },
-      writerOpts
-      )
+        doFlush: options.outputUnreleased,
+        ...writerOpts
+      }
 
       return {
         options: options,
