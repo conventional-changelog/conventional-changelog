@@ -98,6 +98,15 @@ describe('parser', function () {
     }).to.throw('Expected regex')
   })
 
+  it('should not be subject to ReDos', function () {
+    // This test will timeout if the bug is present.
+    expect(parser(
+      'b' + '\r\n'.repeat(1000000) + 'b',
+      options,
+      reg
+    ))
+  })
+
   it('should trim extra newlines', function () {
     expect(parser(
       '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
@@ -507,6 +516,14 @@ describe('parser', function () {
       expect(msgWithmergeHeaderWithoutmergePattern.type).to.equal(null)
       expect(msgWithmergeHeaderWithoutmergePattern.scope).to.equal(null)
       expect(msgWithmergeHeaderWithoutmergePattern.subject).to.equal(null)
+    })
+
+    it('does not throw if merge commit has no header', () => {
+      parser(
+        'Merge branch \'feature\'',
+        mergeOptions,
+        mergeRegex
+      )
     })
   })
 
