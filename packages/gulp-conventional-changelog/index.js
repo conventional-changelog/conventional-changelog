@@ -8,10 +8,11 @@ const fancyLog = require('fancy-log')
 const through = require('through2')
 
 module.exports = function (opts, context, gitRawCommitsOpts, parserOpts, writerOpts) {
-  opts = Object.assign({
+  opts = {
     // TODO: remove this when gulp get's a real logger with levels
-    verbose: process.argv.indexOf('--verbose') !== -1
-  }, opts)
+    verbose: process.argv.indexOf('--verbose') !== -1,
+    ...opts
+  }
 
   if (opts.verbose) {
     opts.debug = fancyLog
