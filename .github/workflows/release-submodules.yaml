@@ -44,7 +44,7 @@ jobs:
       matrix:
         package: ${{fromJson(needs.changeFinder.outputs.nodePaths)}}
     steps:
-      - uses: google-github-actions/release-please-action@1f461f4ce9942f0541c795b0562ae01bb9c49d4c
+      - uses: google-github-actions/release-please-action@v2
         id: release-please
         with:
            path: packages/${{ matrix.package }}
@@ -61,7 +61,7 @@ jobs:
       matrix:
         package: ${{fromJson(needs.changeFinder.outputs.nodePaths)}}
     steps:
-      - uses: GoogleCloudPlatform/release-please-action@1f461f4ce9942f0541c795b0562ae01bb9c49d4c
+      - uses: GoogleCloudPlatform/release-please-action@v2
         id: tag-release
         with:
           path: packages/${{ matrix.package }}
