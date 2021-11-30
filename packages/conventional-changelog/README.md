@@ -42,7 +42,7 @@ See the [conventional-changelog-core](https://github.com/conventional-changelog/
 
 ##### preset
 
-Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'ember', 'eslint', 'express', 'jquery', 'jscs', 'jshint'`
+Type: `string` Possible values: `'angular', 'atom', 'codemirror', 'conventionalcommits', 'ember', 'eslint', 'express', 'jquery', 'jshint'`
 
 It's recommended to use a preset so you don't have to define everything yourself. Presets are names of built-in `config`.
 
