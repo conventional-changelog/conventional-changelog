@@ -20,7 +20,7 @@ const config = require('conventional-changelog-conventionalcommits')
 
 module.exports = config({
     "issuePrefixes": ["TEST-"],
-    "issueUrlFormat": "myBugTracker.com/{prefix}{id}"
+    "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
 })
 ```
 
@@ -31,7 +31,7 @@ or json config like that:
         "preset": {
             "name": "conventionalchangelog",
             "issuePrefixes": ["TEST-"],
-            "issueUrlFormat": "myBugTracker.com/{prefix}{id}"
+            "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
         }
     }
 }
