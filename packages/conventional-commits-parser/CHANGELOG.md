@@ -37,6 +37,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### [3.2.3](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.2...conventional-commits-parser-v3.2.3) (2021-10-23)
+
+
+### Bug Fixes
+
+* address ReDoS issue ([#861](https://www.github.com/conventional-changelog/conventional-changelog/issues/861)) ([c696fa3](https://www.github.com/conventional-changelog/conventional-changelog/commit/c696fa35f93e0ee13728d6cf1221587ac6386311))
+
 ### [3.2.2](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.1...conventional-commits-parser-v3.2.2) (2021-09-09)
 
 
