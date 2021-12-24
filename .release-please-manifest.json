@@ -1,3 +1,4 @@
 {
-  "packages/conventional-changelog-cli":"2.1.1"
+  "packages/conventional-changelog-cli": "2.1.1",
+  "packages/conventional-changelog": "3.1.25"
 }
