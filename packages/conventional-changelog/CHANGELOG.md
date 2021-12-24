@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v3.1.25...conventional-changelog-v4.0.0) (2021-12-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Node 8 (#599)
+* drop support for Node 6 (#558)
+* forcing a breaking semver change based on https://github.com/conventional-changelog/conventional-changelog/pull/385
+* **package:** 
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe347d8c008c6ba3361e2f6357274537a77))
+* creating highly configurable preset, based on conventionalcommits.org ([#421](https://github.com/conventional-changelog/conventional-changelog/issues/421)) ([f2fb240](https://github.com/conventional-changelog/conventional-changelog/commit/f2fb240391e10c79756a590eb6aea1e235ccb0a2))
+* migrate repo to lerna mono-repo ([793e823](https://github.com/conventional-changelog/conventional-changelog/commit/793e8235c961dd509cc63dccadaeb7cb956da6f9))
+
+
+### Bug Fixes
+
+* **conventional-changelog:** support scoped presets ([0f08267](https://github.com/conventional-changelog/conventional-changelog/commit/0f08267a09f3406d5c51d9a5e207535db6b72736))
+* **docs:** update list of available presets ([#871](https://github.com/conventional-changelog/conventional-changelog/issues/871)) ([2799851](https://github.com/conventional-changelog/conventional-changelog/commit/2799851f1915a42cb8498cf8959875badd07fd32))
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef2828e34132020845cc6db23077c2c9c8dc1c))
+
+
+### Code Refactoring
+
+* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558)) ([fd80738](https://github.com/conventional-changelog/conventional-changelog/commit/fd80738a46760753a61cb6929bd899ada1ab1e04))
+
+
+### Miscellaneous Chores
+
+* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599)) ([b9f5057](https://github.com/conventional-changelog/conventional-changelog/commit/b9f50573f292ea29ff51627646ca7825bf182d52))
+* force breaking change ([f6d506d](https://github.com/conventional-changelog/conventional-changelog/commit/f6d506de038a6a86a1915f85e7cef79a277af2b6))
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0491bc7d7eef77d790cc65b86fe5070f1b))
+
 ### [3.1.25](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v3.1.24...conventional-changelog-v3.1.25) (2021-12-24)
 
 
