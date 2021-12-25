@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0 (2021-12-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Node 8 (#599)
+* drop support for Node 6 (#558)
+* **package:** 
+
+### Features
+
+* conventionalcommits preset, preMajor config option ([#434](https://github.com/conventional-changelog/conventional-changelog/issues/434)) ([dde12fe](https://github.com/conventional-changelog/conventional-changelog/commit/dde12fe347d8c008c6ba3361e2f6357274537a77))
+* **preset-loader:** allow use of absolute package path ([#530](https://github.com/conventional-changelog/conventional-changelog/issues/530)) ([84d28b2](https://github.com/conventional-changelog/conventional-changelog/commit/84d28b285f787e9b1252aadf55f07a358635a5a6))
+* **preset-loader:** allow use of full package names ([#481](https://github.com/conventional-changelog/conventional-changelog/issues/481)) ([03cb95c](https://github.com/conventional-changelog/conventional-changelog/commit/03cb95cb92aed56b2cca995f1c7ead9fbe6a08d7))
+* **preset-loader:** new package for loading preset packages ([6f5cb10](https://github.com/conventional-changelog/conventional-changelog/commit/6f5cb102834cf0d726b962ea2ccace8c96f864d7))
+
+
+### Bug Fixes
+
+* **preset-loader:** don't namespace exported function ([#278](https://github.com/conventional-changelog/conventional-changelog/issues/278)) ([89880cb](https://github.com/conventional-changelog/conventional-changelog/commit/89880cb3a7aa15c8835e9198aad2b6a4bafc50a3))
+* **preset-loader:** fix handling conventionalcommits preset without config object ([6425972](https://github.com/conventional-changelog/conventional-changelog/commit/64259723085eaa21a281391acb9fc0704319c8b3)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef2828e34132020845cc6db23077c2c9c8dc1c))
+
+
+### Reverts
+
+* "fix(preset-loader): fix handling conventionalcommits preset without config object" ([#520](https://github.com/conventional-changelog/conventional-changelog/issues/520)) ([417139c](https://github.com/conventional-changelog/conventional-changelog/commit/417139cbdae13d76ba325a8505534419325102a6))
+
+
+### Code Refactoring
+
+* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558)) ([fd80738](https://github.com/conventional-changelog/conventional-changelog/commit/fd80738a46760753a61cb6929bd899ada1ab1e04))
+
+
+### Miscellaneous Chores
+
+* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599)) ([b9f5057](https://github.com/conventional-changelog/conventional-changelog/commit/b9f50573f292ea29ff51627646ca7825bf182d52))
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0491bc7d7eef77d790cc65b86fe5070f1b))
+
 ## [2.3.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader@2.3.0...conventional-changelog-preset-loader@2.3.4) (2020-05-08)
 
 **Note:** Version bump only for package conventional-changelog-preset-loader
