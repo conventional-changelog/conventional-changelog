@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v2.2.2...conventional-changelog-cli-v3.0.0) (2021-12-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Node 8 (#599)
+* drop support for Node 6 (#558)
+* **package:** 
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+* migrate core conventional-changelog packages to lerna monorep. ([1be7d66](https://github.com/conventional-changelog/conventional-changelog/commit/1be7d6670aca2bb5e642bee266edc0dfc6ab4f17))
+* migrate repo to lerna mono-repo ([793e823](https://github.com/conventional-changelog/conventional-changelog/commit/793e8235c961dd509cc63dccadaeb7cb956da6f9))
+* the conventional-changelog ecosystem has been converted into a monorepo ([1be7d66](https://github.com/conventional-changelog/conventional-changelog/commit/1be7d6670aca2bb5e642bee266edc0dfc6ab4f17))
+* update CLI tools to support lerna tags ([#175](https://github.com/conventional-changelog/conventional-changelog/issues/175)) ([1fc5612](https://github.com/conventional-changelog/conventional-changelog/commit/1fc561217d79978b9d0248612b75e87c4b4a2d0b))
+
+
+### Bug Fixes
+
+* add missing context flag ([#361](https://github.com/conventional-changelog/conventional-changelog/issues/361)) ([0cf43f4](https://github.com/conventional-changelog/conventional-changelog/commit/0cf43f448ee191b91df23e9e84bf5ed951dcf2b5)), closes [#355](https://github.com/conventional-changelog/conventional-changelog/issues/355)
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+* **cli.js:** fix issue where standard conventional-changelog options are not passed into options object ([#380](https://github.com/conventional-changelog/conventional-changelog/issues/380)) ([86ae571](https://github.com/conventional-changelog/conventional-changelog/commit/86ae571027a23de4325499b1eab0ad9d26429ea3))
+* **cli:** pass `--tag-prefix` option to core ([#345](https://github.com/conventional-changelog/conventional-changelog/issues/345)) ([2151fce](https://github.com/conventional-changelog/conventional-changelog/commit/2151fcef808f32ec0536ae87edad3c000e1a5af5))
+* **cli:** set options.config to loaded custom config for processing ([3d8b243](https://github.com/conventional-changelog/conventional-changelog/commit/3d8b2438e51f0aa7bf8d3c5eb975e3aa643b50cf)), closes [#227](https://github.com/conventional-changelog/conventional-changelog/issues/227)
+* **deps, cli:** bumps (minor + patch) lodash in conventional-changelog-cli ([#501](https://github.com/conventional-changelog/conventional-changelog/issues/501)) ([50212e6](https://github.com/conventional-changelog/conventional-changelog/commit/50212e623af3e9326d0234f40fa090b9150b8636)), closes [#486](https://github.com/conventional-changelog/conventional-changelog/issues/486)
+* **deps:** address CVE in meow ([#642](https://github.com/conventional-changelog/conventional-changelog/issues/642)) ([46311d2](https://github.com/conventional-changelog/conventional-changelog/commit/46311d2932b367f370d06c4e447b8dcf4bc4e83f))
+* **deps:** update dependency tempfile to v3 ([#459](https://github.com/conventional-changelog/conventional-changelog/issues/459)) ([c0bac28](https://github.com/conventional-changelog/conventional-changelog/commit/c0bac28c45dd4d1516330b83d12f16f6ad88664b))
+* **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+* **docs:** update list of available presets ([#871](https://github.com/conventional-changelog/conventional-changelog/issues/871)) ([2799851](https://github.com/conventional-changelog/conventional-changelog/commit/2799851f1915a42cb8498cf8959875badd07fd32))
+* **preset-loader:** fix handling conventionalcommits preset without config object ([6425972](https://github.com/conventional-changelog/conventional-changelog/commit/64259723085eaa21a281391acb9fc0704319c8b3)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+* **preset, conventionalcommits:** fix handling conventionalcommits preset without config object ([c0566ce](https://github.com/conventional-changelog/conventional-changelog/commit/c0566ce05c03c6274d6efcb01a2eff42e660a9bc)), closes [#512](https://github.com/conventional-changelog/conventional-changelog/issues/512)
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef2828e34132020845cc6db23077c2c9c8dc1c))
+
+
+### Reverts
+
+* "fix(preset-loader): fix handling conventionalcommits preset without config object" ([#520](https://github.com/conventional-changelog/conventional-changelog/issues/520)) ([417139c](https://github.com/conventional-changelog/conventional-changelog/commit/417139cbdae13d76ba325a8505534419325102a6))
+
+
+### Code Refactoring
+
+* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558)) ([fd80738](https://github.com/conventional-changelog/conventional-changelog/commit/fd80738a46760753a61cb6929bd899ada1ab1e04))
+
+
+### Miscellaneous Chores
+
+* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599)) ([b9f5057](https://github.com/conventional-changelog/conventional-changelog/commit/b9f50573f292ea29ff51627646ca7825bf182d52))
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0491bc7d7eef77d790cc65b86fe5070f1b))
+
 ### [2.2.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v2.2.1...conventional-changelog-cli-v2.2.2) (2021-12-24)
 
 
