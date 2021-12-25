@@ -3,6 +3,7 @@
   "bump-patch-for-minor-pre-major": true,
   "bootstrap-sha": "840d139c40a2c4e773794d794c34bc4dbfde27c2",
   "packages": {
-    "packages/conventional-changelog-cli": { "release-as": "" }
+    "packages/conventional-changelog-cli": { "release-as": "" },
+    "packages/conventional-changelog": { "release-as": "" }
   }
 }
