@@ -71,14 +71,14 @@ jobs:
           package-name: ${{ matrix.package }}
           command: github-release
       - uses: actions/checkout@v2
-        if: ${{ steps.tag-release.outputs.release_created }}
+        if: ${{ steps.tag-release.outputs.releases_created }}
       - uses: actions/setup-node@v1
-        if: ${{ steps.tag-release.outputs.release_created }}
+        if: ${{ steps.tag-release.outputs.releases_created }}
         with:
           node-version: 14
           registry-url: 'https://external-dot-oss-automation.appspot.com/'
       - name: publish
-        if: ${{ steps.tag-release.outputs.release_created }}
+        if: ${{ steps.tag-release.outputs.releases_created }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
