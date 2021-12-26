@@ -695,7 +695,7 @@ describe('parser', function () {
           '\n' +
           'Fixes #7315\n' +
           '\n' +
-          '* BREAKING-CHANGE:\n' +
+          '* BREAKING CHANGE:\n' +
           '\n' +
           text,
         options,
