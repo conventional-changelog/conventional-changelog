@@ -20,7 +20,7 @@ describe('regex', function () {
 
     it('should match notes with customized pattern', function () {
       const reNotes = regex({
-        noteKeywords: ['BREAKING CHANGE'],
+        noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE'],
         notesPattern: (noteKeywords) => new RegExp('^[\\s|*]*(' + noteKeywords + ')[:\\s]+(?:\\[.*\\] )(.*)', 'i')
       }).notes
       const notes = 'BREAKING CHANGE: [Do not match this prefix.] This is so important.'
@@ -62,7 +62,7 @@ describe('regex', function () {
 
     it('should not match if there is text after `noteKeywords`', function () {
       const reNotes = regex({
-        noteKeywords: [' BREAKING CHANGE'],
+        noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE'],
         issuePrefixes: ['#']
       }).notes
       const match = 'BREAKING CHANGES: Wow.'.match(reNotes)
