@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v5.0.0...conventional-changelog-writer-v5.0.1) (2021-12-29)
+
+
+### Bug Fixes
+
+* **deps:** patch the handlebars package for CVE-2021-23369 ([1cfc3a1](https://github.com/conventional-changelog/conventional-changelog/commit/1cfc3a1600a11a61d1a9e8d3051d1101cfaa36f1))
+
 ## [5.0.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/v4.1.0...v5.0.0) (2020-12-30)
 
 
