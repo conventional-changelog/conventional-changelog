@@ -30,6 +30,7 @@ You can also use one of the plugins if you are already using the tool:
 - [gulp](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/gulp-conventional-changelog)
 - [atom](https://github.com/conventional-changelog/atom-conventional-changelog)
 - [vscode](https://github.com/axetroy/vscode-changelog-generator)
+- [emacs](https://github.com/liuyinz/emacs-conventional-changelog)
 
 ## Modules Important to Conventional Changelog Ecosystem
 
