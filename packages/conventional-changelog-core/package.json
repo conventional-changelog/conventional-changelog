@@ -29,7 +29,7 @@
     "add-stream": "^1.0.0",
     "conventional-changelog-writer": "^5.0.0",
     "conventional-commits-parser": "^3.2.0",
-    "dateformat": "^3.0.0",
+    "dateformat": "^5.0.0",
     "get-pkg-repo": "^4.0.0",
     "git-raw-commits": "^2.0.8",
     "git-remote-origin-url": "^2.0.0",

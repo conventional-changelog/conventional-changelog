@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "conventional-commits-filter": "^2.0.7",
-    "dateformat": "^3.0.0",
+    "dateformat": "^5.0.0",
     "handlebars": "^4.7.6",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.15",
