@@ -201,7 +201,8 @@ Used to define if `issuePrefixes` should be considered case sensitive.
 
 ##### noteKeywords
 
-Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
+Type: `array` of `string` or `string` Default: `['BREAKING CHANGE',
+'BREAKING-CHANGE']`
 
 Keywords for important notes. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
