@@ -36,23 +36,6 @@ jobs:
               }
               nodePaths = Array.from(nodePaths);
               console.log(`::set-output name=nodePaths::${JSON.stringify(nodePaths)}`);
-  release-pr:
-    runs-on: ubuntu-latest
-    needs: changeFinder
-    strategy:
-      fail-fast: false
-      matrix:
-        package: ${{fromJson(needs.changeFinder.outputs.nodePaths)}}
-    steps:
-      - uses: google-github-actions/release-please-action@bfd488a47b78a5ba7b51dda30bbd261b4059162b
-        id: release-please
-        with:
-           path: packages/${{ matrix.package }}
-           token: ${{ secrets.GITHUB_TOKEN }}
-           release-type: node
-           package-name: ${{ matrix.package }}
-           monorepo-tags: true
-           command: release-pr
   release-please-release:
     runs-on: ubuntu-latest
     needs: changeFinder
@@ -61,7 +44,7 @@ jobs:
       matrix:
         package: ${{fromJson(needs.changeFinder.outputs.nodePaths)}}
     steps:
-      - uses: GoogleCloudPlatform/release-please-action@bfd488a47b78a5ba7b51dda30bbd261b4059162b
+      - uses: GoogleCloudPlatform/release-please-action@6acfa0afca392146443eb180415b2ed741bb7d82
         id: tag-release
         with:
           path: packages/${{ matrix.package }}
@@ -85,3 +68,22 @@ jobs:
           cd packages/${{ matrix.package }}
           npm install
           npm publish --access=public
+  release-pr:
+    runs-on: ubuntu-latest
+    needs:
+      - changeFinder
+      - release-please-release
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{fromJson(needs.changeFinder.outputs.nodePaths)}}
+    steps:
+      - uses: google-github-actions/release-please-action@6acfa0afca392146443eb180415b2ed741bb7d82
+        id: release-please
+        with:
+           path: packages/${{ matrix.package }}
+           token: ${{ secrets.GITHUB_TOKEN }}
+           release-type: node
+           package-name: ${{ matrix.package }}
+           monorepo-tags: true
+           command: release-pr
