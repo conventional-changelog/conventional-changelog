@@ -9,6 +9,7 @@ const shell = require('shelljs')
 const through = require('through2')
 const writeFileSync = require('fs').writeFileSync
 const mkdirp = require('mkdirp')
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 describe('git-raw-commits', function () {
   before(function () {
@@ -191,5 +192,38 @@ describe('git-raw-commits', function () {
         expect(i).to.equal(3)
         done()
       }))
+  })
+
+  it('should allow commits to be scoped to a specific directory and specific date range', function (done) {
+    let i = 0
+
+    // Since milliseconds are ignored(https://git-scm.com/docs/git-commit#Documentation/git-commit.txt-ISO8601),
+    // A one-second delay ensures that new commits are filtered(https://www.git-scm.com/docs/git-log#Documentation/git-log.txt---sinceltdategt)
+    delay(1000)
+      .then(_ => {
+        const now = new Date().toISOString()
+        writeFileSync('./packages/foo/test1', 'hello')
+        shell.exec('git add --all && git commit -m"Fourth commit"')
+        writeFileSync('test2', 'hello')
+        shell.exec('git add --all && git commit -m"Fifth commit"')
+
+        gitRawCommits({
+          path: './packages/foo',
+          since: now
+        })
+          .pipe(through(function (chunk, enc, cb) {
+            chunk = chunk.toString()
+
+            if (i === 0) {
+              expect(chunk).to.equal('Fourth commit\n\n')
+            }
+
+            i++
+            cb()
+          }, function () {
+            expect(i).to.equal(1)
+            done()
+          }))
+      })
   })
 })

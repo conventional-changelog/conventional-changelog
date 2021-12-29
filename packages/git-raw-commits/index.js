@@ -28,6 +28,9 @@ function getGitArgs (gitOpts) {
   const gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..')
 
   const gitArgs = ['log', gitFormat, gitFromTo]
+    .concat(dargs(gitOpts, {
+      excludes: ['debug', 'from', 'to', 'format', 'path']
+    }))
 
   // allow commits to focus on a single directory
   // this is useful for monorepos.
@@ -35,9 +38,7 @@ function getGitArgs (gitOpts) {
     gitArgs.push('--', gitOpts.path)
   }
 
-  return gitArgs.concat(dargs(gitOpts, {
-    excludes: ['debug', 'from', 'to', 'format', 'path']
-  }))
+  return gitArgs
 }
 
 function gitRawCommits (rawGitOpts, rawExecOpts) {
