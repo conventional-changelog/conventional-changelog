@@ -50,7 +50,7 @@
     "concat-stream": "^2.0.0",
     "conventional-changelog-core": "file://./packages/conventional-changelog-core",
     "coveralls": "^3.0.2",
-    "eslint": "^7.0.0",
+    "eslint": "^8.0.0",
     "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^11.1.0",
