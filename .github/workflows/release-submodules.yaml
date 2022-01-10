@@ -55,7 +55,7 @@ jobs:
           command: github-release
       - uses: actions/checkout@v2
         if: ${{ steps.tag-release.outputs.releases_created }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         if: ${{ steps.tag-release.outputs.releases_created }}
         with:
           node-version: 14
