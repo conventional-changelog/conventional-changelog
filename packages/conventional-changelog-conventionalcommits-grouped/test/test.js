@@ -102,24 +102,39 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
 
-        expect(chunk).to.include('first build setup')
-        expect(chunk).to.include('**travis:** add TravisCI pipeline')
+        // Breaking Change summary
         expect(chunk).to.include('**travis:** Continuously integrated.')
-        expect(chunk).to.include('amazing new module')
-        expect(chunk).to.include('**compile:** avoid a bug')
-        expect(chunk).to.include('make it faster')
-        expect(chunk).to.include(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
-        expect(chunk).to.include('New build system.')
-        expect(chunk).to.include('Not backward compatible.')
         expect(chunk).to.include('**compile:** The Change is huge.')
-        expect(chunk).to.include('Build System')
-        expect(chunk).to.include('Continuous Integration')
-        expect(chunk).to.include('Features')
-        expect(chunk).to.include('Bug Fixes')
-        expect(chunk).to.include('Performance Improvements')
-        expect(chunk).to.include('Reverts')
-        expect(chunk).to.include('bad commit')
+        expect(chunk).to.include('* New build system.')
+        expect(chunk).to.include('* Not backward compatible.')
         expect(chunk).to.include('BREAKING CHANGE')
+
+        // Other Types summary
+        expect(chunk).to.include('### Features')
+        expect(chunk).to.include('#### awesome')
+        expect(chunk).to.include('* amazing new module')
+
+        expect(chunk).to.include('### Bug Fixes')
+        expect(chunk).to.include('#### compile')
+        expect(chunk).to.include('* avoid a bug')
+        expect(chunk).to.include('#### changelog')
+        expect(chunk).to.include('* proper issue links')
+
+        expect(chunk).to.include('### Performance Improvements')
+        expect(chunk).to.include('#### ngOptions')
+        expect(chunk).to.include('* make it faster')
+        expect(chunk).to.include(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
+
+        expect(chunk).to.include('### Reverts')
+        expect(chunk).to.include('#### ngOptions')
+        expect(chunk).to.include('* bad commit')
+
+        expect(chunk).to.include('### Build System')
+        expect(chunk).to.include('* first build setup')
+
+        expect(chunk).to.include('### Continuous Integration')
+        expect(chunk).to.include('#### travis')
+        expect(chunk).to.include('* add TravisCI pipeline')
 
         expect(chunk).to.not.include('ci')
         expect(chunk).to.not.include('feat')
@@ -170,12 +185,23 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
 
-        expect(chunk).to.include('first build setup')
-        expect(chunk).to.include('**travis:** add TravisCI pipeline')
+        // Breaking Changes Summary
         expect(chunk).to.include('**travis:** Continuously integrated.')
+
+        // Other Types summary
+        expect(chunk).to.include('### build')
+        expect(chunk).to.include('first build setup')
+
+        expect(chunk).to.include('### ci')
+        expect(chunk).to.include('#### travis')
+        expect(chunk).to.include('* add TravisCI pipeline')
+
+        expect(chunk).to.include('### Feat')
         expect(chunk).to.include('amazing new module')
-        expect(chunk).to.include('**compile:** avoid a bug')
-        expect(chunk).to.include('Feat')
+
+        expect(chunk).to.include('### Fix')
+        expect(chunk).to.include('#### compile')
+        expect(chunk).to.include('* avoid a bug')
 
         expect(chunk).to.not.include('make it faster')
         expect(chunk).to.not.include('Reverts')
@@ -199,7 +225,8 @@ describe('conventionalcommits.org preset', function () {
         chunk = chunk.toString()
 
         expect(chunk).to.include('### Dependencies')
-        expect(chunk).to.include('**deps:** upgrade example from 1 to 2')
+        expect(chunk).to.include('#### deps')
+        expect(chunk).to.include('* upgrade example from 1 to 2')
 
         expect(chunk).to.not.include('release 0.0.0')
         done()

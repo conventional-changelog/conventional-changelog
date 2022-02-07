@@ -154,7 +154,7 @@ function getWriterOpts (config) {
 
       return commit
     },
-    groupBy: 'type',
+    groupBy: ['type', 'scope'],
     // the groupings of commit messages, e.g., Features vs., Bug Fixes, are
     // sorted based on their probable importance:
     commitGroupsSort: (a, b) => {

@@ -11,13 +11,18 @@
 {{/each}}
 {{/if}}
 {{#each commitGroups}}
-
 {{#if title}}
-### {{title}}
 
+### {{title}}
 {{/if}}
 {{#each commits}}
+{{#if this.title}}
+
+#### {{this.title}}
+{{/if}}
+
+{{#each this.commits}}
 {{> commit root=@root}}
 {{/each}}
-
+{{/each}}
 {{/each}}
