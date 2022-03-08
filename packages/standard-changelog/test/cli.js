@@ -324,13 +324,13 @@ describe('standard-changelog cli', function () {
     it('include', function (done) {
       doGitFlow()
 
-      var cp = spawn(process.execPath, [cliPath, '-m', 'include', '--first-release'], {
+      const cp = spawn(process.execPath, [cliPath, '-m', 'include', '--first-release'], {
         stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
         expect(code).to.equal(0)
-        var modified = readFileSync('CHANGELOG.md', 'utf8')
+        const modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.include('First commit')
         expect(modified).to.include('[0.0.17]')
         expect(modified).to.include('Test commit')
@@ -343,13 +343,13 @@ describe('standard-changelog cli', function () {
     it('only-merges', function (done) {
       doGitFlow()
 
-      var cp = spawn(process.execPath, [cliPath, '-m', 'only-merges', '--first-release'], {
+      const cp = spawn(process.execPath, [cliPath, '-m', 'only-merges', '--first-release'], {
         stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
         expect(code).to.equal(0)
-        var modified = readFileSync('CHANGELOG.md', 'utf8')
+        const modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.not.include('First commit')
         expect(modified).to.not.include('[0.0.17]')
         expect(modified).to.include('Test commit')
@@ -362,13 +362,13 @@ describe('standard-changelog cli', function () {
     it('exclude', function (done) {
       doGitFlow()
 
-      var cp = spawn(process.execPath, [cliPath, '-m', 'exclude', '--first-release'], {
+      const cp = spawn(process.execPath, [cliPath, '-m', 'exclude', '--first-release'], {
         stdio: [process.stdin, null, null]
       })
 
       cp.on('close', function (code) {
         expect(code).to.equal(0)
-        var modified = readFileSync('CHANGELOG.md', 'utf8')
+        const modified = readFileSync('CHANGELOG.md', 'utf8')
         expect(modified).to.include('First commit')
         expect(modified).to.include('[0.0.17]')
         expect(modified).to.include('Test commit') // will still be added under the current date but not tag
