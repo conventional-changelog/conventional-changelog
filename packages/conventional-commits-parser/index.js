@@ -21,7 +21,7 @@ function assignOpts (options) {
       'resolved'
     ],
     issuePrefixes: ['#'],
-    noteKeywords: ['BREAKING CHANGE'],
+    noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE'],
     fieldPattern: /^-(.*?)-$/,
     revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./,
     revertCorrespondence: ['header', 'hash'],

@@ -688,7 +688,7 @@ describe('parser', function () {
       const text = expectedText +
           '\n' +
           'Closes #9462'
-      options.noteKeywords = ['BREAKING CHANGE']
+      options.noteKeywords = ['BREAKING CHANGE', 'BREAKING-CHANGE']
       reg = regex(options)
       const msg = parser(
         'fix(core): report duplicate template bindings in templates\n' +
@@ -710,7 +710,7 @@ describe('parser', function () {
     })
 
     it('should not treat it as important notes if there are texts after `noteKeywords`', function () {
-      options.noteKeywords = ['BREAKING CHANGE']
+      options.noteKeywords = ['BREAKING CHANGE', 'BREAKING-CHANGE']
       reg = regex(options)
       const msg = parser(
         'fix(core): report duplicate template bindings in templates\n' +
