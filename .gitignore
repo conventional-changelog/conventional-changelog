@@ -3,4 +3,9 @@
 **/node_modules/
 **/tmp/
 /lerna-debug.log
+package-lock.json
 
+# Editors
+.idea
+.vscode
+.DS_Store

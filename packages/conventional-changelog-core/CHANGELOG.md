@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [4.2.4](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v4.2.3...conventional-changelog-core-v4.2.4) (2021-09-09)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
+
+### [4.2.3](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v4.2.2...conventional-changelog-core-v4.2.3) (2021-07-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency conventional-changelog-writer to v5 ([#731](https://www.github.com/conventional-changelog/conventional-changelog/issues/731)) ([b5951fb](https://www.github.com/conventional-changelog/conventional-changelog/commit/b5951fb5c58ada8d480d17213703d717acb1cd42))
+* **deps:** update get-pkg-repo to ^4.0.0 ([#820](https://www.github.com/conventional-changelog/conventional-changelog/issues/820)) ([97bce29](https://www.github.com/conventional-changelog/conventional-changelog/commit/97bce29eda2494a05becd8b35bca851d36a4b403))
+
+### [4.2.2](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.2.1...v4.2.2) (2020-12-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency git-raw-commits to v2.0.8 ([#723](https://www.github.com/conventional-changelog/conventional-changelog/issues/723)) ([9682305](https://www.github.com/conventional-changelog/conventional-changelog/commit/968230536914a680237e830ccc8e125c56b0f0aa))
+
 ## [4.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core@4.2.0...conventional-changelog-core@4.2.1) (2020-11-05)
 
 

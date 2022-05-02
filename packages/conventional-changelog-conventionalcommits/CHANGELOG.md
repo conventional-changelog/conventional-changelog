@@ -25,6 +25,34 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### [4.6.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.2...conventional-changelog-conventionalcommits-v4.6.3) (2021-12-29)
+
+
+### Bug Fixes
+
+* support BREAKING-CHANGE alongside BREAKING CHANGE ([#882](https://github.com/conventional-changelog/conventional-changelog/issues/882)) ([e6f44ad](https://github.com/conventional-changelog/conventional-changelog/commit/e6f44adcf1ac5abbb85bdac73237c331c6594177))
+
+### [4.6.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.1...conventional-changelog-conventionalcommits-v4.6.2) (2021-12-24)
+
+
+### Bug Fixes
+
+* **docs:** template examples ([#866](https://github.com/conventional-changelog/conventional-changelog/issues/866)) ([5917ad2](https://github.com/conventional-changelog/conventional-changelog/commit/5917ad2bd95a83c2a047b2f5692c8e8e442a23f5))
+
+### [4.6.1](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.0...conventional-changelog-conventionalcommits-v4.6.1) (2021-09-09)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
+
+## [4.6.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-vconventional-changelog-conventionalcommits@4.5.0...conventional-changelog-conventionalcommits-v4.6.0) (2021-04-30)
+
+
+### Features
+
+* **conventionalcommits:** include Release-As commits in CHANGELOG ([#796](https://www.github.com/conventional-changelog/conventional-changelog/issues/796)) ([9a0b9a7](https://www.github.com/conventional-changelog/conventional-changelog/commit/9a0b9a7f7ba5edd68b3476de706672d82e42b9e0))
+
 ## [4.3.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.0...conventional-changelog-conventionalcommits@4.3.1) (2020-06-20)
 
 

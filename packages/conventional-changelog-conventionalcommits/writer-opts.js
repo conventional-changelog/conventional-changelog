@@ -5,6 +5,7 @@ const compareFunc = require('compare-func')
 const Q = require('q')
 const readFile = Q.denodeify(require('fs').readFile)
 const resolve = require('path').resolve
+const releaseAsRe = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 
 /**
  * Handlebar partials for various property substitutions based on commit context.
@@ -80,6 +81,13 @@ function getWriterOpts (config) {
       // for the special case, test(system)!: hello world, where there is
       // a '!' but no 'BREAKING CHANGE' in body:
       addBangNotes(commit)
+
+      // Add an entry in the CHANGELOG if special Release-As footer
+      // is used:
+      if ((commit.footer && releaseAsRe.test(commit.footer)) ||
+          (commit.body && releaseAsRe.test(commit.body))) {
+        discard = false
+      }
 
       commit.notes.forEach(note => {
         note.title = 'BREAKING CHANGES'

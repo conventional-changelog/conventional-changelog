@@ -99,6 +99,15 @@ describe('parser', function () {
     }).to.throw('Expected regex')
   })
 
+  it('should not be subject to ReDos', function () {
+    // This test will timeout if the bug is present.
+    expect(parser(
+      'b' + '\r\n'.repeat(1000000) + 'b',
+      options,
+      reg
+    ))
+  })
+
   it('should trim extra newlines', function () {
     expect(parser(
       '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n' +
@@ -509,6 +518,14 @@ describe('parser', function () {
       expect(msgWithmergeHeaderWithoutmergePattern.scope).to.equal(null)
       expect(msgWithmergeHeaderWithoutmergePattern.subject).to.equal(null)
     })
+
+    it('does not throw if merge commit has no header', () => {
+      parser(
+        'Merge branch \'feature\'',
+        mergeOptions,
+        mergeRegex
+      )
+    })
   })
 
   describe('header', function () {
@@ -671,7 +688,7 @@ describe('parser', function () {
       const text = expectedText +
           '\n' +
           'Closes #9462'
-      options.noteKeywords = ['BREAKING CHANGE']
+      options.noteKeywords = ['BREAKING CHANGE', 'BREAKING-CHANGE']
       reg = regex(options)
       const msg = parser(
         'fix(core): report duplicate template bindings in templates\n' +
@@ -693,7 +710,7 @@ describe('parser', function () {
     })
 
     it('should not treat it as important notes if there are texts after `noteKeywords`', function () {
-      options.noteKeywords = ['BREAKING CHANGE']
+      options.noteKeywords = ['BREAKING CHANGE', 'BREAKING-CHANGE']
       reg = regex(options)
       const msg = parser(
         'fix(core): report duplicate template bindings in templates\n' +

@@ -1,5 +1,4 @@
 'use strict'
-const compareFunc = require('compare-func')
 const conventionalCommitsFilter = require('conventional-commits-filter')
 const Handlebars = require('handlebars')
 const semver = require('semver')
@@ -38,9 +37,23 @@ function compileTemplates (templates) {
 
 function functionify (strOrArr) {
   if (strOrArr && !_.isFunction(strOrArr)) {
-    return compareFunc(strOrArr)
+    return (a, b) => {
+      let str1 = ''
+      let str2 = ''
+      if (Array.isArray(strOrArr)) {
+        for (const key of strOrArr) {
+          str1 += a[key] || ''
+          str2 += b[key] || ''
+        }
+      } else {
+        str1 += a[strOrArr]
+        str2 += b[strOrArr]
+      }
+      return str1.localeCompare(str2)
+    }
+  } else {
+    return strOrArr
   }
-  return strOrArr
 }
 
 function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {

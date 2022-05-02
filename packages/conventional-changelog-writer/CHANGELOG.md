@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v5.0.0...conventional-changelog-writer-v5.0.1) (2021-12-29)
+
+
+### Bug Fixes
+
+* **deps:** patch the handlebars package for CVE-2021-23369 ([1cfc3a1](https://github.com/conventional-changelog/conventional-changelog/commit/1cfc3a1600a11a61d1a9e8d3051d1101cfaa36f1))
+
+## [5.0.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/v4.1.0...v5.0.0) (2020-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* nested object properties no longer supported when sorting
+
+### Bug Fixes
+
+* drop compare-func making sort consistent across node versions ([#729](https://www.github.com/conventional-changelog/conventional-changelog/issues/729)) ([e0081a8](https://www.github.com/conventional-changelog/conventional-changelog/commit/e0081a829133891e2def4a7b7ee5fa25f1440049))
+
+## [4.1.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.18...v4.1.0) (2020-12-29)
+
+
+### Features
+
+* add helper for parsing array of commits ([#711](https://www.github.com/conventional-changelog/conventional-changelog/issues/711)) ([e869fe6](https://www.github.com/conventional-changelog/conventional-changelog/commit/e869fe67548b210508a9df0ce99180164b740e65))
+
 ## [4.0.18](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.17...conventional-changelog-writer@4.0.18) (2020-11-05)
 
 

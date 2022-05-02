@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-core",
-  "version": "4.2.1",
+  "version": "4.2.4",
   "description": "conventional-changelog core",
   "repository": {
     "type": "git",
@@ -27,22 +27,24 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
     "add-stream": "^1.0.0",
-    "conventional-changelog-writer": "file:../conventional-changelog-writer",
-    "conventional-commits-parser": "file:../conventional-commits-parser",
+    "conventional-changelog-writer": "^5.0.0",
+    "conventional-commits-parser": "^3.2.0",
     "dateformat": "^3.0.0",
-    "get-pkg-repo": "^1.0.0",
-    "git-raw-commits": "2.0.0",
+    "get-pkg-repo": "^4.0.0",
+    "git-raw-commits": "^2.0.8",
     "git-remote-origin-url": "^2.0.0",
-    "git-semver-tags": "file:../git-semver-tags",
+    "git-semver-tags": "^4.1.1",
     "lodash": "^4.17.15",
     "normalize-package-data": "^3.0.0",
     "q": "^1.5.1",
     "read-pkg": "^3.0.0",
     "read-pkg-up": "^3.0.0",
-    "shelljs": "^0.8.3",
     "through2": "^4.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
+  },
+  "devDependencies": {
+    "conventional-changelog-angular": "^5.0.12"
   }
 }

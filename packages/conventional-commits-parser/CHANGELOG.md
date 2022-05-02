@@ -37,6 +37,34 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### [3.2.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.3...conventional-commits-parser-v3.2.4) (2021-12-29)
+
+
+### Bug Fixes
+
+* support BREAKING-CHANGE alongside BREAKING CHANGE ([#882](https://github.com/conventional-changelog/conventional-changelog/issues/882)) ([e6f44ad](https://github.com/conventional-changelog/conventional-changelog/commit/e6f44adcf1ac5abbb85bdac73237c331c6594177))
+
+### [3.2.3](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.2...conventional-commits-parser-v3.2.3) (2021-10-23)
+
+
+### Bug Fixes
+
+* address ReDoS issue ([#861](https://www.github.com/conventional-changelog/conventional-changelog/issues/861)) ([c696fa3](https://www.github.com/conventional-changelog/conventional-changelog/commit/c696fa35f93e0ee13728d6cf1221587ac6386311))
+
+### [3.2.2](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.1...conventional-commits-parser-v3.2.2) (2021-09-09)
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
+
+### [3.2.1](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.2.0...v3.2.1) (2021-02-15)
+
+
+### Bug Fixes
+
+* handle missing header in merge commit ([#757](https://www.github.com/conventional-changelog/conventional-changelog/issues/757)) ([d189d3e](https://www.github.com/conventional-changelog/conventional-changelog/commit/d189d3e45b82e7141115ce8eccd95c8cf2d7db77))
+
 ## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.7...conventional-commits-parser@3.0.8) (2019-11-14)
 
 
