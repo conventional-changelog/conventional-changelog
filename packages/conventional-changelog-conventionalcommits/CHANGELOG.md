@@ -25,6 +25,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.3...conventional-changelog-conventionalcommits-v5.0.0) (2022-05-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* always use H2 heading for versions (#920)
+
+### Bug Fixes
+
+* always use H2 heading for versions ([#920](https://github.com/conventional-changelog/conventional-changelog/issues/920)) ([d2e02d7](https://github.com/conventional-changelog/conventional-changelog/commit/d2e02d73f275bd10a39c52016999d8faf400c990)), closes [#867](https://github.com/conventional-changelog/conventional-changelog/issues/867)
+
 ### [4.6.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.2...conventional-changelog-conventionalcommits-v4.6.3) (2021-12-29)
 
 
