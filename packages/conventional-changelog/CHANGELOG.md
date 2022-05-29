@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [3.1.25](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v3.1.24...conventional-changelog-v3.1.25) (2021-12-24)
+
+
+### Bug Fixes
+
+* **docs:** update list of available presets ([#871](https://github.com/conventional-changelog/conventional-changelog/issues/871)) ([2799851](https://github.com/conventional-changelog/conventional-changelog/commit/2799851f1915a42cb8498cf8959875badd07fd32))
+
 ## [3.1.24](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog@3.1.23...conventional-changelog@3.1.24) (2020-11-05)
 
 **Note:** Version bump only for package conventional-changelog

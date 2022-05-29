@@ -25,6 +25,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.3...conventional-changelog-conventionalcommits-v5.0.0) (2022-05-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* always use H2 heading for versions (#920)
+
+### Bug Fixes
+
+* always use H2 heading for versions ([#920](https://github.com/conventional-changelog/conventional-changelog/issues/920)) ([d2e02d7](https://github.com/conventional-changelog/conventional-changelog/commit/d2e02d73f275bd10a39c52016999d8faf400c990)), closes [#867](https://github.com/conventional-changelog/conventional-changelog/issues/867)
+
+### [4.6.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.2...conventional-changelog-conventionalcommits-v4.6.3) (2021-12-29)
+
+
+### Bug Fixes
+
+* support BREAKING-CHANGE alongside BREAKING CHANGE ([#882](https://github.com/conventional-changelog/conventional-changelog/issues/882)) ([e6f44ad](https://github.com/conventional-changelog/conventional-changelog/commit/e6f44adcf1ac5abbb85bdac73237c331c6594177))
+
+### [4.6.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.1...conventional-changelog-conventionalcommits-v4.6.2) (2021-12-24)
+
+
+### Bug Fixes
+
+* **docs:** template examples ([#866](https://github.com/conventional-changelog/conventional-changelog/issues/866)) ([5917ad2](https://github.com/conventional-changelog/conventional-changelog/commit/5917ad2bd95a83c2a047b2f5692c8e8e442a23f5))
+
 ### [4.6.1](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.0...conventional-changelog-conventionalcommits-v4.6.1) (2021-09-09)
 
 
