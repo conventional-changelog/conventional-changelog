@@ -1,8 +1,4 @@
-{{#if isPatch~}}
-  ###
-{{~else~}}
-  ##
-{{~/if}} {{#if @root.linkCompare~}}
+## {{#if @root.linkCompare~}}
   [{{version}}]({{compareUrlFormat}})
 {{~else}}
   {{~version}}
