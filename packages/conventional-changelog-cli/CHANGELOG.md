@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.2.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v2.2.1...conventional-changelog-cli-v2.2.2) (2021-12-24)
+
+
+### Bug Fixes
+
+* **docs:** update list of available presets ([#871](https://github.com/conventional-changelog/conventional-changelog/issues/871)) ([2799851](https://github.com/conventional-changelog/conventional-changelog/commit/2799851f1915a42cb8498cf8959875badd07fd32))
+
 ## [2.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli@2.1.0...conventional-changelog-cli@2.1.1) (2020-11-05)
 
 **Note:** Version bump only for package conventional-changelog-cli
