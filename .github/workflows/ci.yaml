@@ -23,7 +23,7 @@ jobs:
       - run: yarn lint
       - run: yarn test
       - name: coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
           name: actions ${{ matrix.node }}
           fail_ci_if_error: true
@@ -39,7 +39,7 @@ jobs:
       - run: yarn install --engine-strict
       - run: yarn test-windows
       - name: coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
         with:
           name: actions windows
           fail_ci_if_error: true

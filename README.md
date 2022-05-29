@@ -1,7 +1,7 @@
 # Conventional Changelog
 
 [![Build Status](https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master)](https://travis-ci.org/conventional-changelog/conventional-changelog)
-[![Codecov](https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg)](https://codecov.io/gh/conventional-changelog/conventional-changelog)p
+[![Codecov](https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg)](https://codecov.io/gh/conventional-changelog/conventional-changelog)
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 [![community slack](http://devtoolscommunity.herokuapp.com/badge.svg)](http://devtoolscommunity.herokuapp.com)
 
@@ -30,6 +30,7 @@ You can also use one of the plugins if you are already using the tool:
 - [gulp](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/gulp-conventional-changelog)
 - [atom](https://github.com/conventional-changelog/atom-conventional-changelog)
 - [vscode](https://github.com/axetroy/vscode-changelog-generator)
+- [emacs](https://github.com/liuyinz/emacs-conventional-changelog)
 
 ## Modules Important to Conventional Changelog Ecosystem
 
