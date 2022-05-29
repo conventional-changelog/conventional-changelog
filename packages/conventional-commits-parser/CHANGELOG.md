@@ -37,6 +37,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+### [3.2.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.3...conventional-commits-parser-v3.2.4) (2021-12-29)
+
+
+### Bug Fixes
+
+* support BREAKING-CHANGE alongside BREAKING CHANGE ([#882](https://github.com/conventional-changelog/conventional-changelog/issues/882)) ([e6f44ad](https://github.com/conventional-changelog/conventional-changelog/commit/e6f44adcf1ac5abbb85bdac73237c331c6594177))
+
 ### [3.2.3](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.2...conventional-commits-parser-v3.2.3) (2021-10-23)
 
 
