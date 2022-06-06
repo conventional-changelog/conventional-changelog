@@ -1,24 +1,25 @@
 'use strict'
 const expect = require('chai').expect
 const gitRawCommits = require('./')
-const mocha = require('mocha')
-const describe = mocha.describe
-const before = mocha.before
-const it = mocha.it
-const shell = require('shelljs')
 const through = require('through2')
-const writeFileSync = require('fs').writeFileSync
-const mkdirp = require('mkdirp')
+const fs = require('fs')
+const tmp = require('tmp')
+const writeFileSync = fs.writeFileSync
+const { gitInit, exec } = require('../../tools/test-tools')
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
+tmp.setGracefulCleanup()
+const oldDir = process.cwd()
+
 describe('git-raw-commits', function () {
-  before(function () {
-    shell.config.resetForTesting()
-    shell.cd(__dirname)
-    shell.rm('-rf', 'tmp')
-    shell.mkdir('tmp')
-    shell.cd('tmp')
-    shell.exec('git init')
+  before(() => {
+    const tmpDir = tmp.dirSync()
+    process.chdir(tmpDir.name)
+    gitInit()
+  })
+
+  after(() => {
+    process.chdir(oldDir)
   })
 
   it('should emit an error and the error should not be read only if there is no commits', function (done) {
@@ -36,13 +37,13 @@ describe('git-raw-commits', function () {
   })
 
   it('should execute the command without error', function (done) {
-    mkdirp.sync('./packages/foo')
+    fs.mkdirSync('./packages/foo', { recursive: true })
     writeFileSync('./packages/foo/test1', '')
-    shell.exec('git add --all && git commit -m"First commit"')
+    exec('git add --all && git commit -m"First commit"')
     writeFileSync('test2', '')
-    shell.exec('git add --all && git commit -m"Second commit"')
+    exec('git add --all && git commit -m"Second commit"')
     writeFileSync('test3', '')
-    shell.exec('git add --all && git commit -m"Third commit"')
+    exec('git add --all && git commit -m"Third commit"')
 
     gitRawCommits()
       .on('close', done)
@@ -203,9 +204,9 @@ describe('git-raw-commits', function () {
       .then(_ => {
         const now = new Date().toISOString()
         writeFileSync('./packages/foo/test1', 'hello')
-        shell.exec('git add --all && git commit -m"Fourth commit"')
+        exec('git add --all && git commit -m"Fourth commit"')
         writeFileSync('test2', 'hello')
-        shell.exec('git add --all && git commit -m"Fifth commit"')
+        exec('git add --all && git commit -m"Fifth commit"')
 
         gitRawCommits({
           path: './packages/foo',
