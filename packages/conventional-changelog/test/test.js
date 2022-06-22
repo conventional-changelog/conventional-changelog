@@ -1,21 +1,26 @@
 'use strict'
 const conventionalChangelog = require('../')
 const expect = require('chai').expect
-const shell = require('shelljs')
 const through = require('through2')
-const writeFileSync = require('fs').writeFileSync
+const fs = require('fs')
+const path = require('path')
+const tmp = require('tmp')
+const { gitInit, exec } = require('../../../tools/test-tools')
+
+tmp.setGracefulCleanup()
+const oldDir = process.cwd()
 
 describe('conventionalChangelog', function () {
-  before(function () {
-    shell.config.resetForTesting()
-    shell.cd(__dirname)
-    shell.rm('-rf', 'tmp')
-    shell.mkdir('tmp')
-    shell.cd('tmp')
-    shell.mkdir('git-templates')
-    shell.exec('git init --template=../git-templates')
-    writeFileSync('test1', '')
-    shell.exec('git add --all && git commit -m"First commit"')
+  before(() => {
+    const tmpDir = tmp.dirSync()
+    process.chdir(tmpDir.name)
+    gitInit()
+    fs.writeFileSync(path.join(tmpDir.name, 'test1'), '')
+    exec('git add --all && git commit -m"First commit"')
+  })
+
+  after(() => {
+    process.chdir(oldDir)
   })
 
   it('should not warn if preset is found', function (done) {

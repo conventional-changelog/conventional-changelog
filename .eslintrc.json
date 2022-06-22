@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "standard"
-  ],
+  "extends": "standard",
   "overrides": [
     {
       "files": [
