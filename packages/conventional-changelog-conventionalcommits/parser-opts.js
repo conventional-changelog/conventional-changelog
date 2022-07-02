@@ -1,7 +1,13 @@
 'use strict'
+const _ = require('lodash')
+
+const defaultConfig = {
+  issuePrefixes: ['#']
+}
 
 module.exports = function (config) {
-  config = defaultConfig(config)
+  const readyConfig = _.defaults(config, defaultConfig)
+
   return {
     headerPattern: /^(\w*)(?:\((.*)\))?!?: (.*)$/,
     breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/,
@@ -13,13 +19,6 @@ module.exports = function (config) {
     noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE'],
     revertPattern: /^(?:Revert|revert:)\s"?([\s\S]+?)"?\s*This reverts commit (\w*)\./i,
     revertCorrespondence: ['header', 'hash'],
-    issuePrefixes: config.issuePrefixes
+    issuePrefixes: readyConfig.issuePrefixes
   }
-}
-
-// merge user set configuration with default configuration.
-function defaultConfig (config) {
-  config = { ...config }
-  config.issuePrefixes = config.issuePrefixes || ['#']
-  return config
 }

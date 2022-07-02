@@ -3,6 +3,7 @@
 const addBangNotes = require('./add-bang-notes')
 const compareFunc = require('compare-func')
 const Q = require('q')
+const _ = require('lodash')
 const readFile = Q.denodeify(require('fs').readFile)
 const resolve = require('path').resolve
 const releaseAsRe = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
@@ -14,19 +15,41 @@ const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
 const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
+const defaultConfig = {
+  types: [
+    { type: 'feat', section: 'Features' },
+    { type: 'feature', section: 'Features' },
+    { type: 'fix', section: 'Bug Fixes' },
+    { type: 'perf', section: 'Performance Improvements' },
+    { type: 'revert', section: 'Reverts' },
+    { type: 'docs', section: 'Documentation', hidden: true },
+    { type: 'style', section: 'Styles', hidden: true },
+    { type: 'chore', section: 'Miscellaneous Chores', hidden: true },
+    { type: 'refactor', section: 'Code Refactoring', hidden: true },
+    { type: 'test', section: 'Tests', hidden: true },
+    { type: 'build', section: 'Build System', hidden: true },
+    { type: 'ci', section: 'Continuous Integration', hidden: true }
+  ],
+  issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
+  commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
+  compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}',
+  userUrlFormat: '{{host}}/{{user}}',
+  issuePrefixes: ['#']
+}
+
 module.exports = function (config) {
-  config = defaultConfig(config)
-  const commitUrlFormat = expandTemplate(config.commitUrlFormat, {
+  const readyConfig = _.defaults(config, defaultConfig)
+  const commitUrlFormat = expandTemplate(readyConfig.commitUrlFormat, {
     host,
     owner,
     repository
   })
-  const compareUrlFormat = expandTemplate(config.compareUrlFormat, {
+  const compareUrlFormat = expandTemplate(readyConfig.compareUrlFormat, {
     host,
     owner,
     repository
   })
-  const issueUrlFormat = expandTemplate(config.issueUrlFormat, {
+  const issueUrlFormat = expandTemplate(readyConfig.issueUrlFormat, {
     host,
     owner,
     repository,
@@ -41,7 +64,7 @@ module.exports = function (config) {
     readFile(resolve(__dirname, './templates/footer.hbs'), 'utf-8')
   ])
     .spread((template, header, commit, footer) => {
-      const writerOpts = getWriterOpts(config)
+      const writerOpts = getWriterOpts(readyConfig)
 
       writerOpts.mainTemplate = template
       writerOpts.headerPartial = header
@@ -69,8 +92,6 @@ function findTypeEntry (types, commit) {
 }
 
 function getWriterOpts (config) {
-  config = defaultConfig(config)
-
   return {
     transform: (commit, context) => {
       let discard = true
@@ -171,36 +192,6 @@ function getWriterOpts (config) {
     noteGroupsSort: 'title',
     notesSort: compareFunc
   }
-}
-
-// merge user set configuration with default configuration.
-function defaultConfig (config) {
-  config = { ...config }
-  config.types = config.types || [
-    { type: 'feat', section: 'Features' },
-    { type: 'feature', section: 'Features' },
-    { type: 'fix', section: 'Bug Fixes' },
-    { type: 'perf', section: 'Performance Improvements' },
-    { type: 'revert', section: 'Reverts' },
-    { type: 'docs', section: 'Documentation', hidden: true },
-    { type: 'style', section: 'Styles', hidden: true },
-    { type: 'chore', section: 'Miscellaneous Chores', hidden: true },
-    { type: 'refactor', section: 'Code Refactoring', hidden: true },
-    { type: 'test', section: 'Tests', hidden: true },
-    { type: 'build', section: 'Build System', hidden: true },
-    { type: 'ci', section: 'Continuous Integration', hidden: true }
-  ]
-  config.issueUrlFormat = config.issueUrlFormat ||
-    '{{host}}/{{owner}}/{{repository}}/issues/{{id}}'
-  config.commitUrlFormat = config.commitUrlFormat ||
-    '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}'
-  config.compareUrlFormat = config.compareUrlFormat ||
-    '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}'
-  config.userUrlFormat = config.userUrlFormat ||
-    '{{host}}/{{user}}'
-  config.issuePrefixes = config.issuePrefixes || ['#']
-
-  return config
 }
 
 // expand on the simple mustache-style templates supported in
