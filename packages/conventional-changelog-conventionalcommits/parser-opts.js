@@ -19,7 +19,7 @@ module.exports = function (config) {
 
 // merge user set configuration with default configuration.
 function defaultConfig (config) {
-  config = config || {}
+  config = { ...config }
   config.issuePrefixes = config.issuePrefixes || ['#']
   return config
 }

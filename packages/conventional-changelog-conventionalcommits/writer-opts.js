@@ -175,7 +175,7 @@ function getWriterOpts (config) {
 
 // merge user set configuration with default configuration.
 function defaultConfig (config) {
-  config = config || {}
+  config = { ...config }
   config.types = config.types || [
     { type: 'feat', section: 'Features' },
     { type: 'feature', section: 'Features' },
