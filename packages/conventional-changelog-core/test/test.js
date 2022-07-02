@@ -2,7 +2,7 @@
 const conventionalChangelogCore = require('../')
 const expect = require('chai').expect
 const gitTails = require('git-tails').sync
-const through = require('through2')
+const stream = require('stream')
 const Promise = require('pinkie-promise')
 const semver = require('semver')
 const betterThanBefore = require('better-than-before')()
@@ -136,10 +136,12 @@ describe('conventionalChangelogCore', function () {
     preparing(1)
 
     conventionalChangelogCore()
-      .pipe(through(function (chunk) {
-        expect(chunk.toString()).to.include('First commit')
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          expect(chunk.toString()).to.include('First commit')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -147,15 +149,17 @@ describe('conventionalChangelogCore', function () {
     preparing(2)
 
     conventionalChangelogCore()
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('Second commit')
-        expect(chunk).to.include('Third commit')
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('Third commit')
 
-        expect(chunk).to.not.include('First commit')
+          expect(chunk).to.not.include('First commit')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -166,21 +170,24 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({
       releaseCount: 2
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        if (i === 0) {
-          expect(chunk).to.include('Second commit')
-          expect(chunk).to.include('Third commit')
-        } else if (i === 1) {
-          expect(chunk).to.include('First commit')
+          if (i === 0) {
+            expect(chunk).to.include('Second commit')
+            expect(chunk).to.include('Third commit')
+          } else if (i === 1) {
+            expect(chunk).to.include('First commit')
+          }
+
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(2)
+          done()
         }
-
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(2)
-        done()
       }))
   })
 
@@ -191,21 +198,24 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({
       releaseCount: 100
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        if (i === 0) {
-          expect(chunk).to.include('Second commit')
-          expect(chunk).to.include('Third commit')
-        } else if (i === 1) {
-          expect(chunk).to.include('First commit')
+          if (i === 0) {
+            expect(chunk).to.include('Second commit')
+            expect(chunk).to.include('Third commit')
+          } else if (i === 1) {
+            expect(chunk).to.include('First commit')
+          }
+
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(2)
+          done()
         }
-
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(2)
-        done()
       }))
   })
 
@@ -217,21 +227,24 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({
       releaseCount: 100
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        if (i === 0) {
-          expect(chunk).to.include('Second commit')
-          expect(chunk).to.include('Third commit')
-        } else if (i === 1) {
-          expect(chunk).to.include('First commit')
+          if (i === 0) {
+            expect(chunk).to.include('Second commit')
+            expect(chunk).to.include('Third commit')
+          } else if (i === 1) {
+            expect(chunk).to.include('First commit')
+          }
+
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(2)
+          done()
         }
-
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(2)
-        done()
       }))
   })
 
@@ -243,16 +256,18 @@ describe('conventionalChangelogCore', function () {
     }, {}, {
       commitsSort: null
     })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('Second commit')
-        expect(chunk).to.include('Third commit')
-        expect(chunk).to.match(/Third commit closes #1[\w\W]*?\* Second commit/)
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('Third commit')
+          expect(chunk).to.match(/Third commit closes #1[\w\W]*?\* Second commit/)
 
-        expect(chunk).to.not.include('First commit')
+          expect(chunk).to.not.include('First commit')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -260,14 +275,16 @@ describe('conventionalChangelogCore', function () {
     preparing(3)
 
     conventionalChangelogCore()
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('This commit is from feature branch')
+          expect(chunk).to.include('This commit is from feature branch')
 
-        expect(chunk).to.not.include('Merge')
+          expect(chunk).to.not.include('Merge')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -295,14 +312,16 @@ describe('conventionalChangelogCore', function () {
         path: path.join(__dirname, 'fixtures/_package.json')
       }
     })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('## <small>0.0.17')
-        expect(chunk).to.include('Second commit')
-        expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)')
+          expect(chunk).to.include('## <small>0.0.17')
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -314,13 +333,15 @@ describe('conventionalChangelogCore', function () {
         path: path.join(__dirname, 'fixtures/_version-only.json')
       }
     })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('## <small>0.0.17')
-        expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('## <small>0.0.17')
+          expect(chunk).to.include('Second commit')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -333,13 +354,15 @@ describe('conventionalChangelogCore', function () {
       }
     }, {
       linkReferences: true
-    }).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](https://unknown-host/commits/')
-      expect(chunk).to.include('closes [#1](https://unknown-host/issues/1)')
+        expect(chunk).to.include('](https://unknown-host/commits/')
+        expect(chunk).to.include('closes [#1](https://unknown-host/issues/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -352,13 +375,15 @@ describe('conventionalChangelogCore', function () {
       }
     }, {
       linkReferences: true
-    }).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](https://stash.local/scm/conventional-changelog/conventional-changelog/commits/')
-      expect(chunk).to.include('closes [#1](https://stash.local/scm/conventional-changelog/conventional-changelog/issues/1)')
+        expect(chunk).to.include('](https://stash.local/scm/conventional-changelog/conventional-changelog/commits/')
+        expect(chunk).to.include('closes [#1](https://stash.local/scm/conventional-changelog/conventional-changelog/issues/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -375,14 +400,16 @@ describe('conventionalChangelogCore', function () {
         }
       }
     })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('## <small>v0.0.17')
-        expect(chunk).to.include('Second commit')
-        expect(chunk).to.include('closes [#1](https://github.com/a/b/issues/1)')
+          expect(chunk).to.include('## <small>v0.0.17')
+          expect(chunk).to.include('Second commit')
+          expect(chunk).to.include('closes [#1](https://github.com/a/b/issues/1)')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -392,12 +419,14 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({
       append: true
     })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.match(/Second commit[\w\W]*?\* Third commit/)
+          expect(chunk).to.match(/Second commit[\w\W]*?\* Third commit/)
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -412,13 +441,15 @@ describe('conventionalChangelogCore', function () {
       host: 'github',
       owner: 'a',
       repository: 'b'
-    }).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('## <small>0.0.17')
-      expect(chunk).to.include('closes [#1](github/a/b/issues/1)')
+        expect(chunk).to.include('## <small>0.0.17')
+        expect(chunk).to.include('closes [#1](github/a/b/issues/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -426,10 +457,12 @@ describe('conventionalChangelogCore', function () {
     preparing(3)
 
     conventionalChangelogCore()
-      .pipe(through(function (chunk) {
-        expect(chunk.toString()).to.include('closes [#1](https://github.com/conventional-changelog/conventional-changelog-core/issues/1)')
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          expect(chunk.toString()).to.include('closes [#1](https://github.com/conventional-changelog/conventional-changelog-core/issues/1)')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -440,13 +473,15 @@ describe('conventionalChangelogCore', function () {
       host: 'github',
       owner: 'b',
       repository: 'a'
-    }, {}, {}).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }, {}, {}).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](github/b/a/commit/')
-      expect(chunk).to.not.include('closes [#42](github/b/a/issues/42)')
+        expect(chunk).to.include('](github/b/a/commit/')
+        expect(chunk).to.not.include('closes [#42](github/b/a/issues/42)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -459,14 +494,16 @@ describe('conventionalChangelogCore', function () {
       repository: 'a'
     }, {}, {
       issuePrefixes: ['@']
-    }).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](github/b/a/commit/')
-      expect(chunk).to.include('closes [#42](github/b/a/issues/42)')
-      expect(chunk).to.not.include('closes [#71](github/b/a/issues/71)')
+        expect(chunk).to.include('](github/b/a/commit/')
+        expect(chunk).to.include('closes [#42](github/b/a/issues/42)')
+        expect(chunk).to.not.include('closes [#71](github/b/a/issues/71)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -479,13 +516,15 @@ describe('conventionalChangelogCore', function () {
       repository: 'a',
       issue: 'issue',
       commit: 'commits'
-    }, {}, {}).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }, {}, {}).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](github/b/a/commits/')
-      expect(chunk).to.include('closes [#1](github/b/a/issue/1)')
+        expect(chunk).to.include('](github/b/a/commits/')
+        expect(chunk).to.include('closes [#1](github/b/a/issue/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -496,13 +535,15 @@ describe('conventionalChangelogCore', function () {
       host: 'github',
       owner: 'b',
       repository: 'a'
-    }, {}, {}).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }, {}, {}).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](github/b/a/commit/')
-      expect(chunk).to.include('closes [#1](github/b/a/issues/1)')
+        expect(chunk).to.include('](github/b/a/commit/')
+        expect(chunk).to.include('closes [#1](github/b/a/issues/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -513,13 +554,15 @@ describe('conventionalChangelogCore', function () {
       host: 'bitbucket',
       owner: 'b',
       repository: 'a'
-    }, {}, {}).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }, {}, {}).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](bitbucket/b/a/commits/')
-      expect(chunk).to.include('closes [#1](bitbucket/b/a/issue/1)')
+        expect(chunk).to.include('](bitbucket/b/a/commits/')
+        expect(chunk).to.include('closes [#1](bitbucket/b/a/issue/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -530,13 +573,15 @@ describe('conventionalChangelogCore', function () {
       host: 'gitlab',
       owner: 'b',
       repository: 'a'
-    }, {}, {}).pipe(through(function (chunk) {
-      chunk = chunk.toString()
+    }, {}, {}).pipe(new stream.Transform({
+      transform (chunk) {
+        chunk = chunk.toString()
 
-      expect(chunk).to.include('](gitlab/b/a/commit/')
-      expect(chunk).to.include('closes [#1](gitlab/b/a/issues/1)')
+        expect(chunk).to.include('](gitlab/b/a/commit/')
+        expect(chunk).to.include('closes [#1](gitlab/b/a/issues/1)')
 
-      done()
+        done()
+      }
     }))
   })
 
@@ -549,13 +594,15 @@ describe('conventionalChangelogCore', function () {
         cb(null, chunk)
       }
     })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('A tiny header')
-        expect(chunk).to.not.include('Third')
+          expect(chunk).to.include('A tiny header')
+          expect(chunk).to.not.include('Third')
 
-        done()
+          done()
+        }
       }))
   })
 
@@ -566,21 +613,24 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({
       releaseCount: 0
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        if (i === 0) {
-          expect(chunk).to.include('Second commit')
-          expect(chunk).to.include('Third commit closes #1')
-        } else {
-          expect(chunk).to.include('First commit')
+          if (i === 0) {
+            expect(chunk).to.include('Second commit')
+            expect(chunk).to.include('Third commit closes #1')
+          } else {
+            expect(chunk).to.include('First commit')
+          }
+
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(2)
+          done()
         }
-
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(2)
-        done()
       }))
   })
 
@@ -591,20 +641,23 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({
       releaseCount: 0
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        if (i === 1) {
-          expect(chunk).to.include('# 2.0.0')
-        } else if (i === 2) {
-          expect(chunk).to.include('# 0.1.0')
+          if (i === 1) {
+            expect(chunk).to.include('# 2.0.0')
+          } else if (i === 2) {
+            expect(chunk).to.include('# 0.1.0')
+          }
+
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(3)
+          done()
         }
-
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(3)
-        done()
       }))
   })
 
@@ -617,16 +670,19 @@ describe('conventionalChangelogCore', function () {
     }, {}, {}, {}, {
       mainTemplate: '{{gitSemverTags}} or {{gitSemverTags.[0]}}'
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.equal('v2.0.0,v0.1.0 or v2.0.0')
+          expect(chunk).to.equal('v2.0.0,v0.1.0 or v2.0.0')
 
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(3)
-        done()
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(3)
+          done()
+        }
       }))
   })
 
@@ -646,16 +702,19 @@ describe('conventionalChangelogCore', function () {
         return null
       }
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.equal('Not linked')
+          expect(chunk).to.equal('Not linked')
 
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(3)
-        done()
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(3)
+          done()
+        }
       }))
   })
 
@@ -802,9 +861,12 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({}, {}, {}, {}, {
       includeDetails: true
     })
-      .pipe(through.obj(function (chunk) {
-        expect(chunk).to.be.an('object')
-        done()
+      .pipe(new stream.Transform({
+        objectMode: true,
+        transform (chunk) {
+          expect(chunk).to.be.an('object')
+          done()
+        }
       }))
   })
 
@@ -816,15 +878,18 @@ describe('conventionalChangelogCore', function () {
         'Release note'
       ]
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('* test9')
-        expect(chunk).to.include('### Release note\n\n* super release!')
+          expect(chunk).to.include('* test9')
+          expect(chunk).to.include('### Release note\n\n* super release!')
 
-        cb()
-      }, function () {
-        done()
+          cb()
+        },
+        flush () {
+          done()
+        }
       }))
   })
 
@@ -839,14 +904,17 @@ describe('conventionalChangelogCore', function () {
       headerPartial: '',
       commitPartial: '* {{header}}\n'
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.equal('\n* test8\n* test8\n* test9\n\n\n\n')
+          expect(chunk).to.equal('\n* test8\n* test8\n* test9\n\n\n\n')
 
-        cb()
-      }, function () {
-        done()
+          cb()
+        },
+        flush () {
+          done()
+        }
       }))
   })
 
@@ -861,29 +929,32 @@ describe('conventionalChangelogCore', function () {
     let chunkNumber = 0
 
     conventionalChangelogCore({}, context)
-      .pipe(through(function (chunk, enc, cb) {
-        chunkNumber += 1
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunkNumber += 1
+          chunk = chunk.toString()
 
-        if (chunkNumber === 1) {
-          expect(chunk).to.include('## 2.0.0')
-          expect(chunk).to.include('Custom prefix closes @42')
-          expect(chunk).to.include('Custom prefix closes @43')
-          expect(chunk).to.include('Old prefix closes #71')
-          expect(chunk).to.include('Second commit')
-          expect(chunk).to.include('some more features')
-          expect(chunk).to.include('Third commit closes #1')
-          expect(chunk).to.include('This commit is from feature branch')
-          expect(chunk).to.include('This commit is from master branch')
-          expect(chunk).to.not.include('test8')
-          expect(chunk).to.not.include('test9')
-        } else if (chunkNumber === 2) {
-          expect(chunk).to.include('## 0.1.0')
-          expect(chunk).to.include('First commit')
+          if (chunkNumber === 1) {
+            expect(chunk).to.include('## 2.0.0')
+            expect(chunk).to.include('Custom prefix closes @42')
+            expect(chunk).to.include('Custom prefix closes @43')
+            expect(chunk).to.include('Old prefix closes #71')
+            expect(chunk).to.include('Second commit')
+            expect(chunk).to.include('some more features')
+            expect(chunk).to.include('Third commit closes #1')
+            expect(chunk).to.include('This commit is from feature branch')
+            expect(chunk).to.include('This commit is from master branch')
+            expect(chunk).to.not.include('test8')
+            expect(chunk).to.not.include('test9')
+          } else if (chunkNumber === 2) {
+            expect(chunk).to.include('## 0.1.0')
+            expect(chunk).to.include('First commit')
+          }
+          cb()
+        },
+        flush () {
+          done()
         }
-        cb()
-      }, function () {
-        done()
       }))
   })
 
@@ -901,15 +972,18 @@ describe('conventionalChangelogCore', function () {
         path: path.join(__dirname, 'fixtures/_version-only.json')
       }
     })
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        expect(chunk).to.include('https://github.com/user/repo')
-        expect(chunk).to.not.include('.git')
+          expect(chunk).to.include('https://github.com/user/repo')
+          expect(chunk).to.not.include('.git')
 
-        cb()
-      }, function () {
-        done()
+          cb()
+        },
+        flush () {
+          done()
+        }
       }))
   })
 
@@ -922,24 +996,27 @@ describe('conventionalChangelogCore', function () {
       append: true,
       outputUnreleased: true
     }, {}, {}, {}, {})
-      .pipe(through(function (chunk, enc, cb) {
-        chunk = chunk.toString()
+      .pipe(new stream.Transform({
+        transform (chunk, enc, cb) {
+          chunk = chunk.toString()
 
-        if (i === 4) {
-          expect(chunk).to.contain('included in 4.0.0')
-          expect(chunk).to.not.contain('included in 5.0.0')
-        } else if (i === 5) {
-          expect(chunk).to.contain('included in 5.0.0')
-          expect(chunk).to.not.contain('merged, unreleased')
-        } else if (i === 6) {
-          expect(chunk).to.contain('merged, unreleased')
+          if (i === 4) {
+            expect(chunk).to.contain('included in 4.0.0')
+            expect(chunk).to.not.contain('included in 5.0.0')
+          } else if (i === 5) {
+            expect(chunk).to.contain('included in 5.0.0')
+            expect(chunk).to.not.contain('merged, unreleased')
+          } else if (i === 6) {
+            expect(chunk).to.contain('merged, unreleased')
+          }
+
+          i++
+          cb()
+        },
+        flush () {
+          expect(i).to.equal(7)
+          done()
         }
-
-        i++
-        cb()
-      }, function () {
-        expect(i).to.equal(7)
-        done()
       }))
   })
 
@@ -955,20 +1032,23 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal('v2.0.0...v3.0.0')
-          } else if (i === 1) {
-            expect(chunk).to.equal(tail + '...v2.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal('v2.0.0...v3.0.0')
+            } else if (i === 1) {
+              expect(chunk).to.equal(tail + '...v2.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(2)
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(2)
-          done()
         }))
     })
 
@@ -984,20 +1064,23 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal(tail + '...v2.0.0')
-          } else if (i === 1) {
-            expect(chunk).to.equal('v2.0.0...v3.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal(tail + '...v2.0.0')
+            } else if (i === 1) {
+              expect(chunk).to.equal('v2.0.0...v3.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(2)
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(2)
-          done()
         }))
     })
 
@@ -1014,22 +1097,25 @@ describe('conventionalChangelogCore', function () {
         mainTemplate: '{{previousTag}}...{{currentTag}}',
         generateOn: 'version'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal(tail + '...v2.0.0')
-          } else if (i === 1) {
-            expect(chunk).to.equal('...')
-          } else {
-            expect(chunk).to.equal('v2.0.0...v3.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal(tail + '...v2.0.0')
+            } else if (i === 1) {
+              expect(chunk).to.equal('...')
+            } else {
+              expect(chunk).to.equal('v2.0.0...v3.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(3)
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(3)
-          done()
         }))
     })
 
@@ -1047,22 +1133,25 @@ describe('conventionalChangelogCore', function () {
           return null
         }
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal('v2.0.0...v3.0.0')
-          } else if (i === 1) {
-            expect(chunk).to.equal('v0.0.1...v2.0.0')
-          } else if (i === 2) {
-            expect(chunk).to.equal('...v0.0.1')
+            if (i === 0) {
+              expect(chunk).to.equal('v2.0.0...v3.0.0')
+            } else if (i === 1) {
+              expect(chunk).to.equal('v0.0.1...v2.0.0')
+            } else if (i === 2) {
+              expect(chunk).to.equal('...v0.0.1')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(3)
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(3)
-          done()
         }))
     })
 
@@ -1081,22 +1170,25 @@ describe('conventionalChangelogCore', function () {
           return null
         }
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal('...v0.0.1')
-          } else if (i === 1) {
-            expect(chunk).to.equal('v0.0.1...v2.0.0')
-          } else if (i === 2) {
-            expect(chunk).to.equal('v2.0.0...v3.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal('...v0.0.1')
+            } else if (i === 1) {
+              expect(chunk).to.equal('v0.0.1...v2.0.0')
+            } else if (i === 2) {
+              expect(chunk).to.equal('v2.0.0...v3.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(3)
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(3)
-          done()
         }))
     })
 
@@ -1111,16 +1203,19 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          expect(chunk).to.equal('v2.0.0...' + head)
+            expect(chunk).to.equal('v2.0.0...' + head)
 
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(1)
-          done()
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(1)
+            done()
+          }
         }))
     })
 
@@ -1135,17 +1230,20 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal('3.0.0...4.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal('3.0.0...4.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          done()
         }))
     })
 
@@ -1160,17 +1258,20 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal('3.0.0...4.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal('3.0.0...4.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          done()
         }))
     })
 
@@ -1182,10 +1283,12 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk) {
-          expect(chunk.toString()).to.include('...v1.0.0')
+        .pipe(new stream.Transform({
+          transform (chunk) {
+            expect(chunk.toString()).to.include('...v1.0.0')
 
-          done()
+            done()
+          }
         }))
     })
 
@@ -1197,10 +1300,12 @@ describe('conventionalChangelogCore', function () {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
       })
-        .pipe(through(function (chunk) {
-          expect(chunk.toString()).to.include('...v1.0.0')
+        .pipe(new stream.Transform({
+          transform (chunk) {
+            expect(chunk.toString()).to.include('...v1.0.0')
 
-          done()
+            done()
+          }
         }))
     })
 
@@ -1219,22 +1324,25 @@ describe('conventionalChangelogCore', function () {
           return null
         }
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          if (i === 0) {
-            expect(chunk).to.equal('Not linked')
-          } else if (i === 1) {
-            expect(chunk).to.equal('v0.0.1...v2.0.0')
-          } else if (i === 2) {
-            expect(chunk).to.equal('v2.0.0...v3.0.0')
+            if (i === 0) {
+              expect(chunk).to.equal('Not linked')
+            } else if (i === 1) {
+              expect(chunk).to.equal('v0.0.1...v2.0.0')
+            } else if (i === 2) {
+              expect(chunk).to.equal('v2.0.0...v3.0.0')
+            }
+
+            i++
+            cb()
+          },
+          flush () {
+            expect(i).to.equal(3)
+            done()
           }
-
-          i++
-          cb()
-        }, function () {
-          expect(i).to.equal(3)
-          done()
         }))
     })
 
@@ -1245,14 +1353,17 @@ describe('conventionalChangelogCore', function () {
         tagPrefix: 'foo@',
         config: require('conventional-changelog-angular')
       }, {}, { path: './packages/foo' })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
-          // confirm that context.currentTag behaves differently when
-          // tagPrefix is used
-          expect(chunk).to.include('foo@1.0.0...foo@2.0.0')
-          cb()
-        }, function () {
-          done()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
+            // confirm that context.currentTag behaves differently when
+            // tagPrefix is used
+            expect(chunk).to.include('foo@1.0.0...foo@2.0.0')
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
   })
@@ -1279,14 +1390,17 @@ describe('conventionalChangelogCore', function () {
           path: path.join(__dirname, 'fixtures/_package.json')
         }
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          expect(chunk).to.include('v100.0.0')
+            expect(chunk).to.include('v100.0.0')
 
-          cb()
-        }, function () {
-          done()
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
 
@@ -1294,14 +1408,17 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         config: promise
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          expect(chunk).to.include('v100.0.0')
+            expect(chunk).to.include('v100.0.0')
 
-          cb()
-        }, function () {
-          done()
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
 
@@ -1309,14 +1426,17 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         config: fn
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          expect(chunk).to.include('v100.0.0')
+            expect(chunk).to.include('v100.0.0')
 
-          cb()
-        }, function () {
-          done()
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
 
@@ -1341,10 +1461,13 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({}, {
         version: '1.0.0'
       })
-        .pipe(through(function () {
-          done(new Error('should not output unreleased'))
-        }, function () {
-          done()
+        .pipe(new stream.Transform({
+          transform () {
+            done(new Error('should not output unreleased'))
+          },
+          flush () {
+            done()
+          }
         }))
     })
 
@@ -1356,15 +1479,18 @@ describe('conventionalChangelogCore', function () {
       }, {
         version: 'v1.0.0'
       })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
 
-          expect(chunk).to.include('something unreleased yet :)')
-          expect(chunk).to.include('Unreleased')
+            expect(chunk).to.include('something unreleased yet :)')
+            expect(chunk).to.include('Unreleased')
 
-          cb()
-        }, function () {
-          done()
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
   })
@@ -1376,15 +1502,18 @@ describe('conventionalChangelogCore', function () {
       conventionalChangelogCore({
         lernaPackage: 'foo'
       }, {}, { path: './packages/foo' })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
-          expect(chunk).to.include('first lerna style commit hooray')
-          expect(chunk).to.not.include('second lerna style commit woo')
-          expect(chunk).to.not.include('another lerna package, this should be skipped')
-          expect(chunk).to.not.include('something unreleased yet :)')
-          cb()
-        }, function () {
-          done()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
+            expect(chunk).to.include('first lerna style commit hooray')
+            expect(chunk).to.not.include('second lerna style commit woo')
+            expect(chunk).to.not.include('another lerna package, this should be skipped')
+            expect(chunk).to.not.include('something unreleased yet :)')
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
 
@@ -1395,14 +1524,17 @@ describe('conventionalChangelogCore', function () {
         lernaPackage: 'foo',
         config: require('conventional-changelog-angular')
       }, {}, { path: './packages/foo' })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
-          // confirm that context.currentTag behaves differently when
-          // lerna style tags are applied.
-          expect(chunk).to.include('foo@1.0.0...foo@2.0.0')
-          cb()
-        }, function () {
-          done()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
+            // confirm that context.currentTag behaves differently when
+            // lerna style tags are applied.
+            expect(chunk).to.include('foo@1.0.0...foo@2.0.0')
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
 
@@ -1413,15 +1545,18 @@ describe('conventionalChangelogCore', function () {
         lernaPackage: 'foo',
         releaseCount: 2
       }, {}, { path: './packages/foo' })
-        .pipe(through(function (chunk, enc, cb) {
-          chunk = chunk.toString()
-          expect(chunk).to.include('first lerna style commit hooray')
-          expect(chunk).to.include('second lerna style commit woo')
-          expect(chunk).to.not.include('another lerna package, this should be skipped')
-          expect(chunk).to.not.include('something unreleased yet :)')
-          cb()
-        }, function () {
-          done()
+        .pipe(new stream.Transform({
+          transform (chunk, enc, cb) {
+            chunk = chunk.toString()
+            expect(chunk).to.include('first lerna style commit hooray')
+            expect(chunk).to.include('second lerna style commit woo')
+            expect(chunk).to.not.include('another lerna package, this should be skipped')
+            expect(chunk).to.not.include('something unreleased yet :)')
+            cb()
+          },
+          flush () {
+            done()
+          }
         }))
     })
   })

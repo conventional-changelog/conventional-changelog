@@ -6,7 +6,6 @@ const conventionalCommitsParser = require('conventional-commits-parser')
 const conventionalChangelogWriter = require('conventional-changelog-writer')
 const _ = require('lodash')
 const stream = require('stream')
-const through = require('through2')
 const execFileSync = require('child_process').execFileSync
 
 const mergeConfig = require('./lib/merge-config')
@@ -100,11 +99,15 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
         })
         // it would be better if `gitRawCommits` could spit out better formatted data
         // so we don't need to transform here
-        .pipe(through.obj(function (chunk, enc, cb) {
-          try {
-            options.transform.call(this, chunk, cb)
-          } catch (err) {
-            cb(err)
+        .pipe(new stream.Transform({
+          objectMode: true,
+          highWaterMark: 16,
+          transform (chunk, encoding, cb) {
+            try {
+              options.transform.call(this, chunk, cb)
+            } catch (err) {
+              cb(err)
+            }
           }
         }))
         .on('error', function (err) {
@@ -116,22 +119,24 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
           err.message = 'Error in conventional-changelog-writer: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)
         })
-        .pipe(through({
-          objectMode: writerOpts.includeDetails
-        }, function (chunk, enc, cb) {
-          try {
-            readable.push(chunk)
-          } catch (err) {
-            setImmediate(function () {
-              throw err
-            })
+        .pipe(new stream.Transform({
+          objectMode: writerOpts.includeDetails,
+          transform (chunk, encoding, cb) {
+            try {
+              readable.push(chunk)
+            } catch (err) {
+              setImmediate(function () {
+                throw err
+              })
+            }
+
+            cb()
+          },
+          flush (cb) {
+            readable.push(null)
+
+            cb()
           }
-
-          cb()
-        }, function (cb) {
-          readable.push(null)
-
-          cb()
         }))
     })
     .catch(function (err) {
