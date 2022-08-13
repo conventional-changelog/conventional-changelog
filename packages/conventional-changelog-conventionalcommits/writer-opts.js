@@ -144,13 +144,26 @@ function getWriterOpts (config) {
       }
 
       // remove references that already appear in the subject
-      commit.references = commit.references.filter(reference => {
-        if (issues.indexOf(reference.prefix + reference.issue) === -1) {
-          return true
-        }
+      if (config.removeIssuesShownInSubject) {
+        commit.references = commit.references.filter(reference => {
+          if (issues.indexOf(reference.prefix + reference.issue) === -1) {
+            return true
+          }
 
-        return false
-      })
+          return false
+        })
+      }
+
+      // remove references with duplicate issues
+      if (config.removeDuplicateIssues) {
+        commit.references = commit.references.reduce(
+          (uniqueReferences, reference) =>
+            uniqueReferences.find(({ issue }) => issue === reference.issue)
+              ? uniqueReferences
+              : [...uniqueReferences, reference],
+          []
+        )
+      }
 
       return commit
     },
@@ -199,6 +212,8 @@ function defaultConfig (config) {
   config.userUrlFormat = config.userUrlFormat ||
     '{{host}}/{{user}}'
   config.issuePrefixes = config.issuePrefixes || ['#']
+  config.removeIssuesShownInSubject = config.removeIssuesShownInSubject || true
+  config.removeDuplicateIssues = config.removeDuplicateIssues || false
 
   return config
 }
