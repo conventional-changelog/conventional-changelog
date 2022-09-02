@@ -203,6 +203,24 @@ describe('git-semver-tags', function () {
     })
   })
 
+  it('should handle regexp escaped characters in the tag prefix', function (done) {
+    writeFileSync('test6', '')
+    exec('git add --all && git commit -m"eigth commit"')
+    exec('git tag ms+6.0.0')
+    writeFileSync('test6', '1')
+    exec('git add --all && git commit -m"tenth commit"')
+    exec('git tag ms+7.0.0')
+    writeFileSync('test6', '2')
+    exec('git add --all && git commit -m"eleventh commit"')
+    exec('git tag notms+7.0.0')
+
+    gitSemverTags({ tagPrefix: 'ms+' }, function (err, tags) {
+      if (err) done(err)
+      assert.deepStrictEqual(tags, ['ms+7.0.0', 'ms+6.0.0'])
+      done()
+    })
+  })
+
   it('should skip unstable tags', function (done) {
     writeFileSync('test7', '')
     exec('git add --all && git commit -m"twelfth commit"')

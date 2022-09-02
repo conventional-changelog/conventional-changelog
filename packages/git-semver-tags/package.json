@@ -32,6 +32,7 @@
     "git"
   ],
   "dependencies": {
+    "escape-string-regexp": "^4.0.0",
     "meow": "^8.0.0",
     "semver": "^6.0.0"
   },

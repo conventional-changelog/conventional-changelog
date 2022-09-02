@@ -3,6 +3,7 @@
 const proc = require('process')
 const exec = require('child_process').exec
 const semverValid = require('semver').valid
+const escapeStringRegexp = require('escape-string-regexp')
 const regex = /tag:\s*(.+?)[,)]/gi
 const cmd = 'git log --decorate --no-color'
 const unstableTagTest = /.+-\w+\.\d+$/
@@ -36,7 +37,7 @@ module.exports = function gitSemverTags (opts, callback) {
     const tags = []
     let tagPrefixRegexp
     if (options.tagPrefix) {
-      tagPrefixRegexp = new RegExp('^' + options.tagPrefix + '(.*)')
+      tagPrefixRegexp = new RegExp('^' + escapeStringRegexp(options.tagPrefix) + '(.*)')
     }
     data.split('\n').forEach(function (decorations) {
       let match
