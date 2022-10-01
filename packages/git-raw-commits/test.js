@@ -239,42 +239,13 @@ describe('git-raw-commits', function () {
 
     let chunks = []
     gitRawCommits({
-      paths: ['./packages/foo', './packages/common'],
+      path: ['./packages/foo', './packages/common'],
     })
       .pipe(through(function (chunk, enc, cb) {
         chunks.push(chunk.toString())
         cb()
       }, function () {
         expect(chunks).to.have.ordered.members([
-          'Seventh commit\n\n',
-          'Fifth commit\n\n',
-          'Fourth commit\n\n',
-          'First commit\n\n',
-        ])
-        done()
-      }))
-  })
-
-  it('should allow commits to be scoped using both path and paths', function (done) {
-    try {
-      fs.mkdirSync('./packages/other', { recursive: true })
-      writeFileSync('./packages/other/test1', 'hello')
-      exec('git add --all && git commit -m"Eighth commit"')
-    } catch(e) {
-      fail(e)
-    }
-
-    let chunks = []
-    gitRawCommits({
-      path: './packages/foo',
-      paths: ['./packages/other', './packages/common'],
-    })
-      .pipe(through(function (chunk, enc, cb) {
-        chunks.push(chunk.toString())
-        cb()
-      }, function () {
-        expect(chunks).to.have.ordered.members([
-          'Eighth commit\n\n',
           'Seventh commit\n\n',
           'Fifth commit\n\n',
           'Fourth commit\n\n',
