@@ -29,16 +29,17 @@ function getGitArgs (gitOpts) {
 
   const gitArgs = ['log', gitFormat, gitFromTo]
     .concat(dargs(gitOpts, {
-      excludes: ['debug', 'from', 'to', 'format', 'path', 'paths']
+      excludes: ['debug', 'from', 'to', 'format', 'path']
     }))
 
   // allow commits to focus on a single directory
   // this is useful for monorepos.
   if (gitOpts.path) {
-    gitArgs.push('--', gitOpts.path)
-  }
-  if (gitOpts.paths) {
-    gitOpts.paths.forEach(path => gitArgs.push('--', path))
+    if (Array.isArray(gitOpts.path)) {
+      gitOpts.path.forEach(path => gitArgs.push('--', path))
+    } else {
+      gitArgs.push('--', gitOpts.path)
+    }
   }
 
   return gitArgs
