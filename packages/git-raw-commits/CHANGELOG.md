@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### [2.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits-v2.0.10...git-raw-commits-v2.0.11) (2021-12-29)
+
+
+### Bug Fixes
+
+* allow raw commits to be filtered by path and date range ([#893](https://github.com/conventional-changelog/conventional-changelog/issues/893)) ([b2245a7](https://github.com/conventional-changelog/conventional-changelog/commit/b2245a766c70d280380abbbe85c4894eee04fdd0))
+
 ### [2.0.10](https://www.github.com/conventional-changelog/conventional-changelog/compare/v2.0.9...v2.0.10) (2021-01-27)
 
 
