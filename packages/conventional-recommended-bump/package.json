@@ -45,6 +45,6 @@
   },
   "bin": "cli.js",
   "devDependencies": {
-    "conventional-changelog-conventionalcommits": "^4.5.0"
+    "conventional-changelog-conventionalcommits": "^5.0.0"
   }
 }

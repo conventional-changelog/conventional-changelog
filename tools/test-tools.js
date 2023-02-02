@@ -49,7 +49,7 @@ function gitDummyCommit (msg) {
 
 function gitInit () {
   fs.mkdirSync('git-templates')
-  return exec('git init --template=./git-templates')
+  return exec('git init --template=./git-templates  --initial-branch=master')
 }
 
 module.exports = {
