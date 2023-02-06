@@ -15,7 +15,6 @@ try {
 const readPkg = require('read-pkg')
 const readPkgUp = require('read-pkg-up')
 const URL = require('url').URL
-const _ = require('lodash')
 
 const rhosts = /github|bitbucket|gitlab/i
 
@@ -61,18 +60,13 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
   const rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
 
-  options = _.merge({
-    pkg: {
-      transform: function (pkg) {
-        return pkg
-      }
-    },
+  options = {
     append: false,
     releaseCount: 1,
     skipUnstable: false,
     debug: function () {},
     transform: function (commit, cb) {
-      if (_.isString(commit.gitTags)) {
+      if (typeof commit.gitTags === 'string') {
         const match = rtag.exec(commit.gitTags)
         rtag.lastIndex = 0
 
@@ -87,13 +81,20 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
 
       cb(null, commit)
     },
-    lernaPackage: null
-  }, options)
+    lernaPackage: null,
+    ...options,
+    pkg: {
+      transform: function (pkg) {
+        return pkg
+      },
+      ...options?.pkg
+    }
+  }
 
   options.warn = options.warn || options.debug
 
   if (options.config) {
-    if (_.isFunction(options.config)) {
+    if (typeof options.config === 'function') {
       configPromise = Q.nfcall(options.config)
     } else {
       configPromise = Q(options.config)
@@ -132,7 +133,10 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         config = {}
       }
 
-      context = _.assign(context, config.context)
+      context = {
+        ...context,
+        ...config.context
+      }
 
       if (options.pkg) {
         if (pkgObj.state === 'fulfilled') {
@@ -206,7 +210,7 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         }
       }
 
-      if (!_.isBoolean(options.outputUnreleased)) {
+      if (typeof options.outputUnreleased !== 'boolean') {
         options.outputUnreleased = true
       }
 
@@ -225,10 +229,11 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         if (type) {
           hostOpts = require('../hosts/' + type)
 
-          context = _.assign({
+          context = {
             issue: hostOpts.issue,
-            commit: hostOpts.commit
-          }, context)
+            commit: hostOpts.commit,
+            ...context
+          }
         } else {
           options.warn('Host: "' + context.host + '" does not exist')
           hostOpts = {}
@@ -241,35 +246,34 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
         fromTag = null
       }
 
-      gitRawCommitsOpts = _.assign({
+      gitRawCommitsOpts = {
         format: '%B%n-hash-%n%H%n-gitTags-%n%d%n-committerDate-%n%ci',
         from: fromTag,
         merges: false,
-        debug: options.debug
-      },
-      config.gitRawCommitsOpts,
-      gitRawCommitsOpts
-      )
+        debug: options.debug,
+        ...config.gitRawCommitsOpts,
+        ...gitRawCommitsOpts
+      }
 
       if (options.append) {
         gitRawCommitsOpts.reverse = gitRawCommitsOpts.reverse || true
       }
 
-      parserOpts = _.assign(
-        {}, config.parserOpts, {
-          warn: options.warn
-        },
-        parserOpts)
+      parserOpts = {
+        ...config.parserOpts,
+        warn: options.warn,
+        ...parserOpts
+      }
 
       if (hostOpts.referenceActions && parserOpts) {
         parserOpts.referenceActions = hostOpts.referenceActions
       }
 
-      if (_.isEmpty(parserOpts.issuePrefixes) && hostOpts.issuePrefixes) {
+      if (!parserOpts.issuePrefixes?.length && hostOpts.issuePrefixes) {
         parserOpts.issuePrefixes = hostOpts.issuePrefixes
       }
 
-      writerOpts = _.assign({
+      writerOpts = {
         finalizeContext: function (context, writerOpts, filteredCommits, keyCommit, originalCommits) {
           const firstCommit = originalCommits[0]
           const lastCommit = originalCommits[originalCommits.length - 1]
@@ -316,20 +320,18 @@ function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpt
             }
           }
 
-          if (!_.isBoolean(context.linkCompare) && context.previousTag && context.currentTag) {
+          if (typeof context.linkCompare !== 'boolean' && context.previousTag && context.currentTag) {
             context.linkCompare = true
           }
 
           return context
         },
-        debug: options.debug
-      },
-      config.writerOpts, {
+        debug: options.debug,
+        ...config.writerOpts,
         reverse: options.append,
-        doFlush: options.outputUnreleased
-      },
-      writerOpts
-      )
+        doFlush: options.outputUnreleased,
+        ...writerOpts
+      }
 
       return {
         options: options,

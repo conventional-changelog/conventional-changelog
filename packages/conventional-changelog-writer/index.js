@@ -6,20 +6,20 @@ const readFileSync = require('fs').readFileSync
 const semverValid = require('semver').valid
 const through = require('through2')
 const util = require('./lib/util')
-const _ = require('lodash')
 
 function conventionalChangelogWriterInit (context, options) {
-  context = _.extend({
+  context = {
     commit: 'commits',
     issue: 'issues',
-    date: dateFormat(new Date(), 'yyyy-mm-dd', true)
-  }, context)
+    date: dateFormat(new Date(), 'yyyy-mm-dd', true),
+    ...context
+  }
 
-  if (!_.isBoolean(context.linkReferences) && (context.repository || context.repoUrl) && context.commit && context.issue) {
+  if (typeof context.linkReferences !== 'boolean' && (context.repository || context.repoUrl) && context.commit && context.issue) {
     context.linkReferences = true
   }
 
-  options = _.assign({
+  options = {
     groupBy: 'type',
     commitsSort: 'header',
     noteGroupsSort: 'title',
@@ -38,13 +38,14 @@ function conventionalChangelogWriterInit (context, options) {
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
-    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
-  }, options)
+    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8'),
+    ...options
+  }
 
-  if ((!_.isFunction(options.transform) && _.isObject(options.transform)) || _.isUndefined(options.transform)) {
-    options.transform = _.assign({
+  if (!options.transform || typeof options.transform === 'object') {
+    options.transform = {
       hash: function (hash) {
-        if (_.isString(hash)) {
+        if (typeof hash === 'string') {
           return hash.substring(0, 7)
         }
       },
@@ -57,16 +58,17 @@ function conventionalChangelogWriterInit (context, options) {
         }
 
         return dateFormat(date, 'yyyy-mm-dd', true)
-      }
-    }, options.transform)
+      },
+      ...options.transform
+    }
   }
 
   let generateOn = options.generateOn
-  if (_.isString(generateOn)) {
+  if (typeof generateOn === 'string') {
     generateOn = function (commit) {
-      return !_.isUndefined(commit[options.generateOn])
+      return typeof commit[options.generateOn] !== 'undefined'
     }
-  } else if (!_.isFunction(generateOn)) {
+  } else if (typeof generateOn !== 'function') {
     generateOn = function () {
       return false
     }

@@ -13,7 +13,7 @@
     "log"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "license": "MIT",
   "files": [
@@ -34,7 +34,6 @@
     "git-raw-commits": "^2.0.8",
     "git-remote-origin-url": "^2.0.0",
     "git-semver-tags": "^4.1.1",
-    "lodash": "^4.17.15",
     "normalize-package-data": "^3.0.0",
     "q": "^1.5.1",
     "read-pkg": "^3.0.0",
