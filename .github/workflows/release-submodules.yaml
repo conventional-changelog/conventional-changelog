@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: interrogate
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
             github-token: ${{secrets.GITHUB_TOKEN}}
             script: |
