@@ -5,7 +5,6 @@ const expect = require('chai').expect
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const map = require('lodash').map
 const through = require('through2')
 const today = require('dateformat')(new Date(), 'yyyy-mm-dd', true)
 
@@ -223,7 +222,7 @@ describe('conventionalChangelogWriter', function () {
       const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
         transform: {
           notes: function (notes) {
-            map(notes, function (note) {
+            notes.map(function (note) {
               if (note.title === 'BREAKING CHANGE') {
                 note.title = 'BREAKING CHANGES'
               }
@@ -242,7 +241,7 @@ describe('conventionalChangelogWriter', function () {
         .pipe(conventionalChangelogWriter({}, {
           transform: {
             notes: function (notes) {
-              map(notes, function (note) {
+              notes.map(function (note) {
                 if (note.title === 'BREAKING CHANGE') {
                   note.title = 'BREAKING CHANGES'
                 }
@@ -764,23 +763,23 @@ describe('conventionalChangelogWriter', function () {
         })
         expect(changelog.trim()).to.equal(dedent(`## <small>1.0.1 (2015-04-07)</small>
 
-        * feat(scope): broadcast $destroy event on scope destruction 
-        
-        
-        
+        * feat(scope): broadcast $destroy event on scope destruction
+
+
+
         ## <small>2.0.1 (2015-04-07)</small>
-        
-        * fix(ng-list): Allow custom separator 
-        
-        
-        
+
+        * fix(ng-list): Allow custom separator
+
+
+
         ## <small>4.0.1 (2015-04-07)</small>
-        
-        * perf(template): tweak 
-        * refactor(name): rename this module to conventional-changelog-writer 
-        
-        
-        
+
+        * perf(template): tweak
+        * refactor(name): rename this module to conventional-changelog-writer
+
+
+
         ##  (xxxx-xx-xx)`).replace('xxxx-xx-xx', today))
         upstream
           .pipe(conventionalChangelogWriter({}, {
@@ -973,7 +972,7 @@ describe('conventionalChangelogWriter', function () {
     upstream
       .pipe(conventionalChangelogWriter())
       .pipe(through(function (chunk, enc, cb) {
-        expect(chunk.toString()).to.equal('##  (' + today + ')\n\n* bla \n\n\n\n')
+        expect(chunk.toString()).to.equal('##  (' + today + ')\n\n* bla\n\n\n\n')
 
         i++
         cb(null)

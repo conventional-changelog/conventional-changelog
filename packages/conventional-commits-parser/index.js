@@ -3,10 +3,9 @@
 const parser = require('./lib/parser')
 const regex = require('./lib/regex')
 const through = require('through2')
-const _ = require('lodash')
 
 function assignOpts (options) {
-  options = _.extend({
+  options = {
     headerPattern: /^(\w*)(?:\(([\w$.\-*/ ]*)\))?: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
     referenceActions: [
@@ -27,8 +26,9 @@ function assignOpts (options) {
     revertCorrespondence: ['header', 'hash'],
     warn: function () {},
     mergePattern: null,
-    mergeCorrespondence: null
-  }, options)
+    mergeCorrespondence: null,
+    ...options
+  }
 
   if (typeof options.headerPattern === 'string') {
     options.headerPattern = new RegExp(options.headerPattern)

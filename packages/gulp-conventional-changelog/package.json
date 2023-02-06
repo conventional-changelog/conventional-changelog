@@ -17,7 +17,7 @@
     "url": "https://github.com/stevemao"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict'
 const conventionalChangelogWriter = require('./')
-const forEach = require('lodash').forEach
 const fs = require('fs')
 const meow = require('meow')
 const path = require('path')
@@ -32,13 +31,8 @@ const cli = meow(`
   }
 })
 
-const filePaths = []
 const flags = cli.flags
-
-forEach(cli.input, function (input) {
-  filePaths.push(input)
-})
-
+const filePaths = cli.input
 const length = filePaths.length
 
 let templateContext

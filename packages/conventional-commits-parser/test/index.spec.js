@@ -4,7 +4,6 @@ const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
 const expect = require('chai').expect
-const forEach = require('lodash').forEach
 const through = require('through2')
 
 describe('conventionalCommitsParser', function () {
@@ -34,7 +33,7 @@ describe('conventionalCommitsParser', function () {
       'd7a40a29214f37d469e57d730dfd042b639d4d1f'
     ]
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.end()
@@ -82,7 +81,7 @@ describe('conventionalCommitsParser', function () {
       'bla bla bla\n\n'
     ]
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.end()
@@ -150,7 +149,7 @@ describe('conventionalCommitsParser', function () {
     const stream = through()
     let i = 0
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.end()
@@ -211,7 +210,7 @@ describe('conventionalCommitsParser', function () {
     const stream = through()
     let i = 0
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.write('blabla\n-hash-\n9b1aff905b638aa274a5fc8f88662df446d374bd')

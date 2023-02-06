@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 'use strict'
 const conventionalCommitsParser = require('./')
-const forEach = require('lodash').forEach
 const fs = require('fs')
 const isTextPath = require('is-text-path')
 const JSONStream = require('JSONStream')
@@ -83,7 +82,7 @@ const cli = meow(`
   }
 })
 
-forEach(cli.input, function (arg) {
+cli.input.forEach(function (arg) {
   if (isTextPath(arg)) {
     filePaths.push(arg)
   } else {

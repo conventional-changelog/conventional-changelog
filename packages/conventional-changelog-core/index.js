@@ -4,7 +4,6 @@ const addStream = require('add-stream')
 const gitRawCommits = require('git-raw-commits')
 const conventionalCommitsParser = require('conventional-commits-parser')
 const conventionalChangelogWriter = require('conventional-changelog-writer')
-const _ = require('lodash')
 const stream = require('stream')
 const through = require('through2')
 const execFileSync = require('child_process').execFileSync
@@ -26,10 +25,11 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
   commitsStream._read = function () { }
 
   function commitsRange (from, to) {
-    return gitRawCommits(_.merge({}, gitRawCommitsOpts, {
+    return gitRawCommits({
+      ...gitRawCommitsOpts,
       from: from,
       to: to
-    }))
+    })
       .on('error', function (err) {
         if (!commitsErrorThrown) {
           setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)

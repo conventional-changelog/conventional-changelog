@@ -4,7 +4,6 @@ const dargs = require('dargs')
 const execFile = require('child_process').execFile
 const split = require('split2')
 const stream = require('stream')
-const template = require('lodash/template')
 const through = require('through2')
 
 const DELIMITER = '------------------------ >8 ------------------------'
@@ -24,7 +23,7 @@ function normalizeGitOpts (gitOpts) {
 }
 
 function getGitArgs (gitOpts) {
-  const gitFormat = template('--format=<%= format %>%n' + DELIMITER)(gitOpts)
+  const gitFormat = `--format=${gitOpts.format || ''}%n${DELIMITER}`
   const gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..')
 
   const gitArgs = ['log', gitFormat, gitFromTo]

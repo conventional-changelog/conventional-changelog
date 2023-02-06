@@ -1,5 +1,4 @@
 'use strict'
-const _ = require('lodash')
 
 const CATCH_ALL = /()(.+)/gi
 const SCISSOR = '# ------------------------ >8 ------------------------'
@@ -91,11 +90,11 @@ function parser (raw, options, regex) {
     throw new TypeError('Expected a raw commit')
   }
 
-  if (_.isEmpty(options)) {
+  if (!options || (typeof options === 'object' && !Object.keys(options).length)) {
     throw new TypeError('Expected options')
   }
 
-  if (_.isEmpty(regex)) {
+  if (!regex) {
     throw new TypeError('Expected regex')
   }
 
@@ -112,15 +111,15 @@ function parser (raw, options, regex) {
 
   let continueNote = false
   let isBody = true
-  const headerCorrespondence = _.map(options.headerCorrespondence, function (part) {
+  const headerCorrespondence = options.headerCorrespondence?.map(function (part) {
     return part.trim()
-  })
-  const revertCorrespondence = _.map(options.revertCorrespondence, function (field) {
+  }) || []
+  const revertCorrespondence = options.revertCorrespondence?.map(function (field) {
     return field.trim()
-  })
-  const mergeCorrespondence = _.map(options.mergeCorrespondence, function (field) {
+  }) || []
+  const mergeCorrespondence = options.mergeCorrespondence?.map(function (field) {
     return field.trim()
-  })
+  }) || []
 
   let body = null
   let footer = null
@@ -166,7 +165,7 @@ function parser (raw, options, regex) {
       header = ''
     }
 
-    _.forEach(mergeCorrespondence, function (partName, index) {
+    mergeCorrespondence.forEach(function (partName, index) {
       const partValue = mergeMatch[index + 1] || null
       mergeParts[partName] = partValue
     })
@@ -174,30 +173,30 @@ function parser (raw, options, regex) {
     header = merge
     merge = null
 
-    _.forEach(mergeCorrespondence, function (partName) {
+    mergeCorrespondence.forEach(function (partName) {
       mergeParts[partName] = null
     })
   }
 
   const headerMatch = header.match(options.headerPattern)
   if (headerMatch) {
-    _.forEach(headerCorrespondence, function (partName, index) {
+    headerCorrespondence.forEach(function (partName, index) {
       const partValue = headerMatch[index + 1] || null
       headerParts[partName] = partValue
     })
   } else {
-    _.forEach(headerCorrespondence, function (partName) {
+    headerCorrespondence.forEach(function (partName) {
       headerParts[partName] = null
     })
   }
 
-  Array.prototype.push.apply(references, getReferences(header, {
+  references.push(...getReferences(header, {
     references: regex.references,
     referenceParts: regex.referenceParts
   }))
 
   // body or footer
-  _.forEach(lines, function (line) {
+  lines.forEach(function (line) {
     if (options.fieldPattern) {
       const fieldMatch = options.fieldPattern.exec(line)
 
@@ -285,7 +284,7 @@ function parser (raw, options, regex) {
   const revertMatch = raw.match(options.revertPattern)
   if (revertMatch) {
     revert = {}
-    _.forEach(revertCorrespondence, function (partName, index) {
+    revertCorrespondence.forEach(function (partName, index) {
       const partValue = revertMatch[index + 1] || null
       revert[partName] = partValue
     })
@@ -293,13 +292,13 @@ function parser (raw, options, regex) {
     revert = null
   }
 
-  _.map(notes, function (note) {
+  notes.forEach(function (note) {
     note.text = trimOffNewlines(note.text)
-
-    return note
   })
 
-  const msg = _.merge(headerParts, mergeParts, {
+  const msg = {
+    ...headerParts,
+    ...mergeParts,
     merge: merge,
     header: header,
     body: body ? trimOffNewlines(body) : null,
@@ -307,8 +306,9 @@ function parser (raw, options, regex) {
     notes: notes,
     references: references,
     mentions: mentions,
-    revert: revert
-  }, otherFields)
+    revert: revert,
+    ...otherFields
+  }
 
   return msg
 }

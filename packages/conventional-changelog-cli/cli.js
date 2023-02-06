@@ -6,7 +6,6 @@ const conventionalChangelog = require('conventional-changelog')
 const fs = require('fs')
 const meow = require('meow')
 const tempfile = require('tempfile')
-const _ = require('lodash')
 const resolve = require('path').resolve
 
 const cli = meow(`
@@ -132,7 +131,7 @@ if (infile && infile === outfile) {
   }
 }
 
-let options = _.omitBy({
+let options = {
   preset: flags.preset,
   pkg: {
     path: flags.pkg
@@ -143,7 +142,7 @@ let options = _.omitBy({
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
   tagPrefix: flags.tagPrefix
-}, _.isUndefined)
+}
 
 if (flags.verbose) {
   options.debug = console.info.bind(console)
@@ -162,7 +161,17 @@ try {
   if (flags.config) {
     config = require(resolve(process.cwd(), flags.config))
     options.config = config
-    options = _.merge(options, config.options)
+
+    if (config.options) {
+      options = {
+        ...options,
+        ...config.options,
+        pkg: {
+          ...options.pkg,
+          ...config.options.pkg
+        }
+      }
+    }
   } else {
     config = {}
   }
@@ -171,7 +180,9 @@ try {
   process.exit(1)
 }
 
-const gitRawCommitsOpts = _.merge({}, config.gitRawCommitsOpts || {})
+const gitRawCommitsOpts = {
+  ...config.gitRawCommitsOpts
+}
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
 
 const changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
