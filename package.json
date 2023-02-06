@@ -37,10 +37,9 @@
   "scripts": {
     "lint": "eslint . --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
-    "pretest": "npm run lint",
+    "pretest": "pnpm lint",
     "test": "c8 mocha --timeout 30000 packages/*/test{,/*}.js",
-    "test-windows": "c8 mocha --timeout 60000 packages/*/test{,/*}.js",
-    "postinstall": "bash scripts/install.sh"
+    "test-windows": "c8 mocha --timeout 60000 packages/*/test{,/*}.js"
   },
   "version": "1.0.0",
   "devDependencies": {
@@ -48,7 +47,7 @@
     "c8": "^7.1.2",
     "chai": "^4.2.0",
     "concat-stream": "^2.0.0",
-    "conventional-changelog-core": "file://./packages/conventional-changelog-core",
+    "conventional-changelog-core": "^4.2.4",
     "coveralls": "^3.0.2",
     "eslint": "^7.0.0",
     "eslint-config-standard": "^16.0.1",

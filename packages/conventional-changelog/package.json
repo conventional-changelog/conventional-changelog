@@ -38,7 +38,7 @@
     "conventional-changelog-angular": "^5.0.12",
     "conventional-changelog-atom": "^2.0.8",
     "conventional-changelog-codemirror": "^2.0.8",
-    "conventional-changelog-conventionalcommits": "^4.5.0",
+    "conventional-changelog-conventionalcommits": "^5.0.0",
     "conventional-changelog-core": "^4.2.1",
     "conventional-changelog-ember": "^2.0.9",
     "conventional-changelog-eslint": "^3.0.9",
