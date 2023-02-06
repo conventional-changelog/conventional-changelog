@@ -14,10 +14,11 @@ jobs:
         uses: actions/github-script@v6
         with:
             github-token: ${{secrets.GITHUB_TOKEN}}
+            retries: 5
             script: |
               const {execSync} = require('child_process');
               const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-              const latestRelease = await github.repos.getLatestRelease({
+              const latestRelease = await github.rest.repos.getLatestRelease({
                 owner,
                 repo
               });
