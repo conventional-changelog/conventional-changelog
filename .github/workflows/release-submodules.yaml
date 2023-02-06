@@ -58,7 +58,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 7
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         if: ${{ steps.tag-release.outputs.releases_created }}
         with:
           node-version: 14
