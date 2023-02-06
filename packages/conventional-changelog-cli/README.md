@@ -1,6 +1,6 @@
 # conventional-changelog-cli
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coverage-image]][coverage-url]
 
 > Generate a changelog from git metadata
 
@@ -124,5 +124,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-cli
 [daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-cli.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-cli
-[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-cli/badge.svg
-[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-cli
+[coverage-image]: https://img.shields.io/codecov/c/github/conventional-changelog/conventional-changelog.svg
+[coverage-url]: https://app.codecov.io/gh/conventional-changelog/conventional-changelog

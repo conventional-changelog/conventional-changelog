@@ -29,6 +29,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           name: actions ${{ matrix.node }}
+          files: ./coverage/lcov.info
           fail_ci_if_error: true
   windows:
     runs-on: windows-latest
@@ -49,4 +50,5 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           name: actions windows
+          files: ./coverage/lcov.info
           fail_ci_if_error: true

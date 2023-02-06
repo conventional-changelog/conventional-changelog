@@ -1,4 +1,4 @@
-# [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# [![Build Status][travis-image]][travis-url] [![Coverage Status][coverage-image]][coverage-url]
 
 ## conventionalcommits.org convention
 
@@ -46,5 +46,5 @@ configuration options.
 
 [travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master
 [travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog
-[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog/badge.svg
-[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog
+[coverage-image]: https://img.shields.io/codecov/c/github/conventional-changelog/conventional-changelog.svg
+[coverage-url]: https://app.codecov.io/gh/conventional-changelog/conventional-changelog
