@@ -26,7 +26,7 @@ jobs:
       - run: pnpm install
       - run: pnpm test
       - name: coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           name: actions ${{ matrix.node }}
           fail_ci_if_error: true
@@ -46,7 +46,7 @@ jobs:
       - run: pnpm install
       - run: pnpm test-windows
       - name: coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           name: actions windows
           fail_ci_if_error: true
