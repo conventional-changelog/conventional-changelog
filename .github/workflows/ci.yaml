@@ -26,11 +26,11 @@ jobs:
       - run: pnpm install
       - run: pnpm test
       - name: coverage
-        uses: codecov/codecov-action@v3
+        uses: coverallsapp/github-action@master
         with:
-          name: actions ${{ matrix.node }}
-          files: ./coverage/lcov.info
-          fail_ci_if_error: true
+          flag-name: actions ${{ matrix.node }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
   windows:
     runs-on: windows-latest
     steps:
@@ -47,8 +47,16 @@ jobs:
       - run: pnpm install
       - run: pnpm test-windows
       - name: coverage
-        uses: codecov/codecov-action@v3
+        uses: coverallsapp/github-action@master
         with:
-          name: actions windows
-          files: ./coverage/lcov.info
-          fail_ci_if_error: true
+          flag-name: actions windows
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel: true
+  finish:
+    needs: [test, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true

@@ -37,5 +37,5 @@ Based on https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-mes
 [travis-url]: https://travis-ci.org/stevemao/conventional-changelog-atom
 [daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-atom.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-atom
-[coverage-image]: https://img.shields.io/codecov/c/github/conventional-changelog/conventional-changelog.svg
-[coverage-url]: https://app.codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

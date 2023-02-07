@@ -10,5 +10,5 @@
 [travis-url]: https://travis-ci.org/stevemao/conventional-changelog-express
 [daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-express.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-express
-[coverage-image]: https://img.shields.io/codecov/c/github/conventional-changelog/conventional-changelog.svg
-[coverage-url]: https://app.codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
