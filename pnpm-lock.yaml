@@ -284,14 +284,12 @@ importers:
       concat-stream: ^2.0.0
       conventional-changelog: ^3.1.24
       fancy-log: ^1.3.2
-      object-assign: ^4.0.1
       plugin-error: ^1.0.1
     dependencies:
       add-stream: 1.0.0
       concat-stream: 2.0.0
       conventional-changelog: link:../conventional-changelog
       fancy-log: 1.3.3
-      object-assign: 4.1.1
       plugin-error: 1.0.1
 
   packages/standard-changelog:
@@ -2298,6 +2296,7 @@ packages:
   /object-assign/4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /object-inspect/1.12.3:
     resolution: {integrity: sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==}
