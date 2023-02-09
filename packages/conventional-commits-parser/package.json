@@ -36,8 +36,7 @@
     "is-text-path": "^1.0.1",
     "JSONStream": "^1.0.4",
     "meow": "^8.0.0",
-    "split2": "^3.0.0",
-    "through2": "^4.0.0"
+    "split2": "^3.0.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"

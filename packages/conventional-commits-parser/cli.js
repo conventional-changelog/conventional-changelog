@@ -2,12 +2,12 @@
 'use strict'
 const conventionalCommitsParser = require('./')
 const fs = require('fs')
+const { Transform } = require('stream')
 const isTextPath = require('is-text-path')
 const JSONStream = require('JSONStream')
 const meow = require('meow')
 const readline = require('readline')
 const split = require('split2')
-const through = require('through2')
 
 const filePaths = []
 let separator = '\n\n\n'
@@ -122,7 +122,9 @@ if (process.stdin.isTTY) {
     processFile(0)
   } else {
     let commit = ''
-    const stream = through()
+    const stream = new Transform({
+      transform: (chunk, enc, cb) => cb(null, chunk)
+    })
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -131,13 +133,17 @@ if (process.stdin.isTTY) {
 
     stream.pipe(conventionalCommitsParser(options))
       .pipe(JSONStream.stringify('', '', ''))
-      .pipe(through(function (chunk, enc, cb) {
-        if (chunk.toString() === '""') {
-          cb(null, 'Commit cannot be parsed\n')
-        } else {
-          cb(null, chunk + '\n')
-        }
-      }))
+      .pipe(
+        new Transform({
+          transform (chunk, enc, cb) {
+            if (chunk.toString() === '""') {
+              cb(null, 'Commit cannot be parsed\n')
+            } else {
+              cb(null, chunk + '\n')
+            }
+          }
+        })
+      )
       .pipe(process.stdout)
 
     rl.on('line', function (line) {

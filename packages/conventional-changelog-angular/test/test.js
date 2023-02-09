@@ -2,11 +2,15 @@
 const conventionalChangelogCore = require('conventional-changelog-core')
 const preset = require('../')
 const expect = require('chai').expect
-const through = require('through2')
 const path = require('path')
 const fs = require('fs')
 const tmp = require('tmp')
-const { gitInit, gitDummyCommit, exec } = require('../../../tools/test-tools')
+const {
+  gitInit,
+  gitDummyCommit,
+  exec,
+  through
+} = require('../../../tools/test-tools')
 const betterThanBefore = require('better-than-before')()
 const preparing = betterThanBefore.preparing
 
