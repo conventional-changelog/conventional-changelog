@@ -102,7 +102,7 @@ Callback when you are done.
 
 ####### this
 
-`this` arg of through2.
+`this` arg of transform handler of a stream.
 
 ##### outputUnreleased
 

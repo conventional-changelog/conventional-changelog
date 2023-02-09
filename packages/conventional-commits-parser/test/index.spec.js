@@ -4,7 +4,10 @@ const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
 const expect = require('chai').expect
-const through = require('through2')
+const {
+  through,
+  throughObj
+} = require('../../../tools/test-tools')
 
 describe('conventionalCommitsParser', function () {
   it('should parse raw commits', function (done) {
@@ -42,7 +45,7 @@ describe('conventionalCommitsParser', function () {
 
     stream
       .pipe(conventionalCommitsParser())
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         if (i === 0) {
           expect(chunk.header).to.equal('feat(ng-list): Allow custom separator')
         } else if (i === 1) {
@@ -90,7 +93,7 @@ describe('conventionalCommitsParser', function () {
 
     stream
       .pipe(conventionalCommitsParser())
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         ++i
         cb()
       }, function () {
@@ -113,7 +116,7 @@ describe('conventionalCommitsParser', function () {
           done()
         }
       }))
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         cb()
       }))
   })
@@ -160,7 +163,7 @@ describe('conventionalCommitsParser', function () {
         noteKeywords: ['BREAKING CHANGES'],
         referenceActions: ['fix']
       }))
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         if (i === 0) {
           expect(chunk.type).to.equal('feat')
           expect(chunk.scope).to.equal('ng-list')
@@ -229,7 +232,7 @@ describe('conventionalCommitsParser', function () {
         mergePattern: '/^Merge pull request #(\\d+) from (.*)$/',
         revertCorrespondence: ' header'
       }))
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         if (i === 0) {
           expect(chunk.subject).to.equal('feat')
           expect(chunk.type).to.equal('ng-list')

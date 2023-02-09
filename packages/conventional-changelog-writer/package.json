@@ -42,8 +42,7 @@
     "json-stringify-safe": "^5.0.1",
     "meow": "^8.0.0",
     "semver": "^6.0.0",
-    "split": "^1.0.0",
-    "through2": "^4.0.0"
+    "split": "^1.0.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"

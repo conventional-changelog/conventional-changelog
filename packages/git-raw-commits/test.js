@@ -1,11 +1,14 @@
 'use strict'
 const expect = require('chai').expect
 const gitRawCommits = require('./')
-const through = require('through2')
 const fs = require('fs')
 const tmp = require('tmp')
 const writeFileSync = fs.writeFileSync
-const { gitInit, exec } = require('../../tools/test-tools')
+const {
+  gitInit,
+  exec,
+  through
+} = require('../../tools/test-tools')
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 tmp.setGracefulCleanup()
