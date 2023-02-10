@@ -35,7 +35,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "^3.1.24",
-    "meow": "^8.0.0",
+    "meow": "^11.0.0",
     "tempfile": "^3.0.0"
   },
   "scripts": {
