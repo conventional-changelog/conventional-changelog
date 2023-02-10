@@ -19,7 +19,6 @@ importers:
       git-tails: ^1.0.0
       mocha: ^8.0.0
       pinkie-promise: ^2.0.0
-      q: ^1.5.1
       rimraf: ^3.0.2
       safe-buffer: 5.2.1
       semver: ^6.0.0
@@ -43,7 +42,6 @@ importers:
       git-tails: 1.1.0
       mocha: 8.4.0
       pinkie-promise: 2.0.1
-      q: 1.5.1
       rimraf: 3.0.2
       safe-buffer: 5.2.1
       semver: 6.3.0
@@ -81,16 +79,11 @@ importers:
   packages/conventional-changelog-angular:
     specifiers:
       compare-func: ^2.0.0
-      q: ^1.5.1
     dependencies:
       compare-func: 2.0.0
-      q: 1.5.1
 
   packages/conventional-changelog-atom:
-    specifiers:
-      q: ^1.5.1
-    dependencies:
-      q: 1.5.1
+    specifiers: {}
 
   packages/conventional-changelog-cli:
     specifiers:
@@ -105,18 +98,13 @@ importers:
       tempfile: 3.0.0
 
   packages/conventional-changelog-codemirror:
-    specifiers:
-      q: ^1.5.1
-    dependencies:
-      q: 1.5.1
+    specifiers: {}
 
   packages/conventional-changelog-conventionalcommits:
     specifiers:
       compare-func: ^2.0.0
-      q: ^1.5.1
     dependencies:
       compare-func: 2.0.0
-      q: 1.5.1
 
   packages/conventional-changelog-core:
     specifiers:
@@ -130,7 +118,6 @@ importers:
       git-remote-origin-url: ^2.0.0
       git-semver-tags: ^4.1.1
       normalize-package-data: ^3.0.0
-      q: ^1.5.1
       read-pkg: ^3.0.0
       read-pkg-up: ^3.0.0
     dependencies:
@@ -143,43 +130,28 @@ importers:
       git-remote-origin-url: 2.0.0
       git-semver-tags: link:../git-semver-tags
       normalize-package-data: 3.0.3
-      q: 1.5.1
       read-pkg: 3.0.0
       read-pkg-up: 3.0.0
     devDependencies:
       conventional-changelog-angular: link:../conventional-changelog-angular
 
   packages/conventional-changelog-ember:
-    specifiers:
-      q: ^1.5.1
-    dependencies:
-      q: 1.5.1
+    specifiers: {}
 
   packages/conventional-changelog-eslint:
-    specifiers:
-      q: ^1.5.1
-    dependencies:
-      q: 1.5.1
+    specifiers: {}
 
   packages/conventional-changelog-express:
-    specifiers:
-      q: ^1.5.1
-    dependencies:
-      q: 1.5.1
+    specifiers: {}
 
   packages/conventional-changelog-jquery:
-    specifiers:
-      q: ^1.5.1
-    dependencies:
-      q: 1.5.1
+    specifiers: {}
 
   packages/conventional-changelog-jshint:
     specifiers:
       compare-func: ^2.0.0
-      q: ^1.5.1
     dependencies:
       compare-func: 2.0.0
-      q: 1.5.1
 
   packages/conventional-changelog-preset-loader:
     specifiers:
@@ -247,7 +219,6 @@ importers:
       git-raw-commits: ^2.0.8
       git-semver-tags: ^4.1.1
       meow: ^8.0.0
-      q: ^1.5.1
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog-preset-loader: link:../conventional-changelog-preset-loader
@@ -256,7 +227,6 @@ importers:
       git-raw-commits: link:../git-raw-commits
       git-semver-tags: link:../git-semver-tags
       meow: 8.1.2
-      q: 1.5.1
     devDependencies:
       conventional-changelog-conventionalcommits: link:../conventional-changelog-conventionalcommits
 
@@ -2539,10 +2509,6 @@ packages:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
     dev: true
-
-  /q/1.5.1:
-    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
-    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
 
   /quick-lru/4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
