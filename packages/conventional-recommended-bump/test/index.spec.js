@@ -38,6 +38,10 @@ betterThanBefore.setups([
   () => { // 7
     exec('git tag my-package@1.0.0')
     gitDummyCommit(['feat: this should have been working'])
+  },
+  () => { // 8
+    exec('git tag v1.1.0')
+    gitDummyCommit(['feat: another commit'])
   }
 ])
 
@@ -330,6 +334,35 @@ describe('conventional-recommended-bump API', () => {
           done()
         }
       }, () => {})
+    })
+  })
+
+  describe('Option baseTag', () => {
+    it('should use provided tag to get commits', done => {
+      preparing(8)
+
+      conventionalRecommendedBump({
+        baseTag: 'v1.0.0',
+        whatBump: commits => {
+          assert.strictEqual(commits[0].type, 'feat')
+          assert.strictEqual(commits[0].header, 'feat: another commit')
+          assert.strictEqual(commits[3].type, 'feat')
+          assert.strictEqual(commits[3].header, 'feat: should not be taken into account')
+          assert.strictEqual(commits.length, 4)
+        }
+      }, {}, () => done())
+    })
+
+    it('should use latest tag to get commits if baseTag not provided', done => {
+      preparing(8)
+
+      conventionalRecommendedBump({
+        whatBump: commits => {
+          assert.strictEqual(commits[0].type, 'feat')
+          assert.strictEqual(commits[0].header, 'feat: another commit')
+          assert.strictEqual(commits.length, 1)
+        }
+      }, {}, () => done())
     })
   })
 })

@@ -21,6 +21,7 @@ Got the idea from https://github.com/conventional-changelog/conventional-changel
       - [skipUnstable](#skipunstable)
       - [lernaPackage](#lernapackage)
       - [path](#path)
+      - [baseTag](#basetag)
     - [parserOpts](#parseropts)
     - [callback](#callback)
 - [License](#license)
@@ -132,6 +133,12 @@ For instance if your project contained a package named `conventional-changelog`,
 **Type:** `string`
 
 Specify the path to only calculate with git commits related to the path. If you want to calculate recommended bumps of packages in a [Lerna](https://lernajs.io/)-managed repository, `path` should be use along with `lernaPackage` for each of the package.
+
+##### baseTag
+
+**Type:** `string`
+
+Specify the release tag to use for analysing the commits. If not specified, the most recent semver tag will be chosen.
 
 #### parserOpts
 

@@ -11,6 +11,32 @@ const VERSIONS = ['major', 'minor', 'patch']
 
 module.exports = conventionalRecommendedBump
 
+function getCommits ({ options, tag = '', parserOpts, whatBump, warn, cb }) {
+  gitRawCommits({
+    format: '%B%n-hash-%n%H',
+    from: tag,
+    path: options.path
+  })
+    .pipe(conventionalCommitsParser(parserOpts))
+    .pipe(concat(data => {
+      const commits = options.ignoreReverted ? conventionalCommitsFilter(data) : data
+
+      if (!commits || !commits.length) {
+        warn('No commits since last release')
+      }
+
+      let result = whatBump(commits, options)
+
+      if (result && result.level != null) {
+        result.releaseType = VERSIONS[result.level]
+      } else if (result == null) {
+        result = {}
+      }
+
+      cb(null, result)
+    }))
+}
+
 function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArgument) {
   if (typeof optionsArgument !== 'object') {
     throw new Error('The \'options\' argument must be an object.')
@@ -60,6 +86,11 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
 
     const warn = typeof parserOpts.warn === 'function' ? parserOpts.warn : noop
 
+    if (options.baseTag) {
+      getCommits({ options, tag: options.baseTag, parserOpts, whatBump, warn, cb })
+      return
+    }
+
     gitSemverTags({
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
@@ -69,30 +100,7 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
       if (err) {
         return cb(err)
       }
-
-      gitRawCommits({
-        format: '%B%n-hash-%n%H',
-        from: tags[0] || '',
-        path: options.path
-      })
-        .pipe(conventionalCommitsParser(parserOpts))
-        .pipe(concat(data => {
-          const commits = options.ignoreReverted ? conventionalCommitsFilter(data) : data
-
-          if (!commits || !commits.length) {
-            warn('No commits since last release')
-          }
-
-          let result = whatBump(commits, options)
-
-          if (result && result.level != null) {
-            result.releaseType = VERSIONS[result.level]
-          } else if (result == null) {
-            result = {}
-          }
-
-          cb(null, result)
-        }))
+      getCommits({ options, tag: tags[0], parserOpts, whatBump, warn, cb })
     })
   }).catch(err => cb(err))
 }
