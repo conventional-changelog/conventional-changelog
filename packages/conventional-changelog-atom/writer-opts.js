@@ -1,15 +1,14 @@
 'use strict'
 
-const Q = require('q')
-const readFile = Q.denodeify(require('fs').readFile)
-const resolve = require('path').resolve
+const { readFile } = require('fs').promises
+const { resolve } = require('path')
 
-module.exports = Q.all([
+module.exports = Promise.all([
   readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
   readFile(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
   readFile(resolve(__dirname, './templates/commit.hbs'), 'utf-8')
 ])
-  .spread((template, header, commit) => {
+  .then(([template, header, commit]) => {
     const writerOpts = getWriterOpts()
 
     writerOpts.mainTemplate = template

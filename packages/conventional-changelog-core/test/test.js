@@ -2,7 +2,6 @@
 const conventionalChangelogCore = require('../')
 const expect = require('chai').expect
 const gitTails = require('git-tails').sync
-const through = require('through2')
 const Promise = require('pinkie-promise')
 const semver = require('semver')
 const betterThanBefore = require('better-than-before')()
@@ -12,7 +11,13 @@ const writeFileSync = fs.writeFileSync
 const path = require('path')
 const tmp = require('tmp')
 const rimraf = require('rimraf')
-const { gitInit, gitDummyCommit, exec } = require('../../../tools/test-tools')
+const {
+  gitInit,
+  gitDummyCommit,
+  exec,
+  through,
+  throughObj
+} = require('../../../tools/test-tools')
 
 let dir = ''
 
@@ -802,7 +807,7 @@ describe('conventionalChangelogCore', function () {
     conventionalChangelogCore({}, {}, {}, {}, {
       includeDetails: true
     })
-      .pipe(through.obj(function (chunk) {
+      .pipe(throughObj(function (chunk) {
         expect(chunk).to.be.an('object')
         done()
       }))

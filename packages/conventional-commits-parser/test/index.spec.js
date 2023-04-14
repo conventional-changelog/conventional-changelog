@@ -1,8 +1,10 @@
 'use strict'
 const conventionalCommitsParser = require('../')
 const expect = require('chai').expect
-const forEach = require('lodash').forEach
-const through = require('through2')
+const {
+  through,
+  throughObj
+} = require('../../../tools/test-tools')
 
 describe('conventionalCommitsParser', function () {
   it('should parse raw commits', function (done) {
@@ -31,7 +33,7 @@ describe('conventionalCommitsParser', function () {
       'd7a40a29214f37d469e57d730dfd042b639d4d1f'
     ]
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.end()
@@ -40,7 +42,7 @@ describe('conventionalCommitsParser', function () {
 
     stream
       .pipe(conventionalCommitsParser())
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         if (i === 0) {
           expect(chunk.header).to.equal('feat(ng-list): Allow custom separator')
         } else if (i === 1) {
@@ -79,7 +81,7 @@ describe('conventionalCommitsParser', function () {
       'bla bla bla\n\n'
     ]
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.end()
@@ -88,7 +90,7 @@ describe('conventionalCommitsParser', function () {
 
     stream
       .pipe(conventionalCommitsParser())
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         ++i
         cb()
       }, function () {
@@ -111,7 +113,7 @@ describe('conventionalCommitsParser', function () {
           done()
         }
       }))
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         cb()
       }))
   })
@@ -147,7 +149,7 @@ describe('conventionalCommitsParser', function () {
     const stream = through()
     let i = 0
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.end()
@@ -158,7 +160,7 @@ describe('conventionalCommitsParser', function () {
         noteKeywords: ['BREAKING CHANGES'],
         referenceActions: ['fix']
       }))
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         if (i === 0) {
           expect(chunk.type).to.equal('feat')
           expect(chunk.scope).to.equal('ng-list')
@@ -208,7 +210,7 @@ describe('conventionalCommitsParser', function () {
     const stream = through()
     let i = 0
 
-    forEach(commits, function (commit) {
+    commits.forEach(function (commit) {
       stream.write(commit)
     })
     stream.write('blabla\n-hash-\n9b1aff905b638aa274a5fc8f88662df446d374bd')
@@ -227,7 +229,7 @@ describe('conventionalCommitsParser', function () {
         mergePattern: '/^Merge pull request #(\\d+) from (.*)$/',
         revertCorrespondence: ' header'
       }))
-      .pipe(through.obj(function (chunk, enc, cb) {
+      .pipe(throughObj(function (chunk, enc, cb) {
         if (i === 0) {
           expect(chunk.subject).to.equal('feat')
           expect(chunk.type).to.equal('ng-list')

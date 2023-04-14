@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
     "index.js",
@@ -37,14 +37,13 @@
     "conventional-commits-parser": "^3.2.0",
     "git-raw-commits": "^2.0.8",
     "git-semver-tags": "^4.1.1",
-    "meow": "^8.0.0",
-    "q": "^1.5.1"
+    "meow": "^8.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000 ./test/preset-resolver.spec.js"
   },
   "bin": "cli.js",
   "devDependencies": {
-    "conventional-changelog-conventionalcommits": "^4.5.0"
+    "conventional-changelog-conventionalcommits": "^5.0.0"
   }
 }

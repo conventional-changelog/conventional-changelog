@@ -3,8 +3,8 @@ const concat = require('concat-stream')
 const expect = require('chai').expect
 const fs = require('fs')
 const spawn = require('child_process').fork
-const through = require('through2')
 const path = require('path')
+const { through } = require('../../../tools/test-tools')
 
 const cliPath = path.join(__dirname, '../test-cli.js')
 
