@@ -3,9 +3,7 @@
 const dargs = require('dargs')
 const execFile = require('child_process').execFile
 const split = require('split2')
-const stream = require('stream')
-const template = require('lodash/template')
-const through = require('through2')
+const { Readable, Transform } = require('stream')
 
 const DELIMITER = '------------------------ >8 ------------------------'
 
@@ -24,7 +22,7 @@ function normalizeGitOpts (gitOpts) {
 }
 
 function getGitArgs (gitOpts) {
-  const gitFormat = template('--format=<%= format %>%n' + DELIMITER)(gitOpts)
+  const gitFormat = `--format=${gitOpts.format || ''}%n${DELIMITER}`
   const gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..')
 
   const gitArgs = ['log', gitFormat, gitFromTo]
@@ -42,7 +40,7 @@ function getGitArgs (gitOpts) {
 }
 
 function gitRawCommits (rawGitOpts, rawExecOpts) {
-  const readable = new stream.Readable()
+  const readable = new Readable()
   readable._read = function () {}
 
   const gitOpts = normalizeGitOpts(rawGitOpts)
@@ -62,28 +60,39 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
 
   child.stdout
     .pipe(split(DELIMITER + '\n'))
-    .pipe(through(function (chunk, enc, cb) {
-      readable.push(chunk)
-      isError = false
+    .pipe(
+      new Transform({
+        transform (chunk, enc, cb) {
+          readable.push(chunk)
+          isError = false
 
-      cb()
-    }, function (cb) {
-      setImmediate(function () {
-        if (!isError) {
-          readable.push(null)
-          readable.emit('close')
+          cb()
+        },
+        flush (cb) {
+          setImmediate(function () {
+            if (!isError) {
+              readable.push(null)
+              readable.emit('close')
+            }
+
+            cb()
+          })
         }
-
-        cb()
       })
-    }))
+    )
 
   child.stderr
-    .pipe(through.obj(function (chunk) {
-      isError = true
-      readable.emit('error', new Error(chunk))
-      readable.emit('close')
-    }))
+    .pipe(
+      new Transform({
+        objectMode: true,
+        highWaterMark: 16,
+        transform (chunk) {
+          isError = true
+          readable.emit('error', new Error(chunk))
+          readable.emit('close')
+        }
+      })
+    )
 
   return readable
 }

@@ -1,4 +1,5 @@
 const { execSync } = require('child_process')
+const { Transform } = require('stream')
 const fs = require('fs')
 
 function fixMessage (msg) {
@@ -49,11 +50,35 @@ function gitDummyCommit (msg) {
 
 function gitInit () {
   fs.mkdirSync('git-templates')
-  return exec('git init --template=./git-templates')
+  return exec('git init --template=./git-templates  --initial-branch=master')
+}
+
+function through (
+  transform = (chunk, enc, cb) => cb(null, chunk),
+  flush
+) {
+  return new Transform({
+    transform,
+    flush
+  })
+}
+
+function throughObj (
+  transform = (chunk, enc, cb) => cb(null, chunk),
+  flush
+) {
+  return new Transform({
+    objectMode: true,
+    highWaterMark: 16,
+    transform,
+    flush
+  })
 }
 
 module.exports = {
   gitDummyCommit,
   gitInit,
-  exec
+  exec,
+  through,
+  throughObj
 }

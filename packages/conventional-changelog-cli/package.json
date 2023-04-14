@@ -30,12 +30,11 @@
     "log"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "^3.1.24",
-    "lodash": "^4.17.15",
     "meow": "^8.0.0",
     "tempfile": "^3.0.0"
   },
