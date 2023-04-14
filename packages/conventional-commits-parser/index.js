@@ -1,12 +1,11 @@
 'use strict'
 
+const { Transform } = require('stream')
 const parser = require('./lib/parser')
 const regex = require('./lib/regex')
-const through = require('through2')
-const _ = require('lodash')
 
 function assignOpts (options) {
-  options = _.extend({
+  options = {
     headerPattern: /^(\w*)(?:\(([\w$.\-*/ ]*)\))?: (.*)$/,
     headerCorrespondence: ['type', 'scope', 'subject'],
     referenceActions: [
@@ -27,8 +26,9 @@ function assignOpts (options) {
     revertCorrespondence: ['header', 'hash'],
     warn: function () {},
     mergePattern: null,
-    mergeCorrespondence: null
-  }, options)
+    mergeCorrespondence: null,
+    ...options
+  }
 
   if (typeof options.headerPattern === 'string') {
     options.headerPattern = new RegExp(options.headerPattern)
@@ -73,18 +73,22 @@ function conventionalCommitsParser (options) {
   options = assignOpts(options)
   const reg = regex(options)
 
-  return through.obj(function (data, enc, cb) {
-    let commit
+  return new Transform({
+    objectMode: true,
+    highWaterMark: 16,
+    transform (data, enc, cb) {
+      let commit
 
-    try {
-      commit = parser(data.toString(), options, reg)
-      cb(null, commit)
-    } catch (err) {
-      if (options.warn === true) {
-        cb(err)
-      } else {
-        options.warn(err.toString())
-        cb(null, '')
+      try {
+        commit = parser(data.toString(), options, reg)
+        cb(null, commit)
+      } catch (err) {
+        if (options.warn === true) {
+          cb(err)
+        } else {
+          options.warn(err.toString())
+          cb(null, '')
+        }
       }
     }
   })
