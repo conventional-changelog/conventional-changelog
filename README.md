@@ -1,7 +1,7 @@
 # Conventional Changelog
 
 [![Build Status][ci-image]][ci-url]
-[![Codecov][codecov-image]][codecov-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 [![Community slack][slack-image]][slack-url]
 
@@ -30,6 +30,7 @@ You can also use one of the plugins if you are already using the tool:
 - [gulp](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/gulp-conventional-changelog)
 - [atom](https://github.com/conventional-changelog/atom-conventional-changelog)
 - [vscode](https://github.com/axetroy/vscode-changelog-generator)
+- [emacs](https://github.com/liuyinz/emacs-conventional-changelog)
 
 ## Modules Important to Conventional Changelog Ecosystem
 
@@ -57,7 +58,7 @@ JavaScript package managers should allow you to install this package with any ve
 
 [ci-image]: https://github.com/conventional-changelog/conventional-changelog/workflows/ci/badge.svg
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coveralls-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coveralls-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
 [slack-image]: http://devtoolscommunity.herokuapp.com/badge.svg
 [slack-url]: http://devtoolscommunity.herokuapp.com

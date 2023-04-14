@@ -1,9 +1,4 @@
-# conventional-changelog-preset-loader
-
-[![NPM version][npm-image]][npm-url]
-[![Build Status][ci-image]][ci-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Codecov][codecov-image]][codecov-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > Configuration preset loader for `conventional-changelog`.
 
@@ -32,6 +27,7 @@ Will return whatever is exported by the preset package. That may be a configurat
 
 ## License
 
+
 MIT © [Steve Mao](https://github.com/stevemao)
 
 [npm-image]: https://badge.fury.io/js/conventional-changelog-preset-loader.svg
@@ -40,5 +36,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
 [daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-preset-loader.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-preset-loader
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

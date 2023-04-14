@@ -1,9 +1,4 @@
-# conventional-commits-parser
-
-[![NPM version][npm-image]][npm-url]
-[![Build Status][ci-image]][ci-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Codecov][codecov-image]][codecov-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > Parse raw conventional commits
 
@@ -206,7 +201,8 @@ Used to define if `issuePrefixes` should be considered case sensitive.
 
 ##### noteKeywords
 
-Type: `array` of `string` or `string` Default: `['BREAKING CHANGE']`
+Type: `array` of `string` or `string` Default: `['BREAKING CHANGE',
+'BREAKING-CHANGE']`
 
 Keywords for important notes. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
 
@@ -383,5 +379,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
 [daviddm-image]: https://david-dm.org/conventional-changelog/conventional-commits-parser.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/conventional-commits-parser
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

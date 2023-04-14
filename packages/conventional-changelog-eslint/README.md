@@ -1,9 +1,4 @@
-# conventional-changelog-eslint
-
-[![NPM version][npm-image]][npm-url]
-[![Build Status][ci-image]][ci-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Codecov][codecov-image]][codecov-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [eslint](https://github.com/eslint/eslint) preset
 
@@ -54,5 +49,5 @@ Based on https://eslint.org/docs/developer-guide/contributing/pull-requests#step
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
 [daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-eslint.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-eslint
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

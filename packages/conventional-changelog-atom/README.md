@@ -1,9 +1,4 @@
-# conventional-changelog-atom
-
-[![NPM version][npm-image]][npm-url]
-[![Build Status][ci-image]][ci-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Codecov][codecov-image]][codecov-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [atom](https://github.com/atom/atom) preset
 
@@ -42,5 +37,5 @@ Based on https://github.com/atom/atom/blob/master/CONTRIBUTING.md#git-commit-mes
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
 [daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-atom.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-atom
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

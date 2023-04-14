@@ -1,9 +1,4 @@
-# conventional-changelog-core
-
-[![NPM version][npm-image]][npm-url]
-[![Build Status][ci-image]][ci-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Codecov][codecov-image]][codecov-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status: Linux][ci-image]][ci-url] [![Build Status: Windows][appveyor-image]][appveyor-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) core
 
@@ -107,7 +102,7 @@ Callback when you are done.
 
 ####### this
 
-`this` arg of through2.
+`this` arg of transform handler of a stream.
 
 ##### outputUnreleased
 
@@ -252,7 +247,9 @@ MIT
 [npm-url]: https://npmjs.org/package/conventional-changelog-core
 [ci-image]: https://github.com/conventional-changelog/conventional-changelog/workflows/ci/badge.svg
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
+[appveyor-image]: https://ci.appveyor.com/api/projects/status/baoumm34w8c5o0hv/branch/master?svg=true
+[appveyor-url]: https://ci.appveyor.com/project/stevemao/conventional-changelog-core/branch/master
 [daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-core.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-core
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

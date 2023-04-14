@@ -1,9 +1,4 @@
-# conventional-changelog-conventionalcommits
-
-[![NPM version][npm-image]][npm-url]
-[![Build Status][ci-image]][ci-url]
-[![Dependency Status][daviddm-image]][daviddm-url]
-[![Codecov][codecov-image]][codecov-url]
+# [![Build Status][ci-image]][ci-url] [![Coverage Status][coverage-image]][coverage-url]
 
 ## conventionalcommits.org convention
 
@@ -25,7 +20,7 @@ const config = require('conventional-changelog-conventionalcommits')
 
 module.exports = config({
     "issuePrefixes": ["TEST-"],
-    "issueUrlFormat": "myBugTracker.com/{prefix}{id}"
+    "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
 })
 ```
 
@@ -36,7 +31,7 @@ or json config like that:
         "preset": {
             "name": "conventionalchangelog",
             "issuePrefixes": ["TEST-"],
-            "issueUrlFormat": "myBugTracker.com/{prefix}{id}"
+            "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
         }
     }
 }
@@ -44,15 +39,12 @@ or json config like that:
 This last json config way passes the `preset` object to the `conventional-changelog-preset-loader` package, that in turn, passes this same `preset` object as the config for the `conventional-changelog-conventionalcommits`.
 
 
+
 See [conventional-changelog-config-spec](https://github.com/conventional-changelog/conventional-changelog-config-spec) for available
 configuration options.
 
 
-[npm-image]: https://badge.fury.io/js/conventional-changelog-conventionalcommits.svg
-[npm-url]: https://npmjs.org/package/conventional-changelog-conventionalcommits
 [ci-image]: https://github.com/conventional-changelog/conventional-changelog/workflows/ci/badge.svg
 [ci-url]: https://github.com/conventional-changelog/conventional-changelog/actions?query=workflow%3Aci+branch%3Amaster
-[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-angular.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-angular
-[codecov-image]: https://codecov.io/gh/conventional-changelog/conventional-changelog/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
