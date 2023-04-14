@@ -4,7 +4,6 @@ const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
 const beforeEach = mocha.beforeEach
-const _ = require('lodash')
 const parser = require('../lib/parser')
 const regex = require('../lib/regex')
 
@@ -230,7 +229,10 @@ describe('parser', function () {
   })
 
   it('should ignore comments according to commentChar', function () {
-    const commentOptions = _.assign({}, options, { commentChar: '#' })
+    const commentOptions = {
+      ...options,
+      commentChar: '#'
+    }
 
     expect(parser('# comment', commentOptions, reg)).to.eql({
       merge: null,
@@ -276,7 +278,10 @@ describe('parser', function () {
   })
 
   it('should respect commentChar config', function () {
-    const commentOptions = _.assign({}, options, { commentChar: '*' })
+    const commentOptions = {
+      ...options,
+      commentChar: '*'
+    }
 
     expect(parser('* comment', commentOptions, reg)).to.eql({
       merge: null,
@@ -688,7 +693,7 @@ describe('parser', function () {
       const text = expectedText +
           '\n' +
           'Closes #9462'
-      options.noteKeywords = ['BREAKING CHANGE']
+      options.noteKeywords = ['BREAKING CHANGE', 'BREAKING-CHANGE']
       reg = regex(options)
       const msg = parser(
         'fix(core): report duplicate template bindings in templates\n' +
@@ -710,7 +715,7 @@ describe('parser', function () {
     })
 
     it('should not treat it as important notes if there are texts after `noteKeywords`', function () {
-      options.noteKeywords = ['BREAKING CHANGE']
+      options.noteKeywords = ['BREAKING CHANGE', 'BREAKING-CHANGE']
       reg = regex(options)
       const msg = parser(
         'fix(core): report duplicate template bindings in templates\n' +

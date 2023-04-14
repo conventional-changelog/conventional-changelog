@@ -1,4 +1,4 @@
-# [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# [![Build Status][travis-image]][travis-url] [![Coverage Status][coverage-image]][coverage-url]
 
 ## conventionalcommits.org convention
 
@@ -20,7 +20,7 @@ const config = require('conventional-changelog-conventionalcommits')
 
 module.exports = config({
     "issuePrefixes": ["TEST-"],
-    "issueUrlFormat": "myBugTracker.com/{prefix}{id}"
+    "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
 })
 ```
 
@@ -31,7 +31,7 @@ or json config like that:
         "preset": {
             "name": "conventionalchangelog",
             "issuePrefixes": ["TEST-"],
-            "issueUrlFormat": "myBugTracker.com/{prefix}{id}"
+            "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
         }
     }
 }
@@ -46,5 +46,5 @@ configuration options.
 
 [travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master
 [travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog
-[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog/badge.svg
-[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

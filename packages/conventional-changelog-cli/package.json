@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-cli",
-  "version": "2.1.1",
+  "version": "2.2.2",
   "description": "Generate a changelog from git metadata",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -30,12 +30,11 @@
     "log"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "^3.1.24",
-    "lodash": "^4.17.15",
     "meow": "^8.0.0",
     "tempfile": "^3.0.0"
   },

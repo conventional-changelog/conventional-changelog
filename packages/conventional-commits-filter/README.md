@@ -1,4 +1,4 @@
-# conventional-commits-filter [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+# conventional-commits-filter [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coverage-image]][coverage-url]
 > Filter out reverted commits parsed by conventional-commits-parser
 
 
@@ -180,5 +180,5 @@ MIT © [Steve Mao]()
 [travis-url]: https://travis-ci.org/stevemao/conventional-commits-filter
 [daviddm-image]: https://david-dm.org/stevemao/conventional-commits-filter.svg
 [daviddm-url]: https://david-dm.org/stevemao/conventional-commits-filter
-[coveralls-image]: https://coveralls.io/repos/stevemao/conventional-commits-filter/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/r/stevemao/conventional-commits-filter
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
