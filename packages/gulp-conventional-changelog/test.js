@@ -4,11 +4,15 @@ const conventionalChangelog = require('./')
 const expect = require('chai').expect
 const Vinyl = require('vinyl')
 const join = require('path').join
-const through = require('through2')
 const Buffer = require('safe-buffer').Buffer
 const writeFileSync = require('fs').writeFileSync
 const tmp = require('tmp')
-const { gitInit, exec } = require('../../tools/test-tools')
+const {
+  gitInit,
+  exec,
+  through,
+  throughObj
+} = require('../../tools/test-tools')
 
 tmp.setGracefulCleanup()
 const oldDir = process.cwd()
@@ -236,7 +240,7 @@ describe('gulp-conventional-changelog', function () {
       const stream = conventionalChangelog()
       let n = 0
 
-      stream.pipe(through.obj(function (file, enc, cb) {
+      stream.pipe(throughObj(function (file, enc, cb) {
         expect(file.path).to.equal('null.md')
         expect(file.contents).to.equal(null)
         n++

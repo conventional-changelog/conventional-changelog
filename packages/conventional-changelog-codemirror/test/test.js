@@ -2,10 +2,13 @@
 const conventionalChangelogCore = require('conventional-changelog-core')
 const config = require('../')
 const expect = require('chai').expect
-const through = require('through2')
 const fs = require('fs')
 const tmp = require('tmp')
-const { gitInit, exec } = require('../../../tools/test-tools')
+const {
+  gitInit,
+  exec,
+  through
+} = require('../../../tools/test-tools')
 
 tmp.setGracefulCleanup()
 const oldDir = process.cwd()

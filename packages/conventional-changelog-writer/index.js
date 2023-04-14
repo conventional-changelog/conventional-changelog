@@ -1,25 +1,25 @@
 'use strict'
 
 const dateFormat = require('dateformat')
-const join = require('path').join
-const readFileSync = require('fs').readFileSync
-const semverValid = require('semver').valid
-const through = require('through2')
+const { Transform } = require('stream')
+const { join } = require('path')
+const { readFileSync } = require('fs')
+const { valid: semverValid } = require('semver')
 const util = require('./lib/util')
-const _ = require('lodash')
 
 function conventionalChangelogWriterInit (context, options) {
-  context = _.extend({
+  context = {
     commit: 'commits',
     issue: 'issues',
-    date: dateFormat(new Date(), 'yyyy-mm-dd', true)
-  }, context)
+    date: dateFormat(new Date(), 'yyyy-mm-dd', true),
+    ...context
+  }
 
-  if (!_.isBoolean(context.linkReferences) && (context.repository || context.repoUrl) && context.commit && context.issue) {
+  if (typeof context.linkReferences !== 'boolean' && (context.repository || context.repoUrl) && context.commit && context.issue) {
     context.linkReferences = true
   }
 
-  options = _.assign({
+  options = {
     groupBy: 'type',
     commitsSort: 'header',
     noteGroupsSort: 'title',
@@ -38,13 +38,14 @@ function conventionalChangelogWriterInit (context, options) {
     mainTemplate: readFileSync(join(__dirname, 'templates/template.hbs'), 'utf-8'),
     headerPartial: readFileSync(join(__dirname, 'templates/header.hbs'), 'utf-8'),
     commitPartial: readFileSync(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
-    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8')
-  }, options)
+    footerPartial: readFileSync(join(__dirname, 'templates/footer.hbs'), 'utf-8'),
+    ...options
+  }
 
-  if ((!_.isFunction(options.transform) && _.isObject(options.transform)) || _.isUndefined(options.transform)) {
-    options.transform = _.assign({
+  if (!options.transform || typeof options.transform === 'object') {
+    options.transform = {
       hash: function (hash) {
-        if (_.isString(hash)) {
+        if (typeof hash === 'string') {
           return hash.substring(0, 7)
         }
       },
@@ -57,16 +58,17 @@ function conventionalChangelogWriterInit (context, options) {
         }
 
         return dateFormat(date, 'yyyy-mm-dd', true)
-      }
-    }, options.transform)
+      },
+      ...options.transform
+    }
   }
 
   let generateOn = options.generateOn
-  if (_.isString(generateOn)) {
+  if (typeof generateOn === 'string') {
     generateOn = function (commit) {
-      return !_.isUndefined(commit[options.generateOn])
+      return typeof commit[options.generateOn] !== 'undefined'
     }
-  } else if (!_.isFunction(generateOn)) {
+  } else if (typeof generateOn !== 'function') {
     generateOn = function () {
       return false
     }
@@ -87,83 +89,89 @@ function conventionalChangelogWriterParseStream (context, options) {
   let neverGenerated = true
   let savedKeyCommit
   let firstRelease = true
-  return through.obj(function (chunk, _enc, cb) {
-    try {
-      let result
-      const commit = util.processCommit(chunk, options.transform, context)
-      const keyCommit = commit || chunk
 
-      // previous blocks of logs
-      if (options.reverse) {
-        if (commit) {
-          commits.push(commit)
-        }
+  return new Transform({
+    objectMode: true,
+    highWaterMark: 16,
+    transform (chunk, _enc, cb) {
+      try {
+        let result
+        const commit = util.processCommit(chunk, options.transform, context)
+        const keyCommit = commit || chunk
 
-        if (generateOn(keyCommit, commits, context, options)) {
-          neverGenerated = false
-          result = util.generate(options, commits, context, keyCommit)
-          if (options.includeDetails) {
-            this.push({
-              log: result,
-              keyCommit: keyCommit
-            })
-          } else {
-            this.push(result)
+        // previous blocks of logs
+        if (options.reverse) {
+          if (commit) {
+            commits.push(commit)
           }
 
-          commits = []
-        }
-      } else {
-        if (generateOn(keyCommit, commits, context, options)) {
-          neverGenerated = false
-          result = util.generate(options, commits, context, savedKeyCommit)
-
-          if (!firstRelease || options.doFlush) {
+          if (generateOn(keyCommit, commits, context, options)) {
+            neverGenerated = false
+            result = util.generate(options, commits, context, keyCommit)
             if (options.includeDetails) {
               this.push({
                 log: result,
-                keyCommit: savedKeyCommit
+                keyCommit: keyCommit
               })
             } else {
               this.push(result)
             }
+
+            commits = []
+          }
+        } else {
+          if (generateOn(keyCommit, commits, context, options)) {
+            neverGenerated = false
+            result = util.generate(options, commits, context, savedKeyCommit)
+
+            if (!firstRelease || options.doFlush) {
+              if (options.includeDetails) {
+                this.push({
+                  log: result,
+                  keyCommit: savedKeyCommit
+                })
+              } else {
+                this.push(result)
+              }
+            }
+
+            firstRelease = false
+            commits = []
+            savedKeyCommit = keyCommit
           }
 
-          firstRelease = false
-          commits = []
-          savedKeyCommit = keyCommit
+          if (commit) {
+            commits.push(commit)
+          }
         }
 
-        if (commit) {
-          commits.push(commit)
+        cb()
+      } catch (err) {
+        cb(err)
+      }
+    },
+    flush (cb) {
+      if (!options.doFlush && (options.reverse || neverGenerated)) {
+        cb(null)
+        return
+      }
+
+      try {
+        const result = util.generate(options, commits, context, savedKeyCommit)
+
+        if (options.includeDetails) {
+          this.push({
+            log: result,
+            keyCommit: savedKeyCommit
+          })
+        } else {
+          this.push(result)
         }
+
+        cb()
+      } catch (err) {
+        cb(err)
       }
-
-      cb()
-    } catch (err) {
-      cb(err)
-    }
-  }, function (cb) {
-    if (!options.doFlush && (options.reverse || neverGenerated)) {
-      cb(null)
-      return
-    }
-
-    try {
-      const result = util.generate(options, commits, context, savedKeyCommit)
-
-      if (options.includeDetails) {
-        this.push({
-          log: result,
-          keyCommit: savedKeyCommit
-        })
-      } else {
-        this.push(result)
-      }
-
-      cb()
-    } catch (err) {
-      cb(err)
     }
   })
 }

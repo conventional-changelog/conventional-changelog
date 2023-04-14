@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status: Linux][travis-image]][travis-url] [![Build Status: Windows][appveyor-image]][appveyor-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status: Linux][travis-image]][travis-url] [![Build Status: Windows][appveyor-image]][appveyor-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > Get raw git commits out of your repository using git-log(1)
 
@@ -97,5 +97,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [appveyor-url]: https://ci.appveyor.com/project/stevemao/git-raw-commits/branch/master
 [daviddm-image]: https://david-dm.org/conventional-changelog/git-raw-commits.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/git-raw-commits
-[coveralls-image]: https://coveralls.io/repos/conventional-changelog/git-raw-commits/badge.svg
-[coveralls-url]: https://coveralls.io/r/conventional-changelog/git-raw-commits
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > Get all git semver tags of your repository in reverse chronological order
 
@@ -50,5 +50,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/conventional-changelog/git-semver-tags
 [daviddm-image]: https://david-dm.org/stevemao/git-semver-tags.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/stevemao/git-semver-tags
-[coveralls-image]: https://coveralls.io/repos/stevemao/git-semver-tags/badge.svg
-[coveralls-url]: https://coveralls.io/r/stevemao/git-semver-tags
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
