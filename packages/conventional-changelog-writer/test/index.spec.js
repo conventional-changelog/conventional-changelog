@@ -5,9 +5,11 @@ const expect = require('chai').expect
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const map = require('lodash/map')
-const through = require('through2')
 const today = require('dateformat')(new Date(), 'yyyy-mm-dd', true)
+const {
+  through,
+  throughObj
+} = require('../../../tools/test-tools')
 
 const commits = [
   {
@@ -67,7 +69,7 @@ const commits = [
 
 describe('conventionalChangelogWriter', function () {
   function getStream () {
-    const upstream = through.obj()
+    const upstream = throughObj()
     for (const commit of commits) {
       upstream.write(commit)
     }
@@ -78,7 +80,7 @@ describe('conventionalChangelogWriter', function () {
   describe('no commits', function () {
     it('should still work if there is no commits', function (done) {
       let i = 0
-      const upstream = through.obj()
+      const upstream = throughObj()
       upstream.end()
       upstream
         .pipe(conventionalChangelogWriter())
@@ -223,7 +225,7 @@ describe('conventionalChangelogWriter', function () {
       const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
         transform: {
           notes: function (notes) {
-            map(notes, function (note) {
+            notes.map(function (note) {
               if (note.title === 'BREAKING CHANGE') {
                 note.title = 'BREAKING CHANGES'
               }
@@ -242,7 +244,7 @@ describe('conventionalChangelogWriter', function () {
         .pipe(conventionalChangelogWriter({}, {
           transform: {
             notes: function (notes) {
-              map(notes, function (note) {
+              notes.map(function (note) {
                 if (note.title === 'BREAKING CHANGE') {
                   note.title = 'BREAKING CHANGES'
                 }
@@ -333,7 +335,7 @@ describe('conventionalChangelogWriter', function () {
     ]
 
     function getStream () {
-      const upstream = through.obj()
+      const upstream = throughObj()
       for (const commit of commits) {
         upstream.write(commit)
       }
@@ -451,7 +453,7 @@ describe('conventionalChangelogWriter', function () {
             committerDate: '2015-04-08 09:43:59 +1000'
           }
         ]
-        const upstream = through.obj()
+        const upstream = throughObj()
         for (const commit of commits) {
           upstream.write(commit)
         }
@@ -608,7 +610,7 @@ describe('conventionalChangelogWriter', function () {
           .pipe(conventionalChangelogWriter({}, {
             includeDetails: true
           }))
-          .pipe(through.obj(function (chunk, enc, cb) {
+          .pipe(throughObj(function (chunk, enc, cb) {
             if (i === 0) {
               expect(chunk.log).to.include('##  (' + today + ')\n\n')
               expect(chunk.log).to.include('feat(scope): broadcast $destroy event on scope destruction')
@@ -634,7 +636,7 @@ describe('conventionalChangelogWriter', function () {
       it('should not flush when previous release is generated', function (done) {
         let i = 0
 
-        const upstream = through.obj()
+        const upstream = throughObj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -686,7 +688,7 @@ describe('conventionalChangelogWriter', function () {
       })
 
       it('should not flush when it is the only potential release', function (done) {
-        const upstream = through.obj()
+        const upstream = throughObj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -754,7 +756,7 @@ describe('conventionalChangelogWriter', function () {
             committerDate: '2015-04-08 09:43:59 +1000'
           }
         ]
-        const upstream = through.obj()
+        const upstream = throughObj()
         for (const commit of commits) {
           upstream.push(commit)
         }
@@ -764,23 +766,23 @@ describe('conventionalChangelogWriter', function () {
         })
         expect(changelog.trim()).to.equal(dedent(`## <small>1.0.1 (2015-04-07)</small>
 
-        * feat(scope): broadcast $destroy event on scope destruction 
-        
-        
-        
+        * feat(scope): broadcast $destroy event on scope destruction
+
+
+
         ## <small>2.0.1 (2015-04-07)</small>
-        
-        * fix(ng-list): Allow custom separator 
-        
-        
-        
+
+        * fix(ng-list): Allow custom separator
+
+
+
         ## <small>4.0.1 (2015-04-07)</small>
-        
-        * perf(template): tweak 
-        * refactor(name): rename this module to conventional-changelog-writer 
-        
-        
-        
+
+        * perf(template): tweak
+        * refactor(name): rename this module to conventional-changelog-writer
+
+
+
         ##  (xxxx-xx-xx)`).replace('xxxx-xx-xx', today))
         upstream
           .pipe(conventionalChangelogWriter({}, {
@@ -851,7 +853,7 @@ describe('conventionalChangelogWriter', function () {
             reverse: true,
             includeDetails: true
           }))
-          .pipe(through.obj(function (chunk, enc, cb) {
+          .pipe(throughObj(function (chunk, enc, cb) {
             if (i === 0) {
               expect(chunk.log).to.include('## <small>1.0.1 (2015-04-07)</small>\n\n')
               expect(chunk.log).to.include('broadcast $destroy event on scope destruction')
@@ -876,7 +878,7 @@ describe('conventionalChangelogWriter', function () {
       it('should not flush when previous release is generated', function (done) {
         let i = 0
 
-        const upstream = through.obj()
+        const upstream = throughObj()
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
@@ -930,7 +932,7 @@ describe('conventionalChangelogWriter', function () {
     })
 
     it('should not flush when it is the only potential release', function (done) {
-      const upstream = through.obj()
+      const upstream = throughObj()
       upstream.write({
         header: 'feat(scope): broadcast $destroy event on scope destruction',
         body: null,
@@ -962,7 +964,7 @@ describe('conventionalChangelogWriter', function () {
   it('should ignore the field if it doesn\'t exist', function (done) {
     let i = 0
 
-    const upstream = through.obj()
+    const upstream = throughObj()
     upstream.write({
       header: 'bla',
       body: null,
@@ -973,7 +975,7 @@ describe('conventionalChangelogWriter', function () {
     upstream
       .pipe(conventionalChangelogWriter())
       .pipe(through(function (chunk, enc, cb) {
-        expect(chunk.toString()).to.equal('##  (' + today + ')\n\n* bla \n\n\n\n')
+        expect(chunk.toString()).to.equal('##  (' + today + ')\n\n* bla\n\n\n\n')
 
         i++
         cb(null)
@@ -984,7 +986,7 @@ describe('conventionalChangelogWriter', function () {
   })
 
   it('should sort notes on `text` by default', function (done) {
-    const upstream = through.obj()
+    const upstream = throughObj()
     upstream.write({
       header: 'feat(scope): broadcast $destroy event on scope destruction',
       body: null,

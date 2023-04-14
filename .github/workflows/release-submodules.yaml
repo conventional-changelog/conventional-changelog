@@ -9,15 +9,16 @@ jobs:
     outputs:
       nodePaths: ${{ steps.interrogate.outputs.nodePaths }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: interrogate
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
             github-token: ${{secrets.GITHUB_TOKEN}}
+            retries: 5
             script: |
               const {execSync} = require('child_process');
               const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
-              const latestRelease = await github.repos.getLatestRelease({
+              const latestRelease = await github.rest.repos.getLatestRelease({
                 owner,
                 repo
               });
@@ -53,21 +54,24 @@ jobs:
           monorepo-tags: true
           package-name: ${{ matrix.package }}
           command: github-release
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         if: ${{ steps.tag-release.outputs.releases_created }}
-      - uses: actions/setup-node@v1
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
         if: ${{ steps.tag-release.outputs.releases_created }}
         with:
           node-version: 14
           registry-url: 'https://external-dot-oss-automation.appspot.com/'
+          cache: 'pnpm'
       - name: publish
         if: ${{ steps.tag-release.outputs.releases_created }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          cd packages/${{ matrix.package }}
-          npm install
-          npm publish --access=public
+          pnpm install
+          pnpm publish --filter ${{ matrix.package }} --no-git-checks --access public
   release-pr:
     runs-on: ubuntu-latest
     needs:
