@@ -1,7 +1,6 @@
 'use strict'
 const conventionalChangelogCore = require('../')
 const expect = require('chai').expect
-const gitTails = require('git-tails').sync
 const Promise = require('pinkie-promise')
 const semver = require('semver')
 const betterThanBefore = require('better-than-before')()
@@ -73,8 +72,8 @@ betterThanBefore.setups([
   },
   function (context) { // 11
     exec('git tag -d v0.1.0')
-    const tails = gitTails()
-    context.tail = tails[tails.length - 1].substring(0, 7)
+    const tails = exec('git rev-list --max-parents=0 --parents HEAD')
+    context.tail = tails.trim().substring(0, 7)
   },
   function (context) { // 12
     exec('git tag not-semver')
