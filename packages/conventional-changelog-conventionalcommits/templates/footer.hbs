@@ -1,2 +1,15 @@
 // TODO: add ability to add more sections in the footer
 // e.g. contributers
+
+// The following snippet from the Angular plugin, as kickstart template example
+{{#if noteGroups}}
+{{#each noteGroups}}
+
+### {{title}}
+
+{{#each notes}}
+* {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}
+{{/each}}
+{{/each}}
+
+{{/if}}
