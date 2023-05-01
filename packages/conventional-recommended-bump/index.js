@@ -16,7 +16,10 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
     throw new Error('The \'options\' argument must be an object.')
   }
 
-  const options = Object.assign({ ignoreReverted: true }, optionsArgument)
+  const options = Object.assign({
+    ignoreReverted: true,
+    gitRawCommitsOpts: {}
+  }, optionsArgument)
 
   const cb = typeof parserOptsArgument === 'function' ? parserOptsArgument : cbArgument
 
@@ -73,7 +76,8 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
       gitRawCommits({
         format: '%B%n-hash-%n%H',
         from: tags[0] || '',
-        path: options.path
+        path: options.path,
+        ...options.gitRawCommitsOpts
       })
         .pipe(conventionalCommitsParser(parserOpts))
         .pipe(concat(data => {
