@@ -4,6 +4,7 @@ const addBangNotes = require('./add-bang-notes')
 const compareFunc = require('compare-func')
 const { readFile } = require('fs').promises
 const { resolve } = require('path')
+const { minimatch } = require('minimatch')
 const releaseAsRe = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 
 /**
@@ -63,7 +64,10 @@ function findTypeEntry (types, commit) {
     if (entry.type !== typeKey) {
       return false
     }
-    if (entry.scope && entry.scope !== commit.scope) {
+    if (
+      entry.scope &&
+      (!commit.scope || !minimatch(commit.scope, entry.scope))
+    ) {
       return false
     }
     return true
