@@ -4,6 +4,7 @@ const addBangNotes = require('./add-bang-notes')
 const compareFunc = require('compare-func')
 const { readFile } = require('fs').promises
 const { resolve } = require('path')
+const { isDeepStrictEqual } = require('util')
 const releaseAsRe = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 
 /**
@@ -178,7 +179,8 @@ function getWriterOpts (config) {
 // merge user set configuration with default configuration.
 function defaultConfig (config) {
   config = config || {}
-  config.types = config.types || [
+
+  const defaultTypes = [
     { type: 'feat', section: 'Features' },
     { type: 'feature', section: 'Features' },
     { type: 'fix', section: 'Bug Fixes' },
@@ -192,6 +194,18 @@ function defaultConfig (config) {
     { type: 'build', section: 'Build System', hidden: true },
     { type: 'ci', section: 'Continuous Integration', hidden: true }
   ]
+
+  // If our config doesn't already have the default types
+  // merged with user types, merge them now
+  if (
+    Array.isArray(config.types) &&
+    !defaultTypes.every((defaultType) =>
+      config.types.find((configType) => isDeepStrictEqual(configType, defaultType))
+    )
+  ) {
+    config.types = [...config.types, ...defaultTypes]
+  }
+
   config.issueUrlFormat = config.issueUrlFormat ||
     '{{host}}/{{owner}}/{{repository}}/issues/{{id}}'
   config.commitUrlFormat = config.commitUrlFormat ||
