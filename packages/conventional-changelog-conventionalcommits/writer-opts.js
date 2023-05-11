@@ -61,7 +61,7 @@ module.exports = async (config) => {
 function findTypeEntry (types, commit) {
   const typeKey = (commit.revert ? 'revert' : (commit.type || '')).toLowerCase()
   return types.find((entry) => {
-    if (entry.type !== typeKey) {
+    if (!minimatch(typeKey, entry.type)) {
       return false
     }
     if (

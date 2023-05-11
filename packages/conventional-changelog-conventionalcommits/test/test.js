@@ -190,6 +190,28 @@ describe('conventionalcommits.org preset', function () {
       }))
   })
 
+  it('should allow matching "type" to configuration using glob patterns', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { type: '{chore,ci}', section: 'Chores and CI' }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Chores and CI')
+        expect(chunk).to.include('add TravisCI pipeline')
+        expect(chunk).to.include('upgrade example from 1 to 2')
+        done()
+      }))
+  })
+
   it('should allow matching "scope" to configuration', function (done) {
     preparing(1)
     conventionalChangelogCore({
