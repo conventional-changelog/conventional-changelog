@@ -34,10 +34,10 @@
     "concat-stream": "^2.0.0",
     "conventional-changelog-preset-loader": "^2.3.4",
     "conventional-commits-filter": "^2.0.7",
-    "conventional-commits-parser": "^3.2.0",
-    "git-raw-commits": "^2.0.8",
+    "conventional-commits-parser": "^3.2.4",
+    "git-raw-commits": "^2.0.11",
     "git-semver-tags": "^4.1.1",
-    "meow": "^8.0.0"
+    "meow": "^8.1.2"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000 ./test/preset-resolver.spec.js"

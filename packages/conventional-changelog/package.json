@@ -35,11 +35,11 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
   "dependencies": {
-    "conventional-changelog-angular": "^5.0.12",
+    "conventional-changelog-angular": "^5.0.13",
     "conventional-changelog-atom": "^2.0.8",
     "conventional-changelog-codemirror": "^2.0.8",
     "conventional-changelog-conventionalcommits": "^5.0.0",
-    "conventional-changelog-core": "^4.2.1",
+    "conventional-changelog-core": "^4.2.4",
     "conventional-changelog-ember": "^2.0.9",
     "conventional-changelog-eslint": "^3.0.9",
     "conventional-changelog-express": "^2.0.6",

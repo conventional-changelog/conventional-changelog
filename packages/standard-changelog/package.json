@@ -27,14 +27,14 @@
   ],
   "dependencies": {
     "add-stream": "^1.0.0",
-    "chalk": "^4.0.0",
-    "conventional-changelog-angular": "^5.0.12",
-    "conventional-changelog-core": "^4.2.1",
-    "figures": "^3.0.0",
-    "fs-access": "^1.0.0",
-    "meow": "^8.0.0",
-    "rimraf": "^3.0.0",
-    "sprintf-js": "^1.1.1",
+    "chalk": "^4.1.2",
+    "conventional-changelog-angular": "^5.0.13",
+    "conventional-changelog-core": "^4.2.4",
+    "figures": "^3.2.0",
+    "fs-access": "^1.0.1",
+    "meow": "^8.1.2",
+    "rimraf": "^3.0.2",
+    "sprintf-js": "^1.1.2",
     "tempfile": "^3.0.0"
   },
   "scripts": {

@@ -37,12 +37,12 @@
   ],
   "dependencies": {
     "conventional-commits-filter": "^2.0.7",
-    "dateformat": "^3.0.0",
+    "dateformat": "^3.0.3",
     "handlebars": "^4.7.7",
     "json-stringify-safe": "^5.0.1",
-    "meow": "^8.0.0",
-    "semver": "^6.0.0",
-    "split": "^1.0.0"
+    "meow": "^8.1.2",
+    "semver": "^6.3.0",
+    "split": "^1.0.1"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"
