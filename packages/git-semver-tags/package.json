@@ -32,8 +32,8 @@
     "git"
   ],
   "dependencies": {
-    "meow": "^8.0.0",
-    "semver": "^6.0.0"
+    "meow": "^8.1.2",
+    "semver": "^6.3.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"

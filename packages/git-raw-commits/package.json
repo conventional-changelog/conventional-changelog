@@ -34,8 +34,8 @@
   ],
   "dependencies": {
     "dargs": "^7.0.0",
-    "meow": "^8.0.0",
-    "split2": "^3.0.0"
+    "meow": "^8.1.2",
+    "split2": "^3.2.2"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
