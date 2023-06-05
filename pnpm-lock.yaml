@@ -88,12 +88,12 @@ importers:
   packages/conventional-changelog-cli:
     specifiers:
       add-stream: ^1.0.0
-      conventional-changelog: ^3.1.25
+      conventional-changelog: ^4.0.0
       meow: ^8.1.2
       tempfile: ^3.0.0
     dependencies:
       add-stream: 1.0.0
-      conventional-changelog: 3.1.25
+      conventional-changelog: link:../conventional-changelog
       meow: 8.1.2
       tempfile: 3.0.0
 
