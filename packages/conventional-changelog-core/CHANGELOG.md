@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v5.0.0...conventional-changelog-core-v5.0.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* **conventional-changelog-core:** update monorepo dependencies ([#1012](https://github.com/conventional-changelog/conventional-changelog/issues/1012)) ([ef3413a](https://github.com/conventional-changelog/conventional-changelog/commit/ef3413a40e48628e94c88bc50bf4fba0ddc0b0b0))
+
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v4.2.4...conventional-changelog-core-v5.0.0) (2023-06-05)
 
 
