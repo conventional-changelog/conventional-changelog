@@ -9,6 +9,7 @@ jobs:
           - conventional-changelog-writer
           - conventional-changelog-preset-loader
           - conventional-recommended-bump
+          - conventional-changelog
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -17,7 +18,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14
-          registry-url: 'https://external-dot-oss-automation.appspot.com/'
           cache: 'pnpm'
       - name: publish
         env:
