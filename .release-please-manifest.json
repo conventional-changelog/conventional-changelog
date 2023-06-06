@@ -14,5 +14,6 @@
   "packages/conventional-changelog-angular": "6.0.0",
   "packages/conventional-changelog-atom": "3.0.0",
   "packages/git-semver-tags": "5.0.0",
-  "packages/conventional-commits-filter": "3.0.0"
+  "packages/conventional-commits-filter": "3.0.0",
+  "packages/conventional-changelog-preset-loader": "3.0.0"
 }

@@ -67,14 +67,14 @@ importers:
       conventional-changelog-angular: 5.0.13
       conventional-changelog-atom: 2.0.8
       conventional-changelog-codemirror: 2.0.8
-      conventional-changelog-conventionalcommits: link:../conventional-changelog-conventionalcommits
+      conventional-changelog-conventionalcommits: 5.0.0
       conventional-changelog-core: link:../conventional-changelog-core
       conventional-changelog-ember: 2.0.9
       conventional-changelog-eslint: 3.0.9
       conventional-changelog-express: 2.0.6
       conventional-changelog-jquery: 3.0.11
       conventional-changelog-jshint: 2.0.9
-      conventional-changelog-preset-loader: link:../conventional-changelog-preset-loader
+      conventional-changelog-preset-loader: 2.3.4
 
   packages/conventional-changelog-angular:
     specifiers:
@@ -155,11 +155,11 @@ importers:
 
   packages/conventional-changelog-preset-loader:
     specifiers:
-      conventional-changelog-angular: ^5.0.13
-      conventional-changelog-conventionalcommits: ^5.0.0
+      conventional-changelog-angular: ^6.0.0
+      conventional-changelog-conventionalcommits: ^6.0.0
       sinon: ^12.0.1
     devDependencies:
-      conventional-changelog-angular: 5.0.13
+      conventional-changelog-angular: link:../conventional-changelog-angular
       conventional-changelog-conventionalcommits: link:../conventional-changelog-conventionalcommits
       sinon: 12.0.1
 
@@ -221,14 +221,14 @@ importers:
       meow: ^8.1.2
     dependencies:
       concat-stream: 2.0.0
-      conventional-changelog-preset-loader: link:../conventional-changelog-preset-loader
+      conventional-changelog-preset-loader: 2.3.4
       conventional-commits-filter: 2.0.7
       conventional-commits-parser: 3.2.4
       git-raw-commits: 2.0.11
       git-semver-tags: 4.1.1
       meow: 8.1.2
     devDependencies:
-      conventional-changelog-conventionalcommits: link:../conventional-changelog-conventionalcommits
+      conventional-changelog-conventionalcommits: 5.0.0
 
   packages/git-raw-commits:
     specifiers:
@@ -864,6 +864,14 @@ packages:
       q: 1.5.1
     dev: false
 
+  /conventional-changelog-conventionalcommits/5.0.0:
+    resolution: {integrity: sha512-lCDbA+ZqVFQGUj7h9QBKoIpLhl8iihkO0nCTyRNzuXtcd7ubODpYB04IFy31JloiJgG0Uovu8ot8oxRzn7Nwtw==}
+    engines: {node: '>=10'}
+    dependencies:
+      compare-func: 2.0.0
+      lodash: 4.17.21
+      q: 1.5.1
+
   /conventional-changelog-ember/2.0.9:
     resolution: {integrity: sha512-ulzIReoZEvZCBDhcNYfDIsLTHzYHc7awh+eI44ZtV5cx6LVxLlVtEmcO+2/kGIHGtw+qVabJYjdI5cJOQgXh1A==}
     engines: {node: '>=10'}
@@ -898,6 +906,11 @@ packages:
     dependencies:
       compare-func: 2.0.0
       q: 1.5.1
+    dev: false
+
+  /conventional-changelog-preset-loader/2.3.4:
+    resolution: {integrity: sha512-GEKRWkrSAZeTq5+YjUZOYxdHq+ci4dNwHvpaBC3+ENalzFWuCWa9EZXSuZBpkr72sMdKB+1fyDV4takK1Lf58g==}
+    engines: {node: '>=10'}
     dev: false
 
   /conventional-changelog-writer/5.0.1:
@@ -2190,7 +2203,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: false
 
   /log-symbols/4.0.0:
     resolution: {integrity: sha512-FN8JBzLx6CzeMrB0tg6pqlGU1wCrXW+ZXGH481kfsBqer0hToTIiHdjH4Mq8xJUbvATujKCvaREGWpGUionraA==}
