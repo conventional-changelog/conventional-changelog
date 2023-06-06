@@ -73,6 +73,8 @@ function findTypeEntry (types, commit) {
 function getWriterOpts (config) {
   config = defaultConfig(config)
 
+  const commitGroupOrder = config.types.flatMap(t => t.section).filter(t => t)
+
   return {
     transform: (commit, context) => {
       let discard = true
@@ -160,14 +162,9 @@ function getWriterOpts (config) {
     // the groupings of commit messages, e.g., Features vs., Bug Fixes, are
     // sorted based on their probable importance:
     commitGroupsSort: (a, b) => {
-      const commitGroupOrder = ['Reverts', 'Performance Improvements', 'Bug Fixes', 'Features']
       const gRankA = commitGroupOrder.indexOf(a.title)
       const gRankB = commitGroupOrder.indexOf(b.title)
-      if (gRankA >= gRankB) {
-        return -1
-      } else {
-        return 1
-      }
+      return gRankA - gRankB
     },
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
