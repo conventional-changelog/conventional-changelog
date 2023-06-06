@@ -12,6 +12,7 @@ jobs:
           - conventional-changelog
           - conventional-changelog-cli
           - standard-changelog
+          - gulp-conventional-changelog
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2

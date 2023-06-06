@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog-v2.0.35...gulp-conventional-changelog-v3.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 14 is required
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+
 ## [2.0.35](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog@2.0.34...gulp-conventional-changelog@2.0.35) (2020-11-05)
 
 
