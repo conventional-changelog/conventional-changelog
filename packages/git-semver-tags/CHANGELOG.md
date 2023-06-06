@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v4.1.1...git-semver-tags-v5.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 14 is required
+* **git-semver-tags:** --tagPrefix flag was changed to --tag-prefix
+* gitSemverTags now takes options followed by callback.
+
+### Features
+
+* add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
+* add support for listing lerna style tags (project@version) ([#161](https://github.com/conventional-changelog/conventional-changelog/issues/161)) ([b245f9d](https://github.com/conventional-changelog/conventional-changelog/commit/b245f9d46a064a6daa2b46a48eab354c512f46c0))
+* allow raw commits to be filtered by path ([#172](https://github.com/conventional-changelog/conventional-changelog/issues/172)) ([ec0a25d](https://github.com/conventional-changelog/conventional-changelog/commit/ec0a25d0664ae74da1201c011814f62bd8e1b031))
+* allow to specify a tagPrefix in conventional-recommended-bump ([f60f86f](https://github.com/conventional-changelog/conventional-changelog/commit/f60f86fa388edb3b0731b2fb0cb5ddabafd36911))
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+* bad release of git-semver-tags ([8827ae4](https://github.com/conventional-changelog/conventional-changelog/commit/8827ae418adf8bd400ce879548c732812e5934ea))
+* bug in unstableTagTest causing a mismatch on beta release higher then beta-9 ([#679](https://github.com/conventional-changelog/conventional-changelog/issues/679)) ([cd4c726](https://github.com/conventional-changelog/conventional-changelog/commit/cd4c726b1ca227a132ec2eadac5d0cfdd75d9e81))
+* **deps:** update dependency semver to v6 ([#458](https://github.com/conventional-changelog/conventional-changelog/issues/458)) ([efaa7bb](https://github.com/conventional-changelog/conventional-changelog/commit/efaa7bb651fe1b6de047163fc9db8e5d69f0a6e9))
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+* **git-semver-tags:** change --tagPrefix flag to --tag-prefix ([#566](https://github.com/conventional-changelog/conventional-changelog/issues/566)) ([490cda6](https://github.com/conventional-changelog/conventional-changelog/commit/490cda6cff74abe63617f982765b63aebdf3b4b6)), closes [#553](https://github.com/conventional-changelog/conventional-changelog/issues/553)
+* **lerna tags:** support multi-digit version tags ([#223](https://github.com/conventional-changelog/conventional-changelog/issues/223)) ([67012fb](https://github.com/conventional-changelog/conventional-changelog/commit/67012fb655a7d968d82185685971ca246751ab0b))
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+* modify gitSemverTags to take options first ([#390](https://github.com/conventional-changelog/conventional-changelog/issues/390)) ([dc8aeda](https://github.com/conventional-changelog/conventional-changelog/commit/dc8aedae0519045bfcb2e649167f0f6bfb2f4a30))
+
 ## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.1.0...git-semver-tags@4.1.1) (2020-11-05)
 
 
