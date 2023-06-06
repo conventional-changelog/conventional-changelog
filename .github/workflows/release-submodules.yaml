@@ -63,6 +63,7 @@ jobs:
         if: ${{ steps.tag-release.outputs.releases_created }}
         with:
           node-version: 14
+          registry-url: 'https://external-dot-oss-automation.appspot.com/'
           cache: 'pnpm'
       - name: publish
         if: ${{ steps.tag-release.outputs.releases_created }}
