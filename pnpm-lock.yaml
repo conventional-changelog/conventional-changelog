@@ -266,8 +266,8 @@ importers:
     specifiers:
       add-stream: ^1.0.0
       chalk: ^4.1.2
-      conventional-changelog-angular: ^5.0.13
-      conventional-changelog-core: ^4.2.4
+      conventional-changelog-angular: ^6.0.0
+      conventional-changelog-core: ^5.0.0
       figures: ^3.2.0
       fs-access: ^1.0.1
       meow: ^8.1.2
@@ -277,8 +277,8 @@ importers:
     dependencies:
       add-stream: 1.0.0
       chalk: 4.1.2
-      conventional-changelog-angular: 5.0.13
-      conventional-changelog-core: 4.2.4
+      conventional-changelog-angular: link:../conventional-changelog-angular
+      conventional-changelog-core: link:../conventional-changelog-core
       figures: 3.2.0
       fs-access: 1.0.1
       meow: 8.1.2
