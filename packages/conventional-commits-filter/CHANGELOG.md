@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter-v2.0.7...conventional-commits-filter-v3.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 14 is required
+
+### Bug Fixes
+
+* align lodash dependency across packages ([#737](https://github.com/conventional-changelog/conventional-changelog/issues/737)) ([d9feeb6](https://github.com/conventional-changelog/conventional-changelog/commit/d9feeb605de28c00ef55b5c8e229efd1289dd6e8))
+* **filter:** only remove commits that reverted commits in the scope ([#226](https://github.com/conventional-changelog/conventional-changelog/issues/226)) ([461dae6](https://github.com/conventional-changelog/conventional-changelog/commit/461dae6fa3f8566cca6049bfb7237932d95773b2))
+* **filter:** replace `is-subset` with `lodash.ismatch` ([#377](https://github.com/conventional-changelog/conventional-changelog/issues/377)) ([fbcc92e](https://github.com/conventional-changelog/conventional-changelog/commit/fbcc92ec0f480c089f9ee45cc824ab6e628a01f0))
+
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+
 ## [2.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-filter@2.0.6...conventional-commits-filter@2.0.7) (2020-11-05)
 
 **Note:** Version bump only for package conventional-commits-filter
