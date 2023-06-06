@@ -7,5 +7,6 @@
   "packages/conventional-changelog-writer": "5.0.1",
   "packages/conventional-changelog-jshint": "3.0.0",
   "packages/conventional-changelog-jquery": "4.0.0",
-  "packages/conventional-changelog-express": "3.0.0"
+  "packages/conventional-changelog-express": "3.0.0",
+  "packages/conventional-changelog-eslint": "4.0.0"
 }
