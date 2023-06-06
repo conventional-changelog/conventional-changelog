@@ -10,43 +10,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * now all promises are native
 * Node >= 14 is required
-* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599))
-* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558))
-* 
-* **package:** 
-* 
-* **eslint:** 
 
 ### Features
 
 * **eslint:** improve regex headerPattern ([#268](https://github.com/conventional-changelog/conventional-changelog/issues/268)) ([ccc1365](https://github.com/conventional-changelog/conventional-changelog/commit/ccc136505712fdf3e13e4c52a8d23f568ad8b3f0))
-* migrate core conventional-changelog packages to lerna monorep. ([1be7d66](https://github.com/conventional-changelog/conventional-changelog/commit/1be7d6670aca2bb5e642bee266edc0dfc6ab4f17))
-* migrate repo to lerna mono-repo ([793e823](https://github.com/conventional-changelog/conventional-changelog/commit/793e8235c961dd509cc63dccadaeb7cb956da6f9))
 * **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/conventional-changelog/conventional-changelog/commit/60815b50bc68b50a8430c21ec0499273a4a1c402))
 * re-use parser options within each preset ([#335](https://github.com/conventional-changelog/conventional-changelog/issues/335)) ([d3eaacf](https://github.com/conventional-changelog/conventional-changelog/commit/d3eaacfe642eb7e076e4879a3202cc60ca626b59))
-* the conventional-changelog ecosystem has been converted into a monorepo ([1be7d66](https://github.com/conventional-changelog/conventional-changelog/commit/1be7d6670aca2bb5e642bee266edc0dfc6ab4f17))
-
 
 ### Bug Fixes
 
 * **preset, eslint:** display short tag in release notes ([b63a5ff](https://github.com/conventional-changelog/conventional-changelog/commit/b63a5ffdf540cdaff2013e4465f640ef5a8f5013)), closes [#313](https://github.com/conventional-changelog/conventional-changelog/issues/313)
 * **preset:** ESLint recommended-bump is always "patch" ([#371](https://github.com/conventional-changelog/conventional-changelog/issues/371)) ([35e279d](https://github.com/conventional-changelog/conventional-changelog/commit/35e279d40603b0969c6d622514f5c0984c5bf309))
 * **preset:** recommended-bump ESLint preset ([#295](https://github.com/conventional-changelog/conventional-changelog/issues/295)) ([acf9c19](https://github.com/conventional-changelog/conventional-changelog/commit/acf9c193d6930d0ed2c89fc1b0990a784633dfb3))
-* revert previous change ([2f4530f](https://github.com/conventional-changelog/conventional-changelog/commit/2f4530f06cb8f76e83c5f9c7af8126952b4dc8f3))
-* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef2828e34132020845cc6db23077c2c9c8dc1c))
-
-
-### Miscellaneous Chores
-
-* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599)) ([b9f5057](https://github.com/conventional-changelog/conventional-changelog/commit/b9f50573f292ea29ff51627646ca7825bf182d52))
-* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0491bc7d7eef77d790cc65b86fe5070f1b))
-
 
 ### Code Refactoring
 
 * drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
 * drop q from dependencies ([#974](https://github.com/conventional-changelog/conventional-changelog/issues/974)) ([d0e5d59](https://github.com/conventional-changelog/conventional-changelog/commit/d0e5d5926c8addba74bc962553dd8bcfba90e228))
-* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558)) ([fd80738](https://github.com/conventional-changelog/conventional-changelog/commit/fd80738a46760753a61cb6929bd899ada1ab1e04))
 * remove anchor from header templates ([#301](https://github.com/conventional-changelog/conventional-changelog/issues/301)) ([346f24f](https://github.com/conventional-changelog/conventional-changelog/commit/346f24f0f8d92b64ed62658796d1876a52ec3ab3))
 
 ## [3.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint@3.0.8...conventional-changelog-eslint@3.0.9) (2020-11-05)
