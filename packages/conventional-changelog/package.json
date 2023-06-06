@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "3.1.25",
+  "version": "4.0.0",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
@@ -35,17 +35,17 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
   "dependencies": {
-    "conventional-changelog-angular": "^5.0.13",
-    "conventional-changelog-atom": "^2.0.8",
-    "conventional-changelog-codemirror": "^2.0.8",
-    "conventional-changelog-conventionalcommits": "^5.0.0",
-    "conventional-changelog-core": "^4.2.4",
-    "conventional-changelog-ember": "^2.0.9",
-    "conventional-changelog-eslint": "^3.0.9",
-    "conventional-changelog-express": "^2.0.6",
-    "conventional-changelog-jquery": "^3.0.11",
-    "conventional-changelog-jshint": "^2.0.9",
-    "conventional-changelog-preset-loader": "^2.3.4"
+    "conventional-changelog-angular": "^6.0.0",
+    "conventional-changelog-atom": "^3.0.0",
+    "conventional-changelog-codemirror": "^3.0.0",
+    "conventional-changelog-conventionalcommits": "^6.0.0",
+    "conventional-changelog-core": "^5.0.0",
+    "conventional-changelog-ember": "^3.0.0",
+    "conventional-changelog-eslint": "^4.0.0",
+    "conventional-changelog-express": "^3.0.0",
+    "conventional-changelog-jquery": "^4.0.0",
+    "conventional-changelog-jshint": "^3.0.0",
+    "conventional-changelog-preset-loader": "^3.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
