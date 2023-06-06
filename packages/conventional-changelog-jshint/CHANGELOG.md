@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jshint-v2.0.9...conventional-changelog-jshint-v3.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* now all promises are native
+* Node >= 14 is required
+* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599))
+* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558))
+* 
+* **package:** 
+* 
+
+### Features
+
+* migrate core conventional-changelog packages to lerna monorep. ([1be7d66](https://github.com/conventional-changelog/conventional-changelog/commit/1be7d6670aca2bb5e642bee266edc0dfc6ab4f17))
+* migrate repo to lerna mono-repo ([793e823](https://github.com/conventional-changelog/conventional-changelog/commit/793e8235c961dd509cc63dccadaeb7cb956da6f9))
+* **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/conventional-changelog/conventional-changelog/commit/60815b50bc68b50a8430c21ec0499273a4a1c402))
+* re-use parser options within each preset ([#335](https://github.com/conventional-changelog/conventional-changelog/issues/335)) ([d3eaacf](https://github.com/conventional-changelog/conventional-changelog/commit/d3eaacfe642eb7e076e4879a3202cc60ca626b59))
+* the conventional-changelog ecosystem has been converted into a monorepo ([1be7d66](https://github.com/conventional-changelog/conventional-changelog/commit/1be7d6670aca2bb5e642bee266edc0dfc6ab4f17))
+
+
+### Bug Fixes
+
+* **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
+* revert previous change ([2f4530f](https://github.com/conventional-changelog/conventional-changelog/commit/2f4530f06cb8f76e83c5f9c7af8126952b4dc8f3))
+* Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef2828e34132020845cc6db23077c2c9c8dc1c))
+* use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60decb6979efb5026e399e962313e69b005b22)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
+
+
+### Miscellaneous Chores
+
+* drop support for Node 8 ([#599](https://github.com/conventional-changelog/conventional-changelog/issues/599)) ([b9f5057](https://github.com/conventional-changelog/conventional-changelog/commit/b9f50573f292ea29ff51627646ca7825bf182d52))
+* **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0491bc7d7eef77d790cc65b86fe5070f1b))
+
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+* drop q from dependencies ([#974](https://github.com/conventional-changelog/conventional-changelog/issues/974)) ([d0e5d59](https://github.com/conventional-changelog/conventional-changelog/commit/d0e5d5926c8addba74bc962553dd8bcfba90e228))
+* drop support for Node 6 ([#558](https://github.com/conventional-changelog/conventional-changelog/issues/558)) ([fd80738](https://github.com/conventional-changelog/conventional-changelog/commit/fd80738a46760753a61cb6929bd899ada1ab1e04))
+* remove anchor from header templates ([#301](https://github.com/conventional-changelog/conventional-changelog/issues/301)) ([346f24f](https://github.com/conventional-changelog/conventional-changelog/commit/346f24f0f8d92b64ed62658796d1876a52ec3ab3))
+
 ## [2.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jshint@2.0.8...conventional-changelog-jshint@2.0.9) (2020-11-05)
 
 **Note:** Version bump only for package conventional-changelog-jshint
