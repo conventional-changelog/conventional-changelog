@@ -16,5 +16,6 @@
   "packages/git-semver-tags": "5.0.0",
   "packages/conventional-commits-filter": "3.0.0",
   "packages/conventional-changelog-preset-loader": "3.0.0",
-  "packages/conventional-recommended-bump": "7.0.0"
+  "packages/conventional-recommended-bump": "7.0.0",
+  "packages/conventional-changelog-core": "5.0.0"
 }

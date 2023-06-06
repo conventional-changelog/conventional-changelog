@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v4.2.4...conventional-changelog-core-v5.0.0) (2023-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* now all promises are native
+* Node >= 14 is required
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+* drop q from dependencies ([#974](https://github.com/conventional-changelog/conventional-changelog/issues/974)) ([d0e5d59](https://github.com/conventional-changelog/conventional-changelog/commit/d0e5d5926c8addba74bc962553dd8bcfba90e228))
+
 ### [4.2.4](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v4.2.3...conventional-changelog-core-v4.2.4) (2021-09-09)
 
 
