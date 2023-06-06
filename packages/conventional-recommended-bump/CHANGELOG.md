@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v6.1.0...conventional-recommended-bump-v7.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* now all promises are native
+* Node >= 14 is required
+
+### Features
+
+* add possibility to provide custom flags to commit fetcher ([#978](https://github.com/conventional-changelog/conventional-changelog/issues/978)) ([58f0887](https://github.com/conventional-changelog/conventional-changelog/commit/58f0887283a200d52e49607baf7b352f26177b05))
+
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+* drop q from dependencies ([#974](https://github.com/conventional-changelog/conventional-changelog/issues/974)) ([d0e5d59](https://github.com/conventional-changelog/conventional-changelog/commit/d0e5d5926c8addba74bc962553dd8bcfba90e228))
+
 ## [6.1.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/v6.0.12...v6.1.0) (2020-12-30)
 
 
