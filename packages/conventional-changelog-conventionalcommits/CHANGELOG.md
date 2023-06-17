@@ -25,6 +25,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v6.0.0...conventional-changelog-conventionalcommits-v6.1.0) (2023-06-17)
+
+
+### Features
+
+* **conventional-changelog-conventionalcommits:** sort groups based on config types ([#702](https://github.com/conventional-changelog/conventional-changelog/issues/702)) ([#1002](https://github.com/conventional-changelog/conventional-changelog/issues/1002)) ([0e59f0c](https://github.com/conventional-changelog/conventional-changelog/commit/0e59f0c884bf104e3a6a14c5669c58755cdef064))
+
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v5.0.0...conventional-changelog-conventionalcommits-v6.0.0) (2023-06-05)
 
 
