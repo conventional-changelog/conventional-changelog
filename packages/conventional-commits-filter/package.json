@@ -27,10 +27,6 @@
     "changelog",
     "commits"
   ],
-  "dependencies": {
-    "lodash.ismatch": "^4.4.0",
-    "modify-values": "^1.0.1"
-  },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
   },
