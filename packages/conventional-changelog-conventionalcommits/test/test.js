@@ -123,7 +123,7 @@ describe('conventionalcommits.org preset', function () {
         expect(chunk).to.include('Performance Improvements')
         expect(chunk).to.include('Reverts')
         expect(chunk).to.include('bad commit')
-        expect(chunk).to.include('BREAKING CHANGE')
+        expect(chunk).to.include('BREAKING CHANGES')
 
         expect(chunk).to.not.include('ci')
         expect(chunk).to.not.include('feat')
@@ -135,7 +135,7 @@ describe('conventionalcommits.org preset', function () {
 
         // CHANGELOG should group sections in order of importance:
         expect(
-          chunk.indexOf('BREAKING CHANGE') < chunk.indexOf('Features') &&
+          chunk.indexOf('BREAKING CHANGES') < chunk.indexOf('Features') &&
           chunk.indexOf('Features') < chunk.indexOf('Bug Fixes') &&
           chunk.indexOf('Bug Fixes') < chunk.indexOf('Performance Improvements') &&
           chunk.indexOf('Performance Improvements') < chunk.indexOf('Reverts')
@@ -183,6 +183,34 @@ describe('conventionalcommits.org preset', function () {
 
         expect(chunk).to.not.include('make it faster')
         expect(chunk).to.not.include('Reverts')
+        done()
+      }))
+  })
+
+  it('shoud allow custom note titles', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { type: 'chore', scope: 'deps', section: 'Dependencies' }
+        ],
+        parserOpts: {
+          noteKeywords: ["BREAKING CHANGE", "BREAKING CHANGES", "NOTE"],
+          issuePrefixes: ["#", "[A-Z]{3}-"],
+          issuePrefixesCaseSensitive: true,
+        },
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Dependencies')
+        expect(chunk).to.include('**deps:** upgrade example from 1 to 2')
+
+        expect(chunk).to.not.include('release 0.0.0')
         done()
       }))
   })
