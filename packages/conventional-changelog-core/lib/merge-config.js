@@ -53,10 +53,19 @@ function guessNextTag (previousTag, version) {
   return version
 }
 
+function omitUndefinedValueProps (obj) {
+  if (obj === null || typeof obj !== 'object') {
+    return {}
+  }
+  const omittedObj = Object.entries(obj).filter(([, value]) => value !== undefined)
+  return Object.fromEntries(omittedObj)
+}
+
 async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   let configPromise
   let pkgPromise
 
+  options = omitUndefinedValueProps(options)
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
   gitRawExecOpts = gitRawExecOpts || {}
