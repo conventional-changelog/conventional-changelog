@@ -54,11 +54,19 @@ function guessNextTag (previousTag, version) {
 }
 
 function omitUndefinedValueProps (obj) {
-  if (obj === null || typeof obj !== 'object') {
+  if (!obj) {
     return {}
   }
-  const omittedObj = Object.entries(obj).filter(([, value]) => value !== undefined)
-  return Object.fromEntries(omittedObj)
+
+  const omittedObj = {}
+
+  for (const key in obj) {
+    if (obj[key] !== undefined) {
+      omittedObj[key] = obj[key]
+    }
+  }
+
+  return omittedObj
 }
 
 async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
