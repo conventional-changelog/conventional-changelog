@@ -73,6 +73,27 @@ describe('util', function () {
       content: 'this is B and its a bit longer'
     }]
 
+    const groupBy2Layers = [{
+      groupBy: 'A',
+      groupBySecond: '1',
+      content: 'this is A'
+    }, {
+      groupBy: 'A',
+      groupBySecond: '1',
+      content: 'this is another A'
+    }, {
+      groupBy: 'A',
+      groupBySecond: '2',
+      content: 'this is another A; 2'
+    }, {
+      groupBy: 'A',
+      groupBySecond: '2',
+      content: 'this is another A; 3'
+    }, {
+      groupBy: 'Big B',
+      content: 'this is B and its a bit longer'
+    }]
+
     it('should group but not sort groups', function () {
       const commitGroups = util.getCommitGroups('groupBy', commits)
 
@@ -198,6 +219,54 @@ describe('util', function () {
           content: 'this is B and its a bit longer'
         }]
       }])
+    })
+
+    it('should group by 2 layers', function () {
+      const commitGroups = util.getCommitGroups(['groupBy', 'groupBySecond'], groupBy2Layers)
+
+      expect(commitGroups).to.eql([{
+        title: 'A',
+        commits: [{
+          title: '1',
+          commits: [{
+            content: 'this is A',
+            groupBy: 'A',
+            groupBySecond: '1'
+          }, {
+            content: 'this is another A',
+            groupBy: 'A',
+            groupBySecond: '1'
+          }]
+        }, {
+          title: '2',
+          commits: [{
+            content: 'this is another A; 2',
+            groupBy: 'A',
+            groupBySecond: '2'
+          }, {
+            content: 'this is another A; 3',
+            groupBy: 'A',
+            groupBySecond: '2'
+          }]
+        }]
+      }, {
+        title: 'Big B',
+        commits: [{
+          title: false,
+          commits: [{
+            content: 'this is B and its a bit longer',
+            groupBy: 'Big B'
+          }]
+        }]
+      }])
+    })
+
+    it('should error when not a string or array', function () {
+      expect(() => util.getCommitGroups({ something: 'bad' }, [])).to.throw(TypeError, 'The \'groupBy\' argument must be a string or an array.')
+    })
+
+    it('should error when more than 2 entries', function () {
+      expect(() => util.getCommitGroups(['a', 'b', 'c'], [])).to.throw(Error, 'The \'groupBy\' argument can have up to 2 entries.')
     })
   })
 

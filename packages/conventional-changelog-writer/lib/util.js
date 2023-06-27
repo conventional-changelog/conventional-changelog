@@ -57,7 +57,7 @@ function functionify (strOrArr) {
   }
 }
 
-function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
+function groupCommitGroups (groupBy, commits, groupsSort, commitsSort) {
   const commitGroups = []
   const commitGroupsObj = commits.reduce(function (groups, commit) {
     const key = commit[groupBy] || ''
@@ -91,6 +91,43 @@ function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
   }
 
   return commitGroups
+}
+
+function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
+  let groupByFirst = null
+  let groupBySecond = null
+
+  if (_.isString(groupBy)) {
+    groupByFirst = groupBy
+  } else if (_.isArray(groupBy)) {
+    if (groupBy.length > 2) {
+      throw new Error('The \'groupBy\' argument can have up to 2 entries.')
+    }
+
+    if (groupBy.length >= 1) {
+      groupByFirst = groupBy[0]
+    }
+
+    if (groupBy.length === 2) {
+      groupBySecond = groupBy[1]
+    }
+  } else if (groupBy) {
+    throw new TypeError('The \'groupBy\' argument must be a string or an array.')
+  }
+
+  const commitGroupsFirstLayer = groupCommitGroups(groupByFirst, commits, groupsSort, commitsSort)
+
+  const commitGroupsSecondLayer = []
+  if (groupBySecond) {
+    _.forEach(commitGroupsFirstLayer, function (r) {
+      const nestedCommits = groupCommitGroups(groupBySecond, r.commits, groupsSort, commitsSort)
+      r.commits = nestedCommits
+      commitGroupsSecondLayer.push(r)
+    })
+    return commitGroupsSecondLayer
+  }
+
+  return commitGroupsFirstLayer
 }
 
 function getNoteGroups (notes, noteGroupsSort, notesSort) {
