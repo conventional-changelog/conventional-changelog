@@ -41,7 +41,7 @@
     "handlebars": "^4.7.7",
     "json-stringify-safe": "^5.0.1",
     "meow": "^8.1.2",
-    "semver": "^6.3.0",
+    "semver": "^7.0.0",
     "split": "^1.0.1"
   },
   "scripts": {
