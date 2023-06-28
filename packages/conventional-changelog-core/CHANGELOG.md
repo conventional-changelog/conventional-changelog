@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v5.0.1...conventional-changelog-core-v5.0.2) (2023-06-28)
+
+
+### Bug Fixes
+
+* avoid overwriting the default values of options with undefined ([#1018](https://github.com/conventional-changelog/conventional-changelog/issues/1018)) ([71b0c40](https://github.com/conventional-changelog/conventional-changelog/commit/71b0c4051bd2d63999db23279424d76fae1ddc11))
+
 ## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v5.0.0...conventional-changelog-core-v5.0.1) (2023-06-06)
 
 
