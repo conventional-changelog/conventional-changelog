@@ -90,6 +90,9 @@ betterThanBefore.setups([
       'chore: release at different version',
       'Release-As: v3.0.2'
     ])
+  },
+  function () {
+    gitDummyCommit('fix(awesome): fix the awesome thing')
   }
 ])
 
@@ -187,6 +190,28 @@ describe('conventionalcommits.org preset', function () {
       }))
   })
 
+  it('should allow matching "type" to configuration using glob patterns', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { type: '{chore,ci}', section: 'Chores and CI' }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Chores and CI')
+        expect(chunk).to.include('add TravisCI pipeline')
+        expect(chunk).to.include('upgrade example from 1 to 2')
+        done()
+      }))
+  })
+
   it('should allow matching "scope" to configuration', function (done) {
     preparing(1)
     conventionalChangelogCore({
@@ -206,6 +231,36 @@ describe('conventionalcommits.org preset', function () {
         expect(chunk).to.include('**deps:** upgrade example from 1 to 2')
 
         expect(chunk).to.not.include('release 0.0.0')
+        done()
+      }))
+  })
+
+  it('should allow matching "scope" to configuration using glob patterns', function (done) {
+    preparing(1)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { type: 'feat', scope: '!changelog', section: 'Features' },
+          { type: 'fix', scope: '!{changelog,awesome}', section: 'Bug Fixes' }
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.include('### Features')
+        expect(chunk).to.include('**awesome:** adress EXAMPLE-1')
+
+        expect(chunk).to.not.include('proper issue links')
+
+        expect(chunk).to.include('### Bug Fixes')
+        expect(chunk).to.include('oops')
+
+        expect(chunk).to.not.include('**awesome:** fix the awesome thing')
+        expect(chunk).to.not.include('proper issue links')
         done()
       }))
   })
