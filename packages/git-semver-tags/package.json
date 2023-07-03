@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "meow": "^8.1.2",
-    "semver": "^6.3.0"
+    "semver": "^7.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
