@@ -21,7 +21,7 @@ importers:
       pinkie-promise: ^2.0.1
       rimraf: ^3.0.2
       safe-buffer: 5.2.1
-      semver: ^6.3.0
+      semver: ^7.0.0
       sinon: ^15.0.0
       sinon-chai: ^3.7.0
       tmp: ^0.2.1
@@ -44,7 +44,7 @@ importers:
       pinkie-promise: 2.0.1
       rimraf: 3.0.2
       safe-buffer: 5.2.1
-      semver: 6.3.0
+      semver: 7.5.1
       sinon: 15.2.0
       sinon-chai: 3.7.0_chai@4.3.7+sinon@15.2.0
       tmp: 0.2.1
