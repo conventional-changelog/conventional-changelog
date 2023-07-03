@@ -37,6 +37,6 @@
     "concat-stream": "^2.0.0",
     "conventional-changelog": "^4.0.0",
     "fancy-log": "^2.0.0",
-    "plugin-error": "^1.0.1"
+    "plugin-error": "^2.0.0"
   }
 }
