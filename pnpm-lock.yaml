@@ -113,7 +113,7 @@ importers:
       conventional-changelog-writer: ^6.0.0
       conventional-commits-parser: ^4.0.0
       dateformat: ^3.0.3
-      get-pkg-repo: ^4.2.1
+      get-pkg-repo: ^5.0.0
       git-raw-commits: ^3.0.0
       git-remote-origin-url: ^2.0.0
       git-semver-tags: ^5.0.0
@@ -125,7 +125,7 @@ importers:
       conventional-changelog-writer: link:../conventional-changelog-writer
       conventional-commits-parser: link:../conventional-commits-parser
       dateformat: 3.0.3
-      get-pkg-repo: 4.2.1
+      get-pkg-repo: 5.0.0
       git-raw-commits: link:../git-raw-commits
       git-remote-origin-url: 2.0.0
       git-semver-tags: link:../git-semver-tags
@@ -754,6 +754,16 @@ packages:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+    dev: true
+
+  /cliui/8.0.1:
+    resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      wrap-ansi: 7.0.0
+    dev: false
 
   /clone-stats/1.0.0:
     resolution: {integrity: sha512-au6ydSpg6nsrigcZ4m8Bc9hxjeW+GJ8xh5G3BJCMt4WXe1H10UNaVOamqQTmrx1kjVuxAHIQSNU6hY4Nsn9/ag==}
@@ -1454,15 +1464,15 @@ packages:
       has-symbols: 1.0.3
     dev: true
 
-  /get-pkg-repo/4.2.1:
-    resolution: {integrity: sha512-2+QbHjFRfGB74v/pYWjd5OhU3TDIC2Gv/YKUTk/tCvAz0pkn/Mz6P3uByuBimLOcPvN2jYdScl3xGFSrx0jEcA==}
-    engines: {node: '>=6.9.0'}
+  /get-pkg-repo/5.0.0:
+    resolution: {integrity: sha512-iYM3H4zu92jWcE5x9ITkKDKmUJGWrSUwubnHdDpBIXRaqq8oWhFoX3FHYf8jMc7LB4xTgpIv1yqgHEV+wsJcSg==}
+    engines: {node: '>=12'}
     hasBin: true
     dependencies:
       '@hutson/parse-repository-url': 3.0.2
       hosted-git-info: 4.1.0
       through2: 2.0.5
-      yargs: 16.2.0
+      yargs: 17.7.2
     dev: false
 
   /get-stdin/4.0.1:
@@ -3158,6 +3168,11 @@ packages:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
 
+  /yargs-parser/21.1.1:
+    resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /yargs-unparser/2.0.0:
     resolution: {integrity: sha512-7pRTIA9Qc1caZ0bZ6RYRGbHJthJWuakf+WmHK0rVeLkNrrGhfoabBNdue6kdINI6r4if7ocq9aD/n7xwKOdzOA==}
     engines: {node: '>=10'}
@@ -3179,6 +3194,20 @@ packages:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 20.2.9
+    dev: true
+
+  /yargs/17.7.2:
+    resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
+    engines: {node: '>=12'}
+    dependencies:
+      cliui: 8.0.1
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.1.1
+    dev: false
 
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
