@@ -13,7 +13,7 @@ importers:
       eslint-config-standard: ^16.0.3
       eslint-plugin-import: ^2.27.5
       eslint-plugin-node: ^11.1.0
-      eslint-plugin-promise: ^4.3.1
+      eslint-plugin-promise: ^6.0.0
       eslint-plugin-standard: ^4.1.0
       forceable-tty: ^0.1.0
       git-tails: ^1.1.0
@@ -33,10 +33,10 @@ importers:
       concat-stream: 2.0.0
       conventional-changelog-core: link:packages/conventional-changelog-core
       eslint: 8.44.0
-      eslint-config-standard: 16.0.3_73pdpr2qmbkmido2r522coduhq
+      eslint-config-standard: 16.0.3_ud4kilww4xbmc6lamqknwzx5ra
       eslint-plugin-import: 2.27.5_eslint@8.44.0
       eslint-plugin-node: 11.1.0_eslint@8.44.0
-      eslint-plugin-promise: 4.3.1
+      eslint-plugin-promise: 6.1.1_eslint@8.44.0
       eslint-plugin-standard: 4.1.0_eslint@8.44.0
       forceable-tty: 0.1.0
       git-tails: 1.1.0
@@ -1067,7 +1067,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-config-standard/16.0.3_73pdpr2qmbkmido2r522coduhq:
+  /eslint-config-standard/16.0.3_ud4kilww4xbmc6lamqknwzx5ra:
     resolution: {integrity: sha512-x4fmJL5hGqNJKGHSjnLdgA6U6h1YW/G2dW9fA+cyVur4SK6lyue8+UgNKWlZtUDTXvgKDD/Oa3GQjmB5kjtVvg==}
     peerDependencies:
       eslint: ^7.12.1
@@ -1078,7 +1078,7 @@ packages:
       eslint: 8.44.0
       eslint-plugin-import: 2.27.5_eslint@8.44.0
       eslint-plugin-node: 11.1.0_eslint@8.44.0
-      eslint-plugin-promise: 4.3.1
+      eslint-plugin-promise: 6.1.1_eslint@8.44.0
     dev: true
 
   /eslint-import-resolver-node/0.3.7:
@@ -1177,9 +1177,13 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /eslint-plugin-promise/4.3.1:
-    resolution: {integrity: sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==}
-    engines: {node: '>=6'}
+  /eslint-plugin-promise/6.1.1_eslint@8.44.0:
+    resolution: {integrity: sha512-tjqWDwVZQo7UIPMeDReOpUgHCmCiH+ePnVT+5zVapL0uuHnegBUs2smM13CzOs2Xb5+MHMRFTs9v24yjba4Oig==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0
+    dependencies:
+      eslint: 8.44.0
     dev: true
 
   /eslint-plugin-standard/4.1.0_eslint@8.44.0:
