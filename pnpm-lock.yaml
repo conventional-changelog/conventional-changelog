@@ -25,7 +25,7 @@ importers:
       sinon: ^12.0.1
       sinon-chai: ^3.7.0
       tmp: ^0.2.1
-      vinyl: ^2.2.1
+      vinyl: ^3.0.0
     devDependencies:
       better-than-before: 1.0.0
       c8: 7.14.0
@@ -48,7 +48,7 @@ importers:
       sinon: 12.0.1
       sinon-chai: 3.7.0_chai@4.3.7+sinon@12.0.1
       tmp: 0.2.1
-      vinyl: 2.2.1
+      vinyl: 3.0.0
 
   packages/conventional-changelog:
     specifiers:
@@ -777,11 +777,6 @@ packages:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
-  /clone-buffer/1.0.0:
-    resolution: {integrity: sha512-KLLTJWrvwIP+OPfMn0x2PheDEP20RPUcGXj/ERegTgdmPEZylALQldygiqrPPu8P45uNuPs7ckmReLY6v/iA5g==}
-    engines: {node: '>= 0.10'}
-    dev: true
-
   /clone-stats/1.0.0:
     resolution: {integrity: sha512-au6ydSpg6nsrigcZ4m8Bc9hxjeW+GJ8xh5G3BJCMt4WXe1H10UNaVOamqQTmrx1kjVuxAHIQSNU6hY4Nsn9/ag==}
     dev: true
@@ -789,14 +784,6 @@ packages:
   /clone/2.1.2:
     resolution: {integrity: sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==}
     engines: {node: '>=0.8'}
-    dev: true
-
-  /cloneable-readable/1.1.3:
-    resolution: {integrity: sha512-2EF8zTQOxYq70Y4XKtorQupqF0m49MBz2/yf5Bj+MHjvpG3Hy7sImifnqD6UA+TKYxeSV+u6qqQPawN5UvnpKQ==}
-    dependencies:
-      inherits: 2.0.4
-      process-nextick-args: 2.0.1
-      readable-stream: 2.3.8
     dev: true
 
   /color-convert/1.9.3:
@@ -846,6 +833,7 @@ packages:
 
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+    dev: false
 
   /cross-spawn/7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -1332,6 +1320,10 @@ packages:
 
   /fast-deep-equal/3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+    dev: true
+
+  /fast-fifo/1.3.0:
+    resolution: {integrity: sha512-IgfweLvEpwyA4WgiQe9Nx6VV2QkML2NkvZnk1oKnIzXgXdWxuhF7zw4DvLTPZJn6PIUneiAXPF24QmoEqHTjyw==}
     dev: true
 
   /fast-json-stable-stringify/2.1.0:
@@ -1906,6 +1898,7 @@ packages:
 
   /isarray/1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
+    dev: false
 
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
@@ -2500,6 +2493,7 @@ packages:
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
+    dev: false
 
   /progress/2.0.3:
     resolution: {integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==}
@@ -2509,6 +2503,10 @@ packages:
   /punycode/2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
+    dev: true
+
+  /queue-tick/1.0.1:
+    resolution: {integrity: sha512-kJt5qhMxoszgU/62PLP1CJytzd2NKetjSRnyuj31fDd3Rlcz3fzlFdFLD1SItunPwyqEOkca6GbV612BWfaBag==}
     dev: true
 
   /quick-lru/4.0.1:
@@ -2585,6 +2583,7 @@ packages:
       safe-buffer: 5.1.2
       string_decoder: 1.1.1
       util-deprecate: 1.0.2
+    dev: false
 
   /readable-stream/3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
@@ -2642,9 +2641,9 @@ packages:
       is-finite: 1.1.0
     dev: true
 
-  /replace-ext/1.0.1:
-    resolution: {integrity: sha512-yD5BHCe7quCgBph4rMQ+0KkIRKwWCrHDOX1p1Gp6HwjPM5kVoCdKGNhN7ydqqsX6lJEnQDKZ/tFMiEdQ1dvPEw==}
-    engines: {node: '>= 0.10'}
+  /replace-ext/2.0.0:
+    resolution: {integrity: sha512-UszKE5KVK6JvyD92nzMn9cDapSk6w/CaFZ96CnmDMUqH9oowfxF/ZjRITD25H4DnOQClLA4/j7jLGXXLVKxAug==}
+    engines: {node: '>= 10'}
     dev: true
 
   /require-directory/2.1.1:
@@ -2677,6 +2676,7 @@ packages:
 
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
+    dev: false
 
   /safe-buffer/5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
@@ -2808,6 +2808,13 @@ packages:
     resolution: {integrity: sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==}
     dev: false
 
+  /streamx/2.15.0:
+    resolution: {integrity: sha512-HcxY6ncGjjklGs1xsP1aR71INYcsXFJet5CU1CHqihQ2J5nOsbd4OjgjHO42w/4QNv9gZb3BueV+Vxok5pLEXg==}
+    dependencies:
+      fast-fifo: 1.3.0
+      queue-tick: 1.0.1
+    dev: true
+
   /string-width/2.1.1:
     resolution: {integrity: sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==}
     engines: {node: '>=4'}
@@ -2853,6 +2860,7 @@ packages:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
     dependencies:
       safe-buffer: 5.1.2
+    dev: false
 
   /string_decoder/1.3.0:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
@@ -2935,6 +2943,12 @@ packages:
       slice-ansi: 4.0.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
+    dev: true
+
+  /teex/1.0.1:
+    resolution: {integrity: sha512-eYE6iEI62Ni1H8oIa7KlDU6uQBtqr4Eajni3wX7rpfXD8ysFx8z0+dri+KWEPWpBsxXfxu58x/0jvTVT1ekOSg==}
+    dependencies:
+      streamx: 2.15.0
     dev: true
 
   /temp-dir/2.0.0:
@@ -3116,16 +3130,15 @@ packages:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
 
-  /vinyl/2.2.1:
-    resolution: {integrity: sha512-LII3bXRFBZLlezoG5FfZVcXflZgWP/4dCwKtxd5ky9+LOtM4CS3bIRQsmR1KMnMW07jpE8fqR2lcxPZ+8sJIcw==}
-    engines: {node: '>= 0.10'}
+  /vinyl/3.0.0:
+    resolution: {integrity: sha512-rC2VRfAVVCGEgjnxHUnpIVh3AGuk62rP3tqVrn+yab0YH7UULisC085+NYH+mnqf3Wx4SpSi1RQMwudL89N03g==}
+    engines: {node: '>=10.13.0'}
     dependencies:
       clone: 2.1.2
-      clone-buffer: 1.0.0
       clone-stats: 1.0.0
-      cloneable-readable: 1.1.3
       remove-trailing-separator: 1.1.0
-      replace-ext: 1.0.1
+      replace-ext: 2.0.0
+      teex: 1.0.1
     dev: true
 
   /which-boxed-primitive/1.0.2:
