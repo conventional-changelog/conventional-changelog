@@ -44,7 +44,7 @@
   "version": "1.0.0",
   "devDependencies": {
     "better-than-before": "^1.0.0",
-    "c8": "^7.14.0",
+    "c8": "^8.0.0",
     "chai": "^4.3.7",
     "concat-stream": "^2.0.0",
     "conventional-changelog-core": "^5.0.0",
