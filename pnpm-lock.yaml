@@ -10,7 +10,7 @@ importers:
       concat-stream: ^2.0.0
       conventional-changelog-core: ^5.0.0
       eslint: ^8.0.0
-      eslint-config-standard: ^16.0.3
+      eslint-config-standard: ^17.0.0
       eslint-plugin-import: ^2.27.5
       eslint-plugin-node: ^11.1.0
       eslint-plugin-promise: ^6.0.0
@@ -33,7 +33,7 @@ importers:
       concat-stream: 2.0.0
       conventional-changelog-core: link:packages/conventional-changelog-core
       eslint: 8.44.0
-      eslint-config-standard: 16.0.3_ud4kilww4xbmc6lamqknwzx5ra
+      eslint-config-standard: 17.1.0_wti7m7orzlzoeiim3rp7reapva
       eslint-plugin-import: 2.27.5_eslint@8.44.0
       eslint-plugin-node: 11.1.0_eslint@8.44.0
       eslint-plugin-promise: 6.1.1_eslint@8.44.0
@@ -1067,17 +1067,17 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-config-standard/16.0.3_ud4kilww4xbmc6lamqknwzx5ra:
-    resolution: {integrity: sha512-x4fmJL5hGqNJKGHSjnLdgA6U6h1YW/G2dW9fA+cyVur4SK6lyue8+UgNKWlZtUDTXvgKDD/Oa3GQjmB5kjtVvg==}
+  /eslint-config-standard/17.1.0_wti7m7orzlzoeiim3rp7reapva:
+    resolution: {integrity: sha512-IwHwmaBNtDK4zDHQukFDW5u/aTb8+meQWZvNFWkiGmbWjD6bqyuSSBxxXKkCftCUzc1zwCH2m/baCNDLGmuO5Q==}
+    engines: {node: '>=12.0.0'}
     peerDependencies:
-      eslint: ^7.12.1
-      eslint-plugin-import: ^2.22.1
-      eslint-plugin-node: ^11.1.0
-      eslint-plugin-promise: ^4.2.1 || ^5.0.0
+      eslint: ^8.0.1
+      eslint-plugin-import: ^2.25.2
+      eslint-plugin-n: '^15.0.0 || ^16.0.0 '
+      eslint-plugin-promise: ^6.0.0
     dependencies:
       eslint: 8.44.0
       eslint-plugin-import: 2.27.5_eslint@8.44.0
-      eslint-plugin-node: 11.1.0_eslint@8.44.0
       eslint-plugin-promise: 6.1.1_eslint@8.44.0
     dev: true
 
