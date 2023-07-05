@@ -90,6 +90,9 @@ betterThanBefore.setups([
       'chore: release at different version',
       'Release-As: v3.0.2'
     ])
+  },
+  function () {
+    gitDummyCommit(['feat(awesome): remove duplicates', 'fixes A of #107', 'fixes B of #107', ' closes #107'])
   }
 ])
 
@@ -615,6 +618,24 @@ describe('conventionalcommits.org preset', function () {
       .pipe(through(function (chunk) {
         chunk = chunk.toString()
         expect(chunk).to.match(/release at different version/)
+        done()
+      }))
+  })
+  it('should remove all duplicate issues', function (done) {
+    preparing(12)
+
+    conventionalChangelogCore({
+      config: getPreset({
+        removeDuplicateIssues: true
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+        const matches = [...chunk.matchAll(/\[#107\]\(.*\)/g)]
+        expect(chunk).to.satisfy(() => matches.length === 1)
         done()
       }))
   })
