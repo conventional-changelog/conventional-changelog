@@ -239,6 +239,7 @@ describe('conventionalChangelogWriter', function () {
       })
       // the original commit should not be changed
       expect(commits[1].notes[0].title).to.equal('BREAKING CHANGE')
+      done()
     })
 
     it('should merge with the provided transform object', function (done) {
