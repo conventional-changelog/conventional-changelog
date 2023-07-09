@@ -151,6 +151,30 @@ function immutableSet (context, path, value) {
   }
 }
 
+function cloneCommit (commit) {
+  if (!commit || typeof commit !== 'object') {
+    return commit
+  } else
+  if (Array.isArray(commit)) {
+    return commit.map(cloneCommit)
+  }
+
+  const commitClone = {}
+  let value
+
+  for (const key in commit) {
+    value = commit[key]
+
+    if (typeof value === 'object') {
+      commitClone[key] = cloneCommit(value)
+    } else {
+      commitClone[key] = value
+    }
+  }
+
+  return commitClone
+}
+
 function processCommit (chunk, transform, context) {
   let commit
 
@@ -158,9 +182,7 @@ function processCommit (chunk, transform, context) {
     chunk = JSON.parse(chunk)
   } catch (e) {}
 
-  commit = {
-    ...chunk
-  }
+  commit = cloneCommit(chunk)
 
   if (typeof transform === 'function') {
     commit = transform(commit, context)

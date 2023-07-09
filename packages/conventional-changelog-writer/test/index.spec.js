@@ -220,6 +220,28 @@ describe('conventionalChangelogWriter', function () {
         }))
     })
 
+    it('should leave the original commits objects unchanged', function (done) {
+      expect(commits[1].notes[0].title).to.equal('BREAKING CHANGE')
+      conventionalChangelogWriter.parseArray(commits, {}, {
+        transform: {
+          notes: function (notes) {
+            notes.map(function (note) {
+              if (note.title === 'BREAKING CHANGE') {
+                note.title = 'BREAKING CHANGES'
+              }
+
+              return note
+            })
+
+            return notes
+          }
+        }
+      })
+      // the original commit should not be changed
+      expect(commits[1].notes[0].title).to.equal('BREAKING CHANGE')
+      done()
+    })
+
     it('should merge with the provided transform object', function (done) {
       let i = 0
       const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
