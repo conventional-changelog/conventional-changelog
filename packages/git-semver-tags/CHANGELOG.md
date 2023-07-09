@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v5.0.0...git-semver-tags-v5.0.1) (2023-07-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency semver to v7 [security] ([#1021](https://github.com/conventional-changelog/conventional-changelog/issues/1021)) ([31fa409](https://github.com/conventional-changelog/conventional-changelog/commit/31fa409e446a51a5a23e2217997d04364b89c1dd))
+
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v4.1.1...git-semver-tags-v5.0.0) (2023-06-06)
 
 
