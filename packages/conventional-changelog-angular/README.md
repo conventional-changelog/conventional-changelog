@@ -1,8 +1,40 @@
-# [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# conventional-changelog-angular
 
-> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [angular](https://github.com/angular/angular) preset
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
+
+[npm]: https://img.shields.io/npm/v/conventional-changelog-angular.svg
+[npm-url]: https://npmjs.com/package/conventional-changelog-angular
+
+[node]: https://img.shields.io/node/v/conventional-changelog-angular.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-angular
+[deps-url]: https://libraries.io/npm/conventional-changelog-angular/tree
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) [angular](https://github.com/angular/angular) preset.
 
 **Issues with the convention itself should be reported on the Angular issue tracker.**
+
+## Install
+
+```bash
+# yarn
+yarn add -D conventional-changelog-angular
+# pnpm
+pnpm add -D conventional-changelog-angular
+# npm
+npm i -D conventional-changelog-angular
+```
 
 ## Angular Convention
 
@@ -92,13 +124,3 @@ reference GitHub issues that this commit **Closes**.
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
 A detailed explanation can be found in this [document](#commit-message-format).
-
-[npm-image]: https://badge.fury.io/js/conventional-changelog-angular.svg
-[npm-url]: https://npmjs.org/package/conventional-changelog-angular
-[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog-angular.svg?branch=master
-[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-angular
-[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-angular.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-angular
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
-[commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#

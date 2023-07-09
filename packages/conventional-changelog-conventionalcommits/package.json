@@ -16,12 +16,12 @@
     "preset"
   ],
   "files": [
-    "add-bang-notes.js",
-    "conventional-changelog.js",
-    "conventional-recommended-bump.js",
+    "utils.js",
+    "conventionalChangelog.js",
+    "conventionalRecommendedBump.js",
     "index.js",
-    "parser-opts.js",
-    "writer-opts.js",
+    "parserOpts.js",
+    "writerOpts.js",
     "templates"
   ],
   "author": "Ben Coe",

@@ -21,7 +21,7 @@ importers:
       pinkie-promise: ^2.0.1
       rimraf: ^3.0.2
       safe-buffer: 5.2.1
-      semver: ^7.0.0
+      semver: ^7.5.2
       sinon: ^15.0.0
       sinon-chai: ^3.7.0
       tmp: ^0.2.1
@@ -44,7 +44,7 @@ importers:
       pinkie-promise: 2.0.1
       rimraf: 3.0.2
       safe-buffer: 5.2.1
-      semver: 7.5.1
+      semver: 7.5.4
       sinon: 15.2.0
       sinon-chai: 3.7.0_chai@4.3.7+sinon@15.2.0
       tmp: 0.2.1
@@ -172,7 +172,7 @@ importers:
       handlebars: ^4.7.7
       json-stringify-safe: ^5.0.1
       meow: ^8.1.2
-      semver: ^7.0.0
+      semver: ^7.5.2
       split: ^1.0.1
     dependencies:
       conventional-commits-filter: link:../conventional-commits-filter
@@ -180,7 +180,7 @@ importers:
       handlebars: 4.7.7
       json-stringify-safe: 5.0.1
       meow: 8.1.2
-      semver: 7.5.1
+      semver: 7.5.4
       split: 1.0.1
     devDependencies:
       dedent: 0.7.0
@@ -238,10 +238,10 @@ importers:
   packages/git-semver-tags:
     specifiers:
       meow: ^8.1.2
-      semver: ^7.0.0
+      semver: ^7.5.2
     dependencies:
       meow: 8.1.2
-      semver: 7.5.1
+      semver: 7.5.4
 
   packages/gulp-conventional-changelog:
     specifiers:
@@ -2202,7 +2202,7 @@ packages:
     dependencies:
       hosted-git-info: 4.1.0
       is-core-module: 2.12.1
-      semver: 7.5.1
+      semver: 7.5.4
       validate-npm-package-license: 3.0.4
     dev: false
 
@@ -2212,7 +2212,7 @@ packages:
     dependencies:
       hosted-git-info: 6.1.1
       is-core-module: 2.12.1
-      semver: 7.5.1
+      semver: 7.5.4
       validate-npm-package-license: 3.0.4
     dev: false
 
@@ -2664,8 +2664,8 @@ packages:
     hasBin: true
     dev: true
 
-  /semver/7.5.1:
-    resolution: {integrity: sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw==}
+  /semver/7.5.4:
+    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:

@@ -4,113 +4,155 @@ const chai = require('chai')
 const mocha = require('mocha')
 const describe = mocha.describe
 const it = mocha.it
-const presetLoader = require('../').presetLoader
+const { createPresetLoader } = require('../')
 const sinon = require('sinon')
 const sinonChai = require('sinon-chai')
 
 chai.use(sinonChai)
 const expect = chai.expect
+const mockModuleLoader = () => () => ({})
+const mockUnprefixedModuleLoader = (moduleName) => {
+  if (/(^|\/)conventional-changelog-/.test(moduleName)) {
+    throw new Error('Module not found')
+  }
 
-describe('presetLoader', () => {
-  it('loads unscoped package', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  return () => ({})
+}
 
-    load('angular')
+describe('createPresetLoader', () => {
+  it('should load unscoped package', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
 
-    expect(requireMethod).to.have.been.calledOnce
-      .and.to.have.been.calledWith('conventional-changelog-angular')
-  })
-
-  it('loads unscoped package containing path', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
-
-    load('angular/preset/path')
-
-    expect(requireMethod).to.have.been.calledOnce
-      .and.to.have.been.calledWith('conventional-changelog-angular/preset/path')
-  })
-
-  it('loads unscoped package with full package name', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
-
-    load('conventional-changelog-angular')
+    await load('angular')
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith('conventional-changelog-angular')
   })
 
-  it('loads unscoped package with full package name containing path', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load unscoped package containing path', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
 
-    load('conventional-changelog-angular/preset/path')
+    await load('angular/preset/path')
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith('conventional-changelog-angular/preset/path')
   })
 
-  it('loads scoped package', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load unscoped package with full package name', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
 
-    load('@scope/angular')
+    await load('conventional-changelog-angular')
+
+    expect(requireMethod).to.have.been.calledOnce
+      .and.to.have.been.calledWith('conventional-changelog-angular')
+  })
+
+  it('should load unscoped package with full package name containing path', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
+
+    await load('conventional-changelog-angular/preset/path')
+
+    expect(requireMethod).to.have.been.calledOnce
+      .and.to.have.been.calledWith('conventional-changelog-angular/preset/path')
+  })
+
+  it('should load scoped package', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
+
+    await load('@scope/angular')
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith('@scope/conventional-changelog-angular')
   })
 
-  it('loads scoped package containing path', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load scoped package containing path', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
 
-    load('@scope/angular/preset/path')
+    await load('@scope/angular/preset/path')
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith('@scope/conventional-changelog-angular/preset/path')
   })
 
-  it('loads scoped package with full package name', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load scoped package with full package name', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
 
-    load('@scope/conventional-changelog-angular')
+    await load('@scope/conventional-changelog-angular')
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith('@scope/conventional-changelog-angular')
   })
 
-  it('loads scoped package with full package name containing path', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load scoped package with full package name containing path', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
 
-    load('@scope/conventional-changelog-angular/preset/path')
+    await load('@scope/conventional-changelog-angular/preset/path')
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith('@scope/conventional-changelog-angular/preset/path')
   })
 
-  it('loads package with an absolute file path', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load package with an absolute file path', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
     const filePath = require.resolve('conventional-changelog-angular')
 
-    load(filePath)
+    await load(filePath)
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith(filePath)
   })
 
-  it('loads package with an absolute file path name', () => {
-    const requireMethod = sinon.spy()
-    const load = presetLoader(requireMethod)
+  it('should load package with an absolute file path name', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
     const filePath = require.resolve('conventional-changelog-angular')
 
-    load({ name: filePath })
+    await load({ name: filePath })
 
     expect(requireMethod).to.have.been.calledOnce
       .and.to.have.been.calledWith(filePath)
+  })
+
+  it('should load package in @conventional-changelog scope', async () => {
+    const requireMethod = sinon.spy(mockModuleLoader)
+    const load = createPresetLoader(requireMethod)
+
+    await load('@conventional-changelog/preset-angular')
+
+    expect(requireMethod).to.have.been.calledOnce
+      .and.to.have.been.calledWith('@conventional-changelog/preset-angular')
+  })
+
+  it('should load package without adding prefix', async () => {
+    const requireMethod = sinon.spy(mockUnprefixedModuleLoader)
+    const load = createPresetLoader(requireMethod)
+
+    await load('trigen-conventional-changelog-angular')
+
+    expect(requireMethod.getCalls().map(call => call.args)).to.deep.equal([
+      ['conventional-changelog-trigen-conventional-changelog-angular'],
+      ['trigen-conventional-changelog-angular']
+    ])
+  })
+
+  it('should load scoped package without adding prefix', async () => {
+    const requireMethod = sinon.spy(mockUnprefixedModuleLoader)
+    const load = createPresetLoader(requireMethod)
+
+    await load('@trigen/cc-preset-angular')
+
+    expect(requireMethod.getCalls().map(call => call.args)).to.deep.equal([
+      ['@trigen/conventional-changelog-cc-preset-angular'],
+      ['@trigen/cc-preset-angular']
+    ])
   })
 })

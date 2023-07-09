@@ -16,11 +16,11 @@
     "preset"
   ],
   "files": [
-    "conventional-changelog.js",
-    "conventional-recommended-bump.js",
+    "conventionalChangelog.js",
+    "conventionalRecommendedBump.js",
     "index.js",
-    "parser-opts.js",
-    "writer-opts.js",
+    "parserOpts.js",
+    "writerOpts.js",
     "templates"
   ],
   "author": "Steve Mao",

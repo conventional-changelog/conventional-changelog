@@ -113,7 +113,7 @@ describe('conventionalChangelog', function () {
           return
         }
 
-        expect(warning).to.equal('Preset: "no" does not exist')
+        expect(warning).to.equal('Error: Unable to load the "no" preset. Please make sure it\'s installed.')
 
         i++
         done()

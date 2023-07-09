@@ -2,16 +2,15 @@
 const concat = require('concat-stream')
 const conventionalCommitsFilter = require('conventional-commits-filter')
 const conventionalCommitsParser = require('conventional-commits-parser')
-const conventionalChangelogPresetLoader = require('conventional-changelog-preset-loader')
+const { loadPreset } = require('conventional-changelog-preset-loader')
 const gitSemverTags = require('git-semver-tags')
 const gitRawCommits = require('git-raw-commits')
-const presetResolver = require('./preset-resolver')
 
 const VERSIONS = ['major', 'minor', 'patch']
 
-module.exports = conventionalRecommendedBump
+module.exports = conventionalRecommendedBumpLegacy
 
-function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArgument) {
+async function conventionalRecommendedBump (optionsArgument, parserOptsArgument) {
   if (typeof optionsArgument !== 'object') {
     throw new Error('The \'options\' argument must be an object.')
   }
@@ -21,48 +20,33 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
     gitRawCommitsOpts: {}
   }, optionsArgument)
 
-  const cb = typeof parserOptsArgument === 'function' ? parserOptsArgument : cbArgument
-
-  if (typeof cb !== 'function') {
-    throw new Error('You must provide a callback function.')
-  }
-
-  let presetPackage = options.config || {}
+  let config = options.config || {}
   if (options.preset) {
-    try {
-      presetPackage = conventionalChangelogPresetLoader(options.preset)
-    } catch (err) {
-      if (err.message === 'does not exist') {
-        const preset = typeof options.preset === 'object' ? options.preset.name : options.preset
-        return cb(new Error(`Unable to load the "${preset}" preset package. Please make sure it's installed.`))
-      } else {
-        return cb(err)
-      }
-    }
+    config = await loadPreset(options.preset)
   }
 
-  presetResolver(presetPackage).then(config => {
-    const whatBump = options.whatBump ||
-      ((config.recommendedBumpOpts && config.recommendedBumpOpts.whatBump)
-        ? config.recommendedBumpOpts.whatBump
-        : noop)
+  const whatBump = options.whatBump ||
+    ((config.recommendedBumpOpts && config.recommendedBumpOpts.whatBump)
+      ? config.recommendedBumpOpts.whatBump
+      : noop)
 
-    if (typeof whatBump !== 'function') {
-      throw Error('whatBump must be a function')
-    }
+  if (typeof whatBump !== 'function') {
+    throw Error('whatBump must be a function')
+  }
 
-    // TODO: For now we defer to `config.recommendedBumpOpts.parserOpts` if it exists, as our initial refactor
-    // efforts created a `parserOpts` object under the `recommendedBumpOpts` object in each preset package.
-    // In the future we want to merge differences found in `recommendedBumpOpts.parserOpts` into the top-level
-    // `parserOpts` object and remove `recommendedBumpOpts.parserOpts` from each preset package if it exists.
-    const parserOpts = Object.assign({},
-      config.recommendedBumpOpts && config.recommendedBumpOpts.parserOpts
-        ? config.recommendedBumpOpts.parserOpts
-        : config.parserOpts,
-      parserOptsArgument)
+  // TODO: For now we defer to `config.recommendedBumpOpts.parserOpts` if it exists, as our initial refactor
+  // efforts created a `parserOpts` object under the `recommendedBumpOpts` object in each preset package.
+  // In the future we want to merge differences found in `recommendedBumpOpts.parserOpts` into the top-level
+  // `parserOpts` object and remove `recommendedBumpOpts.parserOpts` from each preset package if it exists.
+  const parserOpts = Object.assign({},
+    config.recommendedBumpOpts && config.recommendedBumpOpts.parserOpts
+      ? config.recommendedBumpOpts.parserOpts
+      : config.parserOpts,
+    parserOptsArgument)
 
-    const warn = typeof parserOpts.warn === 'function' ? parserOpts.warn : noop
+  const warn = typeof parserOpts.warn === 'function' ? parserOpts.warn : noop
 
+  return await new Promise((resolve, reject) => {
     gitSemverTags({
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
@@ -70,7 +54,7 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
       skipUnstable: options.skipUnstable
     }, (err, tags) => {
       if (err) {
-        return cb(err)
+        return reject(err)
       }
 
       gitRawCommits({
@@ -95,10 +79,22 @@ function conventionalRecommendedBump (optionsArgument, parserOptsArgument, cbArg
             result = {}
           }
 
-          cb(null, result)
+          resolve(result)
         }))
     })
-  }).catch(err => cb(err))
+  })
+}
+
+function conventionalRecommendedBumpLegacy (optionsArgument, parserOptsArgument, cbArgument) {
+  const cb = typeof parserOptsArgument === 'function' ? parserOptsArgument : cbArgument
+
+  if (typeof cb !== 'function') {
+    throw new Error('You must provide a callback function.')
+  }
+
+  conventionalRecommendedBump(optionsArgument, parserOptsArgument)
+    .then((result) => cb(null, result))
+    .catch((err) => cb(err))
 }
 
 function noop () {}

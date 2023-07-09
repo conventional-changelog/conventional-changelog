@@ -1273,8 +1273,8 @@ describe('conventionalChangelogCore', function () {
       resolve(config)
     })
 
-    const fn = function (cb) {
-      cb(null, config)
+    const fn = function () {
+      return config
     }
 
     it('should load object config', function (done) {
