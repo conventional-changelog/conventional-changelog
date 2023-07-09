@@ -158,9 +158,8 @@ function processCommit (chunk, transform, context) {
     chunk = JSON.parse(chunk)
   } catch (e) {}
 
-  commit = {
-    ...chunk
-  }
+  // ensure two 100% separate objects (for saving to raw)
+  commit = JSON.parse(JSON.stringify(chunk))
 
   if (typeof transform === 'function') {
     commit = transform(commit, context)
