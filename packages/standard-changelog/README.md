@@ -48,7 +48,7 @@ $ standard-changelog --help
 
 ## API
 
-See the [conventional-changelog](https://github.com/ajoslin/conventional-changelog) docs with the angular preset.
+See the [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) docs with the angular preset.
 
 ## License
 

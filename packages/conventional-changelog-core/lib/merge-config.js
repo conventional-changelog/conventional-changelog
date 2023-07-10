@@ -1,5 +1,4 @@
 'use strict'
-const { promisify } = require('util')
 const dateFormat = require('dateformat')
 const getPkgRepo = require('get-pkg-repo')
 const gitSemverTags = require('git-semver-tags')
@@ -70,7 +69,6 @@ function omitUndefinedValueProps (obj) {
 }
 
 async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
-  let configPromise
   let pkgPromise
 
   options = omitUndefinedValueProps(options)
@@ -113,14 +111,6 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   options.warn = options.warn || options.debug
 
-  if (options.config) {
-    if (typeof options.config === 'function') {
-      configPromise = promisify(options.config)()
-    } else {
-      configPromise = Promise.resolve(options.config)
-    }
-  }
-
   if (options.pkg) {
     if (options.pkg.path) {
       pkgPromise = Promise.resolve(readPkg(options.pkg.path))
@@ -129,6 +119,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     }
   }
 
+  const presetConfig = typeof options.config === 'function' ? options.config() : options.config
   const gitRemoteOriginUrlPromise = Promise.resolve(gitRemoteOriginUrl())
   const [
     configObj,
@@ -136,7 +127,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     tagsObj,
     gitRemoteOriginUrlObj
   ] = await Promise.allSettled([
-    configPromise,
+    presetConfig,
     pkgPromise,
     semverTagsPromise(options),
     gitRemoteOriginUrlPromise
@@ -150,11 +141,11 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   let gitSemverTags = []
 
-  if (configPromise) {
+  if (options.config) {
     if (configObj.status === 'fulfilled') {
       config = configObj.value
     } else {
-      options.warn('Error in config' + configObj.reason.toString())
+      options.warn(configObj.reason.toString())
       config = {}
     }
   } else {

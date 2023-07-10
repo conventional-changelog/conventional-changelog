@@ -21,8 +21,7 @@
   },
   "files": [
     "index.js",
-    "cli.js",
-    "preset-resolver.js"
+    "cli.js"
   ],
   "keywords": [
     "conventional-recommended-bump",

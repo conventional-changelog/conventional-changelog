@@ -399,7 +399,7 @@ describe('cli', function () {
 
     cp.stderr
       .pipe(concat(function (chunk) {
-        expect(chunk.toString()).to.include('Preset: "no" does not exist\n')
+        expect(chunk.toString()).to.include('Unable to load the "no" preset.')
       }))
 
     cp.on('close', function (code) {

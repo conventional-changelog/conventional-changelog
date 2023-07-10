@@ -257,7 +257,7 @@ describe('conventional-recommended-bump API', () => {
         preset: 'does-not-exist'
       }, {}, err => {
         assert.ok(err)
-        assert.strictEqual(err.message, 'Unable to load the "does-not-exist" preset package. Please make sure it\'s installed.')
+        assert.strictEqual(err.message, 'Unable to load the "does-not-exist" preset. Please make sure it\'s installed.')
         done()
       })
     })
