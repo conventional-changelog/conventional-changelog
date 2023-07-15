@@ -93,6 +93,10 @@ betterThanBefore.setups([
   }
 ])
 
+betterThanBefore.tearsWithJoy(() => {
+  // teardown the setups!
+});
+
 describe('conventionalcommits.org preset', function () {
   it('should work if there is no semver tag', function (done) {
     preparing(1)
@@ -206,6 +210,28 @@ describe('conventionalcommits.org preset', function () {
         expect(chunk).to.include('**deps:** upgrade example from 1 to 2')
 
         expect(chunk).to.not.include('release 0.0.0')
+        done()
+      }))
+  })
+
+  it('should allow hidding by "subject" pattern to configuration', function (done) {
+    preparing(10)
+    conventionalChangelogCore({
+      config: require('../')({
+        types: [
+          { subject: '*more features', hidden: true },
+          { type: 'feature', release: true, section: "Features" },
+        ]
+      })
+    })
+      .on('error', function (err) {
+        done(err)
+      })
+      .pipe(through(function (chunk) {
+        chunk = chunk.toString()
+
+        expect(chunk).to.not.include('### Features')
+        expect(chunk).to.not.include('some more features')
         done()
       }))
   })

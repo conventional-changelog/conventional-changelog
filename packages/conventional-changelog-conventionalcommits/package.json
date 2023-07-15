@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",
   "dependencies": {
-    "compare-func": "^2.0.0"
+    "compare-func": "^2.0.0",
+    "micromatch": "^4.0.5"
   }
 }
