@@ -193,6 +193,29 @@ describe('conventional-changelog-conventionalcommits', () => {
     }
   })
 
+  it('should handle alternative "types" configuration', async () => {
+    preparing(1)
+
+    for await (let chunk of conventionalChangelogCore({
+      cwd: testTools.cwd,
+      config: preset({
+        types: preset.defaultCommitTypes.map((commitType) => (
+          commitType.type === 'chore'
+            ? { ...commitType, hidden: false }
+            : commitType
+        ))
+      })
+    })) {
+      chunk = chunk.toString()
+
+      expect(chunk).toContain('### Miscellaneous Chores')
+      expect(chunk).toContain('**deps:** upgrade example from 1 to 2')
+
+      expect(chunk).toContain('### Performance Improvements')
+      expect(chunk).toContain('**ngOptions:** make it faster')
+    }
+  })
+
   it('should properly format external repository issues', async () => {
     preparing(1)
 
