@@ -51,7 +51,8 @@ async function conventionalRecommendedBump (optionsArgument, parserOptsArgument)
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
       tagPrefix: options.tagPrefix,
-      skipUnstable: options.skipUnstable
+      skipUnstable: options.skipUnstable,
+      cwd: options.cwd
     }, (err, tags) => {
       if (err) {
         return reject(err)
@@ -62,6 +63,8 @@ async function conventionalRecommendedBump (optionsArgument, parserOptsArgument)
         from: tags[0] || '',
         path: options.path,
         ...options.gitRawCommitsOpts
+      }, {
+        cwd: options.cwd
       })
         .pipe(conventionalCommitsParser(parserOpts))
         .pipe(concat(data => {

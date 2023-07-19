@@ -1,6 +1,13 @@
 const { execSync } = require('child_process')
 const { Transform } = require('stream')
+const path = require('path')
 const fs = require('fs')
+const tmp = require('tmp')
+const conventionalChangelogCore = require('conventional-changelog-core')
+
+function delay (ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 function fixMessage (msg) {
   if (!msg || typeof msg !== 'string') {
@@ -30,29 +37,6 @@ function prepareMessageArgs (msg) {
   return args
 }
 
-function exec (command) {
-  return execSync(command, {
-    stdio: 'pipe',
-    encoding: 'utf-8'
-  })
-}
-
-function gitDummyCommit (msg) {
-  const args = prepareMessageArgs(msg)
-
-  args.push(
-    '--allow-empty',
-    '--no-gpg-sign'
-  )
-
-  return exec(`git commit ${args.join(' ')}`)
-}
-
-function gitInit () {
-  fs.mkdirSync('git-templates')
-  return exec('git init --template=./git-templates  --initial-branch=master')
-}
-
 function through (
   transform = (chunk, enc, cb) => cb(null, chunk),
   flush
@@ -75,10 +59,121 @@ function throughObj (
   })
 }
 
+class TestTools {
+  constructor (cwd) {
+    this.cwd = cwd
+
+    if (!cwd) {
+      this.cwd = fs.realpathSync(tmp.dirSync().name)
+      tmp.setGracefulCleanup()
+    }
+  }
+
+  cleanup () {
+    try {
+      this.rmSync(this.cwd, { recursive: true })
+    } catch (err) {
+      // ignore
+    }
+  }
+
+  mkdirSync (dir, options) {
+    return fs.mkdirSync(path.resolve(this.cwd, dir), options)
+  }
+
+  writeFileSync (file, content) {
+    return fs.writeFileSync(path.resolve(this.cwd, file), content)
+  }
+
+  readFileSync (file, options) {
+    return fs.readFileSync(path.resolve(this.cwd, file), options)
+  }
+
+  rmSync (target, options) {
+    return fs.rmSync(path.resolve(this.cwd, target), options)
+  }
+
+  exec (command) {
+    return execSync(command, {
+      cwd: this.cwd,
+      stdio: 'pipe',
+      encoding: 'utf-8'
+    })
+  }
+
+  gitInit () {
+    this.mkdirSync('git-templates')
+    return this.exec('git init --template=./git-templates  --initial-branch=master')
+  }
+
+  gitDummyCommit (msg) {
+    const args = prepareMessageArgs(msg)
+
+    args.push(
+      '--allow-empty',
+      '--no-gpg-sign'
+    )
+
+    return this.exec(`git commit ${args.join(' ')}`)
+  }
+
+  gitTails () {
+    const data = execSync('git rev-list --parents HEAD', {
+      cwd: this.cwd
+    })
+
+    return data.toString().match(/^[a-f0-9]{40}$/gm)
+  }
+}
+
+function createRunConventionalChangelog (conventionalChangelogCore, options) {
+  return function runConventionalChangelog (options, ...args) {
+    const chunks = []
+    const onChunk = typeof args[args.length - 1] === 'function'
+      ? args.pop()
+      : undefined
+    const includeDetails = args.some(arg => arg.includeDetails)
+    const throughToUse = includeDetails ? throughObj : through
+
+    return new Promise((resolve, reject) => {
+      conventionalChangelogCore({
+        warn: options?.rejectOnWarn ? reject : undefined,
+        ...options
+      }, ...args)
+        .on('error', reject)
+        .pipe(
+          throughToUse((chunk, _, next) => {
+            try {
+              const str = Buffer.isBuffer(chunk)
+                ? chunk.toString()
+                : chunk
+
+              chunks.push(str)
+              onChunk?.(str)
+              next()
+            } catch (err) {
+              reject(err)
+            }
+          }, (done) => {
+            try {
+              resolve(chunks)
+              done()
+            } catch (err) {
+              reject(err)
+            }
+          })
+        )
+    })
+  }
+}
+
+const runConventionalChangelog = createRunConventionalChangelog(conventionalChangelogCore)
+
 module.exports = {
-  gitDummyCommit,
-  gitInit,
-  exec,
+  TestTools,
+  createRunConventionalChangelog,
+  runConventionalChangelog,
   through,
-  throughObj
+  throughObj,
+  delay
 }

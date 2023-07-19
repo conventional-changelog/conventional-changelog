@@ -2,4 +2,4 @@
 'use strict'
 
 require('forceable-tty').override()
-require('./cli')
+require('../cli')

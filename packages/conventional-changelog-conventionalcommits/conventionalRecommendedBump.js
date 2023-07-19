@@ -32,7 +32,7 @@ function createConventionalRecommendedBumpOpts (config, parserOpts) {
       }
 
       return {
-        level: level,
+        level,
         reason: breakings === 1
           ? `There is ${breakings} BREAKING CHANGE and ${features} features`
           : `There are ${breakings} BREAKING CHANGES and ${features} features`
