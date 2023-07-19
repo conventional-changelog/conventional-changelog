@@ -9,6 +9,8 @@ const { execFileSync } = require('child_process')
 
 const mergeConfig = require('./lib/merge-config')
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
+  const cwd = options?.cwd
+
   writerOpts = writerOpts || {}
 
   const readable = new Readable({
@@ -26,9 +28,9 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
   function commitsRange (from, to) {
     return gitRawCommits({
       ...gitRawCommitsOpts,
-      from: from,
-      to: to
-    })
+      from,
+      to
+    }, { cwd })
       .on('error', function (err) {
         if (!commitsErrorThrown) {
           setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
@@ -48,6 +50,7 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
 
       try {
         execFileSync('git', ['rev-parse', '--verify', 'HEAD'], {
+          cwd,
           stdio: 'ignore'
         })
         let reverseTags = context.gitSemverTags.slice(0).reverse()

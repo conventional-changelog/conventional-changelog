@@ -21,7 +21,8 @@ function semverTagsPromise (options) {
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
       tagPrefix: options.tagPrefix,
-      skipUnstable: options.skipUnstable
+      skipUnstable: options.skipUnstable,
+      cwd: options.cwd
     }, (err, result) => {
       if (err) {
         reject(err)
@@ -74,7 +75,10 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   options = omitUndefinedValueProps(options)
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
-  gitRawExecOpts = gitRawExecOpts || {}
+  gitRawExecOpts = {
+    cwd: options?.cwd,
+    ...gitRawExecOpts || {}
+  }
 
   const rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
 
@@ -115,12 +119,12 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     if (options.pkg.path) {
       pkgPromise = Promise.resolve(readPkg(options.pkg.path))
     } else {
-      pkgPromise = Promise.resolve(readPkgUp())
+      pkgPromise = Promise.resolve(readPkgUp({ cwd: options.cwd }))
     }
   }
 
   const presetConfig = typeof options.config === 'function' ? options.config() : options.config
-  const gitRemoteOriginUrlPromise = Promise.resolve(gitRemoteOriginUrl())
+  const gitRemoteOriginUrlPromise = Promise.resolve(gitRemoteOriginUrl(options.cwd))
   const [
     configObj,
     pkgObj,
@@ -353,12 +357,12 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   }
 
   return {
-    options: options,
-    context: context,
-    gitRawCommitsOpts: gitRawCommitsOpts,
-    parserOpts: parserOpts,
-    writerOpts: writerOpts,
-    gitRawExecOpts: gitRawExecOpts
+    options,
+    context,
+    gitRawCommitsOpts,
+    parserOpts,
+    writerOpts,
+    gitRawExecOpts
   }
 }
 
