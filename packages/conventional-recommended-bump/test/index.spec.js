@@ -1,335 +1,403 @@
-'use strict'
+import { describe, it, expect } from 'vitest'
+import BetterThanBefore from 'better-than-before'
+import { TestTools } from '../../../tools/test-tools'
+import conventionalRecommendedBump from '..'
 
-const assert = require('assert')
-const betterThanBefore = require('better-than-before')()
-const conventionalRecommendedBump = require('../index')
-const fs = require('fs')
-const tmp = require('tmp')
-const { gitInit, gitDummyCommit, exec } = require('../../../tools/test-tools')
+const { setups, preparing, tearsWithJoy } = BetterThanBefore()
+let testTools
 
-const preparing = betterThanBefore.preparing
-
-betterThanBefore.setups([
+setups([
   () => { // 1
-    const tmpDir = tmp.dirSync()
-    process.chdir(tmpDir.name)
-    gitInit()
+    testTools = new TestTools()
+    testTools.gitInit()
   },
   () => { // 2
-    gitDummyCommit(['feat!: my first commit'])
+    testTools.gitDummyCommit(['feat!: my first commit'])
   },
   () => { // 3
-    exec('git tag v1.0.0')
+    testTools.exec('git tag v1.0.0')
   },
   () => { // 4
     // we need non-empty commit, so we can revert it
-    fs.writeFileSync('file1', '')
-    exec('git add file1')
-    gitDummyCommit(['feat: my second commit'])
+    testTools.writeFileSync('file1', '')
+    testTools.exec('git add file1')
+    testTools.gitDummyCommit(['feat: my second commit'])
   },
   () => { // 5
-    exec('git revert HEAD')
+    testTools.exec('git revert HEAD')
   },
   () => { // 6
-    gitDummyCommit(['feat: should not be taken into account', 'BREAKING CHANGE: I broke the API'])
-    exec('git tag ms/1.0.0')
-    gitDummyCommit(['feat: this should have been working'])
+    testTools.gitDummyCommit(['feat: should not be taken into account', 'BREAKING CHANGE: I broke the API'])
+    testTools.exec('git tag ms/1.0.0')
+    testTools.gitDummyCommit(['feat: this should have been working'])
   },
   () => { // 7
-    exec('git tag my-package@1.0.0')
-    gitDummyCommit(['feat: this should have been working'])
+    testTools.exec('git tag my-package@1.0.0')
+    testTools.gitDummyCommit(['feat: this should have been working'])
   }
 ])
 
-describe('conventional-recommended-bump API', () => {
+tearsWithJoy(() => {
+  testTools?.cleanup()
+})
+
+describe('conventional-recommended-bump', () => {
   describe('options object', () => {
-    it('should throw an error if an \'options\' object is not provided', done => {
-      assert.throws(() => conventionalRecommendedBump())
-      assert.throws(() => conventionalRecommendedBump('invalid options object'))
-      done()
+    it('should throw an error if an \'options\' object is not provided', () => {
+      expect(() => conventionalRecommendedBump()).toThrow()
+      expect(() => conventionalRecommendedBump('invalid options object')).toThrow()
     })
   })
 
   describe('callback', () => {
-    it('should throw an error if no, or an invalid, callback function is provided', done => {
-      assert.throws(() => conventionalRecommendedBump({}))
-      assert.throws(() => conventionalRecommendedBump({}, {}))
-      assert.throws(() => conventionalRecommendedBump({}, {}, {}))
-      done()
+    it('should throw an error if no, or an invalid, callback function is provided', () => {
+      expect(() => conventionalRecommendedBump({ cwd: testTools.cwd })).toThrow()
+      expect(() => conventionalRecommendedBump({ cwd: testTools.cwd }, {})).toThrow()
+      expect(() => conventionalRecommendedBump({ cwd: testTools.cwd }, {}, {})).toThrow()
     })
 
-    it('should allow callback function in the \'parserOpts\' argument spot', done => {
+    it('should allow callback function in the \'parserOpts\' argument spot', () => {
       preparing(1)
 
-      conventionalRecommendedBump({}, err => {
-        assert.ok(err)
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({ cwd: testTools.cwd }, (err) => {
+          expect(err).toBeTruthy()
+          resolve()
+        })
       })
     })
   })
 
-  it('should return an error if there are no commits in the repository', done => {
+  it('should return an error if there are no commits in the repository', () => {
     preparing(1)
 
-    conventionalRecommendedBump({}, {}, err => {
-      assert.ok(err)
-      done()
+    return new Promise((resolve) => {
+      conventionalRecommendedBump({
+        cwd: testTools.cwd
+      }, {}, (err) => {
+        expect(err).toBeTruthy()
+        resolve()
+      })
     })
   })
 
   describe('conventionalcommits ! in isolation', () => {
-    it('recommends major if ! is used in isolation', done => {
+    it('recommends major if ! is used in isolation', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        preset: {
-          name: 'conventionalcommits'
-        }
-      }, {}, (_, recommendation) => {
-        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
-        assert.strictEqual(recommendation.releaseType, 'major')
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          preset: {
+            name: 'conventionalcommits'
+          }
+        }, {}, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation.reason).toContain('1 BREAKING')
+          expect(recommendation.releaseType).toEqual('major')
+          resolve()
+        })
       })
     })
   })
 
   describe('optional \'whatBump\'', () => {
-    it('should throw an error if \'whatBump\' is defined but not a function', done => {
+    it('should throw an error if \'whatBump\' is defined but not a function', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        whatBump: 'invalid'
-      }, {}, err => {
-        assert.ok(err)
-        assert.strictEqual(err.message, 'whatBump must be a function')
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: 'invalid'
+        }, {}, (err) => {
+          expect(err).toBeTruthy()
+          expect(err.message).toEqual('whatBump must be a function')
+          resolve()
+        })
       })
     })
 
-    it('should return \'{}\' if no \'whatBump\'', done => {
+    it('should return \'{}\' if no \'whatBump\'', () => {
       preparing(2)
 
-      conventionalRecommendedBump({}, {}, (err, recommendation) => {
-        if (err) done(err)
-        assert.deepStrictEqual(recommendation, {})
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd
+        }, {}, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation).toEqual({})
+          resolve()
+        })
       })
     })
 
-    it('should return \'{}\' if \'whatBump\' returns \'null\'', done => {
+    it('should return \'{}\' if \'whatBump\' returns \'null\'', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        whatBump: () => { return null }
-      }, (err, recommendation) => {
-        if (err) done(err)
-        assert.deepStrictEqual(recommendation, {})
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: () => null
+        }, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation).toEqual({})
+          resolve()
+        })
       })
     })
 
-    it('should return \'{}\' if \'whatBump\' returns \'undefined\'', done => {
+    it('should return \'{}\' if \'whatBump\' returns \'undefined\'', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        whatBump: () => { return undefined }
-      }, (err, recommendation) => {
-        if (err) done(err)
-        assert.deepStrictEqual(recommendation, {})
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: () => undefined
+        }, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation).toEqual({})
+          resolve()
+        })
       })
     })
 
-    it('should return what is returned by \'whatBump\'', done => {
+    it('should return what is returned by \'whatBump\'', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        whatBump: () => { return { test: 'test' } }
-      }, (err, recommendation) => {
-        if (err) done(err)
-        assert.deepStrictEqual(recommendation, { test: 'test' })
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: () => ({ test: 'test' })
+        }, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation).toEqual({ test: 'test' })
+          resolve()
+        })
       })
     })
 
-    it('should send options to \'whatBump\'', done => {
+    it('should send options to \'whatBump\'', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        lernaPackage: 'test',
-        whatBump: (commits, options) => { return options.lernaPackage }
-      }, (err, recommendation) => {
-        if (err) done(err)
-        assert.deepStrictEqual(recommendation, 'test')
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          lernaPackage: 'test',
+          whatBump: (commits, options) => options.lernaPackage
+        }, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation).toEqual('test')
+          resolve()
+        })
       })
     })
 
-    it('should return \'releaseType\' as undefined if \'level\' is not valid', done => {
+    it('should return \'releaseType\' as undefined if \'level\' is not valid', () => {
       preparing(2)
 
-      conventionalRecommendedBump({
-        whatBump: () => { return { level: 'test' } }
-      }, (err, recommendation) => {
-        if (err) done(err)
-        assert.deepStrictEqual(recommendation, { level: 'test', releaseType: undefined })
-        done()
+      return new Promise((resolve, reject) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: () => ({ level: 'test' })
+        }, (err, recommendation) => {
+          if (err) reject(err)
+          expect(recommendation).toEqual({ level: 'test', releaseType: undefined })
+          resolve()
+        })
       })
     })
   })
 
   describe('warn logging', () => {
-    it('will ignore \'warn\' option if it\'s not a function', done => {
+    it('will ignore \'warn\' option if it\'s not a function', () => {
       preparing(3)
 
-      conventionalRecommendedBump({}, { warn: 'invalid' }, done)
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd
+        }, { warn: 'invalid' }, resolve)
+      })
     })
 
-    it('should warn if there is no new commits since last release', done => {
+    it('should warn if there is no new commits since last release', () => {
       preparing(3)
 
-      conventionalRecommendedBump({}, {
-        warn: warning => {
-          assert.strictEqual(warning, 'No commits since last release')
-          done()
-        }
-      }, () => {})
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd
+        }, {
+          warn: warning => {
+            expect(warning).toEqual('No commits since last release')
+            resolve()
+          }
+        }, () => {})
+      })
     })
   })
 
   describe('loading a preset package', () => {
-    it('recommends a patch release for a feature when preMajor=true', done => {
+    it('recommends a patch release for a feature when preMajor=true', () => {
       preparing(4)
 
-      conventionalRecommendedBump({
-        preset: {
-          name: 'conventionalcommits',
-          preMajor: true
-        }
-      }, {}, (_, recommendation) => {
-        assert.notStrictEqual(recommendation.reason.indexOf('1 features'), -1)
-        assert.strictEqual(recommendation.releaseType, 'patch')
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          preset: {
+            name: 'conventionalcommits',
+            preMajor: true
+          }
+        }, {}, (_, recommendation) => {
+          expect(recommendation.reason).toContain('1 features')
+          expect(recommendation.releaseType).toEqual('patch')
+          resolve()
+        })
       })
     })
 
-    it('recommends a minor release for a feature when preMajor=false', done => {
+    it('recommends a minor release for a feature when preMajor=false', () => {
       preparing(4)
 
-      conventionalRecommendedBump({
-        preset: {
-          name: 'conventionalcommits'
-        }
-      }, {}, (_, recommendation) => {
-        assert.notStrictEqual(recommendation.reason.indexOf('1 features'), -1)
-        assert.strictEqual(recommendation.releaseType, 'minor')
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          preset: {
+            name: 'conventionalcommits'
+          }
+        }, {}, (_, recommendation) => {
+          expect(recommendation.reason).toContain('1 features')
+          expect(recommendation.releaseType).toEqual('minor')
+          resolve()
+        })
       })
     })
 
-    it('should ignore reverted commits', done => {
+    it('should ignore reverted commits', () => {
       preparing(5)
 
-      conventionalRecommendedBump({
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 0)
-          done()
-        }
-      }, () => {})
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: commits => {
+            expect(commits.length).toEqual(0)
+            resolve()
+          }
+        }, () => {})
+      })
     })
 
-    it('should include reverted commits', done => {
+    it('should include reverted commits', () => {
       preparing(5)
 
-      conventionalRecommendedBump({
-        ignoreReverted: false,
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 2)
-          done()
-        }
-      }, () => {})
-    })
-
-    it('throws an error if unable to load a preset package', done => {
-      preparing(6)
-
-      conventionalRecommendedBump({
-        preset: 'does-not-exist'
-      }, {}, err => {
-        assert.ok(err)
-        assert.strictEqual(err.message, 'Unable to load the "does-not-exist" preset. Please make sure it\'s installed.')
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          ignoreReverted: false,
+          whatBump: commits => {
+            expect(commits.length).toEqual(2)
+            resolve()
+          }
+        }, () => {})
       })
     })
 
-    it('recommends a minor release for a breaking change when preMajor=true', done => {
+    it('throws an error if unable to load a preset package', () => {
       preparing(6)
 
-      conventionalRecommendedBump({
-        preset: {
-          name: 'conventionalcommits',
-          preMajor: true
-        }
-      }, {}, (_, recommendation) => {
-        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
-        assert.strictEqual(recommendation.releaseType, 'minor')
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          preset: 'does-not-exist'
+        }, {}, err => {
+          expect(err).toBeTruthy()
+          expect(err.message).toEqual('Unable to load the "does-not-exist" preset. Please make sure it\'s installed.')
+          resolve()
+        })
       })
     })
 
-    it('recommends a major release for a breaking change when preMajor=false', done => {
+    it('recommends a minor release for a breaking change when preMajor=true', () => {
       preparing(6)
 
-      conventionalRecommendedBump({
-        preset: {
-          name: 'conventionalcommits'
-        }
-      }, {}, (_, recommendation) => {
-        assert.notStrictEqual(recommendation.reason.indexOf('1 BREAKING'), -1)
-        assert.strictEqual(recommendation.releaseType, 'major')
-        done()
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          preset: {
+            name: 'conventionalcommits',
+            preMajor: true
+          }
+        }, {}, (_, recommendation) => {
+          expect(recommendation.reason).toContain('1 BREAKING')
+          expect(recommendation.releaseType).toEqual('minor')
+          resolve()
+        })
+      })
+    })
+
+    it('recommends a major release for a breaking change when preMajor=false', () => {
+      preparing(6)
+
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          preset: {
+            name: 'conventionalcommits'
+          }
+        }, {}, (_, recommendation) => {
+          expect(recommendation.reason).toContain('1 BREAKING')
+          expect(recommendation.releaseType).toEqual('major')
+          resolve()
+        })
       })
     })
   })
 
   describe('repository with custom tag prefix', () => {
-    it('should recommends a minor release if appropriate', done => {
+    it('should recommends a minor release if appropriate', () => {
       preparing(6)
 
-      conventionalRecommendedBump({
-        tagPrefix: 'ms/',
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 1)
-          assert.strictEqual(commits[0].type, 'feat')
-          done()
-        }
-      }, () => {})
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          tagPrefix: 'ms/',
+          whatBump: commits => {
+            expect(commits.length).toEqual(1)
+            expect(commits[0].type).toEqual('feat')
+            resolve()
+          }
+        }, () => {})
+      })
     })
   })
 
   describe('repository with lerna tags', () => {
-    it('should recommend \'major\' version bump when not using lerna tags', done => {
+    it('should recommend \'major\' version bump when not using lerna tags', () => {
       preparing(7)
 
-      conventionalRecommendedBump({
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 3)
-          done()
-        }
-      }, () => {})
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          whatBump: commits => {
+            expect(commits.length).toEqual(3)
+            resolve()
+          }
+        }, () => {})
+      })
     })
 
-    it('should recommend \'minor\' version bump when lerna tag option is enabled', done => {
+    it('should recommend \'minor\' version bump when lerna tag option is enabled', () => {
       preparing(7)
 
-      conventionalRecommendedBump({
-        lernaPackage: 'my-package',
-        whatBump: commits => {
-          assert.strictEqual(commits.length, 1)
-          assert.strictEqual(commits[0].type, 'feat')
-          done()
-        }
-      }, () => {})
+      return new Promise((resolve) => {
+        conventionalRecommendedBump({
+          cwd: testTools.cwd,
+          lernaPackage: 'my-package',
+          whatBump: commits => {
+            expect(commits.length).toEqual(1)
+            expect(commits[0].type).toEqual('feat')
+            resolve()
+          }
+        }, () => {})
+      })
     })
   })
 })

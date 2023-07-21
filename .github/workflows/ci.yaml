@@ -24,6 +24,7 @@ jobs:
           cache: 'pnpm'
       - run: node --version
       - run: pnpm install
+      - run: pnpm lint
       - run: pnpm test
       - name: coverage
         uses: coverallsapp/github-action@master
@@ -45,6 +46,7 @@ jobs:
           node-version: 14
           cache: 'pnpm'
       - run: pnpm install
+      - run: pnpm lint
       - run: pnpm test-windows
       - name: coverage
         uses: coverallsapp/github-action@master

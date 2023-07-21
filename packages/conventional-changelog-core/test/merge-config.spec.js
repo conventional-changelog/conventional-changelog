@@ -1,7 +1,5 @@
-'use strict'
-const mergeConfig = require('../lib/merge-config')
-const expect = require('chai').expect
-const describe = require('mocha').describe
+import { describe, it, expect } from 'vitest'
+import mergeConfig from '../lib/merge-config'
 
 const defaultOptions = {
   append: false,
@@ -11,51 +9,53 @@ const defaultOptions = {
   outputUnreleased: true
 }
 
-describe('merge-config', function () {
-  it('should return passed options', async function () {
-    const options = {
-      append: true,
-      releaseCount: 0,
-      skipUnstable: true,
-      debug: function () {},
-      warn: function () {},
-      transform: function () {},
-      lernaPackage: 'foo',
-      tagPrefix: 'bar',
-      outputUnreleased: true,
-      pkg: {
-        path: 'baz',
-        transform: function () {}
+describe('conventional-changelog-core', () => {
+  describe('mergeConfig', () => {
+    it('should return passed options', async () => {
+      const options = {
+        append: true,
+        releaseCount: 0,
+        skipUnstable: true,
+        debug: () => {},
+        warn: () => {},
+        transform: () => {},
+        lernaPackage: 'foo',
+        tagPrefix: 'bar',
+        outputUnreleased: true,
+        pkg: {
+          path: 'baz',
+          transform: () => {}
+        }
       }
-    }
-    const config = await mergeConfig(options)
-    expect(config.options).to.deep.include(options)
-  })
+      const config = await mergeConfig(options)
+      expect(config.options).toMatchObject(options)
+    })
 
-  it('should return default options if empty options is passed', async function () {
-    const { options } = await mergeConfig({})
-    expect(options).to.include(defaultOptions)
-  })
+    it('should return default options if empty options is passed', async () => {
+      const { options } = await mergeConfig({})
+      expect(options).toContain(defaultOptions)
+    })
 
-  it('should return default options when no options is passed', async function () {
-    const { options } = await mergeConfig()
-    expect(options).to.include(defaultOptions)
-  })
+    it('should return default options when no options is passed', async () => {
+      const { options } = await mergeConfig()
+      expect(options).toContain(defaultOptions)
+    })
 
-  it('should return default options when null is passed', async function () {
-    const { options } = await mergeConfig(null)
-    expect(options).to.include(defaultOptions)
-  })
+    it('should return default options when null is passed', async () => {
+      const { options } = await mergeConfig(null)
+      expect(options).toContain(defaultOptions)
+    })
 
-  it('should return default options when undefined value is passed', async function () {
-    const options = {
-      append: undefined,
-      releaseCount: undefined,
-      skipUnstable: undefined,
-      lernaPackage: undefined,
-      outputUnreleased: undefined
-    }
-    const config = await mergeConfig(options)
-    expect(config.options).to.include(defaultOptions)
+    it('should return default options when undefined value is passed', async () => {
+      const options = {
+        append: undefined,
+        releaseCount: undefined,
+        skipUnstable: undefined,
+        lernaPackage: undefined,
+        outputUnreleased: undefined
+      }
+      const config = await mergeConfig(options)
+      expect(config.options).toContain(defaultOptions)
+    })
   })
 })

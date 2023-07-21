@@ -134,7 +134,7 @@ function getWriterOpts (config) {
             owner: context.owner,
             repository: context.repository,
             id: issue,
-            prefix: prefix
+            prefix
           })
           return `[${prefix}${issue}](${url})`
         })
@@ -149,7 +149,7 @@ function getWriterOpts (config) {
             host: context.host,
             owner: context.owner,
             repository: context.repository,
-            user: user
+            user
           })
 
           return `[@${user}](${usernameUrl})`

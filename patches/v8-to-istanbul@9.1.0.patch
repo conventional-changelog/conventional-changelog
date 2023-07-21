@@ -1,0 +1,13 @@
+diff --git a/lib/range.js b/lib/range.js
+index 4abdfe78be6c8fab30225d65970cf66cb055f941..e692bcf608d0242494d9fa390a05c3ec0b2d32bc 100644
+--- a/lib/range.js
++++ b/lib/range.js
+@@ -27,7 +27,7 @@ module.exports.sliceRange = (lines, startCol, endCol, inclusive = false) => {
+     }
+   }
+ 
+-  while (end < lines.length && startCol < lines[end].endCol && endCol >= lines[end].startCol) {
++  while (end < lines.length && startCol < lines[end]?.endCol && endCol >= lines[end]?.startCol) {
+     ++end
+   }
+ 
