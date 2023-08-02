@@ -6,18 +6,23 @@ on:
     types: [ assigned, opened, synchronize, reopened, labeled ]
 name: ci
 jobs:
+  test-14:
+    name: test (14)
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Node.js 14 is outdated"
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [14, 16, 18]
+        node: [16, 18, 20]
     steps:
       - uses: actions/checkout@v3
       - run: git config --global user.name 'CI'
       - run: git config --global user.email 'dummy@example.org'
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
@@ -40,10 +45,10 @@ jobs:
       - run: git config --global user.email 'dummy@example.org'
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 8
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm lint
