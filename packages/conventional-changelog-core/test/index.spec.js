@@ -1,14 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import path from 'path'
-import {
-  TestTools,
-  createRunConventionalChangelog
-} from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools'
 import conventionalChangelogCore from '../'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
-const runConventionalChangelog = createRunConventionalChangelog(conventionalChangelogCore)
 let testTools
 
 setups([
@@ -129,34 +125,40 @@ describe('conventional-changelog-core', () => {
   it('should work if there is no tag', async () => {
     preparing(1)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('First commit')
-    })
+    }
   })
 
   it('should generate the changelog for the upcoming release', async () => {
     preparing(2)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('Second commit')
       expect(chunk).toContain('Third commit')
 
       expect(chunk).not.toContain('First commit')
-    })
+    }
   })
 
   it('should generate the changelog of the last two releases', async () => {
     preparing(2)
     let i = 0
 
-    const chunks = await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 2
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       if (i === 0) {
         expect(chunk).toContain('Second commit')
         expect(chunk).toContain('Third commit')
@@ -165,19 +167,21 @@ describe('conventional-changelog-core', () => {
       }
 
       i++
-    })
+    }
 
-    expect(chunks.length).toEqual(2)
+    expect(i).toBe(2)
   })
 
   it('should generate the changelog of the last two releases even if release count exceeds the limit', async () => {
     preparing(2)
     let i = 0
 
-    const chunks = await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 100
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       if (i === 0) {
         expect(chunk).toContain('Second commit')
         expect(chunk).toContain('Third commit')
@@ -186,9 +190,9 @@ describe('conventional-changelog-core', () => {
       }
 
       i++
-    })
+    }
 
-    expect(chunks.length).toEqual(2)
+    expect(i).toBe(2)
   })
 
   it('should work when there is no `HEAD` ref', async () => {
@@ -200,10 +204,12 @@ describe('conventional-changelog-core', () => {
     }
     let i = 0
 
-    const chunks = await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 100
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       if (i === 0) {
         expect(chunk).toContain('Second commit')
         expect(chunk).toContain('Third commit')
@@ -212,39 +218,41 @@ describe('conventional-changelog-core', () => {
       }
 
       i++
-    })
+    }
 
-    expect(chunks.length).toEqual(2)
+    expect(i).toBe(2)
   })
 
   it('should honour `gitRawCommitsOpts.from`', async () => {
     preparing(2)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {}, {
       from: 'HEAD~2'
     }, {}, {
       commitsSort: null
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('Second commit')
       expect(chunk).toContain('Third commit')
       expect(chunk).toMatch(/Third commit closes #1[\w\W]*?\* Second commit/)
-
       expect(chunk).not.toContain('First commit')
-    })
+    }
   })
 
   it('should ignore merge commits by default', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
-    }, (chunk) => {
-      expect(chunk).toContain('This commit is from feature branch')
+    })) {
+      chunk = chunk.toString()
 
+      expect(chunk).toContain('This commit is from feature branch')
       expect(chunk).not.toContain('Merge')
-    })
+    }
   })
 
   it('should spit out some debug info', async () => {
@@ -252,14 +260,16 @@ describe('conventional-changelog-core', () => {
 
     let cmd = ''
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       debug (c) {
         if (!cmd) {
           cmd = c
         }
       }
-    })
+    })) {
+      chunk = chunk.toString()
+    }
 
     expect(cmd).toContain('Your git-log command is:')
   })
@@ -267,68 +277,76 @@ describe('conventional-changelog-core', () => {
   it('should load package.json for data', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_package.json')
       }
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('## <small>0.0.17')
       expect(chunk).toContain('Second commit')
       expect(chunk).toContain('closes [#1](https://github.com/ajoslin/conventional-changelog/issues/1)')
-    })
+    }
   })
 
   it('should load package.json for data even if repository field is missing', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_version-only.json')
       }
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('## <small>0.0.17')
       expect(chunk).toContain('Second commit')
-    })
+    }
   })
 
   it('should fallback to use repo url if repo is repository is null', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_host-only.json')
       }
     }, {
       linkReferences: true
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](https://unknown-host/commits/')
       expect(chunk).toContain('closes [#1](https://unknown-host/issues/1)')
-    })
+    }
   })
 
   it('should fallback to use repo url if repo is repository is null', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_unknown-host.json')
       }
     }, {
       linkReferences: true
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](https://stash.local/scm/conventional-changelog/conventional-changelog/commits/')
       expect(chunk).toContain('closes [#1](https://stash.local/scm/conventional-changelog/conventional-changelog/issues/1)')
-    })
+    }
   })
 
   it('should transform package.json data', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_short.json'),
@@ -338,28 +356,32 @@ describe('conventional-changelog-core', () => {
           return pkg
         }
       }
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('## <small>v0.0.17')
       expect(chunk).toContain('Second commit')
       expect(chunk).toContain('closes [#1](https://github.com/a/b/issues/1)')
-    })
+    }
   })
 
   it('should work in append mode', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       append: true
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toMatch(/Second commit[\w\W]*?\* Third commit/)
-    })
+    }
   })
 
   it('should read package.json if only `context.version` is missing', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_package.json')
@@ -368,41 +390,47 @@ describe('conventional-changelog-core', () => {
       host: 'github',
       owner: 'a',
       repository: 'b'
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('## <small>0.0.17')
       expect(chunk).toContain('closes [#1](github/a/b/issues/1)')
-    })
+    }
   })
 
   it('should read the closest package.json by default', async () => {
     preparing(3)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('closes [#1](https://github.com/conventional-changelog/conventional-changelog-core/issues/1)')
-    })
+    }
   })
 
   it('should ignore other prefixes if an `issuePrefixes` option is not provided', async () => {
     preparing(4)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {
       host: 'github',
       owner: 'b',
       repository: 'a'
-    }, {}, {}, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](github/b/a/commit/')
       expect(chunk).not.toContain('closes [#42](github/b/a/issues/42)')
-    })
+    }
   })
 
   it('should use custom prefixes if an `issuePrefixes` option is provided', async () => {
     preparing(5)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {
       host: 'github',
@@ -410,17 +438,19 @@ describe('conventional-changelog-core', () => {
       repository: 'a'
     }, {}, {
       issuePrefixes: ['@']
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](github/b/a/commit/')
       expect(chunk).toContain('closes [#42](github/b/a/issues/42)')
       expect(chunk).not.toContain('closes [#71](github/b/a/issues/71)')
-    })
+    }
   })
 
   it('should read host configs if only `parserOpts.referenceActions` is missing', async () => {
     preparing(5)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {
       host: 'github',
@@ -428,80 +458,92 @@ describe('conventional-changelog-core', () => {
       repository: 'a',
       issue: 'issue',
       commit: 'commits'
-    }, {}, {}, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](github/b/a/commits/')
       expect(chunk).toContain('closes [#1](github/b/a/issue/1)')
-    })
+    }
   })
 
   it('should read github\'s host configs', async () => {
     preparing(5)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {
       host: 'github',
       owner: 'b',
       repository: 'a'
-    }, {}, {}, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](github/b/a/commit/')
       expect(chunk).toContain('closes [#1](github/b/a/issues/1)')
-    })
+    }
   })
 
   it('should read bitbucket\'s host configs', async () => {
     preparing(5)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {
       host: 'bitbucket',
       owner: 'b',
       repository: 'a'
-    }, {}, {}, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](bitbucket/b/a/commits/')
       expect(chunk).toContain('closes [#1](bitbucket/b/a/issue/1)')
-    })
+    }
   })
 
   it('should read gitlab\'s host configs', async () => {
     preparing(5)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {
       host: 'gitlab',
       owner: 'b',
       repository: 'a'
-    }, {}, {}, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('](gitlab/b/a/commit/')
       expect(chunk).toContain('closes [#1](gitlab/b/a/issues/1)')
-    })
+    }
   })
 
   it('should transform the commit', async () => {
     preparing(5)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       transform (chunk, cb) {
         chunk.header = 'A tiny header'
         cb(null, chunk)
       }
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('A tiny header')
       expect(chunk).not.toContain('Third')
-    })
+    }
   })
 
   it('should generate all log blocks', async () => {
     preparing(5)
     let i = 0
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 0
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       if (i === 0) {
         expect(chunk).toContain('Second commit')
         expect(chunk).toContain('Third commit closes #1')
@@ -510,19 +552,21 @@ describe('conventional-changelog-core', () => {
       }
 
       i++
-    })
+    }
 
-    expect(i).toEqual(2)
+    expect(i).toBe(2)
   })
 
   it('should work if there are two semver tags', async () => {
     preparing(6)
     let i = 0
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 0
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       if (i === 1) {
         expect(chunk).toContain('# 2.0.0')
       } else if (i === 2) {
@@ -530,34 +574,36 @@ describe('conventional-changelog-core', () => {
       }
 
       i++
-    })
+    }
 
-    expect(i).toEqual(3)
+    expect(i).toBe(3)
   })
 
   it('semverTags should be attached to the `context` object', async () => {
     preparing(6)
     let i = 0
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 0
     }, {}, {}, {}, {
       mainTemplate: '{{gitSemverTags}} or {{gitSemverTags.[0]}}'
-    }, (chunk) => {
-      expect(chunk).toEqual('v2.0.0,v0.1.0 or v2.0.0')
+    })) {
+      chunk = chunk.toString()
+
+      expect(chunk).toBe('v2.0.0,v0.1.0 or v2.0.0')
 
       i++
-    })
+    }
 
-    expect(i).toEqual(3)
+    expect(i).toBe(3)
   })
 
   it('should not link compare', async () => {
     preparing(6)
     let i = 0
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 0,
       append: true
@@ -569,13 +615,14 @@ describe('conventional-changelog-core', () => {
       transform: () => {
         return null
       }
-    }, (chunk) => {
-      expect(chunk).toEqual('Not linked')
+    })) {
+      chunk = chunk.toString()
 
+      expect(chunk).toBe('Not linked')
       i++
-    })
+    }
 
-    expect(i).toEqual(3)
+    expect(i).toBe(3)
   })
 
   it('should warn if host is not found', async () => {
@@ -583,7 +630,7 @@ describe('conventional-changelog-core', () => {
 
     let warning = ''
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: null,
       warn (message) {
@@ -591,9 +638,11 @@ describe('conventional-changelog-core', () => {
       }
     }, {
       host: 'no'
-    })
+    })) {
+      chunk = chunk.toString()
+    }
 
-    expect(warning).toEqual('Host: "no" does not exist')
+    expect(warning).toBe('Host: "no" does not exist')
   })
 
   it('should warn if package.json is not found', async () => {
@@ -601,7 +650,7 @@ describe('conventional-changelog-core', () => {
 
     let warning = ''
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: 'no'
@@ -609,7 +658,9 @@ describe('conventional-changelog-core', () => {
       warn: (message) => {
         warning = message
       }
-    })
+    })) {
+      chunk = chunk.toString()
+    }
 
     expect(warning).toContain('Error')
   })
@@ -619,7 +670,7 @@ describe('conventional-changelog-core', () => {
 
     let warning = ''
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_malformation.json')
@@ -627,7 +678,9 @@ describe('conventional-changelog-core', () => {
       warn: (message) => {
         warning = message
       }
-    })
+    })) {
+      chunk = chunk.toString()
+    }
 
     expect(warning).toContain('Error')
   })
@@ -635,10 +688,8 @@ describe('conventional-changelog-core', () => {
   it('should error if anything throws', async () => {
     preparing(6)
 
-    let error = null
-
-    try {
-      await runConventionalChangelog({
+    await expect(async () => {
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         pkg: {
           path: path.join(__dirname, 'fixtures/_malformation.json')
@@ -646,21 +697,17 @@ describe('conventional-changelog-core', () => {
         warn: () => {
           undefined.a = 10
         }
-      })
-    } catch (err) {
-      error = err
-    }
-
-    expect(error).toBeTruthy()
+      })) {
+        chunk = chunk.toString()
+      }
+    }).rejects.toThrow()
   })
 
   it('should error if there is an error in `options.pkg.transform`', async () => {
     preparing(6)
 
-    let error = null
-
-    try {
-      await runConventionalChangelog({
+    await expect(async () => {
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         pkg: {
           path: path.join(__dirname, 'fixtures/_short.json'),
@@ -668,114 +715,103 @@ describe('conventional-changelog-core', () => {
             undefined.a = 10
           }
         }
-      })
-    } catch (err) {
-      error = err
-    }
-
-    expect(error.message).toContain('undefined')
+      })) {
+        chunk = chunk.toString()
+      }
+    }).rejects.toThrow('undefined')
   })
 
   it('should error if it errors in git-raw-commits', async () => {
     preparing(6)
 
-    conventionalChangelogCore({}, {}, {
-      unknowOptions: false
-    })
-      .on('error', (err) => {
-        expect(err.message).toContain('Error in git-raw-commits:')
-      })
+    await expect(async () => {
+      for await (let chunk of conventionalChangelogCore({}, {}, {
+        unknowOptions: false
+      })) {
+        chunk = chunk.toString()
+      }
+    }).rejects.toThrow('Error in git-raw-commits:')
   })
 
   it('should error if it emits an error in `options.transform`', async () => {
     preparing(7)
 
-    let error = null
-
-    try {
-      await runConventionalChangelog({
+    await expect(async () => {
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         transform: (commit, cb) => {
           cb(new Error('error'))
         }
-      })
-    } catch (err) {
-      error = err
-    }
-
-    expect(error.message).toContain('Error in options.transform:')
+      })) {
+        chunk = chunk.toString()
+      }
+    }).rejects.toThrow('Error in options.transform:')
   })
 
   it('should error if there is an error in `options.transform`', async () => {
     preparing(8)
 
-    let error = null
-
-    try {
-      await runConventionalChangelog({
+    await expect(async () => {
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         transform: () => {
           undefined.a = 10
         }
-      })
-    } catch (err) {
-      error = err
-    }
-
-    expect(error.message).toContain('Error in options.transform:')
+      })) {
+        chunk = chunk.toString()
+      }
+    }).rejects.toThrow('Error in options.transform:')
   })
 
   it('should error if it errors in conventional-changelog-writer', async () => {
     preparing(8)
 
-    let error = null
-
-    try {
-      await runConventionalChangelog({
+    await expect(async () => {
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd
       }, {}, {}, {}, {
         finalizeContext: () => {
           return undefined.a
         }
-      })
-    } catch (err) {
-      error = err
-    }
-
-    expect(error.message).toContain('Error in conventional-changelog-writer:')
+      })) {
+        chunk = chunk.toString()
+      }
+    }).rejects.toThrow('Error in conventional-changelog-writer:')
   })
 
   it('should be object mode if `writerOpts.includeDetails` is `true`', async () => {
     preparing(8)
 
-    await runConventionalChangelog({
+    for await (const chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {}, {}, {}, {
       includeDetails: true
-    }, (chunk) => {
+    })) {
       expect(chunk).toBeTypeOf('object')
-    })
+    }
   })
 
   it('should pass `parserOpts` to conventional-commits-parser', async () => {
     preparing(9)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
     }, {}, {}, {
       noteKeywords: [
         'Release note'
       ]
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('* test9')
       expect(chunk).toContain('### Release note\n\n* super release!')
-    })
+    }
   })
 
   it('should read each commit range exactly once', async () => {
     preparing(9)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       preset: {
         compareUrlFormat: '/compare/{{previousTag}}...{{currentTag}}'
@@ -783,9 +819,11 @@ describe('conventional-changelog-core', () => {
     }, {}, {}, {}, {
       headerPartial: '',
       commitPartial: '* {{header}}\n'
-    }, (chunk) => {
-      expect(chunk).toEqual('\n* test8\n* test8\n* test9\n\n\n\n')
-    })
+    })) {
+      chunk = chunk.toString()
+
+      expect(chunk).toBe('\n* test8\n* test8\n* test9\n\n\n\n')
+    }
   })
 
   it('should recreate the changelog from scratch', async () => {
@@ -798,9 +836,10 @@ describe('conventional-changelog-core', () => {
 
     let chunkNumber = 0
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd
-    }, context, (chunk) => {
+    }, context)) {
+      chunk = chunk.toString()
       chunkNumber += 1
 
       if (chunkNumber === 1) {
@@ -819,33 +858,37 @@ describe('conventional-changelog-core', () => {
         expect(chunk).toContain('## 0.1.0')
         expect(chunk).toContain('First commit')
       }
-    })
+    }
   })
 
   it('should pass fallback to git remote origin url', async () => {
     preparing(10)
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       pkg: {
         path: path.join(__dirname, 'fixtures/_version-only.json')
       }
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('https://github.com/user/repo')
       expect(chunk).not.toContain('.git')
-    })
+    }
   })
 
   it('should respect merge order', async () => {
     preparing(19)
     let i = 0
 
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       releaseCount: 0,
       append: true,
       outputUnreleased: true
-    }, {}, {}, {}, {}, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       if (i === 4) {
         expect(chunk).toContain('included in 4.0.0')
         expect(chunk).not.toContain('included in 5.0.0')
@@ -857,41 +900,42 @@ describe('conventional-changelog-core', () => {
       }
 
       i++
-    })
-
-    expect(i).toEqual(7)
+    }
+    expect(i).toBe(7)
   })
 
   describe('finalizeContext', () => {
     it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', async () => {
-      const tail = preparing(11).tail
+      const { tail } = preparing(11)
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         releaseCount: 0
       }, {
         version: '3.0.0'
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         if (i === 0) {
-          expect(chunk).toEqual('v2.0.0...v3.0.0')
+          expect(chunk.toString()).toBe('v2.0.0...v3.0.0')
         } else if (i === 1) {
-          expect(chunk).toEqual(tail + '...v2.0.0')
+          expect(chunk.toString()).toBe(tail + '...v2.0.0')
         }
 
         i++
-      })
+      }
 
-      expect(i).toEqual(2)
+      expect(i).toBe(2)
     })
 
     it('should make `context.previousTag` default to a previous semver version of generated log (append)', async () => {
-      const tail = preparing(11).tail
+      const { tail } = preparing(11)
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         releaseCount: 0,
         append: true
@@ -899,24 +943,26 @@ describe('conventional-changelog-core', () => {
         version: '3.0.0'
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         if (i === 0) {
-          expect(chunk).toEqual(tail + '...v2.0.0')
+          expect(chunk).toBe(tail + '...v2.0.0')
         } else if (i === 1) {
-          expect(chunk).toEqual('v2.0.0...v3.0.0')
+          expect(chunk).toBe('v2.0.0...v3.0.0')
         }
 
         i++
-      })
+      }
 
-      expect(i).toEqual(2)
+      expect(i).toBe(2)
     })
 
     it('`context.previousTag` and `context.currentTag` should be `null` if `keyCommit.gitTags` is not a semver', async () => {
       const tail = preparing(12).tail
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         releaseCount: 0,
         append: true
@@ -925,26 +971,28 @@ describe('conventional-changelog-core', () => {
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}',
         generateOn: 'version'
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         if (i === 0) {
-          expect(chunk).toEqual(tail + '...v2.0.0')
+          expect(chunk).toBe(tail + '...v2.0.0')
         } else if (i === 1) {
-          expect(chunk).toEqual('...')
+          expect(chunk).toBe('...')
         } else {
-          expect(chunk).toEqual('v2.0.0...v3.0.0')
+          expect(chunk).toBe('v2.0.0...v3.0.0')
         }
 
         i++
-      })
+      }
 
-      expect(i).toEqual(3)
+      expect(i).toBe(3)
     })
 
     it('should still work if first release has no commits (prepend)', async () => {
       preparing(13)
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         releaseCount: 0
       }, {
@@ -954,26 +1002,28 @@ describe('conventional-changelog-core', () => {
         transform: () => {
           return null
         }
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         if (i === 0) {
-          expect(chunk).toEqual('v2.0.0...v3.0.0')
+          expect(chunk).toBe('v2.0.0...v3.0.0')
         } else if (i === 1) {
-          expect(chunk).toEqual('v0.0.1...v2.0.0')
+          expect(chunk).toBe('v0.0.1...v2.0.0')
         } else if (i === 2) {
-          expect(chunk).toEqual('...v0.0.1')
+          expect(chunk).toBe('...v0.0.1')
         }
 
         i++
-      })
+      }
 
-      expect(i).toEqual(3)
+      expect(i).toBe(3)
     })
 
     it('should still work if first release has no commits (append)', async () => {
       preparing(13)
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         releaseCount: 0,
         append: true
@@ -984,46 +1034,50 @@ describe('conventional-changelog-core', () => {
         transform: () => {
           return null
         }
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         if (i === 0) {
-          expect(chunk).toEqual('...v0.0.1')
+          expect(chunk).toBe('...v0.0.1')
         } else if (i === 1) {
-          expect(chunk).toEqual('v0.0.1...v2.0.0')
+          expect(chunk).toBe('v0.0.1...v2.0.0')
         } else if (i === 2) {
-          expect(chunk).toEqual('v2.0.0...v3.0.0')
+          expect(chunk).toBe('v2.0.0...v3.0.0')
         }
 
         i++
-      })
+      }
 
-      expect(i).toEqual(3)
+      expect(i).toBe(3)
     })
 
     it('should change `context.currentTag` to last commit hash if it is unreleased', async () => {
-      const head = preparing(13).head
+      const { head } = preparing(13)
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         outputUnreleased: true
       }, {
         version: '2.0.0'
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
-      }, (chunk) => {
-        expect(chunk).toEqual('v2.0.0...' + head)
+      })) {
+        chunk = chunk.toString()
+
+        expect(chunk).toBe('v2.0.0...' + head)
 
         i++
-      })
+      }
 
-      expect(i).toEqual(1)
+      expect(i).toBe(1)
     })
 
     it('should not prefix with a "v"', async () => {
       preparing(18)
       let i = 0
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           releaseCount: 0
@@ -1031,26 +1085,25 @@ describe('conventional-changelog-core', () => {
         {
           version: '4.0.0'
         },
-        {},
-        {},
-        {
+        {}, {}, {
           mainTemplate: '{{previousTag}}...{{currentTag}}'
-        },
-        (chunk) => {
-          if (i === 0) {
-            expect(chunk).toEqual('3.0.0...4.0.0')
-          }
-
-          i++
         }
-      )
+      )) {
+        chunk = chunk.toString()
+
+        if (i === 0) {
+          expect(chunk).toBe('3.0.0...4.0.0')
+        }
+
+        i++
+      }
     })
 
     it('should remove the first "v"', async () => {
       preparing(18)
       let i = 0
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           releaseCount: 0
@@ -1062,35 +1115,38 @@ describe('conventional-changelog-core', () => {
         {},
         {
           mainTemplate: '{{previousTag}}...{{currentTag}}'
-        },
-        (chunk) => {
-          if (i === 0) {
-            expect(chunk).toEqual('3.0.0...4.0.0')
-          }
-
-          i++
         }
-      )
+      )) {
+        chunk = chunk.toString()
+
+        if (i === 0) {
+          expect(chunk).toBe('3.0.0...4.0.0')
+        }
+
+        i++
+      }
     })
 
     it('should prefix a leading v to version if no previous tags found', async () => {
       preparing(1)
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd
       }, {
         version: '1.0.0'
       }, {}, {}, {
         mainTemplate: '{{previousTag}}...{{currentTag}}'
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         expect(chunk).toContain('...v1.0.0')
-      })
+      }
     })
 
     it('should not prefix a leading v to version if there is already a leading v', async () => {
       preparing(1)
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd
         },
@@ -1101,18 +1157,19 @@ describe('conventional-changelog-core', () => {
         {},
         {
           mainTemplate: '{{previousTag}}...{{currentTag}}'
-        },
-        (chunk) => {
-          expect(chunk).toContain('...v1.0.0')
         }
-      )
+      )) {
+        chunk = chunk.toString()
+
+        expect(chunk).toContain('...v1.0.0')
+      }
     })
 
     it('should not link compare if previousTag is not truthy', async () => {
       preparing(13)
       let i = 0
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         releaseCount: 0,
         append: true
@@ -1123,38 +1180,41 @@ describe('conventional-changelog-core', () => {
         transform: () => {
           return null
         }
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         if (i === 0) {
-          expect(chunk).toEqual('Not linked')
+          expect(chunk).toBe('Not linked')
         } else if (i === 1) {
-          expect(chunk).toEqual('v0.0.1...v2.0.0')
+          expect(chunk).toBe('v0.0.1...v2.0.0')
         } else if (i === 2) {
-          expect(chunk).toEqual('v2.0.0...v3.0.0')
+          expect(chunk).toBe('v2.0.0...v3.0.0')
         }
 
         i++
-      })
+      }
 
-      expect(i).toEqual(3)
+      expect(i).toBe(3)
     })
 
     it('takes into account tagPrefix option', async () => {
       preparing(16)
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           tagPrefix: 'foo@',
           config: require('conventional-changelog-angular')
         },
         {},
-        { path: './packages/foo' },
-        (chunk) => {
-          // confirm that context.currentTag behaves differently when
-          // tagPrefix is used
-          expect(chunk).toContain('foo@1.0.0...foo@2.0.0')
-        }
-      )
+        { path: './packages/foo' }
+      )) {
+        chunk = chunk.toString()
+
+        // confirm that context.currentTag behaves differently when
+        // tagPrefix is used
+        expect(chunk).toContain('foo@1.0.0...foo@2.0.0')
+      }
     })
   })
 
@@ -1172,44 +1232,47 @@ describe('conventional-changelog-core', () => {
     const fn = () => config
 
     it('should load object config', async () => {
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           config,
           pkg: {
             path: path.join(__dirname, 'fixtures/_package.json')
           }
-        }, (chunk) => {
-          expect(chunk).toContain('v100.0.0')
         }
-      )
+      )) {
+        chunk = chunk.toString()
+
+        expect(chunk).toContain('v100.0.0')
+      }
     })
 
     it('should load promise config', async () => {
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         config: promise
-      }, (chunk) => {
+      })) {
+        chunk = chunk.toString()
+
         expect(chunk).toContain('v100.0.0')
-      })
+      }
     })
 
     it('should load function config', async () => {
-      await runConventionalChangelog(
-        {
-          cwd: testTools.cwd,
-          config: fn
-        },
-        (chunk) => {
-          expect(chunk).toContain('v100.0.0')
-        }
-      )
+      for await (let chunk of conventionalChangelogCore({
+        cwd: testTools.cwd,
+        config: fn
+      })) {
+        chunk = chunk.toString()
+
+        expect(chunk).toContain('v100.0.0')
+      }
     })
 
     it('should warn if config errors', async () => {
       let warning = ''
 
-      await runConventionalChangelog({
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd,
         config: new Promise((resolve, reject) => {
           reject('config error') // eslint-disable-line prefer-promise-reject-errors
@@ -1217,7 +1280,9 @@ describe('conventional-changelog-core', () => {
         warn: (warn) => {
           warning = warn
         }
-      })
+      })) {
+        chunk = chunk.toString()
+      }
 
       expect(warning).toContain('config error')
     })
@@ -1227,31 +1292,35 @@ describe('conventional-changelog-core', () => {
     it('should not output unreleased', async () => {
       preparing(14)
 
-      await runConventionalChangelog({
+      // eslint-disable-next-line no-unreachable-loop
+      for await (let chunk of conventionalChangelogCore({
         cwd: testTools.cwd
       }, {
         version: '1.0.0'
-      }, () => {
+      })) {
+        chunk = chunk.toString()
+
         throw new Error('should not output unreleased')
-      })
+      }
     })
 
     it('should output unreleased', async () => {
       preparing(15)
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           outputUnreleased: true
         },
         {
           version: 'v1.0.0'
-        },
-        (chunk) => {
-          expect(chunk).toContain('something unreleased yet :)')
-          expect(chunk).toContain('Unreleased')
         }
-      )
+      )) {
+        chunk = chunk.toString()
+
+        expect(chunk).toContain('something unreleased yet :)')
+        expect(chunk).toContain('Unreleased')
+      }
     })
   })
 
@@ -1259,59 +1328,62 @@ describe('conventional-changelog-core', () => {
     it('handles upcoming release', async () => {
       preparing(16)
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           lernaPackage: 'foo'
         },
         {},
-        { path: './packages/foo' },
-        (chunk) => {
-          expect(chunk).toContain('first lerna style commit hooray')
-          expect(chunk).not.toContain('second lerna style commit woo')
-          expect(chunk).not.toContain('another lerna package, this should be skipped')
-          expect(chunk).not.toContain('something unreleased yet :)')
-        }
-      )
+        { path: './packages/foo' }
+      )) {
+        chunk = chunk.toString()
+
+        expect(chunk).toContain('first lerna style commit hooray')
+        expect(chunk).not.toContain('second lerna style commit woo')
+        expect(chunk).not.toContain('another lerna package, this should be skipped')
+        expect(chunk).not.toContain('something unreleased yet :)')
+      }
     })
 
     it('takes into account lerna tag format when generating context.currentTag', async () => {
       preparing(16)
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           lernaPackage: 'foo',
           config: require('conventional-changelog-angular')
         },
         {},
-        { path: './packages/foo' },
-        (chunk) => {
-          // confirm that context.currentTag behaves differently when
-          // lerna style tags are applied.
-          expect(chunk).toContain('foo@1.0.0...foo@2.0.0')
-        }
-      )
+        { path: './packages/foo' }
+      )) {
+        chunk = chunk.toString()
+
+        // confirm that context.currentTag behaves differently when
+        // lerna style tags are applied.
+        expect(chunk).toContain('foo@1.0.0...foo@2.0.0')
+      }
     })
 
     it('should generate the changelog of the last two releases', async () => {
       preparing(17)
 
-      await runConventionalChangelog(
+      for await (let chunk of conventionalChangelogCore(
         {
           cwd: testTools.cwd,
           lernaPackage: 'foo',
           releaseCount: 2
         },
         {},
-        { path: './packages/foo' },
-        (chunk) => {
-          expect(chunk).toContain('first lerna style commit hooray')
-          expect(chunk).toContain('second lerna style commit woo')
-          expect(chunk).not.toContain('another lerna package, this should be skipped')
-          expect(chunk).not.toContain('something unreleased yet :)')
-        }
-      )
+        { path: './packages/foo' }
+      )) {
+        chunk = chunk.toString()
+
+        expect(chunk).toContain('first lerna style commit hooray')
+        expect(chunk).toContain('second lerna style commit woo')
+        expect(chunk).not.toContain('another lerna package, this should be skipped')
+        expect(chunk).not.toContain('something unreleased yet :)')
+      }
     })
   })
 })

@@ -1,8 +1,6 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import {
-  TestTools,
-  runConventionalChangelog
-} from '../../../tools/test-tools'
+import conventionalChangelogCore from 'conventional-changelog-core'
+import { TestTools } from '../../../tools/test-tools'
 import preset from '../'
 
 let testTools
@@ -26,20 +24,21 @@ describe('conventional-changelog-eslint', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    await runConventionalChangelog(
+    for await (let chunk of conventionalChangelogCore(
       {
         cwd: testTools.cwd,
         config: preset
-      },
-      (chunk) => {
-        expect(chunk).toContain('the `no-class-assign` rule')
-        expect(chunk).toContain('### Fix')
-        expect(chunk).toContain('indent rule should recognize single line statements with ASI')
-        expect(chunk).toContain('* Commit with trailing spaces in the beginning')
-        expect(chunk).toContain('### Docs')
-
-        expect(chunk).not.toContain('3033')
       }
-    )
+    )) {
+      chunk = chunk.toString()
+
+      expect(chunk).toContain('the `no-class-assign` rule')
+      expect(chunk).toContain('### Fix')
+      expect(chunk).toContain('indent rule should recognize single line statements with ASI')
+      expect(chunk).toContain('* Commit with trailing spaces in the beginning')
+      expect(chunk).toContain('### Docs')
+
+      expect(chunk).not.toContain('3033')
+    }
   })
 })

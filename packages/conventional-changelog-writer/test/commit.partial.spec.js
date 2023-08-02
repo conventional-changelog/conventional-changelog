@@ -37,7 +37,7 @@ describe('conventional-changelog-writer', () => {
         }]
       })
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1)\n')
     })
 
     it('should ignore owner if it does not exist and use host and repository to link', () => {
@@ -54,7 +54,7 @@ describe('conventional-changelog-writer', () => {
         }]
       })
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1)\n')
     })
 
     it('should just use repoUrl to link', () => {
@@ -71,20 +71,20 @@ describe('conventional-changelog-writer', () => {
         }]
       })
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/my commits/hash)), closes [#1](www.myhost.com/my issue/1)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/my commits/hash)), closes [#1](www.myhost.com/my issue/1)\n')
     })
 
     it('should not link the commit if `linkReferences` is falsy', () => {
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header hash\n')
+      expect(log).toBe('* my header hash\n')
     })
 
     it('should link the commit if `linkReferences` is thuthy', () => {
       templateContext.linkReferences = true
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash))\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash))\n')
     })
 
     it('should link reference commit if `linkReferences` is thuthy and no `owner`', () => {
@@ -93,7 +93,7 @@ describe('conventional-changelog-writer', () => {
       templateContext.repository = 'a/b'
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash))\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash))\n')
     })
 
     it('should not link reference if `references` is truthy and `linkReferences` is falsy', () => {
@@ -106,7 +106,7 @@ describe('conventional-changelog-writer', () => {
       }]
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header hash, closes #1 #2 #3\n')
+      expect(log).toBe('* my header hash, closes #1 #2 #3\n')
     })
 
     it('should link reference if `references` is truthy and `linkReferences` is truthy', () => {
@@ -120,7 +120,7 @@ describe('conventional-changelog-writer', () => {
       }]
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n')
     })
 
     it('should link reference if `references` is truthy and `linkReferences` is truthy without an owner', () => {
@@ -136,7 +136,7 @@ describe('conventional-changelog-writer', () => {
       }]
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [#1](www.myhost.com/a/b/my issue/1) [#2](www.myhost.com/a/b/my issue/2) [#3](www.myhost.com/a/b/my issue/3)\n')
     })
 
     it('should link reference from a different repository with an owner', () => {
@@ -148,7 +148,7 @@ describe('conventional-changelog-writer', () => {
       }]
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n')
     })
 
     it('should link reference from a different repository without an owner', () => {
@@ -159,7 +159,7 @@ describe('conventional-changelog-writer', () => {
       }]
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n')
+      expect(log).toBe('* my header ([hash](www.myhost.com/a/b/my commits/hash)), closes [c/d#1](www.myhost.com/c/d/my issue/1)\n')
     })
   })
 })

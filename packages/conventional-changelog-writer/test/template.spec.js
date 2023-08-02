@@ -25,7 +25,7 @@ describe('conventional-changelog-writer', () => {
       }]
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('my header\n\nmy commit\nmy commit\n\nmy footer\n\n\n')
+      expect(log).toBe('my header\n\nmy commit\nmy commit\n\nmy footer\n\n\n')
     })
   })
 })

@@ -150,7 +150,7 @@ describe('conventional-commits-filter', () => {
 
     commits = conventionalCommitsFilter(commits)
 
-    expect(commits.length).toEqual(3)
+    expect(commits.length).toBe(3)
 
     expect(commits).toEqual([
       {
@@ -326,7 +326,7 @@ describe('conventional-commits-filter', () => {
 
     commits = conventionalCommitsFilter(commits)
 
-    expect(commits.length).toEqual(4)
+    expect(commits.length).toBe(4)
 
     expect(commits).toEqual([
       {
@@ -466,7 +466,7 @@ describe('conventional-commits-filter', () => {
 
     commits = conventionalCommitsFilter(commits)
 
-    expect(commits.length).toEqual(2)
+    expect(commits.length).toBe(2)
 
     expect(commits).toEqual([
       {

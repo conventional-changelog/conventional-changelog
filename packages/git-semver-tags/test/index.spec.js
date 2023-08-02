@@ -228,7 +228,7 @@ describe('git-semver-tags', () => {
         cwd: testTools.cwd,
         package: 'bar-project'
       }, (err) => {
-        expect(err.message).toEqual('opts.package should only be used when running in lerna mode')
+        expect(err.message).toBe('opts.package should only be used when running in lerna mode')
         resolve()
       })
     })

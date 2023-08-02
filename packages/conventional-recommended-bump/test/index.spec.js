@@ -94,7 +94,7 @@ describe('conventional-recommended-bump', () => {
         }, {}, (err, recommendation) => {
           if (err) reject(err)
           expect(recommendation.reason).toContain('1 BREAKING')
-          expect(recommendation.releaseType).toEqual('major')
+          expect(recommendation.releaseType).toBe('major')
           resolve()
         })
       })
@@ -111,7 +111,7 @@ describe('conventional-recommended-bump', () => {
           whatBump: 'invalid'
         }, {}, (err) => {
           expect(err).toBeTruthy()
-          expect(err.message).toEqual('whatBump must be a function')
+          expect(err.message).toBe('whatBump must be a function')
           resolve()
         })
       })
@@ -186,7 +186,7 @@ describe('conventional-recommended-bump', () => {
           whatBump: (commits, options) => options.lernaPackage
         }, (err, recommendation) => {
           if (err) reject(err)
-          expect(recommendation).toEqual('test')
+          expect(recommendation).toBe('test')
           resolve()
         })
       })
@@ -227,7 +227,7 @@ describe('conventional-recommended-bump', () => {
           cwd: testTools.cwd
         }, {
           warn: warning => {
-            expect(warning).toEqual('No commits since last release')
+            expect(warning).toBe('No commits since last release')
             resolve()
           }
         }, () => {})
@@ -248,7 +248,7 @@ describe('conventional-recommended-bump', () => {
           }
         }, {}, (_, recommendation) => {
           expect(recommendation.reason).toContain('1 features')
-          expect(recommendation.releaseType).toEqual('patch')
+          expect(recommendation.releaseType).toBe('patch')
           resolve()
         })
       })
@@ -265,7 +265,7 @@ describe('conventional-recommended-bump', () => {
           }
         }, {}, (_, recommendation) => {
           expect(recommendation.reason).toContain('1 features')
-          expect(recommendation.releaseType).toEqual('minor')
+          expect(recommendation.releaseType).toBe('minor')
           resolve()
         })
       })
@@ -278,7 +278,7 @@ describe('conventional-recommended-bump', () => {
         conventionalRecommendedBump({
           cwd: testTools.cwd,
           whatBump: commits => {
-            expect(commits.length).toEqual(0)
+            expect(commits.length).toBe(0)
             resolve()
           }
         }, () => {})
@@ -293,7 +293,7 @@ describe('conventional-recommended-bump', () => {
           cwd: testTools.cwd,
           ignoreReverted: false,
           whatBump: commits => {
-            expect(commits.length).toEqual(2)
+            expect(commits.length).toBe(2)
             resolve()
           }
         }, () => {})
@@ -309,7 +309,7 @@ describe('conventional-recommended-bump', () => {
           preset: 'does-not-exist'
         }, {}, err => {
           expect(err).toBeTruthy()
-          expect(err.message).toEqual('Unable to load the "does-not-exist" preset. Please make sure it\'s installed.')
+          expect(err.message).toBe('Unable to load the "does-not-exist" preset. Please make sure it\'s installed.')
           resolve()
         })
       })
@@ -327,7 +327,7 @@ describe('conventional-recommended-bump', () => {
           }
         }, {}, (_, recommendation) => {
           expect(recommendation.reason).toContain('1 BREAKING')
-          expect(recommendation.releaseType).toEqual('minor')
+          expect(recommendation.releaseType).toBe('minor')
           resolve()
         })
       })
@@ -344,7 +344,7 @@ describe('conventional-recommended-bump', () => {
           }
         }, {}, (_, recommendation) => {
           expect(recommendation.reason).toContain('1 BREAKING')
-          expect(recommendation.releaseType).toEqual('major')
+          expect(recommendation.releaseType).toBe('major')
           resolve()
         })
       })
@@ -360,8 +360,8 @@ describe('conventional-recommended-bump', () => {
           cwd: testTools.cwd,
           tagPrefix: 'ms/',
           whatBump: commits => {
-            expect(commits.length).toEqual(1)
-            expect(commits[0].type).toEqual('feat')
+            expect(commits.length).toBe(1)
+            expect(commits[0].type).toBe('feat')
             resolve()
           }
         }, () => {})
@@ -377,7 +377,7 @@ describe('conventional-recommended-bump', () => {
         conventionalRecommendedBump({
           cwd: testTools.cwd,
           whatBump: commits => {
-            expect(commits.length).toEqual(3)
+            expect(commits.length).toBe(3)
             resolve()
           }
         }, () => {})
@@ -392,8 +392,8 @@ describe('conventional-recommended-bump', () => {
           cwd: testTools.cwd,
           lernaPackage: 'my-package',
           whatBump: commits => {
-            expect(commits.length).toEqual(1)
-            expect(commits[0].type).toEqual('feat')
+            expect(commits.length).toBe(1)
+            expect(commits[0].type).toBe('feat')
             resolve()
           }
         }, () => {})

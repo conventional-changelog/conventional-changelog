@@ -22,28 +22,28 @@ describe('conventional-changelog-writer', () => {
       templateContext.isPatch = true
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('## <small>my version</small>\n')
+      expect(log).toBe('## <small>my version</small>\n')
     })
 
     it('should generate header if `isPatch` is falsy', () => {
       templateContext.isPatch = false
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('## my version\n')
+      expect(log).toBe('## my version\n')
     })
 
     it('should generate header if `title` is truthy', () => {
       templateContext.title = 'my title'
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('## my version "my title"\n')
+      expect(log).toBe('## my version "my title"\n')
     })
 
     it('should generate header if `date` is truthy', () => {
       templateContext.date = 'my date'
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('## my version (my date)\n')
+      expect(log).toBe('## my version (my date)\n')
     })
   })
 })

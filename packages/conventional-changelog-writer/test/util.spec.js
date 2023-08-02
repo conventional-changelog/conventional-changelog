@@ -13,7 +13,7 @@ describe('conventional-changelog-writer', () => {
         }
         const compiled = util.compileTemplates(templates)
 
-        expect(compiled()).toEqual('header\ncommit\nfooter\n')
+        expect(compiled()).toBe('header\ncommit\nfooter\n')
       })
 
       it('should compile templates with default partials if one is an empty string', () => {
@@ -25,7 +25,7 @@ describe('conventional-changelog-writer', () => {
         }
         const compiled = util.compileTemplates(templates)
 
-        expect(compiled()).toEqual('commit\nfooter\n')
+        expect(compiled()).toBe('commit\nfooter\n')
       })
 
       it('should compile templates with customized partials', () => {
@@ -40,7 +40,7 @@ describe('conventional-changelog-writer', () => {
         }
         const compiled = util.compileTemplates(templates)
 
-        expect(compiled()).toEqual('partial1\npartial2\npartial3\n')
+        expect(compiled()).toBe('partial1\npartial2\npartial3\n')
       })
     })
 
@@ -54,7 +54,7 @@ describe('conventional-changelog-writer', () => {
       it('should not change falsy value', () => {
         const func = util.functionify(null)
 
-        expect(func).toEqual(null)
+        expect(func).toBe(null)
       })
     })
 
@@ -631,7 +631,7 @@ describe('conventional-changelog-writer', () => {
           whatever: 'b'
         })
 
-        expect(log).toEqual('b')
+        expect(log).toBe('b')
       })
 
       it('should attach a copy of the commit to note', () => {
@@ -684,7 +684,7 @@ describe('conventional-changelog-writer', () => {
           whatever: '`a`'
         })
 
-        expect(log).toEqual('`a`')
+        expect(log).toBe('`a`')
       })
 
       it('should ignore a reverted commit', () => {
@@ -770,7 +770,7 @@ describe('conventional-changelog-writer', () => {
           whatever: '`a`'
         })
 
-        expect(log).toEqual('`a` oh')
+        expect(log).toBe('`a` oh')
       })
 
       it('should finalize context', () => {
@@ -790,7 +790,7 @@ describe('conventional-changelog-writer', () => {
           whatever: '`a`'
         })
 
-        expect(log).toEqual('`a` oh opt 0 `a`')
+        expect(log).toBe('`a` oh opt 0 `a`')
       })
 
       it('should pass the correct arguments', () => {
@@ -798,8 +798,8 @@ describe('conventional-changelog-writer', () => {
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context, options, filteredCommits, keyCommit, originalCommits) => {
-            expect(filteredCommits.length).toEqual(2)
-            expect(originalCommits.length).toEqual(4)
+            expect(filteredCommits.length).toBe(2)
+            expect(originalCommits.length).toBe(4)
           },
           debug: () => {}
         }, [{

@@ -1,5 +1,5 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools, through, delay } from '../../../tools/test-tools'
+import { TestTools, delay } from '../../../tools/test-tools'
 import gitRawCommits from '../'
 
 let testTools
@@ -14,27 +14,17 @@ describe('git-raw-commits', () => {
     testTools?.cleanup()
   })
 
-  it('should emit an error and the error should not be read only if there are no commits', () => {
-    return new Promise((resolve, reject) => {
-      gitRawCommits({}, {
+  it('should emit an error and the error should not be read only if there are no commits', async () => {
+    await expect(async () => {
+      for await (const commit of gitRawCommits({}, {
         cwd: testTools.cwd
-      })
-        .on('error', (err) => {
-          expect(err).toBeTruthy()
-          err.message = 'error message'
-          resolve()
-        })
-        .pipe(
-          through(() => {
-            reject(new Error('should error'))
-          }, () => {
-            reject(new Error('should error'))
-          })
-        )
-    })
+      })) {
+        commit.toString()
+      }
+    }).rejects.toThrow()
   })
 
-  it('should execute the command without error', () => {
+  it('should execute the command without error', async () => {
     testTools.mkdirSync('./packages/foo', { recursive: true })
     testTools.writeFileSync('./packages/foo/test1', '')
     testTools.exec('git add --all && git commit -m"First commit"')
@@ -43,236 +33,188 @@ describe('git-raw-commits', () => {
     testTools.writeFileSync('test3', '')
     testTools.exec('git add --all && git commit -m"Third commit"')
 
-    return new Promise((resolve, reject) => {
-      gitRawCommits({}, {
-        cwd: testTools.cwd
-      })
-        .on('close', resolve)
-        .on('error', reject)
-    })
+    for await (const commit of gitRawCommits({}, {
+      cwd: testTools.cwd
+    })) {
+      commit.toString()
+    }
   })
 
-  it('should get commits without `options` (`options.from` defaults to the first commit)', () => {
+  it('should get commits without `options` (`options.from` defaults to the first commit)', async () => {
     let i = 0
 
-    return new Promise((resolve) => {
-      gitRawCommits({}, {
-        cwd: testTools.cwd
-      })
-        .pipe(
-          through((chunk, enc, cb) => {
-            chunk = chunk.toString()
+    for await (let chunk of gitRawCommits({}, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            if (i === 0) {
-              expect(chunk).toEqual('Third commit\n\n')
-            } else if (i === 1) {
-              expect(chunk).toEqual('Second commit\n\n')
-            } else {
-              expect(chunk).toEqual('First commit\n\n')
-            }
+      if (i === 0) {
+        expect(chunk).toBe('Third commit\n\n')
+      } else if (i === 1) {
+        expect(chunk).toBe('Second commit\n\n')
+      } else {
+        expect(chunk).toBe('First commit\n\n')
+      }
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(3)
-            resolve()
-          })
-        )
-    })
+      i++
+    }
+
+    expect(i).toBe(3)
   })
 
-  it('should honour `options.from`', () => {
+  it('should honour `options.from`', async () => {
     let i = 0
 
-    return new Promise((resolve) => {
-      gitRawCommits({
-        from: 'HEAD~1'
-      }, {
-        cwd: testTools.cwd
-      })
-        .pipe(
-          through((chunk, enc, cb) => {
-            chunk = chunk.toString()
+    for await (let chunk of gitRawCommits({
+      from: 'HEAD~1'
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            expect(chunk).toEqual('Third commit\n\n')
+      expect(chunk).toBe('Third commit\n\n')
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(1)
-            resolve()
-          })
-        )
-    })
+      i++
+    }
+
+    expect(i).toBe(1)
   })
 
-  it('should honour `options.to`', () => {
+  it('should honour `options.to`', async () => {
     let i = 0
 
-    return new Promise((resolve) => {
-      gitRawCommits({
-        to: 'HEAD^'
-      }, {
-        cwd: testTools.cwd
-      })
-        .pipe(
-          through((chunk, enc, cb) => {
-            chunk = chunk.toString()
+    for await (let chunk of gitRawCommits({
+      to: 'HEAD^'
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            if (i === 0) {
-              expect(chunk).toEqual('Second commit\n\n')
-            } else {
-              expect(chunk).toEqual('First commit\n\n')
-            }
+      if (i === 0) {
+        expect(chunk).toBe('Second commit\n\n')
+      } else {
+        expect(chunk).toBe('First commit\n\n')
+      }
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(2)
-            resolve()
-          })
-        )
-    })
+      i++
+    }
+
+    expect(i).toBe(2)
   })
 
-  it('should honour `options.format`', () => {
+  it('should honour `options.format`', async () => {
     let i = 0
 
-    return new Promise((resolve) => {
-      gitRawCommits({
-        format: 'what%n%B'
-      }, {
-        cwd: testTools.cwd
-      })
-        .pipe(
-          through((chunk, enc, cb) => {
-            chunk = chunk.toString()
+    for await (let chunk of gitRawCommits({
+      format: 'what%n%B'
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            if (i === 0) {
-              expect(chunk).toEqual('what\nThird commit\n\n')
-            } else if (i === 1) {
-              expect(chunk).toEqual('what\nSecond commit\n\n')
-            } else {
-              expect(chunk).toEqual('what\nFirst commit\n\n')
-            }
+      if (i === 0) {
+        expect(chunk).toBe('what\nThird commit\n\n')
+      } else if (i === 1) {
+        expect(chunk).toBe('what\nSecond commit\n\n')
+      } else {
+        expect(chunk).toBe('what\nFirst commit\n\n')
+      }
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(3)
-            resolve()
-          })
-        )
-    })
+      i++
+    }
+
+    expect(i).toBe(3)
   })
 
-  it('should allow commits to be scoped to a specific directory', () => {
+  it('should allow commits to be scoped to a specific directory', async () => {
     let i = 0
     let output = ''
 
-    return new Promise((resolve) => {
-      gitRawCommits({
-        path: './packages/foo'
-      }, {
-        cwd: testTools.cwd
-      })
-        .pipe(
-          through((chunk, enc, cb) => {
-            output += chunk.toString()
+    for await (let chunk of gitRawCommits({
+      path: './packages/foo'
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(1)
-            expect(output).toMatch(/First commit/)
-            expect(output).not.toMatch(/Second commit/)
-            resolve()
-          })
-        )
-    })
+      output += chunk
+      i++
+    }
+
+    expect(i).toBe(1)
+    expect(output).toMatch(/First commit/)
+    expect(output).not.toMatch(/Second commit/)
   })
 
-  it('should show your git-log command', () => {
-    return new Promise((resolve) => {
-      gitRawCommits({
-        format: 'what%n%B',
-        debug: (cmd) => {
-          expect(cmd).toContain('Your git-log command is:\ngit log --format')
-          resolve()
-        }
-      }, {
-        cwd: testTools.cwd
-      })
-    })
+  it('should show your git-log command', async () => {
+    let cmd = ''
+
+    for await (let chunk of gitRawCommits({
+      format: 'what%n%B',
+      debug (message) {
+        cmd = message
+      }
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
+    }
+
+    expect(cmd).toContain('Your git-log command is:\ngit log --format')
   })
 
-  it('should prevent variable expansion on Windows', () => {
+  it('should prevent variable expansion on Windows', async () => {
     let i = 0
 
-    return new Promise((resolve) => {
-      gitRawCommits({
-        format: '%%cd%n%B'
-      }, {
-        cwd: testTools.cwd
-      })
-        .pipe(
-          through((chunk, enc, cb) => {
-            chunk = chunk.toString()
+    for await (let chunk of gitRawCommits({
+      format: '%%cd%n%B'
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            if (i === 0) {
-              expect(chunk).toEqual('%cd\nThird commit\n\n')
-            } else if (i === 1) {
-              expect(chunk).toEqual('%cd\nSecond commit\n\n')
-            } else {
-              expect(chunk).toEqual('%cd\nFirst commit\n\n')
-            }
+      if (i === 0) {
+        expect(chunk).toBe('%cd\nThird commit\n\n')
+      } else if (i === 1) {
+        expect(chunk).toBe('%cd\nSecond commit\n\n')
+      } else {
+        expect(chunk).toBe('%cd\nFirst commit\n\n')
+      }
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(3)
-            resolve()
-          })
-        )
-    })
+      i++
+    }
+
+    expect(i).toBe(3)
   })
 
-  it('should allow commits to be scoped to a specific directory and specific date range', () => {
-    let i = 0
-
+  it('should allow commits to be scoped to a specific directory and specific date range', async () => {
     // Since milliseconds are ignored (https://git-scm.com/docs/git-commit#Documentation/git-commit.txt-ISO8601),
     // A one-second delay ensures that new commits are filtered (https://www.git-scm.com/docs/git-log#Documentation/git-log.txt---sinceltdategt)
-    return delay(1000)
-      .then(() => {
-        const now = new Date().toISOString()
-        testTools.writeFileSync('./packages/foo/test1', 'hello')
-        testTools.exec('git add --all && git commit -m"Fourth commit"')
-        testTools.writeFileSync('test2', 'hello')
-        testTools.exec('git add --all && git commit -m"Fifth commit"')
+    await delay(1000)
 
-        return new Promise((resolve) => {
-          gitRawCommits({
-            path: './packages/foo',
-            since: now
-          }, {
-            cwd: testTools.cwd
-          })
-            .pipe(
-              through((chunk, enc, cb) => {
-                chunk = chunk.toString()
+    const now = new Date().toISOString()
+    let i = 0
 
-                if (i === 0) {
-                  expect(chunk).toEqual('Fourth commit\n\n')
-                }
+    testTools.writeFileSync('./packages/foo/test1', 'hello')
+    testTools.exec('git add --all && git commit -m"Fourth commit"')
+    testTools.writeFileSync('test2', 'hello')
+    testTools.exec('git add --all && git commit -m"Fifth commit"')
 
-                i++
-                cb()
-              }, () => {
-                expect(i).toEqual(1)
-                resolve()
-              })
-            )
-        })
-      })
+    for await (let chunk of gitRawCommits({
+      path: './packages/foo',
+      since: now
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
+
+      if (i === 0) {
+        expect(chunk).toBe('Fourth commit\n\n')
+      }
+
+      i++
+    }
+
+    expect(i).toBe(1)
   })
 })

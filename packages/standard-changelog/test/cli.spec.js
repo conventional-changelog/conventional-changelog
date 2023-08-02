@@ -39,7 +39,7 @@ describe('standard-changelog', () => {
           })
 
           cp.on('close', (code) => {
-            expect(code).toEqual(0)
+            expect(code).toBe(0)
             const content = testTools.readFileSync('CHANGELOG.md', 'utf-8')
             expect(content).toMatch(/First commit/)
             expect(content).toMatch(/old content/)
@@ -56,7 +56,7 @@ describe('standard-changelog', () => {
           })
 
           cp.on('close', (code) => {
-            expect(code).toEqual(0)
+            expect(code).toBe(0)
             const content = testTools.readFileSync('CHANGELOG.md', 'utf-8')
             expect(content).toMatch(/First commit/)
             resolve()
@@ -73,7 +73,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
           expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
 
@@ -91,7 +91,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
           expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
 
@@ -109,7 +109,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
           expect(modified).toContain('First commit')
           expect(modified).toContain('Some previous changelog.\n')
@@ -128,7 +128,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
 
           const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
           expect(modified).toContain('First commit')
@@ -145,7 +145,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
           expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
 
@@ -162,7 +162,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
           expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
           resolve()
@@ -178,7 +178,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
           expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
 
@@ -195,7 +195,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync('no-such-file.md', 'utf8')
           expect(modified).toContain('First commit')
           expect(modified).not.toContain('previous')
@@ -212,7 +212,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync(path.join(testTools.cwd, 'no-such-file.md'), 'utf8')
           expect(modified).toContain('First commit')
           expect(modified).not.toContain('previous')
@@ -231,7 +231,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
           expect(modified).toContain('First commit')
           expect(modified).not.toContain('previous')
@@ -248,7 +248,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
           expect(modified).toContain('0.0.17')
           resolve()
@@ -267,7 +267,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
           expect(modified).toContain('my-repo')
           resolve()
@@ -283,7 +283,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
           expect(modified).toContain('my-repo')
           resolve()
@@ -301,7 +301,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(0)
+          expect(code).toBe(0)
           const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
           expect(modified).toContain('First commit')
           testTools.exec('git tag -d v0.0.17')
@@ -324,7 +324,7 @@ describe('standard-changelog', () => {
         })
 
         cp.on('close', (code) => {
-          expect(code).toEqual(1)
+          expect(code).toBe(1)
           expect(output.toString()).toMatch(/Cannot find module/)
           resolve()
         })
