@@ -1,8 +1,6 @@
 import { describe, beforeEach, afterEach, it, expect } from 'vitest'
-import {
-  TestTools,
-  runConventionalChangelog
-} from '../../../tools/test-tools'
+import conventionalChangelogCore from 'conventional-changelog-core'
+import { TestTools } from '../../../tools/test-tools'
 import preset from '../'
 
 let testTools
@@ -38,22 +36,23 @@ describe('conventional-changelog-jquery', () => {
   })
 
   it('should generate a changelog', async () => {
-    await runConventionalChangelog(
+    for await (let chunk of conventionalChangelogCore(
       {
         cwd: testTools.cwd,
         config: preset
-      },
-      (chunk) => {
-        expect(chunk).toContain('Create jQuery.ajax')
-        expect(chunk).toContain(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog/issues/100)')
-        expect(chunk).toContain(')\n* Make jQuery objects iterable')
-        expect(chunk).toContain('### CSS')
-        expect(chunk).toContain('Remove an internal argument to the on method')
-        expect(chunk).toContain(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog/issues/200)')
-        expect(chunk).toContain('### Manipulation')
-
-        expect(chunk).not.toContain('Bad')
       }
-    )
+    )) {
+      chunk = chunk.toString()
+
+      expect(chunk).toContain('Create jQuery.ajax')
+      expect(chunk).toContain(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog/issues/100)')
+      expect(chunk).toContain(')\n* Make jQuery objects iterable')
+      expect(chunk).toContain('### CSS')
+      expect(chunk).toContain('Remove an internal argument to the on method')
+      expect(chunk).toContain(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog/issues/200)')
+      expect(chunk).toContain('### Manipulation')
+
+      expect(chunk).not.toContain('Bad')
+    }
   })
 })

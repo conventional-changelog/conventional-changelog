@@ -63,10 +63,11 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
     .pipe(
       new Transform({
         transform (chunk, enc, cb) {
-          readable.push(chunk)
           isError = false
-
-          cb()
+          setImmediate(() => {
+            readable.push(chunk)
+            cb()
+          })
         },
         flush (cb) {
           setImmediate(function () {

@@ -1,9 +1,8 @@
 import { Buffer } from 'safe-buffer'
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
 import { join } from 'path'
-import concat from 'concat-stream'
 import Vinyl from 'vinyl'
-import { TestTools, through, throughObj } from '../../../tools/test-tools'
+import { TestTools, through } from '../../../tools/test-tools'
 import conventionalChangelog from '../'
 
 let testTools
@@ -19,27 +18,30 @@ describe('gulp-conventional-changelog', () => {
   })
 
   describe('error', () => {
-    it('should emit error if any', () => {
+    it('should emit error if any', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular'
       })
+      let error = null
 
-      return new Promise((resolve) => {
-        stream.on('error', (err) => {
-          expect(err.plugin).toEqual('gulp-conventional-changelog')
-          resolve()
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: Buffer.from('')
+      }))
+      stream.end()
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: Buffer.from('')
-        }))
+      try {
+        for await (const file of stream) {
+          (() => file)()
+        }
+      } catch (err) {
+        error = err
+      }
 
-        stream.end()
-      })
+      expect(error.plugin).toContain('gulp-conventional-changelog')
     })
   })
 
@@ -49,173 +51,179 @@ describe('gulp-conventional-changelog', () => {
       testTools.exec('git add --all && git commit -m"feat(module): amazing new module"')
     })
 
-    it('should prepend the log', () => {
+    it('should prepend the log', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular'
       })
-
       const fakeStream = through()
+      let i = 0
+
       fakeStream.write(Buffer.from('CHANGELOG'))
       fakeStream.end()
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          file.contents
-            .pipe(concat((data) => {
-              expect(data.toString()).toMatch(/### Features[\w\W]*module:[\w\W]*amazing new module.[\w\W]*CHANGELOG$/)
-              resolve()
-            }))
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: fakeStream
+      }))
+      stream.end()
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: fakeStream
-        }))
+      for await (const file of stream) {
+        let contents = ''
 
-        stream.end()
-      })
+        for await (const chunk of file.contents) {
+          contents += chunk.toString()
+        }
+
+        expect(contents).toMatch(/### Features[\w\W]*module:[\w\W]*amazing new module.[\w\W]*CHANGELOG$/)
+        i++
+      }
+
+      expect(i).toBe(1)
     })
 
-    it('should append the log', () => {
+    it('should append the log', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular',
         append: true
       })
-
       const fakeStream = through()
+      let i = 0
+
       fakeStream.write(Buffer.from('CHANGELOG'))
       fakeStream.end()
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          file.contents
-            .pipe(concat((data) => {
-              expect(data.toString()).toMatch(/CHANGELOG[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
-              resolve()
-            }))
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: fakeStream
+      }))
+      stream.end()
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: fakeStream
-        }))
+      for await (const file of stream) {
+        let contents = ''
 
-        stream.end()
-      })
+        for await (const chunk of file.contents) {
+          contents += chunk.toString()
+        }
+
+        expect(contents).toMatch(/CHANGELOG[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
+        i++
+      }
+
+      expect(i).toBe(1)
     })
 
-    it('should generate all blocks', () => {
+    it('should generate all blocks', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular',
         releaseCount: 0
       })
+      let i = 0
 
       const fakeStream = through()
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          file.contents
-            .pipe(concat((data) => {
-              expect(data.toString()).toMatch(/[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
-              resolve()
-            }))
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: fakeStream
+      }))
+      stream.end()
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: fakeStream
-        }))
+      for await (const file of stream) {
+        let contents = ''
 
-        stream.end()
-      })
+        for await (const chunk of file.contents) {
+          contents += chunk.toString()
+        }
+
+        expect(contents).toMatch(/[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
+        i++
+      }
+
+      expect(i).toBe(1)
     })
   })
 
   describe('buffer', () => {
-    it('should prepend the log', () => {
+    it('should prepend the log', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular'
       })
+      let i = 0
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          expect(file.contents.toString()).toMatch(/### Features[\w\W]*module:[\w\W]*amazing new module.[\w\W]*CHANGELOG$/)
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: Buffer.from('CHANGELOG')
+      }))
+      stream.end()
 
-        stream.on('end', resolve)
+      for await (const file of stream) {
+        expect(file.contents.toString()).toMatch(/### Features[\w\W]*module:[\w\W]*amazing new module.[\w\W]*CHANGELOG$/)
+        i++
+      }
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: Buffer.from('CHANGELOG')
-        }))
-
-        stream.end()
-      })
+      expect(i).toBe(1)
     })
 
-    it('should append the log', () => {
+    it('should append the log', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular',
         append: true
       })
+      let i = 0
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          expect(file.contents.toString()).toMatch(/CHANGELOG[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: Buffer.from('CHANGELOG')
+      }))
+      stream.end()
 
-        stream.on('end', resolve)
+      for await (const file of stream) {
+        expect(file.contents.toString()).toMatch(/CHANGELOG[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
+        i++
+      }
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: Buffer.from('CHANGELOG')
-        }))
-
-        stream.end()
-      })
+      expect(i).toBe(1)
     })
 
-    it('should generate all blocks', () => {
+    it('should generate all blocks', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
         preset: 'angular',
         releaseCount: 0
       })
+      let i = 0
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          expect(file.contents.toString()).toMatch(/[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: Buffer.from('CHANGELOG')
+      }))
+      stream.end()
 
-        stream.on('end', resolve)
+      for await (const file of stream) {
+        expect(file.contents.toString()).toMatch(/[\w\W]*### Features[\w\W]*module:[\w\W]*amazing new module/)
+        i++
+      }
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: Buffer.from('CHANGELOG')
-        }))
-
-        stream.end()
-      })
+      expect(i).toBe(1)
     })
 
-    it('output encoding should always be buffer', () => {
+    it('output encoding should always be buffer', async () => {
       testTools.exec('git tag v0.0.0')
       const stream = conventionalChangelog({
         cwd: testTools.cwd,
@@ -223,53 +231,45 @@ describe('gulp-conventional-changelog', () => {
       }, {
         version: '0.0.0'
       })
+      let i = 0
 
-      return new Promise((resolve) => {
-        stream.on('data', (file) => {
-          expect(file.contents.toString()).toEqual('CHANGELOG')
-        })
+      stream.write(new Vinyl({
+        cwd: __dirname,
+        base: join(__dirname, 'fixtures'),
+        path: join(__dirname, 'fixtures/CHANGELOG.md'),
+        contents: Buffer.from('CHANGELOG')
+      }))
+      stream.end()
 
-        stream.on('end', resolve)
+      for await (const file of stream) {
+        expect(file.contents.toString()).toBe('CHANGELOG')
+        i++
+      }
 
-        stream.write(new Vinyl({
-          cwd: __dirname,
-          base: join(__dirname, 'fixtures'),
-          path: join(__dirname, 'fixtures/CHANGELOG.md'),
-          contents: Buffer.from('CHANGELOG')
-        }))
-
-        stream.end()
-      })
+      expect(i).toBe(1)
     })
   })
 
   describe('null', () => {
-    it('should let null files pass through', () => {
+    it('should let null files pass through', async () => {
       const stream = conventionalChangelog({
         cwd: testTools.cwd
       })
+      let i = 0
 
-      let n = 0
+      stream.write(new Vinyl({
+        path: 'null.md',
+        contents: null
+      }))
+      stream.end()
 
-      return new Promise((resolve) => {
-        stream.pipe(throughObj((file, enc, cb) => {
-          expect(file.path).toEqual('null.md')
-          expect(file.contents).toEqual(null)
-          n++
+      for await (const file of stream) {
+        expect(file.path).toBe('null.md')
+        expect(file.contents).toBe(null)
+        i++
+      }
 
-          cb()
-        }, () => {
-          expect(n).toEqual(1)
-          resolve()
-        }))
-
-        stream.write(new Vinyl({
-          path: 'null.md',
-          contents: null
-        }))
-
-        stream.end()
-      })
+      expect(i).toBe(1)
     })
   })
 
@@ -285,7 +285,6 @@ describe('gulp-conventional-changelog', () => {
       path: join(__dirname, 'fixtures/CHANGELOG.md'),
       contents: Buffer.from('CHANGELOG')
     }))
-
     stream.end()
   })
 })

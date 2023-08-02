@@ -1,8 +1,6 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import {
-  TestTools,
-  runConventionalChangelog
-} from '../../../tools/test-tools'
+import conventionalChangelogCore from 'conventional-changelog-core'
+import { TestTools } from '../../../tools/test-tools'
 import preset from '../'
 
 let testTools
@@ -24,16 +22,22 @@ describe('conventional-changelog-atom', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    const chunks = await runConventionalChangelog({
+    let i = 0
+
+    for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       config: preset
-    }, (chunk) => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain(':arrow_down:')
       expect(chunk).toContain('`updateContentDimensions` when model changes')
       expect(chunk).toContain(':arrow_up:')
       expect(chunk).toContain('one-dark/light-ui@v1.0.1')
-    })
 
-    expect(chunks).toHaveLength(1)
+      i++
+    }
+
+    expect(i).toBe(1)
   })
 })
