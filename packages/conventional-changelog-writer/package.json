@@ -40,7 +40,7 @@
     "dateformat": "^3.0.3",
     "handlebars": "^4.7.7",
     "json-stringify-safe": "^5.0.1",
-    "meow": "^8.1.2",
+    "meow": "^12.0.0",
     "semver": "^7.5.2",
     "split": "^1.0.1"
   },
