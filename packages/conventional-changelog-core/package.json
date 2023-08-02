@@ -36,7 +36,7 @@
     "git-semver-tags": "^5.0.0",
     "normalize-package-data": "^5.0.0",
     "read-pkg": "^3.0.0",
-    "read-pkg-up": "^3.0.0"
+    "read-pkg-up": "^10.0.0"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000"
