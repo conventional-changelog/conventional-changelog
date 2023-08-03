@@ -39,7 +39,7 @@ describe('conventional-changelog-writer', () => {
     it('should generate footer', () => {
       const log = Handlebars.compile(template)(templateContext)
 
-      expect(log).toEqual('\n### my title\n\n* my note 1\n* my note 2\n\n### my other title\n\n* my note 3\n* my note 4\n')
+      expect(log).toBe('\n### my title\n\n* my note 1\n* my note 2\n\n### my other title\n\n* my note 3\n* my note 4\n')
     })
   })
 })

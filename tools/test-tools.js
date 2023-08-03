@@ -1,9 +1,8 @@
-const { execSync } = require('child_process')
+const { execSync, spawn } = require('child_process')
 const { Transform } = require('stream')
 const path = require('path')
 const fs = require('fs')
 const tmp = require('tmp')
-const conventionalChangelogCore = require('conventional-changelog-core')
 
 function delay (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -101,6 +100,36 @@ class TestTools {
     })
   }
 
+  fork (script, args = [], options) {
+    return new Promise((resolve, reject) => {
+      const finalOptions = {
+        cwd: this.cwd,
+        stdio: [null, null, null],
+        ...options
+      }
+      const child = spawn(process.execPath, [script, ...args], finalOptions)
+      let stdout = ''
+      let stderr = ''
+      let exitCode = null
+
+      child.stdout?.on('data', (data) => {
+        stdout += data.toString()
+      })
+      child.stderr?.on('data', (data) => {
+        stderr += data.toString()
+      })
+      child.on('close', (code) => {
+        exitCode = code
+        resolve({
+          stdout,
+          stderr,
+          exitCode
+        })
+      })
+      child.on('error', reject)
+    })
+  }
+
   gitInit () {
     this.mkdirSync('git-templates')
     return this.exec('git init --template=./git-templates  --initial-branch=master')
@@ -126,53 +155,8 @@ class TestTools {
   }
 }
 
-function createRunConventionalChangelog (conventionalChangelogCore, options) {
-  return function runConventionalChangelog (options, ...args) {
-    const chunks = []
-    const onChunk = typeof args[args.length - 1] === 'function'
-      ? args.pop()
-      : undefined
-    const includeDetails = args.some(arg => arg.includeDetails)
-    const throughToUse = includeDetails ? throughObj : through
-
-    return new Promise((resolve, reject) => {
-      conventionalChangelogCore({
-        warn: options?.rejectOnWarn ? reject : undefined,
-        ...options
-      }, ...args)
-        .on('error', reject)
-        .pipe(
-          throughToUse((chunk, _, next) => {
-            try {
-              const str = Buffer.isBuffer(chunk)
-                ? chunk.toString()
-                : chunk
-
-              chunks.push(str)
-              onChunk?.(str)
-              next()
-            } catch (err) {
-              reject(err)
-            }
-          }, (done) => {
-            try {
-              resolve(chunks)
-              done()
-            } catch (err) {
-              reject(err)
-            }
-          })
-        )
-    })
-  }
-}
-
-const runConventionalChangelog = createRunConventionalChangelog(conventionalChangelogCore)
-
 module.exports = {
   TestTools,
-  createRunConventionalChangelog,
-  runConventionalChangelog,
   through,
   throughObj,
   delay

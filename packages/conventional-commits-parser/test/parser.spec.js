@@ -344,7 +344,7 @@ describe('conventional-commits-parser', () => {
         options,
         reg
       )
-      expect(msg.body).toEqual(null)
+      expect(msg.body).toBe(null)
     })
 
     it('should keep header before scissor line', () => {
@@ -355,7 +355,7 @@ describe('conventional-commits-parser', () => {
         options,
         reg
       )
-      expect(msg.header).toEqual('this is some header before a scissors-line')
+      expect(msg.header).toBe('this is some header before a scissors-line')
     })
 
     it('should keep body before scissor line', () => {
@@ -367,7 +367,7 @@ describe('conventional-commits-parser', () => {
         options,
         reg
       )
-      expect(msg.body).toEqual('this is some body before a scissors-line')
+      expect(msg.body).toBe('this is some body before a scissors-line')
     })
 
     describe('mentions', () => {
@@ -417,8 +417,8 @@ describe('conventional-commits-parser', () => {
       )
 
       it('should parse merge header in merge commit', () => {
-        expect(mergeMsg.source).toEqual('feature')
-        expect(mergeMsg.issueId).toEqual(null)
+        expect(mergeMsg.source).toBe('feature')
+        expect(mergeMsg.issueId).toBe(null)
       })
 
       const githubOptions = {
@@ -442,19 +442,19 @@ describe('conventional-commits-parser', () => {
       )
 
       it('should parse header in GitHub like pull request', () => {
-        expect(githubMsg.header).toEqual('feat(scope): broadcast $destroy event on scope destruction')
+        expect(githubMsg.header).toBe('feat(scope): broadcast $destroy event on scope destruction')
       })
 
       it('should understand header parts in GitHub like pull request', () => {
-        expect(githubMsg.type).toEqual('feat')
-        expect(githubMsg.scope).toEqual('scope')
-        expect(githubMsg.subject).toEqual('broadcast $destroy event on scope destruction')
+        expect(githubMsg.type).toBe('feat')
+        expect(githubMsg.scope).toBe('scope')
+        expect(githubMsg.subject).toBe('broadcast $destroy event on scope destruction')
       })
 
       it('should understand merge parts in GitHub like pull request', () => {
-        expect(githubMsg.merge).toEqual('Merge pull request #1 from user/feature/feature-name')
-        expect(githubMsg.issueId).toEqual('1')
-        expect(githubMsg.source).toEqual('user/feature/feature-name')
+        expect(githubMsg.merge).toBe('Merge pull request #1 from user/feature/feature-name')
+        expect(githubMsg.issueId).toBe('1')
+        expect(githubMsg.source).toBe('user/feature/feature-name')
       })
 
       const gitLabOptions = {
@@ -480,18 +480,18 @@ describe('conventional-commits-parser', () => {
       )
 
       it('should parse header in GitLab like merge request', () => {
-        expect(gitlabMsg.header).toEqual('feat(scope): broadcast $destroy event on scope destruction')
+        expect(gitlabMsg.header).toBe('feat(scope): broadcast $destroy event on scope destruction')
       })
 
       it('should understand header parts in GitLab like merge request', () => {
-        expect(gitlabMsg.type).toEqual('feat')
-        expect(gitlabMsg.scope).toEqual('scope')
-        expect(gitlabMsg.subject).toEqual('broadcast $destroy event on scope destruction')
+        expect(gitlabMsg.type).toBe('feat')
+        expect(gitlabMsg.scope).toBe('scope')
+        expect(gitlabMsg.subject).toBe('broadcast $destroy event on scope destruction')
       })
 
       it('should understand merge parts in GitLab like merge request', () => {
-        expect(gitlabMsg.merge).toEqual('Merge branch \'feature/feature-name\' into \'master\'')
-        expect(gitlabMsg.source).toEqual('feature/feature-name')
+        expect(gitlabMsg.merge).toBe('Merge branch \'feature/feature-name\' into \'master\'')
+        expect(gitlabMsg.source).toBe('feature/feature-name')
       })
 
       it('Should parse header if merge header is missing', () => {
@@ -501,11 +501,11 @@ describe('conventional-commits-parser', () => {
           githubRegex
         )
 
-        expect(msgWithoutmergeHeader.merge).toEqual(null)
+        expect(msgWithoutmergeHeader.merge).toBe(null)
       })
 
       it('merge should be null if options.mergePattern is not defined', () => {
-        expect(msg.merge).toEqual(null)
+        expect(msg.merge).toBe(null)
       })
 
       it('Should not parse conventional header if pull request header present and mergePattern is not set', () => {
@@ -515,9 +515,9 @@ describe('conventional-commits-parser', () => {
           options,
           reg
         )
-        expect(msgWithmergeHeaderWithoutmergePattern.type).toEqual(null)
-        expect(msgWithmergeHeaderWithoutmergePattern.scope).toEqual(null)
-        expect(msgWithmergeHeaderWithoutmergePattern.subject).toEqual(null)
+        expect(msgWithmergeHeaderWithoutmergePattern.type).toBe(null)
+        expect(msgWithmergeHeaderWithoutmergePattern.scope).toBe(null)
+        expect(msgWithmergeHeaderWithoutmergePattern.subject).toBe(null)
       })
 
       it('does not throw if merge commit has no header', () => {
@@ -535,23 +535,23 @@ describe('conventional-commits-parser', () => {
           headerPattern: /^(\w*)(?:\(([:\w$.\-* ]*)\))?: (.*)$/,
           headerCorrespondence: ['type', 'scope', 'subject']
         }, reg)
-        expect(msg.scope).toEqual('ng:list')
+        expect(msg.scope).toBe('ng:list')
       })
 
       it('header part should be null if not captured', () => {
-        expect(headerOnlyMsg.type).toEqual(null)
-        expect(headerOnlyMsg.scope).toEqual(null)
-        expect(headerOnlyMsg.subject).toEqual(null)
+        expect(headerOnlyMsg.type).toBe(null)
+        expect(headerOnlyMsg.scope).toBe(null)
+        expect(headerOnlyMsg.subject).toBe(null)
       })
 
       it('should parse header', () => {
-        expect(msg.header).toEqual('feat(scope): broadcast $destroy event on scope destruction')
+        expect(msg.header).toBe('feat(scope): broadcast $destroy event on scope destruction')
       })
 
       it('should understand header parts', () => {
-        expect(msg.type).toEqual('feat')
-        expect(msg.scope).toEqual('scope')
-        expect(msg.subject).toEqual('broadcast $destroy event on scope destruction')
+        expect(msg.type).toBe('feat')
+        expect(msg.scope).toBe('scope')
+        expect(msg.subject).toBe('broadcast $destroy event on scope destruction')
       })
 
       it('should allow correspondence to be changed', () => {
@@ -560,9 +560,9 @@ describe('conventional-commits-parser', () => {
           headerCorrespondence: ['scope', 'subject', 'type']
         }, reg)
 
-        expect(msg.type).toEqual('fix this')
-        expect(msg.scope).toEqual('scope')
-        expect(msg.subject).toEqual('my subject')
+        expect(msg.type).toBe('fix this')
+        expect(msg.scope).toBe('scope')
+        expect(msg.subject).toBe('my subject')
       })
 
       it('should be `undefined` if it is missing in `options.headerCorrespondence`', () => {
@@ -643,13 +643,13 @@ describe('conventional-commits-parser', () => {
       })
 
       it('should be null if not found', () => {
-        expect(headerOnlyMsg.body).toEqual(null)
+        expect(headerOnlyMsg.body).toBe(null)
       })
     })
 
     describe('footer', () => {
       it('should be null if not found', () => {
-        expect(headerOnlyMsg.footer).toEqual(null)
+        expect(headerOnlyMsg.footer).toBe(null)
       })
 
       it('should parse footer', () => {
@@ -881,7 +881,7 @@ describe('conventional-commits-parser', () => {
           reg
         )
 
-        expect(msg.footer).toEqual('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother')
+        expect(msg.footer).toBe('Kills #1, #123\nwhat\nkilled #25\nhandle #33, Closes #100, Handled #3\nother')
       })
 
       it('should parse properly if important notes comes after references', () => {
@@ -913,7 +913,7 @@ describe('conventional-commits-parser', () => {
           raw: ', #123',
           prefix: '#'
         }])
-        expect(msg.footer).toEqual('Kills #1, #123\nBREAKING AMEND: some breaking change')
+        expect(msg.footer).toBe('Kills #1, #123\nBREAKING AMEND: some breaking change')
       })
 
       it('should parse properly if important notes comes with more than one paragraphs after references', () => {
@@ -945,7 +945,7 @@ describe('conventional-commits-parser', () => {
           raw: ', #123',
           prefix: '#'
         }])
-        expect(msg.footer).toEqual('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change')
+        expect(msg.footer).toBe('Kills #1, #123\nBREAKING AMEND: some breaking change\nsome other breaking change')
       })
 
       it('should parse properly if important notes comes after references', () => {
@@ -978,7 +978,7 @@ describe('conventional-commits-parser', () => {
           raw: ', #123',
           prefix: '#'
         }])
-        expect(msg.footer).toEqual('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change')
+        expect(msg.footer).toBe('Kills gh-1, #123\nother\nBREAKING AMEND: some breaking change')
       })
 
       it('should add the subject as note if it match breakingHeaderPattern', () => {
@@ -1014,7 +1014,7 @@ describe('conventional-commits-parser', () => {
           title: 'BREAKING AMEND',
           text: 'some breaking change'
         })
-        expect(msg.notes.length).toEqual(1)
+        expect(msg.notes.length).toBe(1)
       })
     })
 
@@ -1028,7 +1028,7 @@ describe('conventional-commits-parser', () => {
           reg
         )
 
-        expect(msg.hash).toEqual('9b1aff905b638aa274a5fc8f88662df446d374bd')
+        expect(msg.hash).toBe('9b1aff905b638aa274a5fc8f88662df446d374bd')
       })
 
       it('should parse sideNotes', () => {
@@ -1042,7 +1042,7 @@ describe('conventional-commits-parser', () => {
           reg
         )
 
-        expect(msg.sideNotes).toEqual('It should warn the correct unfound file names.\n' +
+        expect(msg.sideNotes).toBe('It should warn the correct unfound file names.\n' +
           'Also it should continue if one file cannot be found.\n' +
           'Tests are added for these')
       })
@@ -1058,8 +1058,8 @@ describe('conventional-commits-parser', () => {
           reg
         )
 
-        expect(msg.committerName).toEqual('Steve Mao')
-        expect(msg[' committerEmail']).toEqual('test@github.com')
+        expect(msg.committerName).toBe('Steve Mao')
+        expect(msg[' committerEmail']).toBe('test@github.com')
       })
     })
 

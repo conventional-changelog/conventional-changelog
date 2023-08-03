@@ -1,5 +1,5 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools, through } from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools'
 import standardChangelog from '../'
 
 let testTools
@@ -16,27 +16,19 @@ describe('standard-changelog', () => {
     testTools?.cleanup()
   })
 
-  it('should generate angular changelog', () => {
-    return new Promise((resolve, reject) => {
-      let i = 0
+  it('should generate angular changelog', async () => {
+    let i = 0
 
-      standardChangelog({
-        cwd: testTools.cwd
-      })
-        .on('error', reject)
-        .pipe(
-          through((chunk, enc, cb) => {
-            chunk = chunk.toString()
+    for await (let chunk of standardChangelog({
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
 
-            expect(chunk).toContain('Features')
+      expect(chunk).toContain('Features')
 
-            i++
-            cb()
-          }, () => {
-            expect(i).toEqual(1)
-            resolve()
-          })
-        )
-    })
+      i++
+    }
+
+    expect(i).toBe(1)
   })
 })

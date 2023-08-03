@@ -1,6 +1,4 @@
-import concat from 'concat-stream'
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { spawn } from 'child_process'
 import path from 'path'
 import { TestTools } from '../../../tools/test-tools'
 
@@ -26,605 +24,273 @@ describe('conventional-changelog-cli', () => {
     testTools?.cleanup()
   })
 
-  it('should work without any arguments', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should work without any arguments', async () => {
+    const { stdout } = await testTools.fork(CLI_PATH)
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('First commit')
-
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('First commit')
   })
 
-  it('should output to the same file if `-s` presents when appending', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-s', '--append'],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should output to the same file if `-s` presents when appending', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      ['-i', FIXTURE_CHANGELOG_PATH, '-s', '--append']
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-        expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
+    expect(exitCode).toBe(0)
 
-        originalChangelog()
-        resolve()
-      })
+    const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
+
+    originalChangelog()
   })
 
-  it('should output to the same file if `-s` presents when not appending', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-s'],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should output to the same file if `-s` presents when not appending', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      ['-i', FIXTURE_CHANGELOG_PATH, '-s']
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-        expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
+    expect(exitCode).toBe(0)
 
-        originalChangelog()
-        resolve()
-      })
+    const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
+
+    originalChangelog()
   })
 
-  it('should output to the same file if `infile` and `outfile` are the same', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [
-          CLI_PATH,
-          '-i',
-          FIXTURE_CHANGELOG_PATH,
-          '-o',
-          FIXTURE_CHANGELOG_PATH
-        ],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should output to the same file if `infile` and `outfile` are the same', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      ['-i', FIXTURE_CHANGELOG_PATH, '-o', FIXTURE_CHANGELOG_PATH]
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-        expect(modified).toContain('First commit')
-        expect(modified).toContain('Some previous changelog.\n')
+    expect(exitCode).toBe(0)
 
-        originalChangelog()
-        resolve()
-      })
+    const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toContain('First commit')
+    expect(modified).toContain('Some previous changelog.\n')
+
+    originalChangelog()
   })
 
-  it('should work if `infile` is missing but `outfile` presets', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-o', path.join(testTools.cwd, '_CHANGELOG.md')], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should work if `infile` is missing but `outfile` presets', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      ['-o', path.join(testTools.cwd, '_CHANGELOG.md')]
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-        expect(modified).toContain('First commit')
+    expect(exitCode).toBe(0)
 
-        resolve()
-      })
+    const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toContain('First commit')
   })
 
-  it('should work if both `infile` and `outfile` presets when not appending', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [
-          CLI_PATH,
-          '-i',
-          FIXTURE_CHANGELOG_PATH,
-          '-o',
-          path.join(testTools.cwd, '_CHANGELOG.md')
-        ],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should work if both `infile` and `outfile` presets when not appending', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      [
+        '-i',
+        FIXTURE_CHANGELOG_PATH,
+        '-o',
+        path.join(testTools.cwd, '_CHANGELOG.md')
+      ]
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-        expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
+    expect(exitCode).toBe(0)
 
-        resolve()
-      })
+    const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
   })
 
-  it('should work if both `infile` and `outfile` presets when appending', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [
-          CLI_PATH,
-          '-i',
-          FIXTURE_CHANGELOG_PATH,
-          '-o',
-          path.join(testTools.cwd, '_CHANGELOG.md'),
-          '--append'
-        ],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should work if both `infile` and `outfile` presets when appending', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      [
+        '-i',
+        FIXTURE_CHANGELOG_PATH,
+        '-o',
+        path.join(testTools.cwd, '_CHANGELOG.md'),
+        '--append'
+      ]
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-        expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
+    expect(exitCode).toBe(0)
 
-        resolve()
-      })
+    const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
   })
 
-  it('should work if `infile` presets but `outfile` is missing when not appending', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should work if `infile` presets but `outfile` is missing when not appending', async () => {
+    const { stdout } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toMatch(/First commit(\s|.)*Some previous changelog./)
-
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toMatch(/First commit(\s|.)*Some previous changelog./)
   })
 
-  it('should work if `infile` presets but `outfile` is missing when appending', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '--append'],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should work if `infile` presets but `outfile` is missing when appending', async () => {
+    const { stdout } = await testTools.fork(
+      CLI_PATH,
+      ['-i', FIXTURE_CHANGELOG_PATH, '--append']
+    )
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toMatch(/Some previous changelog.(\s|.)*First commit/)
-
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toMatch(/Some previous changelog.(\s|.)*First commit/)
   })
 
-  it('should ignore `infile` if `releaseCount` is `0` (stdout)', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '--release-count', 0],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should ignore `infile` if `releaseCount` is `0` (stdout)', async () => {
+    const { stdout } = await testTools.fork(
+      CLI_PATH,
+      ['-i', FIXTURE_CHANGELOG_PATH, '--release-count', 0]
+    )
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          chunk = chunk.toString()
-
-          expect(chunk).toContain('First commit')
-          expect(chunk).not.toContain('previous')
-
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('First commit')
+    expect(stdout).not.toContain('previous')
   })
 
-  it('should ignore `infile` if `releaseCount` is `0` (file)', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '--release-count', 0, '-s'],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should ignore `infile` if `releaseCount` is `0` (file)', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      ['-i', FIXTURE_CHANGELOG_PATH, '--release-count', 0, '-s']
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-        expect(modified).toContain('First commit')
-        expect(modified).not.toContain('previous')
+    expect(exitCode).toBe(0)
 
-        originalChangelog()
-        resolve()
-      })
+    const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toContain('First commit')
+    expect(modified).not.toContain('previous')
+
+    originalChangelog()
   })
 
-  it('should ignore `infile` if `infile` is ENOENT', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-i', 'no-such-file.md'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should ignore `infile` if `infile` is ENOENT', async () => {
+    const { stdout } = await testTools.fork(CLI_PATH, ['-i', 'no-such-file.md'])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          chunk = chunk.toString()
-
-          expect(chunk).toContain('First commit')
-          expect(chunk).not.toContain('previous')
-          expect(chunk).not.toMatch(/First commit[\w\W]*First commit/)
-
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('First commit')
+    expect(stdout).not.toContain('previous')
+    expect(stdout).not.toMatch(/First commit[\w\W]*First commit/)
   })
 
-  it('should warn if `infile` is ENOENT', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-i', 'no-such-file.md', '-v'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should warn if `infile` is ENOENT', async () => {
+    const { stderr } = await testTools.fork(CLI_PATH, ['-i', 'no-such-file.md', '-v'])
 
-      cp.stderr.pipe(
-        concat((chunk) => {
-          chunk = chunk.toString()
-
-          expect(chunk).toContain('infile does not exist.')
-
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stderr).toContain('infile does not exist.')
   })
 
-  it('should create `infile` if `infile` is ENOENT and output to the same file', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '-i', path.join(testTools.cwd, 'no-such-file.md'), '-s'],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('should create `infile` if `infile` is ENOENT and output to the same file', async () => {
+    const { exitCode } = await testTools.fork(
+      CLI_PATH,
+      ['-i', path.join(testTools.cwd, 'no-such-file.md'), '-s']
+    )
 
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        const modified = testTools.readFileSync(path.join(testTools.cwd, 'no-such-file.md'), 'utf8')
-        expect(modified).toContain('First commit')
-        expect(modified).not.toContain('previous')
+    expect(exitCode).toBe(0)
 
-        originalChangelog()
-        resolve()
-      })
+    const modified = testTools.readFileSync(path.join(testTools.cwd, 'no-such-file.md'), 'utf8')
 
-      cp.on('error', reject)
-    })
+    expect(modified).toContain('First commit')
+    expect(modified).not.toContain('previous')
+
+    originalChangelog()
   })
 
-  it('should error if `-s` presents but `-i` is missing', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-s'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should error if `-s` presents but `-i` is missing', async () => {
+    const { stderr, exitCode } = await testTools.fork(CLI_PATH, ['-s'])
 
-      cp.stderr.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('infile must be provided if same-file flag presents.\n')
-        })
-      )
-
-      cp.on('close', (code) => {
-        expect(code).toEqual(1)
-
-        resolve()
-      })
-
-      cp.on('error', reject)
-    })
+    expect(stderr).toContain('infile must be provided if same-file flag presents.\n')
+    expect(exitCode).toBe(1)
   })
 
-  it('should error if it fails to get any options file', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '--config', 'no'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should error if it fails to get any options file', async () => {
+    const { stderr, exitCode } = await testTools.fork(CLI_PATH, ['--config', 'no'])
 
-      cp.stderr.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('Failed to get file. ')
-        })
-      )
-
-      cp.on('close', (code) => {
-        expect(code).toEqual(1)
-
-        resolve()
-      })
-
-      cp.on('error', reject)
-    })
+    expect(stderr).toContain('Failed to get file. ')
+    expect(exitCode).toBe(1)
   })
 
-  it('-k should work', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-k', path.join(__dirname, 'fixtures/_package.json')], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('-k should work', async () => {
+    const { stdout, exitCode } = await testTools.fork(CLI_PATH, ['-k', path.join(__dirname, 'fixtures/_package.json')])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('0.0.17')
-        })
-      )
-
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-
-        resolve()
-      })
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('0.0.17')
+    expect(exitCode).toBe(0)
   })
 
-  it('--context should work with relative path', () => {
+  it('--context should work with relative path', async () => {
     const context = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/context.json'))
     const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.js'))
 
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '--context', context, '--config', config],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+    const { stdout } = await testTools.fork(
+      CLI_PATH,
+      ['--context', context, '--config', config]
+    )
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toEqual('unicorn template')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toBe('unicorn template')
   })
 
-  it('--context should work with absolute path', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.js')],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('--context should work with absolute path', async () => {
+    const { stdout } = await testTools.fork(
+      CLI_PATH,
+      ['--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.js')]
+    )
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toEqual('unicorn template')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toBe('unicorn template')
   })
 
-  it('--config should work with a return promise', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '--config', path.join(__dirname, 'fixtures/promise-config.js')], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('--config should work with a return promise', async () => {
+    const { stdout } = await testTools.fork(CLI_PATH, ['--config', path.join(__dirname, 'fixtures/promise-config.js')])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toEqual('template')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toBe('template')
   })
 
-  it('--config should work with relative path', () => {
+  it('--config should work with relative path', async () => {
     const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.js'))
 
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '--config', config], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+    const { stdout } = await testTools.fork(CLI_PATH, ['--config', config])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toEqual('template')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toBe('template')
   })
 
-  it('--config should work with absolute path', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '--config', path.join(__dirname, 'fixtures/config.js')], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('--config should work with absolute path', async () => {
+    const { stdout } = await testTools.fork(CLI_PATH, ['--config', path.join(__dirname, 'fixtures/config.js')])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toEqual('template')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toBe('template')
   })
 
-  it('--preset should work', () => {
+  it('--preset should work', async () => {
     testTools.writeFileSync('angular', '')
     testTools.exec('git add --all && git commit -m"fix: fix it!"')
 
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '--preset', 'angular'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+    const { stdout } = await testTools.fork(CLI_PATH, ['--preset', 'angular'])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('Bug Fixes')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('Bug Fixes')
   })
 
-  it('--preset "conventionalcommits" should work', () => {
+  it('--preset "conventionalcommits" should work', async () => {
     testTools.writeFileSync('angular', '2')
     testTools.exec('git add --all && git commit -m"fix: fix it!"')
 
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '--preset', 'conventionalcommits'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+    const { stdout } = await testTools.fork(CLI_PATH, ['--preset', 'conventionalcommits'])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('Bug Fixes')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('Bug Fixes')
   })
 
-  it('--config should work with --preset', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(
-        process.execPath,
-        [CLI_PATH, '--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')],
-        {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        }
-      )
+  it('--config should work with --preset', async () => {
+    const { stdout } = await testTools.fork(
+      CLI_PATH,
+      ['--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')]
+    )
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toEqual('Bug Fixestemplate')
-          resolve()
-        })
-      )
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toBe('Bug Fixestemplate')
   })
 
-  it('should be verbose', () => {
-    return new Promise((resolve, reject) => {
-      const cp = spawn(process.execPath, [CLI_PATH, '-v', '-p', 'no'], {
-        cwd: testTools.cwd,
-        stdio: [null, null, null]
-      })
+  it('should be verbose', async () => {
+    const { stdout, stderr, exitCode } = await testTools.fork(CLI_PATH, ['-v', '-p', 'no'])
 
-      cp.stdout.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('Your git-log command is')
-        })
-      )
-
-      cp.stderr.pipe(
-        concat((chunk) => {
-          expect(chunk.toString()).toContain('Unable to load the "no" preset.')
-        })
-      )
-
-      cp.on('close', (code) => {
-        expect(code).toEqual(0)
-        resolve()
-      })
-
-      cp.on('error', reject)
-    })
+    expect(stdout).toContain('Your git-log command is')
+    expect(stderr).toContain('Unable to load the "no" preset.')
+    expect(exitCode).toBe(0)
   })
 })

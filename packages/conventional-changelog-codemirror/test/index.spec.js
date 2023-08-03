@@ -1,8 +1,6 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import {
-  TestTools,
-  runConventionalChangelog
-} from '../../../tools/test-tools'
+import conventionalChangelogCore from 'conventional-changelog-core'
+import { TestTools } from '../../../tools/test-tools'
 import preset from '../'
 
 let testTools
@@ -29,10 +27,12 @@ describe('conventional-changelog-codemirror', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    await runConventionalChangelog({
+    for await (let chunk of conventionalChangelogCore({
       config: preset,
       cwd: testTools.cwd
-    }, chunk => {
+    })) {
+      chunk = chunk.toString()
+
       expect(chunk).toContain('### tern')
       expect(chunk).toContain('Use correct primary when selecting variables')
       expect(chunk).toContain('**addon**')
@@ -40,6 +40,6 @@ describe('conventional-changelog-codemirror', () => {
       expect(chunk).toContain('### stylus')
 
       expect(chunk).not.toContain('Bad')
-    })
+    }
   })
 })

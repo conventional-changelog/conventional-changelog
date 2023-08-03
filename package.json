@@ -7,7 +7,7 @@
   "bugs": "https://github.com/conventional-changelog/conventional-changelog/issues",
   "description": "Generate a changelog from git metadata",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [],
   "homepage": "https://github.com/conventional-changelog/conventional-changelog#readme",
@@ -45,7 +45,6 @@
   "devDependencies": {
     "@vitest/coverage-v8": "^0.33.0",
     "better-than-before": "^1.0.0",
-    "concat-stream": "^2.0.0",
     "conventional-changelog-core": "^5.0.0",
     "eslint": "^8.0.0",
     "eslint-config-standard": "^17.0.0",
