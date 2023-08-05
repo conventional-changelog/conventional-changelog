@@ -1,10 +1,15 @@
 #!/usr/bin/env node
-'use strict'
-const conventionalChangelogWriter = require('./')
-const fs = require('fs')
-const meow = require('meow')
-const path = require('path')
-const split = require('split')
+import { resolve } from 'path'
+import { pathToFileURL } from 'url'
+import { createReadStream } from 'fs'
+import { readFile } from 'fs/promises'
+import split from 'split'
+import meow from 'meow'
+import conventionalChangelogWriter from './index.js'
+
+function relativeResolve (filePath) {
+  return pathToFileURL(resolve(process.cwd(), filePath))
+}
 
 const cli = meow(`
     Usage
@@ -19,13 +24,14 @@ const cli = meow(`
       -c, --context    A filepath of a json that is used to define template variables
       -o, --options    A filepath of a javascript object that is used to define options
 `, {
+  importMeta: import.meta,
   flags: {
     context: {
-      alias: 'c',
+      shortFlag: 'c',
       type: 'string'
     },
     options: {
-      alias: 'o',
+      shortFlag: 'o',
       type: 'string'
     }
   }
@@ -39,7 +45,7 @@ let templateContext
 const contextPath = flags.context
 if (contextPath) {
   try {
-    templateContext = require(path.resolve(process.cwd(), contextPath))
+    templateContext = JSON.parse(await readFile(relativeResolve(contextPath), 'utf8'))
   } catch (err) {
     console.error('Failed to get context from file ' + contextPath + '\n' + err)
     process.exit(1)
@@ -50,7 +56,7 @@ let options
 const optionsPath = flags.options
 if (optionsPath) {
   try {
-    options = require(path.resolve(process.cwd(), optionsPath))
+    options = (await import(relativeResolve(optionsPath))).default
   } catch (err) {
     console.error('Failed to get options from file ' + optionsPath + '\n' + err)
     process.exit(1)
@@ -67,25 +73,25 @@ try {
 
 function processFile (fileIndex) {
   const filePath = filePaths[fileIndex]
-  fs.createReadStream(filePath)
-    .on('error', function (err) {
+  createReadStream(filePath)
+    .on('error', (err) => {
       console.warn('Failed to read file ' + filePath + '\n' + err)
       if (++fileIndex < length) {
         processFile(fileIndex)
       }
     })
     .pipe(split(JSON.parse))
-    .on('error', function (err) {
+    .on('error', (err) => {
       console.warn('Failed to split commits in file ' + filePath + '\n' + err)
     })
     .pipe(stream)
-    .on('error', function (err) {
+    .on('error', (err) => {
       console.warn('Failed to process file ' + filePath + '\n' + err)
       if (++fileIndex < length) {
         processFile(fileIndex)
       }
     })
-    .on('end', function () {
+    .on('end', () => {
       if (++fileIndex < length) {
         processFile(fileIndex)
       }
@@ -96,12 +102,12 @@ function processFile (fileIndex) {
 if (!process.stdin.isTTY) {
   process.stdin
     .pipe(split(JSON.parse))
-    .on('error', function (err) {
+    .on('error', (err) => {
       console.error('Failed to split commits\n' + err)
       process.exit(1)
     })
     .pipe(stream)
-    .on('error', function (err) {
+    .on('error', (err) => {
       console.error('Failed to process file\n' + err)
       process.exit(1)
     })

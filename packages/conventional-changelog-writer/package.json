@@ -21,7 +21,7 @@
   },
   "files": [
     "index.js",
-    "cli.js",
+    "cli.mjs",
     "lib",
     "templates"
   ],
@@ -40,7 +40,7 @@
     "dateformat": "^3.0.3",
     "handlebars": "^4.7.7",
     "json-stringify-safe": "^5.0.1",
-    "meow": "^8.1.2",
+    "meow": "^12.0.1",
     "semver": "^7.5.2",
     "split": "^1.0.1"
   },
@@ -48,7 +48,7 @@
     "test-windows": "echo 'make work on windows'"
   },
   "bin": {
-    "conventional-changelog-writer": "cli.js"
+    "conventional-changelog-writer": "cli.mjs"
   },
   "devDependencies": {
     "dedent": "^0.7.0",

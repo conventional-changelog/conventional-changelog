@@ -21,7 +21,7 @@
   },
   "files": [
     "index.js",
-    "cli.js"
+    "cli.mjs"
   ],
   "keywords": [
     "conventional-recommended-bump",
@@ -36,12 +36,12 @@
     "conventional-commits-parser": "^4.0.0",
     "git-raw-commits": "^3.0.0",
     "git-semver-tags": "^5.0.0",
-    "meow": "^8.1.2"
+    "meow": "^12.0.1"
   },
   "scripts": {
     "test-windows": "mocha --timeout 30000 ./test/preset-resolver.spec.js"
   },
-  "bin": "cli.js",
+  "bin": "cli.mjs",
   "devDependencies": {
     "conventional-changelog-conventionalcommits": "^6.1.0"
   }

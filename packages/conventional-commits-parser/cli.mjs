@@ -1,16 +1,12 @@
 #!/usr/bin/env node
-'use strict'
-const conventionalCommitsParser = require('./')
-const fs = require('fs')
-const { Transform } = require('stream')
-const isTextPath = require('is-text-path')
-const JSONStream = require('JSONStream')
-const meow = require('meow')
-const readline = require('readline')
-const split = require('split2')
-
-const filePaths = []
-let separator = '\n\n\n'
+import fs from 'fs'
+import readline from 'readline'
+import { Transform } from 'stream'
+import isTextPath from 'is-text-path'
+import JSONStream from 'JSONStream'
+import split from 'split2'
+import meow from 'meow'
+import conventionalCommitsParser from './index.js'
 
 const cli = meow(`
     Practice writing commit messages or parse messages from files.
@@ -41,48 +37,52 @@ const cli = meow(`
       --revert-correspondence           Comma separated fields used to define what the commit reverts
       -v, --verbose                     Verbose output
 `, {
+  importMeta: import.meta,
   flags: {
-    'header-pattern': {
-      alias: 'p',
+    headerPattern: {
+      shortFlag: 'p',
       type: 'string'
     },
-    'header-correspondence': {
-      alias: 'c',
+    headerCorrespondence: {
+      shortFlag: 'c',
       type: 'string'
     },
-    'reference-actions': {
-      alias: 'r',
+    referenceActions: {
+      shortFlag: 'r',
       type: 'string'
     },
-    'issue-prefixes': {
-      alias: 'i',
+    issuePrefixes: {
+      shortFlag: 'i',
       type: 'string'
     },
-    'issue-prefixes-case-sensitive': {
+    issuePrefixesCaseSensitive: {
       type: 'boolean'
     },
-    'note-keywords': {
-      alias: 'n',
+    noteKeywords: {
+      shortFlag: 'n',
       type: 'string'
     },
-    'field-pattern': {
-      alias: 'f',
+    fieldPattern: {
+      shortFlag: 'f',
       type: 'string'
     },
-    'revert-pattern': {
+    revertPattern: {
       type: 'string'
     },
-    'revert-correspondence': {
+    revertCorrespondence: {
       type: 'string'
     },
     verbose: {
-      alias: 'v',
+      shortFlag: 'v',
       type: 'boolean'
     }
   }
 })
 
-cli.input.forEach(function (arg) {
+const filePaths = []
+let separator = '\n\n\n'
+
+cli.input.forEach((arg) => {
   if (isTextPath(arg)) {
     filePaths.push(arg)
   } else {
@@ -100,7 +100,7 @@ if (options.verbose) {
 function processFile (fileIndex) {
   const filePath = filePaths[fileIndex]
   fs.createReadStream(filePath)
-    .on('error', function (err) {
+    .on('error', (err) => {
       console.warn('Failed to read file ' + filePath + '\n' + err)
       if (++fileIndex < length) {
         processFile(fileIndex)
@@ -109,7 +109,7 @@ function processFile (fileIndex) {
     .pipe(split(separator))
     .pipe(conventionalCommitsParser(options))
     .pipe(JSONStream.stringify())
-    .on('end', function () {
+    .on('end', () => {
       if (++fileIndex < length) {
         processFile(fileIndex)
       }
@@ -146,7 +146,7 @@ if (process.stdin.isTTY) {
       )
       .pipe(process.stdout)
 
-    rl.on('line', function (line) {
+    rl.on('line', (line) => {
       commit += line + '\n'
       if (commit.indexOf(separator) === -1) {
         return
@@ -161,7 +161,7 @@ if (process.stdin.isTTY) {
   process.stdin
     .pipe(split(separator))
     .pipe(conventionalCommitsParser(options))
-    .on('error', function (err) {
+    .on('error', (err) => {
       console.error(err.toString())
       process.exit(1)
     })
