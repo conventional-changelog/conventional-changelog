@@ -51,7 +51,7 @@
     "conventional-changelog-writer": "cli.mjs"
   },
   "devDependencies": {
-    "dedent": "^0.7.0",
+    "dedent": "^1.0.0",
     "forceable-tty": "^0.1.0"
   }
 }
