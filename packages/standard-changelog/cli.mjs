@@ -1,14 +1,24 @@
 #!/usr/bin/env node
-'use strict'
-const addStream = require('add-stream')
-const chalk = require('chalk')
-const standardChangelog = require('./')
-const fs = require('fs')
-const meow = require('meow')
-const tempfile = require('tempfile')
-const resolve = require('path').resolve
-const Readable = require('stream').Readable
-const rimraf = require('rimraf')
+import {
+  createReadStream,
+  createWriteStream
+} from 'fs'
+import {
+  readFile,
+  rm
+} from 'fs/promises'
+import { resolve } from 'path'
+import { pathToFileURL } from 'url'
+import { Readable } from 'stream'
+import addStream from 'add-stream'
+import chalk from 'chalk'
+import tempfile from 'tempfile'
+import meow from 'meow'
+import standardChangelog from './index.js'
+
+function relativeResolve (filePath) {
+  return pathToFileURL(resolve(process.cwd(), filePath))
+}
 
 const cli = meow(`
   Usage
@@ -28,55 +38,56 @@ const cli = meow(`
     -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
     --commit-path             Generate a changelog scoped to a specific directory
 `, {
+  importMeta: import.meta,
   booleanDefault: undefined,
   flags: {
     infile: {
-      alias: 'i',
+      shortFlag: 'i',
       default: 'CHANGELOG.md',
       type: 'string'
     },
     help: {
-      alias: 'h'
+      shortFlag: 'h'
     },
     outfile: {
-      alias: 'o',
+      shortFlag: 'o',
       type: 'string'
     },
-    'same-file': {
-      alias: 's',
+    sameFile: {
+      shortFlag: 's',
       default: true,
       type: 'boolean'
     },
     preset: {
-      alias: 'p',
+      shortFlag: 'p',
       type: 'string'
     },
     pkg: {
-      alias: 'k',
+      shortFlag: 'k',
       type: 'string'
     },
     append: {
-      alias: 'a',
+      shortFlag: 'a',
       type: 'boolean'
     },
-    'release-count': {
-      alias: 'r',
+    releaseCount: {
+      shortFlag: 'r',
       type: 'number'
     },
     verbose: {
-      alias: 'v',
+      shortFlag: 'v',
       type: 'boolean'
     },
     context: {
-      alias: 'c',
+      shortFlag: 'c',
       type: 'string'
     },
-    'first-release': {
-      alias: 'f',
+    firstRelease: {
+      shortFlag: 'f',
       type: 'boolean'
     },
-    'lerna-package': {
-      alias: 'l',
+    lernaPackage: {
+      shortFlag: 'l',
       type: 'string'
     }
   }
@@ -116,14 +127,14 @@ function outputError (err) {
 
 try {
   if (flags.context) {
-    templateContext = require(resolve(process.cwd(), flags.context))
+    templateContext = JSON.parse(await readFile(relativeResolve(flags.context), 'utf8'))
   }
 } catch (err) {
   outputError(err)
 }
 
 const changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
-  .on('error', function (err) {
+  .on('error', (err) => {
     outputError(err)
   })
 
@@ -131,8 +142,8 @@ standardChangelog.createIfMissing(infile)
 
 let readStream = null
 if (releaseCount !== 0) {
-  readStream = fs.createReadStream(infile)
-    .on('error', function (err) {
+  readStream = createReadStream(infile)
+    .on('error', (err) => {
       outputError(err)
     })
 } else {
@@ -142,10 +153,10 @@ if (releaseCount !== 0) {
 
 if (options.append) {
   changelogStream
-    .pipe(fs.createWriteStream(outfile, {
+    .pipe(createWriteStream(outfile, {
       flags: 'a'
     }))
-    .on('finish', function () {
+    .on('finish', () => {
       standardChangelog.checkpoint('appended changes to %s', [outfile])
     })
 } else {
@@ -153,13 +164,13 @@ if (options.append) {
 
   changelogStream
     .pipe(addStream(readStream))
-    .pipe(fs.createWriteStream(tmp))
-    .on('finish', function () {
-      fs.createReadStream(tmp)
-        .pipe(fs.createWriteStream(outfile))
-        .on('finish', function () {
+    .pipe(createWriteStream(tmp))
+    .on('finish', () => {
+      createReadStream(tmp)
+        .pipe(createWriteStream(outfile))
+        .on('finish', () => {
           standardChangelog.checkpoint('output changes to %s', [outfile])
-          rimraf.sync(tmp)
+          rm(tmp, { recursive: true })
         })
     })
 }

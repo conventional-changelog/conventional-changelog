@@ -1,10 +1,12 @@
 #!/usr/bin/env node
+import { resolve } from 'path'
+import { pathToFileURL } from 'url'
+import meow from 'meow'
+import conventionalRecommendedBump from './index.js'
 
-'use strict'
-
-const meow = require('meow')
-const conventionalRecommendedBump = require('./')
-const path = require('path')
+function relativeResolve (filePath) {
+  return pathToFileURL(resolve(process.cwd(), filePath))
+}
 
 const cli = meow(`
     Usage
@@ -28,39 +30,40 @@ const cli = meow(`
       --commit-path                  Recommend a bump scoped to a specific directory
       --skip-unstable                If given, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
 `, {
+  importMeta: import.meta,
   flags: {
     preset: {
-      alias: 'p'
+      shortFlag: 'p'
     },
     config: {
-      alias: 'g'
+      shortFlag: 'g'
     },
-    'header-pattern': {
-      alias: 'h'
+    headerPattern: {
+      shortFlag: 'h'
     },
-    'header-correspondence': {
-      alias: 'c'
+    headerCorrespondence: {
+      shortFlag: 'c'
     },
-    'reference-actions': {
-      alias: 'r'
+    referenceActions: {
+      shortFlag: 'r'
     },
-    'issue-prefixes': {
-      alias: 'i'
+    issuePrefixes: {
+      shortFlag: 'i'
     },
-    'note-keywords': {
-      alias: 'n'
+    noteKeywords: {
+      shortFlag: 'n'
     },
-    'field-pattern': {
-      alias: 'f'
+    fieldPattern: {
+      shortFlag: 'f'
     },
     verbose: {
-      alias: 'v'
+      shortFlag: 'v'
     },
-    'lerna-package': {
-      alias: 'l'
+    lernaPackage: {
+      shortFlag: 'l'
     },
-    'tag-prefix': {
-      alias: 't'
+    tagPrefix: {
+      shortFlag: 't'
     }
   }
 })
@@ -79,7 +82,7 @@ if (preset) {
   options.preset = preset
   delete flags.preset
 } else if (config) {
-  options.config = require(path.resolve(process.cwd(), config))
+  options.config = (await import(relativeResolve(config))).default
   delete flags.config
 }
 
@@ -87,7 +90,7 @@ if (flags.verbose) {
   options.warn = console.warn.bind(console)
 }
 
-conventionalRecommendedBump(options, flags, function (err, data) {
+conventionalRecommendedBump(options, flags, (err, data) => {
   if (err) {
     console.error(err.toString())
     process.exit(1)

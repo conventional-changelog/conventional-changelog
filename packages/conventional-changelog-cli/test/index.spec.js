@@ -2,7 +2,7 @@ import { describe, beforeAll, afterAll, it, expect } from 'vitest'
 import path from 'path'
 import { TestTools } from '../../../tools/test-tools'
 
-const CLI_PATH = path.join(__dirname, '../cli.js')
+const CLI_PATH = path.join(__dirname, '../cli.mjs')
 const FIXTURE_CHANGELOG_PATH = path.join(__dirname, 'fixtures/_CHANGELOG.md')
 let testTools
 
