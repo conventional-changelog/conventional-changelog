@@ -140,9 +140,6 @@ importers:
       conventional-commits-parser:
         specifier: ^4.0.0
         version: link:../conventional-commits-parser
-      dateformat:
-        specifier: ^3.0.3
-        version: 3.0.3
       get-pkg-repo:
         specifier: ^5.0.0
         version: 5.0.0
@@ -200,9 +197,6 @@ importers:
       conventional-commits-filter:
         specifier: ^3.0.0
         version: link:../conventional-commits-filter
-      dateformat:
-        specifier: ^3.0.3
-        version: 3.0.3
       handlebars:
         specifier: ^4.7.7
         version: 4.7.7
@@ -1169,10 +1163,6 @@ packages:
   /dargs@7.0.0:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
     engines: {node: '>=8'}
-    dev: false
-
-  /dateformat@3.0.3:
-    resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: false
 
   /debug@3.2.7:

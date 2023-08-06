@@ -1,17 +1,21 @@
 'use strict'
 
-const dateFormat = require('dateformat')
 const { Transform } = require('stream')
 const { join } = require('path')
 const { readFileSync } = require('fs')
 const { valid: semverValid } = require('semver')
 const util = require('./lib/util')
 
+// sv-SEis used for yyyy-mm-dd format
+const dateFormatter = Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'UTC'
+})
+
 function conventionalChangelogWriterInit (context, options) {
   context = {
     commit: 'commits',
     issue: 'issues',
-    date: dateFormat(new Date(), 'yyyy-mm-dd', true),
+    date: dateFormatter.format(new Date()),
     ...context
   }
 
@@ -57,7 +61,7 @@ function conventionalChangelogWriterInit (context, options) {
           return
         }
 
-        return dateFormat(date, 'yyyy-mm-dd', true)
+        return dateFormatter.format(new Date(date))
       },
       ...options.transform
     }

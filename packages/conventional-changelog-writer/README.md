@@ -137,9 +137,9 @@ Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
-Type: `string` Default: `dateFormat(new Date(), 'yyyy-mm-dd', true)`
+Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in UTC timezone
 
-Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date. If `version` is found in the last commit, `committerDate` will overwrite this.
+If `version` is found in the last commit, `committerDate` will overwrite this.
 
 #### options
 
