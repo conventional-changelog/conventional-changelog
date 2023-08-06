@@ -3,8 +3,8 @@
 const compareFunc = require('compare-func')
 const { readFile } = require('fs').promises
 const { resolve } = require('path')
+const { DEFAULT_COMMIT_TYPES } = require('./constants')
 const { addBangNotes } = require('./utils')
-const { isDeepStrictEqual } = require('util')
 
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 /**
@@ -15,41 +15,14 @@ const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
 async function createWriterOpts (config) {
-  const defaultTypes = [
-    { type: 'feat', section: 'Features' },
-    { type: 'feature', section: 'Features' },
-    { type: 'fix', section: 'Bug Fixes' },
-    { type: 'perf', section: 'Performance Improvements' },
-    { type: 'revert', section: 'Reverts' },
-    { type: 'docs', section: 'Documentation', hidden: true },
-    { type: 'style', section: 'Styles', hidden: true },
-    { type: 'chore', section: 'Miscellaneous Chores', hidden: true },
-    { type: 'refactor', section: 'Code Refactoring', hidden: true },
-    { type: 'test', section: 'Tests', hidden: true },
-    { type: 'build', section: 'Build System', hidden: true },
-    { type: 'ci', section: 'Continuous Integration', hidden: true }
-  ]; 
   const finalConfig = {
-    types: defaultTypes,
-    hardTypesReplacement: true,
+    types: DEFAULT_COMMIT_TYPES,
     issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
     commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
     compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}',
     userUrlFormat: '{{host}}/{{user}}',
     issuePrefixes: ['#'],
     ...config
-  }
-
-  // If our config doesn't already have the default types
-  // merged with user types, merge them now
-  if (
-    !finalConfig.hardTypesReplacement &&
-    Array.isArray(config.types) &&
-    !defaultTypes.every((defaultType) =>
-      config.types.find((configType) => isDeepStrictEqual(configType, defaultType))
-    )
-  ) {
-    finalConfig.types = [...config.types, ...defaultTypes]
   }
 
   const commitUrlFormat = expandTemplate(finalConfig.commitUrlFormat, {

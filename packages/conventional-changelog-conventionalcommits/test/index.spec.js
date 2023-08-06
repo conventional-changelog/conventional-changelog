@@ -195,7 +195,6 @@ describe('conventional-changelog-conventionalcommits', () => {
 
   it('should handle alternative "types" configuration', async () => {
     preparing(1)
-<<<<<<< HEAD
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -205,14 +204,6 @@ describe('conventional-changelog-conventionalcommits', () => {
             ? { ...commitType, hidden: false }
             : commitType
         ))
-=======
-    conventionalChangelogCore({
-      config: preset({
-        hardTypesReplacement: false,
-        types: [
-          { type: 'chore', section: 'Miscellaneous Chores', hidden: false }
-        ]
->>>>>>> b066aee (chore: use preset variable)
       })
     })) {
       chunk = chunk.toString()
