@@ -34,7 +34,7 @@
     "meow": "^12.0.1",
     "picocolors": "^1.0.0",
     "sprintf-js": "^1.1.2",
-    "tempfile": "^3.0.0"
+    "tempfile": "^5.0.0"
   },
   "bin": "cli.mjs"
 }
