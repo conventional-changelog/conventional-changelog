@@ -11,7 +11,7 @@ import { resolve } from 'path'
 import { pathToFileURL } from 'url'
 import { Readable } from 'stream'
 import addStream from 'add-stream'
-import chalk from 'chalk'
+import pc from 'picocolors'
 import tempfile from 'tempfile'
 import meow from 'meow'
 import standardChangelog from './index.js'
@@ -105,8 +105,8 @@ const options = {
   pkg: {
     path: flags.pkg
   },
-  append: append,
-  releaseCount: releaseCount,
+  append,
+  releaseCount,
   lernaPackage: flags.lernaPackage
 }
 
@@ -118,9 +118,9 @@ let templateContext
 
 function outputError (err) {
   if (flags.verbose) {
-    console.error(chalk.grey(err.stack))
+    console.error(pc.gray(err.stack))
   } else {
-    console.error(chalk.red(err.toString()))
+    console.error(pc.red(err.toString()))
   }
   process.exit(1)
 }
