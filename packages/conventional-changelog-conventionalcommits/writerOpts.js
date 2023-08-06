@@ -3,7 +3,6 @@
 const compareFunc = require('compare-func')
 const { readFile } = require('fs').promises
 const { resolve } = require('path')
-const { isMatch } = require('micromatch')
 const { addBangNotes } = require('./utils')
 
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
@@ -184,14 +183,10 @@ function getWriterOpts (config) {
 function findTypeEntry (types, commit) {
   const typeKey = (commit.revert ? 'revert' : (commit.type || '')).toLowerCase()
   return types.find((entry) => {
-    if (entry.type && entry.type !== typeKey) {
+    if (entry.type !== typeKey) {
       return false
     }
     if (entry.scope && entry.scope !== commit.scope) {
-      return false
-    }
-    const commitSubject = commit.subject || ''
-    if (entry.subject && !isMatch(commitSubject, entry.subject)) {
       return false
     }
 

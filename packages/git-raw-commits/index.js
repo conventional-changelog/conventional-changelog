@@ -1,8 +1,8 @@
-'use strict'
 
 const dargs = require('dargs')
 const execFile = require('child_process').execFile
 const split = require('split2')
+const { isMatch } = require('micromatch')
 const { Readable, Transform } = require('stream')
 
 const DELIMITER = '------------------------ >8 ------------------------'
@@ -27,7 +27,7 @@ function getGitArgs (gitOpts) {
 
   const gitArgs = ['log', gitFormat, gitFromTo]
     .concat(dargs(gitOpts, {
-      excludes: ['debug', 'from', 'to', 'format', 'path']
+      excludes: ['debug', 'from', 'to', 'format', 'path', 'ignore']
     }))
 
   // allow commits to focus on a single directory
@@ -65,7 +65,9 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
         transform (chunk, enc, cb) {
           isError = false
           setImmediate(() => {
-            readable.push(chunk)
+            if ( !(gitOpts?.ignore && isMatch(chunk.toString(), gitOpts?.ignore))) {
+              readable.push(chunk)
+            }
             cb()
           })
         },

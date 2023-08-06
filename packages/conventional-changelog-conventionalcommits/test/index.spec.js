@@ -193,28 +193,6 @@ describe('conventional-changelog-conventionalcommits', () => {
     }
   })
 
-  it('should allow hidding by "subject" pattern to configuration', function (done) {
-    preparing(10)
-    conventionalChangelogCore({
-      config: preset({
-        types: [
-          { subject: '*more features', hidden: true },
-          { type: 'feature', release: true, section: "Features" },
-        ]
-      })
-    })
-      .on('error', function (err) {
-        done(err)
-      })
-      .pipe(through(function (chunk) {
-        chunk = chunk.toString()
-
-        expect(chunk).to.not.include('### Features')
-        expect(chunk).to.not.include('some more features')
-        done()
-      }))
-  })
-
   it('should properly format external repository issues', async () => {
     preparing(1)
 
