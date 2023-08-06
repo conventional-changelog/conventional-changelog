@@ -272,8 +272,8 @@ importers:
   packages/git-raw-commits:
     dependencies:
       dargs:
-        specifier: ^7.0.0
-        version: 7.0.0
+        specifier: ^8.0.0
+        version: 8.0.0
       meow:
         specifier: ^12.0.1
         version: 12.0.1
@@ -1160,9 +1160,9 @@ packages:
       which: 2.0.2
     dev: true
 
-  /dargs@7.0.0:
-    resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
-    engines: {node: '>=8'}
+  /dargs@8.0.0:
+    resolution: {integrity: sha512-uNt1339Xt7lA08sO/0umb/aB7DlLwzl+fV/2bLQIu8QiZ8n4z1CWMKd5UqWF1KMAakg24uIxqklAg+WfjJtcQQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /debug@3.2.7:

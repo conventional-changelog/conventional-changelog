@@ -33,7 +33,7 @@
     "git-log"
   ],
   "dependencies": {
-    "dargs": "^7.0.0",
+    "dargs": "^8.0.0",
     "meow": "^12.0.1",
     "split2": "^4.0.0"
   },
