@@ -19,9 +19,6 @@
   "engines": {
     "node": ">=14"
   },
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "files": [
     "index.js"
   ],

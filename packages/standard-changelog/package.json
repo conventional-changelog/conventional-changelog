@@ -36,8 +36,5 @@
     "sprintf-js": "^1.1.2",
     "tempfile": "^3.0.0"
   },
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
-  },
   "bin": "cli.mjs"
 }

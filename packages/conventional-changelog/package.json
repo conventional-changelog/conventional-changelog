@@ -46,8 +46,5 @@
     "conventional-changelog-jquery": "^4.0.0",
     "conventional-changelog-jshint": "^3.0.0",
     "conventional-changelog-preset-loader": "^3.0.0"
-  },
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
   }
 }

@@ -44,9 +44,6 @@
     "semver": "^7.5.2",
     "split": "^1.0.1"
   },
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
-  },
   "bin": {
     "conventional-changelog-writer": "cli.mjs"
   },
