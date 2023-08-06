@@ -1,12 +1,19 @@
 #!/usr/bin/env node
-'use strict'
+import { resolve } from 'path'
+import { pathToFileURL } from 'url'
+import {
+  createReadStream,
+  createWriteStream
+} from 'fs'
+import { readFile } from 'fs/promises'
+import addStream from 'add-stream'
+import tempfile from 'tempfile'
+import meow from 'meow'
+import conventionalChangelog from 'conventional-changelog'
 
-const addStream = require('add-stream')
-const conventionalChangelog = require('conventional-changelog')
-const fs = require('fs')
-const meow = require('meow')
-const tempfile = require('tempfile')
-const resolve = require('path').resolve
+function relativeResolve (filePath) {
+  return pathToFileURL(resolve(process.cwd(), filePath))
+}
 
 const cli = meow(`
     Usage
@@ -51,61 +58,62 @@ const cli = meow(`
       -t, --tag-prefix          Tag prefix to consider when reading the tags
       --commit-path             Generate a changelog scoped to a specific directory
 `, {
+  importMeta: import.meta,
   booleanDefault: undefined,
   flags: {
     infile: {
-      alias: 'i',
+      shortFlag: 'i',
       type: 'string'
     },
     outfile: {
-      alias: 'o',
+      shortFlag: 'o',
       type: 'string'
     },
-    'same-file': {
-      alias: 's',
+    sameFile: {
+      shortFlag: 's',
       type: 'boolean'
     },
     preset: {
-      alias: 'p',
+      shortFlag: 'p',
       type: 'string'
     },
     pkg: {
-      alias: 'k',
+      shortFlag: 'k',
       type: 'string'
     },
     append: {
-      alias: 'a',
+      shortFlag: 'a',
       type: 'boolean'
     },
-    'release-count': {
-      alias: 'r',
+    releaseCount: {
+      shortFlag: 'r',
       type: 'number'
     },
-    'skip-unstable': {
+    skipUnstable: {
       type: 'boolean'
     },
-    'output-unreleased': {
-      alias: 'u',
+    outputUnreleased: {
+      shortFlag: 'u',
       type: 'boolean'
     },
     verbose: {
-      alias: 'v',
+      shortFlag: 'v',
       type: 'boolean'
     },
     config: {
-      alias: 'n',
+      shortFlag: 'n',
       type: 'string'
     },
     context: {
-      alias: 'c',
+      shortFlag: 'c',
       type: 'string'
     },
-    'lerna-package': {
-      alias: 'l',
+    lernaPackage: {
+      shortFlag: 'l',
       type: 'string'
     },
-    'tag-prefix': {
-      alias: 't',
+    tagPrefix: {
+      shortFlag: 't',
       type: 'string'
     }
   }
@@ -136,9 +144,9 @@ let options = {
   pkg: {
     path: flags.pkg
   },
-  append: append,
-  releaseCount: releaseCount,
-  skipUnstable: skipUnstable,
+  append,
+  releaseCount,
+  skipUnstable,
   outputUnreleased: flags.outputUnreleased,
   lernaPackage: flags.lernaPackage,
   tagPrefix: flags.tagPrefix
@@ -155,11 +163,11 @@ let outStream
 
 try {
   if (flags.context) {
-    templateContext = require(resolve(process.cwd(), flags.context))
+    templateContext = JSON.parse(await readFile(relativeResolve(flags.context), 'utf8'))
   }
 
   if (flags.config) {
-    config = require(resolve(process.cwd(), flags.config))
+    config = (await import(relativeResolve(flags.config))).default
     options.config = config
 
     if (config.options) {
@@ -186,7 +194,7 @@ const gitRawCommitsOpts = {
 if (flags.commitPath) gitRawCommitsOpts.path = flags.commitPath
 
 const changelogStream = conventionalChangelog(options, templateContext, gitRawCommitsOpts, config.parserOpts, config.writerOpts)
-  .on('error', function (err) {
+  .on('error', (err) => {
     if (flags.verbose) {
       console.error(err.stack)
     } else {
@@ -197,7 +205,7 @@ const changelogStream = conventionalChangelog(options, templateContext, gitRawCo
 
 function noInputFile () {
   if (outfile) {
-    outStream = fs.createWriteStream(outfile)
+    outStream = createWriteStream(outfile)
   } else {
     outStream = process.stdout
   }
@@ -207,8 +215,8 @@ function noInputFile () {
 }
 
 if (infile && releaseCount !== 0) {
-  const readStream = fs.createReadStream(infile)
-    .on('error', function () {
+  const readStream = createReadStream(infile)
+    .on('error', () => {
       if (flags.verbose) {
         console.warn('infile does not exist.')
       }
@@ -221,7 +229,7 @@ if (infile && releaseCount !== 0) {
   if (sameFile) {
     if (options.append) {
       changelogStream
-        .pipe(fs.createWriteStream(outfile, {
+        .pipe(createWriteStream(outfile, {
           flags: 'a'
         }))
     } else {
@@ -229,15 +237,15 @@ if (infile && releaseCount !== 0) {
 
       changelogStream
         .pipe(addStream(readStream))
-        .pipe(fs.createWriteStream(tmp))
-        .on('finish', function () {
-          fs.createReadStream(tmp)
-            .pipe(fs.createWriteStream(outfile))
+        .pipe(createWriteStream(tmp))
+        .on('finish', () => {
+          createReadStream(tmp)
+            .pipe(createWriteStream(outfile))
         })
     }
   } else {
     if (outfile) {
-      outStream = fs.createWriteStream(outfile)
+      outStream = createWriteStream(outfile)
     } else {
       outStream = process.stdout
     }

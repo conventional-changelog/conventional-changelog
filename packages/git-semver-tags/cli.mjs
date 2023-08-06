@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-'use strict'
-const meow = require('meow')
-const gitSemverTags = require('./')
+import meow from 'meow'
+import gitSemverTags from './index.js'
 
 const args = meow(`
   Usage
@@ -10,8 +9,10 @@ const args = meow(`
     --cwd                  path to git repository to be searched
     --lerna                parse lerna style git tags
     --package <name>       when listing lerna style tags, filter by a package
-    --tag-prefix <prefix>  prefix to remove from the tags during their processing`,
+    --tag-prefix <prefix>  prefix to remove from the tags during their processing
+`,
 {
+  importMeta: import.meta,
   booleanDefault: undefined,
   flags: {
     cwd: {
@@ -33,7 +34,7 @@ gitSemverTags({
   lernaTags: args.flags.lerna,
   package: args.flags.package,
   tagPrefix: args.flags.tagPrefix
-}, function (err, tags) {
+}, (err, tags) => {
   if (err) {
     console.error(err.toString())
     process.exit(1)

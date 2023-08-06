@@ -1,9 +1,8 @@
-import { spawn } from 'child_process'
 import path from 'path'
 import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
 import { TestTools } from '../../../tools/test-tools'
 
-const CLI_PATH = path.join(__dirname, '../cli.js')
+const CLI_PATH = path.join(__dirname, '../cli.mjs')
 const FIXTURE_CHANGELOG_PATH = path.join(__dirname, 'fixtures/_CHANGELOG.md')
 let testTools
 
@@ -29,306 +28,162 @@ describe('standard-changelog', () => {
     })
 
     describe('without any argument', () => {
-      it('appends to changelog if it exists', () => {
+      it('appends to changelog if it exists', async () => {
         testTools.writeFileSync('CHANGELOG.md', '\nold content', 'utf-8')
 
-        return new Promise((resolve) => {
-          const cp = spawn(process.execPath, [CLI_PATH], {
-            cwd: testTools.cwd,
-            stdio: [null, null, null]
-          })
+        const { exitCode } = await testTools.fork(CLI_PATH)
 
-          cp.on('close', (code) => {
-            expect(code).toBe(0)
-            const content = testTools.readFileSync('CHANGELOG.md', 'utf-8')
-            expect(content).toMatch(/First commit/)
-            expect(content).toMatch(/old content/)
-            resolve()
-          })
-        })
+        expect(exitCode).toBe(0)
+        const content = testTools.readFileSync('CHANGELOG.md', 'utf-8')
+        expect(content).toMatch(/First commit/)
+        expect(content).toMatch(/old content/)
       })
 
-      it('generates changelog if it does not exist', () => {
-        return new Promise((resolve) => {
-          const cp = spawn(process.execPath, [CLI_PATH], {
-            cwd: testTools.cwd,
-            stdio: [null, null, null]
-          })
+      it('generates changelog if it does not exist', async () => {
+        const { exitCode } = await testTools.fork(CLI_PATH)
 
-          cp.on('close', (code) => {
-            expect(code).toBe(0)
-            const content = testTools.readFileSync('CHANGELOG.md', 'utf-8')
-            expect(content).toMatch(/First commit/)
-            resolve()
-          })
-        })
+        expect(exitCode).toBe(0)
+        const content = testTools.readFileSync('CHANGELOG.md', 'utf-8')
+        expect(content).toMatch(/First commit/)
       })
     })
 
-    it('should overwrite if `-s` presents when appending', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-s', '--append'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should overwrite if `-s` presents when appending', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH, '-s', '--append'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-          expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
+      expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
 
-          originalChangelog()
-          resolve()
-        })
-      })
+      originalChangelog()
     })
 
-    it('should overwrite if `-s` presents when not appending', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-s'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should overwrite if `-s` presents when not appending', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH, '-s'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-          expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
+      expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
 
-          originalChangelog()
-          resolve()
-        })
-      })
+      originalChangelog()
     })
 
-    it('should overwrite if `infile` and `outfile` are the same', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-o', FIXTURE_CHANGELOG_PATH], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should overwrite if `infile` and `outfile` are the same', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH, '-o', FIXTURE_CHANGELOG_PATH])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
-          expect(modified).toContain('First commit')
-          expect(modified).toContain('Some previous changelog.\n')
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(FIXTURE_CHANGELOG_PATH, 'utf8')
+      expect(modified).toContain('First commit')
+      expect(modified).toContain('Some previous changelog.\n')
 
-          originalChangelog()
-          resolve()
-        })
-      })
+      originalChangelog()
     })
 
-    it('should work if `infile` is missing but `outfile` presets', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-o', path.join(testTools.cwd, '_CHANGELOG.md')], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should work if `infile` is missing but `outfile` presets', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-o', path.join(testTools.cwd, '_CHANGELOG.md')])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-
-          const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-          expect(modified).toContain('First commit')
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
+      expect(modified).toContain('First commit')
     })
 
-    it('should work if both `infile` and `outfile` presets when not appending', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-o', path.join(testTools.cwd, '_CHANGELOG.md')], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should work if both `infile` and `outfile` presets when not appending', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH, '-o', path.join(testTools.cwd, '_CHANGELOG.md')])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-          expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
-
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
+      expect(modified).toMatch(/First commit(\s|.)*Some previous changelog./)
     })
 
-    it('should work if both `infile` and `outfile` presets when appending', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH, '-o', path.join(testTools.cwd, '_CHANGELOG.md'), '--append'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should work if both `infile` and `outfile` presets when appending', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH, '-o', path.join(testTools.cwd, '_CHANGELOG.md'), '--append'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-          expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
+      expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
     })
 
-    it('should work if `infile` presets but `outfile` is missing when not appending', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', FIXTURE_CHANGELOG_PATH], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should work if `infile` presets but `outfile` is missing when not appending', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', FIXTURE_CHANGELOG_PATH])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
-          expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
-
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(path.join(testTools.cwd, '_CHANGELOG.md'), 'utf8')
+      expect(modified).toMatch(/Some previous changelog.(\s|.)*First commit/)
     })
 
-    it('should work if `infile` presets but `outfile` is missing', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', 'no-such-file.md'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should work if `infile` presets but `outfile` is missing', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', 'no-such-file.md'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync('no-such-file.md', 'utf8')
-          expect(modified).toContain('First commit')
-          expect(modified).not.toContain('previous')
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync('no-such-file.md', 'utf8')
+      expect(modified).toContain('First commit')
+      expect(modified).not.toContain('previous')
     })
 
-    it('should create `infile` if `infile` is ENOENT and overwrite infile', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-i', path.join(testTools.cwd, 'no-such-file.md'), '-s'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should create `infile` if `infile` is ENOENT and overwrite infile', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-i', path.join(testTools.cwd, 'no-such-file.md'), '-s'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync(path.join(testTools.cwd, 'no-such-file.md'), 'utf8')
-          expect(modified).toContain('First commit')
-          expect(modified).not.toContain('previous')
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync(path.join(testTools.cwd, 'no-such-file.md'), 'utf8')
+      expect(modified).toContain('First commit')
+      expect(modified).not.toContain('previous')
 
-          originalChangelog()
-          resolve()
-        })
-      })
+      originalChangelog()
     })
 
-    it('should default to CHANGELOG.md if `-s` presents but `-i` is missing', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-s'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('should default to CHANGELOG.md if `-s` presents but `-i` is missing', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-s'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
-          expect(modified).toContain('First commit')
-          expect(modified).not.toContain('previous')
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
+      expect(modified).toContain('First commit')
+      expect(modified).not.toContain('previous')
     })
 
-    it('-k should work', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-k', path.join(__dirname, 'fixtures/_package.json')], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('-k should work', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-k', path.join(__dirname, 'fixtures/_package.json')])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
-          expect(modified).toContain('0.0.17')
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
+      expect(modified).toContain('0.0.17')
     })
 
-    it('--context should work with relative path', () => {
+    it('--context should work with relative path', async () => {
       const context = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/context.json'))
       const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.js'))
-
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '--context', context, '--config', config], {
-          cwd: testTools.cwd,
-          stdio: 'inherit'
-        })
-
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
-          expect(modified).toContain('my-repo')
-          resolve()
-        })
+      const { exitCode } = await testTools.fork(CLI_PATH, ['--context', context, '--config', config], {
+        stdio: 'inherit'
       })
+
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
+      expect(modified).toContain('my-repo')
     })
 
-    it('--context should work with absolute path', () => {
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.js')], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+    it('--context should work with absolute path', async () => {
+      const { exitCode } = await testTools.fork(CLI_PATH, ['--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.js')])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
-          expect(modified).toContain('my-repo')
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
+      expect(modified).toContain('my-repo')
     })
 
-    it('generates full historical changelog on --first-release', () => {
+    it('generates full historical changelog on --first-release', async () => {
       testTools.exec('git tag -a v0.0.17 -m "old release"')
 
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '-k', path.join(__dirname, 'fixtures/_package.json'), '--first-release'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
+      const { exitCode } = await testTools.fork(CLI_PATH, ['-k', path.join(__dirname, 'fixtures/_package.json'), '--first-release'])
 
-        cp.on('close', (code) => {
-          expect(code).toBe(0)
-          const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
-          expect(modified).toContain('First commit')
-          testTools.exec('git tag -d v0.0.17')
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(0)
+      const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')
+      expect(modified).toContain('First commit')
+      testTools.exec('git tag -d v0.0.17')
     })
 
-    it('outputs an error if context file is not found', () => {
-      let output = ''
+    it('outputs an error if context file is not found', async () => {
+      const { stderr, exitCode } = await testTools.fork(CLI_PATH, ['--context', 'missing-file.txt'])
 
-      return new Promise((resolve) => {
-        const cp = spawn(process.execPath, [CLI_PATH, '--context', 'missing-file.txt'], {
-          cwd: testTools.cwd,
-          stdio: [null, null, null]
-        })
-
-        cp.stderr.on('data', (data) => {
-          output += data.toString()
-        })
-
-        cp.on('close', (code) => {
-          expect(code).toBe(1)
-          expect(output.toString()).toMatch(/Cannot find module/)
-          resolve()
-        })
-      })
+      expect(exitCode).toBe(1)
+      expect(stderr).toMatch(/no such file/)
     })
   })
 })

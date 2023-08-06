@@ -1,4 +1,5 @@
 'use strict'
+const fs = require('fs/promises')
 const dateFormat = require('dateformat')
 const getPkgRepo = require('get-pkg-repo')
 const gitSemverTags = require('git-semver-tags')
@@ -9,8 +10,6 @@ try {
 } catch (err) {
   gitRemoteOriginUrl = () => Promise.reject(err)
 }
-const readPkg = require('read-pkg')
-const readPkgUp = require('read-pkg-up')
 const { URL } = require('url')
 
 const rhosts = /github|bitbucket|gitlab/i
@@ -117,9 +116,17 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   if (options.pkg) {
     if (options.pkg.path) {
-      pkgPromise = Promise.resolve(readPkg(options.pkg.path))
+      pkgPromise = import('read-pkg').then(async ({ parsePackage }) => {
+        const json = await fs.readFile(options.pkg.path, 'utf-8')
+
+        return parsePackage(json)
+      })
     } else {
-      pkgPromise = Promise.resolve(readPkgUp({ cwd: options.cwd }))
+      pkgPromise = import('read-pkg-up').then(async ({ readPackageUp }) => {
+        const { packageJson } = await readPackageUp({ cwd: options.cwd })
+
+        return packageJson
+      })
     }
   }
 
@@ -163,12 +170,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   if (options.pkg) {
     if (pkgObj.status === 'fulfilled') {
-      if (options.pkg.path) {
-        pkg = pkgObj.value
-      } else {
-        pkg = pkgObj.value.pkg || {}
-      }
-
+      pkg = pkgObj.value || {}
       pkg = options.pkg.transform(pkg)
     } else if (options.pkg.path) {
       options.warn(pkgObj.reason.toString())

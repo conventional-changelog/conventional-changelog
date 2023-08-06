@@ -23,7 +23,7 @@
   },
   "files": [
     "index.js",
-    "cli.js"
+    "cli.mjs"
   ],
   "dependencies": {
     "add-stream": "^1.0.0",
@@ -32,13 +32,12 @@
     "conventional-changelog-core": "^5.0.0",
     "figures": "^3.2.0",
     "fs-access": "^1.0.1",
-    "meow": "^8.1.2",
-    "rimraf": "^3.0.2",
+    "meow": "^12.0.1",
     "sprintf-js": "^1.1.2",
     "tempfile": "^3.0.0"
   },
   "scripts": {
     "test-windows": "echo 'make work on windows'"
   },
-  "bin": "cli.js"
+  "bin": "cli.mjs"
 }

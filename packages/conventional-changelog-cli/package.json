@@ -16,10 +16,10 @@
     "url": "https://github.com/stevemao"
   },
   "bin": {
-    "conventional-changelog": "cli.js"
+    "conventional-changelog": "cli.mjs"
   },
   "files": [
-    "cli.js"
+    "cli.mjs"
   ],
   "keywords": [
     "cli",
@@ -35,7 +35,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "^4.0.0",
-    "meow": "^8.1.2",
+    "meow": "^12.0.1",
     "tempfile": "^3.0.0"
   },
   "scripts": {
