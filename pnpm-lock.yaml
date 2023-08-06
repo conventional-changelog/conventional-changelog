@@ -141,8 +141,8 @@ importers:
         specifier: ^4.0.0
         version: link:../conventional-commits-parser
       dateformat:
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^5.0.0
+        version: 5.0.0
       get-pkg-repo:
         specifier: ^5.0.0
         version: 5.0.0
@@ -201,8 +201,8 @@ importers:
         specifier: ^3.0.0
         version: link:../conventional-commits-filter
       dateformat:
-        specifier: ^3.0.3
-        version: 3.0.3
+        specifier: ^5.0.0
+        version: 5.0.0
       handlebars:
         specifier: ^4.7.7
         version: 4.7.7
@@ -1171,8 +1171,9 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /dateformat@3.0.3:
-    resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
+  /dateformat@5.0.0:
+    resolution: {integrity: sha512-JhEwNXpqgY85At+UuqSYNvRcurXD1L+XlE9TwaRQVuOvOKvNDJ/cSa6ioWbAWUxBXCpNlItrFr+OcA9ytba1ZA==}
+    engines: {node: '>=12.20'}
     dev: false
 
   /debug@3.2.7:
