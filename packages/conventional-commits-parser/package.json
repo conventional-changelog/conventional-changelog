@@ -38,9 +38,6 @@
     "meow": "^12.0.1",
     "split2": "^4.0.0"
   },
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
-  },
   "bin": {
     "conventional-commits-parser": "cli.mjs"
   },

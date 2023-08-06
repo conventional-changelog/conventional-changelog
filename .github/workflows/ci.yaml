@@ -37,6 +37,7 @@ jobs:
           flag-name: actions ${{ matrix.node }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
+          fail-on-error: false
   windows:
     runs-on: windows-latest
     steps:
@@ -52,13 +53,14 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - run: pnpm lint
-      - run: pnpm test-windows
+      - run: pnpm test
       - name: coverage
         uses: coverallsapp/github-action@master
         with:
           flag-name: actions windows
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
+          fail-on-error: false
   finish:
     needs: [test, windows]
     runs-on: ubuntu-latest

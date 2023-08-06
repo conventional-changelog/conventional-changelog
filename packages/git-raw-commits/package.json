@@ -37,9 +37,6 @@
     "meow": "^12.0.1",
     "split2": "^4.0.0"
   },
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "bin": {
     "git-raw-commits": "cli.mjs"
   }

@@ -27,8 +27,5 @@
     "changelog",
     "commits"
   ],
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "license": "MIT"
 }

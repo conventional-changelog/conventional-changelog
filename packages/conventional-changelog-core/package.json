@@ -38,9 +38,6 @@
     "read-pkg": "^8.0.0",
     "read-pkg-up": "^10.0.0"
   },
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "devDependencies": {
     "conventional-changelog-angular": "^6.0.0"
   }
