@@ -189,7 +189,6 @@ function findTypeEntry (types, commit) {
     if (entry.scope && entry.scope !== commit.scope) {
       return false
     }
-
     return true
   })
 }

@@ -20,7 +20,8 @@
     "node": ">=14"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "cli.mjs"
   ],
   "keywords": [
     "git-raw-commits",
