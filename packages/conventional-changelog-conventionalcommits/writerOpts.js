@@ -24,7 +24,6 @@ async function createWriterOpts (config) {
     issuePrefixes: ['#'],
     ...config
   }
-
   const commitUrlFormat = expandTemplate(finalConfig.commitUrlFormat, {
     host,
     owner,
