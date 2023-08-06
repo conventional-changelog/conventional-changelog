@@ -3,9 +3,6 @@
   "version": "3.0.0",
   "description": "conventional-changelog CodeMirror preset",
   "main": "index.js",
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"

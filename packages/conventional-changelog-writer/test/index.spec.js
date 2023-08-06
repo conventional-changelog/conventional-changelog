@@ -1,10 +1,13 @@
 import dedent from 'dedent'
 import { describe, it, expect } from 'vitest'
-import dateformat from 'dateformat'
 import { throughObj } from '../../../tools/test-tools'
 import conventionalChangelogWriter from '../'
 
-const today = dateformat(new Date(), 'yyyy-mm-dd', true)
+// sv-SEis used for yyyy-mm-dd format
+const dateFormatter = Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'UTC'
+})
+const today = dateFormatter.format(new Date())
 const commits = [
   {
     hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',

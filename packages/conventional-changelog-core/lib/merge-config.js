@@ -1,6 +1,5 @@
 'use strict'
 const fs = require('fs/promises')
-const dateFormat = require('dateformat')
 const getPkgRepo = require('get-pkg-repo')
 const gitSemverTags = require('git-semver-tags')
 const normalizePackageData = require('normalize-package-data')
@@ -13,6 +12,10 @@ try {
 const { URL } = require('url')
 
 const rhosts = /github|bitbucket|gitlab/i
+// sv-SEis used for yyyy-mm-dd format
+const dateFormatter = Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'UTC'
+})
 
 function semverTagsPromise (options) {
   return new Promise((resolve, reject) => {
@@ -97,7 +100,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
       }
 
       if (commit.committerDate) {
-        commit.committerDate = dateFormat(commit.committerDate, 'yyyy-mm-dd', true)
+        commit.committerDate = dateFormatter.format(new Date(commit.committerDate))
       }
 
       cb(null, commit)

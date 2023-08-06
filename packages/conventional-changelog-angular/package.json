@@ -3,9 +3,6 @@
   "version": "6.0.0",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
