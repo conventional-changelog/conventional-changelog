@@ -106,7 +106,7 @@ describe('git-raw-commits', () => {
     let i = 0
 
     for await (let chunk of gitRawCommits({
-      ignore: 'Second*'
+      ignore: 'Second'
     }, {
       cwd: testTools.cwd
     })) {

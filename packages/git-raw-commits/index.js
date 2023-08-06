@@ -2,7 +2,6 @@
 const dargs = require('dargs')
 const execFile = require('child_process').execFile
 const split = require('split2')
-const { isMatch } = require('micromatch')
 const { Readable, Transform } = require('stream')
 
 const DELIMITER = '------------------------ >8 ------------------------'
@@ -51,6 +50,13 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
     gitOpts.debug('Your git-log command is:\ngit ' + args.join(' '))
   }
 
+  const ignoreRegex = typeof gitOpts.ignore === 'string'
+    ? new RegExp(gitOpts.ignore)
+    : gitOpts.ignore
+  const shouldNotIgnore = ignoreRegex
+    ? chunk => !ignoreRegex.test(chunk.toString())
+    : () => true
+
   let isError = false
 
   const child = execFile('git', args, {
@@ -65,7 +71,7 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
         transform (chunk, enc, cb) {
           isError = false
           setImmediate(() => {
-            if ( !(gitOpts?.ignore && isMatch(chunk.toString(), gitOpts?.ignore))) {
+            if (shouldNotIgnore(chunk)) {
               readable.push(chunk)
             }
             cb()
