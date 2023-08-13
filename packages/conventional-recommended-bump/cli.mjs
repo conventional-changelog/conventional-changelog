@@ -64,6 +64,9 @@ const cli = meow(`
     },
     tagPrefix: {
       shortFlag: 't'
+    },
+    skipUnstable: {
+      type: 'boolean'
     }
   }
 })
