@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import conventionalChangelogCore from 'conventional-changelog-core'
 import { TestTools } from '../../../tools/test-tools'
-import preset from '../'
+import preset, { DEFAULT_COMMIT_TYPES } from '../'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
 let testTools
@@ -199,7 +199,7 @@ describe('conventional-changelog-conventionalcommits', () => {
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       config: preset({
-        types: preset.defaultCommitTypes.map((commitType) => (
+        types: DEFAULT_COMMIT_TYPES.map((commitType) => (
           commitType.type === 'chore'
             ? { ...commitType, hidden: false }
             : commitType

@@ -25,4 +25,4 @@ async function createPreset (config) {
 
 module.exports = createPreset
 
-module.exports.defaultCommitTypes = DEFAULT_COMMIT_TYPES
+module.exports.DEFAULT_COMMIT_TYPES = DEFAULT_COMMIT_TYPES
