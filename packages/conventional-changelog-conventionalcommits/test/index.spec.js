@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import conventionalChangelogCore from 'conventional-changelog-core'
 import { TestTools } from '../../../tools/test-tools'
-import preset from '../'
+import preset, { DEFAULT_COMMIT_TYPES } from '../'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
 let testTools
@@ -190,6 +190,29 @@ describe('conventional-changelog-conventionalcommits', () => {
       expect(chunk).toContain('**deps:** upgrade example from 1 to 2')
 
       expect(chunk).not.toContain('release 0.0.0')
+    }
+  })
+
+  it('should handle alternative "types" configuration', async () => {
+    preparing(1)
+
+    for await (let chunk of conventionalChangelogCore({
+      cwd: testTools.cwd,
+      config: preset({
+        types: DEFAULT_COMMIT_TYPES.map((commitType) => (
+          commitType.type === 'chore'
+            ? { ...commitType, hidden: false }
+            : commitType
+        ))
+      })
+    })) {
+      chunk = chunk.toString()
+
+      expect(chunk).toContain('### Miscellaneous Chores')
+      expect(chunk).toContain('**deps:** upgrade example from 1 to 2')
+
+      expect(chunk).toContain('### Performance Improvements')
+      expect(chunk).toContain('**ngOptions:** make it faster')
     }
   })
 
