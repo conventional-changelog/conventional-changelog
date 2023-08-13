@@ -14,6 +14,7 @@ async function createPreset (config) {
 
   return {
     gitRawCommitsOpts: {
+      ignore: config?.ignoreCommits,
       noMerges: null
     },
     parserOpts,

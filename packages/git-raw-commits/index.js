@@ -1,4 +1,3 @@
-'use strict'
 
 const { Readable, Transform } = require('stream')
 const { execFile } = require('child_process')
@@ -28,7 +27,7 @@ async function getGitArgs (gitOpts) {
   const gitFromTo = [gitOpts.from, gitOpts.to].filter(Boolean).join('..')
   const gitArgs = ['log', gitFormat, gitFromTo]
     .concat(dargs(gitOpts, {
-      excludes: ['debug', 'from', 'to', 'format', 'path']
+      excludes: ['debug', 'from', 'to', 'format', 'path', 'ignore']
     }))
 
   // allow commits to focus on a single directory
@@ -53,6 +52,13 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
       gitOpts.debug('Your git-log command is:\ngit ' + args.join(' '))
     }
 
+    const ignoreRegex = typeof gitOpts.ignore === 'string'
+      ? new RegExp(gitOpts.ignore)
+      : gitOpts.ignore
+    const shouldNotIgnore = ignoreRegex
+      ? chunk => !ignoreRegex.test(chunk.toString())
+      : () => true
+
     const child = execFile('git', args, {
       cwd: execOpts.cwd,
       maxBuffer: Infinity
@@ -65,7 +71,9 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
           transform (chunk, enc, cb) {
             isError = false
             setImmediate(() => {
-              readable.push(chunk)
+              if (shouldNotIgnore(chunk)) {
+                readable.push(chunk)
+              }
               cb()
             })
           },

@@ -102,6 +102,28 @@ describe('git-raw-commits', () => {
     expect(i).toBe(2)
   })
 
+  it('should honour `options.ignore`', async () => {
+    let i = 0
+
+    for await (let chunk of gitRawCommits({
+      ignore: 'Second'
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
+
+      if (i === 0) {
+        expect(chunk).toBe('Third commit\n\n')
+      } else {
+        expect(chunk).toBe('First commit\n\n')
+      }
+
+      i++
+    }
+
+    expect(i).toBe(2)
+  })
+
   it('should honour `options.format`', async () => {
     let i = 0
 
