@@ -1,5 +1,6 @@
 'use strict'
 
+const { DEFAULT_COMMIT_TYPES } = require('./constants')
 const { createParserOpts } = require('./parserOpts')
 const { createWriterOpts } = require('./writerOpts')
 const { createConventionalChangelogOpts } = require('./conventionalChangelog')
@@ -24,3 +25,5 @@ async function createPreset (config) {
 }
 
 module.exports = createPreset
+
+module.exports.DEFAULT_COMMIT_TYPES = DEFAULT_COMMIT_TYPES

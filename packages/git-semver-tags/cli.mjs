@@ -10,7 +10,7 @@ const args = meow(`
     --lerna                parse lerna style git tags
     --package <name>       when listing lerna style tags, filter by a package
     --tag-prefix <prefix>  prefix to remove from the tags during their processing
-`,
+    --skip-unstable        if given, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2`,
 {
   importMeta: import.meta,
   booleanDefault: undefined,
@@ -26,6 +26,9 @@ const args = meow(`
     },
     tagPrefix: {
       type: 'string'
+    },
+    skipUnstable: {
+      type: 'boolean'
     }
   }
 })
@@ -33,7 +36,8 @@ const args = meow(`
 gitSemverTags({
   lernaTags: args.flags.lerna,
   package: args.flags.package,
-  tagPrefix: args.flags.tagPrefix
+  tagPrefix: args.flags.tagPrefix,
+  skipUnstable: args.flags.skipUnstable
 }, (err, tags) => {
   if (err) {
     console.error(err.toString())

@@ -3,6 +3,7 @@
 const compareFunc = require('compare-func')
 const { readFile } = require('fs').promises
 const { resolve } = require('path')
+const { DEFAULT_COMMIT_TYPES } = require('./constants')
 const { addBangNotes } = require('./utils')
 
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
@@ -15,20 +16,7 @@ const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.
 
 async function createWriterOpts (config) {
   const finalConfig = {
-    types: [
-      { type: 'feat', section: 'Features' },
-      { type: 'feature', section: 'Features' },
-      { type: 'fix', section: 'Bug Fixes' },
-      { type: 'perf', section: 'Performance Improvements' },
-      { type: 'revert', section: 'Reverts' },
-      { type: 'docs', section: 'Documentation', hidden: true },
-      { type: 'style', section: 'Styles', hidden: true },
-      { type: 'chore', section: 'Miscellaneous Chores', hidden: true },
-      { type: 'refactor', section: 'Code Refactoring', hidden: true },
-      { type: 'test', section: 'Tests', hidden: true },
-      { type: 'build', section: 'Build System', hidden: true },
-      { type: 'ci', section: 'Continuous Integration', hidden: true }
-    ],
+    types: DEFAULT_COMMIT_TYPES,
     issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
     commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
     compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}',
