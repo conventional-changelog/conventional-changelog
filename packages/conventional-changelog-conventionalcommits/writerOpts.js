@@ -111,7 +111,7 @@ function getWriterOpts (config) {
       if (typeof commit.subject === 'string') {
         // Issue URLs.
         config.issuePrefixes.join('|')
-        const issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([0-9]+)'
+        const issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([a-z0-9]+)'
         const re = new RegExp(issueRegEx, 'g')
 
         commit.subject = commit.subject.replace(re, (_, prefix, issue) => {
