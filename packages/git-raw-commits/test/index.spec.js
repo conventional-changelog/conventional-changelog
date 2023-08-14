@@ -168,6 +168,27 @@ describe('git-raw-commits', () => {
     expect(output).not.toMatch(/Second commit/)
   })
 
+  it('should allow commits to be scoped to a list of directories', async () => {
+    let i = 0
+    let output = ''
+
+    for await (let chunk of gitRawCommits({
+      path: ['./packages/foo', './test2']
+    }, {
+      cwd: testTools.cwd
+    })) {
+      chunk = chunk.toString()
+
+      output += chunk
+      i++
+    }
+
+    expect(i).toBe(2)
+    expect(output).toMatch(/First commit/)
+    expect(output).toMatch(/Second commit/)
+    expect(output).not.toMatch(/Third commit/)
+  })
+
   it('should show your git-log command', async () => {
     let cmd = ''
 
