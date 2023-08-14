@@ -257,6 +257,29 @@ describe('git-semver-tags', () => {
     })
   })
 
+  it('should handle regexp escaped characters in the tag prefix', () => {
+    testTools.writeFileSync('test6', '')
+    testTools.exec('git add --all && git commit -m"eighth commit"')
+    testTools.exec('git tag ms+6.0.0')
+    testTools.writeFileSync('test6', '1')
+    testTools.exec('git add --all && git commit -m"tenth commit"')
+    testTools.exec('git tag ms+7.0.0')
+    testTools.writeFileSync('test6', '2')
+    testTools.exec('git add --all && git commit -m"eleventh commit"')
+    testTools.exec('git tag notms+7.0.0')
+
+    return new Promise((resolve, reject) => {
+      gitSemverTags({
+        cwd: testTools.cwd,
+        tagPrefix: 'ms+'
+      }, (err, tags) => {
+        if (err) return reject(err)
+        expect(tags).toEqual(['ms+7.0.0', 'ms+6.0.0'])
+        resolve()
+      })
+    })
+  })
+
   it('should skip unstable tags', () => {
     testTools.writeFileSync('test7', '')
     testTools.exec('git add --all && git commit -m"twelfth commit"')

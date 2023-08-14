@@ -34,10 +34,6 @@ module.exports = function gitSemverTags (opts, callback) {
     }
 
     const tags = []
-    let tagPrefixRegexp
-    if (options.tagPrefix) {
-      tagPrefixRegexp = new RegExp('^' + options.tagPrefix + '(.*)')
-    }
     data.split('\n').forEach(function (decorations) {
       let match
       while ((match = regex.exec(decorations))) {
@@ -53,9 +49,11 @@ module.exports = function gitSemverTags (opts, callback) {
             tags.push(tag)
           }
         } else if (options.tagPrefix) {
-          const matches = tag.match(tagPrefixRegexp)
-          if (matches && semverValid(matches[1])) {
-            tags.push(tag)
+          if (tag.startsWith(options.tagPrefix)) {
+            const unprefixedTag = tag.replace(options.tagPrefix, '')
+            if (semverValid(unprefixedTag)) {
+              tags.push(tag)
+            }
           }
         } else if (semverValid(tag)) {
           tags.push(tag)
