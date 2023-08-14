@@ -257,7 +257,7 @@ describe('git-semver-tags', () => {
     })
   })
 
-  it('should handle regexp escaped characters in the tag prefix', function () {
+  it('should handle regexp escaped characters in the tag prefix', () => {
     testTools.writeFileSync('test6', '')
     testTools.exec('git add --all && git commit -m"eighth commit"')
     testTools.exec('git tag ms+6.0.0')
@@ -278,7 +278,6 @@ describe('git-semver-tags', () => {
         resolve()
       })
     })
-
   })
 
   it('should skip unstable tags', () => {
