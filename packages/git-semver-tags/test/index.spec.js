@@ -257,22 +257,28 @@ describe('git-semver-tags', () => {
     })
   })
 
-  it('should handle regexp escaped characters in the tag prefix', function (done) {
-    writeFileSync('test6', '')
-    exec('git add --all && git commit -m"eigth commit"')
-    exec('git tag ms+6.0.0')
-    writeFileSync('test6', '1')
-    exec('git add --all && git commit -m"tenth commit"')
-    exec('git tag ms+7.0.0')
-    writeFileSync('test6', '2')
-    exec('git add --all && git commit -m"eleventh commit"')
-    exec('git tag notms+7.0.0')
+  it('should handle regexp escaped characters in the tag prefix', function () {
+    testTools.writeFileSync('test6', '')
+    testTools.exec('git add --all && git commit -m"eighth commit"')
+    testTools.exec('git tag ms+6.0.0')
+    testTools.writeFileSync('test6', '1')
+    testTools.exec('git add --all && git commit -m"tenth commit"')
+    testTools.exec('git tag ms+7.0.0')
+    testTools.writeFileSync('test6', '2')
+    testTools.exec('git add --all && git commit -m"eleventh commit"')
+    testTools.exec('git tag notms+7.0.0')
 
-    gitSemverTags({ tagPrefix: 'ms+' }, function (err, tags) {
-      if (err) done(err)
-      assert.deepStrictEqual(tags, ['ms+7.0.0', 'ms+6.0.0'])
-      done()
+    return new Promise((resolve, reject) => {
+      gitSemverTags({
+        cwd: testTools.cwd,
+        tagPrefix: 'ms+'
+      }, (err, tags) => {
+        if (err) return reject(err)
+        expect(tags).toEqual(['ms+7.0.0', 'ms+6.0.0'])
+        resolve()
+      })
     })
+
   })
 
   it('should skip unstable tags', () => {
