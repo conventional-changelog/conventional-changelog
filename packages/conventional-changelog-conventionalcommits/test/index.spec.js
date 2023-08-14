@@ -35,6 +35,7 @@ setups([
   },
   () => {
     testTools.gitDummyCommit(['feat(awesome): addresses the issue brought up in #133'])
+    testTools.gitDummyCommit(['feat(awesome): addresses the issue brought up in #1a2b'])
   },
   () => {
     testTools.gitDummyCommit(['feat(awesome): fix #88'])
@@ -264,7 +265,7 @@ describe('conventional-changelog-conventionalcommits', () => {
     }
   })
 
-  it('should replace #[0-9]+ with GitHub format issue URL by default', async () => {
+  it('should replace #[a-z0-9]+ with issue URL by default', async () => {
     preparing(2)
 
     for await (let chunk of conventionalChangelogCore({
@@ -274,6 +275,7 @@ describe('conventional-changelog-conventionalcommits', () => {
       chunk = chunk.toString()
 
       expect(chunk).toContain('[#133](https://github.com/conventional-changelog/conventional-changelog/issues/133)')
+      expect(chunk).toContain('[#1a2b](https://github.com/conventional-changelog/conventional-changelog/issues/1a2b)')
     }
   })
 
