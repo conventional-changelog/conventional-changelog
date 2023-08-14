@@ -4,7 +4,7 @@ const conventionalChangelogCore = require('conventional-changelog-core')
 const angular = require('conventional-changelog-angular')
 const fs = require('fs')
 const accessSync = require('fs-access').sync
-const chalk = require('chalk')
+const pc = require('picocolors')
 const figures = require('figures')
 const sprintf = require('sprintf-js').sprintf
 
@@ -26,8 +26,8 @@ conventionalChangelog.createIfMissing = function (infile) {
 }
 
 conventionalChangelog.checkpoint = function (msg, args) {
-  console.info(chalk.green(figures.tick) + ' ' + sprintf(msg, args.map(function (arg) {
-    return chalk.bold(arg)
+  console.info(pc.green(figures.tick) + ' ' + sprintf(msg, args.map(function (arg) {
+    return pc.bold(arg)
   })))
 }
 

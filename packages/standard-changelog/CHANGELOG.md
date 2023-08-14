@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog-v2.0.27...standard-changelog-v3.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 14 is required
+
+### Features
+
+* update CLI tools to support lerna tags ([#175](https://github.com/conventional-changelog/conventional-changelog/issues/175)) ([1fc5612](https://github.com/conventional-changelog/conventional-changelog/commit/1fc561217d79978b9d0248612b75e87c4b4a2d0b))
+
+
+### Bug Fixes
+
+* add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+
 ## [2.0.27](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog@2.0.26...standard-changelog@2.0.27) (2020-11-05)
 
 **Note:** Version bump only for package standard-changelog

@@ -1,38 +1,29 @@
 'use strict'
-const Q = require('q')
-const _ = require('lodash')
-const conventionalChangelog = require('./conventional-changelog')
-const parserOpts = require('./parser-opts')
-const recommendedBumpOpts = require('./conventional-recommended-bump')
-const writerOpts = require('./writer-opts')
 
-module.exports = function (parameter) {
-  // parameter passed can be either a config object or a callback function
-  if (_.isFunction(parameter)) {
-    // parameter is a callback object
-    const config = {}
-    // FIXME: use presetOpts(config) for callback
-    Q.all([
-      conventionalChangelog(config),
-      parserOpts(config),
-      recommendedBumpOpts(config),
-      writerOpts(config)
-    ]).spread((conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts) => {
-      parameter(null, { gitRawCommitsOpts: { noMerges: null }, conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts })
-    })
-  } else {
-    const config = parameter || {}
-    return presetOpts(config)
+const { DEFAULT_COMMIT_TYPES } = require('./constants')
+const { createParserOpts } = require('./parserOpts')
+const { createWriterOpts } = require('./writerOpts')
+const { createConventionalChangelogOpts } = require('./conventionalChangelog')
+const { createConventionalRecommendedBumpOpts } = require('./conventionalRecommendedBump')
+
+async function createPreset (config) {
+  const parserOpts = createParserOpts(config)
+  const writerOpts = await createWriterOpts(config)
+  const recommendedBumpOpts = createConventionalRecommendedBumpOpts(config, parserOpts)
+  const conventionalChangelog = createConventionalChangelogOpts(parserOpts, writerOpts)
+
+  return {
+    gitRawCommitsOpts: {
+      ignore: config?.ignoreCommits,
+      noMerges: null
+    },
+    parserOpts,
+    writerOpts,
+    recommendedBumpOpts,
+    conventionalChangelog
   }
 }
 
-function presetOpts (config) {
-  return Q.all([
-    conventionalChangelog(config),
-    parserOpts(config),
-    recommendedBumpOpts(config),
-    writerOpts(config)
-  ]).spread((conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts) => {
-    return { conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts }
-  })
-}
+module.exports = createPreset
+
+module.exports.DEFAULT_COMMIT_TYPES = DEFAULT_COMMIT_TYPES

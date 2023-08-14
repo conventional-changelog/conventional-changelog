@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-writer",
-  "version": "5.0.1",
+  "version": "6.0.1",
   "description": "Write logs based on conventional commits and templates",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -17,11 +17,11 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "files": [
     "index.js",
-    "cli.js",
+    "cli.mjs",
     "lib",
     "templates"
   ],
@@ -36,24 +36,18 @@
     "logs"
   ],
   "dependencies": {
-    "conventional-commits-filter": "^2.0.7",
-    "dateformat": "^3.0.0",
+    "conventional-commits-filter": "^3.0.0",
     "handlebars": "^4.7.7",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.15",
-    "meow": "^8.0.0",
-    "semver": "^6.0.0",
-    "split": "^1.0.0",
-    "through2": "^4.0.0"
-  },
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
+    "meow": "^12.0.1",
+    "semver": "^7.5.2",
+    "split": "^1.0.1"
   },
   "bin": {
-    "conventional-changelog-writer": "cli.js"
+    "conventional-changelog-writer": "cli.mjs"
   },
   "devDependencies": {
-    "dedent": "^0.7.0",
+    "dedent": "^1.0.0",
     "forceable-tty": "^0.1.0"
   }
 }

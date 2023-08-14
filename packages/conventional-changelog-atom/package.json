@@ -1,11 +1,8 @@
 {
   "name": "conventional-changelog-atom",
-  "version": "2.0.8",
+  "version": "3.0.0",
   "description": "conventional-changelog atom preset",
   "main": "index.js",
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
@@ -17,22 +14,19 @@
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "license": "ISC",
   "files": [
-    "conventional-changelog.js",
-    "conventional-recommended-bump.js",
+    "conventionalChangelog.js",
+    "conventionalRecommendedBump.js",
     "index.js",
-    "parser-opts.js",
-    "writer-opts.js",
+    "parserOpts.js",
+    "writerOpts.js",
     "templates"
   ],
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom#readme",
-  "dependencies": {
-    "q": "^1.5.1"
-  }
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom#readme"
 }

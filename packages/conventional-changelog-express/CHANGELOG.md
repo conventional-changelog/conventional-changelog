@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-express-v2.0.6...conventional-changelog-express-v3.0.0) (2023-06-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* now all promises are native
+* Node >= 14 is required
+
+### Features
+
+* allow raw commits to be filtered by path ([#172](https://github.com/conventional-changelog/conventional-changelog/issues/172)) ([ec0a25d](https://github.com/conventional-changelog/conventional-changelog/commit/ec0a25d0664ae74da1201c011814f62bd8e1b031))
+* extracting code from https://github.com/ajoslin/conventional-changelog ([c9c116a](https://github.com/conventional-changelog/conventional-changelog/commit/c9c116af35a0bd45738b60147533bce5b44da425))
+* **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/conventional-changelog/conventional-changelog/commit/60815b50bc68b50a8430c21ec0499273a4a1c402))
+* re-use parser options within each preset ([#335](https://github.com/conventional-changelog/conventional-changelog/issues/335)) ([d3eaacf](https://github.com/conventional-changelog/conventional-changelog/commit/d3eaacfe642eb7e076e4879a3202cc60ca626b59))
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+* drop q from dependencies ([#974](https://github.com/conventional-changelog/conventional-changelog/issues/974)) ([d0e5d59](https://github.com/conventional-changelog/conventional-changelog/commit/d0e5d5926c8addba74bc962553dd8bcfba90e228))
+
 ## [2.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-express@2.0.5...conventional-changelog-express@2.0.6) (2020-11-05)
 
 **Note:** Version bump only for package conventional-changelog-express

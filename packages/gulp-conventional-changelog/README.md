@@ -1,8 +1,8 @@
-# gulp-conventional-changelog [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# gulp-conventional-changelog [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
-> Generate a changelog using [conventional-changelog](https://github.com/ajoslin/conventional-changelog)
+> Generate a changelog using [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog)
 
-*Issues with the output should be reported on the `conventional-changelog` [issue tracker](https://github.com/ajoslin/conventional-changelog/issues).*
+*Issues with the output should be reported on the `conventional-changelog` [issue tracker](https://github.com/conventional-changelog/conventional-changelog/issues).*
 
 Checkout the [gulp official recipe](https://github.com/gulpjs/gulp/blob/master/docs/recipes/automate-release-workflow.md) to automate releases with gulp and gulp-conventional-changelog.
 
@@ -64,7 +64,7 @@ gulp.task('changelog', function () {
 });
 ```
 
-**Note:** If your `options.releaseCount` is `0` (regenerate all changelog from previous releases) you can just use [conventional-changelog](https://github.com/ajoslin/conventional-changelog) directly or not to read the file at all.
+**Note:** If your `options.releaseCount` is `0` (regenerate all changelog from previous releases) you can just use [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) directly or not to read the file at all.
 
 ```js
 var gulp = require('gulp');
@@ -101,7 +101,7 @@ gulp.task('default', function () {
 
 ## API
 
-See the [conventional-changelog](https://github.com/ajoslin/conventional-changelog) docs.
+See the [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) docs.
 
 There are some changes:
 
@@ -123,5 +123,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/conventional-changelog/gulp-conventional-changelog
 [daviddm-image]: https://david-dm.org/conventional-changelog/gulp-conventional-changelog.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/gulp-conventional-changelog
-[coveralls-image]: https://coveralls.io/repos/github/conventional-changelog/gulp-conventional-changelog/badge.svg
-[coveralls-url]: https://coveralls.io/r/conventional-changelog/gulp-conventional-changelog
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

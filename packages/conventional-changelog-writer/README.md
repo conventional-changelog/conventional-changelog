@@ -1,4 +1,4 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
 > Write logs based on conventional commits and templates
 
@@ -137,9 +137,9 @@ Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
-Type: `string` Default: `dateFormat(new Date(), 'yyyy-mm-dd', true)`
+Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in UTC timezone
 
-Default to formatted (`'yyyy-mm-dd'`) today's date. [dateformat](https://github.com/felixge/node-dateformat) is used for formatting the date. If `version` is found in the last commit, `committerDate` will overwrite this.
+If `version` is found in the last commit, `committerDate` will overwrite this.
 
 #### options
 
@@ -365,5 +365,5 @@ MIT © [Steve Mao](https://github.com/stevemao)
 [travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-writer
 [daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-writer.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-writer
-[coveralls-image]: https://coveralls.io/repos/conventional-changelog/conventional-changelog-writer/badge.svg
-[coveralls-url]: https://coveralls.io/r/conventional-changelog/conventional-changelog-writer
+[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

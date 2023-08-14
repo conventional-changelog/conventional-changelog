@@ -2,7 +2,6 @@
 const conventionalCommitsFilter = require('conventional-commits-filter')
 const Handlebars = require('handlebars')
 const semver = require('semver')
-const _ = require('lodash')
 const stringify = require('json-stringify-safe')
 
 function compileTemplates (templates) {
@@ -12,23 +11,25 @@ function compileTemplates (templates) {
   const footerPartial = templates.footerPartial
   const partials = templates.partials
 
-  if (_.isString(headerPartial)) {
+  if (typeof headerPartial === 'string') {
     Handlebars.registerPartial('header', headerPartial)
   }
 
-  if (_.isString(commitPartial)) {
+  if (typeof commitPartial === 'string') {
     Handlebars.registerPartial('commit', commitPartial)
   }
 
-  if (_.isString(footerPartial)) {
+  if (typeof footerPartial === 'string') {
     Handlebars.registerPartial('footer', footerPartial)
   }
 
-  _.forEach(partials, function (partial, name) {
-    if (_.isString(partial)) {
-      Handlebars.registerPartial(name, partial)
-    }
-  })
+  if (partials) {
+    Object.entries(partials).forEach(function ([name, partial]) {
+      if (typeof partial === 'string') {
+        Handlebars.registerPartial(name, partial)
+      }
+    })
+  }
 
   return Handlebars.compile(main, {
     noEscape: true
@@ -36,7 +37,7 @@ function compileTemplates (templates) {
 }
 
 function functionify (strOrArr) {
-  if (strOrArr && !_.isFunction(strOrArr)) {
+  if (strOrArr && typeof strOrArr !== 'function') {
     return (a, b) => {
       let str1 = ''
       let str2 = ''
@@ -58,11 +59,19 @@ function functionify (strOrArr) {
 
 function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
   const commitGroups = []
-  const commitGroupsObj = _.groupBy(commits, function (commit) {
-    return commit[groupBy] || ''
-  })
+  const commitGroupsObj = commits.reduce(function (groups, commit) {
+    const key = commit[groupBy] || ''
 
-  _.forEach(commitGroupsObj, function (commits, title) {
+    if (groups[key]) {
+      groups[key].push(commit)
+    } else {
+      groups[key] = [commit]
+    }
+
+    return groups
+  }, {})
+
+  Object.entries(commitGroupsObj).forEach(function ([title, commits]) {
     if (title === '') {
       title = false
     }
@@ -87,11 +96,11 @@ function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
 function getNoteGroups (notes, noteGroupsSort, notesSort) {
   const retGroups = []
 
-  _.forEach(notes, function (note) {
+  notes.forEach(function (note) {
     const title = note.title
     let titleExists = false
 
-    _.forEach(retGroups, function (group) {
+    retGroups.forEach(function (group) {
       if (group.title === title) {
         titleExists = true
         group.notes.push(note)
@@ -112,12 +121,58 @@ function getNoteGroups (notes, noteGroupsSort, notesSort) {
   }
 
   if (notesSort) {
-    _.forEach(retGroups, function (group) {
+    retGroups.forEach(function (group) {
       group.notes.sort(notesSort)
     })
   }
 
   return retGroups
+}
+
+function get (context, path) {
+  const parts = path.split('.')
+
+  return parts.reduce((context, key) =>
+    context ? context[key] : context
+  , context)
+}
+
+function immutableSet (context, path, value) {
+  const parts = Array.isArray(path) ? path.slice() : path.split('.')
+  const key = parts.shift()
+
+  if (!key) {
+    return context
+  }
+
+  return {
+    ...context,
+    [key]: parts.length ? immutableSet(context[key], parts, value) : value
+  }
+}
+
+function cloneCommit (commit) {
+  if (!commit || typeof commit !== 'object') {
+    return commit
+  } else
+  if (Array.isArray(commit)) {
+    return commit.map(cloneCommit)
+  }
+
+  const commitClone = {}
+  let value
+
+  for (const key in commit) {
+    value = commit[key]
+
+    if (typeof value === 'object') {
+      commitClone[key] = cloneCommit(value)
+    } else {
+      commitClone[key] = value
+    }
+  }
+
+  return commitClone
 }
 
 function processCommit (chunk, transform, context) {
@@ -127,9 +182,9 @@ function processCommit (chunk, transform, context) {
     chunk = JSON.parse(chunk)
   } catch (e) {}
 
-  commit = _.cloneDeep(chunk)
+  commit = cloneCommit(chunk)
 
-  if (_.isFunction(transform)) {
+  if (typeof transform === 'function') {
     commit = transform(commit, context)
 
     if (commit) {
@@ -139,17 +194,19 @@ function processCommit (chunk, transform, context) {
     return commit
   }
 
-  _.forEach(transform, function (el, path) {
-    let value = _.get(commit, path)
+  if (transform) {
+    Object.entries(transform).forEach(function ([path, el]) {
+      let value = get(commit, path)
 
-    if (_.isFunction(el)) {
-      value = el(value, path)
-    } else {
-      value = el
-    }
+      if (typeof el === 'function') {
+        value = el(value, path)
+      } else {
+        value = el
+      }
 
-    _.set(commit, path, value)
-  })
+      commit = immutableSet(commit, path, value)
+    })
+  }
 
   commit.raw = chunk
 
@@ -169,27 +226,35 @@ function getExtraContext (commits, notes, options) {
 }
 
 function generate (options, commits, context, keyCommit) {
-  let notes = []
+  const notes = []
   let filteredCommits
   const compiled = compileTemplates(options)
 
   if (options.ignoreReverted) {
     filteredCommits = conventionalCommitsFilter(commits)
   } else {
-    filteredCommits = _.clone(commits)
+    filteredCommits = commits.slice()
   }
 
-  _.forEach(filteredCommits, function (commit) {
-    _.map(commit.notes, function (note) {
-      note.commit = commit
+  filteredCommits = filteredCommits.map((commit) => ({
+    ...commit,
+    notes: commit.notes.map((note) => {
+      const commitNote = {
+        ...note,
+        commit
+      }
 
-      return note
+      notes.push(commitNote)
+
+      return commitNote
     })
+  }))
 
-    notes = notes.concat(commit.notes)
-  })
-
-  context = _.merge({}, context, keyCommit, getExtraContext(filteredCommits, notes, options))
+  context = {
+    ...context,
+    ...keyCommit,
+    ...getExtraContext(filteredCommits, notes, options)
+  }
 
   if (keyCommit && keyCommit.committerDate) {
     context.date = keyCommit.committerDate

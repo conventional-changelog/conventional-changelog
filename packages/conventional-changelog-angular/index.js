@@ -1,11 +1,22 @@
 'use strict'
-const Q = require('q')
-const conventionalChangelog = require('./conventional-changelog')
-const parserOpts = require('./parser-opts')
-const recommendedBumpOpts = require('./conventional-recommended-bump')
-const writerOpts = require('./writer-opts')
 
-module.exports = Q.all([conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts])
-  .spread((conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts) => {
-    return { conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts }
-  })
+const { createParserOpts } = require('./parserOpts')
+const { createWriterOpts } = require('./writerOpts')
+const { createConventionalChangelogOpts } = require('./conventionalChangelog')
+const { createConventionalRecommendedBumpOpts } = require('./conventionalRecommendedBump')
+
+async function createPreset () {
+  const parserOpts = createParserOpts()
+  const writerOpts = await createWriterOpts()
+  const recommendedBumpOpts = createConventionalRecommendedBumpOpts(parserOpts)
+  const conventionalChangelog = createConventionalChangelogOpts(parserOpts, writerOpts)
+
+  return {
+    parserOpts,
+    writerOpts,
+    recommendedBumpOpts,
+    conventionalChangelog
+  }
+}
+
+module.exports = createPreset

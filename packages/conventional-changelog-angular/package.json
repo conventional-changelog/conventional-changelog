@@ -1,11 +1,8 @@
 {
   "name": "conventional-changelog-angular",
-  "version": "5.0.13",
+  "version": "6.0.0",
   "description": "conventional-changelog angular preset",
   "main": "index.js",
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
@@ -16,16 +13,16 @@
     "preset"
   ],
   "files": [
-    "conventional-changelog.js",
-    "conventional-recommended-bump.js",
+    "conventionalChangelog.js",
+    "conventionalRecommendedBump.js",
     "index.js",
-    "parser-opts.js",
-    "writer-opts.js",
+    "parserOpts.js",
+    "writerOpts.js",
     "templates"
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "license": "ISC",
   "bugs": {
@@ -33,7 +30,6 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
   "dependencies": {
-    "compare-func": "^2.0.0",
-    "q": "^1.5.1"
+    "compare-func": "^2.0.0"
   }
 }
