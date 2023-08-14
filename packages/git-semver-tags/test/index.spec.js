@@ -1,5 +1,5 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { exec, TestTools } from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools'
 import gitSemverTags from '../'
 
 let testTools
