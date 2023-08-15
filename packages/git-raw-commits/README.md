@@ -59,9 +59,9 @@ A function to get debug information.
 
 ##### gitOpts.path
 
-Type: `string`
+Type: `string` or `array`
 
-Filter commits to the path provided.
+Filter commits to the path(s) provided.
 
 ##### execOpts
 
