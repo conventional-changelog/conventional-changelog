@@ -229,7 +229,7 @@ describe('conventional-changelog-writer', () => {
 
     it('should merge with the provided transform object', async () => {
       let i = 0
-      const changelog = await await conventionalChangelogWriter.parseArray(commits, {}, {
+      const changelog = await conventionalChangelogWriter.parseArray(commits, {}, {
         transform: {
           notes (notes) {
             notes.map((note) => {
@@ -349,7 +349,7 @@ describe('conventional-changelog-writer', () => {
 
     it('should generate on the transformed commit', async () => {
       let i = 0
-      const changelog = await await conventionalChangelogWriter.parseArray(commits, {
+      const changelog = await conventionalChangelogWriter.parseArray(commits, {
         version: '1.0.0'
       }, {
         transform (commit) {
@@ -542,7 +542,7 @@ describe('conventional-changelog-writer', () => {
       it('version should fall back on `context.version` and `context.date`', async () => {
         let i = 0
 
-        const changelog = await await conventionalChangelogWriter.parseArray(commits, {
+        const changelog = await conventionalChangelogWriter.parseArray(commits, {
           version: '0.0.1',
           date: '2015-01-01'
         })
