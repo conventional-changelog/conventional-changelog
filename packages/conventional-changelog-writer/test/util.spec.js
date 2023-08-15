@@ -773,6 +773,22 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a` oh')
       })
 
+      it('support finalize the context async', async () => {
+        const log = await util.generate({
+          mainTemplate: '{{whatever}} {{somethingExtra}}',
+          finalizeContext: async (context) => {
+            await new Promise((resolve) => setTimeout(resolve, 100))
+            context.somethingExtra = 'oh'
+            return context
+          },
+          debug: () => {}
+        }, [], [], {
+          whatever: '`a`'
+        })
+
+        expect(log).toBe('`a` oh')
+      })
+
       it('should finalize context', async () => {
         const log = await util.generate({
           mainTemplate: '{{whatever}} {{somethingExtra}} {{opt}} {{commitsLen}} {{whatever}}',
