@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import { describe, it, expect } from 'vitest'
-import { throughObj } from '../../../tools/test-tools'
+import { delay, throughObj } from '../../../tools/test-tools'
 import conventionalChangelogWriter from '../'
 
 // sv-SEis used for yyyy-mm-dd format
@@ -297,6 +297,25 @@ describe('conventional-changelog-writer', () => {
       }
 
       expect(i).toBe(1)
+    })
+
+    it('support tranform commits async', async () => {
+      const changelog = await conventionalChangelogWriter.parseArray(commits, {}, {
+        async transform () {
+          await delay(100)
+          return [{
+            hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
+            header: 'feat(scope): broadcast $destroy event on scope destruction',
+            body: null,
+            notes: [{
+              title: 'BREAKING CHANGE',
+              text: 'some breaking change'
+            }],
+          }]
+        }
+      })
+
+      expect(changelog).toContain('broadcast $destroy event on scope destruction')
     })
   })
 

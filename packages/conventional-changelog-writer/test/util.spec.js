@@ -369,8 +369,8 @@ describe('conventional-changelog-writer', () => {
         doNothing: 'nothing'
       }
 
-      it('should process object commit', () => {
-        const processed = util.processCommit(commit)
+      it('should process object commit', async () => {
+        const processed = await util.processCommit(commit)
 
         expect(processed).toEqual({
           hash: '456789uhghi',
@@ -386,8 +386,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should process json commit', () => {
-        const processed = util.processCommit(JSON.stringify(commit))
+      it('should process json commit', async () => {
+        const processed = await util.processCommit(JSON.stringify(commit))
 
         expect(processed).toEqual({
           hash: '456789uhghi',
@@ -403,8 +403,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should transform by a function', () => {
-        const processed = util.processCommit(commit, (commit) => {
+      it('should transform by a function', async () => {
+        const processed = await util.processCommit(commit, (commit) => {
           commit.hash = commit.hash.substring(0, 4)
           commit.subject = commit.subject.substring(0, 5)
           commit.replaceThis = 'replaced'
@@ -425,8 +425,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should transform by an object', () => {
-        const processed = util.processCommit(commit, {
+      it('should transform by an object', async () => {
+        const processed = await util.processCommit(commit, {
           hash: (hash) => {
             return hash.substring(0, 4)
           },
@@ -450,8 +450,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should transform by an object using dot path', () => {
-        const processed = util.processCommit({
+      it('should transform by an object using dot path', async () => {
+        const processed = await util.processCommit({
           header: {
             subject: 'my subject'
           }
