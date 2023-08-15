@@ -32,7 +32,7 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
       - name: coverage
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@main
         with:
           flag-name: actions ${{ matrix.node }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -55,7 +55,7 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
       - name: coverage
-        uses: coverallsapp/github-action@master
+        uses: coverallsapp/github-action@main
         with:
           flag-name: actions windows
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -65,7 +65,7 @@ jobs:
     needs: [test, windows]
     runs-on: ubuntu-latest
     steps:
-      - uses: coverallsapp/github-action@master
+      - uses: coverallsapp/github-action@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
