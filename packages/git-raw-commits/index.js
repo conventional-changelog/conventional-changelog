@@ -30,10 +30,10 @@ async function getGitArgs (gitOpts) {
       excludes: ['debug', 'from', 'to', 'format', 'path', 'ignore']
     }))
 
-  // allow commits to focus on a single directory
+  // allow commits to focus on specific directories.
   // this is useful for monorepos.
   if (gitOpts.path) {
-    gitArgs.push('--', gitOpts.path)
+    gitArgs.push('--', ...Array.isArray(gitOpts.path) ? gitOpts.path : [gitOpts.path])
   }
 
   return gitArgs
