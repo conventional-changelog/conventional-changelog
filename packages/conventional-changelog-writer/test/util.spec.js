@@ -618,8 +618,8 @@ describe('conventional-changelog-writer', () => {
     })
 
     describe('generate', () => {
-      it('should merge with the key commit', () => {
-        const log = util.generate({
+      it('should merge with the key commit', async () => {
+        const log = await util.generate({
           mainTemplate: '{{whatever}}',
           finalizeContext: (context) => {
             return context
@@ -634,8 +634,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('b')
       })
 
-      it('should attach a copy of the commit to note', () => {
-        const log = util.generate({
+      it('should attach a copy of the commit to note', async () => {
+        const log = await util.generate({
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context) => {
@@ -673,8 +673,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toContain('chore: first commit')
       })
 
-      it('should not html escape any content', () => {
-        const log = util.generate({
+      it('should not html escape any content', async () => {
+        const log = await util.generate({
           mainTemplate: '{{whatever}}',
           finalizeContext: (context) => {
             return context
@@ -687,8 +687,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a`')
       })
 
-      it('should ignore a reverted commit', () => {
-        const log = util.generate({
+      it('should ignore a reverted commit', async () => {
+        const log = await util.generate({
           mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{text}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context) => {
@@ -758,8 +758,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).not.toContain('breaking change')
       })
 
-      it('should finalize context', () => {
-        const log = util.generate({
+      it('should finalize context', async () => {
+        const log = await util.generate({
           mainTemplate: '{{whatever}} {{somethingExtra}}',
           finalizeContext: (context) => {
             context.somethingExtra = 'oh'
@@ -773,8 +773,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a` oh')
       })
 
-      it('should finalize context', () => {
-        const log = util.generate({
+      it('should finalize context', async () => {
+        const log = await util.generate({
           mainTemplate: '{{whatever}} {{somethingExtra}} {{opt}} {{commitsLen}} {{whatever}}',
           finalizeContext: (context, options, commits, keyCommit) => {
             context.somethingExtra = 'oh'
@@ -793,8 +793,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a` oh opt 0 `a`')
       })
 
-      it('should pass the correct arguments', () => {
-        util.generate({
+      it('should pass the correct arguments', async () => {
+        await util.generate({
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context, options, filteredCommits, keyCommit, originalCommits) => {

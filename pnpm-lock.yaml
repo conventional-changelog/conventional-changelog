@@ -615,7 +615,7 @@ packages:
     engines: {node: '>=10.10.0'}
     dependencies:
       '@humanwhocodes/object-schema': 1.2.1
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -1586,7 +1586,7 @@ packages:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4
       doctrine: 3.0.0
       enquirer: 2.4.1
       escape-string-regexp: 4.0.0
