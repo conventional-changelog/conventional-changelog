@@ -100,7 +100,7 @@ function conventionalChangelogWriterParseStream (context, options) {
     async transform (chunk, _enc, cb) {
       try {
         let result
-        const commit = util.processCommit(chunk, options.transform, context)
+        const commit = await util.processCommit(chunk, options.transform, context)
         const keyCommit = commit || chunk
 
         // previous blocks of logs
@@ -194,7 +194,7 @@ conventionalChangelogWriterParseStream.parseArray = async (rawCommits, context, 
   }
   const entries = []
   for (const rawCommit of rawCommits) {
-    const commit = util.processCommit(rawCommit, await options.transform, context)
+    const commit = await util.processCommit(rawCommit, options.transform, context)
     const keyCommit = commit || rawCommit
     if (generateOn(keyCommit, commits, context, options)) {
       entries.push(await util.generate(options, commits, context, savedKeyCommit))

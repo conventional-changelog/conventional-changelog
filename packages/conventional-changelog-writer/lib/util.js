@@ -175,7 +175,7 @@ function cloneCommit (commit) {
   return commitClone
 }
 
-function processCommit (chunk, transform, context) {
+async function processCommit (chunk, transform, context) {
   let commit
 
   try {
@@ -185,7 +185,7 @@ function processCommit (chunk, transform, context) {
   commit = cloneCommit(chunk)
 
   if (typeof transform === 'function') {
-    commit = transform(commit, context)
+    commit = await transform(commit, context)
 
     if (commit) {
       commit.raw = chunk
