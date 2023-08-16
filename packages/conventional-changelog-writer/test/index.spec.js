@@ -310,7 +310,7 @@ describe('conventional-changelog-writer', () => {
             notes: [{
               title: 'BREAKING CHANGE',
               text: 'some breaking change'
-            }],
+            }]
           }]
         }
       })
