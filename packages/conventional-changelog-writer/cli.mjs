@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { pathToFileURL } from 'url'
 import { createReadStream } from 'fs'
 import { readFile } from 'fs/promises'
-import split from 'split'
+import split from 'split2'
 import meow from 'meow'
 import conventionalChangelogWriter from './index.js'
 
