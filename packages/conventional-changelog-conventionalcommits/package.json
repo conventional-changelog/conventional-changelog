@@ -23,7 +23,7 @@
   ],
   "author": "Ben Coe",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "license": "ISC",
   "bugs": {
