@@ -153,8 +153,8 @@ importers:
         specifier: ^5.0.0
         version: link:../git-semver-tags
       hosted-git-info:
-        specifier: ^6.1.1
-        version: 6.1.1
+        specifier: ^7.0.0
+        version: 7.0.0
       normalize-package-data:
         specifier: ^6.0.0
         version: 6.0.0
