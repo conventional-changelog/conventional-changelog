@@ -19,5 +19,5 @@
   "packages/conventional-recommended-bump": "7.0.1",
   "packages/conventional-changelog-core": "5.0.2",
   "packages/standard-changelog": "3.0.0",
-  "packages/gulp-conventional-changelog": "3.0.0"
+  "packages/gulp-conventional-changelog": "4.0.0"
 }
