@@ -30,7 +30,6 @@
     "conventional-changelog-angular": "^6.0.0",
     "conventional-changelog-core": "^5.0.0",
     "figures": "^3.2.0",
-    "fs-access": "^1.0.1",
     "meow": "^12.0.1",
     "picocolors": "^1.0.0",
     "sprintf-js": "^1.1.2",
