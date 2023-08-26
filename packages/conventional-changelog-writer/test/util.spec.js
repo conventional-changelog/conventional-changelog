@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest'
-import util from '../lib/util'
+import { delay } from '../../../tools/test-tools'
+import {
+  compileTemplates,
+  functionify,
+  getCommitGroups,
+  getNoteGroups,
+  processCommit,
+  getExtraContext,
+  generate
+} from '../lib/util'
 
 describe('conventional-changelog-writer', () => {
   describe('util', () => {
@@ -11,7 +20,7 @@ describe('conventional-changelog-writer', () => {
           commitPartial: 'commit\n',
           footerPartial: 'footer\n'
         }
-        const compiled = util.compileTemplates(templates)
+        const compiled = compileTemplates(templates)
 
         expect(compiled()).toBe('header\ncommit\nfooter\n')
       })
@@ -23,7 +32,7 @@ describe('conventional-changelog-writer', () => {
           commitPartial: 'commit\n',
           footerPartial: 'footer\n'
         }
-        const compiled = util.compileTemplates(templates)
+        const compiled = compileTemplates(templates)
 
         expect(compiled()).toBe('commit\nfooter\n')
       })
@@ -38,7 +47,7 @@ describe('conventional-changelog-writer', () => {
             partial4: null
           }
         }
-        const compiled = util.compileTemplates(templates)
+        const compiled = compileTemplates(templates)
 
         expect(compiled()).toBe('partial1\npartial2\npartial3\n')
       })
@@ -46,13 +55,13 @@ describe('conventional-changelog-writer', () => {
 
     describe('functionify', () => {
       it('should turn any truthy value into a function', () => {
-        const func = util.functionify('a')
+        const func = functionify('a')
 
         expect(func).toBeTypeOf('function')
       })
 
       it('should not change falsy value', () => {
-        const func = util.functionify(null)
+        const func = functionify(null)
 
         expect(func).toBe(null)
       })
@@ -71,7 +80,7 @@ describe('conventional-changelog-writer', () => {
       }]
 
       it('should group but not sort groups', () => {
-        const commitGroups = util.getCommitGroups('groupBy', commits)
+        const commitGroups = getCommitGroups('groupBy', commits)
 
         expect(commitGroups).toEqual([{
           title: 'A',
@@ -100,7 +109,7 @@ describe('conventional-changelog-writer', () => {
           groupBy: 'Big B',
           content: 'this is B and its a bit longer'
         }]
-        const commitGroups = util.getCommitGroups('groupBy', commits)
+        const commitGroups = getCommitGroups('groupBy', commits)
 
         expect(commitGroups).toEqual([{
           title: false,
@@ -119,7 +128,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should group and sort groups', () => {
-        const commitGroups = util.getCommitGroups('groupBy', commits, (a, b) => {
+        const commitGroups = getCommitGroups('groupBy', commits, (a, b) => {
           if (a.title.length < b.title.length) {
             return 1
           }
@@ -148,7 +157,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should group and but not sort commits', () => {
-        const commitGroups = util.getCommitGroups('groupBy', commits)
+        const commitGroups = getCommitGroups('groupBy', commits)
 
         expect(commitGroups).toEqual([{
           title: 'A',
@@ -169,7 +178,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should group and sort commits', () => {
-        const commitGroups = util.getCommitGroups('groupBy', commits, false, (a, b) => {
+        const commitGroups = getCommitGroups('groupBy', commits, false, (a, b) => {
           if (a.content.length < b.content.length) {
             return 1
           }
@@ -217,7 +226,7 @@ describe('conventional-changelog-writer', () => {
       }]
 
       it('should group', () => {
-        const noteGroups = util.getNoteGroups(notes)
+        const noteGroups = getNoteGroups(notes)
 
         expect(noteGroups).toEqual([{
           title: 'A title',
@@ -247,7 +256,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should group and sort groups', () => {
-        const noteGroups = util.getNoteGroups(notes, (a, b) => {
+        const noteGroups = getNoteGroups(notes, (a, b) => {
           if (a.title.length > b.title.length) {
             return 1
           }
@@ -285,7 +294,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should group and sort notes', () => {
-        const noteGroups = util.getNoteGroups(notes, false, (a, b) => {
+        const noteGroups = getNoteGroups(notes, false, (a, b) => {
           if (a.text.length < b.text.length) {
             return 1
           }
@@ -337,7 +346,7 @@ describe('conventional-changelog-writer', () => {
           text: 'this is another B'
         }]
 
-        const noteGroups = util.getNoteGroups(notes)
+        const noteGroups = getNoteGroups(notes)
 
         expect(noteGroups).toEqual([{
           title: '',
@@ -369,8 +378,8 @@ describe('conventional-changelog-writer', () => {
         doNothing: 'nothing'
       }
 
-      it('should process object commit', () => {
-        const processed = util.processCommit(commit)
+      it('should process object commit', async () => {
+        const processed = await processCommit(commit)
 
         expect(processed).toEqual({
           hash: '456789uhghi',
@@ -386,8 +395,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should process json commit', () => {
-        const processed = util.processCommit(JSON.stringify(commit))
+      it('should process json commit', async () => {
+        const processed = await processCommit(JSON.stringify(commit))
 
         expect(processed).toEqual({
           hash: '456789uhghi',
@@ -403,8 +412,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should transform by a function', () => {
-        const processed = util.processCommit(commit, (commit) => {
+      it('should transform by a function', async () => {
+        const processed = await processCommit(commit, (commit) => {
           commit.hash = commit.hash.substring(0, 4)
           commit.subject = commit.subject.substring(0, 5)
           commit.replaceThis = 'replaced'
@@ -425,8 +434,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should transform by an object', () => {
-        const processed = util.processCommit(commit, {
+      it('should transform by an object', async () => {
+        const processed = await processCommit(commit, {
           hash: (hash) => {
             return hash.substring(0, 4)
           },
@@ -450,8 +459,8 @@ describe('conventional-changelog-writer', () => {
         })
       })
 
-      it('should transform by an object using dot path', () => {
-        const processed = util.processCommit({
+      it('should transform by an object using dot path', async () => {
+        const processed = await processCommit({
           header: {
             subject: 'my subject'
           }
@@ -499,7 +508,7 @@ describe('conventional-changelog-writer', () => {
       }]
 
       it('should process context without `options.groupBy`', () => {
-        const extra = util.getExtraContext(commits, notes, {})
+        const extra = getExtraContext(commits, notes, {})
 
         expect(extra).toEqual({
           commitGroups: [{
@@ -536,7 +545,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should process context with `options.groupBy` found', () => {
-        const extra = util.getExtraContext(commits, notes, {
+        const extra = getExtraContext(commits, notes, {
           groupBy: 'groupBy'
         })
 
@@ -578,7 +587,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should process context with `options.groupBy` not found', () => {
-        const extra = util.getExtraContext(commits, notes, {
+        const extra = getExtraContext(commits, notes, {
           groupBy: 'what?'
         })
 
@@ -618,8 +627,8 @@ describe('conventional-changelog-writer', () => {
     })
 
     describe('generate', () => {
-      it('should merge with the key commit', () => {
-        const log = util.generate({
+      it('should merge with the key commit', async () => {
+        const log = await generate({
           mainTemplate: '{{whatever}}',
           finalizeContext: (context) => {
             return context
@@ -634,8 +643,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('b')
       })
 
-      it('should attach a copy of the commit to note', () => {
-        const log = util.generate({
+      it('should attach a copy of the commit to note', async () => {
+        const log = await generate({
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context) => {
@@ -673,8 +682,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toContain('chore: first commit')
       })
 
-      it('should not html escape any content', () => {
-        const log = util.generate({
+      it('should not html escape any content', async () => {
+        const log = await generate({
           mainTemplate: '{{whatever}}',
           finalizeContext: (context) => {
             return context
@@ -687,8 +696,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a`')
       })
 
-      it('should ignore a reverted commit', () => {
-        const log = util.generate({
+      it('should ignore a reverted commit', async () => {
+        const log = await generate({
           mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{text}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context) => {
@@ -758,8 +767,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).not.toContain('breaking change')
       })
 
-      it('should finalize context', () => {
-        const log = util.generate({
+      it('should finalize context', async () => {
+        const log = await generate({
           mainTemplate: '{{whatever}} {{somethingExtra}}',
           finalizeContext: (context) => {
             context.somethingExtra = 'oh'
@@ -773,8 +782,24 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a` oh')
       })
 
-      it('should finalize context', () => {
-        const log = util.generate({
+      it('should support finalize the context async', async () => {
+        const log = await generate({
+          mainTemplate: '{{whatever}} {{somethingExtra}}',
+          async finalizeContext (context) {
+            await delay(100)
+            context.somethingExtra = 'oh'
+            return context
+          },
+          debug: () => {}
+        }, [], [], {
+          whatever: '`a`'
+        })
+
+        expect(log).toBe('`a` oh')
+      })
+
+      it('should finalize context', async () => {
+        const log = await generate({
           mainTemplate: '{{whatever}} {{somethingExtra}} {{opt}} {{commitsLen}} {{whatever}}',
           finalizeContext: (context, options, commits, keyCommit) => {
             context.somethingExtra = 'oh'
@@ -793,8 +818,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a` oh opt 0 `a`')
       })
 
-      it('should pass the correct arguments', () => {
-        util.generate({
+      it('should pass the correct arguments', async () => {
+        await generate({
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}',
           ignoreReverted: true,
           finalizeContext: (context, options, filteredCommits, keyCommit, originalCommits) => {

@@ -81,8 +81,8 @@ function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
     }
 
     commitGroups.push({
-      title: title,
-      commits: commits
+      title,
+      commits
     })
   })
 
@@ -110,7 +110,7 @@ function getNoteGroups (notes, noteGroupsSort, notesSort) {
 
     if (!titleExists) {
       retGroups.push({
-        title: title,
+        title,
         notes: [note]
       })
     }
@@ -175,7 +175,7 @@ function cloneCommit (commit) {
   return commitClone
 }
 
-function processCommit (chunk, transform, context) {
+async function processCommit (chunk, transform, context) {
   let commit
 
   try {
@@ -185,7 +185,7 @@ function processCommit (chunk, transform, context) {
   commit = cloneCommit(chunk)
 
   if (typeof transform === 'function') {
-    commit = transform(commit, context)
+    commit = await transform(commit, context)
 
     if (commit) {
       commit.raw = chunk
@@ -225,7 +225,7 @@ function getExtraContext (commits, notes, options) {
   return context
 }
 
-function generate (options, commits, context, keyCommit) {
+async function generate (options, commits, context, keyCommit) {
   const notes = []
   let filteredCommits
   const compiled = compileTemplates(options)
@@ -264,18 +264,18 @@ function generate (options, commits, context, keyCommit) {
     context.isPatch = context.isPatch || semver.patch(context.version) !== 0
   }
 
-  context = options.finalizeContext(context, options, filteredCommits, keyCommit, commits)
+  context = await options.finalizeContext(context, options, filteredCommits, keyCommit, commits)
   options.debug('Your final context is:\n' + stringify(context, null, 2))
 
   return compiled(context)
 }
 
 module.exports = {
-  compileTemplates: compileTemplates,
-  functionify: functionify,
-  getCommitGroups: getCommitGroups,
-  getNoteGroups: getNoteGroups,
-  processCommit: processCommit,
-  getExtraContext: getExtraContext,
-  generate: generate
+  compileTemplates,
+  functionify,
+  getCommitGroups,
+  getNoteGroups,
+  processCommit,
+  getExtraContext,
+  generate
 }

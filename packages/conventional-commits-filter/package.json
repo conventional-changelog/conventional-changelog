@@ -16,7 +16,7 @@
     "url": "https://github.com/stevemao"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "files": [
     "index.js"
