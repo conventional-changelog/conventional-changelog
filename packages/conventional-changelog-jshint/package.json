@@ -14,7 +14,7 @@
   ],
   "author": "Steve Mao",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "license": "ISC",
   "files": [
