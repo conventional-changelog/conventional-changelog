@@ -209,9 +209,9 @@ importers:
       semver:
         specifier: ^7.5.2
         version: 7.5.2
-      split:
-        specifier: ^1.0.1
-        version: 1.0.1
+      split2:
+        specifier: ^4.0.0
+        version: 4.0.0
     devDependencies:
       dedent:
         specifier: ^1.0.0
@@ -2832,12 +2832,6 @@ packages:
 
   /split2@4.0.0:
     resolution: {integrity: sha512-gjmavJzvQCAZzaEHWoJBOwqIUAiEvUOlguQ6uO0+0LTS1tlLa2YetTLWCrm049ouvLOa1l6SOGm3XaiRiCg9SQ==}
-    dev: false
-
-  /split@1.0.1:
-    resolution: {integrity: sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==}
-    dependencies:
-      through: 2.3.8
     dev: false
 
   /sprintf-js@1.1.2:
