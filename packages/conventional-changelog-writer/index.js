@@ -4,9 +4,13 @@ const { Transform } = require('stream')
 const { join } = require('path')
 const { readFileSync } = require('fs')
 const { valid: semverValid } = require('semver')
-const util = require('./lib/util')
+const {
+  functionify,
+  processCommit,
+  generate
+} = require('./lib/util')
 
-// sv-SEis used for yyyy-mm-dd format
+// sv-SE is used for yyyy-mm-dd format
 const dateFormatter = Intl.DateTimeFormat('sv-SE', {
   timeZone: 'UTC'
 })
@@ -28,13 +32,9 @@ function conventionalChangelogWriterInit (context, options) {
     commitsSort: 'header',
     noteGroupsSort: 'title',
     notesSort: 'text',
-    generateOn: function (commit) {
-      return semverValid(commit.version)
-    },
-    finalizeContext: function (context) {
-      return context
-    },
-    debug: function () { },
+    generateOn: commit => semverValid(commit.version),
+    finalizeContext: context => context,
+    debug: () => {},
     reverse: false,
     includeDetails: false,
     ignoreReverted: true,
@@ -78,10 +78,10 @@ function conventionalChangelogWriterInit (context, options) {
     }
   }
 
-  options.commitGroupsSort = util.functionify(options.commitGroupsSort)
-  options.commitsSort = util.functionify(options.commitsSort)
-  options.noteGroupsSort = util.functionify(options.noteGroupsSort)
-  options.notesSort = util.functionify(options.notesSort)
+  options.commitGroupsSort = functionify(options.commitGroupsSort)
+  options.commitsSort = functionify(options.commitsSort)
+  options.noteGroupsSort = functionify(options.noteGroupsSort)
+  options.notesSort = functionify(options.notesSort)
 
   return { context, options, generateOn }
 }
@@ -100,7 +100,7 @@ function conventionalChangelogWriterParseStream (context, options) {
     async transform (chunk, _enc, cb) {
       try {
         let result
-        const commit = await util.processCommit(chunk, options.transform, context)
+        const commit = await processCommit(chunk, options.transform, context)
         const keyCommit = commit || chunk
 
         // previous blocks of logs
@@ -111,7 +111,7 @@ function conventionalChangelogWriterParseStream (context, options) {
 
           if (generateOn(keyCommit, commits, context, options)) {
             neverGenerated = false
-            result = await util.generate(options, commits, context, keyCommit)
+            result = await generate(options, commits, context, keyCommit)
             if (options.includeDetails) {
               this.push({
                 log: result,
@@ -126,7 +126,7 @@ function conventionalChangelogWriterParseStream (context, options) {
         } else {
           if (generateOn(keyCommit, commits, context, options)) {
             neverGenerated = false
-            result = await util.generate(options, commits, context, savedKeyCommit)
+            result = await generate(options, commits, context, savedKeyCommit)
 
             if (!firstRelease || options.doFlush) {
               if (options.includeDetails) {
@@ -161,7 +161,7 @@ function conventionalChangelogWriterParseStream (context, options) {
       }
 
       try {
-        const result = await util.generate(options, commits, context, savedKeyCommit)
+        const result = await generate(options, commits, context, savedKeyCommit)
 
         if (options.includeDetails) {
           this.push({
@@ -194,10 +194,10 @@ conventionalChangelogWriterParseStream.parseArray = async (rawCommits, context, 
   }
   const entries = []
   for (const rawCommit of rawCommits) {
-    const commit = await util.processCommit(rawCommit, options.transform, context)
+    const commit = await processCommit(rawCommit, options.transform, context)
     const keyCommit = commit || rawCommit
     if (generateOn(keyCommit, commits, context, options)) {
-      entries.push(await util.generate(options, commits, context, savedKeyCommit))
+      entries.push(await generate(options, commits, context, savedKeyCommit))
       savedKeyCommit = keyCommit
       commits = []
     }
@@ -207,9 +207,9 @@ conventionalChangelogWriterParseStream.parseArray = async (rawCommits, context, 
   }
   if (options.reverse) {
     entries.reverse()
-    return await util.generate(options, commits, context, savedKeyCommit) + entries.join('')
+    return await generate(options, commits, context, savedKeyCommit) + entries.join('')
   } else {
-    return entries.join('') + await util.generate(options, commits, context, savedKeyCommit)
+    return entries.join('') + await generate(options, commits, context, savedKeyCommit)
   }
 }
 
