@@ -66,8 +66,8 @@ function getReferences (input, regex) {
       }
 
       const reference = {
-        action: action,
-        owner: owner,
+        action,
+        owner,
         repository: repository || null,
         issue: referenceMatch[3],
         raw: referenceMatch[0],
@@ -132,14 +132,14 @@ function parser (raw, options, regex) {
 
   if (lines.length === 0) {
     return {
-      body: body,
-      footer: footer,
-      header: header,
-      mentions: mentions,
-      merge: merge,
-      notes: notes,
-      references: references,
-      revert: revert,
+      body,
+      footer,
+      header,
+      mentions,
+      merge,
+      notes,
+      references,
+      revert,
       scope: null,
       subject: null,
       type: null
@@ -299,14 +299,14 @@ function parser (raw, options, regex) {
   const msg = {
     ...headerParts,
     ...mergeParts,
-    merge: merge,
-    header: header,
+    merge,
+    header,
     body: body ? trimOffNewlines(body) : null,
     footer: footer ? trimOffNewlines(footer) : null,
-    notes: notes,
-    references: references,
-    mentions: mentions,
-    revert: revert,
+    notes,
+    references,
+    mentions,
+    revert,
     ...otherFields
   }
 

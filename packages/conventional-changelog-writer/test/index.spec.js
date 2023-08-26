@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import { describe, it, expect } from 'vitest'
-import { throughObj } from '../../../tools/test-tools'
-import conventionalChangelogWriter from '../'
+import { delay, throughObj } from '../../../tools/test-tools'
+import conventionalChangelogWriter, { parseArray } from '../'
 
 // sv-SEis used for yyyy-mm-dd format
 const dateFormatter = Intl.DateTimeFormat('sv-SE', {
@@ -99,7 +99,7 @@ describe('conventional-changelog-writer', () => {
         host: 'https://github.com',
         repository: 'a/b'
       }
-      const changelog = conventionalChangelogWriter.parseArray(commits, context)
+      const changelog = await parseArray(commits, context)
 
       expect(changelog).toContain('https://github.com/a/b/commits/13f3160')
 
@@ -119,7 +119,7 @@ describe('conventional-changelog-writer', () => {
         title: 'this is a title',
         repoUrl: 'https://github.com/a/b'
       }
-      const changelog = conventionalChangelogWriter.parseArray(commits, context)
+      const changelog = await parseArray(commits, context)
 
       expect(changelog).toContain('https://github.com/a/b/commits/13f3160')
 
@@ -134,7 +134,7 @@ describe('conventional-changelog-writer', () => {
 
     it('should not auto link', async () => {
       let i = 0
-      const changelog = conventionalChangelogWriter.parseArray(commits, {})
+      const changelog = await parseArray(commits, {})
 
       expect(changelog).not.toContain('https://github.com/a/b/commits/13f3160')
 
@@ -156,7 +156,7 @@ describe('conventional-changelog-writer', () => {
         repository: 'a/b',
         linkReferences: false
       }
-      const changelog = conventionalChangelogWriter.parseArray(commits, context)
+      const changelog = await parseArray(commits, context)
 
       expect(changelog).not.toContain('https://github.com/a/b/commits/13f3160')
 
@@ -175,7 +175,7 @@ describe('conventional-changelog-writer', () => {
       let i = 0
       let called = false
 
-      conventionalChangelogWriter.parseArray(commits, {}, {
+      await parseArray(commits, {}, {
         transform (commit, context) {
           expect(context).toEqual({
             commit: 'commits',
@@ -206,9 +206,9 @@ describe('conventional-changelog-writer', () => {
       expect(i).toBe(1)
     })
 
-    it('should leave the original commits objects unchanged', () => {
+    it('should leave the original commits objects unchanged', async () => {
       expect(commits[1].notes[0].title).toBe('BREAKING CHANGE')
-      conventionalChangelogWriter.parseArray(commits, {}, {
+      await parseArray(commits, {}, {
         transform: {
           notes (notes) {
             notes.map((note) => {
@@ -229,7 +229,7 @@ describe('conventional-changelog-writer', () => {
 
     it('should merge with the provided transform object', async () => {
       let i = 0
-      const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
+      const changelog = await parseArray(commits, {}, {
         transform: {
           notes (notes) {
             notes.map((note) => {
@@ -277,7 +277,7 @@ describe('conventional-changelog-writer', () => {
 
     it('should ignore the commit if tranform returns `null`', async () => {
       let i = 0
-      const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
+      const changelog = await parseArray(commits, {}, {
         transform () {
           return false
         }
@@ -297,6 +297,25 @@ describe('conventional-changelog-writer', () => {
       }
 
       expect(i).toBe(1)
+    })
+
+    it('should support tranform commits async', async () => {
+      const changelog = await parseArray(commits, {}, {
+        async transform () {
+          await delay(100)
+          return {
+            hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
+            header: 'feat(scope): broadcast $destroy event on scope destruction',
+            body: null,
+            notes: [{
+              title: 'BREAKING CHANGE',
+              text: 'some breaking change'
+            }]
+          }
+        }
+      })
+
+      expect(changelog).toContain('broadcast $destroy event on scope destruction')
     })
   })
 
@@ -349,7 +368,7 @@ describe('conventional-changelog-writer', () => {
 
     it('should generate on the transformed commit', async () => {
       let i = 0
-      const changelog = conventionalChangelogWriter.parseArray(commits, {
+      const changelog = await parseArray(commits, {
         version: '1.0.0'
       }, {
         transform (commit) {
@@ -379,7 +398,7 @@ describe('conventional-changelog-writer', () => {
     describe('when commits are not reversed', () => {
       it('should generate on `\'version\'` if it\'s a valid semver', async () => {
         let i = 0
-        const changelog = conventionalChangelogWriter.parseArray(commits)
+        const changelog = await parseArray(commits)
 
         expect(changelog).toContain('##  (' + today)
         expect(changelog).toContain('feat(scope): ')
@@ -460,7 +479,7 @@ describe('conventional-changelog-writer', () => {
 
         upstream.end()
 
-        const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
+        const changelog = await parseArray(commits, {}, {
           generateOn: 'version'
         })
 
@@ -542,7 +561,7 @@ describe('conventional-changelog-writer', () => {
       it('version should fall back on `context.version` and `context.date`', async () => {
         let i = 0
 
-        const changelog = conventionalChangelogWriter.parseArray(commits, {
+        const changelog = await parseArray(commits, {
           version: '0.0.1',
           date: '2015-01-01'
         })
@@ -742,7 +761,7 @@ describe('conventional-changelog-writer', () => {
 
         upstream.end()
 
-        const changelog = conventionalChangelogWriter.parseArray(commits, {}, {
+        const changelog = await parseArray(commits, {}, {
           reverse: true
         })
 

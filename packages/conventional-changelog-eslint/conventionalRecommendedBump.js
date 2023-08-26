@@ -24,7 +24,7 @@ function createConventionalRecommendedBumpOpts (parserOpts) {
       })
 
       return {
-        level: level,
+        level,
         reason: `There are ${breakings} breaking changes and ${features} features`
       }
     }
