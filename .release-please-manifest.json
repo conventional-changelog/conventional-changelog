@@ -4,7 +4,7 @@
   "packages/conventional-changelog": "4.0.0",
   "packages/conventional-commits-parser": "4.0.0",
   "packages/git-raw-commits": "3.0.0",
-  "packages/conventional-changelog-writer": "6.0.1",
+  "packages/conventional-changelog-writer": "7.0.0",
   "packages/conventional-changelog-jshint": "3.0.0",
   "packages/conventional-changelog-jquery": "4.0.0",
   "packages/conventional-changelog-express": "3.0.0",
