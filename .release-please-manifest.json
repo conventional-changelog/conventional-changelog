@@ -1,7 +1,7 @@
 {
   "packages/conventional-changelog-conventionalcommits": "6.1.0",
   "packages/conventional-changelog-cli": "3.0.0",
-  "packages/conventional-changelog": "4.0.0",
+  "packages/conventional-changelog": "5.0.0",
   "packages/conventional-commits-parser": "4.0.0",
   "packages/git-raw-commits": "3.0.0",
   "packages/conventional-changelog-writer": "6.0.1",
