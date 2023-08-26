@@ -13,7 +13,7 @@
   "packages/conventional-changelog-codemirror": "3.0.0",
   "packages/conventional-changelog-angular": "6.0.0",
   "packages/conventional-changelog-atom": "3.0.0",
-  "packages/git-semver-tags": "5.0.1",
+  "packages/git-semver-tags": "6.0.0",
   "packages/conventional-commits-filter": "3.0.0",
   "packages/conventional-changelog-preset-loader": "3.0.0",
   "packages/conventional-recommended-bump": "7.0.1",
