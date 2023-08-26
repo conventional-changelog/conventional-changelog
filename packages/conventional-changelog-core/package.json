@@ -28,17 +28,17 @@
   "dependencies": {
     "@hutson/parse-repository-url": "^5.0.0",
     "add-stream": "^1.0.0",
-    "conventional-changelog-writer": "^6.0.0",
-    "conventional-commits-parser": "^4.0.0",
-    "git-raw-commits": "^3.0.0",
+    "conventional-changelog-writer": "workspace:^",
+    "conventional-commits-parser": "workspace:^",
+    "git-raw-commits": "workspace:^",
     "git-remote-origin-url": "^2.0.0",
-    "git-semver-tags": "^5.0.0",
+    "git-semver-tags": "workspace:^",
     "hosted-git-info": "^7.0.0",
     "normalize-package-data": "^6.0.0",
     "read-pkg": "^8.0.0",
     "read-pkg-up": "^10.0.0"
   },
   "devDependencies": {
-    "conventional-changelog-angular": "^6.0.0"
+    "conventional-changelog-angular": "workspace:^"
   }
 }

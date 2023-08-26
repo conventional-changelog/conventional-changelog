@@ -31,15 +31,15 @@
   ],
   "dependencies": {
     "concat-stream": "^2.0.0",
-    "conventional-changelog-preset-loader": "^3.0.0",
-    "conventional-commits-filter": "^3.0.0",
-    "conventional-commits-parser": "^4.0.0",
-    "git-raw-commits": "^3.0.0",
-    "git-semver-tags": "^5.0.0",
+    "conventional-changelog-preset-loader": "workspace:^",
+    "conventional-commits-filter": "workspace:^",
+    "conventional-commits-parser": "workspace:^",
+    "git-raw-commits": "workspace:^",
+    "git-semver-tags": "workspace:^",
     "meow": "^12.0.1"
   },
   "bin": "cli.mjs",
   "devDependencies": {
-    "conventional-changelog-conventionalcommits": "^6.1.0"
+    "conventional-changelog-conventionalcommits": "workspace:^"
   }
 }
