@@ -20,7 +20,7 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       conventional-changelog-core:
-        specifier: ^5.0.0
+        specifier: workspace:^
         version: link:packages/conventional-changelog-core
       eslint:
         specifier: ^8.0.0
@@ -65,37 +65,37 @@ importers:
   packages/conventional-changelog:
     dependencies:
       conventional-changelog-angular:
-        specifier: ^6.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-angular
       conventional-changelog-atom:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-atom
       conventional-changelog-codemirror:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-codemirror
       conventional-changelog-conventionalcommits:
-        specifier: ^6.1.0
+        specifier: workspace:^
         version: link:../conventional-changelog-conventionalcommits
       conventional-changelog-core:
-        specifier: ^5.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-core
       conventional-changelog-ember:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-ember
       conventional-changelog-eslint:
-        specifier: ^4.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-eslint
       conventional-changelog-express:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-express
       conventional-changelog-jquery:
-        specifier: ^4.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-jquery
       conventional-changelog-jshint:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-jshint
       conventional-changelog-preset-loader:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-preset-loader
 
   packages/conventional-changelog-angular:
@@ -112,7 +112,7 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       conventional-changelog:
-        specifier: ^4.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog
       meow:
         specifier: ^12.0.1
@@ -138,19 +138,19 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       conventional-changelog-writer:
-        specifier: ^6.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-writer
       conventional-commits-parser:
-        specifier: ^4.0.0
+        specifier: workspace:^
         version: link:../conventional-commits-parser
       git-raw-commits:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../git-raw-commits
       git-remote-origin-url:
         specifier: ^2.0.0
         version: 2.0.0
       git-semver-tags:
-        specifier: ^5.0.0
+        specifier: workspace:^
         version: link:../git-semver-tags
       hosted-git-info:
         specifier: ^7.0.0
@@ -166,7 +166,7 @@ importers:
         version: 10.0.0
     devDependencies:
       conventional-changelog-angular:
-        specifier: ^6.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-angular
 
   packages/conventional-changelog-ember: {}
@@ -186,10 +186,10 @@ importers:
   packages/conventional-changelog-preset-loader:
     devDependencies:
       conventional-changelog-angular:
-        specifier: ^6.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-angular
       conventional-changelog-conventionalcommits:
-        specifier: ^6.1.0
+        specifier: workspace:^
         version: link:../conventional-changelog-conventionalcommits
       sinon:
         specifier: ^15.0.0
@@ -198,7 +198,7 @@ importers:
   packages/conventional-changelog-writer:
     dependencies:
       conventional-commits-filter:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-commits-filter
       handlebars:
         specifier: ^4.7.7
@@ -250,26 +250,26 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       conventional-changelog-preset-loader:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-preset-loader
       conventional-commits-filter:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../conventional-commits-filter
       conventional-commits-parser:
-        specifier: ^4.0.0
+        specifier: workspace:^
         version: link:../conventional-commits-parser
       git-raw-commits:
-        specifier: ^3.0.0
+        specifier: workspace:^
         version: link:../git-raw-commits
       git-semver-tags:
-        specifier: ^5.0.0
+        specifier: workspace:^
         version: link:../git-semver-tags
       meow:
         specifier: ^12.0.1
         version: 12.0.1
     devDependencies:
       conventional-changelog-conventionalcommits:
-        specifier: ^6.1.0
+        specifier: workspace:^
         version: link:../conventional-changelog-conventionalcommits
 
   packages/git-raw-commits:
@@ -302,7 +302,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       conventional-changelog:
-        specifier: ^4.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog
       fancy-log:
         specifier: ^2.0.0
@@ -317,10 +317,10 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       conventional-changelog-angular:
-        specifier: ^6.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-angular
       conventional-changelog-core:
-        specifier: ^5.0.0
+        specifier: workspace:^
         version: link:../conventional-changelog-core
       figures:
         specifier: ^3.2.0

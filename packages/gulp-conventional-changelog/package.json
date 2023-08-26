@@ -32,7 +32,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "concat-stream": "^2.0.0",
-    "conventional-changelog": "^4.0.0",
+    "conventional-changelog": "workspace:^",
     "fancy-log": "^2.0.0",
     "plugin-error": "^2.0.0"
   }
