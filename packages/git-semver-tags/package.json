@@ -1,6 +1,6 @@
 {
   "name": "git-semver-tags",
-  "version": "4.1.1",
+  "version": "5.0.1",
   "description": "Get all git semver tags of your repository in reverse chronological order",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
@@ -21,7 +21,7 @@
   },
   "files": [
     "index.js",
-    "cli.js"
+    "cli.mjs"
   ],
   "keywords": [
     "git-semver-tags",
@@ -32,13 +32,10 @@
     "git"
   ],
   "dependencies": {
-    "meow": "^8.0.0",
-    "semver": "^6.0.0"
-  },
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
+    "meow": "^12.0.1",
+    "semver": "^7.5.2"
   },
   "bin": {
-    "git-semver-tags": "cli.js"
+    "git-semver-tags": "cli.mjs"
   }
 }

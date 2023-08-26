@@ -58,11 +58,11 @@ jobs:
         if: ${{ steps.tag-release.outputs.releases_created }}
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
+          version: 8
       - uses: actions/setup-node@v3
         if: ${{ steps.tag-release.outputs.releases_created }}
         with:
-          node-version: 14
+          node-version: 16
           registry-url: 'https://external-dot-oss-automation.appspot.com/'
           cache: 'pnpm'
       - name: publish

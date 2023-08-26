@@ -25,6 +25,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v6.0.0...conventional-changelog-conventionalcommits-v6.1.0) (2023-06-17)
+
+
+### Features
+
+* **conventional-changelog-conventionalcommits:** sort groups based on config types ([#702](https://github.com/conventional-changelog/conventional-changelog/issues/702)) ([#1002](https://github.com/conventional-changelog/conventional-changelog/issues/1002)) ([0e59f0c](https://github.com/conventional-changelog/conventional-changelog/commit/0e59f0c884bf104e3a6a14c5669c58755cdef064))
+
+## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v5.0.0...conventional-changelog-conventionalcommits-v6.0.0) (2023-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* now all promises are native
+* Node >= 14 is required
+
+### Code Refactoring
+
+* drop lodash from dependencies where it possible ([#959](https://github.com/conventional-changelog/conventional-changelog/issues/959)) ([a8b4e12](https://github.com/conventional-changelog/conventional-changelog/commit/a8b4e12883021231befc6bdfeb95a9b50637f361))
+* drop q from dependencies ([#974](https://github.com/conventional-changelog/conventional-changelog/issues/974)) ([d0e5d59](https://github.com/conventional-changelog/conventional-changelog/commit/d0e5d5926c8addba74bc962553dd8bcfba90e228))
+
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v4.6.3...conventional-changelog-conventionalcommits-v5.0.0) (2022-05-27)
 
 

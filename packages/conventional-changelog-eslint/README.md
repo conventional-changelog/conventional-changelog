@@ -1,8 +1,40 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# conventional-changelog-eslint
 
-> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [eslint](https://github.com/eslint/eslint) preset
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
+
+[npm]: https://img.shields.io/npm/v/conventional-changelog-eslint.svg
+[npm-url]: https://npmjs.com/package/conventional-changelog-eslint
+
+[node]: https://img.shields.io/node/v/conventional-changelog-eslint.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-eslint
+[deps-url]: https://libraries.io/npm/conventional-changelog-eslint/tree
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) [eslint](https://github.com/eslint/eslint) preset.
 
 **Issues with the convention itself should be reported on the ESLint issue tracker.**
+
+## Install
+
+```bash
+# yarn
+yarn add -D conventional-changelog-eslint
+# pnpm
+pnpm add -D conventional-changelog-eslint
+# npm
+npm i -D conventional-changelog-eslint
+```
 
 ## ESLint Convention
 
@@ -42,12 +74,3 @@ Upgrade: Esprima to 1.2, switch to using comment attachment (fixes #730)
 The commit message format is important because these messages are used to create a changelog for each release. The tag and issue number help to create more consistent and useful changelogs.
 
 Based on https://eslint.org/docs/developer-guide/contributing/pull-requests#step2
-
-[npm-image]: https://badge.fury.io/js/conventional-changelog-eslint.svg
-[npm-url]: https://npmjs.org/package/conventional-changelog-eslint
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-eslint.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-eslint
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-eslint.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-eslint
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

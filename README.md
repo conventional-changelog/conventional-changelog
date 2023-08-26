@@ -1,13 +1,15 @@
 # Conventional Changelog
 
-[![Build Status](https://travis-ci.org/conventional-changelog/conventional-changelog.svg?branch=master)](https://travis-ci.org/conventional-changelog/conventional-changelog)
-[![Coverage Status](https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master)](https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master?branch=master)
-[![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
-[![community slack](http://devtoolscommunity.herokuapp.com/badge.svg)](http://devtoolscommunity.herokuapp.com)
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 
-_Having problems? want to contribute? join our [community slack](http://devtoolscommunity.herokuapp.com)_.
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
 
-> Generate a CHANGELOG from git metadata
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+Generate a CHANGELOG from git metadata.
 
 ## About this Repo
 

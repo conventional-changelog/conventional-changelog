@@ -1,11 +1,8 @@
 {
   "name": "conventional-changelog-conventionalcommits",
-  "version": "5.0.0",
+  "version": "6.1.0",
   "description": "conventional-changelog conventionalcommits.org preset",
   "main": "index.js",
-  "scripts": {
-    "test-windows": "mocha --timeout 30000"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
@@ -16,12 +13,12 @@
     "preset"
   ],
   "files": [
-    "add-bang-notes.js",
-    "conventional-changelog.js",
-    "conventional-recommended-bump.js",
+    "utils.js",
+    "conventionalChangelog.js",
+    "conventionalRecommendedBump.js",
     "index.js",
-    "parser-opts.js",
-    "writer-opts.js",
+    "parserOpts.js",
+    "writerOpts.js",
     "templates"
   ],
   "author": "Ben Coe",

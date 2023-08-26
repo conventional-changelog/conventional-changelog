@@ -1,8 +1,40 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# conventional-changelog-ember
 
-> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [ember](https://github.com/emberjs/ember.js) preset
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
+
+[npm]: https://img.shields.io/npm/v/conventional-changelog-ember.svg
+[npm-url]: https://npmjs.com/package/conventional-changelog-ember
+
+[node]: https://img.shields.io/node/v/conventional-changelog-ember.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-ember
+[deps-url]: https://libraries.io/npm/conventional-changelog-ember/tree
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) [ember](https://github.com/emberjs/ember.js) preset.
 
 **Issues with the convention itself should be reported on the Ember issue tracker.**
+
+## Install
+
+```bash
+# yarn
+yarn add -D conventional-changelog-ember
+# pnpm
+pnpm add -D conventional-changelog-ember
+# npm
+npm i -D conventional-changelog-ember
+```
 
 ## Ember Convention
 
@@ -52,12 +84,3 @@ Security commits will be tagged as `[SECURITY cve]`. Please do not submit securi
 In general almost all commits should fall into one of these categories. In the cases where they don't please submit your PR untagged. An Ember contributor will let you know if tagging is required.
 
 Based on https://github.com/emberjs/ember.js/blob/master/CONTRIBUTING.md
-
-[npm-image]: https://badge.fury.io/js/conventional-changelog-ember.svg
-[npm-url]: https://npmjs.org/package/conventional-changelog-ember
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-ember.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-ember
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-ember.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-ember
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

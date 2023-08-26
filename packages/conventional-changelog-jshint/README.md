@@ -1,8 +1,40 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# conventional-changelog-jshint
 
-> [conventional-changelog](https://github.com/ajoslin/conventional-changelog) [jshint](https://github.com/jshint/jshint) preset
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
+
+[npm]: https://img.shields.io/npm/v/conventional-changelog-jshint.svg
+[npm-url]: https://npmjs.com/package/conventional-changelog-jshint
+
+[node]: https://img.shields.io/node/v/conventional-changelog-jshint.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-jshint
+[deps-url]: https://libraries.io/npm/conventional-changelog-jshint/tree
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+[conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) [jshint](https://github.com/jshint/jshint) preset.
 
 **Issues with the convention itself should be reported on the JSHint issue tracker.**
+
+## Install
+
+```bash
+# yarn
+yarn add -D conventional-changelog-jshint
+# pnpm
+pnpm add -D conventional-changelog-jshint
+# npm
+npm i -D conventional-changelog-jshint
+```
 
 ## JSHint Convention
 
@@ -79,12 +111,3 @@ Closes #77777
 ```
 
 Based on https://github.com/jshint/jshint/blob/master/CONTRIBUTING.md#commit-message-guidelines
-
-[npm-image]: https://badge.fury.io/js/conventional-changelog-jshint.svg
-[npm-url]: https://npmjs.org/package/conventional-changelog-jshint
-[travis-image]: https://travis-ci.org/stevemao/conventional-changelog-jshint.svg?branch=master
-[travis-url]: https://travis-ci.org/stevemao/conventional-changelog-jshint
-[daviddm-image]: https://david-dm.org/stevemao/conventional-changelog-jshint.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/conventional-changelog-jshint
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

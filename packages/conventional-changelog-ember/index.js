@@ -1,22 +1,25 @@
 'use strict'
-const conventionalChangelog = require('./conventional-changelog')
-const parserOpts = require('./parser-opts')
-const recommendedBumpOpts = require('./conventional-recommended-bump')
-const writerOpts = require('./writer-opts')
 
-module.exports = presetOpts
+const { createParserOpts } = require('./parserOpts')
+const { createWriterOpts } = require('./writerOpts')
+const { createConventionalChangelogOpts } = require('./conventionalChangelog')
+const { createConventionalRecommendedBumpOpts } = require('./conventionalRecommendedBump')
 
-function presetOpts (cb) {
-  Promise.all([conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts])
-    .then(([conventionalChangelog, parserOpts, recommendedBumpOpts, writerOpts]) => {
-      cb(null, {
-        gitRawCommitsOpts: {
-          noMerges: null
-        },
-        conventionalChangelog,
-        parserOpts,
-        recommendedBumpOpts,
-        writerOpts
-      })
-    })
+async function createPreset () {
+  const parserOpts = createParserOpts()
+  const writerOpts = await createWriterOpts()
+  const recommendedBumpOpts = createConventionalRecommendedBumpOpts(parserOpts)
+  const conventionalChangelog = createConventionalChangelogOpts(parserOpts, writerOpts)
+
+  return {
+    gitRawCommitsOpts: {
+      noMerges: null
+    },
+    parserOpts,
+    writerOpts,
+    recommendedBumpOpts,
+    conventionalChangelog
+  }
 }
+
+module.exports = createPreset

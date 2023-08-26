@@ -1,6 +1,5 @@
 'use strict'
-const { promisify } = require('util')
-const dateFormat = require('dateformat')
+const fs = require('fs/promises')
 const getPkgRepo = require('get-pkg-repo')
 const gitSemverTags = require('git-semver-tags')
 const normalizePackageData = require('normalize-package-data')
@@ -10,11 +9,13 @@ try {
 } catch (err) {
   gitRemoteOriginUrl = () => Promise.reject(err)
 }
-const readPkg = require('read-pkg')
-const readPkgUp = require('read-pkg-up')
 const { URL } = require('url')
 
 const rhosts = /github|bitbucket|gitlab/i
+// sv-SEis used for yyyy-mm-dd format
+const dateFormatter = Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'UTC'
+})
 
 function semverTagsPromise (options) {
   return new Promise((resolve, reject) => {
@@ -22,7 +23,8 @@ function semverTagsPromise (options) {
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
       tagPrefix: options.tagPrefix,
-      skipUnstable: options.skipUnstable
+      skipUnstable: options.skipUnstable,
+      cwd: options.cwd
     }, (err, result) => {
       if (err) {
         reject(err)
@@ -53,13 +55,32 @@ function guessNextTag (previousTag, version) {
   return version
 }
 
+function omitUndefinedValueProps (obj) {
+  if (!obj) {
+    return {}
+  }
+
+  const omittedObj = {}
+
+  for (const key in obj) {
+    if (obj[key] !== undefined) {
+      omittedObj[key] = obj[key]
+    }
+  }
+
+  return omittedObj
+}
+
 async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
-  let configPromise
   let pkgPromise
 
+  options = omitUndefinedValueProps(options)
   context = context || {}
   gitRawCommitsOpts = gitRawCommitsOpts || {}
-  gitRawExecOpts = gitRawExecOpts || {}
+  gitRawExecOpts = {
+    cwd: options?.cwd,
+    ...gitRawExecOpts || {}
+  }
 
   const rtag = options && options.tagPrefix ? new RegExp(`tag:\\s*[=]?${options.tagPrefix}(.+?)[,)]`, 'gi') : /tag:\s*[v=]?(.+?)[,)]/gi
 
@@ -79,7 +100,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
       }
 
       if (commit.committerDate) {
-        commit.committerDate = dateFormat(commit.committerDate, 'yyyy-mm-dd', true)
+        commit.committerDate = dateFormatter.format(new Date(commit.committerDate))
       }
 
       cb(null, commit)
@@ -96,30 +117,31 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   options.warn = options.warn || options.debug
 
-  if (options.config) {
-    if (typeof options.config === 'function') {
-      configPromise = promisify(options.config)()
-    } else {
-      configPromise = Promise.resolve(options.config)
-    }
-  }
-
   if (options.pkg) {
     if (options.pkg.path) {
-      pkgPromise = Promise.resolve(readPkg(options.pkg.path))
+      pkgPromise = import('read-pkg').then(async ({ parsePackage }) => {
+        const json = await fs.readFile(options.pkg.path, 'utf-8')
+
+        return parsePackage(json)
+      })
     } else {
-      pkgPromise = Promise.resolve(readPkgUp())
+      pkgPromise = import('read-pkg-up').then(async ({ readPackageUp }) => {
+        const { packageJson } = await readPackageUp({ cwd: options.cwd })
+
+        return packageJson
+      })
     }
   }
 
-  const gitRemoteOriginUrlPromise = Promise.resolve(gitRemoteOriginUrl())
+  const presetConfig = typeof options.config === 'function' ? options.config() : options.config
+  const gitRemoteOriginUrlPromise = Promise.resolve(gitRemoteOriginUrl(options.cwd))
   const [
     configObj,
     pkgObj,
     tagsObj,
     gitRemoteOriginUrlObj
   ] = await Promise.allSettled([
-    configPromise,
+    presetConfig,
     pkgPromise,
     semverTagsPromise(options),
     gitRemoteOriginUrlPromise
@@ -133,11 +155,11 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   let gitSemverTags = []
 
-  if (configPromise) {
+  if (options.config) {
     if (configObj.status === 'fulfilled') {
       config = configObj.value
     } else {
-      options.warn('Error in config' + configObj.reason.toString())
+      options.warn(configObj.reason.toString())
       config = {}
     }
   } else {
@@ -151,12 +173,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   if (options.pkg) {
     if (pkgObj.status === 'fulfilled') {
-      if (options.pkg.path) {
-        pkg = pkgObj.value
-      } else {
-        pkg = pkgObj.value.pkg || {}
-      }
-
+      pkg = pkgObj.value || {}
       pkg = options.pkg.transform(pkg)
     } else if (options.pkg.path) {
       options.warn(pkgObj.reason.toString())
@@ -345,12 +362,12 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   }
 
   return {
-    options: options,
-    context: context,
-    gitRawCommitsOpts: gitRawCommitsOpts,
-    parserOpts: parserOpts,
-    writerOpts: writerOpts,
-    gitRawExecOpts: gitRawExecOpts
+    options,
+    context,
+    gitRawCommitsOpts,
+    parserOpts,
+    writerOpts,
+    gitRawExecOpts
   }
 }
 

@@ -1,14 +1,39 @@
 'use strict'
 
-const isMatch = require('lodash.ismatch')
-const modifyValues = require('modify-values')
+function isMatch (object, source) {
+  let aValue
+  let bValue
 
-function modifyValue (val) {
-  if (typeof val === 'string') {
-    return val.trim()
+  return Object.keys(source).every((key) => {
+    aValue = object[key]
+    bValue = source[key]
+
+    if (typeof aValue === 'string') {
+      aValue = aValue.trim()
+    }
+
+    if (typeof bValue === 'string') {
+      bValue = bValue.trim()
+    }
+
+    return aValue === bValue
+  })
+}
+
+function findRevertCommit (commit, reverts) {
+  if (!reverts.size) {
+    return null
   }
 
-  return val
+  const rawCommit = commit.raw || commit
+
+  for (const revertCommit of reverts) {
+    if (revertCommit.revert && isMatch(rawCommit, revertCommit.revert)) {
+      return revertCommit
+    }
+  }
+
+  return null
 }
 
 function conventionalCommitsFilter (commits) {
@@ -16,44 +41,41 @@ function conventionalCommitsFilter (commits) {
     throw new TypeError('Expected an array')
   }
 
-  let ret = []
-  const ignores = []
-  const remove = []
-  commits.forEach(function (commit) {
-    if (commit.revert) {
-      ignores.push(commit)
+  const result = []
+  const hold = new Set()
+  let holdRevertsCount = 0
+  let revertCommit
+
+  // loop is prepared for streams/iterators
+  for (const commit of commits) {
+    revertCommit = findRevertCommit(commit, hold)
+
+    if (revertCommit) {
+      hold.delete(revertCommit)
+      holdRevertsCount--
+      continue
     }
 
-    ret.push(commit)
-  })
+    if (commit.revert) {
+      hold.add(commit)
+      holdRevertsCount++
+      continue
+    }
 
-  // Filter out reverted commits
-  ret = ret.filter(function (commit) {
-    let ignoreThis = false
+    if (holdRevertsCount > 0) {
+      hold.add(commit)
+    } else {
+      result.push(commit)
+    }
+  }
 
-    commit = commit.raw ? modifyValues(commit.raw, modifyValue) : modifyValues(commit, modifyValue)
+  if (hold.size) {
+    for (const commit of hold) {
+      result.push(commit)
+    }
+  }
 
-    ignores.some(function (ignoreCommit) {
-      const ignore = modifyValues(ignoreCommit.revert, modifyValue)
-
-      ignoreThis = isMatch(commit, ignore)
-
-      if (ignoreThis) {
-        remove.push(ignoreCommit.hash)
-      }
-
-      return ignoreThis
-    })
-
-    return !ignoreThis
-  })
-
-  // Filter out the commits that reverted something otherwise keep the revert commits
-  ret = ret.filter(function (commit) {
-    return remove.indexOf(commit.hash) !== 0
-  })
-
-  return ret
+  return result
 }
 
 module.exports = conventionalCommitsFilter

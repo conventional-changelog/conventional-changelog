@@ -1,11 +1,8 @@
 {
   "name": "conventional-changelog-eslint",
-  "version": "3.0.9",
+  "version": "4.0.0",
   "description": "conventional-changelog eslint preset",
   "main": "index.js",
-  "scripts": {
-    "test-windows": "echo 'make work on windows'"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
@@ -21,11 +18,11 @@
   },
   "license": "ISC",
   "files": [
-    "conventional-changelog.js",
-    "conventional-recommended-bump.js",
+    "conventionalChangelog.js",
+    "conventionalRecommendedBump.js",
     "index.js",
-    "parser-opts.js",
-    "writer-opts.js",
+    "parserOpts.js",
+    "writerOpts.js",
     "templates"
   ],
   "bugs": {
