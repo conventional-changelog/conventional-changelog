@@ -1,6 +1,6 @@
 {
   "name": "conventional-recommended-bump",
-  "version": "7.0.1",
+  "version": "8.0.0",
   "description": "Get a recommended version bump based on conventional commits",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"

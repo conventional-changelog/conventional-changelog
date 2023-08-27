@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog-v3.0.0...gulp-conventional-changelog-v4.0.0) (2023-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 16 is required
+* Now all presets are exports preset config factory function. conventional-changelog-preset-loader now exports new loadPreset and createPresetLoader functions. If you are using presets indirectly, using preset name, no any changes in configuration needed, just upgrade packages to latest versions.
+
+### Features
+
+* drop node 14 support ([#1085](https://github.com/conventional-changelog/conventional-changelog/issues/1085)) ([1bce036](https://github.com/conventional-changelog/conventional-changelog/commit/1bce0362dbb624a869eb01fd7724ab7f81d337e6))
+* unified presets interface ([#1045](https://github.com/conventional-changelog/conventional-changelog/issues/1045)) ([8d0ffbe](https://github.com/conventional-changelog/conventional-changelog/commit/8d0ffbe6c59b861b560cea0e3594c7b32e978cc3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency fancy-log to v2 ([#901](https://github.com/conventional-changelog/conventional-changelog/issues/901)) ([5d93f15](https://github.com/conventional-changelog/conventional-changelog/commit/5d93f15f767a121fffda434e2eb1e862d8621a2f))
+* **deps:** update dependency plugin-error to v2 ([#1038](https://github.com/conventional-changelog/conventional-changelog/issues/1038)) ([5fe464c](https://github.com/conventional-changelog/conventional-changelog/commit/5fe464cc5972af35c93f224256a20a56be4b9d31))
+
 ## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/gulp-conventional-changelog-v2.0.35...gulp-conventional-changelog-v3.0.0) (2023-06-06)
 
 
