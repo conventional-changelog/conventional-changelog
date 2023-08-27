@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-cli",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Generate a changelog from git metadata",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
