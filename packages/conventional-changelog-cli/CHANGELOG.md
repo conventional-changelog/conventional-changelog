@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v3.0.0...conventional-changelog-cli-v4.0.0) (2023-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 16 is required
+* Now all presets are exports preset config factory function. conventional-changelog-preset-loader now exports new loadPreset and createPresetLoader functions. If you are using presets indirectly, using preset name, no any changes in configuration needed, just upgrade packages to latest versions.
+
+### Features
+
+* drop node 14 support ([#1085](https://github.com/conventional-changelog/conventional-changelog/issues/1085)) ([1bce036](https://github.com/conventional-changelog/conventional-changelog/commit/1bce0362dbb624a869eb01fd7724ab7f81d337e6))
+* unified presets interface ([#1045](https://github.com/conventional-changelog/conventional-changelog/issues/1045)) ([8d0ffbe](https://github.com/conventional-changelog/conventional-changelog/commit/8d0ffbe6c59b861b560cea0e3594c7b32e978cc3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency tempfile to v5 ([#1041](https://github.com/conventional-changelog/conventional-changelog/issues/1041)) ([c026e30](https://github.com/conventional-changelog/conventional-changelog/commit/c026e3006cd4cc2d49812ff8a4cfa9f3d4b3795c))
+* fix semver vulnerability ([#1071](https://github.com/conventional-changelog/conventional-changelog/issues/1071)) ([3f5c99d](https://github.com/conventional-changelog/conventional-changelog/commit/3f5c99d503ea1bf01df679f4180c39516e190b21)), closes [#1019](https://github.com/conventional-changelog/conventional-changelog/issues/1019)
+
 ## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v2.2.2...conventional-changelog-cli-v3.0.0) (2023-06-05)
 
 

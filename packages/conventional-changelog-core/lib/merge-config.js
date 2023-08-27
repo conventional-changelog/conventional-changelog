@@ -1,6 +1,7 @@
 'use strict'
 const fs = require('fs/promises')
-const getPkgRepo = require('get-pkg-repo')
+const hostedGitInfo = require('hosted-git-info')
+const parseRepositoryUrl = require('@hutson/parse-repository-url')
 const gitSemverTags = require('git-semver-tags')
 const normalizePackageData = require('normalize-package-data')
 let gitRemoteOriginUrl
@@ -191,7 +192,11 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     context.version = context.version || pkg.version
 
     try {
-      repo = getPkgRepo(pkg)
+      const repositoryURL = typeof pkg.repository === 'string' ? pkg.repository : pkg.repository.url
+      if (repositoryURL) {
+        // Remove parseRepositoryUrl when https://github.com/npm/hosted-git-info/issues/39 is fixed
+        repo = hostedGitInfo.fromUrl(repositoryURL) || parseRepositoryUrl(repositoryURL)
+      }
     } catch (err) {
       repo = {}
     }
