@@ -24,7 +24,6 @@
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "devDependencies": {
     "conventional-changelog-angular": "workspace:^",
-    "conventional-changelog-conventionalcommits": "workspace:^",
-    "sinon": "^15.0.0"
+    "conventional-changelog-conventionalcommits": "workspace:^"
   }
 }
