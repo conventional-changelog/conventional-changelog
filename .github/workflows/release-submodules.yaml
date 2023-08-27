@@ -1,7 +1,4 @@
-on:
-  push:
-    branches:
-      - master
+on: workflow_dispatch
 name: release-please-submodule
 jobs:
   changeFinder:

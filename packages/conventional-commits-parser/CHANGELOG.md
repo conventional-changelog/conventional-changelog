@@ -37,6 +37,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v4.0.0...conventional-commits-parser-v5.0.0) (2023-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 16 is required
+
+### Features
+
+* drop node 14 support ([#1085](https://github.com/conventional-changelog/conventional-changelog/issues/1085)) ([1bce036](https://github.com/conventional-changelog/conventional-changelog/commit/1bce0362dbb624a869eb01fd7724ab7f81d337e6))
+
+
+### Bug Fixes
+
+* **deps:** update dependency is-text-path to v2 ([#903](https://github.com/conventional-changelog/conventional-changelog/issues/903)) ([8568ee4](https://github.com/conventional-changelog/conventional-changelog/commit/8568ee4bcd66ceeb85444dc71342bcb2b11db9ca))
+* **deps:** update dependency split2 to v4 ([#1032](https://github.com/conventional-changelog/conventional-changelog/issues/1032)) ([d16ccc5](https://github.com/conventional-changelog/conventional-changelog/commit/d16ccc5df75f2c728417d20324b6eb6e746633ab))
+* fix semver vulnerability ([#1071](https://github.com/conventional-changelog/conventional-changelog/issues/1071)) ([3f5c99d](https://github.com/conventional-changelog/conventional-changelog/commit/3f5c99d503ea1bf01df679f4180c39516e190b21)), closes [#1019](https://github.com/conventional-changelog/conventional-changelog/issues/1019)
+
 ## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.4...conventional-commits-parser-v4.0.0) (2023-06-06)
 
 
