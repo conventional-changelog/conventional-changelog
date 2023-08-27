@@ -35,16 +35,16 @@
   },
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
   "dependencies": {
-    "conventional-changelog-angular": "^6.0.0",
-    "conventional-changelog-atom": "^3.0.0",
-    "conventional-changelog-codemirror": "^3.0.0",
-    "conventional-changelog-conventionalcommits": "^6.1.0",
-    "conventional-changelog-core": "^5.0.0",
-    "conventional-changelog-ember": "^3.0.0",
-    "conventional-changelog-eslint": "^4.0.0",
-    "conventional-changelog-express": "^3.0.0",
-    "conventional-changelog-jquery": "^4.0.0",
-    "conventional-changelog-jshint": "^3.0.0",
-    "conventional-changelog-preset-loader": "^3.0.0"
+    "conventional-changelog-angular": "workspace:^",
+    "conventional-changelog-atom": "workspace:^",
+    "conventional-changelog-codemirror": "workspace:^",
+    "conventional-changelog-conventionalcommits": "workspace:^",
+    "conventional-changelog-core": "workspace:^",
+    "conventional-changelog-ember": "workspace:^",
+    "conventional-changelog-eslint": "workspace:^",
+    "conventional-changelog-express": "workspace:^",
+    "conventional-changelog-jquery": "workspace:^",
+    "conventional-changelog-jshint": "workspace:^",
+    "conventional-changelog-preset-loader": "workspace:^"
   }
 }
