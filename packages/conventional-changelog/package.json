@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",
