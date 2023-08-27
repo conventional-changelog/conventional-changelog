@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits-v3.0.0...git-raw-commits-v4.0.0) (2023-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 16 is required
+
+### Features
+
+* drop node 14 support ([#1085](https://github.com/conventional-changelog/conventional-changelog/issues/1085)) ([1bce036](https://github.com/conventional-changelog/conventional-changelog/commit/1bce0362dbb624a869eb01fd7724ab7f81d337e6))
+* **git-raw-commits:** add support for multiple paths ([#1079](https://github.com/conventional-changelog/conventional-changelog/issues/1079)) ([107daf2](https://github.com/conventional-changelog/conventional-changelog/commit/107daf24368b07301e1fd6611a8e7c3d7d7cd637))
+* **git-raw-commits:** ignore commits by regex ([#1063](https://github.com/conventional-changelog/conventional-changelog/issues/1063)) ([47033e6](https://github.com/conventional-changelog/conventional-changelog/commit/47033e6edfea3705383bb075bc6a4bd417f9ed8c))
+
+
+### Bug Fixes
+
+* **deps:** update dependency dargs to v8 ([#1028](https://github.com/conventional-changelog/conventional-changelog/issues/1028)) ([1dbcc99](https://github.com/conventional-changelog/conventional-changelog/commit/1dbcc993ba0352b140fcf7074c1ee4078298ea5f))
+* **deps:** update dependency split2 to v4 ([#1032](https://github.com/conventional-changelog/conventional-changelog/issues/1032)) ([d16ccc5](https://github.com/conventional-changelog/conventional-changelog/commit/d16ccc5df75f2c728417d20324b6eb6e746633ab))
+* fix semver vulnerability ([#1071](https://github.com/conventional-changelog/conventional-changelog/issues/1071)) ([3f5c99d](https://github.com/conventional-changelog/conventional-changelog/commit/3f5c99d503ea1bf01df679f4180c39516e190b21)), closes [#1019](https://github.com/conventional-changelog/conventional-changelog/issues/1019)
+
 ## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits-v2.0.11...git-raw-commits-v3.0.0) (2023-06-06)
 
 
