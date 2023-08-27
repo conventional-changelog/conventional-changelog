@@ -19,7 +19,8 @@
     "index.js",
     "parserOpts.js",
     "writerOpts.js",
-    "templates"
+    "templates",
+    "constants.js"
   ],
   "author": "Ben Coe",
   "engines": {
