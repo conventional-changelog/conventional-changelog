@@ -25,6 +25,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v7.0.0...conventional-changelog-conventionalcommits-v7.0.1) (2023-08-27)
+
+
+### Bug Fixes
+
+* **conventional-changelog-conventionalcommits:** include constants.js in package ([#1095](https://github.com/conventional-changelog/conventional-changelog/issues/1095)) ([a730b18](https://github.com/conventional-changelog/conventional-changelog/commit/a730b186c10493ee551b84b528d7437dbc3feac0)), closes [#1093](https://github.com/conventional-changelog/conventional-changelog/issues/1093)
+
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v6.1.0...conventional-changelog-conventionalcommits-v7.0.0) (2023-08-26)
 
 
