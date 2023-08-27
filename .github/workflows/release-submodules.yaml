@@ -1,4 +1,7 @@
 on: workflow_dispatch
+permissions:
+  contents: write
+  pull-requests: write
 name: release-please-submodule
 jobs:
   changeFinder:
