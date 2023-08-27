@@ -1,6 +1,6 @@
 {
   "name": "conventional-changelog-codemirror",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "conventional-changelog CodeMirror preset",
   "main": "index.js",
   "repository": {

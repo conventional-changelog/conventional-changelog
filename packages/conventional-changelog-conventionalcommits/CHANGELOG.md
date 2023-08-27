@@ -25,6 +25,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v6.1.0...conventional-changelog-conventionalcommits-v7.0.0) (2023-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 16 is required
+* Now all presets are exports preset config factory function. conventional-changelog-preset-loader now exports new loadPreset and createPresetLoader functions. If you are using presets indirectly, using preset name, no any changes in configuration needed, just upgrade packages to latest versions.
+
+### Features
+
+* **conventional-changelog-conventionalcommits:** add support for alphanumeric issues ([#1080](https://github.com/conventional-changelog/conventional-changelog/issues/1080)) ([f9b1897](https://github.com/conventional-changelog/conventional-changelog/commit/f9b18975ba1bf74ecb7a294f3b220794e0d09e0b))
+* drop node 14 support ([#1085](https://github.com/conventional-changelog/conventional-changelog/issues/1085)) ([1bce036](https://github.com/conventional-changelog/conventional-changelog/commit/1bce0362dbb624a869eb01fd7724ab7f81d337e6))
+* **git-raw-commits:** ignore commits by regex ([#1063](https://github.com/conventional-changelog/conventional-changelog/issues/1063)) ([47033e6](https://github.com/conventional-changelog/conventional-changelog/commit/47033e6edfea3705383bb075bc6a4bd417f9ed8c))
+* **types:** allow combining provided types with defaults ([#1064](https://github.com/conventional-changelog/conventional-changelog/issues/1064)) ([7ec8a18](https://github.com/conventional-changelog/conventional-changelog/commit/7ec8a183473fe5b1f6675f04c230576e562ea291))
+* unified presets interface ([#1045](https://github.com/conventional-changelog/conventional-changelog/issues/1045)) ([8d0ffbe](https://github.com/conventional-changelog/conventional-changelog/commit/8d0ffbe6c59b861b560cea0e3594c7b32e978cc3))
+
 ## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v6.0.0...conventional-changelog-conventionalcommits-v6.1.0) (2023-06-17)
 
 
