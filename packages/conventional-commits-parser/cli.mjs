@@ -3,7 +3,6 @@ import fs from 'fs'
 import readline from 'readline'
 import { Transform } from 'stream'
 import isTextPath from 'is-text-path'
-import JSONStream from 'JSONStream'
 import split from 'split2'
 import meow from 'meow'
 import conventionalCommitsParser from './index.js'
@@ -97,6 +96,29 @@ if (options.verbose) {
   options.warn = console.log.bind(console)
 }
 
+function stringifyJSONStream (op = '[\n', sep = '\n,\n', cl = '\n]\n') {
+  let index = 0
+
+  return new Transform({
+    objectMode: true,
+    highWaterMark: 16,
+    transform (chunk, enc, cb) {
+      ++index
+      try {
+        cb(null, (index === 1 ? op : sep) + JSON.stringify(chunk, null, 0))
+      } catch (err) {
+        cb(err, null)
+      }
+    },
+    flush (cb) {
+      if (index === 0) {
+        cb(null, op)
+      }
+      cb(null, cl)
+    }
+  })
+}
+
 function processFile (fileIndex) {
   const filePath = filePaths[fileIndex]
   fs.createReadStream(filePath)
@@ -108,7 +130,7 @@ function processFile (fileIndex) {
     })
     .pipe(split(separator))
     .pipe(conventionalCommitsParser(options))
-    .pipe(JSONStream.stringify())
+    .pipe(stringifyJSONStream())
     .on('end', () => {
       if (++fileIndex < length) {
         processFile(fileIndex)
@@ -132,7 +154,7 @@ if (process.stdin.isTTY) {
     })
 
     stream.pipe(conventionalCommitsParser(options))
-      .pipe(JSONStream.stringify('', '', ''))
+      .pipe(stringifyJSONStream('', '', ''))
       .pipe(
         new Transform({
           transform (chunk, enc, cb) {
@@ -165,6 +187,6 @@ if (process.stdin.isTTY) {
       console.error(err.toString())
       process.exit(1)
     })
-    .pipe(JSONStream.stringify())
+    .pipe(stringifyJSONStream())
     .pipe(process.stdout)
 }
