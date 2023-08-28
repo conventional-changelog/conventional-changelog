@@ -175,15 +175,15 @@ describe('conventional-commits-parser', () => {
           prefix: '#'
         }])
       } else
-      if (i === 1) {
-        expect(chunk.type).toBe('fix')
-        expect(chunk.scope).toBe('ng-list')
-        expect(chunk.subject).toBe('Another custom separator')
-        expect(chunk.notes[0]).toEqual({
-          title: 'BREAKING CHANGES',
-          text: 'some breaking changes'
-        })
-      }
+        if (i === 1) {
+          expect(chunk.type).toBe('fix')
+          expect(chunk.scope).toBe('ng-list')
+          expect(chunk.subject).toBe('Another custom separator')
+          expect(chunk.notes[0]).toEqual({
+            title: 'BREAKING CHANGES',
+            text: 'some breaking changes'
+          })
+        }
 
       i++
     }

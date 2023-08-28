@@ -1,4 +1,3 @@
-
 const { Readable, Transform } = require('stream')
 const { execFile } = require('child_process')
 const split = require('split2')
