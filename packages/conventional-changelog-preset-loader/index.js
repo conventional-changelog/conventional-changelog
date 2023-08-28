@@ -99,12 +99,12 @@ function createPresetLoader (moduleLoader) {
     if (typeof presetOrParams === 'string') {
       preset = presetOrParams
     } else
-    if (typeof presetOrParams === 'object' && typeof presetOrParams.name === 'string') {
-      preset = presetOrParams.name
-      params = presetOrParams
-    } else {
-      throw Error('Preset must be string or object with property `name`')
-    }
+      if (typeof presetOrParams === 'object' && typeof presetOrParams.name === 'string') {
+        preset = presetOrParams.name
+        params = presetOrParams
+      } else {
+        throw Error('Preset must be string or object with property `name`')
+      }
 
     const presetNameVariants = resolvePresetNameVariants(preset)
     let createPreset = null

@@ -155,9 +155,9 @@ function cloneCommit (commit) {
   if (!commit || typeof commit !== 'object') {
     return commit
   } else
-  if (Array.isArray(commit)) {
-    return commit.map(cloneCommit)
-  }
+    if (Array.isArray(commit)) {
+      return commit.map(cloneCommit)
+    }
 
   const commitClone = {}
   let value
