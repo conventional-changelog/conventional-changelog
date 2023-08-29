@@ -6,7 +6,7 @@
 
 *[Changelog?](https://speakerdeck.com/stevemao/compose-a-changelog)*
 
-**Note** You don't have to use the angular commit convention. For the best result of the tool to tokenize you commit and produce flexible output, it's recommended to use a commit convention.
+**Note** You don't have to use the angular commit convention. For the best result of the tool to tokenize your commit and produce flexible output, it's recommended to use a commit convention.
 
 
 ## Quick start
