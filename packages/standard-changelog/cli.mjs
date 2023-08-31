@@ -1,23 +1,31 @@
 #!/usr/bin/env node
-import {
-  createReadStream,
-  createWriteStream
-} from 'fs'
+import { createWriteStream } from 'fs'
 import {
   readFile,
-  rm
+  writeFile
 } from 'fs/promises'
-import { resolve } from 'path'
-import { pathToFileURL } from 'url'
-import { Readable } from 'stream'
-import addStream from 'add-stream'
 import pc from 'picocolors'
-import tempfile from 'tempfile'
 import meow from 'meow'
-import standardChangelog from './index.js'
+import standardChangelog, {
+  createIfMissing,
+  checkpoint
+} from './index.js'
 
-function relativeResolve (filePath) {
-  return pathToFileURL(resolve(process.cwd(), filePath))
+function printError (err) {
+  if (flags.verbose) {
+    console.error(pc.gray(err.stack))
+  } else {
+    console.error(pc.red(err.toString()))
+  }
+
+  process.exit(1)
+}
+
+function waitStreamFinish (stream) {
+  return new Promise((resolve) => {
+    stream.on('finish', resolve)
+    stream.on('error', printError)
+  })
 }
 
 const cli = meow(`
@@ -116,61 +124,39 @@ if (flags.verbose) {
 
 let templateContext
 
-function outputError (err) {
-  if (flags.verbose) {
-    console.error(pc.gray(err.stack))
-  } else {
-    console.error(pc.red(err.toString()))
-  }
-  process.exit(1)
-}
-
 try {
   if (flags.context) {
-    templateContext = JSON.parse(await readFile(relativeResolve(flags.context), 'utf8'))
+    templateContext = JSON.parse(await readFile(flags.context, 'utf8'))
   }
 } catch (err) {
-  outputError(err)
+  printError(err)
 }
 
 const changelogStream = standardChangelog(options, templateContext, flags.commitPath ? { path: flags.commitPath } : {})
-  .on('error', (err) => {
-    outputError(err)
-  })
 
-standardChangelog.createIfMissing(infile)
-
-let readStream = null
-if (releaseCount !== 0) {
-  readStream = createReadStream(infile)
-    .on('error', (err) => {
-      outputError(err)
-    })
-} else {
-  readStream = new Readable()
-  readStream.push(null)
-}
+await createIfMissing(infile)
 
 if (options.append) {
-  changelogStream
-    .pipe(createWriteStream(outfile, {
-      flags: 'a'
-    }))
-    .on('finish', () => {
-      standardChangelog.checkpoint('appended changes to %s', [outfile])
-    })
-} else {
-  const tmp = tempfile()
+  await waitStreamFinish(
+    changelogStream
+      .pipe(createWriteStream(outfile, {
+        flags: 'a'
+      }))
+  )
 
-  changelogStream
-    .pipe(addStream(readStream))
-    .pipe(createWriteStream(tmp))
-    .on('finish', () => {
-      createReadStream(tmp)
-        .pipe(createWriteStream(outfile))
-        .on('finish', () => {
-          standardChangelog.checkpoint('output changes to %s', [outfile])
-          rm(tmp, { recursive: true })
-        })
-    })
+  checkpoint('appended changes to %s', [outfile])
+} else {
+  let changelog = ''
+
+  for await (const chunk of changelogStream) {
+    changelog += chunk.toString()
+  }
+
+  if (releaseCount !== 0) {
+    changelog += await readFile(infile, 'utf8')
+  }
+
+  await writeFile(outfile, changelog)
+
+  checkpoint('output changes to %s', [outfile])
 }

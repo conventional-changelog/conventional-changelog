@@ -304,30 +304,18 @@ importers:
 
   packages/standard-changelog:
     dependencies:
-      add-stream:
-        specifier: ^1.0.0
-        version: 1.0.0
       conventional-changelog-angular:
         specifier: workspace:^
         version: link:../conventional-changelog-angular
       conventional-changelog-core:
         specifier: workspace:^
         version: link:../conventional-changelog-core
-      figures:
-        specifier: ^3.2.0
-        version: 3.2.0
       meow:
         specifier: ^12.0.1
         version: 12.1.1
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
-      sprintf-js:
-        specifier: ^1.1.2
-        version: 1.1.2
-      tempfile:
-        specifier: ^5.0.0
-        version: 5.0.0
 
 packages:
 
@@ -1564,13 +1552,6 @@ packages:
       reusify: 1.0.4
     dev: true
 
-  /figures@3.2.0:
-    resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
-    engines: {node: '>=8'}
-    dependencies:
-      escape-string-regexp: 1.0.5
-    dev: false
-
   /file-entry-cache@6.0.1:
     resolution: {integrity: sha512-7Gps/XWymbLk2QLYK4NzpMOrYjMhdIxXuIvy2QBsLE6ljuodKvdkWs/cpyJJ3CVIVpH0Oi1Hvg1ovbMzLdFBBg==}
     engines: {node: ^10.12.0 || >=12.0.0}
@@ -2533,10 +2514,6 @@ packages:
   /split2@4.2.0:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
     engines: {node: '>= 10.x'}
-    dev: false
-
-  /sprintf-js@1.1.2:
-    resolution: {integrity: sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==}
     dev: false
 
   /stackback@0.0.2:
