@@ -1,8 +1,12 @@
-const { Readable, Transform } = require('stream')
+const { Readable } = require('stream')
 const { execFile } = require('child_process')
 const split = require('split2')
 
 const DELIMITER = '------------------------ >8 ------------------------'
+
+function immediate () {
+  return new Promise(resolve => setImmediate(resolve))
+}
 
 function normalizeExecOpts (execOpts) {
   execOpts = execOpts || {}
@@ -38,70 +42,59 @@ async function getGitArgs (gitOpts) {
   return gitArgs
 }
 
+async function streamRawCommits (readable, gitOpts, execOpts) {
+  const args = await getGitArgs(gitOpts)
+  let isError = false
+
+  if (gitOpts.debug) {
+    gitOpts.debug('Your git-log command is:\ngit ' + args.join(' '))
+  }
+
+  const ignoreRegex = typeof gitOpts.ignore === 'string'
+    ? new RegExp(gitOpts.ignore)
+    : gitOpts.ignore
+  const shouldNotIgnore = ignoreRegex
+    ? chunk => !ignoreRegex.test(chunk.toString())
+    : () => true
+  const child = execFile('git', args, {
+    cwd: execOpts.cwd,
+    maxBuffer: Infinity
+  })
+
+  ;(async () => {
+    for await (const chunk of child.stdout.pipe(split(DELIMITER + '\n'))) {
+      isError = false
+
+      await immediate()
+
+      if (!isError && shouldNotIgnore(chunk)) {
+        readable.push(chunk)
+      }
+    }
+
+    await immediate()
+
+    if (!isError) {
+      readable.push(null)
+      readable.emit('close')
+    }
+  })()
+
+  child.stderr.on('data', (chunk) => {
+    isError = true
+    readable.emit('error', new Error(chunk.toString()))
+    readable.emit('close')
+  })
+}
+
 function gitRawCommits (rawGitOpts, rawExecOpts) {
   const readable = new Readable()
   readable._read = () => {}
 
   const gitOpts = normalizeGitOpts(rawGitOpts)
   const execOpts = normalizeExecOpts(rawExecOpts)
-  let isError = false
 
-  getGitArgs(gitOpts).then((args) => {
-    if (gitOpts.debug) {
-      gitOpts.debug('Your git-log command is:\ngit ' + args.join(' '))
-    }
-
-    const ignoreRegex = typeof gitOpts.ignore === 'string'
-      ? new RegExp(gitOpts.ignore)
-      : gitOpts.ignore
-    const shouldNotIgnore = ignoreRegex
-      ? chunk => !ignoreRegex.test(chunk.toString())
-      : () => true
-
-    const child = execFile('git', args, {
-      cwd: execOpts.cwd,
-      maxBuffer: Infinity
-    })
-
-    child.stdout
-      .pipe(split(DELIMITER + '\n'))
-      .pipe(
-        new Transform({
-          transform (chunk, enc, cb) {
-            isError = false
-            setImmediate(() => {
-              if (shouldNotIgnore(chunk)) {
-                readable.push(chunk)
-              }
-              cb()
-            })
-          },
-          flush (cb) {
-            setImmediate(() => {
-              if (!isError) {
-                readable.push(null)
-                readable.emit('close')
-              }
-
-              cb()
-            })
-          }
-        })
-      )
-
-    child.stderr
-      .pipe(
-        new Transform({
-          objectMode: true,
-          highWaterMark: 16,
-          transform (chunk) {
-            isError = true
-            readable.emit('error', new Error(chunk))
-            readable.emit('close')
-          }
-        })
-      )
-  })
+  streamRawCommits(readable, gitOpts, execOpts)
 
   return readable
 }
