@@ -14,24 +14,6 @@ const dateFormatter = Intl.DateTimeFormat('sv-SE', {
   timeZone: 'UTC'
 })
 
-function semverTagsPromise (options) {
-  return new Promise((resolve, reject) => {
-    gitSemverTags({
-      lernaTags: !!options.lernaPackage,
-      package: options.lernaPackage,
-      tagPrefix: options.tagPrefix,
-      skipUnstable: options.skipUnstable,
-      cwd: options.cwd
-    }, (err, result) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(result)
-      }
-    })
-  })
-}
-
 function guessNextTag (previousTag, version) {
   if (previousTag) {
     if (previousTag[0] === 'v' && version[0] !== 'v') {
@@ -151,7 +133,13 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   ] = await Promise.allSettled([
     presetConfig,
     pkgPromise,
-    semverTagsPromise(options),
+    gitSemverTags({
+      lernaTags: !!options.lernaPackage,
+      package: options.lernaPackage,
+      tagPrefix: options.tagPrefix,
+      skipUnstable: options.skipUnstable,
+      cwd: options.cwd
+    }),
     getRemoteOriginUrl(options.cwd)
   ])
   let config
@@ -161,7 +149,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
 
   let hostOpts
 
-  let gitSemverTags = []
+  let semverTags = []
 
   if (options.config) {
     if (configObj.status === 'fulfilled') {
@@ -237,9 +225,9 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   context.version = context.version || ''
 
   if (tagsObj.status === 'fulfilled') {
-    gitSemverTags = context.gitSemverTags = tagsObj.value
-    fromTag = gitSemverTags[options.releaseCount - 1]
-    const lastTag = gitSemverTags[0]
+    semverTags = context.gitSemverTags = tagsObj.value
+    fromTag = semverTags[options.releaseCount - 1]
+    const lastTag = semverTags[0]
 
     if (lastTag === context.version || lastTag === 'v' + context.version) {
       if (options.outputUnreleased) {
@@ -324,13 +312,13 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
         const match = /tag:\s*(.+?)[,)]/gi.exec(keyCommit.gitTags)
         const currentTag = context.currentTag
         context.currentTag = currentTag || match ? match[1] : null
-        const index = gitSemverTags.indexOf(context.currentTag)
+        const index = semverTags.indexOf(context.currentTag)
 
         // if `keyCommit.gitTags` is not a semver
         if (index === -1) {
           context.currentTag = currentTag || null
         } else {
-          const previousTag = context.previousTag = gitSemverTags[index + 1]
+          const previousTag = context.previousTag = semverTags[index + 1]
 
           if (!previousTag) {
             if (options.append) {
@@ -341,7 +329,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
           }
         }
       } else {
-        context.previousTag = context.previousTag || gitSemverTags[0]
+        context.previousTag = context.previousTag || semverTags[0]
 
         if (context.version === 'Unreleased') {
           if (options.append) {
@@ -355,7 +343,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
           } else if (options.tagPrefix) {
             context.currentTag = options.tagPrefix + context.version
           } else {
-            context.currentTag = guessNextTag(gitSemverTags[0], context.version)
+            context.currentTag = guessNextTag(semverTags[0], context.version)
           }
         }
       }

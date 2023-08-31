@@ -1,66 +1,71 @@
-'use strict'
+const { exec } = require('child_process')
+const { valid: semverValid } = require('semver')
 
-const proc = require('process')
-const exec = require('child_process').exec
-const semverValid = require('semver').valid
 const regex = /tag:\s*(.+?)[,)]/gi
 const cmd = 'git log --decorate --no-color'
 const unstableTagTest = /.+-\w+\.\d+$/
 
 function lernaTag (tag, pkg) {
-  if (pkg && !(new RegExp('^' + pkg + '@')).test(tag)) {
+  if (pkg && !tag.startsWith(`${pkg}@`)) {
     return false
-  } else {
-    return /^.+@[0-9]+\.[0-9]+\.[0-9]+(-.+)?$/.test(tag)
   }
+
+  return /^.+@[0-9]+\.[0-9]+\.[0-9]+(-.+)?$/.test(tag)
 }
 
-module.exports = function gitSemverTags (opts, callback) {
-  if (typeof opts === 'function') {
-    callback = opts
-    opts = {}
-  }
-  const options = Object.assign({ maxBuffer: Infinity, cwd: proc.cwd() }, opts)
-
-  if (options.package && !options.lernaTags) {
-    callback(new Error('opts.package should only be used when running in lerna mode'))
-    return
-  }
-
-  exec(cmd, options, function (err, data) {
-    if (err) {
-      callback(err)
-      return
+function gitSemverTags (opts = {}) {
+  return new Promise((resolve, reject) => {
+    const options = {
+      maxBuffer: Infinity,
+      cwd: process.cwd(),
+      ...opts
     }
 
-    const tags = []
-    data.split('\n').forEach(function (decorations) {
+    if (options.package && !options.lernaTags) {
+      throw new Error('opts.package should only be used when running in lerna mode')
+    }
+
+    exec(cmd, options, (err, data) => {
+      if (err) {
+        reject(err)
+        return
+      }
+
+      const tags = []
       let match
-      while ((match = regex.exec(decorations))) {
-        const tag = match[1]
+      let tag
+      let unprefixedTag
 
-        if (options.skipUnstable && unstableTagTest.test(tag)) {
-          // skip unstable tag
-          continue
-        }
+      data.split('\n').forEach((decorations) => {
+        while ((match = regex.exec(decorations))) {
+          tag = match[1]
 
-        if (options.lernaTags) {
-          if (lernaTag(tag, options.package)) {
-            tags.push(tag)
+          if (options.skipUnstable && unstableTagTest.test(tag)) {
+            // skip unstable tag
+            continue
           }
-        } else if (options.tagPrefix) {
-          if (tag.startsWith(options.tagPrefix)) {
-            const unprefixedTag = tag.replace(options.tagPrefix, '')
-            if (semverValid(unprefixedTag)) {
+
+          if (options.lernaTags) {
+            if (lernaTag(tag, options.package)) {
               tags.push(tag)
             }
-          }
-        } else if (semverValid(tag)) {
-          tags.push(tag)
-        }
-      }
-    })
+          } else if (options.tagPrefix) {
+            if (tag.startsWith(options.tagPrefix)) {
+              unprefixedTag = tag.replace(options.tagPrefix, '')
 
-    callback(null, tags)
+              if (semverValid(unprefixedTag)) {
+                tags.push(tag)
+              }
+            }
+          } else if (semverValid(tag)) {
+            tags.push(tag)
+          }
+        }
+      })
+
+      resolve(tags)
+    })
   })
 }
+
+module.exports = gitSemverTags
