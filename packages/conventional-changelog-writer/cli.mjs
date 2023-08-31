@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import { pathToFileURL } from 'url'
 import { createReadStream } from 'fs'
 import { readFile } from 'fs/promises'
-import split from 'split2'
+import { Transform } from 'stream'
 import meow from 'meow'
 import conventionalChangelogWriter from './index.js'
 
@@ -71,6 +71,22 @@ try {
   process.exit(1)
 }
 
+function splitAndParseJSONStream () {
+  return new Transform({
+    readableObjectMode: true,
+    transform (chunk, enc, cb) {
+      try {
+        for (const line of chunk.toString().split(/\r?\n/)) {
+          this.push(JSON.parse(line))
+        }
+        cb()
+      } catch (err) {
+        cb(err)
+      }
+    }
+  })
+}
+
 function processFile (fileIndex) {
   const filePath = filePaths[fileIndex]
   createReadStream(filePath)
@@ -80,7 +96,7 @@ function processFile (fileIndex) {
         processFile(fileIndex)
       }
     })
-    .pipe(split(JSON.parse))
+    .pipe(splitAndParseJSONStream())
     .on('error', (err) => {
       console.warn('Failed to split commits in file ' + filePath + '\n' + err)
     })
@@ -101,7 +117,7 @@ function processFile (fileIndex) {
 
 if (!process.stdin.isTTY) {
   process.stdin
-    .pipe(split(JSON.parse))
+    .pipe(splitAndParseJSONStream())
     .on('error', (err) => {
       console.error('Failed to split commits\n' + err)
       process.exit(1)

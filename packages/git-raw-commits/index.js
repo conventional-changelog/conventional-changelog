@@ -1,6 +1,5 @@
 const { Readable } = require('stream')
 const { execFile } = require('child_process')
-const split = require('split2')
 
 const DELIMITER = '------------------------ >8 ------------------------'
 
@@ -62,13 +61,15 @@ async function streamRawCommits (readable, gitOpts, execOpts) {
   })
 
   ;(async () => {
-    for await (const chunk of child.stdout.pipe(split(DELIMITER + '\n'))) {
+    for await (const chunk of child.stdout) {
       isError = false
 
-      await immediate()
+      for await (const line of chunk.toString().split(DELIMITER + '\n')) {
+        await immediate()
 
-      if (!isError && shouldNotIgnore(chunk)) {
-        readable.push(chunk)
+        if (!isError && shouldNotIgnore(line)) {
+          readable.push(line)
+        }
       }
     }
 

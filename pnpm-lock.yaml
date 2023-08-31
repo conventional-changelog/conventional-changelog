@@ -206,9 +206,6 @@ importers:
       semver:
         specifier: ^7.5.2
         version: 7.5.4
-      split2:
-        specifier: ^4.0.0
-        version: 4.2.0
     devDependencies:
       dedent:
         specifier: ^1.0.0
@@ -227,9 +224,6 @@ importers:
       meow:
         specifier: ^12.0.1
         version: 12.1.1
-      split2:
-        specifier: ^4.0.0
-        version: 4.2.0
     devDependencies:
       forceable-tty:
         specifier: ^0.1.0
@@ -268,9 +262,6 @@ importers:
       meow:
         specifier: ^12.0.1
         version: 12.1.1
-      split2:
-        specifier: ^4.0.0
-        version: 4.2.0
 
   packages/git-semver-tags:
     dependencies:
@@ -2506,11 +2497,6 @@ packages:
 
   /spdx-license-ids@3.0.13:
     resolution: {integrity: sha512-XkD+zwiqXHikFZm4AX/7JSCXA98U5Db4AFd5XUg/+9UNtnH75+Z9KxtpYiJZx36mUDVOwH83pl7yvCer6ewM3w==}
-    dev: false
-
-  /split2@4.2.0:
-    resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
-    engines: {node: '>= 10.x'}
     dev: false
 
   /stackback@0.0.2:

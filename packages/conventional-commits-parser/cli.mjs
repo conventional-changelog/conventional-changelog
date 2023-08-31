@@ -3,7 +3,6 @@ import fs from 'fs'
 import readline from 'readline'
 import { Transform } from 'stream'
 import isTextPath from 'is-text-path'
-import split from 'split2'
 import meow from 'meow'
 import conventionalCommitsParser from './index.js'
 
@@ -119,6 +118,18 @@ function stringifyJSONStream (op = '[\n', sep = '\n,\n', cl = '\n]\n') {
   })
 }
 
+function splitStream (match) {
+  return new Transform({
+    readableObjectMode: true,
+    transform (chunk, enc, cb) {
+      for (const line of chunk.toString().split(match)) {
+        this.push(line)
+      }
+      cb()
+    }
+  })
+}
+
 function processFile (fileIndex) {
   const filePath = filePaths[fileIndex]
   fs.createReadStream(filePath)
@@ -128,7 +139,7 @@ function processFile (fileIndex) {
         processFile(fileIndex)
       }
     })
-    .pipe(split(separator))
+    .pipe(splitStream(separator))
     .pipe(conventionalCommitsParser(options))
     .pipe(stringifyJSONStream())
     .on('end', () => {
@@ -181,7 +192,7 @@ if (process.stdin.isTTY) {
 } else {
   options.warn = true
   process.stdin
-    .pipe(split(separator))
+    .pipe(splitStream(separator))
     .pipe(conventionalCommitsParser(options))
     .on('error', (err) => {
       console.error(err.toString())
