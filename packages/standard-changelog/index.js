@@ -1,33 +1,31 @@
-'use strict'
-
+const fs = require('fs/promises')
+const pc = require('picocolors')
 const conventionalChangelogCore = require('conventional-changelog-core')
 const angular = require('conventional-changelog-angular')
-const fs = require('fs')
-const pc = require('picocolors')
-const figures = require('figures')
-const sprintf = require('sprintf-js').sprintf
+const { tick } = require('./figures')
 
 function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   options = options || {}
   options.config = angular
+
   return conventionalChangelogCore(options, context, gitRawCommitsOpts, parserOpts, writerOpts)
 }
 
-conventionalChangelog.createIfMissing = function (infile) {
+async function createIfMissing (infile) {
   try {
-    fs.accessSync(infile, fs.F_OK)
+    await fs.access(infile, fs.F_OK)
   } catch (err) {
     if (err.code === 'ENOENT') {
-      conventionalChangelog.checkpoint('created %s', [infile])
-      fs.writeFileSync(infile, '\n', 'utf-8')
+      checkpoint('created %s', [infile])
+      await fs.writeFile(infile, '\n', 'utf-8')
     }
   }
 }
 
-conventionalChangelog.checkpoint = function (msg, args) {
-  console.info(pc.green(figures.tick) + ' ' + sprintf(msg, args.map(function (arg) {
-    return pc.bold(arg)
-  })))
+function checkpoint (msg, args) {
+  console.info(`${pc.green(tick)} ${msg}`, ...args.map(arg => pc.bold(arg)))
 }
 
 module.exports = conventionalChangelog
+module.exports.createIfMissing = createIfMissing
+module.exports.checkpoint = checkpoint
