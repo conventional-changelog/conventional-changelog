@@ -16,12 +16,12 @@ $ npm install --save git-semver-tags
 ```js
 var gitSemverTags = require('git-semver-tags');
 
-// gitSemverTags([options,] callback)
+// gitSemverTags([options])
 
-gitSemverTags(function(err, tags) {
-  console.log(tags);
-  //=> [ 'v2.0.0', 'v1.0.0' ]
-});
+const tags = await gitSemverTags();
+
+console.log(tags);
+//=> [ 'v2.0.0', 'v1.0.0' ]
 ```
 
 ```sh

@@ -93,17 +93,12 @@ if (flags.verbose) {
   options.warn = console.warn.bind(console)
 }
 
-conventionalRecommendedBump(options, flags, (err, data) => {
-  if (err) {
-    console.error(err.toString())
-    process.exit(1)
-  }
+const data = await conventionalRecommendedBump(options, flags)
 
-  if (data.releaseType) {
-    console.log(data.releaseType)
-  }
+if (data.releaseType) {
+  console.log(data.releaseType)
+}
 
-  if (flags.verbose && data.reason) {
-    console.log(`Reason: ${data.reason}`)
-  }
-})
+if (flags.verbose && data.reason) {
+  console.log(`Reason: ${data.reason}`)
+}

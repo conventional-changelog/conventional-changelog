@@ -14,34 +14,25 @@ describe('git-semver-tags', () => {
     testTools?.cleanup()
   })
 
-  it('should error if no commits found', () => {
-    return new Promise((resolve) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err) => {
-        expect(err).toBeTruthy()
-        resolve()
-      })
-    })
+  it('should error if no commits found', async () => {
+    await expect(() => gitSemverTags({
+      cwd: testTools.cwd
+    })).rejects.toThrow()
   })
 
-  it('should get no semver tags', () => {
+  it('should get no semver tags', async () => {
     testTools.writeFileSync('test1', '')
     testTools.exec('git add --all && git commit -m"First commit"')
     testTools.exec('git tag foo')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual([])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual([])
   })
 
-  it('should get the semver tag', () => {
+  it('should get the semver tag', async () => {
     testTools.writeFileSync('test2', '')
     testTools.exec('git add --all && git commit -m"Second commit"')
     testTools.exec('git tag v2.0.0')
@@ -49,90 +40,66 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"Third commit"')
     testTools.exec('git tag va.b.c')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['v2.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['v2.0.0'])
   })
 
-  it('should get both semver tags', () => {
+  it('should get both semver tags', async () => {
     testTools.exec('git tag v3.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['v3.0.0', 'v2.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['v3.0.0', 'v2.0.0'])
   })
 
-  it('should get all semver tags if two tags on the same commit', () => {
+  it('should get all semver tags if two tags on the same commit', async () => {
     testTools.exec('git tag v4.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['v4.0.0', 'v3.0.0', 'v2.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['v4.0.0', 'v3.0.0', 'v2.0.0'])
   })
 
-  it('should still work if I run it again', () => {
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['v4.0.0', 'v3.0.0', 'v2.0.0'])
-        resolve()
-      })
+  it('should still work if I run it again', async () => {
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['v4.0.0', 'v3.0.0', 'v2.0.0'])
   })
 
-  it('should be in reverse chronological order', () => {
+  it('should be in reverse chronological order', async () => {
     testTools.writeFileSync('test4', '')
     testTools.exec('git add --all && git commit -m"Fourth commit"')
     testTools.exec('git tag v1.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
   })
 
-  it('should work with prerelease', () => {
+  it('should work with prerelease', async () => {
     testTools.writeFileSync('test5', '')
     testTools.exec('git add --all && git commit -m"Fifth commit"')
     testTools.exec('git tag 5.0.0-pre')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
   })
 
-  it('should work with empty commit', () => {
+  it('should work with empty commit', async () => {
     testTools?.cleanup()
     testTools = new TestTools()
 
@@ -143,18 +110,14 @@ describe('git-semver-tags', () => {
     testTools.gitDummyCommit('empty commit2')
     testTools.gitDummyCommit('empty commit3')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['v1.1.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd
     })
+
+    expect(tags).toEqual(['v1.1.0'])
   })
 
-  it('should work with lerna style tags', () => {
+  it('should work with lerna style tags', async () => {
     testTools.writeFileSync('test5', '2')
     testTools.exec('git add --all && git commit -m"sixth commit"')
     testTools.exec('git tag foo-project@4.0.0')
@@ -162,19 +125,15 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"seventh commit"')
     testTools.exec('git tag foo-project@5.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        lernaTags: true
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd,
+      lernaTags: true
     })
+
+    expect(tags).toEqual(['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
   })
 
-  it('should work with lerna style tags with multiple digits', () => {
+  it('should work with lerna style tags with multiple digits', async () => {
     testTools.writeFileSync('test5', '4')
     testTools.exec('git add --all && git commit -m"fifth commit"')
     testTools.exec('git tag foobar-project@0.0.10')
@@ -185,56 +144,43 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"seventh commit"')
     testTools.exec('git tag foobar-project@10.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        lernaTags: true
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual([
-          'foobar-project@10.0.0',
-          'foobar-project@0.10.0',
-          'foobar-project@0.0.10',
-          'foo-project@5.0.0',
-          'foo-project@4.0.0',
-          'blarg-project@1.0.0'
-        ])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd,
+      lernaTags: true
     })
+
+    expect(tags).toEqual([
+      'foobar-project@10.0.0',
+      'foobar-project@0.10.0',
+      'foobar-project@0.0.10',
+      'foo-project@5.0.0',
+      'foo-project@4.0.0',
+      'blarg-project@1.0.0'
+    ])
   })
 
-  it('should allow lerna style tags to be filtered by package', () => {
+  it('should allow lerna style tags to be filtered by package', async () => {
     testTools.writeFileSync('test5', '')
     testTools.exec('git add --all && git commit -m"seventh commit"')
     testTools.exec('git tag bar-project@5.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        lernaTags: true,
-        package: 'bar-project'
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['bar-project@5.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd,
+      lernaTags: true,
+      package: 'bar-project'
     })
+
+    expect(tags).toEqual(['bar-project@5.0.0'])
   })
 
-  it('should not allow package filter without lernaTags=true', () => {
-    return new Promise((resolve) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        package: 'bar-project'
-      }, (err) => {
-        expect(err.message).toBe('opts.package should only be used when running in lerna mode')
-        resolve()
-      })
-    })
+  it('should not allow package filter without lernaTags=true', async () => {
+    await expect(() => gitSemverTags({
+      cwd: testTools.cwd,
+      package: 'bar-project'
+    })).rejects.toThrow('opts.package should only be used when running in lerna mode')
   })
 
-  it('should work with tag prefix option', () => {
+  it('should work with tag prefix option', async () => {
     testTools.writeFileSync('test6', '')
     testTools.exec('git add --all && git commit -m"eighth commit"')
     testTools.exec('git tag ms/6.0.0')
@@ -245,19 +191,15 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"eleventh commit"')
     testTools.exec('git tag notms/7.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        tagPrefix: 'ms/'
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['ms/7.0.0', 'ms/6.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd,
+      tagPrefix: 'ms/'
     })
+
+    expect(tags).toEqual(['ms/7.0.0', 'ms/6.0.0'])
   })
 
-  it('should handle regexp escaped characters in the tag prefix', () => {
+  it('should handle regexp escaped characters in the tag prefix', async () => {
     testTools.writeFileSync('test6', '')
     testTools.exec('git add --all && git commit -m"eighth commit"')
     testTools.exec('git tag ms+6.0.0')
@@ -268,19 +210,15 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"eleventh commit"')
     testTools.exec('git tag notms+7.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        tagPrefix: 'ms+'
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['ms+7.0.0', 'ms+6.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd,
+      tagPrefix: 'ms+'
     })
+
+    expect(tags).toEqual(['ms+7.0.0', 'ms+6.0.0'])
   })
 
-  it('should skip unstable tags', () => {
+  it('should skip unstable tags', async () => {
     testTools.writeFileSync('test7', '')
     testTools.exec('git add --all && git commit -m"twelfth commit"')
     testTools.exec('git tag skip/8.0.0')
@@ -294,16 +232,12 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"fifteenth commit"')
     testTools.exec('git tag skip/9.0.0')
 
-    return new Promise((resolve, reject) => {
-      gitSemverTags({
-        cwd: testTools.cwd,
-        tagPrefix: 'skip/',
-        skipUnstable: true
-      }, (err, tags) => {
-        if (err) return reject(err)
-        expect(tags).toEqual(['skip/9.0.0', 'skip/8.0.0'])
-        resolve()
-      })
+    const tags = await gitSemverTags({
+      cwd: testTools.cwd,
+      tagPrefix: 'skip/',
+      skipUnstable: true
     })
+
+    expect(tags).toEqual(['skip/9.0.0', 'skip/8.0.0'])
   })
 })

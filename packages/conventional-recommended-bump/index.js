@@ -1,5 +1,4 @@
 'use strict'
-const concat = require('concat-stream')
 const conventionalCommitsFilter = require('conventional-commits-filter')
 const conventionalCommitsParser = require('conventional-commits-parser')
 const { loadPreset } = require('conventional-changelog-preset-loader')
@@ -8,7 +7,7 @@ const gitRawCommits = require('git-raw-commits')
 
 const VERSIONS = ['major', 'minor', 'patch']
 
-module.exports = conventionalRecommendedBumpLegacy
+function noop () {}
 
 async function conventionalRecommendedBump (optionsArgument, parserOptsArgument) {
   if (typeof optionsArgument !== 'object') {
@@ -45,59 +44,43 @@ async function conventionalRecommendedBump (optionsArgument, parserOptsArgument)
     parserOptsArgument)
 
   const warn = typeof parserOpts.warn === 'function' ? parserOpts.warn : noop
-
-  return await new Promise((resolve, reject) => {
-    gitSemverTags({
-      lernaTags: !!options.lernaPackage,
-      package: options.lernaPackage,
-      tagPrefix: options.tagPrefix,
-      skipUnstable: options.skipUnstable,
-      cwd: options.cwd
-    }, (err, tags) => {
-      if (err) {
-        return reject(err)
-      }
-
-      gitRawCommits({
-        format: '%B%n-hash-%n%H',
-        from: tags[0] || '',
-        path: options.path,
-        ...options.gitRawCommitsOpts
-      }, {
-        cwd: options.cwd
-      })
-        .pipe(conventionalCommitsParser(parserOpts))
-        .pipe(concat(data => {
-          const commits = options.ignoreReverted ? conventionalCommitsFilter(data) : data
-
-          if (!commits || !commits.length) {
-            warn('No commits since last release')
-          }
-
-          let result = whatBump(commits, options)
-
-          if (result && result.level != null) {
-            result.releaseType = VERSIONS[result.level]
-          } else if (result == null) {
-            result = {}
-          }
-
-          resolve(result)
-        }))
-    })
+  const tags = await gitSemverTags({
+    lernaTags: !!options.lernaPackage,
+    package: options.lernaPackage,
+    tagPrefix: options.tagPrefix,
+    skipUnstable: options.skipUnstable,
+    cwd: options.cwd
   })
-}
+  const commitsStream = gitRawCommits({
+    format: '%B%n-hash-%n%H',
+    from: tags[0] || '',
+    path: options.path,
+    ...options.gitRawCommitsOpts
+  }, {
+    cwd: options.cwd
+  })
+    .pipe(conventionalCommitsParser(parserOpts))
+  let commits = []
 
-function conventionalRecommendedBumpLegacy (optionsArgument, parserOptsArgument, cbArgument) {
-  const cb = typeof parserOptsArgument === 'function' ? parserOptsArgument : cbArgument
-
-  if (typeof cb !== 'function') {
-    throw new Error('You must provide a callback function.')
+  for await (const commit of commitsStream) {
+    commits.push(commit)
   }
 
-  conventionalRecommendedBump(optionsArgument, parserOptsArgument)
-    .then((result) => cb(null, result))
-    .catch((err) => cb(err))
+  commits = options.ignoreReverted ? conventionalCommitsFilter(commits) : commits
+
+  if (!commits || !commits.length) {
+    warn('No commits since last release')
+  }
+
+  let result = whatBump(commits, options)
+
+  if (result && result.level != null) {
+    result.releaseType = VERSIONS[result.level]
+  } else if (result == null) {
+    result = {}
+  }
+
+  return result
 }
 
-function noop () {}
+module.exports = conventionalRecommendedBump

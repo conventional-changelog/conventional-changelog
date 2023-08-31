@@ -33,16 +33,11 @@ const args = meow(`
   }
 })
 
-gitSemverTags({
+const tags = await gitSemverTags({
   lernaTags: args.flags.lerna,
   package: args.flags.package,
   tagPrefix: args.flags.tagPrefix,
   skipUnstable: args.flags.skipUnstable
-}, (err, tags) => {
-  if (err) {
-    console.error(err.toString())
-    process.exit(1)
-  }
-
-  console.log(tags.join('\n'))
 })
+
+console.log(tags.join('\n'))
