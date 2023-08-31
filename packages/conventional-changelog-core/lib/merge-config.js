@@ -1,15 +1,11 @@
 'use strict'
 const fs = require('fs/promises')
+const { exec } = require('child_process')
 const hostedGitInfo = require('hosted-git-info')
 const parseRepositoryUrl = require('@hutson/parse-repository-url')
 const gitSemverTags = require('git-semver-tags')
 const normalizePackageData = require('normalize-package-data')
-let gitRemoteOriginUrl
-try {
-  gitRemoteOriginUrl = require('git-remote-origin-url')
-} catch (err) {
-  gitRemoteOriginUrl = () => Promise.reject(err)
-}
+
 const { URL } = require('url')
 
 const rhosts = /github|bitbucket|gitlab/i
@@ -70,6 +66,18 @@ function omitUndefinedValueProps (obj) {
   }
 
   return omittedObj
+}
+
+function getRemoteOriginUrl (cwd) {
+  return new Promise((resolve, reject) => {
+    exec('git config --get remote.origin.url', { cwd }, (err, stdout) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(stdout.trim())
+      }
+    })
+  })
 }
 
 async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
@@ -135,7 +143,6 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
   }
 
   const presetConfig = typeof options.config === 'function' ? options.config() : options.config
-  const gitRemoteOriginUrlPromise = Promise.resolve(gitRemoteOriginUrl(options.cwd))
   const [
     configObj,
     pkgObj,
@@ -145,7 +152,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     presetConfig,
     pkgPromise,
     semverTagsPromise(options),
-    gitRemoteOriginUrlPromise
+    getRemoteOriginUrl(options.cwd)
   ])
   let config
   let pkg

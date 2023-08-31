@@ -31,7 +31,6 @@
     "conventional-changelog-writer": "workspace:^",
     "conventional-commits-parser": "workspace:^",
     "git-raw-commits": "workspace:^",
-    "git-remote-origin-url": "^2.0.0",
     "git-semver-tags": "workspace:^",
     "hosted-git-info": "^7.0.0",
     "normalize-package-data": "^6.0.0",
