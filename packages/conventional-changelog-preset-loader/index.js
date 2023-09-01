@@ -115,6 +115,10 @@ function createPresetLoader (moduleLoader) {
       throw Error(`Unable to load the "${preset}" preset. Please make sure it's installed.`, { cause: err })
     }
 
+    if (typeof createPreset !== 'function') {
+      throw Error(`The "${preset}" preset does not export a function. Maybe you are using an old version of the preset. Please upgrade.`)
+    }
+
     return params
       ? await createPreset(params)
       : await createPreset()
