@@ -27,7 +27,7 @@ function createConventionalRecommendedBumpOpts (config, parserOpts) {
         }
       })
 
-      if (config.preMajor && level < 2) {
+      if (config?.preMajor && level < 2) {
         level++
       }
 

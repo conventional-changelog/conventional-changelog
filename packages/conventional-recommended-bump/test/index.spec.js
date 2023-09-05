@@ -77,9 +77,7 @@ describe('conventional-recommended-bump', () => {
 
       const recommendation = await conventionalRecommendedBump({
         cwd: testTools.cwd,
-        preset: {
-          name: 'conventionalcommits'
-        }
+        preset: 'conventionalcommits'
       }, {})
 
       expect(recommendation.reason).toContain('1 BREAKING')
