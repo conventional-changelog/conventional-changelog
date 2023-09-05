@@ -71,6 +71,15 @@ describe('conventional-recommended-bump', () => {
     await expect(() => conventionalRecommendedBump({ cwd: testTools.cwd }, {})).rejects.toThrow()
   })
 
+  it('should allow the string `conventionalcommits` as the preset option', async () => {
+    preparing(2)
+
+    await expect(() => conventionalRecommendedBump({
+      cwd: testTools.cwd,
+      preset: 'conventionalcommits'
+    }, {})).not.toThrowError()
+  })
+
   describe('conventionalcommits ! in isolation', () => {
     it('recommends major if ! is used in isolation', async () => {
       preparing(2)
