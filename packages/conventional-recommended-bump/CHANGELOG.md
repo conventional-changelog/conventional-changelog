@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v8.0.0...conventional-recommended-bump-v8.0.1) (2023-09-07)
+
+
+### Bug Fixes
+
+* **conventional-changelog-conventionalcommits:** fix handling input params ([#1120](https://github.com/conventional-changelog/conventional-changelog/issues/1120)) ([e721cde](https://github.com/conventional-changelog/conventional-changelog/commit/e721cdec8de32162dd56096ef6a07786f1b4faec))
+
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v7.0.1...conventional-recommended-bump-v8.0.0) (2023-08-26)
 
 
