@@ -17,7 +17,7 @@ jobs:
       matrix:
         node: [16, 18, 20]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git config --global user.name 'CI'
       - run: git config --global user.email 'dummy@example.org'
       - uses: pnpm/action-setup@v2
@@ -41,7 +41,7 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: git config --global user.name 'CI'
       - run: git config --global user.email 'dummy@example.org'
       - uses: pnpm/action-setup@v2
