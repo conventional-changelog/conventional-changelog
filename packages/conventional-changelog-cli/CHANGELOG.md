@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v4.0.0...conventional-changelog-cli-v4.1.0) (2023-09-09)
+
+**Note:** Upgrade workspace dependencies.
+
 ## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v3.0.0...conventional-changelog-cli-v4.0.0) (2023-08-26)
 
 
