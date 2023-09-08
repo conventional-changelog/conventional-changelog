@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v6.0.0...conventional-changelog-core-v7.0.0) (2023-09-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **git-semver-tags,conventional-recommended-bump:** gitSemverTags and conventionalRecommendedBump now return promises
+* **standard-changelog:** createIfMissing method now returns a promise
+
+### Features
+
+* **git-semver-tags,conventional-recommended-bump:** refactoring to use promises instead of callbacks ([#1112](https://github.com/conventional-changelog/conventional-changelog/issues/1112)) ([1697ecd](https://github.com/conventional-changelog/conventional-changelog/commit/1697ecdf4c2329732e612cc1bd3323e84f046f3a))
+* **standard-changelog:** use promises ([#1111](https://github.com/conventional-changelog/conventional-changelog/issues/1111)) ([5015ab7](https://github.com/conventional-changelog/conventional-changelog/commit/5015ab71de7a3db9cbcbbabd0cc25502f1cd0109))
+
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v5.0.2...conventional-changelog-core-v6.0.0) (2023-08-26)
 
 
