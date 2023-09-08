@@ -100,14 +100,17 @@ export class TestTools {
     })
   }
 
-  fork (script, args = [], options) {
+  /**
+   * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>
+   */
+  fork (script, args = [], options = {}, nodeArgs = []) {
     return new Promise((resolve, reject) => {
       const finalOptions = {
         cwd: this.cwd,
         stdio: [null, null, null],
         ...options
       }
-      const child = spawn(process.execPath, [script, ...args], finalOptions)
+      const child = spawn(process.execPath, [...nodeArgs, script, ...args], finalOptions)
       let stdout = ''
       let stderr = ''
       let exitCode = null
@@ -128,6 +131,14 @@ export class TestTools {
       })
       child.on('error', reject)
     })
+  }
+
+  forkTypeScript (script, args = [], options) {
+    return this.fork(script, args, options, [
+      '--no-warnings',
+      '--loader',
+      '@swc-node/register/esm'
+    ])
   }
 
   gitInit () {
