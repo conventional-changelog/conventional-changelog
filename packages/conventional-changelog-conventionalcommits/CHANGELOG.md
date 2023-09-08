@@ -3,27 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.5.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.4.0...conventional-changelog-conventionalcommits@4.5.0) (2020-11-05)
+
+## [7.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v7.0.1...conventional-changelog-conventionalcommits-v7.0.2) (2023-09-08)
 
 
-### Features
+### Bug Fixes
 
-* **conventionalcommits:** allow matching scope ([#669](https://github.com/conventional-changelog/conventional-changelog/issues/669)) ([e01e027](https://github.com/conventional-changelog/conventional-changelog/commit/e01e027af60f5fa3e9146223b96797793930aeb4))
-
-
-
-
-
-# [4.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.1...conventional-changelog-conventionalcommits@4.4.0) (2020-08-12)
-
-
-### Features
-
-* **templates:** if hash is nullish, do not display in CHANGELOG ([#664](https://github.com/conventional-changelog/conventional-changelog/issues/664)) ([f10256c](https://github.com/conventional-changelog/conventional-changelog/commit/f10256c635687de0a85c4db2bf06292902924f77))
-
-
-
-
+* **conventional-changelog-conventionalcommits:** fix handling input params ([#1120](https://github.com/conventional-changelog/conventional-changelog/issues/1120)) ([e721cde](https://github.com/conventional-changelog/conventional-changelog/commit/e721cdec8de32162dd56096ef6a07786f1b4faec))
 
 ## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v7.0.0...conventional-changelog-conventionalcommits-v7.0.1) (2023-08-27)
 
@@ -106,6 +92,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 * **conventionalcommits:** include Release-As commits in CHANGELOG ([#796](https://www.github.com/conventional-changelog/conventional-changelog/issues/796)) ([9a0b9a7](https://www.github.com/conventional-changelog/conventional-changelog/commit/9a0b9a7f7ba5edd68b3476de706672d82e42b9e0))
+
+# [4.5.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.4.0...conventional-changelog-conventionalcommits@4.5.0) (2020-11-05)
+
+
+### Features
+
+* **conventionalcommits:** allow matching scope ([#669](https://github.com/conventional-changelog/conventional-changelog/issues/669)) ([e01e027](https://github.com/conventional-changelog/conventional-changelog/commit/e01e027af60f5fa3e9146223b96797793930aeb4))
+
+
+
+
+
+# [4.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.1...conventional-changelog-conventionalcommits@4.4.0) (2020-08-12)
+
+
+### Features
+
+* **templates:** if hash is nullish, do not display in CHANGELOG ([#664](https://github.com/conventional-changelog/conventional-changelog/issues/664)) ([f10256c](https://github.com/conventional-changelog/conventional-changelog/commit/f10256c635687de0a85c4db2bf06292902924f77))
+
 
 ## [4.3.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits@4.3.0...conventional-changelog-conventionalcommits@4.3.1) (2020-06-20)
 
