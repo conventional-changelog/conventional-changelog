@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader-v4.0.0...conventional-changelog-preset-loader-v4.1.0) (2023-09-08)
+
+
+### Features
+
+* **conventional-changelog-preset-loader:** throw error if preset does not export a function ([#1115](https://github.com/conventional-changelog/conventional-changelog/issues/1115)) ([4f09e6d](https://github.com/conventional-changelog/conventional-changelog/commit/4f09e6da384c3d5d40da67ebddc07e2d1a03ac31))
+
 ## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader-v3.0.0...conventional-changelog-preset-loader-v4.0.0) (2023-08-27)
 
 
