@@ -16,7 +16,7 @@
   "packages/git-semver-tags": "6.0.0",
   "packages/conventional-commits-filter": "4.0.0",
   "packages/conventional-changelog-preset-loader": "4.1.0",
-  "packages/conventional-recommended-bump": "8.0.0",
+  "packages/conventional-recommended-bump": "9.0.0",
   "packages/conventional-changelog-core": "6.0.0",
   "packages/standard-changelog": "4.0.0",
   "packages/gulp-conventional-changelog": "4.0.0"
