@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v7.0.0...git-semver-tags-v7.0.1) (2023-09-10)
+
+
+### Bug Fixes
+
+* **git-semver-tags:** make sure that tags are sorted by date ([#1145](https://github.com/conventional-changelog/conventional-changelog/issues/1145)) ([e170b47](https://github.com/conventional-changelog/conventional-changelog/commit/e170b47cbb21e059d9fec41c6adc25a4a242d9c0))
+
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v6.0.0...git-semver-tags-v7.0.0) (2023-09-08)
 
 
