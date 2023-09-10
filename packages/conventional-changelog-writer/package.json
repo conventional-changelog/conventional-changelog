@@ -1,7 +1,9 @@
 {
   "name": "conventional-changelog-writer",
+  "type": "module",
   "version": "7.0.1",
   "description": "Write logs based on conventional commits and templates",
+  "exports": "./index.js",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
@@ -21,7 +23,7 @@
   },
   "files": [
     "index.js",
-    "cli.mjs",
+    "cli.js",
     "lib",
     "templates"
   ],
@@ -44,7 +46,7 @@
     "split2": "^4.0.0"
   },
   "bin": {
-    "conventional-changelog-writer": "cli.mjs"
+    "conventional-changelog-writer": "cli.js"
   },
   "devDependencies": {
     "dedent": "^1.0.0",

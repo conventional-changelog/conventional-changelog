@@ -1,9 +1,6 @@
-'use strict'
-
 const { Transform } = require('stream')
 const addStream = require('add-stream')
 const concat = require('concat-stream')
-const conventionalChangelog = require('conventional-changelog')
 const PluginError = require('plugin-error')
 const fancyLog = require('fancy-log')
 
@@ -18,15 +15,18 @@ module.exports = function (opts, context, gitRawCommitsOpts, parserOpts, writerO
     opts.debug = fancyLog
   }
 
+  const conventionalChangelogPromise = import('conventional-changelog')
+
   return new Transform({
     objectMode: true,
     highWaterMark: 16,
-    transform  (file, enc, cb) {
+    async transform  (file, enc, cb) {
       if (file.isNull()) {
         cb(null, file)
         return
       }
 
+      const { default: conventionalChangelog } = await conventionalChangelogPromise
       const stream = conventionalChangelog(opts, context, gitRawCommitsOpts, parserOpts, writerOpts)
         .on('error', function (err) {
           cb(new PluginError('gulp-conventional-changelog', err))

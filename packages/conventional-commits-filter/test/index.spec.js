@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import conventionalCommitsFilter from '../'
+import conventionalCommitsFilter from '../index.js'
 
 describe('conventional-commits-filter', () => {
   it('should error if `commits` is not an array', () => {

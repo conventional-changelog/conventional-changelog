@@ -11,7 +11,7 @@ $ npm install --save conventional-changelog-core
 ```
 
 ```js
-var conventionalChangelogCore = require('conventional-changelog-core');
+import conventionalChangelogCore from 'conventional-changelog-core';
 
 conventionalChangelogCore()
   .pipe(process.stdout); // or any writable stream

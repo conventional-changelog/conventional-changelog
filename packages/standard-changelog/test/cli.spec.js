@@ -1,8 +1,8 @@
 import path from 'path'
 import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools.js'
 
-const CLI_PATH = path.join(__dirname, '../cli.mjs')
+const CLI_PATH = path.join(__dirname, '../cli.js')
 const FIXTURE_CHANGELOG_PATH = path.join(__dirname, 'fixtures/_CHANGELOG.md')
 let testTools
 
@@ -150,7 +150,7 @@ describe('standard-changelog', () => {
 
     it('--context should work with relative path', async () => {
       const context = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/context.json'))
-      const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.js'))
+      const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.cjs'))
       const { exitCode } = await testTools.fork(CLI_PATH, ['--context', context, '--config', config], {
         stdio: 'inherit'
       })
@@ -161,7 +161,7 @@ describe('standard-changelog', () => {
     })
 
     it('--context should work with absolute path', async () => {
-      const { exitCode } = await testTools.fork(CLI_PATH, ['--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.js')])
+      const { exitCode } = await testTools.fork(CLI_PATH, ['--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.cjs')])
 
       expect(exitCode).toBe(0)
       const modified = testTools.readFileSync('CHANGELOG.md', 'utf8')

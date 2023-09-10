@@ -1,6 +1,6 @@
-const { Readable } = require('stream')
-const { execFile } = require('child_process')
-const split = require('split2')
+import { Readable } from 'stream'
+import { execFile } from 'child_process'
+import split from 'split2'
 
 const DELIMITER = '------------------------ >8 ------------------------'
 
@@ -87,7 +87,7 @@ async function streamRawCommits (readable, gitOpts, execOpts) {
   })
 }
 
-function gitRawCommits (rawGitOpts, rawExecOpts) {
+export default function gitRawCommits (rawGitOpts, rawExecOpts) {
   const readable = new Readable()
   readable._read = () => {}
 
@@ -98,5 +98,3 @@ function gitRawCommits (rawGitOpts, rawExecOpts) {
 
   return readable
 }
-
-module.exports = gitRawCommits

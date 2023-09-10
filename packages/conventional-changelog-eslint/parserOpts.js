@@ -1,6 +1,4 @@
-'use strict'
-
-function createParserOpts () {
+export function createParserOpts () {
   return {
     headerPattern: /^(\w*):\s*(.*)$/,
     headerCorrespondence: [
@@ -9,5 +7,3 @@ function createParserOpts () {
     ]
   }
 }
-
-module.exports.createParserOpts = createParserOpts

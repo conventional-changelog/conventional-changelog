@@ -1,5 +1,3 @@
-'use strict'
-
 const CATCH_ALL = /()(.+)/gi
 const SCISSOR = '# ------------------------ >8 ------------------------'
 
@@ -85,7 +83,7 @@ function passTrough () {
   return true
 }
 
-function parser (raw, options, regex) {
+export default function parser (raw, options, regex) {
   if (!raw || !raw.trim()) {
     throw new TypeError('Expected a raw commit')
   }
@@ -312,5 +310,3 @@ function parser (raw, options, regex) {
 
   return msg
 }
-
-module.exports = parser

@@ -1,6 +1,4 @@
-'use strict'
-
-const DEFAULT_COMMIT_TYPES = Object.freeze([
+export const DEFAULT_COMMIT_TYPES = Object.freeze([
   { type: 'feat', section: 'Features' },
   { type: 'feature', section: 'Features' },
   { type: 'fix', section: 'Bug Fixes' },
@@ -14,5 +12,3 @@ const DEFAULT_COMMIT_TYPES = Object.freeze([
   { type: 'build', section: 'Build System', hidden: true },
   { type: 'ci', section: 'Continuous Integration', hidden: true }
 ].map(Object.freeze))
-
-exports.DEFAULT_COMMIT_TYPES = DEFAULT_COMMIT_TYPES

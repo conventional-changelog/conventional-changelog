@@ -1,7 +1,9 @@
 {
   "name": "git-raw-commits",
+  "type": "module",
   "version": "4.0.0",
   "description": "Get raw git commits out of your repository using git-log(1)",
+  "exports": "./index.js",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
@@ -21,7 +23,7 @@
   },
   "files": [
     "index.js",
-    "cli.mjs"
+    "cli.js"
   ],
   "keywords": [
     "git-raw-commits",
@@ -38,6 +40,6 @@
     "split2": "^4.0.0"
   },
   "bin": {
-    "git-raw-commits": "cli.mjs"
+    "git-raw-commits": "cli.js"
   }
 }

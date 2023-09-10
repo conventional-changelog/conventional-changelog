@@ -1,6 +1,6 @@
 import { describe, beforeEach, it, expect } from 'vitest'
-import parser from '../lib/parser'
-import regex from '../lib/regex'
+import parser from '../lib/parser.js'
+import regex from '../lib/regex.js'
 
 describe('conventional-commits-parser', () => {
   describe('parser', () => {

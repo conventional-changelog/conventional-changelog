@@ -1,12 +1,12 @@
-'use strict'
+import { DEFAULT_COMMIT_TYPES } from './constants.js'
+import { createParserOpts } from './parserOpts.js'
+import { createWriterOpts } from './writerOpts.js'
+import { createConventionalChangelogOpts } from './conventionalChangelog.js'
+import { createConventionalRecommendedBumpOpts } from './conventionalRecommendedBump.js'
 
-const { DEFAULT_COMMIT_TYPES } = require('./constants')
-const { createParserOpts } = require('./parserOpts')
-const { createWriterOpts } = require('./writerOpts')
-const { createConventionalChangelogOpts } = require('./conventionalChangelog')
-const { createConventionalRecommendedBumpOpts } = require('./conventionalRecommendedBump')
+export { DEFAULT_COMMIT_TYPES }
 
-async function createPreset (config) {
+export default async function createPreset (config) {
   const parserOpts = createParserOpts(config)
   const writerOpts = await createWriterOpts(config)
   const recommendedBumpOpts = createConventionalRecommendedBumpOpts(config, parserOpts)
@@ -23,7 +23,3 @@ async function createPreset (config) {
     conventionalChangelog
   }
 }
-
-module.exports = createPreset
-
-module.exports.DEFAULT_COMMIT_TYPES = DEFAULT_COMMIT_TYPES

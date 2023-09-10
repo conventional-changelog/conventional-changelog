@@ -1,8 +1,6 @@
-'use strict'
-
-const { Transform } = require('stream')
-const parser = require('./lib/parser')
-const regex = require('./lib/regex')
+import { Transform } from 'stream'
+import parser from './lib/parser.js'
+import regex from './lib/regex.js'
 
 function assignOpts (options) {
   options = {
@@ -69,7 +67,7 @@ function assignOpts (options) {
   return options
 }
 
-function conventionalCommitsParser (options) {
+export default function conventionalCommitsParser (options) {
   options = assignOpts(options)
   const reg = regex(options)
 
@@ -94,12 +92,9 @@ function conventionalCommitsParser (options) {
   })
 }
 
-function sync (commit, options) {
+export function parseSync (commit, options) {
   options = assignOpts(options)
   const reg = regex(options)
 
   return parser(commit, options, reg)
 }
-
-module.exports = conventionalCommitsParser
-module.exports.sync = sync

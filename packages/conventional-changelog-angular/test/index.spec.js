@@ -2,8 +2,8 @@ import path from 'path'
 import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/test-tools'
-import preset from '../'
+import { TestTools } from '../../../tools/test-tools.js'
+import preset from '../index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
 let testTools

@@ -1,8 +1,6 @@
-'use strict'
+import { addBangNotes } from './utils.js'
 
-const { addBangNotes } = require('./utils')
-
-function createConventionalRecommendedBumpOpts (config, parserOpts) {
+export function createConventionalRecommendedBumpOpts (config, parserOpts) {
   return {
     parserOpts,
 
@@ -40,5 +38,3 @@ function createConventionalRecommendedBumpOpts (config, parserOpts) {
     }
   }
 }
-
-module.exports.createConventionalRecommendedBumpOpts = createConventionalRecommendedBumpOpts

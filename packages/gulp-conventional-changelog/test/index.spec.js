@@ -2,8 +2,8 @@ import { Buffer } from 'safe-buffer'
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
 import { join } from 'path'
 import Vinyl from 'vinyl'
-import { TestTools, through } from '../../../tools/test-tools'
-import conventionalChangelog from '../'
+import { TestTools, through } from '../../../tools/test-tools.js'
+import conventionalChangelog from '../index.js'
 
 let testTools
 

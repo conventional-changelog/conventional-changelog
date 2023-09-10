@@ -1,24 +1,8 @@
-'use strict'
+import { readFile } from 'fs/promises'
+import { resolve } from 'path'
+import { fileURLToPath } from 'url'
 
-const { readFile } = require('fs').promises
-const { resolve } = require('path')
-
-async function createWriterOpts () {
-  const [template, header, commit] = await Promise.all([
-    readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/commit.hbs'), 'utf-8')
-  ])
-  const writerOpts = getWriterOpts()
-
-  writerOpts.mainTemplate = template
-  writerOpts.headerPartial = header
-  writerOpts.commitPartial = commit
-
-  return writerOpts
-}
-
-module.exports.createWriterOpts = createWriterOpts
+const dirname = fileURLToPath(new URL('.', import.meta.url))
 
 function getWriterOpts () {
   return {
@@ -44,4 +28,19 @@ function getWriterOpts () {
     commitGroupsSort: 'title',
     commitsSort: ['emoji', 'shortDesc']
   }
+}
+
+export async function createWriterOpts () {
+  const [template, header, commit] = await Promise.all([
+    readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8')
+  ])
+  const writerOpts = getWriterOpts()
+
+  writerOpts.mainTemplate = template
+  writerOpts.headerPartial = header
+  writerOpts.commitPartial = commit
+
+  return writerOpts
 }

@@ -1,15 +1,16 @@
-'use strict'
+import { readFile } from 'fs/promises'
+import { resolve } from 'path'
+import { fileURLToPath } from 'url'
+import compareFunc from 'compare-func'
 
-const compareFunc = require('compare-func')
-const { readFile } = require('fs').promises
-const { resolve } = require('path')
+const dirname = fileURLToPath(new URL('.', import.meta.url))
 
-async function createWriterOpts () {
+export async function createWriterOpts () {
   const [template, header, commit, footer] = await Promise.all([
-    readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/commit.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/footer.hbs'), 'utf-8')
+    readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/footer.hbs'), 'utf-8')
   ])
   const writerOpts = getWriterOpts()
 
@@ -20,8 +21,6 @@ async function createWriterOpts () {
 
   return writerOpts
 }
-
-module.exports.createWriterOpts = createWriterOpts
 
 function getWriterOpts () {
   return {

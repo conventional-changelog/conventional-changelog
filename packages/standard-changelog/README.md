@@ -33,7 +33,7 @@ $ npm install --save standard-changelog
 ```
 
 ```js
-var standardChangelog = require('standard-changelog');
+import standardChangelog from 'standard-changelog';
 
 standardChangelog()
   .pipe(process.stdout); // or any writable stream

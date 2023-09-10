@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import mergeConfig from '../lib/merge-config'
+import mergeConfig from '../lib/merge-config.js'
 
 const defaultOptions = {
   append: false,

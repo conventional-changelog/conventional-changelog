@@ -1,5 +1,5 @@
 import { vitest, describe, it, expect } from 'vitest'
-import { createPresetLoader } from '../'
+import { createPresetLoader } from '../index.js'
 
 const mockModuleLoader = () => () => ({})
 const mockUnprefixedModuleLoader = (moduleName) => {

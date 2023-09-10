@@ -1,9 +1,4 @@
-'use strict'
-
-const path = require('path')
-
-module.exports.loadPreset = createPresetLoader((preset) => import(preset))
-module.exports.createPresetLoader = createPresetLoader
+import path from 'path'
 
 /**
  * @typedef {((moduleName: string) => any) | ((moduleName: string) => Promise<any>)} ModuleLoader
@@ -91,7 +86,7 @@ function getModuleDefaultExport (module) {
  * @param {ModuleLoader} moduleLoader - Function that loads module.
  * @returns {(presetOrParams: string | PresetParams) => Promise<any>} Function that loads preset.
  */
-function createPresetLoader (moduleLoader) {
+export function createPresetLoader (moduleLoader) {
   return async function loadPreset (presetOrParams) {
     let preset = ''
     let params = null
@@ -124,3 +119,5 @@ function createPresetLoader (moduleLoader) {
       : await createPreset()
   }
 }
+
+export const loadPreset = createPresetLoader((preset) => import(preset))

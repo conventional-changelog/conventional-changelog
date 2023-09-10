@@ -1,14 +1,15 @@
-'use strict'
-
-const { Transform } = require('stream')
-const { join } = require('path')
-const { readFile } = require('fs/promises')
-const { valid: semverValid } = require('semver')
-const {
+import { Transform } from 'stream'
+import { join } from 'path'
+import { fileURLToPath } from 'url'
+import { readFile } from 'fs/promises'
+import { valid as semverValid } from 'semver'
+import {
   functionify,
   processCommit,
   generate
-} = require('./lib/util')
+} from './lib/util.js'
+
+const dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // sv-SE is used for yyyy-mm-dd format
 const dateFormatter = Intl.DateTimeFormat('sv-SE', {
@@ -37,10 +38,10 @@ async function conventionalChangelogWriterInit (context, options) {
     commitPartial,
     footerPartial
   ] = await Promise.all([
-    readFile(join(__dirname, 'templates/template.hbs'), 'utf-8'),
-    readFile(join(__dirname, 'templates/header.hbs'), 'utf-8'),
-    readFile(join(__dirname, 'templates/commit.hbs'), 'utf-8'),
-    readFile(join(__dirname, 'templates/footer.hbs'), 'utf-8')
+    readFile(join(dirname, 'templates/template.hbs'), 'utf-8'),
+    readFile(join(dirname, 'templates/header.hbs'), 'utf-8'),
+    readFile(join(dirname, 'templates/commit.hbs'), 'utf-8'),
+    readFile(join(dirname, 'templates/footer.hbs'), 'utf-8')
   ])
 
   options = {
@@ -102,7 +103,7 @@ async function conventionalChangelogWriterInit (context, options) {
   return { context, options, generateOn }
 }
 
-function conventionalChangelogWriterParseStream (inputContext, inputOptions) {
+export default function conventionalChangelogWriterParseStream (inputContext, inputOptions) {
   const initPromise = conventionalChangelogWriterInit(inputContext, inputOptions)
   let commits = []
   let neverGenerated = true
@@ -215,7 +216,7 @@ function conventionalChangelogWriterParseStream (inputContext, inputOptions) {
 /*
  * Given an array of commits, returns a string representing a CHANGELOG entry.
  */
-conventionalChangelogWriterParseStream.parseArray = async (rawCommits, context, options) => {
+export async function parseArray (rawCommits, context, options) {
   let generateOn
   rawCommits = [...rawCommits];
   ({ context, options, generateOn } = await conventionalChangelogWriterInit(context, options))
@@ -244,5 +245,3 @@ conventionalChangelogWriterParseStream.parseArray = async (rawCommits, context, 
     return entries.join('') + await generate(options, commits, context, savedKeyCommit)
   }
 }
-
-module.exports = conventionalChangelogWriterParseStream

@@ -1,5 +1,6 @@
 {
   "name": "conventional-changelog-cli",
+  "type": "module",
   "version": "4.1.0",
   "description": "Generate a changelog from git metadata",
   "bugs": {
@@ -16,10 +17,10 @@
     "url": "https://github.com/stevemao"
   },
   "bin": {
-    "conventional-changelog": "cli.mjs"
+    "conventional-changelog": "cli.js"
   },
   "files": [
-    "cli.mjs"
+    "cli.js"
   ],
   "keywords": [
     "cli",

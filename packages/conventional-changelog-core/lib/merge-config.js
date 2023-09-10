@@ -1,13 +1,13 @@
-'use strict'
-const fs = require('fs/promises')
-const { exec } = require('child_process')
-const hostedGitInfo = require('hosted-git-info')
-const parseRepositoryUrl = require('@hutson/parse-repository-url')
-const gitSemverTags = require('git-semver-tags')
-const normalizePackageData = require('normalize-package-data')
+import fs from 'fs/promises'
+import path from 'path'
+import { exec } from 'child_process'
+import { URL, fileURLToPath } from 'url'
+import hostedGitInfo from 'hosted-git-info'
+import parseRepositoryUrl from '@hutson/parse-repository-url'
+import gitSemverTags from 'git-semver-tags'
+import normalizePackageData from 'normalize-package-data'
 
-const { URL } = require('url')
-
+const dirname = fileURLToPath(new URL('.', import.meta.url))
 const rhosts = /github|bitbucket|gitlab/i
 // sv-SEis used for yyyy-mm-dd format
 const dateFormatter = Intl.DateTimeFormat('sv-SE', {
@@ -62,7 +62,7 @@ function getRemoteOriginUrl (cwd) {
   })
 }
 
-async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
+export default async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   let pkgPromise
 
   options = omitUndefinedValueProps(options)
@@ -255,7 +255,7 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     }
 
     if (type) {
-      hostOpts = require('../hosts/' + type)
+      hostOpts = JSON.parse(await fs.readFile(path.join(dirname, '..', 'hosts', `${type}.json`), 'utf8'))
 
       context = {
         issue: hostOpts.issue,
@@ -370,5 +370,3 @@ async function mergeConfig (options, context, gitRawCommitsOpts, parserOpts, wri
     gitRawExecOpts
   }
 }
-
-module.exports = mergeConfig

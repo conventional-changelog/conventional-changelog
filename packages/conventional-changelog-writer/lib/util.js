@@ -1,10 +1,9 @@
-'use strict'
-const conventionalCommitsFilter = require('conventional-commits-filter')
-const Handlebars = require('handlebars')
-const semver = require('semver')
-const stringify = require('json-stringify-safe')
+import conventionalCommitsFilter from 'conventional-commits-filter'
+import Handlebars from 'handlebars'
+import semver from 'semver'
+import stringify from 'json-stringify-safe'
 
-function compileTemplates (templates) {
+export function compileTemplates (templates) {
   const main = templates.mainTemplate
   const headerPartial = templates.headerPartial
   const commitPartial = templates.commitPartial
@@ -36,7 +35,7 @@ function compileTemplates (templates) {
   })
 }
 
-function functionify (strOrArr) {
+export function functionify (strOrArr) {
   if (strOrArr && typeof strOrArr !== 'function') {
     return (a, b) => {
       let str1 = ''
@@ -57,7 +56,7 @@ function functionify (strOrArr) {
   }
 }
 
-function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
+export function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
   const commitGroups = []
   const commitGroupsObj = commits.reduce(function (groups, commit) {
     const key = commit[groupBy] || ''
@@ -93,7 +92,7 @@ function getCommitGroups (groupBy, commits, groupsSort, commitsSort) {
   return commitGroups
 }
 
-function getNoteGroups (notes, noteGroupsSort, notesSort) {
+export function getNoteGroups (notes, noteGroupsSort, notesSort) {
   const retGroups = []
 
   notes.forEach(function (note) {
@@ -175,7 +174,7 @@ function cloneCommit (commit) {
   return commitClone
 }
 
-async function processCommit (chunk, transform, context) {
+export async function processCommit (chunk, transform, context) {
   let commit
 
   try {
@@ -213,7 +212,7 @@ async function processCommit (chunk, transform, context) {
   return commit
 }
 
-function getExtraContext (commits, notes, options) {
+export function getExtraContext (commits, notes, options) {
   const context = {}
 
   // group `commits` by `options.groupBy`
@@ -225,7 +224,7 @@ function getExtraContext (commits, notes, options) {
   return context
 }
 
-async function generate (options, commits, context, keyCommit) {
+export async function generate (options, commits, context, keyCommit) {
   const notes = []
   let filteredCommits
   const compiled = compileTemplates(options)
@@ -268,14 +267,4 @@ async function generate (options, commits, context, keyCommit) {
   options.debug('Your final context is:\n' + stringify(context, null, 2))
 
   return compiled(context)
-}
-
-module.exports = {
-  compileTemplates,
-  functionify,
-  getCommitGroups,
-  getNoteGroups,
-  processCommit,
-  getExtraContext,
-  generate
 }

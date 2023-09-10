@@ -1,6 +1,4 @@
-'use strict'
-
-function createParserOpts () {
+export function createParserOpts () {
   return {
     mergePattern: /^Merge pull request #(.*) from .*$/,
     mergeCorrespondence: ['pr'],
@@ -12,5 +10,3 @@ function createParserOpts () {
     ]
   }
 }
-
-module.exports.createParserOpts = createParserOpts

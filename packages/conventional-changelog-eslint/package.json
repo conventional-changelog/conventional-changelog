@@ -1,8 +1,9 @@
 {
   "name": "conventional-changelog-eslint",
+  "type": "module",
   "version": "5.0.0",
   "description": "conventional-changelog eslint preset",
-  "main": "index.js",
+  "exports": "./index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"

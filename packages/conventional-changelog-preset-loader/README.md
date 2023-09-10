@@ -39,7 +39,7 @@ npm i -D conventional-changelog-preset-loader
 Import `loadPreset` function from the package and use it to load the preset:
 
 ```js
-const { loadPreset } = require('conventional-changelog-preset-loader')
+import { loadPreset } from 'conventional-changelog-preset-loader'
 
 loadPreset('angular').then((config) => {
   // do something with config object
@@ -49,8 +49,10 @@ loadPreset('angular').then((config) => {
 By default it uses `import` to load preset. If you want to use `require` instead, you can create own loader with `createPresetLoader` function:
 
 ```js
-const { createPresetLoader } = require('conventional-changelog-preset-loader')
+import { createRequire } from 'node:module'
+import { createPresetLoader } from 'conventional-changelog-preset-loader'
 
+const require = createRequire(import.meta.url)
 const loadPreset = createPresetLoader(require)
 ```
 
@@ -83,7 +85,7 @@ export default function createPreset(options) {
 To pass options to the preset, `loadPreset` function accepts object with `name` property as first argument:
 
 ```js
-const { loadPreset } = require('conventional-changelog-preset-loader')
+import { loadPreset } from 'conventional-changelog-preset-loader'
 
 loadPreset({
   name: 'angular',

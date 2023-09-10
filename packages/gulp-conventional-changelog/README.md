@@ -17,8 +17,8 @@ $ npm install --save-dev gulp-conventional-changelog
 ## Usage
 
 ```js
-var gulp = require('gulp');
-var conventionalChangelog = require('gulp-conventional-changelog');
+import gulp from 'gulp';
+import conventionalChangelog from 'gulp-conventional-changelog';
 
 gulp.task('changelog', function () {
   return gulp.src('CHANGELOG.md')
@@ -67,9 +67,9 @@ gulp.task('changelog', function () {
 **Note:** If your `options.releaseCount` is `0` (regenerate all changelog from previous releases) you can just use [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) directly or not to read the file at all.
 
 ```js
-var gulp = require('gulp');
-var conventionalChangelog = require('conventional-changelog');
-var fs = require('fs');
+import gulp from 'gulp';
+import conventionalChangelog from 'conventional-changelog';
+import fs from 'fs';
 
 gulp.task('default', function () {
   return conventionalChangelog({
@@ -83,8 +83,8 @@ gulp.task('default', function () {
 Or
 
 ```js
-var gulp = require('gulp');
-var conventionalChangelog = require('gulp-conventional-changelog');
+import gulp from 'gulp';
+import conventionalChangelog from 'gulp-conventional-changelog';
 
 gulp.task('default', function () {
   return gulp.src('CHANGELOG.md', {

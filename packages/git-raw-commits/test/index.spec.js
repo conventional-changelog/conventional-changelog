@@ -1,6 +1,6 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools, delay } from '../../../tools/test-tools'
-import gitRawCommits from '../'
+import { TestTools, delay } from '../../../tools/test-tools.js'
+import gitRawCommits from '../index.js'
 
 let testTools
 
