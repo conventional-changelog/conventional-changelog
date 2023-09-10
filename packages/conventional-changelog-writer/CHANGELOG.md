@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v7.0.0...conventional-changelog-writer-v7.0.1) (2023-09-10)
+
+
+### Bug Fixes
+
+* **conventional-changelog-writer:** fix transform async handlers ([#1146](https://github.com/conventional-changelog/conventional-changelog/issues/1146)) ([be3901b](https://github.com/conventional-changelog/conventional-changelog/commit/be3901bc66e44f938c4a9634b697a0c79841635a))
+
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v6.0.1...conventional-changelog-writer-v7.0.0) (2023-08-26)
 
 
