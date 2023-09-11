@@ -78,7 +78,7 @@ function getWriterOpts (config) {
       // adds additional breaking change notes
       // for the special case, test(system)!: hello world, where there is
       // a '!' but no 'BREAKING CHANGE' in body:
-      addBangNotes(commit)
+      let notes = addBangNotes(commit)
 
       // Add an entry in the CHANGELOG if special Release-As footer
       // is used:
@@ -87,32 +87,36 @@ function getWriterOpts (config) {
         discard = false
       }
 
-      commit.notes.forEach(note => {
-        note.title = 'BREAKING CHANGES'
+      notes = notes.map(note => {
         discard = false
+
+        return {
+          ...note,
+          title: 'BREAKING CHANGES'
+        }
       })
 
       // breaking changes attached to any type are still displayed.
       if (discard && (entry === undefined ||
           entry.hidden)) return
 
-      if (entry) commit.type = entry.section
+      const type = entry
+        ? entry.section
+        : commit.type
+      const scope = commit.scope === '*'
+        ? ''
+        : commit.scope
+      const shortHash = typeof commit.hash === 'string'
+        ? commit.hash.substring(0, 7)
+        : commit.shortHash
+      let subject = commit.subject
 
-      if (commit.scope === '*') {
-        commit.scope = ''
-      }
-
-      if (typeof commit.hash === 'string') {
-        commit.shortHash = commit.hash.substring(0, 7)
-      }
-
-      if (typeof commit.subject === 'string') {
+      if (typeof subject === 'string') {
         // Issue URLs.
-        config.issuePrefixes.join('|')
         const issueRegEx = '(' + config.issuePrefixes.join('|') + ')' + '([a-z0-9]+)'
         const re = new RegExp(issueRegEx, 'g')
 
-        commit.subject = commit.subject.replace(re, (_, prefix, issue) => {
+        subject = subject.replace(re, (_, prefix, issue) => {
           issues.push(prefix + issue)
           const url = expandTemplate(config.issueUrlFormat, {
             host: context.host,
@@ -124,7 +128,7 @@ function getWriterOpts (config) {
           return `[${prefix}${issue}](${url})`
         })
         // User URLs.
-        commit.subject = commit.subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
+        subject = subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
           // TODO: investigate why this code exists.
           if (user.includes('/')) {
             return `@${user}`
@@ -142,15 +146,16 @@ function getWriterOpts (config) {
       }
 
       // remove references that already appear in the subject
-      commit.references = commit.references.filter(reference => {
-        if (issues.indexOf(reference.prefix + reference.issue) === -1) {
-          return true
-        }
+      const references = commit.references.filter(reference => !issues.includes(reference.prefix + reference.issue))
 
-        return false
-      })
-
-      return commit
+      return {
+        notes,
+        type,
+        scope,
+        shortHash,
+        subject,
+        references
+      }
     },
     groupBy: 'type',
     // the groupings of commit messages, e.g., Features vs., Bug Fixes, are

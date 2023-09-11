@@ -25,27 +25,33 @@ export async function createWriterOpts () {
 function getWriterOpts () {
   return {
     transform: (commit) => {
-      const type = commit.type ? commit.type.toUpperCase() : ''
+      let type = commit.type ? commit.type.toUpperCase() : ''
 
       if (type === 'FEAT') {
-        commit.type = 'Features'
+        type = 'Features'
       } else if (type === 'FIX') {
-        commit.type = 'Bug Fixes'
+        type = 'Bug Fixes'
       } else {
         return
       }
 
-      if (typeof commit.hash === 'string') {
-        commit.hash = commit.hash.substring(0, 7)
-      }
-
-      commit.notes.forEach(note => {
-        if (note.title === 'BREAKING CHANGE') {
-          note.title = 'BREAKING CHANGES'
+      const hash = typeof commit.hash === 'string'
+        ? commit.hash.substring(0, 7)
+        : commit.hash
+      const notes = commit.notes.map(note => {
+        return {
+          ...note,
+          title: note.title === 'BREAKING CHANGE'
+            ? 'BREAKING CHANGES'
+            : note.title
         }
       })
 
-      return commit
+      return {
+        type,
+        hash,
+        notes
+      }
     },
     groupBy: 'type',
     commitGroupsSort: 'title',

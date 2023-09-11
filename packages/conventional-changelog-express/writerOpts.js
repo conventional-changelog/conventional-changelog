@@ -22,15 +22,19 @@ export async function createWriterOpts () {
 function getWriterOpts () {
   return {
     transform: (commit) => {
+      let component = commit.component
+
       if (commit.component === 'perf') {
-        commit.component = 'Performance'
+        component = 'Performance'
       } else if (commit.component === 'deps') {
-        commit.component = 'Dependencies'
+        component = 'Dependencies'
       } else {
         return
       }
 
-      return commit
+      return {
+        component
+      }
     },
     groupBy: 'component',
     commitGroupsSort: 'title',

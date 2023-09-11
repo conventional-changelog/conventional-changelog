@@ -1,24 +1,84 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# conventional-changelog-writer
 
-> Write logs based on conventional commits and templates
+[![ESM-only package][package]][package-url]
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
+
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
+
+[npm]: https://img.shields.io/npm/v/conventional-changelog-writer.svg
+[npm-url]: https://npmjs.com/package/conventional-changelog-writer
+
+[node]: https://img.shields.io/node/v/conventional-changelog-writer.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-writer
+[deps-url]: https://libraries.io/npm/conventional-changelog-writer/tree
+
+[size]: https://packagephobia.com/badge?p=conventional-changelog-writer
+[size-url]: https://packagephobia.com/result?p=conventional-changelog-writer
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+Write logs based on conventional commits and templates.
+
+<hr />
+<a href="#install">Install</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#usage">Usage</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#api">API</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#customization-guide">Customization</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#cli">CLI</a>
+<br />
+<hr />
 
 ## Install
 
-```sh
-$ npm install --save conventional-changelog-writer
+```bash
+# pnpm
+pnpm add -D conventional-changelog-writer
+# yarn
+yarn add -D conventional-changelog-writer
+# npm
+npm i -D conventional-changelog-writer
 ```
 
 ## Usage
 
 ```js
-import conventionalChangelogWriter from 'conventional-changelog-writer';
+import {
+  createChangelogAsyncGeneratorFromCommits,
+  createChangelogWriterStream,
+  createChangelogFromCommits
+} from 'conventional-changelog-writer'
 
-conventionalChangelogWriter(context, options);
+// Create logs Async Generator from commits
+for await (let log of createChangelogAsyncGeneratorFromCommits(commits, context, options)) {
+  console.log(log)
+}
+
+// Create logs stream from commits
+commitsStream
+  .pipe(createChangelogWriterStream(context, options))
+  .pipe(process.stdout)
+
+// Create changelog string from commits
+console.log(await createChangelogFromCommits(commits, context, options))
 ```
 
-It returns a transform stream.
-
-It expects an object mode upstream that looks something like this:
+Commits it an async iterable of commit objects that looks like this:
 
 ```js
 { hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
@@ -41,9 +101,9 @@ It expects an object mode upstream that looks something like this:
   references: [] }
 ```
 
-Each chunk should be a commit. Json object is also **valid**. Parts of the objects will be formatted and combined into a log based on the handlebars context, templates and options.
+Parts of the commits will be formatted and combined into a log based on the handlebars context, templates and options.
 
-The downstream might look something like this:
+The output log might look something like this:
 
 ```js
 ## 0.0.1 "this is a title" (2015-05-29)
@@ -60,17 +120,23 @@ The downstream might look something like this:
 * some breaking change
 ```
 
-
 ## API
 
-### conventionalChangelogWriter([context, [options]])
+### createChangelogAsyncGeneratorFromCommits(commits: Commit[] | AsyncIterable<Commit>, context?: Context, options?: Options, includeDetails?: boolean): AsyncGenerator<string | Details, void>
 
-Returns a transform stream.
+Creates an async generator of changelog entries from commits.
 
-### conventionalChangelogWriter.parseArray(commits, [context, [options]])
+If `includeDetails` is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
 
-Rather than returning a transform stream for parsing commits,
-parses the array of commits provided generating a CHANGELOG entry.
+### createChangelogWriterStream(context?: Context, options?: Options, includeDetails?: boolean): Transform
+
+Creates a transform stream which takes commits and outputs changelog entries.
+
+If `includeDetails` is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
+
+### createChangelogFromCommits(commits: Commit[] | AsyncIterable<Commit>, context?: Context, options?: Options): Promise<string>
+
+Create a changelog from commits.
 
 #### context
 
@@ -115,7 +181,7 @@ The repository name on `host`. Eg: `'conventional-changelog-writer'`.
 Type: `string`
 
 The whole repository url. Eg: `'https://github.com/conventional-changelog/conventional-changelog-writer'`.
-The should be used as a fallback when `context.repository` doesn't exist.
+Should be used as a fallback when `context.repository` doesn't exist.
 
 ##### linkReferences
 
@@ -143,19 +209,13 @@ If `version` is found in the last commit, `committerDate` will overwrite this.
 
 #### options
 
-Type: `object`
+Writer options.
 
 ##### transform
 
-Type: `object` or `function` Default: get the first 7 digits of hash, and `committerDate` will be formatted as `'yyyy-mm-dd'`.
+Type: `function` Default: `defaultCommitTransform` exported function.
 
-Replace with new values in each commit.
-
-If this is an object, the keys are paths to a nested object property. the values can be a string (static) and a function (dynamic) with the old value and path passed as arguments. This value is merged with your own transform object.
-
-If this is a function, the commit chunk will be passed as the argument and the returned value would be the new commit object. This is a handy function if you can't provide a transform stream as an upstream of this one. If returns a falsy value this commit is ignored.
-
-a `raw` object that is originally poured form upstream is attached to `commit`.
+A function to transform commits. Should return diff object which will be merged with the original commit.
 
 ##### groupBy
 
@@ -189,59 +249,25 @@ A compare function used to sort note groups. If it's a string or array, it sorts
 
 ##### generateOn
 
-Type: `function`, `string` or `any` Default: if `commit.version` is a valid semver.
+Type: `function`, `string` or `null` Default: if `commit.version` is a valid semver.
 
 When the upstream finishes pouring the commits it will generate a block of logs if `doFlush` is `true`. However, you can generate more than one block based on this criteria (usually a version) even if there are still commits from the upstream.
 
-###### generateOn(commit, commits, context, options)
+If this value is a `string`, it checks the existence of the field. Set to `null` to disable it.
 
-####### commit
-
-Current commit.
-
-####### commits
-
-Current collected commits.
-
-####### context
-
-The generated context based on original input `context` and `options`.
-
-####### options
-
-Normalized options.
+###### generateOn(keyCommit: Commit, commitsGroup: Commit[], context: FinalContext, options: FinalOptions): boolean
 
 **NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`). However, if the transformed commit is ignored it falls back to the original commit.
 
-If this value is a `string`, it checks the existence of the field. Set to other type to disable it.
-
-##### finalizeContext
+##### finalizeContext(context: FinalContext, options: FinalOptions, filteredCommits: Commit[], keyCommit: Commit | null, commits: Commit[]): FinalContext | Promise<FinalContext>
 
 Type: `function` Default: pass through
 
 Last chance to modify your context before generating a changelog.
 
-###### finalizeContext(context, options, commits, keyCommit)
-
-####### context
-
-The generated context based on original input `context` and `options`.
-
-####### options
-
-Normalized options.
-
-####### commits
-
-Filtered commits from your git metadata.
-
-####### keyCommit
-
-The commit that triggers to generate the log.
-
 ##### debug
 
-Type: `function` Default: `function() {}`
+Type: `function` Default: `() => {}`
 
 A function to get debug information.
 
@@ -250,15 +276,6 @@ A function to get debug information.
 Type: `boolean` Default: `false`
 
 The normal order means reverse chronological order. `reverse` order means chronological order. Are the commits from upstream in the reverse order? You should only worry about this when generating more than one blocks of logs based on `generateOn`. If you find the last commit is in the wrong block inverse this value.
-
-##### includeDetails
-
-Type: `boolean` Default: `false`
-
-If this value is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
-
-*NOTE:* The downstream must be in object mode if this is `true`.
-*NOTE:* This is only supported when using streaming mode.
 
 ##### ignoreReverted
 
@@ -271,8 +288,6 @@ If `true`, reverted commits will be ignored.
 Type: `boolean` Default: `true`
 
 If `true`, the stream will flush out the last bit of commits (could be empty) to changelog.
-
-*NOTE:* This is only supported when using streaming mode.
 
 ##### mainTemplate
 
@@ -318,11 +333,9 @@ context should be module specific and can be used across the whole log. Thus the
 
 Basically you can make your own templates and define all your template context. Extra context are based on commits from upstream and `options`. For more details, please checkout [handlebars](http://handlebarsjs.com) and the source code of this module. `finalizeContext` can be used at last to modify context before generating a changelog.
 
-
 ## CLI
 
 ```sh
-$ npm install --global conventional-changelog-writer
 $ conventional-changelog-writer --help # for more details
 ```
 
@@ -358,17 +371,6 @@ The output might look something like this
 
 It is printed to stdout.
 
-
 ## License
 
 MIT © [Steve Mao](https://github.com/stevemao)
-
-
-[npm-image]: https://badge.fury.io/js/conventional-changelog-writer.svg
-[npm-url]: https://npmjs.org/package/conventional-changelog-writer
-[travis-image]: https://travis-ci.org/conventional-changelog/conventional-changelog-writer.svg?branch=master
-[travis-url]: https://travis-ci.org/conventional-changelog/conventional-changelog-writer
-[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-changelog-writer.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-changelog-writer
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

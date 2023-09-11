@@ -26,25 +26,30 @@ function getWriterOpts () {
         return
       }
 
+      let tag = commit.tag
+
       if (commit.tag === 'BUGFIX') {
-        commit.tag = 'Bug Fixes'
+        tag = 'Bug Fixes'
       } else if (commit.tag === 'CLEANUP') {
-        commit.tag = 'Cleanup'
+        tag = 'Cleanup'
       } else if (commit.tag === 'FEATURE') {
-        commit.tag = 'Features'
+        tag = 'Features'
       } else if (commit.tag === 'DOC') {
-        commit.tag = 'Documentation'
+        tag = 'Documentation'
       } else if (commit.tag === 'SECURITY') {
-        commit.tag = 'Security'
+        tag = 'Security'
       } else {
         return
       }
 
-      if (typeof commit.hash === 'string') {
-        commit.shortHash = commit.hash.substring(0, 7)
-      }
+      const shortHash = typeof commit.hash === 'string'
+        ? commit.hash.substring(0, 7)
+        : commit.shortHash
 
-      return commit
+      return {
+        tag,
+        shortHash
+      }
     },
     groupBy: 'tag',
     commitGroupsSort: 'title',
