@@ -1,11 +1,11 @@
-'use strict'
+import { readFile } from 'fs/promises'
+import { resolve } from 'path'
+import { fileURLToPath } from 'url'
+import compareFunc from 'compare-func'
+import { DEFAULT_COMMIT_TYPES } from './constants.js'
+import { addBangNotes } from './utils.js'
 
-const compareFunc = require('compare-func')
-const { readFile } = require('fs').promises
-const { resolve } = require('path')
-const { DEFAULT_COMMIT_TYPES } = require('./constants')
-const { addBangNotes } = require('./utils')
-
+const dirname = fileURLToPath(new URL('.', import.meta.url))
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 /**
  * Handlebar partials for various property substitutions based on commit context.
@@ -14,7 +14,7 @@ const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
 const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
-async function createWriterOpts (config) {
+export async function createWriterOpts (config) {
   const finalConfig = {
     types: DEFAULT_COMMIT_TYPES,
     issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
@@ -48,10 +48,10 @@ async function createWriterOpts (config) {
     commit,
     footer
   ] = await Promise.all([
-    readFile(resolve(__dirname, './templates/template.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/header.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/commit.hbs'), 'utf-8'),
-    readFile(resolve(__dirname, './templates/footer.hbs'), 'utf-8')
+    readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8'),
+    readFile(resolve(dirname, './templates/footer.hbs'), 'utf-8')
   ])
   const writerOpts = getWriterOpts(finalConfig)
 
@@ -65,8 +65,6 @@ async function createWriterOpts (config) {
 
   return writerOpts
 }
-
-module.exports.createWriterOpts = createWriterOpts
 
 function getWriterOpts (config) {
   const commitGroupOrder = config.types.flatMap(t => t.section).filter(t => t)

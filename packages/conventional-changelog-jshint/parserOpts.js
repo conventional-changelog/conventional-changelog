@@ -1,6 +1,4 @@
-'use strict'
-
-function createParserOpts () {
+export function createParserOpts () {
   return {
     headerPattern: /^\[\[(.*)]] (.*)$/,
     headerCorrespondence: [
@@ -10,5 +8,3 @@ function createParserOpts () {
     noteKeywords: 'BREAKING CHANGE'
   }
 }
-
-module.exports.createParserOpts = createParserOpts

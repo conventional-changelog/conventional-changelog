@@ -1,11 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools.js'
 
-const CLI_PATH = path.join(__dirname, './test-cli.js')
+const CLI_PATH = path.join(__dirname, './test-cli.cjs')
 const COMMITS_PATH = 'fixtures/commits.ldjson'
-const OPTIONS_PATH = 'fixtures/options.js'
+const OPTIONS_PATH = 'fixtures/options.cjs'
 const CONTEXT_PATH = 'fixtures/context.json'
 
 describe('conventional-changelog-writer', () => {

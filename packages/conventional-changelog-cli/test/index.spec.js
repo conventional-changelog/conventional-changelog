@@ -1,8 +1,8 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
 import path from 'path'
-import { TestTools } from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools.js'
 
-const CLI_PATH = path.join(__dirname, '../cli.mjs')
+const CLI_PATH = path.join(__dirname, '../cli.js')
 const FIXTURE_CHANGELOG_PATH = path.join(__dirname, 'fixtures/_CHANGELOG.md')
 let testTools
 
@@ -220,7 +220,7 @@ describe('conventional-changelog-cli', () => {
 
   it('--context should work with relative path', async () => {
     const context = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/context.json'))
-    const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.js'))
+    const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.cjs'))
 
     const { stdout } = await testTools.fork(
       CLI_PATH,
@@ -233,20 +233,20 @@ describe('conventional-changelog-cli', () => {
   it('--context should work with absolute path', async () => {
     const { stdout } = await testTools.fork(
       CLI_PATH,
-      ['--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.js')]
+      ['--context', path.join(__dirname, 'fixtures/context.json'), '--config', path.join(__dirname, 'fixtures/config.cjs')]
     )
 
     expect(stdout).toBe('unicorn template')
   })
 
   it('--config should work with a return promise', async () => {
-    const { stdout } = await testTools.fork(CLI_PATH, ['--config', path.join(__dirname, 'fixtures/promise-config.js')])
+    const { stdout } = await testTools.fork(CLI_PATH, ['--config', path.join(__dirname, 'fixtures/promise-config.cjs')])
 
     expect(stdout).toBe('template')
   })
 
   it('--config should work with relative path', async () => {
-    const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.js'))
+    const config = path.relative(testTools.cwd, path.join(__dirname, 'fixtures/config.cjs'))
 
     const { stdout } = await testTools.fork(CLI_PATH, ['--config', config])
 
@@ -254,7 +254,7 @@ describe('conventional-changelog-cli', () => {
   })
 
   it('--config should work with absolute path', async () => {
-    const { stdout } = await testTools.fork(CLI_PATH, ['--config', path.join(__dirname, 'fixtures/config.js')])
+    const { stdout } = await testTools.fork(CLI_PATH, ['--config', path.join(__dirname, 'fixtures/config.cjs')])
 
     expect(stdout).toBe('template')
   })
@@ -280,7 +280,7 @@ describe('conventional-changelog-cli', () => {
   it('--config should work with --preset', async () => {
     const { stdout } = await testTools.fork(
       CLI_PATH,
-      ['--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.js')]
+      ['--preset', 'angular', '--config', path.join(__dirname, 'fixtures/config.cjs')]
     )
 
     expect(stdout).toBe('Bug Fixestemplate')

@@ -1,8 +1,9 @@
 {
   "name": "conventional-changelog-atom",
+  "type": "module",
   "version": "4.0.0",
   "description": "conventional-changelog atom preset",
-  "main": "index.js",
+  "exports": "./index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { delay } from '../../../tools/test-tools'
+import { delay } from '../../../tools/test-tools.js'
 import {
   compileTemplates,
   functionify,
@@ -8,7 +8,7 @@ import {
   processCommit,
   getExtraContext,
   generate
-} from '../lib/util'
+} from '../lib/util.js'
 
 describe('conventional-changelog-writer', () => {
   describe('util', () => {

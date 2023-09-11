@@ -13,7 +13,7 @@ $ npm install --save git-raw-commits
 ## Usage
 
 ```js
-var gitRawCommits = require('git-raw-commits');
+import gitRawCommits from 'git-raw-commits';
 
 gitRawCommits(options)
   .pipe(...);

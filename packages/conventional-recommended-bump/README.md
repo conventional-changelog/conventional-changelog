@@ -36,7 +36,7 @@ npm install conventional-recommended-bump
 ## Usage
 
 ```javascript
-const conventionalRecommendedBump = require(`conventional-recommended-bump`);
+import conventionalRecommendedBump from 'conventional-recommended-bump';
 
 const recommendation = await conventionalRecommendedBump({
   preset: `angular`

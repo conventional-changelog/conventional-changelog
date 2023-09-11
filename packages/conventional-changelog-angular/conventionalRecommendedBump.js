@@ -1,6 +1,4 @@
-'use strict'
-
-function createConventionalRecommendedBumpOpts (parserOpts) {
+export function createConventionalRecommendedBumpOpts (parserOpts) {
   return {
     parserOpts,
 
@@ -30,5 +28,3 @@ function createConventionalRecommendedBumpOpts (parserOpts) {
     }
   }
 }
-
-module.exports.createConventionalRecommendedBumpOpts = createConventionalRecommendedBumpOpts

@@ -14,6 +14,4 @@ function isUnicodeSupported () {
     process.env.TERMINAL_EMULATOR === 'JetBrains-JediTerm'
 }
 
-const tick = isUnicodeSupported() ? '✔' : '√'
-
-exports.tick = tick
+export const tick = isUnicodeSupported() ? '✔' : '√'

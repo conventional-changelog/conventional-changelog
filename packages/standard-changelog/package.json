@@ -1,7 +1,9 @@
 {
   "name": "standard-changelog",
+  "type": "module",
   "version": "5.0.0",
   "description": "Generate a changelog from git metadata with Angular commit convention",
+  "exports": "./index.js",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
@@ -24,7 +26,7 @@
   "files": [
     "index.js",
     "figures.js",
-    "cli.mjs"
+    "cli.js"
   ],
   "dependencies": {
     "conventional-changelog-angular": "workspace:^",
@@ -32,5 +34,5 @@
     "meow": "^12.0.1",
     "picocolors": "^1.0.0"
   },
-  "bin": "cli.mjs"
+  "bin": "cli.js"
 }

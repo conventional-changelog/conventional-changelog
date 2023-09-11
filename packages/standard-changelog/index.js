@@ -1,17 +1,17 @@
-const fs = require('fs/promises')
-const pc = require('picocolors')
-const conventionalChangelogCore = require('conventional-changelog-core')
-const angular = require('conventional-changelog-angular')
-const { tick } = require('./figures')
+import fs from 'fs/promises'
+import pc from 'picocolors'
+import conventionalChangelogCore from 'conventional-changelog-core'
+import angular from 'conventional-changelog-angular'
+import { tick } from './figures.js'
 
-function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
+export default function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts) {
   options = options || {}
   options.config = angular
 
   return conventionalChangelogCore(options, context, gitRawCommitsOpts, parserOpts, writerOpts)
 }
 
-async function createIfMissing (infile) {
+export async function createIfMissing (infile) {
   try {
     await fs.access(infile, fs.F_OK)
   } catch (err) {
@@ -22,10 +22,6 @@ async function createIfMissing (infile) {
   }
 }
 
-function checkpoint (msg, args) {
+export function checkpoint (msg, args) {
   console.info(`${pc.green(tick)} ${msg}`, ...args.map(arg => pc.bold(arg)))
 }
-
-module.exports = conventionalChangelog
-module.exports.createIfMissing = createIfMissing
-module.exports.checkpoint = checkpoint

@@ -1,15 +1,14 @@
-'use strict'
-const conventionalCommitsFilter = require('conventional-commits-filter')
-const conventionalCommitsParser = require('conventional-commits-parser')
-const { loadPreset } = require('conventional-changelog-preset-loader')
-const gitSemverTags = require('git-semver-tags')
-const gitRawCommits = require('git-raw-commits')
+import conventionalCommitsFilter from 'conventional-commits-filter'
+import conventionalCommitsParser from 'conventional-commits-parser'
+import { loadPreset } from 'conventional-changelog-preset-loader'
+import gitSemverTags from 'git-semver-tags'
+import gitRawCommits from 'git-raw-commits'
 
 const VERSIONS = ['major', 'minor', 'patch']
 
 function noop () {}
 
-async function conventionalRecommendedBump (optionsArgument, parserOptsArgument) {
+export default async function conventionalRecommendedBump (optionsArgument, parserOptsArgument) {
   if (typeof optionsArgument !== 'object') {
     throw new Error('The \'options\' argument must be an object.')
   }
@@ -82,5 +81,3 @@ async function conventionalRecommendedBump (optionsArgument, parserOptsArgument)
 
   return result
 }
-
-module.exports = conventionalRecommendedBump

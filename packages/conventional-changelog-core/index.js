@@ -1,14 +1,12 @@
-'use strict'
+import { Readable, Transform } from 'stream'
+import { execFileSync } from 'child_process'
+import addStream from 'add-stream'
+import gitRawCommits from 'git-raw-commits'
+import conventionalCommitsParser from 'conventional-commits-parser'
+import conventionalChangelogWriter from 'conventional-changelog-writer'
+import mergeConfig from './lib/merge-config.js'
 
-const addStream = require('add-stream')
-const gitRawCommits = require('git-raw-commits')
-const conventionalCommitsParser = require('conventional-commits-parser')
-const conventionalChangelogWriter = require('conventional-changelog-writer')
-const { Readable, Transform } = require('stream')
-const { execFileSync } = require('child_process')
-
-const mergeConfig = require('./lib/merge-config')
-function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
+export default function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
   const cwd = options?.cwd
 
   writerOpts = writerOpts || {}
@@ -152,5 +150,3 @@ function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts,
 
   return readable
 }
-
-module.exports = conventionalChangelog

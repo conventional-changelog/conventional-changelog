@@ -1,7 +1,9 @@
 {
   "name": "conventional-commits-filter",
+  "type": "module",
   "version": "4.0.0",
   "description": "Filter out reverted commits parsed by conventional-commits-parser",
+  "exports": "./index.js",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },

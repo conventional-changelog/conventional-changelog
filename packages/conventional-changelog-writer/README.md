@@ -11,7 +11,7 @@ $ npm install --save conventional-changelog-writer
 ## Usage
 
 ```js
-var conventionalChangelogWriter = require('conventional-changelog-writer');
+import conventionalChangelogWriter from 'conventional-changelog-writer';
 
 conventionalChangelogWriter(context, options);
 ```

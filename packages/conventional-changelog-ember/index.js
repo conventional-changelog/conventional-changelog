@@ -1,11 +1,9 @@
-'use strict'
+import { createParserOpts } from './parserOpts.js'
+import { createWriterOpts } from './writerOpts.js'
+import { createConventionalChangelogOpts } from './conventionalChangelog.js'
+import { createConventionalRecommendedBumpOpts } from './conventionalRecommendedBump.js'
 
-const { createParserOpts } = require('./parserOpts')
-const { createWriterOpts } = require('./writerOpts')
-const { createConventionalChangelogOpts } = require('./conventionalChangelog')
-const { createConventionalRecommendedBumpOpts } = require('./conventionalRecommendedBump')
-
-async function createPreset () {
+export default async function createPreset () {
   const parserOpts = createParserOpts()
   const writerOpts = await createWriterOpts()
   const recommendedBumpOpts = createConventionalRecommendedBumpOpts(parserOpts)
@@ -21,5 +19,3 @@ async function createPreset () {
     conventionalChangelog
   }
 }
-
-module.exports = createPreset

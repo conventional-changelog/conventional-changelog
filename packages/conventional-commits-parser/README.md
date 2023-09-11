@@ -67,7 +67,7 @@ $ npm install --save conventional-commits-parser
 ## Usage
 
 ```js
-var conventionalCommitsParser = require('conventional-commits-parser');
+import conventionalCommitsParser from 'conventional-commits-parser';
 
 conventionalCommitsParser(options);
 ```

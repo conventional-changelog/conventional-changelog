@@ -1,5 +1,3 @@
-'use strict'
-
 function isMatch (object, source) {
   let aValue
   let bValue
@@ -36,7 +34,7 @@ function findRevertCommit (commit, reverts) {
   return null
 }
 
-function conventionalCommitsFilter (commits) {
+export default function conventionalCommitsFilter (commits) {
   if (!Array.isArray(commits)) {
     throw new TypeError('Expected an array')
   }
@@ -77,5 +75,3 @@ function conventionalCommitsFilter (commits) {
 
   return result
 }
-
-module.exports = conventionalCommitsFilter

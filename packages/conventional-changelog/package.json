@@ -1,7 +1,9 @@
 {
   "name": "conventional-changelog",
+  "type": "module",
   "version": "5.1.0",
   "description": "Generate a changelog from git metadata",
+  "exports": "./index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"

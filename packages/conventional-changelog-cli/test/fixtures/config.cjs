@@ -1,7 +1,5 @@
-'use strict'
-
-module.exports = Promise.resolve({
+module.exports = {
   writerOpts: {
     mainTemplate: '{{commitGroups.[0].commits.[0].type}}{{testContext}}template'
   }
-})
+}

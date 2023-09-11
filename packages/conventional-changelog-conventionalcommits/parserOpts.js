@@ -1,8 +1,6 @@
-'use strict'
+import { breakingHeaderPattern } from './utils.js'
 
-const { breakingHeaderPattern } = require('./utils')
-
-function createParserOpts (config) {
+export function createParserOpts (config) {
   return {
     headerPattern: /^(\w*)(?:\((.*)\))?!?: (.*)$/,
     breakingHeaderPattern,
@@ -17,5 +15,3 @@ function createParserOpts (config) {
     issuePrefixes: config?.issuePrefixes || ['#']
   }
 }
-
-module.exports.createParserOpts = createParserOpts

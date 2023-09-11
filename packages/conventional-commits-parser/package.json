@@ -1,7 +1,9 @@
 {
   "name": "conventional-commits-parser",
+  "type": "module",
   "version": "5.0.0",
   "description": "Parse raw conventional commits",
+  "exports": "./index.js",
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
@@ -21,7 +23,7 @@
   },
   "files": [
     "index.js",
-    "cli.mjs",
+    "cli.js",
     "lib"
   ],
   "keywords": [
@@ -38,7 +40,7 @@
     "split2": "^4.0.0"
   },
   "bin": {
-    "conventional-commits-parser": "cli.mjs"
+    "conventional-commits-parser": "cli.js"
   },
   "devDependencies": {
     "forceable-tty": "^0.1.0"

@@ -1,6 +1,4 @@
-'use strict'
-
-function createParserOpts () {
+export function createParserOpts () {
   return {
     headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/,
     headerCorrespondence: [
@@ -13,5 +11,3 @@ function createParserOpts () {
     revertCorrespondence: ['header', 'hash']
   }
 }
-
-module.exports.createParserOpts = createParserOpts

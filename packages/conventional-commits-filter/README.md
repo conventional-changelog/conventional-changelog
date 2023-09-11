@@ -12,9 +12,9 @@ $ npm install --save conventional-commits-filter
 ## Usage
 
 ```js
-var conventionalCommitsFilter = require('conventional-commits-filter');
+import conventionalCommitsFilter from 'conventional-commits-filter';
 
-var commits = [{
+const commits = [{
   type: 'revert',
   scope: null,
   subject: 'feat(): amazing new module',

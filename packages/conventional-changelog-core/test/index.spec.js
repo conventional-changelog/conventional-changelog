@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import path from 'path'
-import { TestTools } from '../../../tools/test-tools'
-import conventionalChangelogCore from '../'
+import { TestTools } from '../../../tools/test-tools.js'
+import conventionalChangelogCore from '../index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
 let testTools
@@ -1204,7 +1204,7 @@ describe('conventional-changelog-core', () => {
         {
           cwd: testTools.cwd,
           tagPrefix: 'foo@',
-          config: require('conventional-changelog-angular')
+          config: (await import('conventional-changelog-angular')).default
         },
         {},
         { path: './packages/foo' }
@@ -1352,7 +1352,7 @@ describe('conventional-changelog-core', () => {
         {
           cwd: testTools.cwd,
           lernaPackage: 'foo',
-          config: require('conventional-changelog-angular')
+          config: (await import('conventional-changelog-angular')).default
         },
         {},
         { path: './packages/foo' }

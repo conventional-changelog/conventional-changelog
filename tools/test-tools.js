@@ -1,10 +1,10 @@
-const { execSync, spawn } = require('child_process')
-const { Transform } = require('stream')
-const path = require('path')
-const fs = require('fs')
-const tmp = require('tmp')
+import { execSync, spawn } from 'child_process'
+import { Transform } from 'stream'
+import path from 'path'
+import fs from 'fs'
+import tmp from 'tmp'
 
-function delay (ms) {
+export function delay (ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
@@ -36,7 +36,7 @@ function prepareMessageArgs (msg) {
   return args
 }
 
-function through (
+export function through (
   transform = (chunk, enc, cb) => cb(null, chunk),
   flush
 ) {
@@ -46,7 +46,7 @@ function through (
   })
 }
 
-function throughObj (
+export function throughObj (
   transform = (chunk, enc, cb) => cb(null, chunk),
   flush
 ) {
@@ -58,7 +58,7 @@ function throughObj (
   })
 }
 
-class TestTools {
+export class TestTools {
   constructor (cwd) {
     this.cwd = cwd
 
@@ -153,11 +153,4 @@ class TestTools {
 
     return data.toString().match(/^[a-f0-9]{40}$/gm)
   }
-}
-
-module.exports = {
-  TestTools,
-  through,
-  throughObj,
-  delay
 }

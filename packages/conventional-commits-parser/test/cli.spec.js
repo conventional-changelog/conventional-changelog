@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools'
+import { TestTools } from '../../../tools/test-tools.js'
 
-const CLI_PATH = path.join(__dirname, './test-cli.js')
+const CLI_PATH = path.join(__dirname, './test-cli.cjs')
 
 describe('conventional-commits-parser', () => {
   describe('cli', () => {

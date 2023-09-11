@@ -1,5 +1,3 @@
-'use strict'
-
 const reNomatch = /(?!.*)/
 
 function join (array, joiner) {
@@ -46,7 +44,7 @@ function getReferencesRegex (referenceActions) {
   return new RegExp('(' + joinedKeywords + ')(?:\\s+(.*?))(?=(?:' + joinedKeywords + ')|$)', 'gi')
 }
 
-module.exports = function (options) {
+export default function regex (options) {
   options = options || {}
   const reNotes = getNotesRegex(options.noteKeywords, options.notesPattern)
   const reReferenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)

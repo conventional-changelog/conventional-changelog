@@ -1,5 +1,5 @@
-const { exec } = require('child_process')
-const { valid: semverValid } = require('semver')
+import { exec } from 'child_process'
+import { valid as semverValid } from 'semver'
 
 const regex = /tag:\s*(.+?)[,)]/gi
 const cmd = 'git log --decorate --no-color --date-order'
@@ -13,7 +13,7 @@ function lernaTag (tag, pkg) {
   return /^.+@[0-9]+\.[0-9]+\.[0-9]+(-.+)?$/.test(tag)
 }
 
-function gitSemverTags (opts = {}) {
+export default function gitSemverTags (opts = {}) {
   return new Promise((resolve, reject) => {
     const options = {
       maxBuffer: Infinity,
@@ -67,5 +67,3 @@ function gitSemverTags (opts = {}) {
     })
   })
 }
-
-module.exports = gitSemverTags

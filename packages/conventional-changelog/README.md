@@ -12,7 +12,7 @@ $ npm install --save conventional-changelog
 ```
 
 ```js
-var conventionalChangelog = require('conventional-changelog');
+import conventionalChangelog from 'conventional-changelog';
 
 conventionalChangelog({
   preset: 'angular'
@@ -23,9 +23,9 @@ conventionalChangelog({
 Or if you want to use your own custom preset:
 
 ```js
-var conventionalChangelog = require('conventional-changelog');
+import conventionalChangelog from 'conventional-changelog';
+import config from '@org/conventional-changelog-custom-preset';
 
-var config = require('@org/conventional-changelog-custom-preset');
 conventionalChangelog({config})
   .pipe(process.stdout); // or any writable stream
 ```

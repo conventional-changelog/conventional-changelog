@@ -43,7 +43,7 @@ Use the [Conventional Changelog CLI Quick Start](https://github.com/conventional
 If you want to use this package directly and pass options, you can use the [Conventional Changelog CLI Quick Start](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-cli#quick-start) and with the `--config` or `-n` parameter, pass a js config that looks like this:
 
 ```js
-const createPreset = require('conventional-changelog-conventionalcommits')
+import createPreset from 'conventional-changelog-conventionalcommits'
 
 createPreset({
   issuePrefixes: ['TEST-'],

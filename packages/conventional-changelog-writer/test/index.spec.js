@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import { describe, it, expect } from 'vitest'
-import { delay, throughObj } from '../../../tools/test-tools'
-import conventionalChangelogWriter, { parseArray } from '../'
+import { delay, throughObj } from '../../../tools/test-tools.js'
+import conventionalChangelogWriter, { parseArray } from '../index.js'
 
 // sv-SEis used for yyyy-mm-dd format
 const dateFormatter = Intl.DateTimeFormat('sv-SE', {

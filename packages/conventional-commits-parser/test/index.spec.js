@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { through } from '../../../tools/test-tools'
-import conventionalCommitsParser from '../'
+import { through } from '../../../tools/test-tools.js'
+import conventionalCommitsParser, { parseSync } from '../index.js'
 
 describe('conventional-commits-parser', () => {
   it('should parse raw commits', async () => {
@@ -265,7 +265,7 @@ describe('conventional-commits-parser', () => {
       const commit = 'feat(ng-list): Allow custom separator\n' +
         'bla bla bla\n\n' +
         'Closes #123\nCloses #25\nFixes #33\n'
-      const result = conventionalCommitsParser.sync(commit)
+      const result = parseSync(commit)
 
       expect(result.header).toBe('feat(ng-list): Allow custom separator')
       expect(result.footer).toBe('Closes #123\nCloses #25\nFixes #33')
@@ -299,7 +299,7 @@ describe('conventional-commits-parser', () => {
 
     it('should parse references from header', () => {
       const commit = 'Subject #1'
-      const result = conventionalCommitsParser.sync(commit)
+      const result = parseSync(commit)
 
       expect(result.references).toEqual([{
         action: null,
@@ -313,7 +313,7 @@ describe('conventional-commits-parser', () => {
 
     it('should parse slash in the header with default headerPattern option', () => {
       const commit = 'feat(hello/world): message'
-      const result = conventionalCommitsParser.sync(commit)
+      const result = parseSync(commit)
 
       expect(result.type).toBe('feat')
       expect(result.scope).toBe('hello/world')
