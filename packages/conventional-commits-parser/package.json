@@ -29,18 +29,12 @@
   "engines": {
     "node": ">=16"
   },
-  "bin": {
-    "conventional-commits-parser": "./src/cli/index.ts"
-  },
   "exports": "./src/index.ts",
   "publishConfig": {
     "bin": {
       "conventional-commits-parser": "./dist/cli/index.js"
     },
-    "exports": {
-      ".": "./dist/index.js",
-      "./package.json": "./package.json"
-    }
+    "exports": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -48,8 +42,7 @@
   "scripts": {
     "clear": "del ./dist",
     "prepublishOnly": "pnpm build",
-    "emitDeclarations": "tsc --emitDeclarationOnly",
-    "build": "pnpm emitDeclarations && rollup -c"
+    "build": "tsc"
   },
   "dependencies": {
     "meow": "^12.0.1"
