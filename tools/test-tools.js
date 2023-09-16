@@ -1,5 +1,6 @@
 import { execSync, spawn } from 'child_process'
 import { Transform } from 'stream'
+import { pathToFileURL } from 'url'
 import path from 'path'
 import fs from 'fs'
 import tmp from 'tmp'
@@ -113,7 +114,7 @@ export class TestTools {
       const nodeArgs = [
         '--no-warnings',
         '--loader',
-        path.resolve(__dirname, '..', 'node_modules', 'tsm', 'loader.mjs')
+        pathToFileURL(path.resolve(__dirname, '..', 'node_modules', 'tsm', 'loader.mjs')).toString()
       ]
       const child = spawn(process.execPath, [...nodeArgs, script, ...args], finalOptions)
       let stdout = ''
