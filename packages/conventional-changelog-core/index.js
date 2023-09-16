@@ -2,7 +2,7 @@ import { Readable, Transform } from 'stream'
 import { execFileSync } from 'child_process'
 import addStream from 'add-stream'
 import gitRawCommits from 'git-raw-commits'
-import conventionalCommitsParser from 'conventional-commits-parser'
+import { parseCommitsStream } from 'conventional-commits-parser'
 import conventionalChangelogWriter from 'conventional-changelog-writer'
 import mergeConfig from './lib/merge-config.js'
 
@@ -93,7 +93,7 @@ export default function conventionalChangelog (options, context, gitRawCommitsOp
           err.message = 'Error in git-raw-commits: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)
         })
-        .pipe(conventionalCommitsParser(parserOpts))
+        .pipe(parseCommitsStream(parserOpts))
         .on('error', function (err) {
           err.message = 'Error in conventional-commits-parser: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)

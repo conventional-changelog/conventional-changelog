@@ -103,13 +103,18 @@ export class TestTools {
   /**
    * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>
    */
-  fork (script, args = [], options = {}, nodeArgs = []) {
+  fork (script, args = [], options = {}) {
     return new Promise((resolve, reject) => {
       const finalOptions = {
         cwd: this.cwd,
         stdio: [null, null, null],
         ...options
       }
+      const nodeArgs = [
+        '--no-warnings',
+        '--loader',
+        path.resolve(__dirname, '..', 'node_modules', 'tsm', 'loader.mjs')
+      ]
       const child = spawn(process.execPath, [...nodeArgs, script, ...args], finalOptions)
       let stdout = ''
       let stderr = ''
@@ -131,14 +136,6 @@ export class TestTools {
       })
       child.on('error', reject)
     })
-  }
-
-  forkTypeScript (script, args = [], options) {
-    return this.fork(script, args, options, [
-      '--no-warnings',
-      '--loader',
-      '@swc-node/register/esm'
-    ])
   }
 
   gitInit () {

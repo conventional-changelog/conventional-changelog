@@ -5,6 +5,6 @@ export function createParserOpts () {
       'type',
       'shortDesc'
     ],
-    noteKeywords: 'BREAKING CHANGE'
+    noteKeywords: ['BREAKING CHANGE']
   }
 }

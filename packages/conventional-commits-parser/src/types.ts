@@ -90,16 +90,15 @@ export interface CommitNote {
 
 export type CommitMeta = Record<string, string | null>
 
-export interface Commit {
+export interface CommitBase {
   merge: string | null
-  mergeMeta: CommitMeta | null
   revert: CommitMeta | null
   header: string | null
-  headerMeta: CommitMeta | null
   body: string | null
   footer: string | null
   notes: CommitNote[]
   mentions: string[]
   references: CommitReference[]
-  meta: CommitMeta | null
 }
+
+export type Commit = CommitBase & CommitMeta

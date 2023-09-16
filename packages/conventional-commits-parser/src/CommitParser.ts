@@ -17,22 +17,22 @@ import {
 import { defaultOptions } from './options.js'
 
 /**
- * Create an empty commit object.
+ * Helper to create commit object.
+ * @param initialData - Initial commit data.
  * @returns Commit object with empty data.
  */
-export function createEmptyCommit(): Commit {
+export function createCommitObject(initialData: Partial<Commit> = {}): Commit {
+  // @ts-expect-error: You can read properties from `Commit` without problems, but you can't assign object to this type. So here is helper for that.
   return {
     merge: null,
-    mergeMeta: null,
     revert: null,
     header: null,
-    headerMeta: null,
     body: null,
     footer: null,
     notes: [],
     mentions: [],
     references: [],
-    meta: null
+    ...initialData
   }
 }
 
@@ -44,7 +44,7 @@ export class CommitParser {
   private readonly regexes: ParserRegexes
   private lines: string[] = []
   private lineIndex = 0
-  private commit = createEmptyCommit()
+  private commit = createCommitObject()
 
   constructor(options: ParserOptions = {}) {
     this.options = {
@@ -162,11 +162,10 @@ export class CommitParser {
       this.nextLine()
 
       commit.merge = matches[0] || null
-      commit.mergeMeta = correspondence.reduce<CommitMeta>((meta, key, index) => {
-        meta[key] = matches[index + 1] || null
 
-        return meta
-      }, {})
+      correspondence.forEach((key, index) => {
+        commit[key] = matches[index + 1] || null
+      })
 
       return true
     }
@@ -191,11 +190,9 @@ export class CommitParser {
     }
 
     if (matches) {
-      commit.headerMeta = correspondence.reduce<CommitMeta>((meta, key, index) => {
-        meta[key] = matches[index + 1] || null
-
-        return meta
-      }, {})
+      correspondence.forEach((key, index) => {
+        commit[key] = matches[index + 1] || null
+      })
     }
   }
 
@@ -206,13 +203,12 @@ export class CommitParser {
     } = this
 
     if (!options.fieldPattern || !this.isLineAvailable()) {
-      return
+      return false
     }
 
-    const meta = commit.meta || {}
     let matches: RegExpMatchArray | null
     let field: string | null = null
-    let isNotEmpty = false
+    let parsed = false
 
     while (this.isLineAvailable()) {
       matches = this.currentLine().match(options.fieldPattern)
@@ -224,17 +220,15 @@ export class CommitParser {
       }
 
       if (field) {
-        meta[field] = appendLine(meta[field], this.currentLine())
-        isNotEmpty = true
+        parsed = true
+        commit[field] = appendLine(commit[field], this.currentLine())
         this.nextLine()
       } else {
         break
       }
     }
 
-    if (isNotEmpty) {
-      commit.meta = meta
-    }
+    return parsed
   }
 
   private parseNotes() {
@@ -261,6 +255,10 @@ export class CommitParser {
       this.nextLine()
 
       while (this.isLineAvailable()) {
+        if (this.parseMeta()) {
+          return true
+        }
+
         if (this.parseNotes()) {
           return true
         }
@@ -395,7 +393,7 @@ export class CommitParser {
     const commentFilter = getCommentFilter(this.options.commentChar)
     const rawLines = trimNewLines(input).split(/\r?\n/)
     const lines = truncateToScissor(rawLines).filter(line => commentFilter(line) && gpgFilter(line))
-    const commit = createEmptyCommit()
+    const commit = createCommitObject()
 
     this.lines = lines
     this.lineIndex = 0

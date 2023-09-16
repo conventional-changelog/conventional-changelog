@@ -88,7 +88,7 @@ describe('conventional-commits-parser', () => {
         i++
       }
 
-      expect(i).toBe(3)
+      expect(i).toBe(2)
     })
 
     it('should warn if malformed commits found', async () => {
@@ -152,9 +152,9 @@ describe('conventional-commits-parser', () => {
         referenceActions: ['fix']
       }))) {
         if (i === 0) {
-          expect(chunk.headerMeta.type).toBe('feat')
-          expect(chunk.headerMeta.scope).toBe('ng-list')
-          expect(chunk.headerMeta.subject).toBe('Allow custom separator')
+          expect(chunk.type).toBe('feat')
+          expect(chunk.scope).toBe('ng-list')
+          expect(chunk.subject).toBe('Allow custom separator')
           expect(chunk.references).toEqual([
             {
               action: 'Fix',
@@ -183,9 +183,9 @@ describe('conventional-commits-parser', () => {
           ])
         } else
           if (i === 1) {
-            expect(chunk.headerMeta.type).toBe('fix')
-            expect(chunk.headerMeta.scope).toBe('ng-list')
-            expect(chunk.headerMeta.subject).toBe('Another custom separator')
+            expect(chunk.type).toBe('fix')
+            expect(chunk.scope).toBe('ng-list')
+            expect(chunk.subject).toBe('Another custom separator')
             expect(chunk.notes[0]).toEqual({
               title: 'BREAKING CHANGES',
               text: 'some breaking changes'
@@ -225,9 +225,9 @@ describe('conventional-commits-parser', () => {
         revertCorrespondence: ['header']
       }))) {
         if (i === 0) {
-          expect(chunk.headerMeta.subject).toBe('feat')
-          expect(chunk.headerMeta.type).toBe('ng-list')
-          expect(chunk.headerMeta.scope).toBe('Allow custom separator')
+          expect(chunk.subject).toBe('feat')
+          expect(chunk.type).toBe('ng-list')
+          expect(chunk.scope).toBe('Allow custom separator')
           expect(chunk.references).toEqual([
             {
               action: 'Fix',
@@ -255,16 +255,16 @@ describe('conventional-commits-parser', () => {
             }
           ])
         } else if (i === 1) {
-          expect(chunk.headerMeta.type).toBe('ng-list')
-          expect(chunk.headerMeta.scope).toBe('Another custom separator')
-          expect(chunk.headerMeta.subject).toBe('fix')
+          expect(chunk.type).toBe('ng-list')
+          expect(chunk.scope).toBe('Another custom separator')
+          expect(chunk.subject).toBe('fix')
           expect(chunk.notes[0]).toEqual({
             title: 'BREAKING CHANGES',
             text: 'some breaking changes'
           })
         } else if (i === 2) {
           expect(chunk.header).toBe('blabla')
-          expect(chunk.meta.hash).toBe('9b1aff905b638aa274a5fc8f88662df446d374bd')
+          expect(chunk.hash).toBe('9b1aff905b638aa274a5fc8f88662df446d374bd')
         } else if (i === 3) {
           expect(chunk.revert.header).toBe('throw an error if a callback is passed to animate methods')
         }

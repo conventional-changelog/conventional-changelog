@@ -1,5 +1,5 @@
 import conventionalCommitsFilter from 'conventional-commits-filter'
-import conventionalCommitsParser from 'conventional-commits-parser'
+import { parseCommitsStream } from 'conventional-commits-parser'
 import { loadPreset } from 'conventional-changelog-preset-loader'
 import gitSemverTags from 'git-semver-tags'
 import gitRawCommits from 'git-raw-commits'
@@ -58,7 +58,7 @@ export default async function conventionalRecommendedBump (optionsArgument, pars
   }, {
     cwd: options.cwd
   })
-    .pipe(conventionalCommitsParser(parserOpts))
+    .pipe(parseCommitsStream(parserOpts))
   let commits = []
 
   for await (const commit of commitsStream) {

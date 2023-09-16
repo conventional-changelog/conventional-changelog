@@ -15,13 +15,13 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should parse commits in a file', async () => {
-      const { stdout } = await testTools.forkTypeScript(CLI_PATH, [path.join(FIXTURES_PATH, 'log1.txt')])
+      const { stdout } = await testTools.fork(CLI_PATH, [path.join(FIXTURES_PATH, 'log1.txt')])
 
       expect(stdout).toContain('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"')
     })
 
     it('should work with a separator', async () => {
-      const { stdout } = await testTools.forkTypeScript(CLI_PATH, [
+      const { stdout } = await testTools.fork(CLI_PATH, [
         path.join(FIXTURES_PATH, 'log2.txt'),
         '-s',
         '==='
@@ -32,7 +32,7 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should work with two files', async () => {
-      const { stdout } = await testTools.forkTypeScript(CLI_PATH, [
+      const { stdout } = await testTools.fork(CLI_PATH, [
         path.join(FIXTURES_PATH, 'log1.txt'),
         path.join(FIXTURES_PATH, 'log2.txt'),
         '-s',
@@ -45,7 +45,7 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should error if files cannot be found', async () => {
-      const { stderr } = await testTools.forkTypeScript(CLI_PATH, [
+      const { stderr } = await testTools.fork(CLI_PATH, [
         path.join(FIXTURES_PATH, 'log1.txt'),
         path.join(FIXTURES_PATH, 'log4.txt'),
         path.join(FIXTURES_PATH, 'log2.txt'),
@@ -59,7 +59,7 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should work with options', async () => {
-      const { stdout } = await testTools.forkTypeScript(CLI_PATH, [
+      const { stdout } = await testTools.fork(CLI_PATH, [
         path.join(FIXTURES_PATH, 'log3.txt'),
         '-p',
         '^(\\w*)(?:\\(([:\\w\\$\\.\\-\\* ]*)\\))?\\: (.*)$',
@@ -72,9 +72,9 @@ describe('conventional-commits-parser', () => {
       ])
       const data = JSON.parse(stdout)[0]
 
-      expect(data.headerMeta.scope).toBe('category')
-      expect(data.headerMeta.type).toBe('fix:subcategory')
-      expect(data.headerMeta.subject).toBe('My subject')
+      expect(data.scope).toBe('category')
+      expect(data.type).toBe('fix:subcategory')
+      expect(data.subject).toBe('My subject')
 
       expect(data.references).toEqual([
         {
@@ -112,7 +112,7 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should work if it is not a tty', async () => {
-      const { stdout } = await testTools.forkTypeScript(CLI_PATH, [], {
+      const { stdout } = await testTools.fork(CLI_PATH, [], {
         stdio: [
           await fs.open(path.join(FIXTURES_PATH, 'log1.txt'), 'r'),
           null,
@@ -125,7 +125,7 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should separate if it is not a tty', async () => {
-      const { stdout } = await testTools.forkTypeScript(CLI_PATH, ['-s', '==='], {
+      const { stdout } = await testTools.fork(CLI_PATH, ['-s', '==='], {
         stdio: [
           await fs.open(path.join(FIXTURES_PATH, 'log2.txt'), 'r'),
           null,
@@ -139,7 +139,7 @@ describe('conventional-commits-parser', () => {
     })
 
     it('should error if it is not a tty and commit cannot be parsed', async () => {
-      const { stderr } = await testTools.forkTypeScript(CLI_PATH, [], {
+      const { stderr } = await testTools.fork(CLI_PATH, [], {
         stdio: [
           await fs.open(path.join(FIXTURES_PATH, 'bad_commit.txt'), 'r'),
           null,

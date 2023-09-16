@@ -10,7 +10,7 @@ export function trimNewLines(input: string) {
 
   const matches = input.match(/[^\r\n]/)
 
-  if (!matches || typeof matches.index === 'undefined') {
+  if (typeof matches?.index !== 'number') {
     return ''
   }
 

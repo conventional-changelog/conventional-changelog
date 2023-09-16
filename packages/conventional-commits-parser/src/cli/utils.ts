@@ -2,7 +2,7 @@ import type { Readable } from 'stream'
 import fs from 'fs'
 import readline from 'readline'
 
-async function *splitStream(stream: Readable, separator: string) {
+async function* splitStream(stream: Readable, separator: string) {
   let chunk: Buffer
   let payload: string
   let buffer = ''
@@ -21,17 +21,17 @@ async function *splitStream(stream: Readable, separator: string) {
   }
 }
 
-export async function *readRawCommitsFromFiles(files: string[], separator: string) {
+export async function* readRawCommitsFromFiles(files: string[], separator: string) {
   for (const file of files) {
     try {
-      yield *splitStream(fs.createReadStream(file), separator)
+      yield* splitStream(fs.createReadStream(file), separator)
     } catch (err) {
       console.warn(`Failed to read file ${file}:\n  ${(err as Error).toString()}`)
     }
   }
 }
 
-export async function *readRawCommitsFromLine(separator: string) {
+export async function* readRawCommitsFromLine(separator: string) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

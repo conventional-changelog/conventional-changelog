@@ -29,7 +29,6 @@
     }
   ],
   "ignorePatterns": [
-    "packages/*/dist/**/*",
-    "rollup.config.js"
+    "packages/*/dist/**/*"
   ]
 }

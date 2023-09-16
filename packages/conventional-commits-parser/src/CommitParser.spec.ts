@@ -86,9 +86,9 @@ describe('conventional-commits-parser', () => {
         const commit = 'feat(hello/world): message'
         const result = parser.parse(commit)
 
-        expect(result.headerMeta?.type).toBe('feat')
-        expect(result.headerMeta?.scope).toBe('hello/world')
-        expect(result.headerMeta?.subject).toBe('message')
+        expect(result.type).toBe('feat')
+        expect(result.scope).toBe('hello/world')
+        expect(result.subject).toBe('message')
       })
     })
 
@@ -111,13 +111,10 @@ describe('conventional-commits-parser', () => {
 
         expect(commit).toEqual({
           merge: null,
-          mergeMeta: null,
           header: 'feat(scope): broadcast $destroy event on scope destruction',
-          headerMeta: {
-            scope: 'scope',
-            subject: 'broadcast $destroy event on scope destruction',
-            type: 'feat'
-          },
+          scope: 'scope',
+          subject: 'broadcast $destroy event on scope destruction',
+          type: 'feat',
           body: 'perf testing shows that in chrome this change adds 5-15% overhead\n\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
           footer: 'BREAKING AMEND: some breaking change\n\n\n\n\nBREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\nKills #1\n\n\n\nkilled #25',
           notes: [
@@ -149,8 +146,7 @@ describe('conventional-commits-parser', () => {
             }
           ],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
       })
 
@@ -164,9 +160,7 @@ describe('conventional-commits-parser', () => {
           + '\n\n    Kills   #1\n'
         )).toEqual({
           merge: null,
-          mergeMeta: null,
           header: ' feat(scope): broadcast $destroy event on scope destruction ',
-          headerMeta: null,
           body: ' perf testing shows that in chrome this change adds 5-15% overhead \n\n when destroying 10k nested scopes where each scope has a $destroy listener ',
           footer: '         BREAKING AMEND: some breaking change         \n\n   BREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1',
           notes: [
@@ -190,8 +184,7 @@ describe('conventional-commits-parser', () => {
             }
           ],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
       })
 
@@ -207,13 +200,10 @@ describe('conventional-commits-parser', () => {
           + 'Kills #1\n'
         )).toEqual({
           merge: null,
-          mergeMeta: null,
           header: 'feat(scope): broadcast $destroy event on scope destruction',
-          headerMeta: {
-            scope: 'scope',
-            subject: 'broadcast $destroy event on scope destruction',
-            type: 'feat'
-          },
+          scope: 'scope',
+          subject: 'broadcast $destroy event on scope destruction',
+          type: 'feat',
           body: 'perf testing shows that in chrome this change adds 5-15% overhead\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
           footer: 'BREAKING AMEND: some breaking change\nKills #1',
           notes: [
@@ -233,8 +223,7 @@ describe('conventional-commits-parser', () => {
             }
           ],
           mentions: ['example'],
-          revert: null,
-          meta: null
+          revert: null
         })
       })
 
@@ -279,44 +268,35 @@ describe('conventional-commits-parser', () => {
 
         expect(parser.parse('# comment')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: null,
-          headerMeta: null,
           body: null,
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
 
         expect(parser.parse(' # non-comment')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: ' # non-comment',
-          headerMeta: null,
           body: null,
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
 
         expect(parser.parse('header\n# comment\n\nbody')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: 'header',
-          headerMeta: null,
           body: 'body',
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
       })
 
@@ -328,58 +308,46 @@ describe('conventional-commits-parser', () => {
 
         expect(parser.parse('* comment')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: null,
-          headerMeta: null,
           body: null,
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
 
         expect(parser.parse('# non-comment')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: '# non-comment',
-          headerMeta: null,
           body: null,
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
 
         expect(parser.parse(' * non-comment')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: ' * non-comment',
-          headerMeta: null,
           body: null,
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
 
         expect(parser.parse('header\n* comment\n\nbody')).toEqual({
           merge: null,
-          mergeMeta: null,
           header: 'header',
-          headerMeta: null,
           body: 'body',
           footer: null,
           notes: [],
           references: [],
           mentions: [],
-          revert: null,
-          meta: null
+          revert: null
         })
       })
     })
@@ -428,8 +396,8 @@ describe('conventional-commits-parser', () => {
         const commit = parser.parse('Merge branch \'feature\'\nHEADER')
 
         it('should parse merge header in merge commit', () => {
-          expect(commit.mergeMeta?.source).toBe('feature')
-          expect(commit.mergeMeta?.issueId).toBe(null)
+          expect(commit.source).toBe('feature')
+          expect(commit.issueId).toBe(null)
         })
 
         it('should not throw if merge commit has no header', () => {
@@ -448,7 +416,9 @@ describe('conventional-commits-parser', () => {
             + 'feat(scope): broadcast $destroy event on scope destruction'
           )
 
-          expect(commit.headerMeta).toBe(null)
+          expect(commit.type).not.toBeDefined()
+          expect(commit.scope).not.toBeDefined()
+          expect(commit.subject).not.toBeDefined()
         })
       })
 
@@ -477,15 +447,15 @@ describe('conventional-commits-parser', () => {
         })
 
         it('should understand header parts in GitHub like pull request', () => {
-          expect(commit.headerMeta?.type).toBe('feat')
-          expect(commit.headerMeta?.scope).toBe('scope')
-          expect(commit.headerMeta?.subject).toBe('broadcast $destroy event on scope destruction')
+          expect(commit.type).toBe('feat')
+          expect(commit.scope).toBe('scope')
+          expect(commit.subject).toBe('broadcast $destroy event on scope destruction')
         })
 
         it('should understand merge parts in GitHub like pull request', () => {
           expect(commit.merge).toBe('Merge pull request #1 from user/feature/feature-name')
-          expect(commit.mergeMeta?.issueId).toBe('1')
-          expect(commit.mergeMeta?.source).toBe('user/feature/feature-name')
+          expect(commit.issueId).toBe('1')
+          expect(commit.source).toBe('user/feature/feature-name')
         })
 
         it('should parse header if merge header is missing', () => {
@@ -522,14 +492,14 @@ describe('conventional-commits-parser', () => {
         })
 
         it('should understand header parts in GitLab like merge request', () => {
-          expect(commit.headerMeta?.type).toBe('feat')
-          expect(commit.headerMeta?.scope).toBe('scope')
-          expect(commit.headerMeta?.subject).toBe('broadcast $destroy event on scope destruction')
+          expect(commit.type).toBe('feat')
+          expect(commit.scope).toBe('scope')
+          expect(commit.subject).toBe('broadcast $destroy event on scope destruction')
         })
 
         it('should understand merge parts in GitLab like merge request', () => {
           expect(commit.merge).toBe('Merge branch \'feature/feature-name\' into \'master\'')
-          expect(commit.mergeMeta?.source).toBe('feature/feature-name')
+          expect(commit.source).toBe('feature/feature-name')
         })
       })
     })
@@ -545,13 +515,15 @@ describe('conventional-commits-parser', () => {
           ]
         }).parse('feat(ng:list): Allow custom separator')
 
-        expect(commit.headerMeta?.scope).toBe('ng:list')
+        expect(commit.scope).toBe('ng:list')
       })
 
       it('should parse header part as null if not captured', () => {
         const commit = customParser.parse('header')
 
-        expect(commit.headerMeta).toBe(null)
+        expect(commit.type).not.toBeDefined()
+        expect(commit.scope).not.toBeDefined()
+        expect(commit.subject).not.toBeDefined()
       })
 
       it('should parse header', () => {
@@ -581,9 +553,9 @@ describe('conventional-commits-parser', () => {
           + 'kills stevemao/conventional-commits-parser#1'
         )
 
-        expect(commit.headerMeta?.type).toBe('feat')
-        expect(commit.headerMeta?.scope).toBe('scope')
-        expect(commit.headerMeta?.subject).toBe('broadcast $destroy event on scope destruction')
+        expect(commit.type).toBe('feat')
+        expect(commit.scope).toBe('scope')
+        expect(commit.subject).toBe('broadcast $destroy event on scope destruction')
       })
 
       it('should allow correspondence to be changed', () => {
@@ -596,9 +568,9 @@ describe('conventional-commits-parser', () => {
           ]
         }).parse('scope(my subject): fix this')
 
-        expect(commit.headerMeta?.type).toBe('fix this')
-        expect(commit.headerMeta?.scope).toBe('scope')
-        expect(commit.headerMeta?.subject).toBe('my subject')
+        expect(commit.type).toBe('fix this')
+        expect(commit.scope).toBe('scope')
+        expect(commit.subject).toBe('my subject')
       })
 
       it('should be `undefined` if it is missing in `options.headerCorrespondence`', () => {
@@ -607,7 +579,7 @@ describe('conventional-commits-parser', () => {
           headerCorrespondence: ['scop', 'subject']
         }).parse('scope(my subject): fix this')
 
-        expect(commit.headerMeta?.scope).toBe(undefined)
+        expect(commit.scope).toBe(undefined)
       })
 
       it('should reference an issue with an owner', () => {
@@ -1171,7 +1143,36 @@ describe('conventional-commits-parser', () => {
           + '9b1aff905b638aa274a5fc8f88662df446d374bd'
         )
 
-        expect(commit.meta?.hash).toBe('9b1aff905b638aa274a5fc8f88662df446d374bd')
+        expect(commit.hash).toBe('9b1aff905b638aa274a5fc8f88662df446d374bd')
+      })
+
+      it('should parse meta after notes', () => {
+        const commit = customParser.parse(
+          'build!: first build setup\n'
+          + '\n'
+          + 'BREAKING AMEND: New build system.\n'
+          + '\n'
+          + '-hash-\n'
+          + '4937825901dacca88609da354f0e8a8c84ae04ea\n'
+          + '-gitTags-\n'
+          + '\n'
+          + '-committerDate-\n'
+          + '2023-09-16 21:13:23 +0400\n'
+        )
+
+        expect(commit).toMatchObject({
+          body: '',
+          notes: [
+            {
+              title: 'BREAKING AMEND',
+              text: 'New build system.'
+            }
+          ],
+          footer: 'BREAKING AMEND: New build system.',
+          hash: '4937825901dacca88609da354f0e8a8c84ae04ea',
+          gitTags: '',
+          committerDate: '2023-09-16 21:13:23 +0400'
+        })
       })
 
       it('should parse sideNotes', () => {
@@ -1183,7 +1184,7 @@ describe('conventional-commits-parser', () => {
           + 'Tests are added for these'
         )
 
-        expect(commit.meta?.sideNotes).toBe('It should warn the correct unfound file names.\n'
+        expect(commit.sideNotes).toBe('It should warn the correct unfound file names.\n'
           + 'Also it should continue if one file cannot be found.\n'
           + 'Tests are added for these')
       })
@@ -1197,8 +1198,8 @@ describe('conventional-commits-parser', () => {
           + 'test@github.com'
         )
 
-        expect(commit.meta?.committerName).toBe('Steve Mao')
-        expect(commit.meta?.[' committerEmail']).toBe('test@github.com')
+        expect(commit.committerName).toBe('Steve Mao')
+        expect(commit[' committerEmail']).toBe('test@github.com')
       })
     })
 
