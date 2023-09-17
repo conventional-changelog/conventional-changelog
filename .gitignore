@@ -26,3 +26,7 @@ build
 
 # Env files
 .env
+
+# IDE files
+.idea
+.vscode
