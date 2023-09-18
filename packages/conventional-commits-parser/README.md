@@ -1,7 +1,106 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# conventional-commits-parser
 
-> Parse raw conventional commits
+[![ESM-only package][package]][package-url]
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
+
+[npm]: https://img.shields.io/npm/v/conventional-commits-parser.svg
+[npm-url]: https://npmjs.com/package/conventional-commits-parser
+
+[node]: https://img.shields.io/node/v/conventional-commits-parser.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-commits-parser
+[deps-url]: https://libraries.io/npm/conventional-commits-parser/tree
+
+[size]: https://packagephobia.com/badge?p=conventional-commits-parser
+[size-url]: https://packagephobia.com/result?p=conventional-commits-parser
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+Parse raw conventional commits.
+
+## Install
+
+```bash
+# yarn
+yarn add -D conventional-commits-parser
+# pnpm
+pnpm add -D conventional-commits-parser
+# npm
+npm i -D conventional-commits-parser
+```
+
+## Usage
+
+```js
+import { CommitParser } from 'conventional-commits-parser';
+
+const parser = new CommitParser(options)
+
+parser.parse(rawCommitMessage)
+```
+
+Parser expects raw commit message. Examples:
+
+```js
+'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
+'feat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change.\nThanks @stevemao\n'
+```
+
+It will return parsed commit object. Examples:
+
+```js
+{
+  type: 'feat',
+  scope: 'scope',
+  subject: 'broadcast $destroy event on scope destruction',
+  merge: null,
+  header: 'feat(scope): broadcast $destroy event on scope destruction',
+  body: null,
+  footer: 'Closes #1',
+  notes: [],
+  references:
+   [{
+     action: 'Closes',
+     owner: null,
+     repository: null,
+     issue: '1',
+     raw: '#1',
+     prefix: '#'
+   }],
+  mentions: [],
+  revert: null
+}
+{
+  type: 'feat',
+  scope: 'ng-list',
+  subject: 'Allow custom separator',
+  merge: null,
+  header: 'feat(ng-list): Allow custom separator',
+  body: 'bla bla bla',
+  footer: 'BREAKING CHANGE: some breaking change.\nThanks @stevemao',
+  notes:
+   [{
+     title: 'BREAKING CHANGE',
+     text: 'some breaking change.\nThanks @stevemao'
+   }],
+  references: [],
+  mentions: ['stevemao'],
+  revert: null
+}
+```
 
 ## Conventional Commit Message Format
 
@@ -56,78 +155,22 @@ Tests are added for these
 
 Then `sideNotes` will be `It should warn the correct unfound file names.\nAlso it should continue if one file cannot be found.\nTests are added for these`. You can customize the `fieldPattern`.
 
-
-## Install
-
-```sh
-$ npm install --save conventional-commits-parser
-```
-
-
-## Usage
-
-```js
-import conventionalCommitsParser from 'conventional-commits-parser';
-
-conventionalCommitsParser(options);
-```
-
-It returns a transform stream and expects an upstream that looks something like this:
-
-```
-'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
-'feat(ng-list): Allow custom separator\nbla bla bla\n\nBREAKING CHANGE: some breaking change.\nThanks @stevemao\n'
-```
-
-Each chunk should be a commit. The downstream will look something like this:
-
-```js
-{ type: 'feat',
-  scope: 'scope',
-  subject: 'broadcast $destroy event on scope destruction',
-  merge: null,
-  header: 'feat(scope): broadcast $destroy event on scope destruction',
-  body: null,
-  footer: 'Closes #1',
-  notes: [],
-  references:
-   [ { action: 'Closes',
-       owner: null,
-       repository: null,
-       issue: '1',
-       raw: '#1',
-       prefix: '#' } ],
-  mentions: [],
-  revert: null }
-{ type: 'feat',
-  scope: 'ng-list',
-  subject: 'Allow custom separator',
-  merge: null,
-  header: 'feat(ng-list): Allow custom separator',
-  body: 'bla bla bla',
-  footer: 'BREAKING CHANGE: some breaking change.\nThanks @stevemao',
-  notes:
-   [ { title: 'BREAKING CHANGE',
-       text: 'some breaking change.\nThanks @stevemao' } ],
-  references: [],
-  mentions: [ 'stevemao' ],
-  revert: null }
-```
-
-
 ## API
 
-### conventionalCommitsParser([options])
+### `new CommitParser(options?: ParserOptions)`
 
-Returns an transform stream. If there is any malformed commits it will be gracefully ignored (an empty data will be emitted so down stream can notice).
+Creates parser instance with `parse` method.
 
-#### options
+### `parseCommitsStream(options?: ParserOptions)`
 
-Type: `object`
+Creates an transform stream. If there is any malformed commits it will be gracefully ignored (an empty data will be emitted so down stream can notice).
 
-##### mergePattern
+### ParserOptions
 
-Type: `regex` or `string` Default: null
+#### mergePattern
+
+Type: `RegExp`
+Default: null
 
 Pattern to match merge headers. EG: branch merge, GitHub or GitLab like pull requests headers. When a merge header is parsed, the next line is used for conventional header parsing.
 
@@ -148,85 +191,82 @@ We can parse it with these options and the default headerPattern:
 }
 ```
 
-##### mergeCorrespondence
+#### mergeCorrespondence
 
-Type: `array` of `string` or `string` Default: null
+Type: `string[]`,
+Default: null
 
 Used to define what capturing group of `mergePattern`.
 
-If it's a `string` it will be converted to an `array` separated by a comma.
+#### headerPattern
 
-##### headerPattern
-
-Type: `regex` or `string` Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
+Type: `RegExp`,
+Default: `/^(\w*)(?:\(([\w\$\.\-\* ]*)\))?\: (.*)$/`
 
 Used to match header pattern.
 
-##### headerCorrespondence
+#### headerCorrespondence
 
-Type: `array` of `string` or `string` Default `['type', 'scope', 'subject']`
+Type: `string[]`,
+Default `['type', 'scope', 'subject']`
 
-Used to define what capturing group of `headerPattern` captures what header part. The order of the array should correspond to the order of `headerPattern`'s capturing group. If the part is not captured it is `null`. If it's a `string` it will be converted to an `array` separated by a comma.
+Used to define what capturing group of `headerPattern` captures what header part. The order of the array should correspond to the order of `headerPattern`'s capturing group. If the part is not captured it is `null`.
 
-##### referenceActions
+#### referenceActions
 
-Type: `array` of `string` or `string` Default:
-`[
-  'close',
-  'closes',
-  'closed',
-  'fix',
-  'fixes',
-  'fixed',
-  'resolve',
-  'resolves',
-  'resolved'
-]`
+Type: `string[]`,
+Default: `['close', 'closes', 'closed', 'fix', 'fixes', 'fixed', 'resolve', 'resolves', 'resolved']`
 
-Keywords to reference an issue. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
+Keywords to reference an issue. This value is case **insensitive**.
 
 Set it to `null` to reference an issue without any action.
 
-##### issuePrefixes
+#### issuePrefixes
 
-Type: `array` of `string` or `string` Default: `['#']`
+Type: `string[]`,
+Default: `['#']`
 
 The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
 
-##### issuePrefixesCaseSensitive
+#### issuePrefixesCaseSensitive
 
-Type: `boolean` Default: false
+Type: `boolean`,
+Default: false
 
 Used to define if `issuePrefixes` should be considered case sensitive.
 
-##### noteKeywords
+#### noteKeywords
 
-Type: `array` of `string` or `string` Default: `['BREAKING CHANGE',
-'BREAKING-CHANGE']`
+Type: `string[]`,
+Default: `['BREAKING CHANGE', 'BREAKING-CHANGE']`
 
-Keywords for important notes. This value is case **insensitive**. If it's a `string` it will be converted to an `array` separated by a comma.
+Keywords for important notes. This value is case **insensitive**.
 
-##### notesPattern
+#### notesPattern
 
-Type: `function` Default: `noteKeywordsSelection => ^[\\s|*]*(' + noteKeywordsSelection + ')[:\\s]+(.*)` where `noteKeywordsSelection` is `join(noteKeywords, '|')`
+Type: `function`,
+Default: `noteKeywordsSelection => ^[\\s|*]*(' + noteKeywordsSelection + ')[:\\s]+(.*)` where `noteKeywordsSelection` is `join(noteKeywords, '|')`
 
 A function that takes `noteKeywordsSelection` and returns a `RegExp` to be matched against the notes.
 
-##### fieldPattern
+#### fieldPattern
 
-Type: `regex` or `string` Default: `/^-(.*?)-$/`
+Type: `RegExp`,
+Default: `/^-(.*?)-$/`
 
 Pattern to match other fields.
 
-##### revertPattern
+#### revertPattern
 
-Type: `regex` or `string` Default: `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./`
+Type: `RegExp`,
+Default: `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./`
 
 Pattern to match what this commit reverts.
 
-##### revertCorrespondence
+#### revertCorrespondence
 
-Type: `array` of `string` or `string` Default: `['header', 'hash']`
+Type: `string[]`,
+Default: `['header', 'hash']`
 
 Used to define what capturing group of `revertPattern` captures what reverted commit fields. The order of the array should correspond to the order of `revertPattern`'s capturing group.
 
@@ -251,43 +291,26 @@ If configured correctly, the parsed result would be
 
 It implies that this commit reverts a commit with header `'throw an error if a callback is passed'` and hash `'9bb4d6c'`.
 
-If it's a `string` it will be converted to an `array` separated by a comma.
+#### commentChar
 
-##### commentChar
-
-Type: `string` or `null` Default: null
+Type: `string` or `null`,
+Default: null
 
 What commentChar to use. By default it is `null`, so no comments are stripped.
 Set to `#` if you pass the contents of `.git/COMMIT_EDITMSG` directly.
 
 If you have configured the git commentchar via `git config core.commentchar` you'll want to pass what you have set there.
 
-##### warn
+#### warn
 
-Type: `function` or `boolean` Default: `function() {}`
+Type: `function` or `boolean`,
+Default: `() => {}`
 
-What warn function to use. For example, `console.warn.bind(console)` or `grunt.log.writeln`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
-
-### conventionalCommitsParser.sync(commit, [options])
-
-The sync version. Useful when parsing a single commit. Returns the result.
-
-#### commit
-
-A single commit to be parsed.
-
-#### options
-
-Same as the `options` of `conventionalCommitsParser`.
-
+What warn function to use. For example, `console.warn.bind(console)`. By default, it's a noop. If it is `true`, it will error if commit cannot be parsed (strict).
 
 ## CLI
 
 You can use cli to practice writing commit messages or parse messages from files. Note: the sample output might be different. It's just for demonstration purposes.
-
-```sh
-$ npm install --global conventional-commits-parser
-```
 
 If you run `conventional-commits-parser` without any arguments
 
@@ -367,17 +390,6 @@ Will be printed out.
 
 You can specify one or more files. The output array will be in order of the input file paths. If you specify more than one separator, the last one will be used.
 
-
 ## License
 
 MIT © [Steve Mao](https://github.com/stevemao)
-
-
-[npm-image]: https://badge.fury.io/js/conventional-commits-parser.svg
-[npm-url]: https://npmjs.org/package/conventional-commits-parser
-[travis-image]: https://travis-ci.org/conventional-changelog/conventional-commits-parser.svg?branch=master
-[travis-url]: https://travis-ci.org/conventional-changelog/conventional-commits-parser
-[daviddm-image]: https://david-dm.org/conventional-changelog/conventional-commits-parser.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/conventional-changelog/conventional-commits-parser
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
