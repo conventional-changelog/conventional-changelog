@@ -117,7 +117,7 @@ export class CommitParser {
     let sentence: string
     let reference: CommitReference | null
 
-    for (;;) {
+    while (true) {
       matches = regex.exec(input)
 
       if (!matches) {
@@ -127,7 +127,7 @@ export class CommitParser {
       action = matches[1] || null
       sentence = matches[2] || ''
 
-      for (;;) {
+      while (true) {
         reference = this.parseReference(sentence, action)
 
         if (!reference) {
