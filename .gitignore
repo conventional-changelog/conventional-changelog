@@ -1,11 +1,32 @@
-**/.nyc_output/
-**/coverage/
-**/node_modules/
-**/tmp/
-/lerna-debug.log
-package-lock.json
+# Logs
+logs
+*.log
+npm-debug.log*
 
-# Editors
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directory
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# OS stuff
+._*
+.DS_Store
+
+# Some caches
+.*cache
+
+# Compiled dist
+dist
+package
+build
+
+# Env files
+.env
+
+# IDE files
 .idea
 .vscode
-.DS_Store

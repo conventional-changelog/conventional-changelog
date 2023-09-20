@@ -1,5 +1,6 @@
 import { execSync, spawn } from 'child_process'
 import { Transform } from 'stream'
+import { pathToFileURL } from 'url'
 import path from 'path'
 import fs from 'fs'
 import tmp from 'tmp'
@@ -100,14 +101,22 @@ export class TestTools {
     })
   }
 
-  fork (script, args = [], options) {
+  /**
+   * @returns {Promise<{stdout: string, stderr: string, exitCode: number}>
+   */
+  fork (script, args = [], options = {}) {
     return new Promise((resolve, reject) => {
       const finalOptions = {
         cwd: this.cwd,
         stdio: [null, null, null],
         ...options
       }
-      const child = spawn(process.execPath, [script, ...args], finalOptions)
+      const nodeArgs = [
+        '--no-warnings',
+        '--loader',
+        pathToFileURL(path.resolve(__dirname, '..', 'node_modules', 'tsm', 'loader.mjs')).toString()
+      ]
+      const child = spawn(process.execPath, [...nodeArgs, script, ...args], finalOptions)
       let stdout = ''
       let stderr = ''
       let exitCode = null
