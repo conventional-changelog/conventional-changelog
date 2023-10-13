@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-codemirror",
   "type": "module",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "conventional-changelog CodeMirror preset",
   "exports": "./index.js",
   "repository": {
