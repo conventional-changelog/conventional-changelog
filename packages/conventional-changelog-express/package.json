@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-express",
   "type": "module",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "conventional-changelog express preset",
   "exports": "./index.js",
   "repository": {
