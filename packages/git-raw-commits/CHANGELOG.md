@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits-v4.0.0...git-raw-commits-v5.0.0) (2023-10-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+* **git-raw-commits:** improve code readability ([#1110](https://github.com/conventional-changelog/conventional-changelog/issues/1110)) ([50b78e1](https://github.com/conventional-changelog/conventional-changelog/commit/50b78e157d71b969acfed969979425f92c4e0aa3))
+* **deps:** lock file maintenance ([#1104](https://github.com/conventional-changelog/conventional-changelog/issues/1104)) ([5b92a87](https://github.com/conventional-changelog/conventional-changelog/commit/5b92a87a7e057fb1439ab80eedfbe9cdca015af2))
+
 ## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-raw-commits-v3.0.0...git-raw-commits-v4.0.0) (2023-08-26)
 
 
