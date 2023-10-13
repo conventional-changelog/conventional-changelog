@@ -3,39 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.1.0...conventional-commits-parser@3.2.0) (2020-11-05)
+## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v5.0.0...conventional-commits-parser-v6.0.0) (2023-10-14)
 
 
-### Bug Fixes
+### ⚠ BREAKING CHANGES
 
-* ignore gpg lines ([#685](https://github.com/conventional-changelog/conventional-changelog/issues/685)) ([f8fcbc2](https://github.com/conventional-changelog/conventional-changelog/commit/f8fcbc2e8b0834c29178ace6382b438a020ad828))
-* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
-
-
-### Features
-
-* allows notes pattern to be customized ([#586](https://github.com/conventional-changelog/conventional-changelog/issues/586)) ([9c00f32](https://github.com/conventional-changelog/conventional-changelog/commit/9c00f3242d916be1774a618d943f908f8d9699a6))
-
-
-
-
-
-# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
-
-
-### Bug Fixes
-
-* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
-
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+* Now package exports CommitParser class and parseCommitsStream method for backward compatability. Options has minor changes in types, please read the docs.
 
 ### Features
 
-* **conventional-commits-parser:** add issuePrefixesCaseSensitive parser option ([#580](https://github.com/conventional-changelog/conventional-changelog/issues/580)) ([526b282](https://github.com/conventional-changelog/conventional-changelog/commit/526b28214d12c55158eb2e4d44408378587ceb97))
-* support slash in headerPattern default options ([93a547d](https://github.com/conventional-changelog/conventional-changelog/commit/93a547d742634d8676f499cfa2a274bc3792d020))
-
-
-
-
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+* **conventional-commits-parser** rewrite to TypeScript ([#1126](https://github.com/conventional-changelog/conventional-changelog/issues/1126)) ([9e280d8](https://github.com/conventional-changelog/conventional-changelog/commit/9e280d89f33e2185643e2531edb668bd0e0df22c))
 
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v4.0.0...conventional-commits-parser-v5.0.0) (2023-08-26)
 
