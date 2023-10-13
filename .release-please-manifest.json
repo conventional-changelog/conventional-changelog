@@ -1,5 +1,6 @@
 {
   "packages/conventional-changelog": "6.0.0",
+  "packages/conventional-changelog-angular": "8.0.0",
   "packages/conventional-changelog-conventionalcommits": "7.0.2",
   "packages/conventional-changelog-cli": "4.1.0",
   "packages/conventional-commits-parser": "5.0.0",
@@ -11,7 +12,6 @@
   "packages/conventional-changelog-eslint": "5.0.0",
   "packages/conventional-changelog-ember": "4.0.0",
   "packages/conventional-changelog-codemirror": "4.0.0",
-  "packages/conventional-changelog-angular": "7.0.0",
   "packages/conventional-changelog-atom": "4.0.0",
   "packages/git-semver-tags": "7.0.1",
   "packages/conventional-commits-filter": "4.0.0",
