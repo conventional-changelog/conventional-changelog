@@ -4,7 +4,7 @@
   "packages/conventional-changelog-atom": "5.0.0",
   "packages/conventional-changelog-cli": "5.0.0",
   "packages/conventional-changelog-codemirror": "5.0.0",
-  "packages/conventional-changelog-conventionalcommits": "7.0.2",
+  "packages/conventional-changelog-conventionalcommits": "8.0.0",
   "packages/conventional-commits-parser": "5.0.0",
   "packages/git-raw-commits": "4.0.0",
   "packages/conventional-changelog-writer": "7.0.1",
