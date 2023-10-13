@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v5.1.0...conventional-changelog-v6.0.0) (2023-10-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
 ## [5.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v5.0.0...conventional-changelog-v5.1.0) (2023-09-09)
 
 **Note:** Upgrade workspace dependencies.
@@ -874,7 +885,7 @@ Bump deps and fix https://github.com/ajoslin/conventional-changelog/issues/64
 
 #### Breaking Changes
 
-* 
+*
 Removed versionLink and patchVersionLink options, and went back to the
 default title output from 0.0.9.
 
