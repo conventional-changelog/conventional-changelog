@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v7.0.0...conventional-changelog-core-v8.0.0) (2023-10-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+* Now package exports CommitParser class and parseCommitsStream method for backward compatability. Options has minor changes in types, please read the docs.
+
+### Features
+
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+* **conventional-commits-parser** rewrite to TypeScript ([#1126](https://github.com/conventional-changelog/conventional-changelog/issues/1126)) ([9e280d8](https://github.com/conventional-changelog/conventional-changelog/commit/9e280d89f33e2185643e2531edb668bd0e0df22c))
+
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v6.0.0...conventional-changelog-core-v7.0.0) (2023-09-08)
 
 
