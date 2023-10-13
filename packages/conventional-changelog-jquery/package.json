@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-jquery",
   "type": "module",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "conventional-changelog jquery preset",
   "exports": "./index.js",
   "repository": {
