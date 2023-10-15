@@ -163,7 +163,7 @@ let outStream
 
 try {
   if (flags.context) {
-    templateContext = JSON.parse(await readFile(relativeResolve(flags.context), 'utf8'))
+    templateContext = require(resolve(process.cwd(), flags.context))
   }
 
   if (flags.config) {
