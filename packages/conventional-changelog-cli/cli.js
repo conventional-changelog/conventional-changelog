@@ -51,7 +51,7 @@ const cli = meow(`
                                 Default: false
 
       -n, --config              A filepath of your config script
-                                Example of a config script: https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog-cli/test/fixtures/config.js
+                                Example of a config script: https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog-cli/test/fixtures/config.cjs
 
       -c, --context             A filepath of a json that is used to define template variables
       -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
