@@ -298,6 +298,11 @@ Type: `object`
 
 Partials that used in the main template, if any. The key should be the partial name and the value should be handlebars template strings. If you are using handlebars template files, read files by yourself.
 
+##### timeZone
+
+Type: `string` Default: `UTC`
+
+The time zone to use. The date in the changelog is generated based on time zone.
 
 ## Customization Guide
 
