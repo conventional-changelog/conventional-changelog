@@ -12,10 +12,10 @@ import {
 const dirname = fileURLToPath(new URL('.', import.meta.url))
 
 // sv-SE is used for yyyy-mm-dd format
-function dateFormatter(timeZone) {
+function formatDate(date, timeZone = 'UTC') {
   return Intl.DateTimeFormat('sv-SE', {
     timeZone
-  })
+  }).format(date)
 }
 
 function immediate () {
@@ -26,7 +26,7 @@ async function conventionalChangelogWriterInit (context, options) {
   context = {
     commit: 'commits',
     issue: 'issues',
-    date: dateFormatter(options?.timeZone ?? 'UTC').format(new Date()),
+    date: formatDate(new Date(), options?.timeZone),
     ...context
   }
 
@@ -80,7 +80,7 @@ async function conventionalChangelogWriterInit (context, options) {
           return
         }
 
-        return dateFormatter(options?.timeZone ?? 'UTC').format(new Date(date))
+        return formatDate(new Date(date), options?.timeZone)
       },
       ...options.transform
     }

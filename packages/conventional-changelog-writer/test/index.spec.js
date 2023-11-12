@@ -4,12 +4,18 @@ import { delay, throughObj } from '../../../tools/test-tools.js'
 import conventionalChangelogWriter, { parseArray } from '../index.js'
 
 // sv-SEis used for yyyy-mm-dd format
-function dateFormatter(timeZone) {
+function formatDate(date, timeZone = 'UTC') {
   return Intl.DateTimeFormat('sv-SE', {
     timeZone
-  })
+  }).format(date)
 }
-const today = (timeZone = 'UTC') => dateFormatter(timeZone).format(new Date())
+
+function getTodayDate(timezone) {
+  return formatDate(new Date(), timezone)
+}
+
+const todayUtc = getTodayDate()
+
 const commits = [
   {
     hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
@@ -84,7 +90,7 @@ describe('conventional-changelog-writer', () => {
 
       for await (let chunk of upstream.pipe(conventionalChangelogWriter())) {
         chunk = chunk.toString()
-        expect(chunk).toBe('##  (' + today() + ')\n\n\n\n\n')
+        expect(chunk).toBe('##  (' + todayUtc  + ')\n\n\n\n\n')
         i++
       }
 
@@ -182,7 +188,7 @@ describe('conventional-changelog-writer', () => {
           expect(context).toEqual({
             commit: 'commits',
             issue: 'issues',
-            date: today()
+            date: todayUtc 
           })
           called = true
           return commit
@@ -195,7 +201,7 @@ describe('conventional-changelog-writer', () => {
           expect(context).toEqual({
             commit: 'commits',
             issue: 'issues',
-            date: today()
+            date: todayUtc 
           })
 
           return commit
@@ -285,7 +291,7 @@ describe('conventional-changelog-writer', () => {
         }
       })
 
-      expect(changelog).toBe('##  (' + today() + ')\n\n\n\n\n')
+      expect(changelog).toBe('##  (' + todayUtc  + ')\n\n\n\n\n')
 
       for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
         transform () {
@@ -293,7 +299,7 @@ describe('conventional-changelog-writer', () => {
         }
       }))) {
         chunk = chunk.toString()
-        expect(chunk).toBe('##  (' + today() + ')\n\n\n\n\n')
+        expect(chunk).toBe('##  (' + todayUtc  + ')\n\n\n\n\n')
 
         i++
       }
@@ -402,7 +408,7 @@ describe('conventional-changelog-writer', () => {
         let i = 0
         const changelog = await parseArray(commits)
 
-        expect(changelog).toContain('##  (' + today())
+        expect(changelog).toContain('##  (' + todayUtc )
         expect(changelog).toContain('feat(scope): ')
         expect(changelog).toContain('## <small>1.0.1 (2015-04-07)</small>')
         expect(changelog).toContain('fix(ng-list): ')
@@ -413,7 +419,7 @@ describe('conventional-changelog-writer', () => {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toContain('##  (' + today())
+            expect(chunk).toContain('##  (' + todayUtc )
             expect(chunk).toContain('feat(scope): ')
 
             expect(chunk).not.toContain('fix(ng-list): ')
@@ -485,7 +491,7 @@ describe('conventional-changelog-writer', () => {
           generateOn: 'version'
         })
 
-        expect(changelog).toContain('##  (' + today())
+        expect(changelog).toContain('##  (' + todayUtc )
         expect(changelog).toContain('feat(scope): broadcast $destroy event on scope destruction')
         expect(changelog).not.toContain('<a name=""></a>')
         expect(changelog).toContain('fix(ng-list): Allow custom separator')
@@ -499,7 +505,7 @@ describe('conventional-changelog-writer', () => {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toContain('##  (' + today())
+            expect(chunk).toContain('##  (' + todayUtc )
 
             expect(chunk).not.toContain('## 1.0.1 (2015-04-07)')
           } else if (i === 1) {
@@ -534,7 +540,7 @@ describe('conventional-changelog-writer', () => {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toContain('##  (' + today())
+            expect(chunk).toContain('##  (' + todayUtc )
             expect(chunk).not.toContain('## 1.0.1 (2015-04-07)')
           }
 
@@ -552,7 +558,7 @@ describe('conventional-changelog-writer', () => {
         }))) {
           chunk = chunk.toString()
 
-          expect(chunk).toContain('##  (' + today())
+          expect(chunk).toContain('##  (' + todayUtc )
 
           i++
         }
@@ -600,7 +606,7 @@ describe('conventional-changelog-writer', () => {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toBe('##  (' + today() + ')\n\n\n\n\n')
+            expect(chunk).toBe('##  (' + todayUtc  + ')\n\n\n\n\n')
           } else {
             expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
           }
@@ -618,7 +624,7 @@ describe('conventional-changelog-writer', () => {
           includeDetails: true
         }))) {
           if (i === 0) {
-            expect(chunk.log).toContain('##  (' + today() + ')\n\n')
+            expect(chunk.log).toContain('##  (' + todayUtc  + ')\n\n')
             expect(chunk.log).toContain('feat(scope): broadcast $destroy event on scope destruction')
             expect(chunk.keyCommit).toBe()
           } else {
@@ -786,7 +792,7 @@ describe('conventional-changelog-writer', () => {
 
 
 
-        ##  (xxxx-xx-xx)`).replace('xxxx-xx-xx', today()))
+        ##  (xxxx-xx-xx)`).replace('xxxx-xx-xx', todayUtc ))
 
         for await (let chunk of upstream.pipe(conventionalChangelogWriter({}, {
           reverse: true
@@ -809,7 +815,7 @@ describe('conventional-changelog-writer', () => {
             expect(chunk).toContain('perf(template): ')
             expect(chunk).toContain('refactor(name): ')
           } else if (i === 3) {
-            expect(chunk).toContain('##  (' + today())
+            expect(chunk).toContain('##  (' + todayUtc )
           }
 
           i++
@@ -832,7 +838,7 @@ describe('conventional-changelog-writer', () => {
           if (i === 0) {
             expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
           } else {
-            expect(chunk).toBe('##  (' + today() + ')\n\n\n\n\n')
+            expect(chunk).toBe('##  (' + todayUtc  + ')\n\n\n\n\n')
           }
 
           i++
@@ -851,7 +857,7 @@ describe('conventional-changelog-writer', () => {
           }
         }))) {
           if(i === 0) {
-            expect(chunk).toBe('##  (' + today('America/New_York') + ')\n\n\n\n\n')
+            expect(chunk).toBe('##  (' + getTodayDate('America/New_York') + ')\n\n\n\n\n')
           }
           i++
         }
@@ -873,7 +879,7 @@ describe('conventional-changelog-writer', () => {
             expect(chunk.keyCommit.version).toBe('1.0.1')
             expect(chunk.keyCommit.committerDate).toBe('2015-04-07')
           } else {
-            expect(chunk.log).toContain('##  (' + today() + ')\n\n')
+            expect(chunk.log).toContain('##  (' + todayUtc  + ')\n\n')
             expect(chunk.log).toContain('perf(template): tweak')
             expect(chunk.log).toContain('refactor(name): rename this module to conventional-changelog-writer')
             expect(chunk.keyCommit).toBe()
@@ -980,7 +986,7 @@ describe('conventional-changelog-writer', () => {
     upstream.end()
 
     for await (const chunk of upstream.pipe(conventionalChangelogWriter())) {
-      expect(chunk.toString()).toBe('##  (' + today() + ')\n\n* bla\n\n\n\n')
+      expect(chunk.toString()).toBe('##  (' + todayUtc  + ')\n\n* bla\n\n\n\n')
       i++
     }
 
