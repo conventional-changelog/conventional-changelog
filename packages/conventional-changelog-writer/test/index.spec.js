@@ -10,8 +10,8 @@ function formatDate(date, timeZone = 'UTC') {
   }).format(date)
 }
 
-function getTodayDate(timezone) {
-  return formatDate(new Date(), timezone)
+function getTodayDate(timeZone) {
+  return formatDate(new Date(), timeZone)
 }
 
 const todayUtc = getTodayDate()
@@ -847,7 +847,7 @@ describe('conventional-changelog-writer', () => {
         expect(i).toBe(2)
       });
 
-      it('should generated date from timezone of the option', async () => {
+      it('should generated date from timeZone of the option', async () => {
         let i = 0
 
         for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
