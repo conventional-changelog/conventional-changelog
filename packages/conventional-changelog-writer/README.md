@@ -137,7 +137,7 @@ Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
-Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in UTC timezone
+Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in timezone set by [`timeZone`](#timeZone) option.
 
 If `version` is found in the last commit, `committerDate` will overwrite this.
 
@@ -298,6 +298,11 @@ Type: `object`
 
 Partials that used in the main template, if any. The key should be the partial name and the value should be handlebars template strings. If you are using handlebars template files, read files by yourself.
 
+##### timeZone
+
+Type: `string` Default: `'UTC'`
+
+The timezone to use. The date in the changelog is generated based on timezone.
 
 ## Customization Guide
 
