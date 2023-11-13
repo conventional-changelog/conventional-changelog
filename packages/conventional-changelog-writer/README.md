@@ -137,7 +137,7 @@ Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
-Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in timezone set by timeZone option.
+Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in timezone set by [`timeZone`](#timezone) option.
 
 If `version` is found in the last commit, `committerDate` will overwrite this.
 
@@ -300,7 +300,7 @@ Partials that used in the main template, if any. The key should be the partial n
 
 ##### timeZone
 
-Type: `string` Default: `UTC`
+Type: `string` Default: `'UTC'`
 
 The timezone to use. The date in the changelog is generated based on timezone.
 
