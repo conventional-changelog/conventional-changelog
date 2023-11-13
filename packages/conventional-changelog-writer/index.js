@@ -11,7 +11,7 @@ import {
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
 
-function formatDate(date, timeZone = 'UTC') {
+function formatDate (date, timeZone = 'UTC') {
   // sv-SE is used for yyyy-mm-dd format
   return Intl.DateTimeFormat('sv-SE', {
     timeZone

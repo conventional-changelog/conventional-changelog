@@ -3,14 +3,14 @@ import { describe, it, expect } from 'vitest'
 import { delay, throughObj } from '../../../tools/test-tools.js'
 import conventionalChangelogWriter, { parseArray } from '../index.js'
 
-function formatDate(date, timeZone = 'UTC') {
+function formatDate (date, timeZone = 'UTC') {
   // sv-SE is used for yyyy-mm-dd format
   return Intl.DateTimeFormat('sv-SE', {
     timeZone
   }).format(date)
 }
 
-function getTodayDate(timeZone) {
+function getTodayDate (timeZone) {
   return formatDate(new Date(), timeZone)
 }
 
@@ -845,7 +845,7 @@ describe('conventional-changelog-writer', () => {
         }
 
         expect(i).toBe(2)
-      });
+      })
 
       it('should generated date from timeZone of the option', async () => {
         let i = 0
@@ -856,7 +856,7 @@ describe('conventional-changelog-writer', () => {
             return false
           }
         }))) {
-          if(i === 0) {
+          if (i === 0) {
             expect(chunk).toBe('##  (' + getTodayDate('America/New_York') + ')\n\n\n\n\n')
           }
           i++
