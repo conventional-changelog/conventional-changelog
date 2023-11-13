@@ -137,7 +137,7 @@ Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
-Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in timezone set by [`timeZone`](#timezone) option.
+Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in timezone set by [`timeZone`](#timeZone) option.
 
 If `version` is found in the last commit, `committerDate` will overwrite this.
 
