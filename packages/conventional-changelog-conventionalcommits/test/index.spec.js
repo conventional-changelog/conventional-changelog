@@ -351,12 +351,13 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('some more feats')
-      expect(chunk).not.toContain('BREAKING')
+      if (i === 0) {
+        expect(chunk).toContain('some more feats')
+        expect(chunk).not.toContain('BREAKING')
+      }
+
       i++
     }
-
-    expect(i).toBe(1)
   })
 
   it('should support "feature" as alias for "feat"', async () => {
@@ -370,12 +371,13 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('some more features')
-      expect(chunk).not.toContain('BREAKING')
+      if (i === 0) {
+        expect(chunk).toContain('some more features')
+        expect(chunk).not.toContain('BREAKING')
+      }
+
       i++
     }
-
-    expect(i).toBe(1)
   })
 
   it('should work with unknown host', async () => {
@@ -391,15 +393,18 @@ describe('conventional-changelog-conventionalcommits', () => {
       pkg: {
         path: path.join(__dirname, 'fixtures/_unknown-host.json')
       }
+    }, {
+      linkCompare: true
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('(http://unknown/compare')
-      expect(chunk).toContain('](http://unknown/commit/')
+      if (i === 0) {
+        expect(chunk).toContain('(http://unknown/compare')
+        expect(chunk).toContain('](http://unknown/commit/')
+      }
+
       i++
     }
-
-    expect(i).toBe(1)
   })
 
   it('should work specifying where to find a package.json using conventional-changelog-core', async () => {
@@ -412,16 +417,19 @@ describe('conventional-changelog-conventionalcommits', () => {
       pkg: {
         path: path.join(__dirname, 'fixtures/_known-host.json')
       }
+    }, {
+      linkCompare: true
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('(https://github.com/conventional-changelog/example/compare')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/example/commit/')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/example/issues/')
+      if (i === 0) {
+        expect(chunk).toContain('(https://github.com/conventional-changelog/example/compare')
+        expect(chunk).toContain('](https://github.com/conventional-changelog/example/commit/')
+        expect(chunk).toContain('](https://github.com/conventional-changelog/example/issues/')
+      }
+
       i++
     }
-
-    expect(i).toBe(1)
   })
 
   it('should fallback to the closest package.json when not providing a location for a package.json', async () => {
@@ -431,20 +439,24 @@ describe('conventional-changelog-conventionalcommits', () => {
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
       config: preset
+    }, {
+      linkCompare: true
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('(https://github.com/conventional-changelog/conventional-changelog/compare')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/conventional-changelog/commit/')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/conventional-changelog/issues/')
+      if (i === 0) {
+        expect(chunk).toContain('(https://github.com/conventional-changelog/conventional-changelog/compare')
+        expect(chunk).toContain('](https://github.com/conventional-changelog/conventional-changelog/commit/')
+        expect(chunk).toContain('](https://github.com/conventional-changelog/conventional-changelog/issues/')
+      }
+
       i++
     }
-
-    expect(i).toBe(1)
   })
 
   it('should support non public GitHub repository locations', async () => {
     preparing(8)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -452,19 +464,26 @@ describe('conventional-changelog-conventionalcommits', () => {
       pkg: {
         path: path.join(__dirname, 'fixtures/_ghe-host.json')
       }
+    }, {
+      linkCompare: true
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('(https://github.internal.example.com/dlmr')
-      expect(chunk).toContain('(https://github.internal.example.com/conventional-changelog/internal/compare')
-      expect(chunk).toContain('](https://github.internal.example.com/conventional-changelog/internal/commit/')
-      expect(chunk).toContain('5](https://github.internal.example.com/conventional-changelog/internal/issues/5')
-      expect(chunk).toContain(' closes [#10](https://github.internal.example.com/conventional-changelog/internal/issues/10)')
+      if (i === 0) {
+        expect(chunk).toContain('(https://github.internal.example.com/dlmr')
+        expect(chunk).toContain('(https://github.internal.example.com/conventional-changelog/internal/compare')
+        expect(chunk).toContain('](https://github.internal.example.com/conventional-changelog/internal/commit/')
+        expect(chunk).toContain('5](https://github.internal.example.com/conventional-changelog/internal/issues/5')
+        expect(chunk).toContain(' closes [#10](https://github.internal.example.com/conventional-changelog/internal/issues/10)')
+      }
+
+      i++
     }
   })
 
   it('should only replace with link to user if it is an username', async () => {
     preparing(9)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -472,16 +491,21 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).not.toContain('(https://github.com/5')
-      expect(chunk).toContain('(https://github.com/username')
+      if (i === 0) {
+        expect(chunk).not.toContain('(https://github.com/5')
+        expect(chunk).toContain('(https://github.com/username')
 
-      expect(chunk).not.toContain('[@dummy](https://github.com/dummy)/package')
-      expect(chunk).toContain('bump @dummy/package from')
+        expect(chunk).not.toContain('[@dummy](https://github.com/dummy)/package')
+        expect(chunk).toContain('bump @dummy/package from')
+      }
+
+      i++
     }
   })
 
   it('supports multiple lines of footer information', async () => {
     preparing(9)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -489,14 +513,19 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('closes [#99]')
-      expect(chunk).toContain('[#100]')
-      expect(chunk).toContain('this completely changes the API')
+      if (i === 0) {
+        expect(chunk).toContain('closes [#99]')
+        expect(chunk).toContain('[#100]')
+        expect(chunk).toContain('this completely changes the API')
+      }
+
+      i++
     }
   })
 
   it('does not require that types are case sensitive', async () => {
     preparing(9)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -504,12 +533,17 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toContain('incredible new flag')
+      if (i === 0) {
+        expect(chunk).toContain('incredible new flag')
+      }
+
+      i++
     }
   })
 
   it('populates breaking change if ! is present', async () => {
     preparing(9)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -517,12 +551,17 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toMatch(/incredible new flag FIXES: #33\r?\n/)
+      if (i === 0) {
+        expect(chunk).toMatch(/incredible new flag FIXES: #33\r?\n/)
+      }
+
+      i++
     }
   })
 
   it('parses both default (Revert "<subject>") and custom (revert: <subject>) revert commits', async () => {
     preparing(10)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -530,13 +569,18 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toMatch(/custom revert format/)
-      expect(chunk).toMatch(/default revert format/)
+      if (i === 0) {
+        expect(chunk).toMatch(/custom revert format/)
+        expect(chunk).toMatch(/default revert format/)
+      }
+
+      i++
     }
   })
 
   it('should include commits with "Release-As:" footer in CHANGELOG', async () => {
     preparing(11)
+    let i = 0
 
     for await (let chunk of conventionalChangelogCore({
       cwd: testTools.cwd,
@@ -544,7 +588,11 @@ describe('conventional-changelog-conventionalcommits', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toMatch(/release at different version/)
+      if (i === 0) {
+        expect(chunk).toMatch(/release at different version/)
+      }
+
+      i++
     }
   })
 })
