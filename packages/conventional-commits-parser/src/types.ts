@@ -95,6 +95,7 @@ export interface CommitBase {
   revert: CommitMeta | null
   header: string | null
   body: string | null
+  bodyLines: string[]
   footer: string | null
   notes: CommitNote[]
   mentions: string[]

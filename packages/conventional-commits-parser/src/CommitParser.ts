@@ -28,6 +28,7 @@ export function createCommitObject(initialData: Partial<Commit> = {}): Commit {
     revert: null,
     header: null,
     body: null,
+    bodyLines: [],
     footer: null,
     notes: [],
     mentions: [],
@@ -296,7 +297,13 @@ export class CommitParser {
     const isStillBody = !references.length && isBody
 
     if (isStillBody) {
-      commit.body = appendLine(commit.body, this.currentLine())
+      const currentLine = this.currentLine()
+
+      commit.body = appendLine(commit.body, currentLine)
+
+      if (currentLine !== '') {
+        commit.bodyLines.push(currentLine)
+      }
     } else {
       commit.references.push(...references)
       commit.footer = appendLine(commit.footer, this.currentLine())
@@ -370,6 +377,8 @@ export class CommitParser {
     if (commit.body) {
       commit.body = trimNewLines(commit.body)
     }
+
+    commit.bodyLines.map(bodyLine => trimNewLines(bodyLine))
 
     if (commit.footer) {
       commit.footer = trimNewLines(commit.footer)

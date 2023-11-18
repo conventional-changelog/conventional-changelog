@@ -27,6 +27,7 @@ It expects an object mode upstream that looks something like this:
   scope: 'scope',
   subject: 'broadcast $destroy event on scope destruction',
   body: null,
+  bodyLines: [],
   footer: 'Closes #1',
   notes: [],
   references: [ { action: 'Closes', owner: null, repository: null, issue: '1', raw: '#1' } ] }
@@ -36,6 +37,7 @@ It expects an object mode upstream that looks something like this:
   scope: 'ng-list',
   subject: 'Allow custom separator',
   body: 'bla bla bla',
+  bodyLines: ['bla bla bla'],
   footer: 'BREAKING CHANGE: some breaking change',
   notes: [ { title: 'BREAKING CHANGE', text: 'some breaking change' } ],
   references: [] }

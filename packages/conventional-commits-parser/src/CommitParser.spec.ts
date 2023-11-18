@@ -37,6 +37,8 @@ describe('conventional-commits-parser', () => {
         const result = parser.parse(commit)
 
         expect(result.header).toBe('feat(ng-list): Allow custom separator')
+        expect(result.body).toBe('bla bla bla')
+        expect(result.bodyLines).toEqual(['bla bla bla'])
         expect(result.footer).toBe('Closes #123\nCloses #25\nFixes #33')
         expect(result.references).toEqual([
           {
@@ -90,6 +92,24 @@ describe('conventional-commits-parser', () => {
         expect(result.scope).toBe('hello/world')
         expect(result.subject).toBe('message')
       })
+
+      it('should parse multiple body lines from body', () => {
+        const commit = 'feat(conventional-commits-parser): add bodyLines to commit object\n\n'
+          + 'Adds the new property bodyLines to the commit object\n'
+          + 'Second body line after one new line\n\n'
+          + 'Third body line after two new lines\n'
+          + 'BREAKING CHANGE: Non-body line\n\n'
+          + 'Closes #1166.'
+        const result = parser.parse(commit)
+
+        expect(result.header).toBe('feat(conventional-commits-parser): add bodyLines to commit object')
+        expect(result.body).toBe('Adds the new property bodyLines to the commit object\nSecond body line after one new line\n\nThird body line after two new lines')
+        expect(result.bodyLines).toEqual([
+          'Adds the new property bodyLines to the commit object',
+          'Second body line after one new line',
+          'Third body line after two new lines'
+        ])
+      })
     })
 
     describe('custom options', () => {
@@ -116,6 +136,7 @@ describe('conventional-commits-parser', () => {
           subject: 'broadcast $destroy event on scope destruction',
           type: 'feat',
           body: 'perf testing shows that in chrome this change adds 5-15% overhead\n\n\n\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
+          bodyLines: ['perf testing shows that in chrome this change adds 5-15% overhead', 'when destroying 10k nested scopes where each scope has a $destroy listener'],
           footer: 'BREAKING AMEND: some breaking change\n\n\n\n\nBREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\nKills #1\n\n\n\nkilled #25',
           notes: [
             {
@@ -162,6 +183,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: ' feat(scope): broadcast $destroy event on scope destruction ',
           body: ' perf testing shows that in chrome this change adds 5-15% overhead \n\n when destroying 10k nested scopes where each scope has a $destroy listener ',
+          bodyLines: [' perf testing shows that in chrome this change adds 5-15% overhead ', ' when destroying 10k nested scopes where each scope has a $destroy listener '],
           footer: '         BREAKING AMEND: some breaking change         \n\n   BREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1',
           notes: [
             {
@@ -205,6 +227,7 @@ describe('conventional-commits-parser', () => {
           subject: 'broadcast $destroy event on scope destruction',
           type: 'feat',
           body: 'perf testing shows that in chrome this change adds 5-15% overhead\nwhen destroying 10k nested scopes where each scope has a $destroy listener',
+          bodyLines: ['perf testing shows that in chrome this change adds 5-15% overhead', 'when destroying 10k nested scopes where each scope has a $destroy listener'],
           footer: 'BREAKING AMEND: some breaking change\nKills #1',
           notes: [
             {
@@ -270,6 +293,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: null,
           body: null,
+          bodyLines: [],
           footer: null,
           notes: [],
           references: [],
@@ -281,6 +305,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: ' # non-comment',
           body: null,
+          bodyLines: [],
           footer: null,
           notes: [],
           references: [],
@@ -292,6 +317,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: 'header',
           body: 'body',
+          bodyLines: ['body'],
           footer: null,
           notes: [],
           references: [],
@@ -310,6 +336,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: null,
           body: null,
+          bodyLines: [],
           footer: null,
           notes: [],
           references: [],
@@ -321,6 +348,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: '# non-comment',
           body: null,
+          bodyLines: [],
           footer: null,
           notes: [],
           references: [],
@@ -332,6 +360,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: ' * non-comment',
           body: null,
+          bodyLines: [],
           footer: null,
           notes: [],
           references: [],
@@ -343,6 +372,7 @@ describe('conventional-commits-parser', () => {
           merge: null,
           header: 'header',
           body: 'body',
+          bodyLines: ['body'],
           footer: null,
           notes: [],
           references: [],
