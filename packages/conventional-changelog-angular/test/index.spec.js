@@ -58,8 +58,8 @@ setups([
     testTools.gitCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
   },
   () => {
-    testTools.gitCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
-    testTools.gitCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
+    testTools.gitCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234567.'])
+    testTools.gitCommit(['revert: feat: custom revert format', 'This reverts commit 5678910.'])
   }
 ])
 
@@ -324,8 +324,8 @@ describe('conventional-changelog-angular', () => {
     })) {
       chunk = chunk.toString()
 
-      expect(chunk).toMatch(/custom revert format/)
-      expect(chunk).toMatch(/default revert format/)
+      expect(chunk).toMatch('custom revert format')
+      expect(chunk).toMatch('default revert format')
       i++
     }
 
