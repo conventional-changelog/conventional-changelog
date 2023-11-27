@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools.js'
+import { TestTools } from '../../../tools/test-tools.ts'
 
 const CLI_PATH = path.join(__dirname, './test-cli.cjs')
 const COMMITS_PATH = 'fixtures/commits.ldjson'

@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "@trigen/eslint-config/typescript",
+    "@trigen/eslint-config/typescript-requiring-type-checking"
+  ],
+  "parserOptions": {
+    "tsconfigRootDir": "./tools",
+    "project": ["./tsconfig.json"]
+  },
+  "rules": {
+    "@typescript-eslint/no-magic-numbers": "off"
+  }
+}

@@ -1,5 +1,5 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools.js'
+import { TestTools } from '../../../tools/test-tools.ts'
 import standardChangelog from '../index.js'
 
 let testTools
