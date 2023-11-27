@@ -4,7 +4,7 @@ import { describe, beforeAll, it, expect } from 'vitest'
 import { TestTools } from '../../../../tools/test-tools.js'
 
 const CLI_PATH = path.join(__dirname, './index.ts')
-const FIXTURES_PATH = path.join(__dirname, '..', '..', 'test', 'fixtures')
+const FIXTURES_PATH = path.resolve(__dirname, '..', '..', 'test', 'fixtures')
 
 describe('conventional-commits-parser', () => {
   describe('cli', () => {

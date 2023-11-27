@@ -8,7 +8,10 @@ import { CommitParser } from './CommitParser.js'
  * @param options - CommitParser options.
  * @yields Parsed commit.
  */
-export async function* parseCommitsAsyncGenerator(rawCommits: AsyncGenerator<string | Buffer>, options: ParserStreamOptions = {}) {
+export async function* parseCommitsAsyncGenerator(
+  rawCommits: (string | Buffer)[] | AsyncIterable<string | Buffer>,
+  options: ParserStreamOptions = {}
+) {
   const warnOption = options.warn
   const warn = warnOption === true
     ? (err: Error) => {
@@ -36,6 +39,6 @@ export async function* parseCommitsAsyncGenerator(rawCommits: AsyncGenerator<str
  */
 export function parseCommitsStream(options: ParserStreamOptions = {}) {
   return Transform.from(
-    (rawCommits: AsyncGenerator<Buffer>) => parseCommitsAsyncGenerator(rawCommits, options)
+    (rawCommits: AsyncIterable<Buffer>) => parseCommitsAsyncGenerator(rawCommits, options)
   )
 }
