@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import meow from 'meow'
 import type { Commit } from '../types.js'
 import { CommitParser } from '../CommitParser.js'
@@ -90,23 +91,23 @@ const cli = meow(`
 })
 const { separator } = cli.flags
 const parser = new CommitParser(parseOptions(cli.flags))
-let inputStream: AsyncGenerator<string, void>
+let inputStream: AsyncIterable<string>
 let chunk: string
 let commit: Commit
 let jsonStreamOpened = false
 
-if (cli.input.length) {
-  inputStream = readRawCommitsFromFiles(cli.input, separator)
-} else
-  if (process.stdin.isTTY) {
-    inputStream = readRawCommitsFromLine(separator)
-  } else {
-    inputStream = readRawCommitsFromStdin(separator)
-  }
-
 process.stdout.write(JSON_STREAM_OPEN)
 
 try {
+  if (cli.input.length) {
+    inputStream = readRawCommitsFromFiles(cli.input, separator)
+  } else
+    if (process.stdin.isTTY) {
+      inputStream = readRawCommitsFromLine(separator)
+    } else {
+      inputStream = readRawCommitsFromStdin(separator)
+    }
+
   for await (chunk of inputStream) {
     commit = parser.parse(chunk.toString())
 
@@ -119,6 +120,7 @@ try {
   }
 } catch (err) {
   console.error(err)
+  process.exit(1)
 }
 
 process.stdout.write(JSON_STREAM_CLOSE)

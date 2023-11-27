@@ -26,7 +26,7 @@ export async function* readRawCommitsFromFiles(files: string[], separator: strin
     try {
       yield* splitStream(fs.createReadStream(file), separator)
     } catch (err) {
-      console.warn(`Failed to read file ${file}:\n  ${(err as Error).toString()}`)
+      console.warn(`Failed to read file ${file}:\n  ${err as string}`)
     }
   }
 }
