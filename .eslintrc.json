@@ -15,6 +15,7 @@
     },
     {
       "files": [
+        "tools/**/*.ts",
         "packages/**/*.ts"
       ],
       "extends": [

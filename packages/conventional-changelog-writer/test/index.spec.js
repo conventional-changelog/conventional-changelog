@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import { describe, it, expect } from 'vitest'
-import { delay, throughObj } from '../../../tools/test-tools.js'
+import { delay, throughObj } from '../../../tools/test-tools.ts'
 import conventionalChangelogWriter, { parseArray } from '../index.js'
 
 function formatDate (date, timeZone = 'UTC') {

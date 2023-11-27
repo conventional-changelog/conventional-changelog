@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { delay } from '../../../tools/test-tools.js'
+import { delay } from '../../../tools/test-tools.ts'
 import {
   compileTemplates,
   functionify,

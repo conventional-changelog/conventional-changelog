@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
-import { TestTools } from '../../../tools/test-tools.js'
+import { TestTools } from '../../../tools/test-tools.ts'
 import conventionalRecommendedBump from '../index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()

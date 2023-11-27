@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import path from 'path'
-import { TestTools } from '../../../tools/test-tools.js'
+import { TestTools } from '../../../tools/test-tools.ts'
 import conventionalChangelogCore from '../index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
