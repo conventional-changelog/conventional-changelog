@@ -114,7 +114,7 @@ describe('conventional-commits-parser', () => {
     it('should work if it is not a tty', async () => {
       const { stdout } = await testTools.fork(CLI_PATH, [], {
         stdio: [
-          await fs.open(path.join(FIXTURES_PATH, 'log1.txt'), 'r'),
+          (await fs.open(path.join(FIXTURES_PATH, 'log1.txt'), 'r')).fd,
           null,
           null,
           'ipc'
@@ -127,7 +127,7 @@ describe('conventional-commits-parser', () => {
     it('should separate if it is not a tty', async () => {
       const { stdout } = await testTools.fork(CLI_PATH, ['-s', '==='], {
         stdio: [
-          await fs.open(path.join(FIXTURES_PATH, 'log2.txt'), 'r'),
+          (await fs.open(path.join(FIXTURES_PATH, 'log2.txt'), 'r')).fd,
           null,
           null,
           'ipc'
@@ -141,7 +141,7 @@ describe('conventional-commits-parser', () => {
     it('should error if it is not a tty and commit cannot be parsed', async () => {
       const { stderr } = await testTools.fork(CLI_PATH, [], {
         stdio: [
-          await fs.open(path.join(FIXTURES_PATH, 'bad_commit.txt'), 'r'),
+          (await fs.open(path.join(FIXTURES_PATH, 'bad_commit.txt'), 'r')).fd,
           null,
           null,
           'ipc'
