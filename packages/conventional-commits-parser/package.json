@@ -42,7 +42,8 @@
   "scripts": {
     "clear": "del ./dist",
     "prepublishOnly": "pnpm build",
-    "build": "tsc"
+    "build": "tsc",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "meow": "^12.0.1"

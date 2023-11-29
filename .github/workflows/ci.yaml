@@ -30,6 +30,7 @@ jobs:
       - run: node --version
       - run: pnpm install
       - run: pnpm lint
+      - run: pnpm test:types
       - run: pnpm test
       - name: coverage
         uses: coverallsapp/github-action@main
@@ -52,7 +53,6 @@ jobs:
           node-version: 16
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm lint
       - run: pnpm test
       - name: coverage
         uses: coverallsapp/github-action@main

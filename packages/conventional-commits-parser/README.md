@@ -31,13 +31,26 @@
 
 Parse raw conventional commits.
 
+<hr />
+<a href="#install">Install</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#usage">Usage</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#conventional-commit-message-format">Message format</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#api">API</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#cli">CLI</a>
+<br />
+<hr />
+
 ## Install
 
 ```bash
-# yarn
-yarn add -D conventional-commits-parser
 # pnpm
 pnpm add -D conventional-commits-parser
+# yarn
+yarn add -D conventional-commits-parser
 # npm
 npm i -D conventional-commits-parser
 ```
@@ -315,7 +328,7 @@ You can use cli to practice writing commit messages or parse messages from files
 If you run `conventional-commits-parser` without any arguments
 
 ```sh
-$ conventional-commits-parser
+$ conventional-commits-parser --help # for more details
 ```
 
 You will enter an interactive shell. To show your parsed output enter "return" three times (or enter your specified separator).
