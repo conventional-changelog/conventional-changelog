@@ -41,7 +41,8 @@
     "lint": "eslint . --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
     "test:watch": "vitest watch",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "test:types": "pnpm -r --parallel --if-present test:types"
   },
   "version": "1.0.0",
   "devDependencies": {
