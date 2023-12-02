@@ -26,17 +26,22 @@ function getWriterOpts () {
         return
       }
 
-      if (typeof commit.hash === 'string') {
-        commit.shortHash = commit.hash.substring(0, 7)
-      }
-
-      commit.references.forEach(function (reference) {
-        if (reference.prefix === '#') {
-          reference.originalIssueTracker = 'https://bugs.jquery.com/ticket/'
+      const shortHash = typeof commit.hash === 'string'
+        ? commit.hash.substring(0, 7)
+        : commit.shortHash
+      const references = commit.references.map((reference) => {
+        return {
+          ...reference,
+          originalIssueTracker: reference.prefix === '#'
+            ? 'https://bugs.jquery.com/ticket/'
+            : reference.originalIssueTracker
         }
       })
 
-      return commit
+      return {
+        shortHash,
+        references
+      }
     },
     groupBy: 'component',
     commitGroupsSort: 'title',

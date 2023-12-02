@@ -11,18 +11,20 @@ function getWriterOpts () {
         return
       }
 
-      commit.emoji = commit.emoji.substring(0, 72)
-      const emojiLength = commit.emoji.length
+      const emoji = commit.emoji.substring(0, 72)
+      const emojiLength = emoji.length
+      const shortHash = typeof commit.hash === 'string'
+        ? commit.hash.substring(0, 7)
+        : commit.shortHash
+      const shortDesc = typeof commit.shortDesc === 'string'
+        ? commit.shortDesc.substring(0, 72 - emojiLength)
+        : undefined
 
-      if (typeof commit.hash === 'string') {
-        commit.shortHash = commit.hash.substring(0, 7)
+      return {
+        emoji,
+        shortHash,
+        shortDesc
       }
-
-      if (typeof commit.shortDesc === 'string') {
-        commit.shortDesc = commit.shortDesc.substring(0, 72 - emojiLength)
-      }
-
-      return commit
     },
     groupBy: 'emoji',
     commitGroupsSort: 'title',

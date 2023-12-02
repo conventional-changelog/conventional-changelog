@@ -1,57 +1,67 @@
-import dedent from 'dedent'
 import { describe, it, expect } from 'vitest'
-import { delay, throughObj } from '../../../tools/test-tools.ts'
-import conventionalChangelogWriter, { parseArray } from '../index.js'
+import { delay, throughObj } from '../../../tools/test-tools.js'
+import { defaultCommitTransform } from './options.js'
+import {
+  createChangelogWriterStream,
+  createChangelogFromCommits
+} from './writers.js'
 
-function formatDate (date, timeZone = 'UTC') {
+function formatDate(date: Date, timeZone = 'UTC') {
   // sv-SE is used for yyyy-mm-dd format
   return Intl.DateTimeFormat('sv-SE', {
     timeZone
   }).format(date)
 }
 
-function getTodayDate (timeZone) {
+function getTodayDate(timeZone?: string) {
   return formatDate(new Date(), timeZone)
 }
 
 const todayUtc = getTodayDate()
-
 const commits = [
   {
     hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
     header: 'feat(scope): broadcast $destroy event on scope destruction',
     body: null,
     footer: 'Closes #1',
-    notes: [{
-      title: 'BREAKING NEWS',
-      text: 'breaking news'
-    }],
-    references: [{
-      action: 'Closes',
-      repository: null,
-      issue: '1',
-      raw: '#1'
-    }, {
-      action: 'Closes',
-      repository: null,
-      issue: '2',
-      raw: '#2'
-    }, {
-      action: 'Closes',
-      repository: null,
-      issue: '3',
-      raw: '#3'
-    }]
+    notes: [
+      {
+        title: 'BREAKING NEWS',
+        text: 'breaking news'
+      }
+    ],
+    references: [
+      {
+        action: 'Closes',
+        repository: null,
+        issue: '1',
+        raw: '#1'
+      },
+      {
+        action: 'Closes',
+        repository: null,
+        issue: '2',
+        raw: '#2'
+      },
+      {
+        action: 'Closes',
+        repository: null,
+        issue: '3',
+        raw: '#3'
+      }
+    ]
   },
   {
     hash: '13f31602f396bc269076ab4d389cfd8ca94b20ba',
     header: 'fix(ng-list): Allow custom separator',
     body: 'bla bla bla',
     footer: 'BREAKING CHANGE: some breaking change',
-    notes: [{
-      title: 'BREAKING CHANGE',
-      text: 'some breaking change'
-    }],
+    notes: [
+      {
+        title: 'BREAKING CHANGE',
+        text: 'some breaking change'
+      }
+    ],
     references: []
   },
   {
@@ -73,11 +83,13 @@ const commits = [
 ]
 
 describe('conventional-changelog-writer', () => {
-  function getStream () {
+  function getStream() {
     const upstream = throughObj()
+
     for (const commit of commits) {
       upstream.write(commit)
     }
+
     upstream.end()
     return upstream
   }
@@ -86,11 +98,12 @@ describe('conventional-changelog-writer', () => {
     it('should still work if there is no commits', async () => {
       let i = 0
       const upstream = throughObj()
+
       upstream.end()
 
-      for await (let chunk of upstream.pipe(conventionalChangelogWriter())) {
+      for await (let chunk of upstream.pipe(createChangelogWriterStream())) {
         chunk = chunk.toString()
-        expect(chunk).toBe('##  (' + todayUtc + ')\n\n\n\n\n')
+        expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
         i++
       }
 
@@ -107,11 +120,11 @@ describe('conventional-changelog-writer', () => {
         host: 'https://github.com',
         repository: 'a/b'
       }
-      const changelog = await parseArray(commits, context)
+      const changelog = await createChangelogFromCommits(commits, context)
 
       expect(changelog).toContain('https://github.com/a/b/commits/13f3160')
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter(context))) {
+      for await (let chunk of getStream().pipe(createChangelogWriterStream(context))) {
         chunk = chunk.toString()
         expect(chunk).toContain('https://github.com/a/b/commits/13f3160')
         i++
@@ -127,11 +140,11 @@ describe('conventional-changelog-writer', () => {
         title: 'this is a title',
         repoUrl: 'https://github.com/a/b'
       }
-      const changelog = await parseArray(commits, context)
+      const changelog = await createChangelogFromCommits(commits, context)
 
       expect(changelog).toContain('https://github.com/a/b/commits/13f3160')
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter(context))) {
+      for await (let chunk of getStream().pipe(createChangelogWriterStream(context))) {
         chunk = chunk.toString()
         expect(chunk.toString()).toContain('https://github.com/a/b/commits/13f3160')
         i++
@@ -142,11 +155,11 @@ describe('conventional-changelog-writer', () => {
 
     it('should not auto link', async () => {
       let i = 0
-      const changelog = await parseArray(commits, {})
+      const changelog = await createChangelogFromCommits(commits, {})
 
       expect(changelog).not.toContain('https://github.com/a/b/commits/13f3160')
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter())) {
+      for await (let chunk of getStream().pipe(createChangelogWriterStream())) {
         chunk = chunk.toString()
         expect(chunk.toString()).not.toContain('https://github.com/a/b/commits/13f3160')
         i++
@@ -164,11 +177,11 @@ describe('conventional-changelog-writer', () => {
         repository: 'a/b',
         linkReferences: false
       }
-      const changelog = await parseArray(commits, context)
+      const changelog = await createChangelogFromCommits(commits, context)
 
       expect(changelog).not.toContain('https://github.com/a/b/commits/13f3160')
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter(context))) {
+      for await (let chunk of getStream().pipe(createChangelogWriterStream(context))) {
         chunk = chunk.toString()
         expect(chunk).not.toContain('https://github.com/a/b/commits/13f3160')
         i++
@@ -183,8 +196,8 @@ describe('conventional-changelog-writer', () => {
       let i = 0
       let called = false
 
-      await parseArray(commits, {}, {
-        transform (commit, context) {
+      await createChangelogFromCommits(commits, {}, {
+        transform(commit, context) {
           expect(context).toEqual({
             commit: 'commits',
             issue: 'issues',
@@ -196,8 +209,8 @@ describe('conventional-changelog-writer', () => {
       })
       expect(called).toBe(true)
 
-      for await (const commit of getStream().pipe(conventionalChangelogWriter({}, {
-        transform (commit, context) {
+      for await (const commit of getStream().pipe(createChangelogWriterStream({}, {
+        transform(commit, context) {
           expect(context).toEqual({
             commit: 'commits',
             issue: 'issues',
@@ -216,18 +229,15 @@ describe('conventional-changelog-writer', () => {
 
     it('should leave the original commits objects unchanged', async () => {
       expect(commits[1].notes[0].title).toBe('BREAKING CHANGE')
-      await parseArray(commits, {}, {
-        transform: {
-          notes (notes) {
-            notes.map((note) => {
-              if (note.title === 'BREAKING CHANGE') {
-                note.title = 'BREAKING CHANGES'
-              }
-
-              return note
-            })
-
-            return notes
+      await createChangelogFromCommits(commits, {}, {
+        transform(commit) {
+          return {
+            notes: commit.notes.map(note => ({
+              ...note,
+              title: note.title === 'BREAKING CHANGE'
+                ? 'BREAKING CHANGES'
+                : note.title
+            }))
           }
         }
       })
@@ -237,37 +247,34 @@ describe('conventional-changelog-writer', () => {
 
     it('should merge with the provided transform object', async () => {
       let i = 0
-      const changelog = await parseArray(commits, {}, {
-        transform: {
-          notes (notes) {
-            notes.map((note) => {
-              if (note.title === 'BREAKING CHANGE') {
-                note.title = 'BREAKING CHANGES'
-              }
-
-              return note
-            })
-
-            return notes
+      const changelog = await createChangelogFromCommits(commits, {}, {
+        transform(commit) {
+          return {
+            ...defaultCommitTransform(commit),
+            notes: commit.notes.map(note => ({
+              ...note,
+              title: note.title === 'BREAKING CHANGE'
+                ? 'BREAKING CHANGES'
+                : note.title
+            }))
           }
         }
       })
+
       expect(changelog).toContain('13f3160')
       expect(changelog).toContain('BREAKING CHANGES')
       expect(changelog).not.toContain('13f31602f396bc269076ab4d389cfd8ca94b20ba')
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
-        transform: {
-          notes (notes) {
-            notes.map((note) => {
-              if (note.title === 'BREAKING CHANGE') {
-                note.title = 'BREAKING CHANGES'
-              }
-
-              return note
-            })
-
-            return notes
+      for await (let chunk of getStream().pipe(createChangelogWriterStream({}, {
+        transform(commit) {
+          return {
+            ...defaultCommitTransform(commit),
+            notes: commit.notes.map(note => ({
+              ...note,
+              title: note.title === 'BREAKING CHANGE'
+                ? 'BREAKING CHANGES'
+                : note.title
+            }))
           }
         }
       }))) {
@@ -285,21 +292,21 @@ describe('conventional-changelog-writer', () => {
 
     it('should ignore the commit if tranform returns `null`', async () => {
       let i = 0
-      const changelog = await parseArray(commits, {}, {
-        transform () {
-          return false
+      const changelog = await createChangelogFromCommits(commits, {}, {
+        transform() {
+          return null
         }
       })
 
-      expect(changelog).toBe('##  (' + todayUtc + ')\n\n\n\n\n')
+      expect(changelog).toBe(`##  (${todayUtc})\n\n\n\n\n`)
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
-        transform () {
-          return false
+      for await (let chunk of getStream().pipe(createChangelogWriterStream({}, {
+        transform() {
+          return null
         }
       }))) {
         chunk = chunk.toString()
-        expect(chunk).toBe('##  (' + todayUtc + ')\n\n\n\n\n')
+        expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
 
         i++
       }
@@ -308,17 +315,19 @@ describe('conventional-changelog-writer', () => {
     })
 
     it('should support tranform commits async', async () => {
-      const changelog = await parseArray(commits, {}, {
-        async transform () {
+      const changelog = await createChangelogFromCommits(commits, {}, {
+        async transform() {
           await delay(100)
           return {
             hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
             header: 'feat(scope): broadcast $destroy event on scope destruction',
             body: null,
-            notes: [{
-              title: 'BREAKING CHANGE',
-              text: 'some breaking change'
-            }]
+            notes: [
+              {
+                title: 'BREAKING CHANGE',
+                text: 'some breaking change'
+              }
+            ]
           }
         }
       })
@@ -364,11 +373,13 @@ describe('conventional-changelog-writer', () => {
       }
     ]
 
-    function getStream () {
+    function getStream() {
       const upstream = throughObj()
+
       for (const commit of commits) {
         upstream.write(commit)
       }
+
       upstream.end()
 
       return upstream
@@ -376,23 +387,27 @@ describe('conventional-changelog-writer', () => {
 
     it('should generate on the transformed commit', async () => {
       let i = 0
-      const changelog = await parseArray(commits, {
+      const changelog = await createChangelogFromCommits(commits, {
         version: '1.0.0'
       }, {
-        transform (commit) {
-          commit.version = '1.0.0'
-          return commit
+        transform(commit) {
+          return {
+            ...commit,
+            version: '1.0.0'
+          } as typeof commit
         }
       })
 
       expect(changelog).toContain('# 1.0.0 ')
 
-      for await (let chunk of getStream().pipe(conventionalChangelogWriter({
+      for await (let chunk of getStream().pipe(createChangelogWriterStream({
         version: '1.0.0'
       }, {
-        transform (commit) {
-          commit.version = '1.0.0'
-          return commit
+        transform(commit) {
+          return {
+            ...commit,
+            version: '1.0.0'
+          } as typeof commit
         }
       }))) {
         chunk = chunk.toString()
@@ -406,20 +421,20 @@ describe('conventional-changelog-writer', () => {
     describe('when commits are not reversed', () => {
       it('should generate on `\'version\'` if it\'s a valid semver', async () => {
         let i = 0
-        const changelog = await parseArray(commits)
+        const changelog = await createChangelogFromCommits(commits)
 
-        expect(changelog).toContain('##  (' + todayUtc)
+        expect(changelog).toContain(`##  (${todayUtc}`)
         expect(changelog).toContain('feat(scope): ')
         expect(changelog).toContain('## <small>1.0.1 (2015-04-07)</small>')
         expect(changelog).toContain('fix(ng-list): ')
         expect(changelog).toContain('perf(template): ')
         expect(changelog).toContain('refactor(name): ')
 
-        for await (let chunk of getStream().pipe(conventionalChangelogWriter())) {
+        for await (let chunk of getStream().pipe(createChangelogWriterStream())) {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toContain('##  (' + todayUtc)
+            expect(chunk).toContain(`##  (${todayUtc}`)
             expect(chunk).toContain('feat(scope): ')
 
             expect(chunk).not.toContain('fix(ng-list): ')
@@ -487,11 +502,11 @@ describe('conventional-changelog-writer', () => {
 
         upstream.end()
 
-        const changelog = await parseArray(commits, {}, {
+        const changelog = await createChangelogFromCommits(commits, {}, {
           generateOn: 'version'
         })
 
-        expect(changelog).toContain('##  (' + todayUtc)
+        expect(changelog).toContain(`##  (${todayUtc}`)
         expect(changelog).toContain('feat(scope): broadcast $destroy event on scope destruction')
         expect(changelog).not.toContain('<a name=""></a>')
         expect(changelog).toContain('fix(ng-list): Allow custom separator')
@@ -499,13 +514,13 @@ describe('conventional-changelog-writer', () => {
         expect(changelog).toContain('refactor(name): rename this module to conventional-changelog-writer')
         expect(changelog).toContain('perf(template): tweak')
 
-        for await (let chunk of upstream.pipe(conventionalChangelogWriter({}, {
+        for await (let chunk of upstream.pipe(createChangelogWriterStream({}, {
           generateOn: 'version'
         }))) {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toContain('##  (' + todayUtc)
+            expect(chunk).toContain(`##  (${todayUtc}`)
 
             expect(chunk).not.toContain('## 1.0.1 (2015-04-07)')
           } else if (i === 1) {
@@ -528,19 +543,19 @@ describe('conventional-changelog-writer', () => {
       it('`generateOn` could be a function', async () => {
         let i = 0
 
-        for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
-          generateOn (commit, commits, context, options) {
+        for await (let chunk of getStream().pipe(createChangelogWriterStream({}, {
+          generateOn(commit, commits, context, options) {
             expect(commits.length).toBeTypeOf('number')
             expect(context.commit).toBe('commits')
             expect(options.groupBy).toBe('type')
 
-            return commit.version
+            return Boolean(commit.version)
           }
         }))) {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toContain('##  (' + todayUtc)
+            expect(chunk).toContain(`##  (${todayUtc}`)
             expect(chunk).not.toContain('## 1.0.1 (2015-04-07)')
           }
 
@@ -553,12 +568,12 @@ describe('conventional-changelog-writer', () => {
       it('`generateOn` could be a null', async () => {
         let i = 0
 
-        for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
+        for await (let chunk of getStream().pipe(createChangelogWriterStream({}, {
           generateOn: null
         }))) {
           chunk = chunk.toString()
 
-          expect(chunk).toContain('##  (' + todayUtc)
+          expect(chunk).toContain(`##  (${todayUtc}`)
 
           i++
         }
@@ -568,8 +583,7 @@ describe('conventional-changelog-writer', () => {
 
       it('version should fall back on `context.version` and `context.date`', async () => {
         let i = 0
-
-        const changelog = await parseArray(commits, {
+        const changelog = await createChangelogFromCommits(commits, {
           version: '0.0.1',
           date: '2015-01-01'
         })
@@ -577,7 +591,7 @@ describe('conventional-changelog-writer', () => {
         expect(changelog).toContain('## <small>0.0.1 (2015-01-01)</small>')
         expect(changelog).toContain('## <small>1.0.1 (2015-04-07)</small>')
 
-        for await (let chunk of getStream().pipe(conventionalChangelogWriter({
+        for await (let chunk of getStream().pipe(createChangelogWriterStream({
           version: '0.0.1',
           date: '2015-01-01'
         }))) {
@@ -598,15 +612,15 @@ describe('conventional-changelog-writer', () => {
       it('should still generate a block even if the commit is ignored', async () => {
         let i = 0
 
-        for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
-          transform () {
-            return false
+        for await (let chunk of getStream().pipe(createChangelogWriterStream({}, {
+          transform() {
+            return null
           }
         }))) {
           chunk = chunk.toString()
 
           if (i === 0) {
-            expect(chunk).toBe('##  (' + todayUtc + ')\n\n\n\n\n')
+            expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
           } else {
             expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
           }
@@ -620,13 +634,11 @@ describe('conventional-changelog-writer', () => {
       it('should include details', async () => {
         let i = 0
 
-        for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
-          includeDetails: true
-        }))) {
+        for await (const chunk of getStream().pipe(createChangelogWriterStream({}, {}, true))) {
           if (i === 0) {
-            expect(chunk.log).toContain('##  (' + todayUtc + ')\n\n')
+            expect(chunk.log).toContain(`##  (${todayUtc})\n\n`)
             expect(chunk.log).toContain('feat(scope): broadcast $destroy event on scope destruction')
-            expect(chunk.keyCommit).toBe()
+            expect(chunk.keyCommit).toBe(null)
           } else {
             expect(chunk.log).toContain('## <small>1.0.1 (2015-04-07)</small>\n\n')
             expect(chunk.log).toContain('fix(ng-list): Allow custom separator')
@@ -651,10 +663,12 @@ describe('conventional-changelog-writer', () => {
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
           footer: null,
-          notes: [{
-            title: 'BREAKING CHANGE',
-            text: 'No backward compatibility.'
-          }],
+          notes: [
+            {
+              title: 'BREAKING CHANGE',
+              text: 'No backward compatibility.'
+            }
+          ],
           references: [],
           committerDate: '2015-04-07 14:17:05 +1000',
           version: 'v1.0.0'
@@ -663,17 +677,19 @@ describe('conventional-changelog-writer', () => {
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
           footer: null,
-          notes: [{
-            title: 'BREAKING CHANGE',
-            text: 'No backward compatibility.'
-          }],
+          notes: [
+            {
+              title: 'BREAKING CHANGE',
+              text: 'No backward compatibility.'
+            }
+          ],
           references: [],
           committerDate: '2015-04-07 14:17:05 +1000',
           version: 'v0.1.4'
         })
         upstream.end()
 
-        for await (let chunk of upstream.pipe(conventionalChangelogWriter({
+        for await (let chunk of upstream.pipe(createChangelogWriterStream({
           version: 'v2.0.0'
         }, {
           doFlush: false
@@ -700,17 +716,19 @@ describe('conventional-changelog-writer', () => {
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
           footer: null,
-          notes: [{
-            title: 'BREAKING CHANGE',
-            text: 'No backward compatibility.'
-          }],
+          notes: [
+            {
+              title: 'BREAKING CHANGE',
+              text: 'No backward compatibility.'
+            }
+          ],
           references: [],
           committerDate: '2015-04-07 14:17:05 +1000'
         })
         upstream.end()
 
         // eslint-disable-next-line no-unreachable-loop
-        for await (const chunk of upstream.pipe(conventionalChangelogWriter({
+        for await (const chunk of upstream.pipe(createChangelogWriterStream({
           version: 'v2.0.0'
         }, {
           doFlush: false
@@ -769,32 +787,32 @@ describe('conventional-changelog-writer', () => {
 
         upstream.end()
 
-        const changelog = await parseArray(commits, {}, {
+        const changelog = await createChangelogFromCommits(commits, {}, {
           reverse: true
         })
 
-        expect(changelog.trim()).toBe(dedent(`## <small>1.0.1 (2015-04-07)</small>
+        expect(changelog.trim()).toBe(`## <small>1.0.1 (2015-04-07)</small>
 
-        * feat(scope): broadcast $destroy event on scope destruction
-
-
-
-        ## <small>2.0.1 (2015-04-07)</small>
-
-        * fix(ng-list): Allow custom separator
+* feat(scope): broadcast $destroy event on scope destruction
 
 
 
-        ## <small>4.0.1 (2015-04-07)</small>
+## <small>2.0.1 (2015-04-07)</small>
 
-        * perf(template): tweak
-        * refactor(name): rename this module to conventional-changelog-writer
-
+* fix(ng-list): Allow custom separator
 
 
-        ##  (xxxx-xx-xx)`).replace('xxxx-xx-xx', todayUtc))
 
-        for await (let chunk of upstream.pipe(conventionalChangelogWriter({}, {
+## <small>4.0.1 (2015-04-07)</small>
+
+* perf(template): tweak
+* refactor(name): rename this module to conventional-changelog-writer
+
+
+
+##  (${todayUtc})`)
+
+        for await (let chunk of upstream.pipe(createChangelogWriterStream({}, {
           reverse: true
         }))) {
           chunk = chunk.toString()
@@ -815,7 +833,7 @@ describe('conventional-changelog-writer', () => {
             expect(chunk).toContain('perf(template): ')
             expect(chunk).toContain('refactor(name): ')
           } else if (i === 3) {
-            expect(chunk).toContain('##  (' + todayUtc)
+            expect(chunk).toContain(`##  (${todayUtc}`)
           }
 
           i++
@@ -827,9 +845,9 @@ describe('conventional-changelog-writer', () => {
       it('should still generate a block even if the commit is ignored', async () => {
         let i = 0
 
-        for await (let chunk of getStream().pipe(conventionalChangelogWriter({}, {
-          transform () {
-            return false
+        for await (let chunk of getStream().pipe(createChangelogWriterStream({}, {
+          transform() {
+            return null
           },
           reverse: true
         }))) {
@@ -838,7 +856,7 @@ describe('conventional-changelog-writer', () => {
           if (i === 0) {
             expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
           } else {
-            expect(chunk).toBe('##  (' + todayUtc + ')\n\n\n\n\n')
+            expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
           }
 
           i++
@@ -850,15 +868,16 @@ describe('conventional-changelog-writer', () => {
       it('should generated date from timeZone of the option', async () => {
         let i = 0
 
-        for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
+        for await (const chunk of getStream().pipe(createChangelogWriterStream({}, {
           timeZone: 'America/New_York',
-          transform () {
-            return false
+          transform() {
+            return null
           }
         }))) {
           if (i === 0) {
-            expect(chunk).toBe('##  (' + getTodayDate('America/New_York') + ')\n\n\n\n\n')
+            expect(chunk).toBe(`##  (${getTodayDate('America/New_York')})\n\n\n\n\n`)
           }
+
           i++
         }
 
@@ -868,10 +887,9 @@ describe('conventional-changelog-writer', () => {
       it('should include details', async () => {
         let i = 0
 
-        for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
-          reverse: true,
-          includeDetails: true
-        }))) {
+        for await (const chunk of getStream().pipe(createChangelogWriterStream({}, {
+          reverse: true
+        }, true))) {
           if (i === 0) {
             expect(chunk.log).toContain('## <small>1.0.1 (2015-04-07)</small>\n\n')
             expect(chunk.log).toContain('broadcast $destroy event on scope destruction')
@@ -879,10 +897,10 @@ describe('conventional-changelog-writer', () => {
             expect(chunk.keyCommit.version).toBe('1.0.1')
             expect(chunk.keyCommit.committerDate).toBe('2015-04-07')
           } else {
-            expect(chunk.log).toContain('##  (' + todayUtc + ')\n\n')
+            expect(chunk.log).toContain(`##  (${todayUtc})\n\n`)
             expect(chunk.log).toContain('perf(template): tweak')
             expect(chunk.log).toContain('refactor(name): rename this module to conventional-changelog-writer')
-            expect(chunk.keyCommit).toBe()
+            expect(chunk.keyCommit).toBe(null)
           }
 
           i++
@@ -893,17 +911,18 @@ describe('conventional-changelog-writer', () => {
 
       it('should not flush when previous release is generated', async () => {
         let i = 0
-
         const upstream = throughObj()
 
         upstream.write({
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
           footer: null,
-          notes: [{
-            title: 'BREAKING CHANGE',
-            text: 'No backward compatibility.'
-          }],
+          notes: [
+            {
+              title: 'BREAKING CHANGE',
+              text: 'No backward compatibility.'
+            }
+          ],
           references: [],
           committerDate: '2015-04-07 14:17:05 +1000',
           version: 'v1.0.0'
@@ -912,17 +931,19 @@ describe('conventional-changelog-writer', () => {
           header: 'feat(scope): broadcast $destroy event on scope destruction',
           body: null,
           footer: null,
-          notes: [{
-            title: 'BREAKING CHANGE',
-            text: 'No backward compatibility.'
-          }],
+          notes: [
+            {
+              title: 'BREAKING CHANGE',
+              text: 'No backward compatibility.'
+            }
+          ],
           references: [],
           committerDate: '2015-04-07 14:17:05 +1000',
           version: 'v2.0.290'
         })
         upstream.end()
 
-        for await (let chunk of upstream.pipe(conventionalChangelogWriter({
+        for await (let chunk of upstream.pipe(createChangelogWriterStream({
           version: 'v2.0.0'
         }, {
           reverse: true,
@@ -951,17 +972,19 @@ describe('conventional-changelog-writer', () => {
         header: 'feat(scope): broadcast $destroy event on scope destruction',
         body: null,
         footer: null,
-        notes: [{
-          title: 'BREAKING CHANGE',
-          text: 'No backward compatibility.'
-        }],
+        notes: [
+          {
+            title: 'BREAKING CHANGE',
+            text: 'No backward compatibility.'
+          }
+        ],
         references: [],
         committerDate: '2015-04-07 14:17:05 +1000'
       })
       upstream.end()
 
       // eslint-disable-next-line no-unreachable-loop
-      for await (const chunk of upstream.pipe(conventionalChangelogWriter({
+      for await (const chunk of upstream.pipe(createChangelogWriterStream({
         version: 'v2.0.0'
       }, {
         reverse: true,
@@ -985,8 +1008,8 @@ describe('conventional-changelog-writer', () => {
     })
     upstream.end()
 
-    for await (const chunk of upstream.pipe(conventionalChangelogWriter())) {
-      expect(chunk.toString()).toBe('##  (' + todayUtc + ')\n\n* bla\n\n\n\n')
+    for await (const chunk of upstream.pipe(createChangelogWriterStream())) {
+      expect(chunk.toString()).toBe(`##  (${todayUtc})\n\n* bla\n\n\n\n`)
       i++
     }
 
@@ -1000,10 +1023,12 @@ describe('conventional-changelog-writer', () => {
       header: 'feat(scope): broadcast $destroy event on scope destruction',
       body: null,
       footer: null,
-      notes: [{
-        title: 'BREAKING CHANGE',
-        text: 'No backward compatibility.'
-      }],
+      notes: [
+        {
+          title: 'BREAKING CHANGE',
+          text: 'No backward compatibility.'
+        }
+      ],
       references: [],
       committerDate: '2015-04-07 14:17:05 +1000'
     })
@@ -1011,25 +1036,28 @@ describe('conventional-changelog-writer', () => {
       header: 'fix(ng-list): Allow custom separator',
       body: 'bla bla bla',
       footer: null,
-      notes: [{
-        title: 'BREAKING CHANGE',
-        text: 'Another change.'
-      }, {
-        title: 'BREAKING CHANGE',
-        text: 'Some breaking change.'
-      }],
+      notes: [
+        {
+          title: 'BREAKING CHANGE',
+          text: 'Another change.'
+        },
+        {
+          title: 'BREAKING CHANGE',
+          text: 'Some breaking change.'
+        }
+      ],
       references: [],
       committerDate: '2015-04-07 15:00:44 +1000'
     })
     upstream.end()
 
-    for await (const chunk of upstream.pipe(conventionalChangelogWriter())) {
+    for await (const chunk of upstream.pipe(createChangelogWriterStream())) {
       expect(chunk.toString()).toMatch(/Another change.[\w\W]*No backward compatibility.[\w\W]*Some breaking change./)
     }
   })
 
   it('should not error if version is not semver', async () => {
-    for await (const chunk of getStream().pipe(conventionalChangelogWriter({
+    for await (const chunk of getStream().pipe(createChangelogWriterStream({
       version: 'a.b.c'
     }))) {
       expect(chunk.toString()).toContain('a.b.c')
@@ -1038,9 +1066,9 @@ describe('conventional-changelog-writer', () => {
 
   it('should callback with error on transform', async () => {
     await expect(async () => {
-      for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
-        transform () {
-          return undefined.a
+      for await (const chunk of getStream().pipe(createChangelogWriterStream({}, {
+        transform() {
+          throw new Error('error')
         }
       }))) {
         chunk.toString()
@@ -1050,9 +1078,9 @@ describe('conventional-changelog-writer', () => {
 
   it('should callback with error on flush', async () => {
     await expect(async () => {
-      for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
-        finalizeContext () {
-          return undefined.a
+      for await (const chunk of getStream().pipe(createChangelogWriterStream({}, {
+        finalizeContext() {
+          throw new Error('error')
         }
       }))) {
         chunk.toString()
@@ -1061,10 +1089,10 @@ describe('conventional-changelog-writer', () => {
   })
 
   it('should show your final context', async () => {
-    let context = null
+    let context: string | null = null
 
-    for await (const chunk of getStream().pipe(conventionalChangelogWriter({}, {
-      debug (message) {
+    for await (const chunk of getStream().pipe(createChangelogWriterStream({}, {
+      debug(message) {
         context = message
       }
     }))) {

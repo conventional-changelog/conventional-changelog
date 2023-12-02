@@ -26,11 +26,13 @@ function getWriterOpts () {
         return
       }
 
-      if (typeof commit.hash === 'string') {
-        commit.shortHash = commit.hash.substring(0, 7)
-      }
+      const shortHash = typeof commit.hash === 'string'
+        ? commit.hash.substring(0, 7)
+        : commit.shortHash
 
-      return commit
+      return {
+        shortHash
+      }
     },
     groupBy: 'language',
     commitGroupsSort: 'title',

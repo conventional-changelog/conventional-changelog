@@ -23,7 +23,7 @@ function findRevertCommit (commit, reverts) {
     return null
   }
 
-  const rawCommit = commit.raw || commit // @todo: ??? remove?
+  const rawCommit = commit.raw || commit
 
   for (const revertCommit of reverts) {
     if (revertCommit.revert && isMatch(rawCommit, revertCommit.revert)) {

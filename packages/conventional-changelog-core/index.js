@@ -3,7 +3,7 @@ import { execFileSync } from 'child_process'
 import addStream from 'add-stream'
 import gitRawCommits from 'git-raw-commits'
 import { parseCommitsStream } from 'conventional-commits-parser'
-import conventionalChangelogWriter from 'conventional-changelog-writer'
+import { createChangelogWriterStream } from 'conventional-changelog-writer'
 import mergeConfig from './lib/merge-config.js'
 
 export default function conventionalChangelog (options, context, gitRawCommitsOpts, parserOpts, writerOpts, gitRawExecOpts) {
@@ -117,7 +117,7 @@ export default function conventionalChangelog (options, context, gitRawCommitsOp
           err.message = 'Error in options.transform: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)
         })
-        .pipe(conventionalChangelogWriter(context, writerOpts))
+        .pipe(createChangelogWriterStream(context, writerOpts, writerOpts.includeDetails))
         .on('error', function (err) {
           err.message = 'Error in conventional-changelog-writer: ' + err.message
           setImmediate(readable.emit.bind(readable), 'error', err)
