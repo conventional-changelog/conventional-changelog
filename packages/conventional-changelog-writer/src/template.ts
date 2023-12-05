@@ -2,14 +2,15 @@ import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { readFile } from 'fs/promises'
 import Handlebars from 'handlebars'
-// @ts-expect-error This package is not typed yet
-import filterCommits from 'conventional-commits-filter'
+// @todo Drop import and ignoreReverted option
+import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import type {
   TemplatesOptions,
   FinalTemplatesOptions,
   FinalContext,
   FinalOptions,
   CommitKnownProps,
+  TransformedCommit,
   CommitNote
 } from './types/index.js'
 import { getTemplateContext } from './context.js'
@@ -86,12 +87,14 @@ export function createTemplateRenderer<Commit extends CommitKnownProps = CommitK
   const { ignoreReverted } = options
   const template = compileTemplates(options)
 
-  return async (commits: Commit[], keyCommit: Commit | null) => {
+  return async (
+    commits: TransformedCommit<Commit>[],
+    keyCommit: Commit | null
+  ) => {
     const notes: CommitNote[] = []
     const commitsForTemplate = (
       ignoreReverted
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        ? filterCommits(commits) as Commit[]
+        ? Array.from(filterRevertedCommitsSync(commits))
         : commits
     ).map(commit => ({
       ...commit,

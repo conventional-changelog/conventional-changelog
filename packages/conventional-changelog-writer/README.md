@@ -122,7 +122,7 @@ The output log might look something like this:
 
 ## API
 
-### createChangelogAsyncGeneratorFromCommits(commits: Commit[] | AsyncIterable<Commit>, context?: Context, options?: Options, includeDetails?: boolean): AsyncGenerator<string | Details, void>
+### createChangelogAsyncGeneratorFromCommits(commits: Iterable<Commit> | AsyncIterable<Commit>, context?: Context, options?: Options, includeDetails?: boolean): AsyncGenerator<string | Details, void>
 
 Creates an async generator of changelog entries from commits.
 
@@ -134,7 +134,7 @@ Creates a transform stream which takes commits and outputs changelog entries.
 
 If `includeDetails` is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
 
-### createChangelogFromCommits(commits: Commit[] | AsyncIterable<Commit>, context?: Context, options?: Options): Promise<string>
+### createChangelogFromCommits(commits: Iterable<Commit> | AsyncIterable<Commit>, context?: Context, options?: Options): Promise<string>
 
 Create a changelog from commits.
 
