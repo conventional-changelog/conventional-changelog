@@ -1,6 +1,7 @@
 import { Transform } from 'stream'
 import type {
   CommitKnownProps,
+  TransformedCommit,
   Context,
   Options,
   Details
@@ -25,26 +26,26 @@ import { transformCommit } from './commit.js'
  * @yields Changelog entry.
  */
 export function createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Commit[] | AsyncIterable<Commit>,
+  commits: Iterable<Commit> | AsyncIterable<Commit>,
   context?: Context<Commit>,
   options?: Options<Commit>,
   includeDetails?: false
 ): AsyncGenerator<string, void>
 export function createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Commit[] | AsyncIterable<Commit>,
+  commits: Iterable<Commit> | AsyncIterable<Commit>,
   context: Context<Commit>,
   options: Options<Commit>,
   includeDetails: true
 ): AsyncGenerator<Details<Commit>, void>
 export function createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Commit[] | AsyncIterable<Commit>,
+  commits: Iterable<Commit> | AsyncIterable<Commit>,
   context?: Context<Commit>,
   options?: Options<Commit>,
   includeDetails?: boolean
 ): AsyncGenerator<string | Details<Commit>, void>
 
 export async function* createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Commit[] | AsyncIterable<Commit>,
+  commits: Iterable<Commit> | AsyncIterable<Commit>,
   context: Context<Commit> = {},
   options: Options<Commit> = {},
   includeDetails = false
@@ -66,9 +67,9 @@ export async function* createChangelogAsyncGeneratorFromCommits<Commit extends C
     })
     : (log: string) => log
   let chunk: Commit
-  let commit: Commit | null
+  let commit: TransformedCommit<Commit> | null
   let keyCommit: Commit | null
-  let commitsGroup: Commit[] = []
+  let commitsGroup: TransformedCommit<Commit>[] = []
   let neverGenerated = true
   let result: string
   let savedKeyCommit: Commit | null = null
@@ -145,7 +146,7 @@ export function createChangelogWriterStream<Commit extends CommitKnownProps = Co
  * @returns Changelog string.
  */
 export async function createChangelogFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Commit[] | AsyncIterable<Commit>,
+  commits: Iterable<Commit> | AsyncIterable<Commit>,
   context?: Context<Commit>,
   options?: Options<Commit>
 ) {

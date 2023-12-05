@@ -74,6 +74,16 @@ export function throughObj(
   })
 }
 
+export async function toArray<T>(iterable: Iterable<T> | AsyncIterable<T>) {
+  const array = []
+
+  for await (const item of iterable) {
+    array.push(item)
+  }
+
+  return array
+}
+
 export class TestTools {
   cwd: string
 

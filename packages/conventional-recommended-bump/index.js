@@ -1,4 +1,5 @@
-import conventionalCommitsFilter from 'conventional-commits-filter'
+// @todo Drop import, use git lib
+import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import { parseCommitsStream } from 'conventional-commits-parser'
 import { loadPreset } from 'conventional-changelog-preset-loader'
 import gitSemverTags from 'git-semver-tags'
@@ -65,7 +66,7 @@ export default async function conventionalRecommendedBump (optionsArgument, pars
     commits.push(commit)
   }
 
-  commits = options.ignoreReverted ? conventionalCommitsFilter(commits) : commits
+  commits = options.ignoreReverted ? Array.from(filterRevertedCommitsSync(commits)) : commits
 
   if (!commits || !commits.length) {
     warn('No commits since last release')

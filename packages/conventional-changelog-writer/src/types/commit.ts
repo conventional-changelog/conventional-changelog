@@ -1,3 +1,5 @@
+import type { AnyObject } from './utils.js'
+
 export interface CommitKnownProps {
   type?: string | null
   header?: string | null
@@ -5,6 +7,7 @@ export interface CommitKnownProps {
   hash?: string | null
   committerDate?: string | null
   notes: CommitNote[]
+  revert?: AnyObject | null
 }
 
 export type TransformedCommit<Commit extends CommitKnownProps = CommitKnownProps> = Commit & {
