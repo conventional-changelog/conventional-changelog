@@ -46,9 +46,12 @@ npm i -D conventional-commits-filter
 
 ```js
 import {
+  filterRevertedCommitsSync,
   filterRevertedCommits,
-  filterRevertedCommitsSync
+  filterRevertedCommitsStream
 } from 'conventional-commits-filter'
+import { pipeline } from 'stream/promises'
+import { Readable } from 'stream'
 
 const commits = [{
   type: 'revert',
@@ -152,14 +155,26 @@ const commits = [{
   }
 }];
 
-// for sync input data
+// to filter reverted commits syncronously:
 for (const commit of filterRevertedCommitsSync(commits)) {
   console.log(commit)
 }
-// for async iterable or stream input data
-for await (const commit of filterRevertedCommits(commits)) {
-  console.log(commit)
-}
+
+// to filter reverted commits in async iterables:
+await pipeline(
+  commits,
+  filterRevertedCommits,
+  async function* (filteredCommits) {
+    for await (const commit of filteredCommits) {
+      console.log(commit)
+    }
+  }
+)
+
+// to filter reverted commits in streams:
+Readable.from(commits)
+  .pipe(filterRevertedCommitsStream())
+  .on('data', commit => console.log(commit))
 ```
 
 Output:
