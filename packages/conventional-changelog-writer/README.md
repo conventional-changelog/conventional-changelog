@@ -59,23 +59,30 @@ npm i -D conventional-changelog-writer
 
 ```js
 import {
-  createChangelogAsyncGeneratorFromCommits,
-  createChangelogWriterStream,
-  createChangelogFromCommits
+  writeChangelogString,
+  writeChangelog,
+  writeChangelogStream
 } from 'conventional-changelog-writer'
+import { pipeline } from 'stream/promises'
 
-// Create logs Async Generator from commits
-for await (let log of createChangelogAsyncGeneratorFromCommits(commits, context, options)) {
-  console.log(log)
-}
+// to write changelog from commits to string:
+console.log(await writeChangelogString(commits, context, options))
 
-// Create logs stream from commits
+// to write changelog from commits to async iterable:
+await pipeline(
+  commits,
+  writeChangelog(context, options),
+  async function* (changelog) {
+    for await (const chunk of changelog) {
+      console.log(chunk)
+    }
+  }
+)
+
+// to write changelog from commits to stream:
 commitsStream
-  .pipe(createChangelogWriterStream(context, options))
+  .pipe(writeChangelogStream(context, options))
   .pipe(process.stdout)
-
-// Create changelog string from commits
-console.log(await createChangelogFromCommits(commits, context, options))
 ```
 
 Commits it an async iterable of commit objects that looks like this:
@@ -122,19 +129,19 @@ The output log might look something like this:
 
 ## API
 
-### createChangelogAsyncGeneratorFromCommits(commits: Iterable<Commit> | AsyncIterable<Commit>, context?: Context, options?: Options, includeDetails?: boolean): AsyncGenerator<string | Details, void>
+### writeChangelog(context?: Context, options?: Options, includeDetails?: boolean)
 
-Creates an async generator of changelog entries from commits.
+Creates an async generator function to generate changelog entries from commits.
 
 If `includeDetails` is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
 
-### createChangelogWriterStream(context?: Context, options?: Options, includeDetails?: boolean): Transform
+### writeChangelogStream(context?: Context, options?: Options, includeDetails?: boolean): Transform
 
 Creates a transform stream which takes commits and outputs changelog entries.
 
 If `includeDetails` is `true`, instead of emitting strings of changelog, it emits objects containing the details the block.
 
-### createChangelogFromCommits(commits: Iterable<Commit> | AsyncIterable<Commit>, context?: Context, options?: Options): Promise<string>
+### writeChangelogString(commits: Iterable<Commit> | AsyncIterable<Commit>, context?: Context, options?: Options): Promise<string>
 
 Create a changelog from commits.
 

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
+import { pipeline } from 'stream/promises'
 import meow from 'meow'
 import type {
   Context,
   Options,
   CommitKnownProps
 } from '../index.js'
-import { createChangelogAsyncGeneratorFromCommits } from '../index.js'
+import { writeChangelog } from '../index.js'
 import {
   loadDataFile,
   readCommitsFromFiles,
@@ -63,7 +64,6 @@ if (optionsPath) {
 }
 
 let inputStream: AsyncIterable<CommitKnownProps>
-let chunk: string
 
 try {
   if (cli.input.length) {
@@ -76,9 +76,11 @@ try {
       inputStream = readCommitsFromStdin()
     }
 
-  for await (chunk of createChangelogAsyncGeneratorFromCommits(inputStream, context, options)) {
-    process.stdout.write(chunk)
-  }
+  await pipeline(
+    inputStream,
+    writeChangelog(context, options),
+    process.stdout
+  )
 } catch (err) {
   console.error(err)
   process.exit(1)
