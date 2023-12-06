@@ -58,11 +58,38 @@ npm i -D conventional-commits-parser
 ## Usage
 
 ```js
-import { CommitParser } from 'conventional-commits-parser';
+import {
+  CommitParser,
+  parseCommitsAsyncIterable,
+  parseCommitsStream
+} from 'conventional-commits-parser';
+import { pipeline } from 'stream/promises'
+import { Readable } from 'stream'
 
+const rawCommitMessage = 'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
+
+// to parse raw commit message manually:
 const parser = new CommitParser(options)
 
-parser.parse(rawCommitMessage)
+console.log(parser.parse(rawCommitMessage))
+
+// to parse raw commit messages async iterables:
+await pipeline(
+  async function* () {
+    yield rawCommitMessage
+  },
+  parseCommitsAsyncIterable(options),
+  async function* (parsedCommits) {
+    for await (const commit of parsedCommits) {
+      console.log(commit)
+    }
+  },
+)
+
+// to parse raw commit messages streams:
+Readable.from([rawCommitMessage])
+  .pipe(parseCommitsStream(options))
+  .on('data', commit => console.log(commit))
 ```
 
 Parser expects raw commit message. Examples:
