@@ -58,11 +58,36 @@ npm i -D conventional-commits-parser
 ## Usage
 
 ```js
-import { CommitParser } from 'conventional-commits-parser';
+import {
+  CommitParser,
+  parseCommits,
+  parseCommitsStream
+} from 'conventional-commits-parser'
+import { pipeline } from 'stream/promises'
+import { Readable } from 'stream'
 
+const rawCommitMessage = 'feat(scope): broadcast $destroy event on scope destruction\nCloses #1'
+
+// to parse raw commit message manually:
 const parser = new CommitParser(options)
 
-parser.parse(rawCommitMessage)
+console.log(parser.parse(rawCommitMessage))
+
+// to parse raw commit messages async iterables:
+await pipeline(
+  [rawCommitMessage],
+  parseCommits(options),
+  async function* (parsedCommits) {
+    for await (const commit of parsedCommits) {
+      console.log(commit)
+    }
+  }
+)
+
+// to parse raw commit messages streams:
+Readable.from([rawCommitMessage])
+  .pipe(parseCommitsStream(options))
+  .on('data', commit => console.log(commit))
 ```
 
 Parser expects raw commit message. Examples:
@@ -173,6 +198,10 @@ Then `sideNotes` will be `It should warn the correct unfound file names.\nAlso i
 ### `new CommitParser(options?: ParserOptions)`
 
 Creates parser instance with `parse` method.
+
+### `parseCommits(options?: ParserOptions)`
+
+Create async generator function to parse async iterable of raw commits. If there is any malformed commits it will be gracefully ignored (an empty data will be emitted so down async iterable can notice).
 
 ### `parseCommitsStream(options?: ParserOptions)`
 

@@ -3,13 +3,11 @@ import type { ParserStreamOptions } from './types.js'
 import { CommitParser } from './CommitParser.js'
 
 /**
- * Create async generator to parse commits.
- * @param rawCommits - Async generator of raw commits.
+ * Create async generator function to parse async iterable of raw commits.
  * @param options - CommitParser options.
- * @yields Parsed commit.
+ * @returns Async generator function to parse async iterable of raw commits.
  */
-export async function* parseCommitsAsyncGenerator(
-  rawCommits: Iterable<string | Buffer> | AsyncIterable<string | Buffer>,
+export function parseCommits(
   options: ParserStreamOptions = {}
 ) {
   const warnOption = options.warn
@@ -20,14 +18,19 @@ export async function* parseCommitsAsyncGenerator(
     : warnOption
       ? (err: Error) => warnOption(err.toString())
       : () => { /* noop */ }
-  const parser = new CommitParser(options)
-  let rawCommit: string | Buffer
 
-  for await (rawCommit of rawCommits) {
-    try {
-      yield parser.parse(rawCommit.toString())
-    } catch (err) {
-      warn(err as Error)
+  return async function* parse(
+    rawCommits: Iterable<string | Buffer> | AsyncIterable<string | Buffer>
+  ) {
+    const parser = new CommitParser(options)
+    let rawCommit: string | Buffer
+
+    for await (rawCommit of rawCommits) {
+      try {
+        yield parser.parse(rawCommit.toString())
+      } catch (err) {
+        warn(err as Error)
+      }
     }
   }
 }
@@ -38,7 +41,5 @@ export async function* parseCommitsAsyncGenerator(
  * @returns Stream of parsed commits.
  */
 export function parseCommitsStream(options: ParserStreamOptions = {}) {
-  return Transform.from(
-    (rawCommits: AsyncIterable<Buffer>) => parseCommitsAsyncGenerator(rawCommits, options)
-  )
+  return Transform.from(parseCommits(options))
 }

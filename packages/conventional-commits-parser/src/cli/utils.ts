@@ -55,3 +55,24 @@ export async function* readRawCommitsFromLine(separator: string) {
 export function readRawCommitsFromStdin(separator: string) {
   return splitStream(process.stdin, separator)
 }
+
+const JSON_STREAM_OPEN = '[\n'
+const JSON_STREAM_SEPARATOR = '\n,\n'
+const JSON_STREAM_CLOSE = '\n]\n'
+
+export async function* stringify(commits: AsyncIterable<Record<string, unknown>>) {
+  let jsonStreamOpened = false
+
+  yield JSON_STREAM_OPEN
+
+  for await (const commit of commits) {
+    if (jsonStreamOpened) {
+      yield JSON_STREAM_SEPARATOR
+    }
+
+    yield JSON.stringify(commit)
+    jsonStreamOpened = true
+  }
+
+  yield JSON_STREAM_CLOSE
+}

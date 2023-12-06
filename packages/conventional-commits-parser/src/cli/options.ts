@@ -43,6 +43,8 @@ export function parseOptions(options: Record<string, unknown>): ParserOptions {
 
   if (options.verbose) {
     options.warn = console.warn.bind(console)
+  } else {
+    options.warn = true
   }
 
   return options

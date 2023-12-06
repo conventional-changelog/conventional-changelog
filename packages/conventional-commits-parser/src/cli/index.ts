@@ -1,18 +1,16 @@
 #!/usr/bin/env node
+import { pipeline } from 'stream/promises'
 import meow from 'meow'
-import type { Commit } from '../types.js'
-import { CommitParser } from '../CommitParser.js'
+import { parseCommits } from '../index.js'
 import { parseOptions } from './options.js'
 import {
   readRawCommitsFromFiles,
   readRawCommitsFromLine,
-  readRawCommitsFromStdin
+  readRawCommitsFromStdin,
+  stringify
 } from './utils.js'
 
 const DEFAULT_SEPARATOR = '\n\n\n'
-const JSON_STREAM_OPEN = '[\n'
-const JSON_STREAM_SEPARATOR = '\n,\n'
-const JSON_STREAM_CLOSE = '\n]\n'
 const cli = meow(`
     Practice writing commit messages or parse messages from files.
     If used without specifying a text file path, you will enter an interactive shell.
@@ -90,13 +88,8 @@ const cli = meow(`
   }
 })
 const { separator } = cli.flags
-const parser = new CommitParser(parseOptions(cli.flags))
+const options = parseOptions(cli.flags)
 let inputStream: AsyncIterable<string>
-let chunk: string
-let commit: Commit
-let jsonStreamOpened = false
-
-process.stdout.write(JSON_STREAM_OPEN)
 
 try {
   if (cli.input.length) {
@@ -108,19 +101,13 @@ try {
       inputStream = readRawCommitsFromStdin(separator)
     }
 
-  for await (chunk of inputStream) {
-    commit = parser.parse(chunk.toString())
-
-    if (jsonStreamOpened) {
-      process.stdout.write(JSON_STREAM_SEPARATOR)
-    }
-
-    process.stdout.write(JSON.stringify(commit))
-    jsonStreamOpened = true
-  }
+  await pipeline(
+    inputStream,
+    parseCommits(options),
+    stringify,
+    process.stdout
+  )
 } catch (err) {
   console.error(err)
   process.exit(1)
 }
-
-process.stdout.write(JSON_STREAM_CLOSE)
