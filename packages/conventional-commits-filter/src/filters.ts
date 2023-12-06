@@ -1,10 +1,11 @@
+import { Transform } from 'stream'
 import type { Commit } from './types.js'
 import { RevertedCommitsFilter } from './RevertedCommitsFilter.js'
 
 /**
- * Filter reverted commits
+ * Filter reverted commits.
  * @param commits
- * @yields Commits without reverted commits
+ * @yields Commits without reverted commits.
  */
 export async function* filterRevertedCommits<
   T extends Commit = Commit
@@ -21,9 +22,9 @@ export async function* filterRevertedCommits<
 }
 
 /**
- * Filter reverted commits synchronously
+ * Filter reverted commits synchronously.
  * @param commits
- * @yields Commits without reverted commits
+ * @yields Commits without reverted commits.
  */
 export function* filterRevertedCommitsSync<
   T extends Commit = Commit
@@ -37,4 +38,12 @@ export function* filterRevertedCommitsSync<
   }
 
   yield* filter.flush()
+}
+
+/**
+ * Filter reverted commits stream.
+ * @returns Reverted commits filter stream.
+ */
+export function filterRevertedCommitsStream() {
+  return Transform.from(filterRevertedCommits)
 }
