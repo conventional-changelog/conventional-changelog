@@ -17,108 +17,130 @@ import {
 } from './options.js'
 import { transformCommit } from './commit.js'
 
-/**
- * Creates an async generator of changelog entries from commits.
- * @param commits - Commits to generate changelog from.
- * @param context - Context for changelog template.
- * @param options - Options for changelog template.
- * @param includeDetails - Whether to yield details object instead of changelog entry.
- * @yields Changelog entry.
- */
-export function createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Iterable<Commit> | AsyncIterable<Commit>,
-  context?: Context<Commit>,
-  options?: Options<Commit>,
-  includeDetails?: false
-): AsyncGenerator<string, void>
-export function createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Iterable<Commit> | AsyncIterable<Commit>,
-  context: Context<Commit>,
-  options: Options<Commit>,
-  includeDetails: true
-): AsyncGenerator<Details<Commit>, void>
-export function createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Iterable<Commit> | AsyncIterable<Commit>,
-  context?: Context<Commit>,
-  options?: Options<Commit>,
-  includeDetails?: boolean
-): AsyncGenerator<string | Details<Commit>, void>
-
-export async function* createChangelogAsyncGeneratorFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
-  commits: Iterable<Commit> | AsyncIterable<Commit>,
+async function getRequirements<
+  Commit extends CommitKnownProps = CommitKnownProps
+>(
   context: Context<Commit> = {},
-  options: Options<Commit> = {},
-  includeDetails = false
-): AsyncGenerator<string | Details<Commit>, void> {
+  options: Options<Commit> = {}
+) {
   const templates = await loadTemplates(options)
   const finalContext = getFinalContext(context, options)
   const finalOptions = getFinalOptions(options, templates)
   const generateOn = getGenerateOnFunction(finalContext, finalOptions)
   const renderTemplate = createTemplateRenderer(finalContext, finalOptions)
-  const {
-    transform,
-    reverse,
-    doFlush
-  } = finalOptions
+
+  return {
+    finalContext,
+    finalOptions,
+    generateOn,
+    renderTemplate
+  }
+}
+
+/**
+ * Creates an async generator function to generate changelog entries from commits.
+ * @param context - Context for changelog template.
+ * @param options - Options for changelog template.
+ * @param includeDetails - Whether to yield details object instead of changelog entry.
+ * @returns Async generator function to generate changelog entries from commits.
+ */
+export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProps>(
+  context?: Context<Commit>,
+  options?: Options<Commit>,
+  includeDetails?: false
+): (commits: Iterable<Commit> | AsyncIterable<Commit>) => AsyncGenerator<string, void>
+export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProps>(
+  context: Context<Commit>,
+  options: Options<Commit>,
+  includeDetails: true
+): (commits: Iterable<Commit> | AsyncIterable<Commit>) => AsyncGenerator<Details<Commit>, void>
+export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProps>(
+  context?: Context<Commit>,
+  options?: Options<Commit>,
+  includeDetails?: boolean
+): (commits: Iterable<Commit> | AsyncIterable<Commit>) => AsyncGenerator<string | Details<Commit>, void>
+
+export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProps>(
+  context: Context<Commit> = {},
+  options: Options<Commit> = {},
+  includeDetails = false
+): (commits: Iterable<Commit> | AsyncIterable<Commit>) => AsyncGenerator<string | Details<Commit>, void> {
+  const requirementsPromise = getRequirements(context, options)
   const prepResult = includeDetails
     ? (log: string, keyCommit: Commit | null) => ({
       log,
       keyCommit
     })
     : (log: string) => log
-  let chunk: Commit
-  let commit: TransformedCommit<Commit> | null
-  let keyCommit: Commit | null
-  let commitsGroup: TransformedCommit<Commit>[] = []
-  let neverGenerated = true
-  let result: string
-  let savedKeyCommit: Commit | null = null
-  let firstRelease = true
 
-  for await (chunk of commits) {
-    commit = await transformCommit(chunk, transform, finalContext, finalOptions)
-    keyCommit = commit || chunk
+  return async function* write(
+    commits: Iterable<Commit> | AsyncIterable<Commit>
+  ) {
+    const {
+      finalContext,
+      finalOptions,
+      generateOn,
+      renderTemplate
+    } = await requirementsPromise
+    const {
+      transform,
+      reverse,
+      doFlush
+    } = finalOptions
+    let chunk: Commit
+    let commit: TransformedCommit<Commit> | null
+    let keyCommit: Commit | null
+    let commitsGroup: TransformedCommit<Commit>[] = []
+    let neverGenerated = true
+    let result: string
+    let savedKeyCommit: Commit | null = null
+    let firstRelease = true
 
-    // previous blocks of logs
-    if (reverse) {
-      if (commit) {
-        commitsGroup.push(commit)
-      }
+    for await (chunk of commits) {
+      commit = await transformCommit(chunk, transform, finalContext, finalOptions)
+      keyCommit = commit || chunk
 
-      if (generateOn(keyCommit, commitsGroup)) {
-        neverGenerated = false
-        result = await renderTemplate(commitsGroup, keyCommit)
-        commitsGroup = []
-
-        yield prepResult(result, keyCommit)
-      }
-    } else {
-      if (generateOn(keyCommit, commitsGroup)) {
-        neverGenerated = false
-        result = await renderTemplate(commitsGroup, savedKeyCommit)
-        commitsGroup = []
-
-        if (!firstRelease || doFlush) {
-          yield prepResult(result, savedKeyCommit)
+      // previous blocks of logs
+      if (reverse) {
+        if (commit) {
+          commitsGroup.push(commit)
         }
 
-        firstRelease = false
-        savedKeyCommit = keyCommit
-      }
+        if (generateOn(keyCommit, commitsGroup)) {
+          neverGenerated = false
+          result = await renderTemplate(commitsGroup, keyCommit)
+          commitsGroup = []
 
-      if (commit) {
-        commitsGroup.push(commit)
+          yield prepResult(result, keyCommit)
+        }
+      } else {
+        if (generateOn(keyCommit, commitsGroup)) {
+          neverGenerated = false
+          result = await renderTemplate(commitsGroup, savedKeyCommit)
+          commitsGroup = []
+
+          if (!firstRelease || doFlush) {
+            yield prepResult(result, savedKeyCommit)
+          }
+
+          firstRelease = false
+          savedKeyCommit = keyCommit
+        }
+
+        if (commit) {
+          commitsGroup.push(commit)
+        }
       }
     }
+
+    if (!doFlush && (reverse || neverGenerated)) {
+      return
+    }
+
+    result = await renderTemplate(commitsGroup, savedKeyCommit)
+
+    yield prepResult(result, savedKeyCommit)
   }
-
-  if (!doFlush && (reverse || neverGenerated)) {
-    return
-  }
-
-  result = await renderTemplate(commitsGroup, savedKeyCommit)
-
-  yield prepResult(result, savedKeyCommit)
 }
 
 /**
@@ -128,33 +150,31 @@ export async function* createChangelogAsyncGeneratorFromCommits<Commit extends C
  * @param includeDetails - Whether to emit details object instead of changelog entry.
  * @returns Transform stream which takes commits and outputs changelog entries.
  */
-export function createChangelogWriterStream<Commit extends CommitKnownProps = CommitKnownProps>(
+export function writeChangelogStream<Commit extends CommitKnownProps = CommitKnownProps>(
   context?: Context<Commit>,
   options?: Options<Commit>,
   includeDetails = false
 ) {
-  return Transform.from(
-    (commits: AsyncIterable<Commit>) => createChangelogAsyncGeneratorFromCommits(commits, context, options, includeDetails)
-  )
+  return Transform.from(writeChangelog(context, options, includeDetails))
 }
 
 /**
- * Create a changelog from commits.
+ * Create a changelog string from commits.
  * @param commits - Commits to generate changelog from.
  * @param context - Context for changelog template.
  * @param options - Options for changelog template.
  * @returns Changelog string.
  */
-export async function createChangelogFromCommits<Commit extends CommitKnownProps = CommitKnownProps>(
+export async function writeChangelogString<Commit extends CommitKnownProps = CommitKnownProps>(
   commits: Iterable<Commit> | AsyncIterable<Commit>,
   context?: Context<Commit>,
   options?: Options<Commit>
 ) {
-  const changelogAsyncGenerator = createChangelogAsyncGeneratorFromCommits(commits, context, options)
+  const changelogAsyncIterable = writeChangelog(context, options)(commits)
   let changelog = ''
   let chunk: string
 
-  for await (chunk of changelogAsyncGenerator) {
+  for await (chunk of changelogAsyncIterable) {
     changelog += chunk
   }
 
