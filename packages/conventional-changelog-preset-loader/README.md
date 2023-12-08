@@ -1,10 +1,15 @@
 # conventional-changelog-preset-loader
 
+[![ESM-only package][package]][package-url]
 [![NPM version][npm]][npm-url]
 [![Node version][node]][node-url]
 [![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
+
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
 
 [npm]: https://img.shields.io/npm/v/conventional-changelog-preset-loader.svg
 [npm-url]: https://npmjs.com/package/conventional-changelog-preset-loader
@@ -15,6 +20,9 @@
 [deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-preset-loader
 [deps-url]: https://libraries.io/npm/conventional-changelog-preset-loader/tree
 
+[size]: https://packagephobia.com/badge?p=conventional-changelog-preset-loader
+[size-url]: https://packagephobia.com/result?p=conventional-changelog-preset-loader
+
 [build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
 [build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
 
@@ -23,18 +31,31 @@
 
 Configuration preset loader for `conventional-changelog`.
 
-## Usage
+<hr />
+<a href="#install">Install</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#usage">Usage</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#preset-package-resolution">Preset package resolution</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#preset-exports">Preset exports</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#preset-options">Preset options</a>
+<br />
+<hr />
 
-Install:
+## Install
 
 ```bash
-# yarn
-yarn add -D conventional-changelog-preset-loader
 # pnpm
 pnpm add -D conventional-changelog-preset-loader
+# yarn
+yarn add -D conventional-changelog-preset-loader
 # npm
 npm i -D conventional-changelog-preset-loader
 ```
+
+## Usage
 
 Import `loadPreset` function from the package and use it to load the preset:
 

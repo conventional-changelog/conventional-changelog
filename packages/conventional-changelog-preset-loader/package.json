@@ -3,27 +3,37 @@
   "type": "module",
   "version": "4.1.0",
   "description": "Configuration preset loader for `conventional-changelog`.",
-  "exports": "./index.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-changelog-preset-loader"
   },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  },
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "keywords": [
     "conventional-changelog",
     "preset",
     "loader"
   ],
-  "license": "MIT",
   "engines": {
     "node": ">=16"
   },
-  "files": [
-    "index.js"
-  ],
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  "exports": "./src/index.ts",
+  "publishConfig": {
+    "exports": "./dist/index.js"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clear": "del ./dist",
+    "prepublishOnly": "pnpm build",
+    "build": "tsc",
+    "test:types": "tsc --noEmit"
+  },
   "devDependencies": {
     "conventional-changelog-angular": "workspace:^",
     "conventional-changelog-conventionalcommits": "workspace:^"
