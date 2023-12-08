@@ -7,9 +7,5 @@
   "parserOptions": {
     "tsconfigRootDir": "./packages/conventional-changelog-writer",
     "project": ["./tsconfig.json", "./test/tsconfig.json"]
-  },
-  "rules": {
-    "jsdoc/require-returns": "off",
-    "jsdoc/require-yields-check": "off"
   }
 }

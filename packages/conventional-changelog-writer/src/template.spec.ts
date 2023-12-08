@@ -103,7 +103,10 @@ describe('conventional-changelog-writer', () => {
               }
             ],
             revert: null,
-            hash: '815a3f0717bf1dfce007bd076420c609504edcf3'
+            hash: '815a3f0717bf1dfce007bd076420c609504edcf3',
+            get raw() {
+              return this
+            }
           },
           {
             header: 'chore: first commit',
@@ -120,7 +123,10 @@ describe('conventional-changelog-writer', () => {
               }
             ],
             revert: null,
-            hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a'
+            hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a',
+            get raw() {
+              return this
+            }
           }
         ], {
           notes: []
@@ -158,7 +164,10 @@ describe('conventional-changelog-writer', () => {
               header: 'feat(): amazing new module',
               hash: '56185b7356766d2b30cfa2406b257080272e0b7a'
             },
-            hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
+            hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n',
+            get raw() {
+              return this
+            }
           },
           {
             header: 'feat(): amazing nee\n',
@@ -197,7 +206,10 @@ describe('conventional-changelog-writer', () => {
               }
             ],
             revert: null,
-            hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
+            hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n',
+            get raw() {
+              return this
+            }
           },
           {
             header: 'chore: first commit\n',
@@ -205,7 +217,10 @@ describe('conventional-changelog-writer', () => {
             footer: null,
             notes: [],
             revert: null,
-            hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
+            hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n',
+            get raw() {
+              return this
+            }
           }
         ], {
           notes: []
@@ -296,7 +311,10 @@ describe('conventional-changelog-writer', () => {
               header: 'feat(): amazing new module',
               hash: '56185b7356766d2b30cfa2406b257080272e0b7a'
             },
-            hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n'
+            hash: '789d898b5f8422d7f65cc25135af2c1a95a125ac\n',
+            get raw() {
+              return this
+            }
           },
           {
             header: 'feat(): amazing nee\n',
@@ -335,7 +353,10 @@ describe('conventional-changelog-writer', () => {
               }
             ],
             revert: null,
-            hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n'
+            hash: '815a3f0717bf1dfce007bd076420c609504edcf3\n',
+            get raw() {
+              return this
+            }
           },
           {
             header: 'chore: first commit\n',
@@ -343,7 +364,10 @@ describe('conventional-changelog-writer', () => {
             footer: null,
             notes: [],
             revert: null,
-            hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n'
+            hash: '74a3e4d6d25dee2c0d6483a0a3887417728cbe0a\n',
+            get raw() {
+              return this
+            }
           }
         ], {
           notes: []
