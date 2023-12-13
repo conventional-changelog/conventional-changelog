@@ -1,5 +1,6 @@
 export const breakingHeaderPattern = /^(\w*)(?:\((.*)\))?!: (.*)$/
 
+// todo: drop, CommitParser currently handles this case
 export function addBangNotes (commit) {
   const match = commit.header.match(breakingHeaderPattern)
   if (match && commit.notes.length === 0) {
@@ -7,6 +8,7 @@ export function addBangNotes (commit) {
 
     return [
       {
+        title: 'BREAKING CHANGE',
         text: noteText
       }
     ]
