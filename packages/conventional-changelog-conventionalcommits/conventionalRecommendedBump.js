@@ -13,7 +13,7 @@ export function createConventionalRecommendedBumpOpts (config, parserOpts) {
         // adds additional breaking change notes
         // for the special case, test(system)!: hello world, where there is
         // a '!' but no 'BREAKING CHANGE' in body:
-        addBangNotes(commit)
+        commit.notes = addBangNotes(commit)
         if (commit.notes.length > 0) {
           breakings += commit.notes.length
           level = 0
