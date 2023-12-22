@@ -7,7 +7,7 @@ export function createParserOpts () {
       'subject'
     ],
     noteKeywords: ['BREAKING CHANGE'],
-    revertPattern: /^(?:Revert|revert:)\s"?([\s\S]+?)"?\s*This reverts commit (\w*)\./i,
+    revertPattern: /^(?:Revert|revert:)\s"?([\s\S]+?)"?\s*This reverts commit (\w{7,40})\b/i,
     revertCorrespondence: ['header', 'hash']
   }
 }
