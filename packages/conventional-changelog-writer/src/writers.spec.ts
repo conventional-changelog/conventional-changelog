@@ -1,23 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { delay, throughObj } from '../../../tools/test-tools.js'
 import { defaultCommitTransform } from './options.js'
+import { formatDate } from './utils.js'
 import {
   writeChangelogStream,
   writeChangelogString
 } from './writers.js'
 
-function formatDate(date: Date, timeZone = 'UTC') {
-  // sv-SE is used for yyyy-mm-dd format
-  return Intl.DateTimeFormat('sv-SE', {
-    timeZone
-  }).format(date)
-}
-
-function getTodayDate(timeZone?: string) {
-  return formatDate(new Date(), timeZone)
-}
-
-const todayUtc = getTodayDate()
+const todayUtc = formatDate(new Date())
 const commits = [
   {
     hash: '9b1aff905b638aa274a5fc8f88662df446d374bd',
@@ -249,9 +239,9 @@ describe('conventional-changelog-writer', () => {
       it('should merge with the provided transform object', async () => {
         let i = 0
         const changelog = await writeChangelogString(commits, {}, {
-          transform(commit) {
+          transform(commit, context, options) {
             return {
-              ...defaultCommitTransform(commit),
+              ...defaultCommitTransform(commit, context, options),
               notes: commit.notes.map(note => ({
                 ...note,
                 title: note.title === 'BREAKING CHANGE'
@@ -267,9 +257,9 @@ describe('conventional-changelog-writer', () => {
         expect(changelog).not.toContain('13f31602f396bc269076ab4d389cfd8ca94b20ba')
 
         for await (let chunk of getStream().pipe(writeChangelogStream({}, {
-          transform(commit) {
+          transform(commit, context, options) {
             return {
-              ...defaultCommitTransform(commit),
+              ...defaultCommitTransform(commit, context, options),
               notes: commit.notes.map(note => ({
                 ...note,
                 title: note.title === 'BREAKING CHANGE'
@@ -866,17 +856,19 @@ describe('conventional-changelog-writer', () => {
           expect(i).toBe(2)
         })
 
-        it('should generated date from timeZone of the option', async () => {
+        it('should generated date using formatDate option', async () => {
           let i = 0
 
           for await (const chunk of getStream().pipe(writeChangelogStream({}, {
-            timeZone: 'America/New_York',
+            formatDate() {
+              return 'formatted date'
+            },
             transform() {
               return null
             }
           }))) {
             if (i === 0) {
-              expect(chunk).toBe(`##  (${getTodayDate('America/New_York')})\n\n\n\n\n`)
+              expect(chunk).toBe(`##  (formatted date)\n\n\n\n\n`)
             }
 
             i++

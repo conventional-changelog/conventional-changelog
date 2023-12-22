@@ -3,25 +3,17 @@ import type {
   StringsRecord
 } from './types/index.js'
 
-const utcDateFormatter = Intl.DateTimeFormat('sv-SE', {
-  timeZone: 'UTC'
-})
+const DATETIME_LENGTH = 10
 
 /**
  * Formats date to yyyy-mm-dd format.
- * @param date - Date string, number or Date object.
- * @param timeZone - Time zone to use.
+ * @param date - Date string or Date object.
  * @returns Date string in yyyy-mm-dd format.
  */
-export function formatDate(date?: string | number | Date, timeZone = 'UTC') {
-  const dateFormatter = !timeZone || timeZone === 'UTC'
-    ? utcDateFormatter
-    : Intl.DateTimeFormat('sv-SE', {
-      timeZone
-    })
-
-  // sv-SEis used for yyyy-mm-dd format
-  return dateFormatter.format(date ? new Date(date) : new Date())
+export function formatDate(
+  date: string | Date
+) {
+  return new Date(date).toISOString().slice(0, DATETIME_LENGTH)
 }
 
 /**

@@ -4,15 +4,11 @@ import type {
   CommitGroup,
   CommitNote,
   NoteGroup,
-  Options,
   FinalOptions,
   Context,
   FinalContext
 } from './types/index.js'
-import {
-  formatDate,
-  stringify
-} from './utils.js'
+import { stringify } from './utils.js'
 
 export function getCommitGroups<Commit extends CommitKnownProps = CommitKnownProps>(
   commits: Commit[],
@@ -117,12 +113,12 @@ export function getExtraContext<Commit extends CommitKnownProps = CommitKnownPro
  */
 export function getFinalContext<Commit extends CommitKnownProps = CommitKnownProps>(
   context: Context<Commit>,
-  options: Options<Commit>
+  options: Pick<FinalOptions<Commit>, 'formatDate'>
 ) {
   const finalContext: FinalContext<Commit> = {
     commit: 'commits',
     issue: 'issues',
-    date: formatDate(new Date(), options.timeZone),
+    date: options.formatDate(new Date()),
     ...context
   }
 

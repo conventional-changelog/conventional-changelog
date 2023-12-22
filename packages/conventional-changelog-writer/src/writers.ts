@@ -24,8 +24,8 @@ async function getRequirements<
   options: Options<Commit> = {}
 ) {
   const templates = await loadTemplates(options)
-  const finalContext = getFinalContext(context, options)
   const finalOptions = getFinalOptions(options, templates)
+  const finalContext = getFinalContext(context, finalOptions)
   const generateOn = getGenerateOnFunction(finalContext, finalOptions)
   const renderTemplate = createTemplateRenderer(finalContext, finalOptions)
 

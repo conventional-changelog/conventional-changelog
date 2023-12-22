@@ -109,9 +109,11 @@ export interface Options<Commit extends CommitKnownProps = CommitKnownProps> ext
    */
   debug?(message: string): void
   /**
-   * The timezone to use. The date in the changelog is generated based on timezone.
+   * A function to format date.
+   * @param date - Date string or Date object.
+   * @returns Final date string.
    */
-  timeZone?: string
+  formatDate?(date: string | Date): string
 }
 
 type RequiredOptions<Commit extends CommitKnownProps = CommitKnownProps> = Required<Options<Commit>>
@@ -121,6 +123,7 @@ export interface FinalOptions<Commit extends CommitKnownProps = CommitKnownProps
   generateOn: RequiredOptions<Commit>['generateOn']
   finalizeContext: RequiredOptions<Commit>['finalizeContext']
   debug: RequiredOptions<Commit>['debug']
+  formatDate: RequiredOptions<Commit>['formatDate']
   transform: RequiredOptions<Commit>['transform']
   commitsSort?: Comparator<Commit>
   commitGroupsSort?: Comparator<CommitGroup<Commit>>

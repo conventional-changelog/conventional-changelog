@@ -72,12 +72,14 @@ describe('conventional-changelog-writer', () => {
 
     describe('createTemplateRenderer', () => {
       it('should merge with the key commit', async () => {
-        const log = await createTemplateRenderer(getFinalContext({
-          version: 'a'
-        }, {}), getFinalOptions({}, {
+        const finalOptions = getFinalOptions({}, {
           ...emptyTemplates,
           mainTemplate: '{{version}}'
-        }))([], {
+        })
+        const finalContext = getFinalContext({
+          version: 'a'
+        }, finalOptions)
+        const log = await createTemplateRenderer(finalContext, finalOptions)([], {
           version: 'b',
           notes: []
         })
@@ -86,12 +88,14 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should attach a copy of the commit to note', async () => {
-        const log = await createTemplateRenderer<Commit>(getFinalContext({}, {}), getFinalOptions({
+        const finalOptions = getFinalOptions({
           ignoreReverted: true
         }, {
           ...emptyTemplates,
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}'
-        }))([
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+        const log = await createTemplateRenderer<Commit>(finalContext, finalOptions)([
           {
             header: 'feat(): new feature',
             body: null,
@@ -137,10 +141,12 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should not html escape any content', async () => {
-        const log = await createTemplateRenderer(getFinalContext({}, {}), getFinalOptions({}, {
+        const finalOptions = getFinalOptions({}, {
           ...emptyTemplates,
           mainTemplate: '{{version}}'
-        }))([], {
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+        const log = await createTemplateRenderer(finalContext, finalOptions)([], {
           version: '`a`',
           notes: []
         })
@@ -149,12 +155,14 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should ignore a reverted commit', async () => {
-        const log = await createTemplateRenderer<Commit>(getFinalContext({}, {}), getFinalOptions({
+        const finalOptions = getFinalOptions({
           ignoreReverted: true
         }, {
           ...emptyTemplates,
           mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{text}}{{/each}}{{/each}}'
-        }))([
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+        const log = await createTemplateRenderer<Commit>(finalContext, finalOptions)([
           {
             header: 'revert: feat(): amazing new module\n',
             body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
@@ -235,7 +243,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should finalize context', async () => {
-        const log = await createTemplateRenderer(getFinalContext({}, {}), getFinalOptions({
+        const finalOptions = getFinalOptions({
           finalizeContext: (context) => {
             context.title = 'oh'
             return context
@@ -243,7 +251,9 @@ describe('conventional-changelog-writer', () => {
         }, {
           ...emptyTemplates,
           mainTemplate: '{{version}} {{title}}'
-        }))([], {
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+        const log = await createTemplateRenderer(finalContext, finalOptions)([], {
           version: '`a`',
           notes: []
         })
@@ -252,7 +262,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should support finalize the context async', async () => {
-        const log = await createTemplateRenderer(getFinalContext({}, {}), getFinalOptions({
+        const finalOptions = getFinalOptions({
           finalizeContext: async (context) => {
             await delay(100)
             context.title = 'oh'
@@ -261,7 +271,9 @@ describe('conventional-changelog-writer', () => {
         }, {
           ...emptyTemplates,
           mainTemplate: '{{version}} {{title}}'
-        }))([], {
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+        const log = await createTemplateRenderer(finalContext, finalOptions)([], {
           version: '`a`',
           notes: []
         })
@@ -270,7 +282,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should finalize context', async () => {
-        const log = await createTemplateRenderer(getFinalContext({}, {}), getFinalOptions({
+        const finalOptions = getFinalOptions({
           finalizeContext: (context, options, commits, keyCommit) => {
             context.title = 'oh'
             context.date = String(commits.length)
@@ -281,7 +293,9 @@ describe('conventional-changelog-writer', () => {
         }, {
           ...emptyTemplates,
           mainTemplate: '{{version}} {{title}} {{date}} {{version}}'
-        }))([], {
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+        const log = await createTemplateRenderer(finalContext, finalOptions)([], {
           version: '`a`',
           notes: []
         })
@@ -290,7 +304,7 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should pass the correct arguments', async () => {
-        await createTemplateRenderer<Commit>(getFinalContext({}, {}), getFinalOptions({
+        const finalOptions = getFinalOptions({
           ignoreReverted: true,
           finalizeContext: (context, options, filteredCommits, keyCommit, originalCommits) => {
             expect(filteredCommits.length).toBe(2)
@@ -301,7 +315,10 @@ describe('conventional-changelog-writer', () => {
         }, {
           ...emptyTemplates,
           mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}'
-        }))([
+        })
+        const finalContext = getFinalContext({}, finalOptions)
+
+        await createTemplateRenderer<Commit>(finalContext, finalOptions)([
           {
             header: 'revert: feat(): amazing new module\n',
             body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
