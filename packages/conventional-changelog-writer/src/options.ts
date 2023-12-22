@@ -21,13 +21,13 @@ const HEADER_MAX_LENGTH = 100
  * @param commit
  * @param _context
  * @param options
- * @param options.timeZone - Time zone for date formatting.
+ * @param options.formatDate - Date formatter function.
  * @returns Patch object for commit.
  */
 export function defaultCommitTransform<Commit extends CommitKnownProps = CommitKnownProps>(
   commit: Commit,
-  _context?: unknown,
-  options?: { timeZone?: string }
+  _context: unknown,
+  options: Pick<FinalOptions<Commit>, 'formatDate'>
 ) {
   const {
     hash,
@@ -43,7 +43,7 @@ export function defaultCommitTransform<Commit extends CommitKnownProps = CommitK
       ? header.substring(0, HEADER_MAX_LENGTH)
       : header,
     committerDate: committerDate
-      ? formatDate(committerDate, options?.timeZone)
+      ? options.formatDate(committerDate)
       : committerDate
   } as Partial<Commit>
 }
@@ -67,6 +67,7 @@ export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownPro
     generateOn: (commit: Commit) => Boolean(semverValid(commit.version)),
     finalizeContext: (context: FinalContext<Commit>) => context,
     debug: () => { /* noop */ },
+    formatDate,
     reverse: false,
     ignoreReverted: true,
     doFlush: true,
