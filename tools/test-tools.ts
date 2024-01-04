@@ -44,6 +44,22 @@ function prepareMessageArgs(msg: string | string[]) {
   return args
 }
 
+const commitTypes = [
+  'chore',
+  'test',
+  'ci',
+  'feat',
+  'refactor',
+  'style',
+  'docs'
+]
+
+function createRandomCommitMessage(index: number) {
+  const type = commitTypes[Math.round(Math.random() * (commitTypes.length - 1))]
+
+  return `${type}: commit message for ${type} #${index}`
+}
+
 export function through(
   transform = (
     chunk: string | Buffer,
@@ -74,7 +90,7 @@ export function throughObj(
   })
 }
 
-export async function toArray<T>(iterable: Iterable<T> | AsyncIterable<T>) {
+export async function toArray<T>(iterable: Iterable<T> | AsyncIterable<T>): Promise<T[]> {
   const array = []
 
   for await (const item of iterable) {
@@ -87,10 +103,10 @@ export async function toArray<T>(iterable: Iterable<T> | AsyncIterable<T>) {
 export class TestTools {
   cwd: string
 
-  constructor(cwd: string) {
-    this.cwd = cwd
-
-    if (!cwd) {
+  constructor(cwd?: string) {
+    if (cwd) {
+      this.cwd = cwd
+    } else {
       /* eslint-disable */
       this.cwd = fs.realpathSync(tmp.dirSync().name)
       tmp.setGracefulCleanup()
@@ -180,7 +196,19 @@ export class TestTools {
     return this.exec('git init --template=./git-templates  --initial-branch=master')
   }
 
-  gitDummyCommit(msg: string | string[]) {
+  gitInitSimpleRepository() {
+    this.gitInit()
+
+    for (let i = 0; i < 20; i++) {
+      this.gitCommit(createRandomCommitMessage(i))
+
+      if (i % 3 === 0) {
+        this.exec(`git tag v${i}.0.0`)
+      }
+    }
+  }
+
+  gitCommit(msg: string | string[]) {
     const args = prepareMessageArgs(msg)
 
     args.push(

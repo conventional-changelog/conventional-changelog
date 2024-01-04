@@ -19,39 +19,39 @@ setups([
         url: 'https://github.com/conventional-changelog/conventional-changelog-core.git'
       }
     }))
-    testTools.gitDummyCommit('First commit')
+    testTools.gitCommit('First commit')
   },
   () => { // 2
     testTools.exec('git tag v0.1.0')
-    testTools.gitDummyCommit('Second commit')
-    testTools.gitDummyCommit('Third commit closes #1')
+    testTools.gitCommit('Second commit')
+    testTools.gitCommit('Third commit closes #1')
   },
   () => { // 3
     testTools.exec('git checkout -b feature')
-    testTools.gitDummyCommit('This commit is from feature branch')
+    testTools.gitCommit('This commit is from feature branch')
     testTools.exec('git checkout master')
-    testTools.gitDummyCommit('This commit is from master branch')
+    testTools.gitCommit('This commit is from master branch')
     testTools.exec('git merge feature -m"Merge branch \'feature\'"')
   },
   () => { // 4
-    testTools.gitDummyCommit('Custom prefix closes @42')
+    testTools.gitCommit('Custom prefix closes @42')
   },
   () => { // 5
-    testTools.gitDummyCommit('Custom prefix closes @43')
-    testTools.gitDummyCommit('Old prefix closes #71')
+    testTools.gitCommit('Custom prefix closes @43')
+    testTools.gitCommit('Old prefix closes #71')
   },
   () => { // 6
-    testTools.gitDummyCommit('some more features')
+    testTools.gitCommit('some more features')
     testTools.exec('git tag v2.0.0')
   },
   () => { // 7
-    testTools.gitDummyCommit('test8')
+    testTools.gitCommit('test8')
   },
   () => { // 8
-    testTools.gitDummyCommit('test8')
+    testTools.gitCommit('test8')
   },
   () => { // 9
-    testTools.gitDummyCommit(['test9', 'Release note: super release!'])
+    testTools.gitCommit(['test9', 'Release note: super release!'])
   },
   () => { // 10
     testTools.exec('git remote add origin https://github.com/user/repo.git')
@@ -63,10 +63,10 @@ setups([
   },
   (context) => { // 12
     testTools.exec('git tag not-semver')
-    testTools.gitDummyCommit()
+    testTools.gitCommit()
 
     const head = testTools.exec('git rev-parse HEAD').trim()
-    testTools.gitDummyCommit('Revert \\"test9\\" This reverts commit ' + head + '.')
+    testTools.gitCommit('Revert \\"test9\\" This reverts commit ' + head + '.')
     context.head = testTools.exec('git rev-parse HEAD').substring(0, 7)
   },
   (context) => { // 13
@@ -74,12 +74,12 @@ setups([
     testTools.exec('git tag v0.0.1 ' + tail)
   },
   () => { // 14
-    testTools.gitDummyCommit()
+    testTools.gitCommit()
     testTools.exec('git tag v1.0.0')
   },
   () => { // 15
-    testTools.gitDummyCommit()
-    testTools.gitDummyCommit('something unreleased yet :)')
+    testTools.gitCommit()
+    testTools.gitCommit('something unreleased yet :)')
   },
   () => { // 16
     testTools.writeFileSync('./package.json', '{"version": "2.0.0"}') // required by angular preset.
@@ -98,16 +98,16 @@ setups([
     testTools.exec('git add --all && git commit -m"feat: second lerna style commit woo"')
   },
   () => { // 18
-    testTools.gitDummyCommit()
+    testTools.gitCommit()
     testTools.exec('git tag 3.0.0')
   },
   () => { // 19
     testTools.exec('git checkout feature')
-    testTools.gitDummyCommit('included in 5.0.0')
+    testTools.gitCommit('included in 5.0.0')
     testTools.exec('git checkout -b feature2')
-    testTools.gitDummyCommit('merged, unreleased')
+    testTools.gitCommit('merged, unreleased')
     testTools.exec('git checkout master')
-    testTools.gitDummyCommit('included in 4.0.0')
+    testTools.gitCommit('included in 4.0.0')
     testTools.exec('git tag v4.0.0')
     testTools.exec('git merge feature -m"Merge branch \'feature\'"')
     testTools.writeFileSync('./package.json', '{"version": "5.0.0"}') // required by angular preset.

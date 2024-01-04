@@ -20,52 +20,52 @@ setups([
         url: 'https://github.com/conventional-changelog/conventional-changelog.git'
       }
     }))
-    testTools.gitDummyCommit(['build!: first build setup', 'BREAKING CHANGE: New build system.'])
-    testTools.gitDummyCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
-    testTools.gitDummyCommit(['Feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
-    testTools.gitDummyCommit(['Fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
-    testTools.gitDummyCommit(['fix(changelog): proper issue links', ' see #1, conventional-changelog/standard-version#358'])
-    testTools.gitDummyCommit('revert(ngOptions): bad commit')
-    testTools.gitDummyCommit('fix(*): oops')
-    testTools.gitDummyCommit(['fix(changelog): proper issue links', ' see GH-1'])
-    testTools.gitDummyCommit(['feat(awesome): adress EXAMPLE-1'])
-    testTools.gitDummyCommit(['chore(deps): upgrade example from 1 to 2'])
-    testTools.gitDummyCommit(['chore(release): release 0.0.0'])
+    testTools.gitCommit(['build!: first build setup', 'BREAKING CHANGE: New build system.'])
+    testTools.gitCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
+    testTools.gitCommit(['Feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
+    testTools.gitCommit(['Fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
+    testTools.gitCommit(['fix(changelog): proper issue links', ' see #1, conventional-changelog/standard-version#358'])
+    testTools.gitCommit('revert(ngOptions): bad commit')
+    testTools.gitCommit('fix(*): oops')
+    testTools.gitCommit(['fix(changelog): proper issue links', ' see GH-1'])
+    testTools.gitCommit(['feat(awesome): adress EXAMPLE-1'])
+    testTools.gitCommit(['chore(deps): upgrade example from 1 to 2'])
+    testTools.gitCommit(['chore(release): release 0.0.0'])
   },
   () => {
-    testTools.gitDummyCommit(['feat(awesome): addresses the issue brought up in #133'])
-    testTools.gitDummyCommit(['feat(awesome): addresses the issue brought up in #1a2b'])
+    testTools.gitCommit(['feat(awesome): addresses the issue brought up in #133'])
+    testTools.gitCommit(['feat(awesome): addresses the issue brought up in #1a2b'])
   },
   () => {
-    testTools.gitDummyCommit(['feat(awesome): fix #88'])
+    testTools.gitCommit(['feat(awesome): fix #88'])
   },
   () => {
-    testTools.gitDummyCommit(['feat(awesome): issue brought up by @bcoe! on Friday'])
+    testTools.gitCommit(['feat(awesome): issue brought up by @bcoe! on Friday'])
   },
   () => {
-    testTools.gitDummyCommit(['build(npm): edit build script', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['test(*)!: more tests', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['build(npm): edit build script', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['test(*)!: more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   () => {
     testTools.exec('git tag v0.1.0')
-    testTools.gitDummyCommit('feat: some more feats')
+    testTools.gitCommit('feat: some more feats')
   },
   () => {
     testTools.exec('git tag v0.2.0')
-    testTools.gitDummyCommit('feature: some more features')
+    testTools.gitCommit('feature: some more features')
   },
   () => {
-    testTools.gitDummyCommit(['feat(*): implementing #5 by @dlmr', ' closes #10'])
+    testTools.gitCommit(['feat(*): implementing #5 by @dlmr', ' closes #10'])
   },
   () => {
-    testTools.gitDummyCommit(['fix: use npm@5 (@username)'])
-    testTools.gitDummyCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit([
+    testTools.gitCommit(['fix: use npm@5 (@username)'])
+    testTools.gitCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit([
       'feat: complex new feature',
       'this is a complex new feature with many reviewers',
       'Reviewer: @hutson',
@@ -73,14 +73,14 @@ setups([
       'Refs: #100',
       'BREAKING CHANGE: this completely changes the API'
     ])
-    testTools.gitDummyCommit(['FEAT(foo)!: incredible new flag FIXES: #33'])
+    testTools.gitCommit(['FEAT(foo)!: incredible new flag FIXES: #33'])
   },
   () => {
-    testTools.gitDummyCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
-    testTools.gitDummyCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
+    testTools.gitCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
+    testTools.gitCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
   },
   () => {
-    testTools.gitDummyCommit([
+    testTools.gitCommit([
       'chore: release at different version',
       'Release-As: v3.0.2'
     ])

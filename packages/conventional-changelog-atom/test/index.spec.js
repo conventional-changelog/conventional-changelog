@@ -10,11 +10,11 @@ describe('conventional-changelog-atom', () => {
     testTools = new TestTools()
 
     testTools.gitInit()
-    testTools.gitDummyCommit([':arrow_down: exception-reporting'])
-    testTools.gitDummyCommit([':bug: `updateContentDimensions` when model changes'])
-    testTools.gitDummyCommit(['Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17'])
-    testTools.gitDummyCommit([':arrow_up: language-gfm@0.79.0'])
-    testTools.gitDummyCommit([':arrow_up: one-dark/light-ui@v1.0.1'])
+    testTools.gitCommit([':arrow_down: exception-reporting'])
+    testTools.gitCommit([':bug: `updateContentDimensions` when model changes'])
+    testTools.gitCommit(['Merge pull request #7881 from atom/bf-upgrade-babel-to-5.6.17'])
+    testTools.gitCommit([':arrow_up: language-gfm@0.79.0'])
+    testTools.gitCommit([':arrow_up: one-dark/light-ui@v1.0.1'])
   })
 
   afterAll(() => {

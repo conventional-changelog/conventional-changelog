@@ -12,7 +12,7 @@ setups([
     testTools.gitInit()
   },
   () => { // 2
-    testTools.gitDummyCommit(['feat!: my first commit'])
+    testTools.gitCommit(['feat!: my first commit'])
   },
   () => { // 3
     testTools.exec('git tag v1.0.0')
@@ -21,19 +21,19 @@ setups([
     // we need non-empty commit, so we can revert it
     testTools.writeFileSync('file1', '')
     testTools.exec('git add file1')
-    testTools.gitDummyCommit(['feat: my second commit'])
+    testTools.gitCommit(['feat: my second commit'])
   },
   () => { // 5
     testTools.exec('git revert HEAD')
   },
   () => { // 6
-    testTools.gitDummyCommit(['feat: should not be taken into account', 'BREAKING CHANGE: I broke the API'])
+    testTools.gitCommit(['feat: should not be taken into account', 'BREAKING CHANGE: I broke the API'])
     testTools.exec('git tag ms/1.0.0')
-    testTools.gitDummyCommit(['feat: this should have been working'])
+    testTools.gitCommit(['feat: this should have been working'])
   },
   () => { // 7
     testTools.exec('git tag my-package@1.0.0')
-    testTools.gitDummyCommit(['feat: this should have been working'])
+    testTools.gitCommit(['feat: this should have been working'])
   }
 ])
 
