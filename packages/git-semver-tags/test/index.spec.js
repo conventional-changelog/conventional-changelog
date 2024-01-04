@@ -104,11 +104,11 @@ describe('git-semver-tags', () => {
     testTools = new TestTools()
 
     testTools.gitInit()
-    testTools.gitDummyCommit('empty commit')
+    testTools.gitCommit('empty commit')
     testTools.exec('git tag v1.1.0')
     testTools.exec('git tag blarg-project@1.0.0') // should be ignored.
-    testTools.gitDummyCommit('empty commit2')
-    testTools.gitDummyCommit('empty commit3')
+    testTools.gitCommit('empty commit2')
+    testTools.gitCommit('empty commit3')
 
     const tags = await gitSemverTags({
       cwd: testTools.cwd

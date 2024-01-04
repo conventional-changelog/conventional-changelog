@@ -15,7 +15,7 @@ describe('standard-changelog', () => {
     beforeAll(() => {
       testTools = new TestTools()
       testTools.gitInit()
-      testTools.gitDummyCommit('feat: First commit')
+      testTools.gitCommit('feat: First commit')
     })
 
     beforeEach(() => {

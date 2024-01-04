@@ -10,17 +10,17 @@ describe('conventional-changelog-express', () => {
     testTools = new TestTools()
 
     testTools.gitInit()
-    testTools.gitDummyCommit([
+    testTools.gitCommit([
       'deps: type-is@~1.6.3',
       '',
       ' - deps: mime-types@~2.1.1',
       ' - perf: reduce try block size',
       ' - perf: remove bitwise operations'
     ])
-    testTools.gitDummyCommit(['perf: use saved reference to http.STATUS_CODES', '', 'closes #2602'])
-    testTools.gitDummyCommit(['docs: add license comments'])
-    testTools.gitDummyCommit(['deps: path-to-regexp@0.1.4'])
-    testTools.gitDummyCommit('Bad commit')
+    testTools.gitCommit(['perf: use saved reference to http.STATUS_CODES', '', 'closes #2602'])
+    testTools.gitCommit(['docs: add license comments'])
+    testTools.gitCommit(['deps: path-to-regexp@0.1.4'])
+    testTools.gitCommit('Bad commit')
   })
 
   afterEach(() => {

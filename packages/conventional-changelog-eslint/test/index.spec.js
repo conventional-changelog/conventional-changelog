@@ -10,13 +10,13 @@ describe('conventional-changelog-eslint', () => {
     testTools = new TestTools()
 
     testTools.gitInit()
-    testTools.gitDummyCommit(['Fix: the `no-class-assign` rule (fixes #2718)'])
-    testTools.gitDummyCommit([])
-    testTools.gitDummyCommit(['Update: Handle CRLF line endings in spaced-comment rule - 2 (fixes #3005)'])
-    testTools.gitDummyCommit(['Fix: indent rule should recognize single line statements with ASI (fixes #3001, fixes #3000)'])
-    testTools.gitDummyCommit(['Docs: Fix unmatched paren in rule description'])
-    testTools.gitDummyCommit(['Fix:        Commit with trailing spaces in the beginning'])
-    testTools.gitDummyCommit(['Merge pull request #3033 from gcochard/patch-3 '])
+    testTools.gitCommit(['Fix: the `no-class-assign` rule (fixes #2718)'])
+    testTools.gitCommit([])
+    testTools.gitCommit(['Update: Handle CRLF line endings in spaced-comment rule - 2 (fixes #3005)'])
+    testTools.gitCommit(['Fix: indent rule should recognize single line statements with ASI (fixes #3001, fixes #3000)'])
+    testTools.gitCommit(['Docs: Fix unmatched paren in rule description'])
+    testTools.gitCommit(['Fix:        Commit with trailing spaces in the beginning'])
+    testTools.gitCommit(['Merge pull request #3033 from gcochard/patch-3 '])
   })
 
   afterAll(() => {

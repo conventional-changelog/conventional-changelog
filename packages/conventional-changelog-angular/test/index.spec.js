@@ -21,45 +21,45 @@ setups([
       }
     }))
 
-    testTools.gitDummyCommit(['build: first build setup', 'BREAKING CHANGE: New build system.'])
-    testTools.gitDummyCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
-    testTools.gitDummyCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
-    testTools.gitDummyCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
-    testTools.gitDummyCommit('revert(ngOptions): bad commit')
-    testTools.gitDummyCommit('fix(*): oops')
+    testTools.gitCommit(['build: first build setup', 'BREAKING CHANGE: New build system.'])
+    testTools.gitCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
+    testTools.gitCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
+    testTools.gitCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
+    testTools.gitCommit('revert(ngOptions): bad commit')
+    testTools.gitCommit('fix(*): oops')
   },
   () => {
-    testTools.gitDummyCommit(['feat(awesome): addresses the issue brought up in #133'])
+    testTools.gitCommit(['feat(awesome): addresses the issue brought up in #133'])
   },
   () => {
-    testTools.gitDummyCommit(['feat(awesome): fix #88'])
+    testTools.gitCommit(['feat(awesome): fix #88'])
   },
   () => {
-    testTools.gitDummyCommit(['feat(awesome): issue brought up by @bcoe! on Friday'])
+    testTools.gitCommit(['feat(awesome): issue brought up by @bcoe! on Friday'])
   },
   () => {
-    testTools.gitDummyCommit(['build(npm): edit build script', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitDummyCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['build(npm): edit build script', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['ci(travis): setup travis', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['docs(readme): make it clear', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['style(whitespace): make it easier to read', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['refactor(code): change a lot of code', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['test(*): more tests', 'BREAKING CHANGE: The Change is huge.'])
   },
   () => {
     testTools.exec('git tag v1.0.0')
-    testTools.gitDummyCommit('feat: some more features')
+    testTools.gitCommit('feat: some more features')
   },
   () => {
-    testTools.gitDummyCommit(['feat(*): implementing #5 by @dlmr', ' closes #10'])
+    testTools.gitCommit(['feat(*): implementing #5 by @dlmr', ' closes #10'])
   },
   () => {
-    testTools.gitDummyCommit(['fix: use npm@5 (@username)'])
-    testTools.gitDummyCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
+    testTools.gitCommit(['fix: use npm@5 (@username)'])
+    testTools.gitCommit(['build(deps): bump @dummy/package from 7.1.2 to 8.0.0', 'BREAKING CHANGE: The Change is huge.'])
   },
   () => {
-    testTools.gitDummyCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
-    testTools.gitDummyCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
+    testTools.gitCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234.'])
+    testTools.gitCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
   }
 ])
 
