@@ -35,11 +35,11 @@ Filter out reverted commits parsed by conventional-commits-parser.
 
 ```bash
 # pnpm
-pnpm add -D conventional-commits-filter
+pnpm add conventional-commits-filter
 # yarn
-yarn add -D conventional-commits-filter
+yarn add conventional-commits-filter
 # npm
-npm i -D conventional-commits-filter
+npm i conventional-commits-filter
 ```
 
 ## Usage
