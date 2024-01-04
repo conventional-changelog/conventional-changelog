@@ -1,0 +1,63 @@
+{
+  "name": "@conventional-changelog/git-client",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Simple git client for conventional changelog packages.",
+  "author": {
+    "name": "Dan Onoshko",
+    "email": "danon0404@gmail.com",
+    "url": "https://github.com/dangreen"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/git-client"
+  },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  },
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-client#readme",
+  "keywords": [
+    "git",
+    "client",
+    "conventional",
+    "changelog"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "exports": "./src/index.ts",
+  "publishConfig": {
+    "exports": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clear": "del ./dist",
+    "prepublishOnly": "pnpm build",
+    "build": "tsc",
+    "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/semver": "^7.5.5",
+    "semver": "^7.5.2"
+  },
+  "peerDependencies": {
+    "conventional-commits-filter": "workspace:^",
+    "conventional-commits-parser": "workspace:^"
+  },
+  "peerDependenciesMeta": {
+    "conventional-commits-filter": {
+      "optional": true
+    },
+    "conventional-commits-parser": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "conventional-commits-filter": "workspace:^",
+    "conventional-commits-parser": "workspace:^"
+  }
+}
