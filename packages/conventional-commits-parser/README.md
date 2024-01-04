@@ -48,11 +48,11 @@ Parse raw conventional commits.
 
 ```bash
 # pnpm
-pnpm add -D conventional-commits-parser
+pnpm add conventional-commits-parser
 # yarn
-yarn add -D conventional-commits-parser
+yarn add conventional-commits-parser
 # npm
-npm i -D conventional-commits-parser
+npm i conventional-commits-parser
 ```
 
 ## Usage

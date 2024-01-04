@@ -48,11 +48,11 @@ Configuration preset loader for `conventional-changelog`.
 
 ```bash
 # pnpm
-pnpm add -D conventional-changelog-preset-loader
+pnpm add conventional-changelog-preset-loader
 # yarn
-yarn add -D conventional-changelog-preset-loader
+yarn add conventional-changelog-preset-loader
 # npm
-npm i -D conventional-changelog-preset-loader
+npm i conventional-changelog-preset-loader
 ```
 
 ## Usage

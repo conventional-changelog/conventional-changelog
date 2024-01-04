@@ -48,11 +48,11 @@ Write logs based on conventional commits and templates.
 
 ```bash
 # pnpm
-pnpm add -D conventional-changelog-writer
+pnpm add conventional-changelog-writer
 # yarn
-yarn add -D conventional-changelog-writer
+yarn add conventional-changelog-writer
 # npm
-npm i -D conventional-changelog-writer
+npm i conventional-changelog-writer
 ```
 
 ## Usage
