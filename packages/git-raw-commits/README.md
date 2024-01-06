@@ -1,101 +1,60 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status: Linux][travis-image]][travis-url] [![Build Status: Windows][appveyor-image]][appveyor-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# git-raw-commits
 
-> Get raw git commits out of your repository using git-log(1)
+[![ESM-only package][package]][package-url]
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
+
+[npm]: https://img.shields.io/npm/v/git-raw-commits.svg
+[npm-url]: https://npmjs.com/package/git-raw-commits
+
+[node]: https://img.shields.io/node/v/git-raw-commits.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/git-raw-commits
+[deps-url]: https://libraries.io/npm/git-raw-commits/tree
+
+[size]: https://packagephobia.com/badge?p=git-raw-commits
+[size-url]: https://packagephobia.com/result?p=git-raw-commits
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+Get raw git commits out of your repository using git-log(1).
 
 ## Install
 
-```sh
-$ npm install --save git-raw-commits
+```bash
+# pnpm
+pnpm add git-raw-commits
+# yarn
+yarn add git-raw-commits
+# npm
+npm i git-raw-commits
 ```
-
-
-## Usage
-
-```js
-import gitRawCommits from 'git-raw-commits';
-
-gitRawCommits(options)
-  .pipe(...);
-```
-
-
-## API
-
-### gitRawCommits(gitOpts, [execOpts])
-
-Returns a readable stream. Stream is split to break on each commit.
-
-#### gitOpts
-
-Type: `object`
-
-Please check the available options at http://git-scm.com/docs/git-log.
-**NOTE:** Single dash arguments are not supported because of https://github.com/sindresorhus/dargs/blob/master/index.js#L5.
-
-*NOTE*: for `<revision range>` we can also use `<from>..<to>` pattern, and this module has the following extra options for shortcut of this pattern:
-
-##### gitOpts.from
-
-Type: `string` Default: `''`
-
-##### gitOpts.to
-
-Type: `string` Default: `'HEAD'`
-
-This module also have the following additions:
-
-##### gitOpts.format
-
-Type: `string` Default: `'%B'`
-
-Please check http://git-scm.com/docs/git-log for format options.
-
-##### gitOpts.debug
-
-Type: `function`
-
-A function to get debug information.
-
-##### gitOpts.path
-
-Type: `string` or `array`
-
-Filter commits to the path(s) provided.
-
-##### execOpts
-
-Options to pass to `git` `childProcess`
-
-Type: `object`
-
-##### execOpts.cwd
-
-Type: `string`
-
-Current working directory to execute git in
-
 
 ## CLI
 
-```sh
-$ npm install --global git-raw-commits
-$ git-raw-commits --help # for more details
+```bash
+# Example
+git-raw-commits --from HEAD~2 --to HEAD^
+# For more details
+git-raw-commits --help
 ```
 
+## API
+
+For JS API see [@conventional-changelog/git-client](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-client).
 
 ## License
 
 MIT © [Steve Mao](https://github.com/stevemao)
-
-
-[npm-image]: https://badge.fury.io/js/git-raw-commits.svg
-[npm-url]: https://npmjs.org/package/git-raw-commits
-[travis-image]: https://travis-ci.org/conventional-changelog/git-raw-commits.svg?branch=master
-[travis-url]: https://travis-ci.org/conventional-changelog/git-raw-commits
-[appveyor-image]: https://ci.appveyor.com/api/projects/status/4qm3bjmg41k3dsbv/branch/master?svg=true
-[appveyor-url]: https://ci.appveyor.com/project/stevemao/git-raw-commits/branch/master
-[daviddm-image]: https://david-dm.org/conventional-changelog/git-raw-commits.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/conventional-changelog/git-raw-commits
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

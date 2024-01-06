@@ -1,9 +1,25 @@
-import type { Readable } from 'stream'
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import {
   type SpawnOptionsWithoutStdio,
   spawn as spawnChild
 } from 'child_process'
 import type { Arg } from './types.js'
+
+/**
+ * Read output stream to string.
+ * @param stream
+ * @returns Stream output string.
+ */
+async function readOutput(stream: AsyncIterable<string | Buffer>) {
+  let chunk: string | Buffer
+  let buffer = ''
+
+  for await (chunk of stream) {
+    buffer += chunk.toString()
+  }
+
+  return buffer
+}
 
 /**
  * Spawn child process.
@@ -15,22 +31,18 @@ import type { Arg } from './types.js'
 export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithoutStdio) {
   return new Promise<string>((resolve, reject) => {
     const child = spawnChild(cmd, args, options)
-    let output = ''
-    const onData = (data: Buffer) => {
-      output += data.toString()
-    }
-    const onDone = (codeOrError: Error | number | null) => {
+    const stdoutPromise = readOutput(child.stdout)
+    const stderrPromise = readOutput(child.stderr)
+    const onDone = async (codeOrError: Error | number | null) => {
       if (codeOrError === 0) {
-        resolve(output)
+        resolve(await stdoutPromise)
       } else if (codeOrError instanceof Error) {
         reject(codeOrError)
       } else {
-        reject(new Error(output))
+        reject(new Error(await stderrPromise))
       }
     }
 
-    child.stdout?.on('data', onData)
-    child.stderr?.on('data', onData)
     child.on('close', onDone)
     child.on('error', onDone)
   })
@@ -41,18 +53,20 @@ export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithout
  * @param cmd
  * @param args
  * @param options
- * @returns Readable stdout stream.
+ * @yields Stdout chunks.
  */
-export function stdoutSpawn(cmd: string, args: string[], options?: SpawnOptionsWithoutStdio) {
+export async function* stdoutSpawn(cmd: string, args: string[], options?: SpawnOptionsWithoutStdio) {
   const child = spawnChild(cmd, args, options)
-  const { stdout } = child
+  const { stdout, stderr } = child
+  const errorPromise = readOutput(stderr)
 
-  child.stderr.on('data', (chunk: Buffer) => {
-    stdout.emit('error', new Error(chunk.toString()))
-    stdout.emit('close')
-  })
+  yield* stdout
 
-  return stdout
+  const error = await errorPromise
+
+  if (error) {
+    throw new Error(error)
+  }
 }
 
 /**
@@ -61,8 +75,8 @@ export function stdoutSpawn(cmd: string, args: string[], options?: SpawnOptionsW
  * @param separator
  * @yields String chunks.
  */
-export async function* splitStream(stream: Readable, separator: string) {
-  let chunk: Buffer
+export async function* splitStream(stream: AsyncIterable<string | Buffer>, separator: string) {
+  let chunk: string | Buffer
   let payload: string[]
   let buffer = ''
 

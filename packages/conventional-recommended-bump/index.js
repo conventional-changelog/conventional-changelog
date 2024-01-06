@@ -3,7 +3,7 @@ import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import { parseCommitsStream } from 'conventional-commits-parser'
 import { loadPreset } from 'conventional-changelog-preset-loader'
 import gitSemverTags from 'git-semver-tags'
-import gitRawCommits from 'git-raw-commits'
+import { getRawCommitsStream } from 'git-raw-commits'
 
 const VERSIONS = ['major', 'minor', 'patch']
 
@@ -51,12 +51,11 @@ export default async function conventionalRecommendedBump (optionsArgument, pars
     skipUnstable: options.skipUnstable,
     cwd: options.cwd
   })
-  const commitsStream = gitRawCommits({
+  const commitsStream = getRawCommitsStream({
     format: '%B%n-hash-%n%H',
     from: tags[0] || '',
     path: options.path,
-    ...options.gitRawCommitsOpts
-  }, {
+    ...options.gitRawCommitsOpts,
     cwd: options.cwd
   })
     .pipe(parseCommitsStream(parserOpts))

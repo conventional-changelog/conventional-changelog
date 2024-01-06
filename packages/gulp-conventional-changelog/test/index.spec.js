@@ -273,7 +273,7 @@ describe('gulp-conventional-changelog', () => {
     })
   })
 
-  it('should verbose', () => {
+  it('should verbose', async () => {
     const stream = conventionalChangelog({
       cwd: testTools.cwd,
       verbose: true
@@ -286,5 +286,9 @@ describe('gulp-conventional-changelog', () => {
       contents: Buffer.from('CHANGELOG')
     }))
     stream.end()
+
+    for await (const file of stream) {
+      file.contents.toString()
+    }
   })
 })

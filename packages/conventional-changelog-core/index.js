@@ -1,7 +1,7 @@
 import { Readable, Transform } from 'stream'
 import { execFileSync } from 'child_process'
 import addStream from 'add-stream'
-import gitRawCommits from 'git-raw-commits'
+import { getRawCommitsStream } from 'git-raw-commits'
 import { parseCommitsStream } from 'conventional-commits-parser'
 import { writeChangelogStream } from 'conventional-changelog-writer'
 import mergeConfig from './lib/merge-config.js'
@@ -24,11 +24,12 @@ export default function conventionalChangelog (options, context, gitRawCommitsOp
   commitsStream._read = function () { }
 
   function commitsRange (from, to) {
-    return gitRawCommits({
+    return getRawCommitsStream({
       ...gitRawCommitsOpts,
       from,
-      to
-    }, { cwd })
+      to,
+      cwd
+    })
       .on('error', function (err) {
         if (!commitsErrorThrown) {
           setImmediate(commitsStream.emit.bind(commitsStream), 'error', err)
@@ -85,7 +86,10 @@ export default function conventionalChangelog (options, context, gitRawCommitsOp
             setImmediate(commitsStream.emit.bind(commitsStream), 'end')
           })
       } catch (_e) {
-        commitsStream = gitRawCommits(gitRawCommitsOpts, gitRawExecOpts)
+        commitsStream = getRawCommitsStream({
+          ...gitRawCommitsOpts,
+          ...gitRawExecOpts
+        })
       }
 
       commitsStream
