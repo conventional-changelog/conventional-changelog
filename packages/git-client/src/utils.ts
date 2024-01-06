@@ -3,6 +3,7 @@ import {
   type SpawnOptionsWithoutStdio,
   spawn as spawnChild
 } from 'child_process'
+import type { Arg } from './types.js'
 
 /**
  * Spawn child process.
@@ -63,19 +64,44 @@ export function stdoutSpawn(cmd: string, args: string[], options?: SpawnOptionsW
  */
 export async function* splitStream(stream: Readable, separator: string) {
   let chunk: Buffer
-  let payload: string
+  let payload: string[]
   let buffer = ''
 
   for await (chunk of stream) {
     buffer += chunk.toString()
 
     if (buffer.includes(separator)) {
-      [payload, buffer] = buffer.split(separator)
-      yield payload
+      payload = buffer.split(separator)
+      buffer = payload.pop() || ''
+
+      yield* payload
     }
   }
 
   if (buffer) {
     yield buffer
   }
+}
+
+/**
+ * Format arguments.
+ * @param args
+ * @returns Formatted arguments.
+ */
+export function formatArgs(...args: Arg[]): string[] {
+  const finalArgs: string[] = []
+
+  for (const arg of args) {
+    if (!arg) {
+      continue
+    }
+
+    if (Array.isArray(arg)) {
+      finalArgs.push(...formatArgs(...arg))
+    } else {
+      finalArgs.push(arg)
+    }
+  }
+
+  return finalArgs
 }

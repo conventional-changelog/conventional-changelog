@@ -2,7 +2,7 @@ export interface GitLogParams {
   /**
    * Read commits from specific path.
    */
-  path?: string
+  path?: string | string[]
   /**
    * Start commits range.
    */
@@ -51,3 +51,5 @@ export interface GitTagsLogParams {
    */
   clean?: boolean
 }
+
+export type Arg = string | null | undefined | false | Arg[]
