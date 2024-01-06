@@ -32,7 +32,6 @@ export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithout
     child.stdout?.on('data', onData)
     child.stderr?.on('data', onData)
     child.on('close', onDone)
-    child.on('exit', onDone)
     child.on('error', onDone)
   })
 }
