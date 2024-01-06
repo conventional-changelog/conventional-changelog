@@ -1,12 +1,14 @@
 import {
   spawn,
   stdoutSpawn,
-  splitStream
+  splitStream,
+  formatArgs
 } from './utils.js'
 import type {
   GitLogParams,
   GitCommitParams,
-  GitTagParams
+  GitTagParams,
+  Arg
 } from './types.js'
 
 const SCISSOR = '------------------------ >8 ------------------------'
@@ -15,7 +17,20 @@ const SCISSOR = '------------------------ >8 ------------------------'
  * Wrapper around Git CLI.
  */
 export class GitClient {
-  constructor(readonly cwd: string) {}
+  constructor(
+    readonly cwd: string,
+    private readonly debug: ((log: string[]) => void) | false = false
+  ) {}
+
+  private formatArgs(...args: Arg[]) {
+    const finalArgs = formatArgs(...args)
+
+    if (this.debug) {
+      this.debug(finalArgs)
+    }
+
+    return finalArgs
+  }
 
   /**
    * Get raw commits stream.
@@ -27,19 +42,21 @@ export class GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @yields Raw commits data.
    */
-  async* getRawCommits(params: GitLogParams = {}, restRawArgs: string[] = []) {
+  async* getRawCommits(params: GitLogParams = {}, restRawArgs: Arg[] = []) {
     const {
       path,
       from = '',
       to = 'HEAD',
       format = '%B'
     } = params
-    const stdout = stdoutSpawn('git', ['log'].concat(
+    const args = this.formatArgs(
+      'log',
       `--format=${format}%n${SCISSOR}`,
       [from, to].filter(Boolean).join('..'),
       restRawArgs,
-      path ? ['--', path] : ''
-    ).filter(Boolean), {
+      path && ['--', path]
+    )
+    const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
     })
     const commitsStream = splitStream(stdout, `${SCISSOR}\n`)
@@ -59,15 +76,16 @@ export class GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @yields Tags
    */
-  async* getTags(restRawArgs: string[] = []) {
+  async* getTags(restRawArgs: Arg[] = []) {
     const tagRegex = /tag:\s*(.+?)[,)]/gi
-    const stdout = stdoutSpawn('git', [
+    const args = this.formatArgs(
       'log',
       '--decorate',
       '--no-color',
       '--date-order',
-      ...restRawArgs
-    ], {
+      restRawArgs
+    )
+    const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
     })
     const tagsStream = splitStream(stdout, `${SCISSOR}\n`)
@@ -90,12 +108,13 @@ export class GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @returns Boolean value.
    */
-  async checkIgnore(file: string, restRawArgs: string[] = []) {
-    const output = await spawn('git', [
+  async checkIgnore(file: string, restRawArgs: Arg[] = []) {
+    const args = this.formatArgs(
       'check-ignore',
       file,
-      ...restRawArgs
-    ], {
+      restRawArgs
+    )
+    const output = await spawn('git', args, {
       cwd: this.cwd
     })
 
@@ -107,8 +126,14 @@ export class GitClient {
    * @param files - Files to stage.
    * @param restRawArgs - Additional raw git arguments.
    */
-  async add(files: string | string[], restRawArgs: string[] = []) {
-    await spawn('git', ['add'].concat(files, restRawArgs), {
+  async add(files: string | string[], restRawArgs: Arg[] = []) {
+    const args = this.formatArgs(
+      'add',
+      files,
+      restRawArgs
+    )
+
+    await spawn('git', args, {
       cwd: this.cwd
     })
   }
@@ -122,22 +147,24 @@ export class GitClient {
    * @param params.message
    * @param restRawArgs - Additional raw git arguments.
    */
-  async commit(params: GitCommitParams, restRawArgs: string[] = []) {
+  async commit(params: GitCommitParams, restRawArgs: Arg[] = []) {
     const {
       verify = true,
       sign = false,
       files = [],
       message
     } = params
-
-    await spawn('git', ['commit'].concat(
-      verify ? '' : '--no-verify',
-      sign ? '-S' : '',
+    const args = this.formatArgs(
+      'commit',
+      !verify && '--no-verify',
+      sign && '-S',
       files,
       '-m',
       message,
       restRawArgs
-    ).filter(Boolean), {
+    )
+
+    await spawn('git', args, {
       cwd: this.cwd
     })
   }
@@ -150,7 +177,7 @@ export class GitClient {
    * @param params.message
    * @param restRawArgs - Additional raw git arguments.
    */
-  async tag(params: GitTagParams, restRawArgs: string[] = []) {
+  async tag(params: GitTagParams, restRawArgs: Arg[] = []) {
     let {
       sign = false,
       name,
@@ -161,13 +188,16 @@ export class GitClient {
       message = ''
     }
 
-    await spawn('git', ['tag'].concat(
-      sign ? ['-s'] : [],
-      message ? ['-a'] : [],
+    const args = this.formatArgs(
+      'tag',
+      sign && '-s',
+      message && '-a',
       name,
-      message ? ['-m', message] : [],
+      message && ['-m', message],
       restRawArgs
-    ), {
+    )
+
+    await spawn('git', args, {
       cwd: this.cwd
     })
   }
@@ -177,13 +207,14 @@ export class GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @returns Current branch name.
    */
-  async getCurrentBranch(restRawArgs: string[] = []) {
-    const branch = await spawn('git', [
+  async getCurrentBranch(restRawArgs: Arg[] = []) {
+    const args = this.formatArgs(
       'rev-parse',
       '--abbrev-ref',
       'HEAD',
-      ...restRawArgs
-    ], {
+      restRawArgs
+    )
+    const branch = await spawn('git', args, {
       cwd: this.cwd
     })
 
@@ -195,14 +226,16 @@ export class GitClient {
    * @param branch
    * @param restRawArgs - Additional raw git arguments.
    */
-  async push(branch: string, restRawArgs: string[] = []) {
-    await spawn('git', [
+  async push(branch: string, restRawArgs: Arg[] = []) {
+    const args = this.formatArgs(
       'push',
       '--follow-tags',
       'origin',
       branch,
-      ...restRawArgs
-    ], {
+      restRawArgs
+    )
+
+    await spawn('git', args, {
       cwd: this.cwd
     })
   }

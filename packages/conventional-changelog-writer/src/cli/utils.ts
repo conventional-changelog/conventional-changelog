@@ -5,23 +5,27 @@ import { readFile } from 'fs/promises'
 
 const NEWLINE = /\r?\n/
 
-async function* parseJsonStream<T>(stream: Readable) {
+export async function* parseJsonStream<T>(stream: Readable) {
   let chunk: Buffer
-  let payload: string
+  let payload: string[]
   let buffer = ''
+  let json: string
 
   for await (chunk of stream) {
     buffer += chunk.toString()
 
     if (NEWLINE.test(buffer)) {
-      [payload, buffer] = buffer.split(NEWLINE)
+      payload = buffer.split(NEWLINE)
+      buffer = payload.pop() || ''
 
-      try {
-        yield JSON.parse(payload) as T
-      } catch (err) {
-        throw new Error('Failed to split commits', {
-          cause: err
-        })
+      for (json of payload) {
+        try {
+          yield JSON.parse(json) as T
+        } catch (err) {
+          throw new Error('Failed to split commits', {
+            cause: err
+          })
+        }
       }
     }
   }

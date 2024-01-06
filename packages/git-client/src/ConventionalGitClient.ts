@@ -7,7 +7,8 @@ import type { filterRevertedCommits } from 'conventional-commits-filter'
 import semver from 'semver'
 import type {
   ConventionalGitLogParams,
-  GitTagsLogParams
+  GitTagsLogParams,
+  Arg
 } from './types.js'
 import { GitClient } from './GitClient.js'
 
@@ -17,8 +18,11 @@ import { GitClient } from './GitClient.js'
 export class ConventionalGitClient extends GitClient {
   private readonly deps: Promise<[typeof parseCommits, typeof filterRevertedCommits]>
 
-  constructor(cwd: string) {
-    super(cwd)
+  constructor(
+    cwd: string,
+    debug?: ((log: string[]) => void) | false
+  ) {
+    super(cwd, debug)
 
     this.deps = Promise.all([
       import('conventional-commits-parser')
@@ -42,7 +46,7 @@ export class ConventionalGitClient extends GitClient {
   async* getCommits(
     params: ConventionalGitLogParams = {},
     parserOptions: ParserStreamOptions = {},
-    restRawArgs: string[] = []
+    restRawArgs: Arg[] = []
   ): AsyncIterable<Commit> {
     const [parseCommits, filterRevertedCommits] = await this.deps
 
@@ -69,7 +73,7 @@ export class ConventionalGitClient extends GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @yields Semver tags.
    */
-  async* getSemverTags(params: GitTagsLogParams = {}, restRawArgs: string[] = []) {
+  async* getSemverTags(params: GitTagsLogParams = {}, restRawArgs: Arg[] = []) {
     const { prefix, skipUnstable, clean } = params
     const tagsStream = this.getTags(restRawArgs)
     const unstableTagRegex = /.+-\w+\.\d+$/
@@ -112,7 +116,7 @@ export class ConventionalGitClient extends GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @returns Current sematic version, `null` if not found.
    */
-  async getVersionFromTags(prefix?: string, restRawArgs: string[] = []) {
+  async getVersionFromTags(prefix?: string, restRawArgs: Arg[] = []) {
     const semverTagsStream = this.getSemverTags({
       prefix,
       clean: true

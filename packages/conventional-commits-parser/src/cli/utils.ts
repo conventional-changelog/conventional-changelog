@@ -2,17 +2,19 @@ import type { Readable } from 'stream'
 import fs from 'fs'
 import readline from 'readline'
 
-async function* splitStream(stream: Readable, separator: string) {
+export async function* splitStream(stream: Readable, separator: string) {
   let chunk: Buffer
-  let payload: string
+  let payload: string[]
   let buffer = ''
 
   for await (chunk of stream) {
     buffer += chunk.toString()
 
     if (buffer.includes(separator)) {
-      [payload, buffer] = buffer.split(separator)
-      yield payload
+      payload = buffer.split(separator)
+      buffer = payload.pop() || ''
+
+      yield* payload
     }
   }
 
