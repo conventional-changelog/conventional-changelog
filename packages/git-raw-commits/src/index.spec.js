@@ -1,6 +1,6 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
 import { TestTools, delay } from '../../../tools/test-tools.ts'
-import gitRawCommits from '../index.js'
+import { getRawCommits } from './index.js'
 
 let testTools
 
@@ -16,7 +16,7 @@ describe('git-raw-commits', () => {
 
   it('should emit an error and the error should not be read only if there are no commits', async () => {
     await expect(async () => {
-      for await (const commit of gitRawCommits({}, {
+      for await (const commit of getRawCommits({
         cwd: testTools.cwd
       })) {
         commit.toString()
@@ -33,7 +33,7 @@ describe('git-raw-commits', () => {
     testTools.writeFileSync('test3', '')
     testTools.exec('git add --all && git commit -m"Third commit"')
 
-    for await (const commit of gitRawCommits({}, {
+    for await (const commit of getRawCommits({
       cwd: testTools.cwd
     })) {
       commit.toString()
@@ -43,7 +43,7 @@ describe('git-raw-commits', () => {
   it('should get commits without `options` (`options.from` defaults to the first commit)', async () => {
     let i = 0
 
-    for await (let chunk of gitRawCommits({}, {
+    for await (let chunk of getRawCommits({
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -65,9 +65,8 @@ describe('git-raw-commits', () => {
   it('should honour `options.from`', async () => {
     let i = 0
 
-    for await (let chunk of gitRawCommits({
-      from: 'HEAD~1'
-    }, {
+    for await (let chunk of getRawCommits({
+      from: 'HEAD~1',
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -83,9 +82,8 @@ describe('git-raw-commits', () => {
   it('should honour `options.to`', async () => {
     let i = 0
 
-    for await (let chunk of gitRawCommits({
-      to: 'HEAD^'
-    }, {
+    for await (let chunk of getRawCommits({
+      to: 'HEAD^',
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -105,9 +103,8 @@ describe('git-raw-commits', () => {
   it('should honour `options.ignore`', async () => {
     let i = 0
 
-    for await (let chunk of gitRawCommits({
-      ignore: 'Second'
-    }, {
+    for await (let chunk of getRawCommits({
+      ignore: 'Second',
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -127,9 +124,8 @@ describe('git-raw-commits', () => {
   it('should honour `options.format`', async () => {
     let i = 0
 
-    for await (let chunk of gitRawCommits({
-      format: 'what%n%B'
-    }, {
+    for await (let chunk of getRawCommits({
+      format: 'what%n%B',
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -152,9 +148,8 @@ describe('git-raw-commits', () => {
     let i = 0
     let output = ''
 
-    for await (let chunk of gitRawCommits({
-      path: './packages/foo'
-    }, {
+    for await (let chunk of getRawCommits({
+      path: './packages/foo',
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -172,9 +167,8 @@ describe('git-raw-commits', () => {
     let i = 0
     let output = ''
 
-    for await (let chunk of gitRawCommits({
-      path: ['./packages/foo', './test2']
-    }, {
+    for await (let chunk of getRawCommits({
+      path: ['./packages/foo', './test2'],
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -192,12 +186,11 @@ describe('git-raw-commits', () => {
   it('should show your git-log command', async () => {
     let cmd = ''
 
-    for await (let chunk of gitRawCommits({
+    for await (let chunk of getRawCommits({
       format: 'what%n%B',
       debug (message) {
         cmd = message
-      }
-    }, {
+      },
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -209,9 +202,8 @@ describe('git-raw-commits', () => {
   it('should prevent variable expansion on Windows', async () => {
     let i = 0
 
-    for await (let chunk of gitRawCommits({
-      format: '%%cd%n%B'
-    }, {
+    for await (let chunk of getRawCommits({
+      format: '%%cd%n%B',
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()
@@ -243,10 +235,9 @@ describe('git-raw-commits', () => {
     testTools.writeFileSync('test2', 'hello')
     testTools.exec('git add --all && git commit -m"Fifth commit"')
 
-    for await (let chunk of gitRawCommits({
+    for await (let chunk of getRawCommits({
       path: './packages/foo',
-      since: now
-    }, {
+      since: now,
       cwd: testTools.cwd
     })) {
       chunk = chunk.toString()

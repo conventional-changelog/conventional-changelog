@@ -2,29 +2,22 @@
   "name": "git-raw-commits",
   "type": "module",
   "version": "4.0.0",
-  "description": "Get raw git commits out of your repository using git-log(1)",
-  "exports": "./index.js",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-raw-commits#readme",
+  "description": "Get raw git commits out of your repository using git-log(1).",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/git-raw-commits"
   },
-  "license": "MIT",
-  "engines": {
-    "node": ">=16"
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "files": [
-    "index.js",
-    "cli.js"
-  ],
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-raw-commits#readme",
   "keywords": [
     "git-raw-commits",
     "raw",
@@ -34,12 +27,20 @@
     "log",
     "git-log"
   ],
-  "dependencies": {
-    "dargs": "^8.0.0",
-    "meow": "^12.0.1",
-    "split2": "^4.0.0"
+  "engines": {
+    "node": ">=16"
   },
   "bin": {
-    "git-raw-commits": "cli.js"
+    "git-raw-commits": "./src/cli.js"
+  },
+  "exports": "./src/index.js",
+  "files": [
+    "src",
+    "!**/*.spec.js"
+  ],
+  "dependencies": {
+    "@conventional-changelog/git-client": "workspace:^",
+    "dargs": "^8.0.0",
+    "meow": "^12.0.1"
   }
 }

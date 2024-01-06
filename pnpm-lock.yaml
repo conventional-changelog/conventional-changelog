@@ -264,15 +264,15 @@ importers:
 
   packages/git-raw-commits:
     dependencies:
+      '@conventional-changelog/git-client':
+        specifier: workspace:^
+        version: link:../git-client
       dargs:
         specifier: ^8.0.0
         version: 8.1.0
       meow:
         specifier: ^12.0.1
         version: 12.1.1
-      split2:
-        specifier: ^4.0.0
-        version: 4.2.0
 
   packages/git-semver-tags:
     dependencies:
@@ -3734,11 +3734,6 @@ packages:
 
   /spdx-license-ids@3.0.15:
     resolution: {integrity: sha512-lpT8hSQp9jAKp9mhtBU4Xjon8LPGBvLIuBiSVhMEtmLecTh2mO0tlqrAMp47tBXzMr13NJMQ2lf7RpQGLJ3HsQ==}
-
-  /split2@4.2.0:
-    resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
-    engines: {node: '>= 10.x'}
-    dev: false
 
   /stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
