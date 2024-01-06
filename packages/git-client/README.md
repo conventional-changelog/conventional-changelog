@@ -23,7 +23,7 @@
 [size]: https://packagephobia.com/badge?p=@conventional-changelog/git-client
 [size-url]: https://packagephobia.com/result?p=@conventional-changelog/git-client
 
-[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/git-client/ci.yaml?branch=master
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
 [build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
 
 [coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
