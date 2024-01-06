@@ -63,11 +63,7 @@ export class GitClient {
     let chunk: string
 
     for await (chunk of commitsStream) {
-      chunk = chunk.trim()
-
-      if (chunk) {
-        yield chunk
-      }
+      yield chunk
     }
   }
 
