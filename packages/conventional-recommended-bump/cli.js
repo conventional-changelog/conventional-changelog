@@ -85,7 +85,7 @@ if (preset) {
   options.preset = preset
   delete flags.preset
 } else if (config) {
-  options.config = (await import(relativeResolve(config))).default
+  options.config = await (await import(relativeResolve(config))).default
   delete flags.config
 }
 
