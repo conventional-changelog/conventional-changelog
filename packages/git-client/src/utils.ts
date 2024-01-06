@@ -17,9 +17,16 @@ export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithout
     const child = spawnChild(cmd, args, options)
     let output = ''
     const onData = (data: Buffer) => {
+      console.log({
+        data: data.toString()
+      })
       output += data.toString()
     }
     const onDone = (codeOrError: Error | number | null) => {
+      console.log({
+        codeOrError
+      })
+
       if (codeOrError === 0) {
         resolve(output)
       } else if (codeOrError instanceof Error) {
@@ -28,6 +35,9 @@ export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithout
         reject(new Error(output))
       }
     }
+
+    child.on('close', () => console.log('close'))
+    child.on('exit', () => console.log('exit'))
 
     child.stdout?.on('data', onData)
     child.stderr?.on('data', onData)

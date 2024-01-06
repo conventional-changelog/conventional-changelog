@@ -214,6 +214,11 @@ export class GitClient {
       cwd: this.cwd
     })
 
+    console.log({
+      args,
+      branch
+    })
+
     return branch.trim()
   }
 
