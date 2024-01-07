@@ -100,6 +100,16 @@ export async function toArray<T>(iterable: Iterable<T> | AsyncIterable<T>): Prom
   return array
 }
 
+export async function toString(iterable: Iterable<string | Buffer> | AsyncIterable<string | Buffer>) {
+  let string = ''
+
+  for await (const chunk of iterable) {
+    string += chunk.toString()
+  }
+
+  return string
+}
+
 export class TestTools {
   cwd: string
 

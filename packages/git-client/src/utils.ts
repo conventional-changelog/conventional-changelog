@@ -1,50 +1,34 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import {
+  type ChildProcessWithoutNullStreams,
   type SpawnOptionsWithoutStdio,
   spawn as spawnChild
 } from 'child_process'
 import type { Arg } from './types.js'
 
 /**
- * Read output stream to string.
- * @param stream
- * @returns Stream output string.
+ * Catch process error.
+ * @param child
+ * @returns Process error.
  */
-async function readOutput(stream: AsyncIterable<string | Buffer>) {
-  let chunk: string | Buffer
-  let buffer = ''
+function catchProcessError(child: ChildProcessWithoutNullStreams) {
+  return new Promise<Error | null>((resolve) => {
+    let stderr = ''
+    let error: Error | null = null
 
-  for await (chunk of stream) {
-    buffer += chunk.toString()
-  }
-
-  return buffer
-}
-
-/**
- * Spawn child process.
- * @param cmd
- * @param args
- * @param options
- * @returns Process output.
- */
-export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithoutStdio) {
-  return new Promise<string>((resolve, reject) => {
-    const child = spawnChild(cmd, args, options)
-    const stdoutPromise = readOutput(child.stdout)
-    const stderrPromise = readOutput(child.stderr)
-    const onDone = async (codeOrError: Error | number | null) => {
-      if (codeOrError === 0) {
-        resolve(await stdoutPromise)
-      } else if (codeOrError instanceof Error) {
-        reject(codeOrError)
-      } else {
-        reject(new Error(await stderrPromise))
+    child.stderr.on('data', (chunk: Buffer) => {
+      stderr += chunk.toString()
+    })
+    child.on('error', (err: Error) => {
+      error = err
+    })
+    child.on('close', () => {
+      if (stderr) {
+        error = new Error(stderr)
       }
-    }
 
-    child.on('close', onDone)
-    child.on('error', onDone)
+      resolve(error)
+    })
   })
 }
 
@@ -57,16 +41,34 @@ export function spawn(cmd: string, args: string[], options?: SpawnOptionsWithout
  */
 export async function* stdoutSpawn(cmd: string, args: string[], options?: SpawnOptionsWithoutStdio) {
   const child = spawnChild(cmd, args, options)
-  const { stdout, stderr } = child
-  const errorPromise = readOutput(stderr)
+  const errorPromise = catchProcessError(child)
 
-  yield* stdout
+  yield* child.stdout as AsyncIterable<Buffer>
 
   const error = await errorPromise
 
   if (error) {
-    throw new Error(error)
+    throw error
   }
+}
+
+/**
+ * Spawn child process.
+ * @param cmd
+ * @param args
+ * @param options
+ * @returns Process output.
+ */
+export async function spawn(cmd: string, args: string[], options?: SpawnOptionsWithoutStdio) {
+  const stdout = stdoutSpawn(cmd, args, options)
+  let chunk: Buffer
+  const output: Buffer[] = []
+
+  for await (chunk of stdout) {
+    output.push(chunk)
+  }
+
+  return Buffer.concat(output)
 }
 
 /**
