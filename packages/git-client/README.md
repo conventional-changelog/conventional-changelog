@@ -51,7 +51,7 @@ yarn add @conventional-changelog/git-client conventional-commits-filter conventi
 npm i @conventional-changelog/git-client conventional-commits-filter conventional-commits-parser
 ```
 
-Note: `conventional-commits-filter` and `conventional-commits-parser` are not required if you need only `GitClient` class.
+Note: `conventional-commits-filter` and `conventional-commits-parser` are required only if you need `ConventionalGitClient#getCommits` method.
 
 ## Usage
 

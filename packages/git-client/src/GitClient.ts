@@ -84,13 +84,12 @@ export class GitClient {
     const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
     })
-    const tagsStream = splitStream(stdout, `${SCISSOR}\n`)
-    let chunk: string
+    let chunk: Buffer
     let matches: IterableIterator<RegExpMatchArray>
     let tag: string
 
-    for await (chunk of tagsStream) {
-      matches = chunk.trim().matchAll(tagRegex)
+    for await (chunk of stdout) {
+      matches = chunk.toString().trim().matchAll(tagRegex)
 
       for ([, tag] of matches) {
         yield tag
@@ -110,11 +109,16 @@ export class GitClient {
       file,
       restRawArgs
     )
-    const output = await spawn('git', args, {
-      cwd: this.cwd
-    })
 
-    return Boolean(output)
+    try {
+      await spawn('git', args, {
+        cwd: this.cwd
+      })
+
+      return true
+    } catch (err) {
+      return false
+    }
   }
 
   /**
@@ -210,11 +214,13 @@ export class GitClient {
       'HEAD',
       restRawArgs
     )
-    const branch = await spawn('git', args, {
-      cwd: this.cwd
-    })
+    const branch = (
+      await spawn('git', args, {
+        cwd: this.cwd
+      })
+    ).toString().trim()
 
-    return branch.trim()
+    return branch
   }
 
   /**

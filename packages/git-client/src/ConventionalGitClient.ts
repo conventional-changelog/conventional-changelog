@@ -6,23 +6,36 @@ import type {
 import type { filterRevertedCommits } from 'conventional-commits-filter'
 import semver from 'semver'
 import type {
-  ConventionalGitLogParams,
-  GitTagsLogParams,
+  GetCommitsParams,
+  GetSemverTagsParams,
   Arg
 } from './types.js'
 import { GitClient } from './GitClient.js'
 
 /**
+ * Helper to get package tag prefix.
+ * @param packageName
+ * @returns Tag prefix.
+ */
+export function packagePrefix(packageName?: string) {
+  if (!packageName) {
+    return /^.+@/
+  }
+
+  return `${packageName}@`
+}
+
+/**
  * Wrapper around Git CLI with conventional commits support.
  */
 export class ConventionalGitClient extends GitClient {
-  private readonly deps: Promise<[typeof parseCommits, typeof filterRevertedCommits]>
+  private deps: Promise<[typeof parseCommits, typeof filterRevertedCommits]> | null = null
 
-  constructor(
-    cwd: string,
-    debug?: ((log: string[]) => void) | false
-  ) {
-    super(cwd, debug)
+  private loadDeps() {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    if (this.deps) {
+      return this.deps
+    }
 
     this.deps = Promise.all([
       import('conventional-commits-parser')
@@ -30,6 +43,8 @@ export class ConventionalGitClient extends GitClient {
       import('conventional-commits-filter')
         .then(({ filterRevertedCommits }) => filterRevertedCommits)
     ])
+
+    return this.deps
   }
 
   /**
@@ -44,11 +59,11 @@ export class ConventionalGitClient extends GitClient {
    * @yields Raw commits data.
    */
   async* getCommits(
-    params: ConventionalGitLogParams = {},
+    params: GetCommitsParams = {},
     parserOptions: ParserStreamOptions = {},
     restRawArgs: Arg[] = []
   ): AsyncIterable<Commit> {
-    const [parseCommits, filterRevertedCommits] = await this.deps
+    const [parseCommits, filterRevertedCommits] = await this.loadDeps()
 
     if (params.filterReverts) {
       yield* filterRevertedCommits(this.getCommits({
@@ -73,7 +88,7 @@ export class ConventionalGitClient extends GitClient {
    * @param restRawArgs - Additional raw git arguments.
    * @yields Semver tags.
    */
-  async* getSemverTags(params: GitTagsLogParams = {}, restRawArgs: Arg[] = []) {
+  async* getSemverTags(params: GetSemverTagsParams = {}, restRawArgs: Arg[] = []) {
     const { prefix, skipUnstable, clean } = params
     const tagsStream = this.getTags(restRawArgs)
     const unstableTagRegex = /.+-\w+\.\d+$/
@@ -89,7 +104,11 @@ export class ConventionalGitClient extends GitClient {
       }
 
       if (prefix) {
-        if (tag.startsWith(prefix)) {
+        const isPrefixed = typeof prefix === 'string'
+          ? tag.startsWith(prefix)
+          : prefix.test(tag)
+
+        if (isPrefixed) {
           unprefixed = tag.replace(prefix, '')
 
           if (semver.valid(unprefixed)) {

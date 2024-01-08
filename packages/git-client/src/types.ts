@@ -17,7 +17,7 @@ export interface GitLogParams {
   format?: string
 }
 
-export interface ConventionalGitLogParams extends GitLogParams {
+export interface GetCommitsParams extends GitLogParams {
   /**
    * Enable revert commits filter.
    */
@@ -37,11 +37,11 @@ export interface GitTagParams {
   message?: string
 }
 
-export interface GitTagsLogParams {
+export interface GetSemverTagsParams {
   /**
    * Get semver tags with specific prefix.
    */
-  prefix?: string
+  prefix?: string | RegExp
   /**
    * Skip semver tags with unstable versions.
    */
