@@ -1,54 +1,65 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+# git-semver-tags
 
-> Get all git semver tags of your repository in reverse chronological order
+[![ESM-only package][package]][package-url]
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
+
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
+
+[npm]: https://img.shields.io/npm/v/git-semver-tags.svg
+[npm-url]: https://npmjs.com/package/git-semver-tags
+
+[node]: https://img.shields.io/node/v/git-semver-tags.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/git-semver-tags
+[deps-url]: https://libraries.io/npm/git-semver-tags/tree
+
+[size]: https://packagephobia.com/badge?p=git-semver-tags
+[size-url]: https://packagephobia.com/result?p=git-semver-tags
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+Get all git semver tags of your repository in reverse chronological order.
 
 *Note:* since lightweight tags do not store date information, the date of a tag is the date of the commit that is tagged on. If two tags on one commit, the order is not guaranteed.
 
-
 ## Install
 
-```sh
-$ npm install --save git-semver-tags
+```bash
+# pnpm
+pnpm add git-semver-tags
+# yarn
+yarn add git-semver-tags
+# npm
+npm i git-semver-tags
 ```
 
-## Usage
+## CLI
 
-```js
-import gitSemverTags from 'git-semver-tags';
-
-// gitSemverTags([options])
-
-const tags = await gitSemverTags();
-
-console.log(tags);
-//=> [ 'v2.0.0', 'v1.0.0' ]
+```bash
+# Example
+git-semver-tags
+# Output:
+# v2.0.0
+# v1.0.0
+# For more details
+git-semver-tags --help
 ```
 
-```sh
-$ npm install --global git-semver-tags
-$ git-semver-tags
-v2.0.0
-v1.0.0
-```
+## API
 
-## Options
-
-* `opts.lernaTags`: extract lerna style tags (`foo-package@2.0.0`) from the
-  git history, rather than `v1.0.0` format.
-* `opts.package`: what package should lerna style tags be listed for, e.g.,
-  `foo-package`.
-* `opts.tagPrefix`: specify a prefix for the git tag to be ignored from the semver checks
+For JS API see [@conventional-changelog/git-client](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-client).
 
 ## License
 
 MIT © [Steve Mao](https://github.com/stevemao)
-
-
-[npm-image]: https://badge.fury.io/js/git-semver-tags.svg
-[npm-url]: https://npmjs.org/package/git-semver-tags
-[travis-image]: https://travis-ci.org/conventional-changelog/git-semver-tags.svg?branch=master
-[travis-url]: https://travis-ci.org/conventional-changelog/git-semver-tags
-[daviddm-image]: https://david-dm.org/stevemao/git-semver-tags.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/stevemao/git-semver-tags
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

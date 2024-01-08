@@ -276,12 +276,12 @@ importers:
 
   packages/git-semver-tags:
     dependencies:
+      '@conventional-changelog/git-client':
+        specifier: workspace:^
+        version: link:../git-client
       meow:
         specifier: ^12.0.1
         version: 12.1.1
-      semver:
-        specifier: ^7.5.2
-        version: 7.5.4
 
   packages/gulp-conventional-changelog:
     dependencies:
