@@ -20,7 +20,7 @@ found in [packages/conventional-changelog](https://github.com/conventional-chang
 
 ## Getting started
 
-It's recommended you use the high level [standard-version](https://github.com/conventional-changelog/standard-version) library, which is a drop-in replacement for npm's `version` command, handling automated version bumping, tagging and CHANGELOG generation.
+It's recommended you use the high level [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) library, which is a drop-in replacement for npm's `version` command, handling automated version bumping, tagging and CHANGELOG generation.
 
 Alternatively, if you'd like to move towards completely automating your release process as an output from CI/CD, consider using [semantic-release](https://github.com/semantic-release/semantic-release).
 
