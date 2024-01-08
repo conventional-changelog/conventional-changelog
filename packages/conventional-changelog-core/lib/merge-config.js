@@ -4,7 +4,7 @@ import { exec } from 'child_process'
 import { URL, fileURLToPath } from 'url'
 import hostedGitInfo from 'hosted-git-info'
 import parseRepositoryUrl from '@hutson/parse-repository-url'
-import gitSemverTags from 'git-semver-tags'
+import { getSemverTags } from 'git-semver-tags'
 import normalizePackageData from 'normalize-package-data'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
@@ -133,7 +133,7 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
   ] = await Promise.allSettled([
     presetConfig,
     pkgPromise,
-    gitSemverTags({
+    getSemverTags({
       lernaTags: !!options.lernaPackage,
       package: options.lernaPackage,
       tagPrefix: options.tagPrefix,

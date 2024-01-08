@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import meow from 'meow'
-import gitSemverTags from './index.js'
+import { getSemverTags } from './index.js'
 
 const args = meow(`
   Usage
@@ -33,7 +33,7 @@ const args = meow(`
   }
 })
 
-const tags = await gitSemverTags({
+const tags = await getSemverTags({
   lernaTags: args.flags.lerna,
   package: args.flags.package,
   tagPrefix: args.flags.tagPrefix,

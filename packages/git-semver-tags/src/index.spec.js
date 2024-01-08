@@ -1,6 +1,6 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
 import { TestTools } from '../../../tools/test-tools.ts'
-import gitSemverTags from '../index.js'
+import { getSemverTags } from './index.js'
 
 let testTools
 
@@ -15,7 +15,7 @@ describe('git-semver-tags', () => {
   })
 
   it('should error if no commits found', async () => {
-    await expect(() => gitSemverTags({
+    await expect(() => getSemverTags({
       cwd: testTools.cwd
     })).rejects.toThrow()
   })
@@ -25,7 +25,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"First commit"')
     testTools.exec('git tag foo')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -40,7 +40,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"Third commit"')
     testTools.exec('git tag va.b.c')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -50,7 +50,7 @@ describe('git-semver-tags', () => {
   it('should get both semver tags', async () => {
     testTools.exec('git tag v3.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -60,7 +60,7 @@ describe('git-semver-tags', () => {
   it('should get all semver tags if two tags on the same commit', async () => {
     testTools.exec('git tag v4.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -68,7 +68,7 @@ describe('git-semver-tags', () => {
   })
 
   it('should still work if I run it again', async () => {
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -80,7 +80,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"Fourth commit"')
     testTools.exec('git tag v1.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -92,7 +92,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"Fifth commit"')
     testTools.exec('git tag 5.0.0-pre')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -110,7 +110,7 @@ describe('git-semver-tags', () => {
     testTools.gitCommit('empty commit2')
     testTools.gitCommit('empty commit3')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd
     })
 
@@ -125,7 +125,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"seventh commit"')
     testTools.exec('git tag foo-project@5.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd,
       lernaTags: true
     })
@@ -144,7 +144,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"seventh commit"')
     testTools.exec('git tag foobar-project@10.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd,
       lernaTags: true
     })
@@ -164,7 +164,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"seventh commit"')
     testTools.exec('git tag bar-project@5.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd,
       lernaTags: true,
       package: 'bar-project'
@@ -174,7 +174,7 @@ describe('git-semver-tags', () => {
   })
 
   it('should not allow package filter without lernaTags=true', async () => {
-    await expect(() => gitSemverTags({
+    await expect(() => getSemverTags({
       cwd: testTools.cwd,
       package: 'bar-project'
     })).rejects.toThrow('opts.package should only be used when running in lerna mode')
@@ -191,7 +191,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"eleventh commit"')
     testTools.exec('git tag notms/7.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd,
       tagPrefix: 'ms/'
     })
@@ -210,7 +210,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"eleventh commit"')
     testTools.exec('git tag notms+7.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd,
       tagPrefix: 'ms+'
     })
@@ -232,7 +232,7 @@ describe('git-semver-tags', () => {
     testTools.exec('git add --all && git commit -m"fifteenth commit"')
     testTools.exec('git tag skip/9.0.0')
 
-    const tags = await gitSemverTags({
+    const tags = await getSemverTags({
       cwd: testTools.cwd,
       tagPrefix: 'skip/',
       skipUnstable: true

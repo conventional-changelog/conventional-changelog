@@ -2,29 +2,22 @@
   "name": "git-semver-tags",
   "type": "module",
   "version": "7.0.1",
-  "description": "Get all git semver tags of your repository in reverse chronological order",
-  "exports": "./index.js",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-semver-tags#readme",
+  "description": "Get all git semver tags of your repository in reverse chronological order.",
   "author": {
     "name": "Steve Mao",
     "email": "maochenyan@gmail.com",
     "url": "https://github.com/stevemao"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/git-semver-tags"
   },
-  "license": "MIT",
-  "engines": {
-    "node": ">=16"
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "files": [
-    "index.js",
-    "cli.js"
-  ],
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/git-semver-tags#readme",
   "keywords": [
     "git-semver-tags",
     "order",
@@ -33,11 +26,19 @@
     "git-tag",
     "git"
   ],
-  "dependencies": {
-    "meow": "^12.0.1",
-    "semver": "^7.5.2"
+  "engines": {
+    "node": ">=16"
   },
   "bin": {
-    "git-semver-tags": "cli.js"
+    "git-semver-tags": "./src/cli.js"
+  },
+  "exports": "./src/index.js",
+  "files": [
+    "src",
+    "!**/*.spec.js"
+  ],
+  "dependencies": {
+    "@conventional-changelog/git-client": "workspace:^",
+    "meow": "^12.0.1"
   }
 }

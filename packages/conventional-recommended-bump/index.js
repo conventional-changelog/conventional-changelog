@@ -2,7 +2,7 @@
 import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import { parseCommitsStream } from 'conventional-commits-parser'
 import { loadPreset } from 'conventional-changelog-preset-loader'
-import gitSemverTags from 'git-semver-tags'
+import { getSemverTags } from 'git-semver-tags'
 import { getRawCommitsStream } from 'git-raw-commits'
 
 const VERSIONS = ['major', 'minor', 'patch']
@@ -44,7 +44,7 @@ export default async function conventionalRecommendedBump (optionsArgument, pars
     parserOptsArgument)
 
   const warn = typeof parserOpts.warn === 'function' ? parserOpts.warn : noop
-  const tags = await gitSemverTags({
+  const tags = await getSemverTags({
     lernaTags: !!options.lernaPackage,
     package: options.lernaPackage,
     tagPrefix: options.tagPrefix,
