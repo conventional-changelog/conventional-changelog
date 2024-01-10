@@ -267,9 +267,6 @@ importers:
       '@conventional-changelog/git-client':
         specifier: workspace:^
         version: link:../git-client
-      dargs:
-        specifier: ^8.0.0
-        version: 8.1.0
       meow:
         specifier: ^12.0.1
         version: 12.1.1
@@ -1416,11 +1413,6 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
-
-  /dargs@8.1.0:
-    resolution: {integrity: sha512-wAV9QHOsNbwnWdNW2FYvE1P56wtgSbM+3SZcdGiWQILwVjACCXDCI3Ai8QlCjMDB8YK5zySiXZYBiwGmNY3lnw==}
-    engines: {node: '>=12'}
-    dev: false
 
   /debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}

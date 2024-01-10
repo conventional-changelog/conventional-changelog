@@ -1,15 +1,11 @@
 import { Readable } from 'stream'
 import { GitClient } from '@conventional-changelog/git-client'
-import dargs from 'dargs'
 
-function getFinalOptionsAndArgs (options = {}) {
+function getFinalOptions (options = {}) {
   const finalOptions = {
     cwd: process.cwd(),
     ...options
   }
-  const args = dargs(finalOptions, {
-    excludes: ['cwd', 'debug', 'ignore', 'path', 'from', 'to', 'format']
-  })
 
   if (options.debug) {
     finalOptions.debug = (args) => {
@@ -17,7 +13,7 @@ function getFinalOptionsAndArgs (options = {}) {
     }
   }
 
-  return [finalOptions, args]
+  return finalOptions
 }
 
 /**
@@ -33,7 +29,7 @@ function getFinalOptionsAndArgs (options = {}) {
  * @yields {string} - Raw commit.
  */
 export async function * getRawCommits (options) {
-  const [{ cwd, debug, ignore, ...finalOptions }, args] = getFinalOptionsAndArgs(options)
+  const { cwd, debug, ignore, ...finalOptions } = getFinalOptions(options)
   const ignoreRegex = typeof ignore === 'string'
     ? new RegExp(ignore)
     : ignore
@@ -43,7 +39,7 @@ export async function * getRawCommits (options) {
   const client = new GitClient(cwd, debug)
   let commit
 
-  for await (commit of client.getRawCommits(finalOptions, args)) {
+  for await (commit of client.getRawCommits(finalOptions)) {
     if (shouldNotIgnore(commit)) {
       yield commit
     }

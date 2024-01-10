@@ -8,7 +8,7 @@ import semver from 'semver'
 import type {
   GetCommitsParams,
   GetSemverTagsParams,
-  Arg
+  Params
 } from './types.js'
 import { GitClient } from './GitClient.js'
 
@@ -55,13 +55,11 @@ export class ConventionalGitClient extends GitClient {
    * @param params.to - End commits range.
    * @param params.format - Commits format.
    * @param parserOptions - Commit parser options.
-   * @param restRawArgs - Additional raw git arguments.
    * @yields Raw commits data.
    */
   async* getCommits(
-    params: GetCommitsParams = {},
-    parserOptions: ParserStreamOptions = {},
-    restRawArgs: Arg[] = []
+    params: GetCommitsParams & Params = {},
+    parserOptions: ParserStreamOptions = {}
   ): AsyncIterable<Commit> {
     const [parseCommits, filterRevertedCommits] = await this.loadDeps()
 
@@ -69,12 +67,12 @@ export class ConventionalGitClient extends GitClient {
       yield* filterRevertedCommits(this.getCommits({
         filterReverts: false,
         ...params
-      }, parserOptions, restRawArgs))
+      }, parserOptions))
       return
     }
 
     const parse = parseCommits(parserOptions)
-    const commitsStream = this.getRawCommits(params, restRawArgs)
+    const commitsStream = this.getRawCommits(params)
 
     yield* parse(commitsStream)
   }
@@ -85,12 +83,16 @@ export class ConventionalGitClient extends GitClient {
    * @param params.prefix - Get semver tags with specific prefix.
    * @param params.skipUnstable - Skip semver tags with unstable versions.
    * @param params.clean - Clean version from prefix and trash.
-   * @param restRawArgs - Additional raw git arguments.
    * @yields Semver tags.
    */
-  async* getSemverTags(params: GetSemverTagsParams = {}, restRawArgs: Arg[] = []) {
-    const { prefix, skipUnstable, clean } = params
-    const tagsStream = this.getTags(restRawArgs)
+  async* getSemverTags(params: GetSemverTagsParams = {}) {
+    const {
+      prefix,
+      skipUnstable,
+      clean,
+      ...restParams
+    } = params
+    const tagsStream = this.getTags(restParams)
     const unstableTagRegex = /.+-\w+\.\d+$/
     const cleanTag = clean
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
@@ -131,15 +133,14 @@ export class ConventionalGitClient extends GitClient {
 
   /**
    * Get current sematic version from git tags.
-   * @param prefix - Tag prefix to match.
-   * @param restRawArgs - Additional raw git arguments.
+   * @param params - Additional git params.
    * @returns Current sematic version, `null` if not found.
    */
-  async getVersionFromTags(prefix?: string, restRawArgs: Arg[] = []) {
+  async getVersionFromTags(params: GetSemverTagsParams & Params = {}) {
     const semverTagsStream = this.getSemverTags({
-      prefix,
-      clean: true
-    }, restRawArgs)
+      clean: true,
+      ...params
+    })
     const semverTags: string[] = []
 
     for await (const tag of semverTagsStream) {
