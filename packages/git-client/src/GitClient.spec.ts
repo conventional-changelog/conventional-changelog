@@ -102,7 +102,9 @@ describe('git-client', () => {
         testTools.writeFileSync('test2', 'hello')
         testTools.exec('git add --all && git commit -m"chore: hello"')
 
-        const commitsStream = client.getRawCommits({}, ['--since', now])
+        const commitsStream = client.getRawCommits({
+          since: now
+        })
         const commits = await toArray(commitsStream)
 
         expect(commits).toEqual(['chore: hello\n\n'])

@@ -4,7 +4,12 @@ import {
   type SpawnOptionsWithoutStdio,
   spawn as spawnChild
 } from 'child_process'
-import type { Arg } from './types.js'
+import type {
+  Value,
+  Param,
+  Params,
+  Arg
+} from './types.js'
 
 /**
  * Catch process error.
@@ -99,6 +104,54 @@ export async function* splitStream(stream: AsyncIterable<string | Buffer>, separ
 }
 
 /**
+ * Format key-value pair for cli arguments.
+ * @param key
+ * @param value
+ * @returns Formatted key-value pair.
+ */
+function formatKeyValue(key: string, value?: Value) {
+  return `${
+    key.length === 1 ? '-' : '--'
+  }${
+    key.replace(/[A-Z]/g, '-$&').toLowerCase()
+  }${
+    value ? `=${value}` : ''
+  }`
+}
+
+/**
+ * Format object params for cli arguments.
+ * @param params
+ * @returns Formatted params.
+ */
+function formatParams(params: Params) {
+  const args: string[] = []
+  let key: string
+  let value: Param
+  let arrayValue: Param
+
+  for (key in params) {
+    value = params[key]
+
+    if (value === true) {
+      args.push(formatKeyValue(key))
+    } else
+      if (value === false) {
+        args.push(formatKeyValue(`no-${key}`))
+      } else
+        if (Array.isArray(value)) {
+          for (arrayValue of value) {
+            args.push(formatKeyValue(key, arrayValue))
+          }
+        } else {
+          args.push(formatKeyValue(key, value))
+        }
+  }
+
+  return args
+}
+
+/**
  * Format arguments.
  * @param args
  * @returns Formatted arguments.
@@ -113,9 +166,12 @@ export function formatArgs(...args: Arg[]): string[] {
 
     if (Array.isArray(arg)) {
       finalArgs.push(...formatArgs(...arg))
-    } else {
-      finalArgs.push(arg)
-    }
+    } else
+      if (typeof arg === 'object' && !(arg instanceof RegExp)) {
+        finalArgs.push(...formatParams(arg))
+      } else {
+        finalArgs.push(String(arg))
+      }
   }
 
   return finalArgs

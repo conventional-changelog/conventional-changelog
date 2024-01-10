@@ -52,4 +52,10 @@ export interface GetSemverTagsParams {
   clean?: boolean
 }
 
-export type Arg = string | null | undefined | false | Arg[]
+export type Value = string | number | boolean | RegExp | null | undefined
+
+export type Param = Value | Value[]
+
+export type Params = Record<string, Param>
+
+export type Arg = Value | Params | Arg[]
