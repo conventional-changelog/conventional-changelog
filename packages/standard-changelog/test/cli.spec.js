@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools.ts'
+import { TestTools } from '../../../tools/index.ts'
 
 const CLI_PATH = path.join(__dirname, '../cli.js')
 const FIXTURE_CHANGELOG_PATH = path.join(__dirname, 'fixtures/_CHANGELOG.md')

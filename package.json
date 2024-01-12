@@ -58,7 +58,6 @@
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.0.0",
     "safe-buffer": "5.2.1",
-    "tmp": "^0.2.1",
     "tsm": "^2.3.0",
     "typescript": "^5.2.2",
     "vinyl": "^3.0.0",

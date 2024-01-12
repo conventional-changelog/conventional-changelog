@@ -1,5 +1,5 @@
-import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools, toArray, delay } from '../../../tools/test-tools.js'
+import { describe, beforeAll, afterAll, it, expect } from 'vitest'
+import { TestTools, toArray, delay } from '../../../tools/index.js'
 import { GitClient } from './GitClient.js'
 
 describe('git-client', () => {
@@ -12,6 +12,10 @@ describe('git-client', () => {
       testTools.gitInitSimpleRepository()
 
       client = new GitClient(testTools.cwd)
+    })
+
+    afterAll(() => {
+      testTools?.cleanup()
     })
 
     describe('getRawCommits', () => {

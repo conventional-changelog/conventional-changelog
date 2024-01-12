@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toArray } from '../../../tools/test-tools.js'
+import { toArray } from '../../../tools/index.js'
 import { filterRevertedCommits } from './index.js'
 
 describe('conventional-commits-filter', () => {

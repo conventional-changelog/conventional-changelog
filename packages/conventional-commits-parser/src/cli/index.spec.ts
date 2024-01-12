@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools } from '../../../../tools/test-tools.js'
+import { describe, beforeAll, afterAll, it, expect } from 'vitest'
+import { TestTools } from '../../../../tools/index.js'
 
 const CLI_PATH = path.join(__dirname, './index.ts')
 const FIXTURES_PATH = path.resolve(__dirname, '..', '..', 'test', 'fixtures')
@@ -12,6 +12,10 @@ describe('conventional-commits-parser', () => {
 
     beforeAll(() => {
       testTools = new TestTools(FIXTURES_PATH)
+    })
+
+    afterAll(() => {
+      testTools?.cleanup()
     })
 
     it('should parse commits in a file', async () => {

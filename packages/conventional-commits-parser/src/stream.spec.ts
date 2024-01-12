@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { through } from '../../../tools/test-tools.js'
+import { through } from '../../../tools/index.js'
 import { parseCommitsStream } from './stream.js'
 
 describe('conventional-commits-parser', () => {

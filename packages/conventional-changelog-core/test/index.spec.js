@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest'
+import { afterAll, describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import path from 'path'
-import { TestTools } from '../../../tools/test-tools.ts'
+import { TestTools } from '../../../tools/index.ts'
 import conventionalChangelogCore from '../index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
@@ -118,6 +118,10 @@ setups([
 ])
 
 tearsWithJoy(() => {
+  testTools?.cleanup()
+})
+
+afterAll(() => {
   testTools?.cleanup()
 })
 

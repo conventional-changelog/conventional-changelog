@@ -1,134 +1,44 @@
 import { execSync, spawn } from 'child_process'
-import { Transform } from 'stream'
 import { pathToFileURL } from 'url'
 import path from 'path'
 import fs from 'fs'
-// @ts-expect-error 'tmp' has no types
-import tmp from 'tmp'
+import {
+  formatMessageArgs,
+  createRandomCommitMessage
+} from './commit.js'
+import { createTmpDirectory } from './tmp.js'
 
-export function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
-
-function fixMessage(message?: string) {
-  let msg = message
-
-  if (!msg || typeof msg !== 'string') {
-    msg = 'Test commit'
-  }
-
-  // we need to escape backtick for bash but not for windows
-  // probably this should be done in git-dummy-commit or shelljs
-  if (process.platform !== 'win32') {
-    msg = msg.replace(/`/g, '\\`')
-  }
-
-  return `"${msg}"`
-}
-
-function prepareMessageArgs(msg: string | string[]) {
-  const args = []
-
-  if (Array.isArray(msg)) {
-    if (msg.length > 0) {
-      for (const m of msg) {
-        args.push('-m', fixMessage(m))
-      }
-    } else {
-      args.push('-m', fixMessage())
-    }
-  } else {
-    args.push('-m', fixMessage(msg))
-  }
-
-  return args
-}
-
-const commitTypes = [
-  'chore',
-  'test',
-  'ci',
-  'feat',
-  'refactor',
-  'style',
-  'docs'
-]
-
-function createRandomCommitMessage(index: number) {
-  const type = commitTypes[Math.round(Math.random() * (commitTypes.length - 1))]
-
-  return `${type}: commit message for ${type} #${index}`
-}
-
-export function through(
-  transform = (
-    chunk: string | Buffer,
-    _enc: string,
-    cb: (err: Error | null, chunk: string | Buffer) => void
-  ) => cb(null, chunk),
-  flush?: () => void
-) {
-  return new Transform({
-    transform,
-    flush
-  })
-}
-
-export function throughObj(
-  transform = (
-    chunk: string | Buffer,
-    _enc: string,
-    cb: (err: Error | null, chunk: string | Buffer) => void
-  ) => cb(null, chunk),
-  flush?: () => void
-) {
-  return new Transform({
-    objectMode: true,
-    highWaterMark: 16,
-    transform,
-    flush
-  })
-}
-
-export async function toArray<T>(iterable: Iterable<T> | AsyncIterable<T>): Promise<T[]> {
-  const array = []
-
-  for await (const item of iterable) {
-    array.push(item)
-  }
-
-  return array
-}
-
-export async function toString(iterable: Iterable<string | Buffer> | AsyncIterable<string | Buffer>) {
-  let string = ''
-
-  for await (const chunk of iterable) {
-    string += chunk.toString()
-  }
-
-  return string
-}
+const tmpDir = path.join(__dirname, 'tmp')
 
 export class TestTools {
   cwd: string
+  private readonly shouldCleanup: boolean
 
   constructor(cwd?: string) {
     if (cwd) {
       this.cwd = cwd
+      this.shouldCleanup = false
     } else {
-      /* eslint-disable */
-      this.cwd = fs.realpathSync(tmp.dirSync().name)
-      tmp.setGracefulCleanup()
-      /* eslint-enable */
+      this.cwd = createTmpDirectory(tmpDir)
+      this.shouldCleanup = true
     }
   }
 
   cleanup() {
+    if (!this.shouldCleanup) {
+      return
+    }
+
     try {
       this.rmSync(this.cwd, {
         recursive: true
       })
+
+      const otherDirs = fs.readdirSync(tmpDir)
+
+      if (!otherDirs.length) {
+        fs.rmdirSync(tmpDir)
+      }
     } catch (err) {
       // ignore
     }
@@ -219,7 +129,7 @@ export class TestTools {
   }
 
   gitCommit(msg: string | string[]) {
-    const args = prepareMessageArgs(msg)
+    const args = formatMessageArgs(msg)
 
     args.push(
       '--allow-empty',
