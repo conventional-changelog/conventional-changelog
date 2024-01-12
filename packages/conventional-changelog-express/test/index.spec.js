@@ -1,6 +1,6 @@
 import { describe, beforeEach, afterEach, it, expect } from 'vitest'
 import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/test-tools.ts'
+import { TestTools } from '../../../tools/index.ts'
 import preset from '../index.js'
 
 let testTools

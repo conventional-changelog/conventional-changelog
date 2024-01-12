@@ -3,7 +3,7 @@ import { Readable } from 'stream'
 import {
   toArray,
   toString
-} from '../../../tools/test-tools.js'
+} from '../../../tools/index.js'
 import {
   spawn,
   stdoutSpawn,

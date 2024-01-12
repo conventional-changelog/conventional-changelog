@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools } from '../../../../tools/test-tools.js'
+import { describe, beforeAll, afterAll, it, expect } from 'vitest'
+import { TestTools } from '../../../../tools/index.js'
 
 const CLI_PATH = path.join(__dirname, './index.ts')
 const FIXTURES_RELATIVE_PATH = path.join('..', '..', 'test', 'fixtures')
@@ -19,6 +19,10 @@ describe('conventional-changelog-writer', () => {
 
     beforeAll(() => {
       testTools = new TestTools(__dirname)
+    })
+
+    afterAll(() => {
+      testTools?.cleanup()
     })
 
     it('should work without context and options', async () => {

@@ -1,5 +1,5 @@
-import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools, toArray } from '../../../tools/test-tools.js'
+import { describe, beforeAll, afterAll, it, expect } from 'vitest'
+import { TestTools, toArray } from '../../../tools/index.js'
 import {
   ConventionalGitClient,
   packagePrefix
@@ -15,6 +15,10 @@ describe('git-client', () => {
       testTools.gitInitSimpleRepository()
 
       client = new ConventionalGitClient(testTools.cwd)
+    })
+
+    afterAll(() => {
+      testTools?.cleanup()
     })
 
     describe('getCommits', () => {

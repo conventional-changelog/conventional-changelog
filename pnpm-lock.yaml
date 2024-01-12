@@ -49,9 +49,6 @@ importers:
       safe-buffer:
         specifier: 5.2.1
         version: 5.2.1
-      tmp:
-        specifier: ^0.2.1
-        version: 0.2.1
       tsm:
         specifier: ^2.3.0
         version: 2.3.0
@@ -3878,13 +3875,6 @@ packages:
   /tinyspy@2.1.1:
     resolution: {integrity: sha512-XPJL2uSzcOyBMky6OFrusqWlzfFrXtE0hPuMgW8A2HmaqrPo4ZQHRN/V0QXN3FSjKxpsbRrFc5LI7KOwBsT1/w==}
     engines: {node: '>=14.0.0'}
-    dev: true
-
-  /tmp@0.2.1:
-    resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
-    engines: {node: '>=8.17.0'}
-    dependencies:
-      rimraf: 3.0.2
     dev: true
 
   /to-regex-range@5.0.1:

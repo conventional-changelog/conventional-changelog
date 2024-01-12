@@ -1,5 +1,5 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools } from '../../../tools/test-tools.ts'
+import { TestTools } from '../../../tools/index.ts'
 import { getSemverTags } from './index.js'
 
 let testTools
