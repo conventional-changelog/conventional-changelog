@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { delay, throughObj } from '../../../tools/test-tools.js'
+import { delay, throughObj } from '../../../tools/index.js'
 import { defaultCommitTransform } from './options.js'
 import { formatDate } from './utils.js'
 import {

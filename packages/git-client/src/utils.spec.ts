@@ -3,7 +3,7 @@ import { Readable } from 'stream'
 import {
   toArray,
   toString
-} from '../../../tools/test-tools.js'
+} from '../../../tools/index.js'
 import {
   spawn,
   stdoutSpawn,
@@ -82,6 +82,16 @@ describe('git-client', () => {
       it('should format arrays', () => {
         expect(formatArgs('git', ['log', ['']])).toEqual(['git', 'log'])
         expect(formatArgs('git', ['log', [null]])).toEqual(['git', 'log'])
+      })
+
+      it('should format params object', () => {
+        const date = new Date().toISOString()
+
+        expect(formatArgs('git', [
+          {
+            since: date
+          }
+        ])).toEqual(['git', `--since=${date}`])
       })
     })
   })

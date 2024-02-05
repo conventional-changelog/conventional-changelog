@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { Readable } from 'stream'
-import { toArray } from '../../../../tools/test-tools.js'
+import { toArray } from '../../../../tools/index.js'
 import { splitStream } from './utils.js'
 
 describe('conventional-commits-parser', () => {

@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/render-result-naming-convention */
 import { describe, it, expect } from 'vitest'
-import { delay } from '../../../tools/test-tools.js'
+import { delay } from '../../../tools/index.js'
 import type { CommitNote } from './types/index.js'
 import { getFinalContext } from './context.js'
 import { getFinalOptions } from './options.js'

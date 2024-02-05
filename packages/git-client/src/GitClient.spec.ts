@@ -1,5 +1,5 @@
-import { describe, beforeAll, it, expect } from 'vitest'
-import { TestTools, toArray, delay } from '../../../tools/test-tools.js'
+import { describe, beforeAll, afterAll, it, expect } from 'vitest'
+import { TestTools, toArray, delay } from '../../../tools/index.js'
 import { GitClient } from './GitClient.js'
 
 describe('git-client', () => {
@@ -12,6 +12,10 @@ describe('git-client', () => {
       testTools.gitInitSimpleRepository()
 
       client = new GitClient(testTools.cwd)
+    })
+
+    afterAll(() => {
+      testTools?.cleanup()
     })
 
     describe('getRawCommits', () => {
@@ -102,7 +106,9 @@ describe('git-client', () => {
         testTools.writeFileSync('test2', 'hello')
         testTools.exec('git add --all && git commit -m"chore: hello"')
 
-        const commitsStream = client.getRawCommits({}, ['--since', now])
+        const commitsStream = client.getRawCommits({
+          since: now
+        })
         const commits = await toArray(commitsStream)
 
         expect(commits).toEqual(['chore: hello\n\n'])
