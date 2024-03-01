@@ -530,7 +530,6 @@ describe('conventional-commits-parser', () => {
         const parser = new CommitParser({
           breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/
         })
-
         const commit = 'feat(hello/world)!: message'
         const result = parser.parse(commit)
 

@@ -182,10 +182,12 @@ export class CommitParser {
     const correspondence = options.headerCorrespondence || []
     const header = this.nextLine()
     let matches: RegExpMatchArray | null = null
+
     if (header) {
       if (options.breakingHeaderPattern) {
         matches = header.match(options.breakingHeaderPattern)
       }
+
       if (!matches && options.headerPattern) {
         matches = header.match(options.headerPattern)
       }
