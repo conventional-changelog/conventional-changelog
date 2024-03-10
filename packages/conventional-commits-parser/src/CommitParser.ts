@@ -199,9 +199,7 @@ export class CommitParser {
 
     if (matches) {
       correspondence.forEach((key, index) => {
-        if (matches) {
-          commit[key] = matches[index + 1] || null
-        }
+        commit[key] = matches![index + 1] || null
       })
     }
   }
