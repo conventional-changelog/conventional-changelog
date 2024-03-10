@@ -279,7 +279,7 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
     from: fromTag,
     merges: false,
     debug: options.debug,
-    ...config.gitRawCommitsOpts,
+    ...config.commits,
     ...gitRawCommitsOpts
   }
 
@@ -288,7 +288,7 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
   }
 
   parserOpts = {
-    ...config.parserOpts,
+    ...config.parser,
     warn: options.warn,
     ...parserOpts
   }
@@ -355,7 +355,7 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
       return context
     },
     debug: options.debug,
-    ...config.writerOpts,
+    ...config.writer,
     reverse: options.append,
     doFlush: options.outputUnreleased,
     ...writerOpts

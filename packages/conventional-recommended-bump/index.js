@@ -24,24 +24,16 @@ export default async function conventionalRecommendedBump (optionsArgument, pars
     config = await loadPreset(options.preset)
   }
 
-  const whatBump = options.whatBump ||
-    ((config.recommendedBumpOpts && config.recommendedBumpOpts.whatBump)
-      ? config.recommendedBumpOpts.whatBump
-      : noop)
+  const whatBump = options.whatBump || config.whatBump || noop
 
   if (typeof whatBump !== 'function') {
     throw Error('whatBump must be a function')
   }
 
-  // TODO: For now we defer to `config.recommendedBumpOpts.parserOpts` if it exists, as our initial refactor
-  // efforts created a `parserOpts` object under the `recommendedBumpOpts` object in each preset package.
-  // In the future we want to merge differences found in `recommendedBumpOpts.parserOpts` into the top-level
-  // `parserOpts` object and remove `recommendedBumpOpts.parserOpts` from each preset package if it exists.
-  const parserOpts = Object.assign({},
-    config.recommendedBumpOpts && config.recommendedBumpOpts.parserOpts
-      ? config.recommendedBumpOpts.parserOpts
-      : config.parserOpts,
-    parserOptsArgument)
+  const parserOpts = {
+    ...config.parser,
+    ...parserOptsArgument
+  }
 
   const warn = typeof parserOpts.warn === 'function' ? parserOpts.warn : noop
   const tags = await getSemverTags({

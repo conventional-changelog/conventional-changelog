@@ -19,11 +19,10 @@
   },
   "license": "ISC",
   "files": [
-    "conventionalChangelog.js",
-    "conventionalRecommendedBump.js",
+    "whatBump.js",
     "index.js",
-    "parserOpts.js",
-    "writerOpts.js",
+    "parser.js",
+    "writer.js",
     "templates"
   ],
   "bugs": {
