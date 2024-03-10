@@ -1,21 +1,14 @@
-import { createParserOpts } from './parserOpts.js'
-import { createWriterOpts } from './writerOpts.js'
-import { createConventionalChangelogOpts } from './conventionalChangelog.js'
-import { createConventionalRecommendedBumpOpts } from './conventionalRecommendedBump.js'
+import { createParserOpts } from './parser.js'
+import { createWriterOpts } from './writer.js'
+import { whatBump } from './whatBump.js'
 
 export default async function createPreset () {
-  const parserOpts = createParserOpts()
-  const writerOpts = await createWriterOpts()
-  const recommendedBumpOpts = createConventionalRecommendedBumpOpts(parserOpts)
-  const conventionalChangelog = createConventionalChangelogOpts(parserOpts, writerOpts)
-
   return {
-    gitRawCommitsOpts: {
+    commits: {
       noMerges: null
     },
-    parserOpts,
-    writerOpts,
-    recommendedBumpOpts,
-    conventionalChangelog
+    parser: createParserOpts(),
+    writer: await createWriterOpts(),
+    whatBump
   }
 }
