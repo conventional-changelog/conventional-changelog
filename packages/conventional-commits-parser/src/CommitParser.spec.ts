@@ -526,6 +526,18 @@ describe('conventional-commits-parser', () => {
         expect(commit.subject).not.toBeDefined()
       })
 
+      it('should parse header if the subject match breakingHeaderPattern', () => {
+        const parser = new CommitParser({
+          breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/
+        })
+        const commit = 'feat(hello/world)!: message'
+        const result = parser.parse(commit)
+
+        expect(result.type).toBe('feat')
+        expect(result.scope).toBe('hello/world')
+        expect(result.subject).toBe('message')
+      })
+
       it('should parse header', () => {
         const commit = customParser.parse(
           'feat(scope): broadcast $destroy event on scope destruction\n'
