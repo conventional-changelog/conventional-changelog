@@ -48,8 +48,12 @@ export class GitClient {
       from = '',
       to = 'HEAD',
       format = '%B',
+      ignore,
       ...restParams
     } = params
+    const shouldNotIgnore = ignore
+      ? (chunk: string) => !ignore.test(chunk)
+      : () => true
     const args = this.formatArgs(
       'log',
       `--format=${format}%n${SCISSOR}`,
@@ -64,7 +68,9 @@ export class GitClient {
     let chunk: string
 
     for await (chunk of commitsStream) {
-      yield chunk
+      if (shouldNotIgnore(chunk)) {
+        yield chunk
+      }
     }
   }
 
@@ -96,6 +102,15 @@ export class GitClient {
         yield tag
       }
     }
+  }
+
+  /**
+   * Get last tag.
+   * @param params - Additional git params.
+   * @returns Last tag, `null` if not found.
+   */
+  async getLastTag(params: Params = {}) {
+    return (await this.getTags(params).next()).value || null
   }
 
   /**
