@@ -61,18 +61,16 @@ export class ConventionalGitClient extends GitClient {
     params: GetCommitsParams & Params = {},
     parserOptions: ParserStreamOptions = {}
   ): AsyncIterable<Commit> {
+    const { filterReverts, ...gitLogParams } = params
     const [parseCommits, filterRevertedCommits] = await this.loadDeps()
 
-    if (params.filterReverts) {
-      yield* filterRevertedCommits(this.getCommits({
-        filterReverts: false,
-        ...params
-      }, parserOptions))
+    if (filterReverts) {
+      yield* filterRevertedCommits(this.getCommits(gitLogParams, parserOptions))
       return
     }
 
     const parse = parseCommits(parserOptions)
-    const commitsStream = this.getRawCommits(params)
+    const commitsStream = this.getRawCommits(gitLogParams)
 
     yield* parse(commitsStream)
   }
@@ -85,7 +83,7 @@ export class ConventionalGitClient extends GitClient {
    * @param params.clean - Clean version from prefix and trash.
    * @yields Semver tags.
    */
-  async* getSemverTags(params: GetSemverTagsParams = {}) {
+  async* getSemverTags(params: GetSemverTagsParams & Params = {}) {
     const {
       prefix,
       skipUnstable,
@@ -129,6 +127,15 @@ export class ConventionalGitClient extends GitClient {
         }
       }
     }
+  }
+
+  /**
+   * Get last semver tag.
+   * @param params - getSemverTags params.
+   * @returns Last semver tag, `null` if not found.
+   */
+  async getLastSemverTag(params: GetSemverTagsParams & Params = {}) {
+    return (await this.getSemverTags(params).next()).value || null
   }
 
   /**

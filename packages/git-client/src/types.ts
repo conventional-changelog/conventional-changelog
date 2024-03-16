@@ -15,6 +15,10 @@ export interface GitLogParams {
    * Commits format.
    */
   format?: string
+  /**
+   * Pattern to filter commits.
+   */
+  ignore?: RegExp
 }
 
 export interface GetCommitsParams extends GitLogParams {

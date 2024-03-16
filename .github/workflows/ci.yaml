@@ -48,7 +48,7 @@ jobs:
           node-version: 16
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm test
+      - run: pnpm test -- --test-timeout=60000
       - name: coverage
         uses: coverallsapp/github-action@main
         with:

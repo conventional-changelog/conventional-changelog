@@ -143,7 +143,7 @@ function formatParams(params: Params) {
           for (arrayValue of value) {
             args.push(formatKeyValue(key, arrayValue))
           }
-        } else {
+        } else if (value) {
           args.push(formatKeyValue(key, value))
         }
   }

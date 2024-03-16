@@ -29,20 +29,16 @@ function getFinalOptions (options = {}) {
  * @yields {string} - Raw commit.
  */
 export async function * getRawCommits (options) {
-  const { cwd, debug, ignore, ...finalOptions } = getFinalOptions(options)
-  const ignoreRegex = typeof ignore === 'string'
-    ? new RegExp(ignore)
-    : ignore
-  const shouldNotIgnore = ignoreRegex
-    ? chunk => !ignoreRegex.test(chunk.toString())
-    : () => true
+  const { cwd, debug, ...finalOptions } = getFinalOptions(options)
   const client = new GitClient(cwd, debug)
   let commit
 
+  if (typeof finalOptions.ignore === 'string') {
+    finalOptions.ignore = new RegExp(finalOptions.ignore)
+  }
+
   for await (commit of client.getRawCommits(finalOptions)) {
-    if (shouldNotIgnore(commit)) {
-      yield commit
-    }
+    yield commit
   }
 }
 
