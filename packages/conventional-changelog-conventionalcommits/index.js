@@ -9,7 +9,7 @@ export default async function createPreset (config) {
   return {
     commits: {
       ignore: config?.ignoreCommits,
-      noMerges: null
+      merges: false
     },
     parser: createParserOpts(config),
     writer: await createWriterOpts(config),

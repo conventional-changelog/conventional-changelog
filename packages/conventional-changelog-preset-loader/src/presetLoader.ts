@@ -89,7 +89,7 @@ async function loadWithFallbacks<T extends object>(moduleLoader: ModuleLoader<T>
  */
 export function createPresetLoader(moduleLoader: PresetModuleLoader) {
   return async function loadPreset<
-    Preset extends UnknownPreset = UnknownPreset,
+    Preset = UnknownPreset,
     PresetCreatorParams extends UnknownPresetCreatorParams = UnknownPresetCreatorParams
   >(presetOrParams: PresetParams<PresetCreatorParams>) {
     let preset = ''

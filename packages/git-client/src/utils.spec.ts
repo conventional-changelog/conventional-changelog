@@ -22,7 +22,7 @@ describe('git-client', () => {
 
       it('should throw error from stderr', async () => {
         await expect(spawn('git', ['spawn-unknown'])).rejects.toThrow()
-      }, 1000 * 10)
+      })
 
       it('should throw error from process', async () => {
         await expect(spawn('unknown', ['unknown'])).rejects.toThrow()

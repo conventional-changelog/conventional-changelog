@@ -1,0 +1,11 @@
+{
+  "extends": [
+    "@trigen/eslint-config/typescript",
+    "@trigen/eslint-config/typescript-requiring-type-checking",
+    "@trigen/eslint-config/jest"
+  ],
+  "parserOptions": {
+    "tsconfigRootDir": "./packages/conventional-recommended-bump",
+    "project": ["./tsconfig.json", "./test/tsconfig.json"]
+  }
+}

@@ -1,190 +1,102 @@
 # conventional-recommended-bump
 
-> Get a recommended version bump based on conventional commits.
+[![ESM-only package][package]][package-url]
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 
-Got the idea from https://github.com/conventional-changelog/conventional-changelog/pull/29
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
 
-## Table of Contents
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+[npm]: https://img.shields.io/npm/v/conventional-recommended-bump.svg
+[npm-url]: https://npmjs.com/package/conventional-recommended-bump
 
+[node]: https://img.shields.io/node/v/conventional-recommended-bump.svg
+[node-url]: https://nodejs.org
 
-- [Install](#install)
-- [Usage](#usage)
-- [API](#api)
-    - [options](#options)
-      - [ignoreReverted](#ignorereverted)
-      - [preset](#preset)
-      - [config](#config)
-      - [whatBump](#whatbump)
-      - [tagPrefix](#tagprefix)
-      - [skipUnstable](#skipunstable)
-      - [lernaPackage](#lernapackage)
-      - [path](#path)
-    - [parserOpts](#parseropts)
-    - [callback](#callback)
-- [License](#license)
+[deps]: https://img.shields.io/librariesio/release/npm/conventional-recommended-bump
+[deps-url]: https://libraries.io/npm/conventional-recommended-bump/tree
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+[size]: https://packagephobia.com/badge?p=conventional-recommended-bump
+[size-url]: https://packagephobia.com/result?p=conventional-recommended-bump
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+Get a recommended version bump based on conventional commits.
+
+> Got the idea from https://github.com/conventional-changelog/conventional-changelog/pull/29
+
+<hr />
+<a href="#install">Install</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#usage">Usage</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#api">API</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#cli">CLI</a>
+<br />
+<hr />
 
 ## Install
 
 ```bash
-npm install conventional-recommended-bump
+# pnpm
+pnpm add conventional-recommended-bump
+# yarn
+yarn add conventional-recommended-bump
+# npm
+npm i conventional-recommended-bump
 ```
 
 ## Usage
 
-```javascript
-import conventionalRecommendedBump from 'conventional-recommended-bump';
+```js
+import { Bumper } from 'conventional-recommended-bump'
 
-const recommendation = await conventionalRecommendedBump({
-  preset: `angular`
-});
+const bumper = new Bumper(process.cwd()).loadPreset('angular')
+const recommendation = await bumper.bump()
 
-console.log(recommendation.releaseType); // 'major'
-```
-
-```bash
-npm install --global conventional-recommended-bump
-conventional-recommended-bump --help
+console.log(recommendation.releaseType) // 'major'
 ```
 
 ## API
 
-```javascript
-conventionalRecommendedBump(options, [parserOpts,] callback);
+### `new Bumper(cwdOrGitClient: string | ConventionalGitClient = process.cwd())`
+
+Create a new Bumper instance. `cwdOrGitClient` is the current working directory or a `ConventionalGitClient` instance.
+
+### `bumper.tag(paramsOrTag: GetSemverTagsParams & Params | string): this`
+
+Set params to get the last semver tag or set the tag directly.
+
+### `bumper.commits(params: GetCommitsParams & Params, parserOptions?: ParserStreamOptions): this`
+
+Set params to get the commits.
+
+### `bumper.commits(commits: Iterable<Commit> | AsyncIterable<Commit>): this`
+
+Set the commits directly.
+
+### `bumper.loadPreset(preset: PresetParams): this`
+
+Load and set necessary params from a preset.
+
+### `bumper.bump(whatBump?: (commits: Commit[]) => Promise<BumperRecommendation | null | undefined>): Promise<BumperRecommendation>`
+
+Get a recommended version bump based on conventional commits. `whatBump` function is required if preset is not loaded.
+
+## CLI
+
+```sh
+$ conventional-recommended-bump --help
 ```
-
-`parserOpts` is optional.
-
-In the case you don't want to provide `parserOpts`, then `callback` must be provided as the second argument.
-
-#### options
-
-`options` is an object with the following properties:
-
-* ignoreReverted
-* preset
-* config
-* whatBump
-
-##### ignoreReverted
-
-**Type:** `boolean` **Default:** `true`
-
-If `true`, reverted commits will be ignored.
-
-##### preset
-
-**Type:** `string`
-
-It's recommended to use a preset so you don't have to define everything yourself.
-
-The value is passed to [`conventional-changelog-preset-loader`](https://www.npmjs.com/package/conventional-changelog-preset-loader).
-
-##### config
-
-**Type:** `object`
-
-This should serve as default values for other arguments of `conventional-recommended-bump` so you don't need to rewrite the same or similar config across your projects.
-
-**NOTE:** `config` option will be overwritten by the value loaded by `conventional-changelog-preset-loader` if the `preset` options is set.
-
-##### whatBump
-
-**Type:** `function`
-
-A function that takes parsed commits as an argument.
-
-```javascript
-whatBump(commits) {};
-```
-
-`commits` is an array of all commits from last semver tag to `HEAD` as parsed by [conventional-commits-parser](https://github.com/conventional-changelog/conventional-commits-parser)
-
-This should return an object including but not limited to `level` and `reason`. `level` is a `number` indicating what bump it should be and `reason` is the reason of such release.
-
-##### tagPrefix
-
-**Type:** `string`
-
-Specify a prefix for the git tag that will be taken into account during the comparison.
-
-For instance if your version tag is prefixed by `version/` instead of `v` you would specifying `--tagPrefix=version/` using the CLI, or `version/` as the value of the `tagPrefix` option.
-
-##### skipUnstable
-
-**Type:** `boolean`
-
-If true, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
-
-##### lernaPackage
-
-**Type:** `string`
-
-Specify the name of a package in a [Lerna](https://lernajs.io/)-managed repository. The package name will be used when fetching all changes to a package since the last time that package was released.
-
-For instance if your project contained a package named `conventional-changelog`, you could have only commits that have happened since the last release of `conventional-changelog` was tagged by specifying `--lernaPackage=conventional-changelog` using the CLI, or `conventional-changelog` as the value of the `lernaPackage` option.
-
-##### path
-
-**Type:** `string`
-
-Specify the path to only calculate with git commits related to the path. If you want to calculate recommended bumps of packages in a [Lerna](https://lernajs.io/)-managed repository, `path` should be use along with `lernaPackage` for each of the package.
-
-#### parserOpts
-
-**Type:** `object`
-
-See the [conventional-commits-parser](https://github.com/conventional-changelog/conventional-commits-parser) documentation for available options.
-
-#### callback
-
-**Type:** `function`
-
-```javascript
-callback(error, recommendation) {};
-```
-
-`recommendation` is an `object` with a single property, `releaseType`.
-
-`releaseType` is a `string`: Possible values: `major`, `minor` and `patch`, or `undefined` if `whatBump` does not return sa valid `level` property, or the `level` property is not set by `whatBump`.
-
-## Debugging
-
-To assist users of `conventional-recommended-bump` with debugging the behavior of this module we use the [debug](https://www.npmjs.com/package/debug) utility package to print information about the release process to the console. To enable debug message printing, the environment variable `DEBUG`, which is the variable used by the `debug` package, must be set to a value configured by the package containing the debug messages to be printed.
-
-To print debug messages on a unix system set the environment variable `DEBUG` with the name of this package prior to executing `conventional-recommended-bump`:
-
-```bash
-DEBUG=conventional-recommended-bump conventional-recommended-bump
-```
-
-On the Windows command line you may do:
-
-```bash
-set DEBUG=conventional-recommended-bump
-conventional-recommended-bump
-```
-
-## Node Support Policy
-
-We only support [Long-Term Support](https://github.com/nodejs/Release) versions of Node.
-
-We specifically limit our support to LTS versions of Node, not because this package won't work on other versions, but because we have a limited amount of time, and supporting LTS offers the greatest return on that investment.
-
-It's possible this package will work correctly on newer versions of Node. It may even be possible to use this package on older versions of Node, though that's more unlikely as we'll make every effort to take advantage of features available in the oldest LTS version we support.
-
-As each Node LTS version reaches its end-of-life we will remove that version from the `node` `engines` property of our package's `package.json` file. Removing a Node version is considered a breaking change and will entail the publishing of a new major version of this package. We will not accept any requests to support an end-of-life version of Node. Any merge requests or issues supporting an end-of-life version of Node will be closed.
-
-We will accept code that allows this package to run on newer, non-LTS, versions of Node. Furthermore, we will attempt to ensure our own changes work on the latest version of Node. To help in that commitment, our continuous integration setup runs against all LTS versions of Node in addition the most recent Node release; called _current_.
-
-JavaScript package managers should allow you to install this package with any version of Node, with, at most, a warning if your version of Node does not fall within the range specified by our `node` `engines` property. If you encounter issues installing this package, please report the issue to your package manager.
-
-## Contributing
-
-Please read our [contributing guide](https://github.com/conventional-changelog/conventional-changelog/blob/master/CONTRIBUTING.md) to see how you may contribute to this project.
 
 ## License
 
