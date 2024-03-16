@@ -5,7 +5,7 @@ import { whatBump } from './whatBump.js'
 export default async function createPreset () {
   return {
     commits: {
-      noMerges: null
+      merges: false
     },
     parser: createParserOpts(),
     writer: await createWriterOpts(),

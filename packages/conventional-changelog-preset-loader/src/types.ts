@@ -17,7 +17,7 @@ export type UnknownPresetCreatorParams = Record<string, unknown>
 export type UnknownPreset = Record<string, unknown>
 
 export type PresetCreator<
-  Preset extends UnknownPreset = UnknownPreset,
+  Preset = UnknownPreset,
   Params extends UnknownPresetCreatorParams = UnknownPresetCreatorParams
 > = ((params?: Params) => Preset) | ((params?: Params) => Promise<Preset>)
 

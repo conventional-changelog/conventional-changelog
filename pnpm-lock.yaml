@@ -220,6 +220,9 @@ importers:
 
   packages/conventional-recommended-bump:
     dependencies:
+      '@conventional-changelog/git-client':
+        specifier: workspace:^
+        version: link:../git-client
       conventional-changelog-preset-loader:
         specifier: workspace:^
         version: link:../conventional-changelog-preset-loader
@@ -229,12 +232,6 @@ importers:
       conventional-commits-parser:
         specifier: workspace:^
         version: link:../conventional-commits-parser
-      git-raw-commits:
-        specifier: workspace:^
-        version: link:../git-raw-commits
-      git-semver-tags:
-        specifier: workspace:^
-        version: link:../git-semver-tags
       meow:
         specifier: ^12.0.1
         version: 12.1.1

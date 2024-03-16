@@ -1,10 +1,10 @@
-import type { ParserOptions } from '../types.js'
+import type { ParserStreamOptions } from '../types.js'
 
 function trim(str: string) {
   return str.trim()
 }
 
-export function parseOptions(options: Record<string, unknown>): ParserOptions {
+export function parseOptions(options: Record<string, unknown>): ParserStreamOptions {
   if (typeof options.headerPattern === 'string') {
     options.headerPattern = new RegExp(options.headerPattern)
   }
