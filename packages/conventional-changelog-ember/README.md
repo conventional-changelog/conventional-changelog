@@ -1,10 +1,15 @@
 # conventional-changelog-ember
 
+[![ESM-only package][package]][package-url]
 [![NPM version][npm]][npm-url]
 [![Node version][node]][node-url]
 [![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
+
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
 
 [npm]: https://img.shields.io/npm/v/conventional-changelog-ember.svg
 [npm-url]: https://npmjs.com/package/conventional-changelog-ember
@@ -14,6 +19,9 @@
 
 [deps]: https://img.shields.io/librariesio/release/npm/conventional-changelog-ember
 [deps-url]: https://libraries.io/npm/conventional-changelog-ember/tree
+
+[size]: https://packagephobia.com/badge?p=conventional-changelog-ember
+[size-url]: https://packagephobia.com/result?p=conventional-changelog-ember
 
 [build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
 [build-url]: https://github.com/conventional-changelog/conventional-changelog/actions

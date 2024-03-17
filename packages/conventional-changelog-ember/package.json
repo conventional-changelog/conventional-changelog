@@ -3,30 +3,27 @@
   "type": "module",
   "version": "4.0.0",
   "description": "conventional-changelog ember preset",
-  "exports": "./index.js",
+  "author": "Steve Mao",
+  "license": "ISC",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-ember#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-changelog-ember"
+  },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
   "keywords": [
     "conventional-changelog",
     "ember",
     "preset"
   ],
-  "author": "Steve Mao",
   "engines": {
     "node": ">=16"
   },
-  "license": "ISC",
+  "exports": "./src/index.js",
   "files": [
-    "whatBump.js",
-    "index.js",
-    "parser.js",
-    "writer.js",
-    "templates"
-  ],
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-ember#readme"
+    "src"
+  ]
 }
