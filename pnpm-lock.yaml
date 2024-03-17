@@ -14,8 +14,8 @@ importers:
   .:
     devDependencies:
       '@trigen/eslint-config':
-        specifier: 8.0.0-alpha.29
-        version: 8.0.0-alpha.29(eslint@8.50.0)(typescript@5.2.2)
+        specifier: 8.0.0-alpha.31
+        version: 8.0.0-alpha.31(eslint@8.50.0)(typescript@5.2.2)
       '@types/node':
         specifier: ^20.5.9
         version: 20.6.5
@@ -711,8 +711,8 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@trigen/eslint-config@8.0.0-alpha.29(eslint@8.50.0)(typescript@5.2.2):
-    resolution: {integrity: sha512-t9ZBeQOzj578xFa8esCEsR82x4jvyAvxFHMwXutweg/VAIaTkqqRtNOou7CVvA5NB2ATCzlrt93yRVs91YIqWg==}
+  /@trigen/eslint-config@8.0.0-alpha.31(eslint@8.50.0)(typescript@5.2.2):
+    resolution: {integrity: sha512-EL6KrSXXgJjjnSuBtIKkD5+TApcOUv/pETuXnAhP/nToLaAq4ltqPyCfOu6YJdYzbOqzWptUxe3BOS4P0TRzTA==}
     engines: {node: '>=10'}
     peerDependencies:
       '@testing-library/dom': '>=8.0.0'
