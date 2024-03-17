@@ -36,7 +36,7 @@
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "workspace:^",
-    "meow": "^12.0.1",
+    "meow": "^13.0.0",
     "tempfile": "^5.0.0"
   },
   "license": "MIT"
