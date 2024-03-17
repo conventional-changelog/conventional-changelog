@@ -3,34 +3,29 @@
   "type": "module",
   "version": "7.0.2",
   "description": "conventional-changelog conventionalcommits.org preset",
-  "exports": "./index.js",
+  "author": "Ben Coe",
+  "license": "ISC",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-changelog-conventionalcommits"
+  },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
   "keywords": [
     "conventional-changelog",
     "conventionalcommits.org",
     "preset"
   ],
-  "files": [
-    "utils.js",
-    "whatBump.js",
-    "index.js",
-    "parser.js",
-    "writer.js",
-    "templates",
-    "constants.js"
-  ],
-  "author": "Ben Coe",
   "engines": {
     "node": ">=16"
   },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",
+  "exports": "./src/index.js",
+  "files": [
+    "src"
+  ],
   "dependencies": {
     "compare-func": "^2.0.0"
   }

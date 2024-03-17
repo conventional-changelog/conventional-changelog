@@ -3,7 +3,7 @@ import { afterAll, describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import conventionalChangelogCore from 'conventional-changelog-core'
 import { TestTools } from '../../../tools/index.ts'
-import preset from '../index.js'
+import preset from '../src/index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
 let testTools
