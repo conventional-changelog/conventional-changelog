@@ -46,7 +46,7 @@
   },
   "version": "1.0.0",
   "devDependencies": {
-    "@trigen/eslint-config": "8.0.0-alpha.29",
+    "@trigen/eslint-config": "8.0.0-alpha.32",
     "@types/node": "^20.5.9",
     "@vitest/coverage-v8": "^0.34.0",
     "better-than-before": "^1.0.0",
