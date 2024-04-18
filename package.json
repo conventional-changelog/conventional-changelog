@@ -29,7 +29,10 @@
       ":automergeDigest",
       ":gitSignOff",
       ":preserveSemverRanges"
-    ]
+    ],
+    "constraints": {
+      "pnpm": "^8.7.5"
+    }
   },
   "repository": {
     "type": "git",
