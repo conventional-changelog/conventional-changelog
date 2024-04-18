@@ -8,7 +8,7 @@
   "bugs": "https://github.com/conventional-changelog/conventional-changelog/issues",
   "description": "Generate a changelog from git metadata",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "files": [],
   "homepage": "https://github.com/conventional-changelog/conventional-changelog#readme",
