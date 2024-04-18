@@ -39,6 +39,6 @@
   ],
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
-    "meow": "^12.0.1"
+    "meow": "^13.0.0"
   }
 }

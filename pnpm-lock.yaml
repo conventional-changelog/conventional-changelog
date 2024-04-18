@@ -113,8 +113,8 @@ importers:
         specifier: workspace:^
         version: link:../conventional-changelog
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
       tempfile:
         specifier: ^5.0.0
         version: 5.0.0
@@ -199,8 +199,8 @@ importers:
         specifier: ^4.7.7
         version: 4.7.8
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
       semver:
         specifier: ^7.5.2
         version: 7.5.4
@@ -210,8 +210,8 @@ importers:
   packages/conventional-commits-parser:
     dependencies:
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
 
   packages/conventional-recommended-bump:
     dependencies:
@@ -228,8 +228,8 @@ importers:
         specifier: workspace:^
         version: link:../conventional-commits-parser
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
     devDependencies:
       conventional-changelog-conventionalcommits:
         specifier: workspace:^
@@ -257,8 +257,8 @@ importers:
         specifier: workspace:^
         version: link:../git-client
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
 
   packages/git-semver-tags:
     dependencies:
@@ -266,8 +266,8 @@ importers:
         specifier: workspace:^
         version: link:../git-client
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
 
   packages/gulp-conventional-changelog:
     dependencies:
@@ -296,8 +296,8 @@ importers:
         specifier: workspace:^
         version: link:../conventional-changelog-core
       meow:
-        specifier: ^12.0.1
-        version: 12.1.1
+        specifier: ^13.0.0
+        version: 13.2.0
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
@@ -3196,9 +3196,9 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
-  /meow@12.1.1:
-    resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
-    engines: {node: '>=16.10'}
+  /meow@13.2.0:
+    resolution: {integrity: sha512-pxQJQzB6djGPXh08dacEloMFopsOqGVRKFPYvPOt9XDZ1HasbgDZA74CJGreSU4G3Ak7EFJGoiH2auq+yXISgA==}
+    engines: {node: '>=18'}
     dev: false
 
   /merge-stream@2.0.0:

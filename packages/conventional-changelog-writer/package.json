@@ -55,7 +55,7 @@
     "@types/semver": "^7.5.5",
     "conventional-commits-filter": "workspace:^",
     "handlebars": "^4.7.7",
-    "meow": "^12.0.1",
+    "meow": "^13.0.0",
     "semver": "^7.5.2"
   }
 }
