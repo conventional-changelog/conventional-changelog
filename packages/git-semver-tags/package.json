@@ -27,7 +27,7 @@
     "git"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "bin": {
     "git-semver-tags": "./src/cli.js"

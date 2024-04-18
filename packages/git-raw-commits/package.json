@@ -28,7 +28,7 @@
     "git-log"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "bin": {
     "git-raw-commits": "./src/cli.js"

@@ -25,7 +25,7 @@
     "bump"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "exports": "./src/index.ts",
   "publishConfig": {
