@@ -63,10 +63,5 @@
     "vinyl": "^3.0.0",
     "vite": "^4.4.4",
     "vitest": "^1.0.0"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "v8-to-istanbul@9.1.0": "patches/v8-to-istanbul@9.1.0.patch"
-    }
   }
 }

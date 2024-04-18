@@ -33,17 +33,17 @@ describe('conventional-changelog-core', () => {
 
     it('should return default options if empty options is passed', async () => {
       const { options } = await mergeConfig({})
-      expect(options).toContain(defaultOptions)
+      expect(options).toMatchObject(defaultOptions)
     })
 
     it('should return default options when no options is passed', async () => {
       const { options } = await mergeConfig()
-      expect(options).toContain(defaultOptions)
+      expect(options).toMatchObject(defaultOptions)
     })
 
     it('should return default options when null is passed', async () => {
       const { options } = await mergeConfig(null)
-      expect(options).toContain(defaultOptions)
+      expect(options).toMatchObject(defaultOptions)
     })
 
     it('should return default options when undefined value is passed', async () => {
@@ -55,7 +55,7 @@ describe('conventional-changelog-core', () => {
         outputUnreleased: undefined
       }
       const config = await mergeConfig(options)
-      expect(config.options).toContain(defaultOptions)
+      expect(config.options).toMatchObject(defaultOptions)
     })
   })
 })
