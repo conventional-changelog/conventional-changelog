@@ -116,7 +116,7 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
         return parsePackage(json)
       })
     } else {
-      pkgPromise = import('read-pkg-up').then(async ({ readPackageUp }) => {
+      pkgPromise = import('read-package-up').then(async ({ readPackageUp }) => {
         const { packageJson } = await readPackageUp({ cwd: options.cwd })
 
         return packageJson
