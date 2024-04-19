@@ -21,19 +21,6 @@
   "main": "",
   "name": "conventional-changelog-monorepo",
   "private": true,
-  "renovate": {
-    "extends": [
-      "config:base",
-      ":maintainLockFilesWeekly",
-      ":rebaseStalePrs",
-      ":automergeDigest",
-      ":gitSignOff",
-      ":preserveSemverRanges"
-    ],
-    "constraints": {
-      "pnpm": "^8.7.5"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git"
@@ -41,18 +28,25 @@
   "scripts": {
     "clear": "pnpm -r --parallel --if-present clear && del ./coverage",
     "build": "pnpm -r --parallel --if-present build",
-    "lint": "eslint . --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
-    "fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/ --ignore-path .gitignore",
+    "lint": "eslint '*.{js,cjs}' 'packages/**/*.{js,cjs,ts}'",
+    "format": "pnpm lint --fix",
+    "test:types": "pnpm -r --parallel --if-present test:types",
     "test:watch": "vitest watch",
     "test": "vitest run --coverage",
-    "test:types": "pnpm -r --parallel --if-present test:types"
+    "commit": "cz",
+    "updateGitHooks": "simple-git-hooks"
   },
   "version": "1.0.0",
   "devDependencies": {
+    "@commitlint/cli": "^19.2.2",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/config-pnpm-scopes": "^19.1.0",
+    "@commitlint/cz-commitlint": "^19.2.0",
     "@trigen/eslint-config": "8.0.0-alpha.32",
     "@types/node": "^20.5.9",
     "@vitest/coverage-v8": "^1.0.0",
     "better-than-before": "^1.0.0",
+    "commitizen": "^4.3.0",
     "conventional-changelog-core": "workspace:^",
     "del-cli": "^5.1.0",
     "eslint": "^8.0.0",
@@ -60,7 +54,10 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
     "eslint-plugin-promise": "^6.0.0",
+    "inquirer": "^9.2.19",
+    "nano-staged": "^0.8.0",
     "safe-buffer": "5.2.1",
+    "simple-git-hooks": "^2.11.1",
     "tsm": "^2.3.0",
     "typescript": "^5.2.2",
     "vinyl": "^3.0.0",
