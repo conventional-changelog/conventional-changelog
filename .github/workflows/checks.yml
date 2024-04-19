@@ -1,0 +1,31 @@
+name: Checks
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  editorconfig:
+    runs-on: ubuntu-latest
+    name: editorconfig
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Check editorconfig
+        uses: editorconfig-checker/action-editorconfig-checker@main
+  package-json:
+    runs-on: ubuntu-latest
+    name: package.json
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Check package.json files
+        run: pnpm --package=@trigen/lint-package-json dlx lint-package-json --monorepo

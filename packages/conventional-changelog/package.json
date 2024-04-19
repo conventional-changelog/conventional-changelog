@@ -2,25 +2,8 @@
   "name": "conventional-changelog",
   "type": "module",
   "version": "5.1.0",
-  "description": "Generate a changelog from git metadata",
-  "exports": "./index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
-  },
-  "keywords": [
-    "conventional-changelog",
-    "conventional",
-    "changelog",
-    "log"
-  ],
-  "engines": {
-    "node": ">=18"
-  },
-  "license": "MIT",
-  "files": [
-    "index.js"
-  ],
+  "description": "Generate a changelog from git metadata.",
+  "author": "Steve Mao",
   "contributors": [
     {
       "name": "Brian Ford"
@@ -32,10 +15,29 @@
       "name": "Andrew Joslin"
     }
   ],
+  "license": "MIT",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-changelog"
+  },
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#readme",
+  "keywords": [
+    "conventional-changelog",
+    "conventional",
+    "changelog",
+    "log"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "exports": "./index.js",
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "conventional-changelog-angular": "workspace:^",
     "conventional-changelog-atom": "workspace:^",

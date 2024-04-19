@@ -3,7 +3,9 @@
   "type": "module",
   "version": "4.1.0",
   "description": "Configuration preset loader for `conventional-changelog`.",
+  "author": "Hutson Betts",
   "license": "MIT",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",
@@ -12,7 +14,6 @@
   "bugs": {
     "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
   "keywords": [
     "conventional-changelog",
     "preset",

@@ -2,11 +2,17 @@
   "name": "conventional-changelog-core",
   "type": "module",
   "version": "7.0.0",
-  "description": "conventional-changelog core",
-  "exports": "./index.js",
+  "description": "Core package of conventional-changelog.",
+  "author": "Steve Mao",
+  "license": "MIT",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/conventional-changelog/conventional-changelog.git"
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/conventional-changelog-core"
+  },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
   },
   "keywords": [
     "conventional-changelog",
@@ -17,16 +23,12 @@
   "engines": {
     "node": ">=18"
   },
-  "license": "MIT",
+  "exports": "./index.js",
   "files": [
     "index.js",
     "lib",
     "hosts"
   ],
-  "bugs": {
-    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
-  },
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-core#readme",
   "dependencies": {
     "@hutson/parse-repository-url": "^5.0.0",
     "add-stream": "^1.0.0",

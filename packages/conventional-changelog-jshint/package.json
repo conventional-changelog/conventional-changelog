@@ -2,7 +2,7 @@
   "name": "conventional-changelog-jshint",
   "type": "module",
   "version": "4.0.0",
-  "description": "conventional-changelog jshint preset",
+  "description": "JSHint preset for conventional-changelog.",
   "author": "Steve Mao",
   "license": "ISC",
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-jshint#readme",
