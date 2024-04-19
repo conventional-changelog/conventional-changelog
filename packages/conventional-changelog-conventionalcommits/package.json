@@ -2,7 +2,7 @@
   "name": "conventional-changelog-conventionalcommits",
   "type": "module",
   "version": "7.0.2",
-  "description": "conventional-changelog conventionalcommits.org preset",
+  "description": "Conventionalcommits.org preset for conventional-changelog.",
   "author": "Ben Coe",
   "license": "ISC",
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",

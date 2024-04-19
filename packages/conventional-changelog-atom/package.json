@@ -2,7 +2,7 @@
   "name": "conventional-changelog-atom",
   "type": "module",
   "version": "4.0.0",
-  "description": "conventional-changelog atom preset",
+  "description": "Atom preset for conventional-changelog.",
   "author": "Steve Mao",
   "license": "ISC",
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-atom#readme",

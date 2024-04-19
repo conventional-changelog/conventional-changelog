@@ -2,7 +2,7 @@
   "name": "conventional-changelog-eslint",
   "type": "module",
   "version": "5.0.0",
-  "description": "conventional-changelog eslint preset",
+  "description": "ESLint preset for conventional-changelog.",
   "author": "Steve Mao",
   "license": "ISC",
   "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-eslint#readme",
