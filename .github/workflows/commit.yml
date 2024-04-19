@@ -1,0 +1,25 @@
+name: Commit
+on:
+  push:
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    name: commitlint
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run commitlint
+        run: pnpm commitlint --from=HEAD~1

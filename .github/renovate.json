@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges"
+  ],
+  "constraints": {
+    "pnpm": "^8.7.5"
+  }
+}
