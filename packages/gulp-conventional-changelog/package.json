@@ -27,9 +27,18 @@
   "engines": {
     "node": ">=18"
   },
+  "publishConfig": {
+    "directory": "package",
+    "linkDirectory": false
+  },
   "files": [
     "index.js"
   ],
+  "scripts": {
+    "clear": "del ./package",
+    "prepublishOnly": "run clear clean-publish",
+    "postpublish": "pnpm clear"
+  },
   "dependencies": {
     "add-stream": "^1.0.0",
     "concat-stream": "^2.0.0",

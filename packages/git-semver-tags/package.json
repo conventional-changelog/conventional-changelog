@@ -33,10 +33,18 @@
     "git-semver-tags": "./src/cli.js"
   },
   "exports": "./src/index.js",
+  "publishConfig": {
+    "directory": "package",
+    "linkDirectory": false
+  },
   "files": [
-    "src",
-    "!**/*.spec.js"
+    "src"
   ],
+  "scripts": {
+    "clear": "del ./package",
+    "prepublishOnly": "run clear clean-publish",
+    "postpublish": "pnpm clear"
+  },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
     "meow": "^13.0.0"

@@ -37,14 +37,19 @@
     "exports": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "directory": "package",
+    "linkDirectory": false
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "clear": "del ./dist",
-    "prepublishOnly": "pnpm build",
+    "clear:package": "del ./package",
+    "clear:dist": "del ./dist",
+    "clear": "del ./package ./dist",
+    "prepublishOnly": "run build clear:package clean-publish",
+    "postpublish": "pnpm clear:package",
     "build": "tsc",
     "test:types": "tsc --noEmit"
   },

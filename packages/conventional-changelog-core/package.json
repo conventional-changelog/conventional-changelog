@@ -24,11 +24,21 @@
     "node": ">=18"
   },
   "exports": "./index.js",
+  "publishConfig": {
+    "directory": "package",
+    "linkDirectory": false
+  },
   "files": [
     "index.js",
     "lib",
     "hosts"
   ],
+  "scripts": {
+    "clear:package": "del ./package",
+    "clear": "del ./package",
+    "prepublishOnly": "run clear:package clean-publish",
+    "postpublish": "pnpm clear:package"
+  },
   "dependencies": {
     "@hutson/parse-repository-url": "^5.0.0",
     "add-stream": "^1.0.0",

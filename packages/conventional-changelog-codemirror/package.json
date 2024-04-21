@@ -23,7 +23,16 @@
     "node": ">=18"
   },
   "exports": "./src/index.js",
+  "publishConfig": {
+    "directory": "package",
+    "linkDirectory": false
+  },
   "files": [
     "src"
-  ]
+  ],
+  "scripts": {
+    "clear": "del ./package",
+    "prepublishOnly": "run clear clean-publish",
+    "postpublish": "pnpm clear"
+  }
 }
