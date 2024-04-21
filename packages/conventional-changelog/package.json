@@ -35,9 +35,19 @@
     "node": ">=18"
   },
   "exports": "./index.js",
+  "publishConfig": {
+    "directory": "package",
+    "linkDirectory": false
+  },
   "files": [
     "index.js"
   ],
+  "scripts": {
+    "clear:package": "del ./package",
+    "clear": "del ./package",
+    "prepublishOnly": "run clear:package clean-publish",
+    "postpublish": "pnpm clear:package"
+  },
   "dependencies": {
     "conventional-changelog-angular": "workspace:^",
     "conventional-changelog-atom": "workspace:^",

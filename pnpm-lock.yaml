@@ -23,6 +23,9 @@ importers:
       '@trigen/eslint-config':
         specifier: 8.0.0-alpha.32
         version: 8.0.0-alpha.32(eslint@8.50.0)(typescript@5.2.2)
+      '@trigen/scripts':
+        specifier: 8.0.0-alpha.30
+        version: 8.0.0-alpha.30
       '@types/node':
         specifier: ^20.5.9
         version: 20.6.5
@@ -32,6 +35,9 @@ importers:
       better-than-before:
         specifier: ^1.0.0
         version: 1.0.0
+      clean-publish:
+        specifier: ^4.4.0
+        version: 4.4.0
       commitizen:
         specifier: ^4.3.0
         version: 4.3.0(@types/node@20.6.5)(typescript@5.2.2)
@@ -119,14 +125,17 @@ importers:
       conventional-changelog-preset-loader:
         specifier: workspace:^
         version: link:../conventional-changelog-preset-loader
+    publishDirectory: package
 
   packages/conventional-changelog-angular:
     dependencies:
       compare-func:
         specifier: ^2.0.0
         version: 2.0.0
+    publishDirectory: package
 
-  packages/conventional-changelog-atom: {}
+  packages/conventional-changelog-atom:
+    publishDirectory: package
 
   packages/conventional-changelog-cli:
     dependencies:
@@ -142,14 +151,17 @@ importers:
       tempfile:
         specifier: ^5.0.0
         version: 5.0.0
+    publishDirectory: package
 
-  packages/conventional-changelog-codemirror: {}
+  packages/conventional-changelog-codemirror:
+    publishDirectory: package
 
   packages/conventional-changelog-conventionalcommits:
     dependencies:
       compare-func:
         specifier: ^2.0.0
         version: 2.0.0
+    publishDirectory: package
 
   packages/conventional-changelog-core:
     dependencies:
@@ -187,20 +199,26 @@ importers:
       conventional-changelog-angular:
         specifier: workspace:^
         version: link:../conventional-changelog-angular
+    publishDirectory: package
 
-  packages/conventional-changelog-ember: {}
+  packages/conventional-changelog-ember:
+    publishDirectory: package
 
-  packages/conventional-changelog-eslint: {}
+  packages/conventional-changelog-eslint:
+    publishDirectory: package
 
-  packages/conventional-changelog-express: {}
+  packages/conventional-changelog-express:
+    publishDirectory: package
 
-  packages/conventional-changelog-jquery: {}
+  packages/conventional-changelog-jquery:
+    publishDirectory: package
 
   packages/conventional-changelog-jshint:
     dependencies:
       compare-func:
         specifier: ^2.0.0
         version: 2.0.0
+    publishDirectory: package
 
   packages/conventional-changelog-preset-loader:
     devDependencies:
@@ -210,6 +228,7 @@ importers:
       conventional-changelog-conventionalcommits:
         specifier: workspace:^
         version: link:../conventional-changelog-conventionalcommits
+    publishDirectory: package
 
   packages/conventional-changelog-writer:
     dependencies:
@@ -228,14 +247,17 @@ importers:
       semver:
         specifier: ^7.5.2
         version: 7.5.4
+    publishDirectory: package
 
-  packages/conventional-commits-filter: {}
+  packages/conventional-commits-filter:
+    publishDirectory: package
 
   packages/conventional-commits-parser:
     dependencies:
       meow:
         specifier: ^13.0.0
         version: 13.2.0
+    publishDirectory: package
 
   packages/conventional-recommended-bump:
     dependencies:
@@ -258,6 +280,7 @@ importers:
       conventional-changelog-conventionalcommits:
         specifier: workspace:^
         version: link:../conventional-changelog-conventionalcommits
+    publishDirectory: package
 
   packages/git-client:
     dependencies:
@@ -274,6 +297,7 @@ importers:
       conventional-commits-parser:
         specifier: workspace:^
         version: link:../conventional-commits-parser
+    publishDirectory: package
 
   packages/git-raw-commits:
     dependencies:
@@ -283,6 +307,7 @@ importers:
       meow:
         specifier: ^13.0.0
         version: 13.2.0
+    publishDirectory: package
 
   packages/git-semver-tags:
     dependencies:
@@ -292,6 +317,7 @@ importers:
       meow:
         specifier: ^13.0.0
         version: 13.2.0
+    publishDirectory: package
 
   packages/gulp-conventional-changelog:
     dependencies:
@@ -310,6 +336,7 @@ importers:
       plugin-error:
         specifier: ^2.0.0
         version: 2.0.1
+    publishDirectory: package
 
   packages/standard-changelog:
     dependencies:
@@ -325,6 +352,7 @@ importers:
       picocolors:
         specifier: ^1.0.0
         version: 1.0.0
+    publishDirectory: package
 
 packages:
 
@@ -1195,6 +1223,16 @@ packages:
       - typescript
     dev: true
 
+  /@trigen/scripts@8.0.0-alpha.30:
+    resolution: {integrity: sha512-WM6npRXrGrsoeDL6b1HnRpWa0yGraQ+1Kwdtfas72DFJf9UdVWf4w7jhETE41JzIzcpDysTO1PpmLAZqwuZu8A==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      argue-cli: 2.1.0
+      dotenv: 16.4.5
+      p-limit: 5.0.0
+    dev: true
+
   /@types/conventional-commits-parser@5.0.0:
     resolution: {integrity: sha512-loB369iXNmAZglwWATL+WRe+CRMmmBPtpolYzIebFaX4YA3x+BEfLqhUAV9WanycKI3TG1IMr5bMJDajDKLlUQ==}
     dependencies:
@@ -1599,6 +1637,11 @@ packages:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
 
+  /argue-cli@2.1.0:
+    resolution: {integrity: sha512-dgojXfc4SiqmNwe38PnbT3zJasrz7g62dLAPD+VFT5RJb8W7LGRqw2IFd2ES+plnhsp4HYNJmFqMU1tCThdCww==}
+    engines: {node: '>=14.0.0'}
+    dev: true
+
   /array-buffer-byte-length@1.0.0:
     resolution: {integrity: sha512-LPuwb2P+NrQw3XhxGc36+XSvuBPopovXYTR9Ew++Du9Yb/bx5AzBfrIsBoj0EZUifjQU+sHL21sseZ3jerWO/A==}
     dependencies:
@@ -1854,6 +1897,17 @@ packages:
     resolution: {integrity: sha512-iKEoDYaRmd1mxM90a2OEfWhjsjPpYPuQ+lMYsoxB126+t8fw7ySEO48nmDg5COTjxDI65/Y2OWpeEHk3ZOe8zg==}
     dependencies:
       get-func-name: 2.0.2
+    dev: true
+
+  /clean-publish@4.4.0:
+    resolution: {integrity: sha512-wAJxoegQKPN/BhAp1cOb7XID5Q3LBMpMUOmLjr1zWUwOOR7QDM+3zN3ViJQVAy4WbCXLI8bTJrFglIO1ldkE0g==}
+    engines: {node: '>= 16.0.0'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+      fast-glob: 3.3.2
+      lilconfig: 3.1.1
+      micromatch: 4.0.5
     dev: true
 
   /clean-stack@4.2.0:
@@ -2224,6 +2278,11 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       is-obj: 2.0.0
+
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
+    dev: true
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -3909,6 +3968,11 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+    dev: true
+
+  /lilconfig@3.1.1:
+    resolution: {integrity: sha512-O18pf7nyvHTckunPWCV1XUNXU1piu01y2b7ATJ0ppkUkk8ocqVWBrYjJBCwHDjD/ZWcfyrA0P4gKhzWGi5EINQ==}
+    engines: {node: '>=14'}
     dev: true
 
   /lines-and-columns@1.2.4:

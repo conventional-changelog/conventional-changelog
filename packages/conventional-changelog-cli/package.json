@@ -32,9 +32,19 @@
   "bin": {
     "conventional-changelog": "cli.js"
   },
+  "publishConfig": {
+    "directory": "package",
+    "linkDirectory": false
+  },
   "files": [
     "cli.js"
   ],
+  "scripts": {
+    "clear:package": "del ./package",
+    "clear": "del ./package",
+    "prepublishOnly": "run clear:package clean-publish",
+    "postpublish": "pnpm clear:package"
+  },
   "dependencies": {
     "add-stream": "^1.0.0",
     "conventional-changelog": "workspace:^",
