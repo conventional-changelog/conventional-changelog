@@ -388,6 +388,20 @@ export class CommitParser {
     })
   }
 
+  private parseScopes() {
+    const { commit, options: { isEnableMultipleScopes, scopeDelimitersPattern } } = this
+
+    if (!isEnableMultipleScopes || !scopeDelimitersPattern || !commit.scope) {
+      return
+    }
+
+    const messageScopes = commit.scope.split(scopeDelimitersPattern)
+
+    if (messageScopes.length > 1) {
+      commit.scopes = messageScopes
+    }
+  }
+
   /**
    * Parse commit message string into an object.
    * @param input - Commit message string.
@@ -432,6 +446,7 @@ export class CommitParser {
     this.parseBreakingHeader()
     this.parseMentions(input)
     this.parseRevert(input)
+    this.parseScopes()
     this.cleanupCommit()
 
     return commit

@@ -90,6 +90,37 @@ describe('conventional-commits-parser', () => {
         expect(result.scope).toBe('hello/world')
         expect(result.subject).toBe('message')
       })
+
+      it('should parse scopes with delimiters when default isEnableMultipleScopes and scopeDelimitersPattern option', () => {
+        const parser = new CommitParser({
+          headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/ // TODO default headerPattern do not match scopeDelimiters
+        })
+        const commitsWithScopeDelimiters = [
+          {
+            commit: 'feat(hello/world): message',
+            parsedScore: 'hello/world'
+          },
+          {
+            commit: 'feat(hello\\world): message',
+            parsedScore: 'hello\\world'
+          },
+          {
+            commit: 'feat(hello,world): message',
+            parsedScore: 'hello,world'
+          },
+          {
+            commit: 'feat(hello, world): message',
+            parsedScore: 'hello, world'
+          }
+        ]
+
+        Object.values(commitsWithScopeDelimiters).forEach(({ commit, parsedScore }) => {
+          const result = parser.parse(commit)
+
+          expect(result.scope).toBe(parsedScore)
+          expect(result.scopes).toEqual(['hello', 'world'])
+        })
+      })
     })
 
     describe('custom options', () => {
@@ -256,6 +287,38 @@ describe('conventional-commits-parser', () => {
         )
 
         expect(commit.body).toBe('this is some body before a scissors-line')
+      })
+
+      it('should not parse scopes with delimiters when isEnableMultipleScopes is false', () => {
+        const parser = new CommitParser({
+          isEnableMultipleScopes: false,
+          headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/ // TODO default headerPattern do not match scopeDelimiters
+        })
+        const commitsWithScopeDelimiters = [
+          {
+            commit: 'feat(hello/world): message',
+            parsedScore: 'hello/world'
+          },
+          {
+            commit: 'feat(hello\\world): message',
+            parsedScore: 'hello\\world'
+          },
+          {
+            commit: 'feat(hello,world): message',
+            parsedScore: 'hello,world'
+          },
+          {
+            commit: 'feat(hello, world): message',
+            parsedScore: 'hello, world'
+          }
+        ]
+
+        Object.values(commitsWithScopeDelimiters).forEach(({ commit, parsedScore }) => {
+          const result = parser.parse(commit)
+
+          expect(result.scope).toBe(parsedScore)
+          expect(result.scopes).toBeUndefined()
+        })
       })
     })
 
