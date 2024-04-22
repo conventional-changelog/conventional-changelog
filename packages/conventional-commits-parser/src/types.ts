@@ -82,7 +82,6 @@ export interface ParserRegexes {
   referenceParts: RegExp
   references: RegExp
   mentions: RegExp
-  scopeDelimiters: RegExp
 }
 
 export interface CommitReference {
