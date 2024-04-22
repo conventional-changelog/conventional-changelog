@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { resolve } from 'path'
+import { resolve, extname } from 'path'
 import { pathToFileURL } from 'url'
 import {
   createReadStream,
@@ -13,6 +13,17 @@ import conventionalChangelog from 'conventional-changelog'
 
 function relativeResolve (filePath) {
   return pathToFileURL(resolve(process.cwd(), filePath))
+}
+
+async function loadDataFile (filePath) {
+  const resolvedFilePath = relativeResolve(filePath)
+  const ext = extname(resolvedFilePath.toString())
+
+  if (ext === '.json') {
+    return JSON.parse(await readFile(resolvedFilePath, 'utf8'))
+  }
+
+  return (await import(resolvedFilePath)).default
 }
 
 const cli = meow(`
@@ -163,11 +174,11 @@ let outStream
 
 try {
   if (flags.context) {
-    templateContext = JSON.parse(await readFile(relativeResolve(flags.context), 'utf8'))
+    templateContext = await loadDataFile(flags.context)
   }
 
   if (flags.config) {
-    config = (await import(relativeResolve(flags.config))).default
+    config = await loadDataFile(flags.config)
     options.config = config
 
     if (config.options) {

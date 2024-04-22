@@ -7,6 +7,7 @@ export default {
   ],
   rules: {
     'body-max-line-length': [0],
+    'header-max-length': [0],
     'scope-enum': async (ctx) => {
       const scopeEnum = await scopes.rules['scope-enum'](ctx)
 
