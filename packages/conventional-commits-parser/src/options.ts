@@ -14,7 +14,7 @@ export const defaultOptions: ParserOptions = {
     'resolves',
     'resolved'
   ],
-  headerPattern: /^(\w*)(?:\(([\w$.\-*/ ]*)\))?: (.*)$/,
+  headerPattern: /^(\w*)(?:\(([\w$.\-*/\\, ]*)\))?: (.*)$/,
   headerCorrespondence: [
     'type',
     'scope',

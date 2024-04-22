@@ -92,9 +92,6 @@ describe('conventional-commits-parser', () => {
       })
 
       it('should parse scopes with delimiters when default isEnableMultipleScopes and scopeDelimitersPattern option', () => {
-        const parser = new CommitParser({
-          headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/ // TODO default headerPattern do not match scopeDelimiters
-        })
         const commitsWithScopeDelimiters = [
           {
             commit: 'feat(hello/world): message',
@@ -291,8 +288,7 @@ describe('conventional-commits-parser', () => {
 
       it('should not parse scopes with delimiters when isEnableMultipleScopes is false', () => {
         const parser = new CommitParser({
-          isEnableMultipleScopes: false,
-          headerPattern: /^(\w*)(?:\((.*)\))?: (.*)$/ // TODO default headerPattern do not match scopeDelimiters
+          isEnableMultipleScopes: false
         })
         const commitsWithScopeDelimiters = [
           {
