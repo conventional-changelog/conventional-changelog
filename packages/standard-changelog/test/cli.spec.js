@@ -183,7 +183,7 @@ describe('standard-changelog', () => {
       const { stderr, exitCode } = await testTools.fork(CLI_PATH, ['--context', 'missing-file.txt'])
 
       expect(exitCode).toBe(1)
-      expect(stderr).toMatch(/no such file/)
+      expect(stderr).toMatch(/Cannot find module/)
     })
   })
 })

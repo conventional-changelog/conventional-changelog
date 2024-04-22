@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import { resolve } from 'path'
-import { pathToFileURL } from 'url'
 import meow from 'meow'
 import type { Preset } from '../index.js'
 import { Bumper } from '../index.js'
@@ -9,10 +7,7 @@ import {
   parseTagsOptions,
   parseParserOptions
 } from './options.js'
-
-function relativeResolve(filePath: string) {
-  return pathToFileURL(resolve(process.cwd(), filePath))
-}
+import { loadDataFile } from './utils.js'
 
 const cli = meow(`
     Usage
@@ -115,9 +110,7 @@ const bumper = new Bumper(process.cwd())
 if (preset) {
   bumper.loadPreset(preset)
 } else if (config) {
-  // @ts-expect-error Dynamic import actually works with file URLs
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  const configOptions = (await import(relativeResolve(config))).default as Preset
+  const configOptions = await loadDataFile(config) as Preset
 
   if (configOptions.tags) {
     tagsOptions = {

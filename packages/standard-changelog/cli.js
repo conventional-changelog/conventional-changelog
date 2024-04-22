@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { resolve, extname } from 'path'
+import { pathToFileURL } from 'url'
 import { createWriteStream } from 'fs'
 import {
   readFile,
@@ -10,6 +12,21 @@ import standardChangelog, {
   createIfMissing,
   checkpoint
 } from './index.js'
+
+function relativeResolve (filePath) {
+  return pathToFileURL(resolve(process.cwd(), filePath))
+}
+
+async function loadDataFile (filePath) {
+  const resolvedFilePath = relativeResolve(filePath)
+  const ext = extname(resolvedFilePath.toString())
+
+  if (ext === '.json') {
+    return JSON.parse(await readFile(resolvedFilePath, 'utf8'))
+  }
+
+  return (await import(resolvedFilePath)).default
+}
 
 function printError (err) {
   if (flags.verbose) {
@@ -126,7 +143,7 @@ let templateContext
 
 try {
   if (flags.context) {
-    templateContext = JSON.parse(await readFile(flags.context, 'utf8'))
+    templateContext = await loadDataFile(flags.context)
   }
 } catch (err) {
   printError(err)
