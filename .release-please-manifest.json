@@ -18,7 +18,7 @@
   "packages/conventional-changelog-preset-loader": "4.1.0",
   "packages/conventional-recommended-bump": "9.0.0",
   "packages/conventional-changelog-core": "7.0.0",
-  "packages/standard-changelog": "5.0.0",
+  "packages/standard-changelog": "6.0.0",
   "packages/gulp-conventional-changelog": "5.0.0",
   "packages/git-client": "1.0.0"
 }
