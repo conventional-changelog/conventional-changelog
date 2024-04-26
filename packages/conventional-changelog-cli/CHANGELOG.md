@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v4.1.0...conventional-changelog-cli-v5.0.0) (2024-04-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 18 is required
+* cleanup presets interface ([#1215](https://github.com/conventional-changelog/conventional-changelog/issues/1215))
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* cleanup presets interface ([#1215](https://github.com/conventional-changelog/conventional-changelog/issues/1215)) ([0e4f293](https://github.com/conventional-changelog/conventional-changelog/commit/0e4f2935add5dbf68410ea3c245ed8bd13e292a8))
+* drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
+
+### Bug Fixes
+
+* **conventional-changelog-cli,conventional-recommended-bump,standard-changelog:** fix config loading ([#1234](https://github.com/conventional-changelog/conventional-changelog/issues/1234)) ([c2c4b3a](https://github.com/conventional-changelog/conventional-changelog/commit/c2c4b3a4cb60f784a4e7ee83d189b85c0acac960))
+* **conventional-changelog-cli:** fix link for option prompt ([#1159](https://github.com/conventional-changelog/conventional-changelog/issues/1159)) ([7e51c6d](https://github.com/conventional-changelog/conventional-changelog/commit/7e51c6d1bed61dfa7d8dedf7b11a0a027a222f3f))
+* **deps:** update dependency meow to v13 ([#1190](https://github.com/conventional-changelog/conventional-changelog/issues/1190)) ([862f66b](https://github.com/conventional-changelog/conventional-changelog/commit/862f66ba99989af2d44a524b11bc3a873426b00b))
+
 ## [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-cli-v4.0.0...conventional-changelog-cli-v4.1.0) (2023-09-09)
 
 **Note:** Upgrade workspace dependencies.

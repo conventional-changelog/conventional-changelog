@@ -1,6 +1,6 @@
 {
   "name": "gulp-conventional-changelog",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Generate a changelog using conventional-changelog.",
   "author": {
     "name": "Steve Mao",
