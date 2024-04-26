@@ -3,7 +3,7 @@
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
 
-[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/ci.yaml?branch=master
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/tests.yaml?branch=master
 [build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
 
 [coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
