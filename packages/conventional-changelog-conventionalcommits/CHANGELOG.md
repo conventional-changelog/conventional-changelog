@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 
+## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v7.0.2...conventional-changelog-conventionalcommits-v8.0.0) (2024-04-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 18 is required
+* **conventional-recommended-bump:** new `Bumper` exported class ([#1218](https://github.com/conventional-changelog/conventional-changelog/issues/1218))
+* cleanup presets interface ([#1215](https://github.com/conventional-changelog/conventional-changelog/issues/1215))
+* **conventional-changelog-writer:** rewrite to TypeScript ([#1150](https://github.com/conventional-changelog/conventional-changelog/issues/1150))
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* cleanup presets interface ([#1215](https://github.com/conventional-changelog/conventional-changelog/issues/1215)) ([0e4f293](https://github.com/conventional-changelog/conventional-changelog/commit/0e4f2935add5dbf68410ea3c245ed8bd13e292a8))
+* **conventional-changelog-writer:** rewrite to TypeScript ([#1150](https://github.com/conventional-changelog/conventional-changelog/issues/1150)) ([8af364f](https://github.com/conventional-changelog/conventional-changelog/commit/8af364feb20f4e6f7ffab6f5b25638df780db715))
+* **conventional-recommended-bump:** new `Bumper` exported class ([#1218](https://github.com/conventional-changelog/conventional-changelog/issues/1218)) ([0ddc8cd](https://github.com/conventional-changelog/conventional-changelog/commit/0ddc8cdceb91f838f9f73e0bff8e3f140176a13a))
+* drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
+
+### Bug Fixes
+
+* **conventional-changelog-conventionalcommits:** avoid double empty lines ([#1235](https://github.com/conventional-changelog/conventional-changelog/issues/1235)) ([3b4bfdf](https://github.com/conventional-changelog/conventional-changelog/commit/3b4bfdf3ac7d26da8466a577227254123b767336)), closes [#1188](https://github.com/conventional-changelog/conventional-changelog/issues/1188)
+
 ## [7.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v7.0.1...conventional-changelog-conventionalcommits-v7.0.2) (2023-09-08)
 
 
