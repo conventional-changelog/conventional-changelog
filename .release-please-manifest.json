@@ -8,7 +8,7 @@
   "packages/conventional-changelog-jshint": "5.0.0",
   "packages/conventional-changelog-jquery": "5.0.0",
   "packages/conventional-changelog-express": "5.0.0",
-  "packages/conventional-changelog-eslint": "5.0.0",
+  "packages/conventional-changelog-eslint": "6.0.0",
   "packages/conventional-changelog-ember": "5.0.0",
   "packages/conventional-changelog-codemirror": "5.0.0",
   "packages/conventional-changelog-angular": "7.0.0",
