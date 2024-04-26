@@ -6,7 +6,7 @@
   "packages/git-raw-commits": "5.0.0",
   "packages/conventional-changelog-writer": "8.0.0",
   "packages/conventional-changelog-jshint": "5.0.0",
-  "packages/conventional-changelog-jquery": "5.0.0",
+  "packages/conventional-changelog-jquery": "6.0.0",
   "packages/conventional-changelog-express": "5.0.0",
   "packages/conventional-changelog-eslint": "6.0.0",
   "packages/conventional-changelog-ember": "5.0.0",
