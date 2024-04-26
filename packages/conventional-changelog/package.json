@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "type": "module",
-  "version": "5.1.0",
+  "version": "6.0.0",
   "description": "Generate a changelog from git metadata.",
   "author": "Steve Mao",
   "contributors": [
