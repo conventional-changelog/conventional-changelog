@@ -15,7 +15,7 @@
   "packages/conventional-changelog-atom": "5.0.0",
   "packages/git-semver-tags": "7.0.1",
   "packages/conventional-commits-filter": "5.0.0",
-  "packages/conventional-changelog-preset-loader": "4.1.0",
+  "packages/conventional-changelog-preset-loader": "5.0.0",
   "packages/conventional-recommended-bump": "10.0.0",
   "packages/conventional-changelog-core": "7.0.0",
   "packages/standard-changelog": "6.0.0",

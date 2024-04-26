@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader-v4.1.0...conventional-changelog-preset-loader-v5.0.0) (2024-04-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 18 is required
+* **conventional-recommended-bump:** new `Bumper` exported class ([#1218](https://github.com/conventional-changelog/conventional-changelog/issues/1218))
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* **conventional-changelog-preset-loader:** rewrite to TypeScript ([#1185](https://github.com/conventional-changelog/conventional-changelog/issues/1185)) ([d082692](https://github.com/conventional-changelog/conventional-changelog/commit/d082692a2bafbc8edf402f353bc2b94bc8077f08))
+* **conventional-recommended-bump:** new `Bumper` exported class ([#1218](https://github.com/conventional-changelog/conventional-changelog/issues/1218)) ([0ddc8cd](https://github.com/conventional-changelog/conventional-changelog/commit/0ddc8cdceb91f838f9f73e0bff8e3f140176a13a))
+* drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
 ## [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-preset-loader-v4.0.0...conventional-changelog-preset-loader-v4.1.0) (2023-09-08)
 
 
