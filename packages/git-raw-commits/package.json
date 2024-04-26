@@ -1,7 +1,7 @@
 {
   "name": "git-raw-commits",
   "type": "module",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Get raw git commits out of your repository using git-log(1).",
   "author": {
     "name": "Steve Mao",
