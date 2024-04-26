@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-core",
   "type": "module",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "description": "Core package of conventional-changelog.",
   "author": "Steve Mao",
   "license": "MIT",
