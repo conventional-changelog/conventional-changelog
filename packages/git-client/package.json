@@ -1,7 +1,7 @@
 {
   "name": "@conventional-changelog/git-client",
   "type": "module",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Simple git client for conventional changelog packages.",
   "author": {
     "name": "Dan Onoshko",

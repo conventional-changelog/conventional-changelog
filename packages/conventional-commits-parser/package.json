@@ -1,7 +1,7 @@
 {
   "name": "conventional-commits-parser",
   "type": "module",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Parse raw conventional commits.",
   "author": {
     "name": "Steve Mao",
