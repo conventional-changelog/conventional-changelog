@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v5.1.0...conventional-changelog-v6.0.0) (2024-04-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 18 is required
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
 ## [5.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v5.0.0...conventional-changelog-v5.1.0) (2023-09-09)
 
 **Note:** Upgrade workspace dependencies.
