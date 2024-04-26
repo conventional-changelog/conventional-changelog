@@ -12,7 +12,7 @@
   "packages/conventional-changelog-ember": "5.0.0",
   "packages/conventional-changelog-codemirror": "4.0.0",
   "packages/conventional-changelog-angular": "7.0.0",
-  "packages/conventional-changelog-atom": "4.0.0",
+  "packages/conventional-changelog-atom": "5.0.0",
   "packages/git-semver-tags": "7.0.1",
   "packages/conventional-commits-filter": "5.0.0",
   "packages/conventional-changelog-preset-loader": "4.1.0",
