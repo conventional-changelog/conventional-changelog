@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-express",
   "type": "module",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "Express preset for conventional-changelog.",
   "author": "Steve Mao",
   "license": "ISC",
