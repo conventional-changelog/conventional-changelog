@@ -97,7 +97,7 @@ jobs:
       - run: git config --global user.name 'CI'
       - run: git config --global user.email 'dummy@example.org'
       - name: Run tests
-        run: pnpm test:unit -- --test-timeout=60000
+        run: pnpm test:unit --test-timeout=60000
       - name: Collect coverage
         uses: coverallsapp/github-action@main
         with:
