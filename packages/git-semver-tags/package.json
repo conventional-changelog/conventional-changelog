@@ -1,7 +1,7 @@
 {
   "name": "git-semver-tags",
   "type": "module",
-  "version": "7.0.1",
+  "version": "8.0.0",
   "description": "Get all git semver tags of your repository in reverse chronological order.",
   "author": {
     "name": "Steve Mao",

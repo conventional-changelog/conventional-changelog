@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v7.0.1...git-semver-tags-v8.0.0) (2024-04-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 18 is required
+* **git-semver-tags:** refactored to use @conventional-changelog/git-client ([#1203](https://github.com/conventional-changelog/conventional-changelog/issues/1203))
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
+* **git-semver-tags:** refactored to use @conventional-changelog/git-client ([#1203](https://github.com/conventional-changelog/conventional-changelog/issues/1203)) ([7ac1860](https://github.com/conventional-changelog/conventional-changelog/commit/7ac186060b16ea66847c401d57ca78157329d778))
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
+
+### Bug Fixes
+
+* **deps:** update dependency meow to v13 ([#1190](https://github.com/conventional-changelog/conventional-changelog/issues/1190)) ([862f66b](https://github.com/conventional-changelog/conventional-changelog/commit/862f66ba99989af2d44a524b11bc3a873426b00b))
+
 ## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v7.0.0...git-semver-tags-v7.0.1) (2023-09-10)
 
 
