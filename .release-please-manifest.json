@@ -2,7 +2,7 @@
   "packages/conventional-changelog-conventionalcommits": "7.0.2",
   "packages/conventional-changelog-cli": "4.1.0",
   "packages/conventional-changelog": "5.1.0",
-  "packages/conventional-commits-parser": "5.0.0",
+  "packages/conventional-commits-parser": "6.0.0",
   "packages/git-raw-commits": "4.0.0",
   "packages/conventional-changelog-writer": "7.0.1",
   "packages/conventional-changelog-jshint": "4.0.0",
