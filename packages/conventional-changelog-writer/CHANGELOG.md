@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v7.0.1...conventional-changelog-writer-v8.0.0) (2024-04-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node >= 18 is required
+* **conventional-changelog-writer:** `formatDate` option ([#1189](https://github.com/conventional-changelog/conventional-changelog/issues/1189))
+* **conventional-changelog-writer:** align methods with other packages ([#1182](https://github.com/conventional-changelog/conventional-changelog/issues/1182))
+* **conventional-commits-filter:** rewrite to TypeScript ([#1178](https://github.com/conventional-changelog/conventional-changelog/issues/1178))
+* **conventional-changelog-writer:** rewrite to TypeScript ([#1150](https://github.com/conventional-changelog/conventional-changelog/issues/1150))
+* Now all packages, except gulp-conventional-changelog, are ESM-only.
+
+### Features
+
+* **conventional-changelog-writer:** `formatDate` option ([#1189](https://github.com/conventional-changelog/conventional-changelog/issues/1189)) ([8c4bbbe](https://github.com/conventional-changelog/conventional-changelog/commit/8c4bbbe2945a23bd3660a2dbfe1b497fda03afa4)), closes [#1186](https://github.com/conventional-changelog/conventional-changelog/issues/1186)
+* **conventional-changelog-writer:** align methods with other packages ([#1182](https://github.com/conventional-changelog/conventional-changelog/issues/1182)) ([7b13ec9](https://github.com/conventional-changelog/conventional-changelog/commit/7b13ec9afcbe7afc24ce47af805c339ba7f0276f))
+* **conventional-changelog-writer:** rewrite to TypeScript ([#1150](https://github.com/conventional-changelog/conventional-changelog/issues/1150)) ([8af364f](https://github.com/conventional-changelog/conventional-changelog/commit/8af364feb20f4e6f7ffab6f5b25638df780db715))
+* **conventional-changelog-writer:** timeZone option ([#1162](https://github.com/conventional-changelog/conventional-changelog/issues/1162)) ([27f3642](https://github.com/conventional-changelog/conventional-changelog/commit/27f36422fdeb9a855c26ceac6d80896af0918764))
+* **conventional-commits-filter:** rewrite to TypeScript ([#1178](https://github.com/conventional-changelog/conventional-changelog/issues/1178)) ([e0c7b06](https://github.com/conventional-changelog/conventional-changelog/commit/e0c7b060202100ab82d858986ce43ba1b310d496))
+* drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
+* move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
+
+
+### Bug Fixes
+
+* **deps:** update dependency meow to v13 ([#1190](https://github.com/conventional-changelog/conventional-changelog/issues/1190)) ([862f66b](https://github.com/conventional-changelog/conventional-changelog/commit/862f66ba99989af2d44a524b11bc3a873426b00b))
+
 ## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v7.0.0...conventional-changelog-writer-v7.0.1) (2023-09-10)
 
 
