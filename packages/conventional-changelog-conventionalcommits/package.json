@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-conventionalcommits",
   "type": "module",
-  "version": "7.0.2",
+  "version": "8.0.0",
   "description": "Conventionalcommits.org preset for conventional-changelog.",
   "author": "Ben Coe",
   "license": "ISC",
