@@ -18,7 +18,7 @@
 [node-url]: https://nodejs.org
 
 [deps]: https://img.shields.io/librariesio/release/npm/@conventional-changelog/git-client
-[deps-url]: https://libraries.io/npm/@conventional-changelog/git-client/tree
+[deps-url]: https://libraries.io/npm/@conventional-changelog%2Fgit-client/tree
 
 [size]: https://packagephobia.com/badge?p=@conventional-changelog/git-client
 [size-url]: https://packagephobia.com/result?p=@conventional-changelog/git-client
