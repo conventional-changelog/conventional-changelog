@@ -20,5 +20,5 @@
   "packages/conventional-changelog-core": "8.0.0",
   "packages/standard-changelog": "6.0.0",
   "packages/gulp-conventional-changelog": "5.0.0",
-  "packages/git-client": "1.0.0"
+  "packages/git-client": "1.0.1"
 }
