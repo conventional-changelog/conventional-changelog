@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.0...git-client-v1.0.1) (2024-05-06)
+
+
+### Bug Fixes
+
+* **git-client:** trigger update peer dependencies versions ([79eda8b](https://github.com/conventional-changelog/conventional-changelog/commit/79eda8b2ef17a11b8d6a44a587cdbb27e273e479))
+
 ## 1.0.0 (2024-04-26)
 
 
