@@ -58,6 +58,16 @@ export interface ParserOptions {
    * Keywords to reference an issue. This value is case **insensitive**.
    */
   referenceActions?: string[]
+  /**
+   * Used to determine whether to separate scopes by slash or comma delimiters contain in scope.
+   * The default value of isEnableMultipleScopes is true.
+   */
+  isEnableMultipleScopes?: boolean
+  /**
+   * RegExp used to separate scopes.
+   * The default value of scopeDelimitersPattern is `/\/|\\|, ?/g`.
+   */
+  scopeDelimitersPattern?: RegExp
 }
 
 export interface ParserStreamOptions extends ParserOptions {
@@ -99,6 +109,7 @@ export interface CommitBase {
   notes: CommitNote[]
   mentions: string[]
   references: CommitReference[]
+  scopes: string[]
 }
 
 export type Commit = CommitBase & CommitMeta
