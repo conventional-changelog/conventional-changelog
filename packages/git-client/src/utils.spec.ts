@@ -8,7 +8,7 @@ import {
   spawn,
   stdoutSpawn,
   splitStream,
-  formatArgs
+  formatArgs, firstElementStream
 } from './utils.js'
 
 describe('git-client', () => {
@@ -62,6 +62,26 @@ describe('git-client', () => {
           '5',
           '6'
         ])
+      })
+    })
+
+    describe('firstElementStream', () => {
+      it('should return the first element', async () => {
+        const stream = Readable.from([
+          '1 2',
+          ' 3',
+          ' 4 5 6'
+        ])
+        const result = await firstElementStream(stream)
+
+        expect(result).toEqual('1 2')
+      })
+
+      it('should return null if the stream is empty', async () => {
+        const stream = Readable.from([])
+        const result = await firstElementStream(stream)
+
+        expect(result).toEqual(null)
       })
     })
 
