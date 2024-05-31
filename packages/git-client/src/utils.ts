@@ -104,6 +104,20 @@ export async function* splitStream(stream: AsyncIterable<string | Buffer>, separ
 }
 
 /**
+ * Return first element of a stream
+ * @param stream
+ * @returns First element or null if empty
+ */
+export async function firstElementStream<A>(stream: AsyncIterable<A>) {
+  // eslint-disable-next-line no-unreachable-loop
+  for await (const tag of stream) {
+    return tag
+  }
+
+  return null
+}
+
+/**
  * Format key-value pair for cli arguments.
  * @param key
  * @param value
