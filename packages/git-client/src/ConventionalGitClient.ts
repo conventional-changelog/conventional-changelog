@@ -96,9 +96,8 @@ export class ConventionalGitClient extends GitClient {
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
       : (tag: string) => tag
     let unprefixed: string
-    let tag: string | null
 
-    for await (tag of tagsStream) {
+    for await (const tag of tagsStream) {
       if (skipUnstable && unstableTagRegex.test(tag)) {
         continue
       }
@@ -108,22 +107,26 @@ export class ConventionalGitClient extends GitClient {
           ? tag.startsWith(prefix)
           : prefix.test(tag)
 
-        if (isPrefixed) {
-          unprefixed = tag.replace(prefix, '')
+        if (!isPrefixed) {
+          continue
+        }
 
-          if (semver.valid(unprefixed)) {
-            tag = cleanTag(tag, unprefixed)
+        unprefixed = tag.replace(prefix, '')
 
-            if (tag) {
-              yield tag
-            }
-          }
+        if (!semver.valid(unprefixed)) {
+          continue
+        }
+
+        const cleanTagString = cleanTag(tag, unprefixed)
+
+        if (cleanTagString) {
+          yield cleanTagString
         }
       } else if (semver.valid(tag)) {
-        tag = cleanTag(tag)
+        const cleanTagString = cleanTag(tag)
 
-        if (tag) {
-          yield tag
+        if (cleanTagString) {
+          yield cleanTagString
         }
       }
     }

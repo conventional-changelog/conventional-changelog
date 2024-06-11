@@ -83,6 +83,7 @@ export class GitClient {
     const tagRegex = /tag:\s*(.+?)[,)]/gi
     const args = this.formatArgs(
       'log',
+      '--all',
       '--decorate',
       '--no-color',
       '--date-order',
@@ -91,14 +92,11 @@ export class GitClient {
     const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
     })
-    let chunk: Buffer
-    let matches: IterableIterator<RegExpMatchArray>
-    let tag: string
 
-    for await (chunk of stdout) {
-      matches = chunk.toString().trim().matchAll(tagRegex)
+    for await (const chunk of stdout) {
+      const matches = chunk.toString().trim().matchAll(tagRegex)
 
-      for ([, tag] of matches) {
+      for (const [,tag] of matches) {
         yield tag
       }
     }

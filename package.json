@@ -22,7 +22,8 @@
     "generation"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "pnpm": "~7"
   },
   "scripts": {
     "clear": "pnpm -r --parallel --if-present clear && del ./coverage",
