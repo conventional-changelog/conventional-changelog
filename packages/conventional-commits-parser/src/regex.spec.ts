@@ -310,7 +310,7 @@ describe('conventional-commits-parser', () => {
           expect(match?.[3]).toBe('3')
         })
 
-        it('should be case sensitve if set in options', () => {
+        it('should be case sensitive if set in options', () => {
           const body = 'closes gh-1, amends GH-2, fixes #3'
 
           referenceParts = getParserRegexes({
@@ -399,6 +399,17 @@ describe('conventional-commits-parser', () => {
 
           expect(match?.[0]).toBe('@someone')
           expect(match?.[1]).toBe('someone')
+        })
+      })
+
+      describe('url', () => {
+        it('should match any URLs', () => {
+          const { url } = getParserRegexes()
+
+          expect(url.test('https://github.com/org/repo/issues/123#issuecomment-444531023')).toBe(true)
+          expect(url.test('https://github.com/org/repo#my-readme-section')).toBe(true)
+          expect(url.test('https://example.com/')).toBe(true)
+          expect(url.test('https://example.com/1#1')).toBe(true)
         })
       })
     })

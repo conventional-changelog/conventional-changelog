@@ -72,6 +72,7 @@ export interface ParserRegexes {
   referenceParts: RegExp
   references: RegExp
   mentions: RegExp
+  url: RegExp
 }
 
 export interface CommitReference {
