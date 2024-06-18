@@ -71,6 +71,11 @@ export class CommitParser {
     action: string | null
   ) {
     const { regexes } = this
+
+    if (regexes.url.test(input)) {
+      return null
+    }
+
     const matches = regexes.referenceParts.exec(input)
 
     if (!matches) {
