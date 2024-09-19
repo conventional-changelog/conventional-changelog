@@ -13,12 +13,13 @@ const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]
 const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
 const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
+const commitRemoteUrl = host.includes('bitbucket.org') ? 'commits' : 'commit'
 
 export async function createWriterOpts (config) {
   const finalConfig = {
     types: DEFAULT_COMMIT_TYPES,
     issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
-    commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
+    commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/{{commitRemoteUrl}}/{{hash}}',
     compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}',
     userUrlFormat: '{{host}}/{{user}}',
     issuePrefixes: ['#'],
