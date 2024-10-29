@@ -90,6 +90,15 @@ describe('conventional-commits-parser', () => {
         expect(result.scope).toBe('hello/world')
         expect(result.subject).toBe('message')
       })
+
+      it('should parse @ in the header with default headerPattern option', () => {
+        const commit = 'feat(@org/hello-world): message'
+        const result = parser.parse(commit)
+
+        expect(result.type).toBe('feat')
+        expect(result.scope).toBe('@org/hello-world')
+        expect(result.subject).toBe('message')
+      })
     })
 
     describe('custom options', () => {
