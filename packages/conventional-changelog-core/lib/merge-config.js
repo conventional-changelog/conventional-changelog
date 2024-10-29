@@ -106,20 +106,22 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
     }
   }
 
-  options.warn = options.warn || options.debug
+  options.warn ||= options.debug
 
   if (options.pkg) {
     if (options.pkg.path) {
-      pkgPromise = import('read-pkg').then(async ({ parsePackage }) => {
-        const json = await fs.readFile(options.pkg.path, 'utf-8')
+      pkgPromise = fs.readFile(options.pkg.path, 'utf-8').then(file => {
+        const json = JSON.parse(file)
 
-        return parsePackage(json)
+        normalizePackageData(json)
+        return json
       })
     } else {
-      pkgPromise = import('read-package-up').then(async ({ readPackageUp }) => {
-        const { packageJson } = await readPackageUp({ cwd: options.cwd })
+      pkgPromise = import('fd-package-json').then(({ findPackage }) => {
+        const json = findPackage(options.cwd)
 
-        return packageJson
+        normalizePackageData(json)
+        return json
       })
     }
   }
