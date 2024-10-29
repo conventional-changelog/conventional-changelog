@@ -54,7 +54,7 @@
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
-    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-promise": "^7.0.0",
     "inquirer": "^9.2.19",
     "nano-staged": "^0.8.0",
     "safe-buffer": "5.2.1",
