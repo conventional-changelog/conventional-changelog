@@ -29,6 +29,10 @@ function getNotesRegex(
   return notesPattern(noteKeywordsSelection)
 }
 
+function getUrlRegex() {
+  return /\b(?:https?):\/\/(?:www\.)?([-a-zA-Z0-9@:%_+.~#?&//=])+\b/
+}
+
 function getReferencePartsRegex(
   issuePrefixes: string[] | undefined,
   issuePrefixesCaseSensitive: boolean | undefined
@@ -71,6 +75,7 @@ export function getParserRegexes(
     notes,
     referenceParts,
     references,
-    mentions: /@([\w-]+)/g
+    mentions: /@([\w-]+)/g,
+    url: getUrlRegex()
   }
 }
