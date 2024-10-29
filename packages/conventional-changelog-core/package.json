@@ -46,7 +46,7 @@
     "conventional-commits-parser": "workspace:^",
     "git-raw-commits": "workspace:^",
     "git-semver-tags": "workspace:^",
-    "hosted-git-info": "^7.0.0",
+    "hosted-git-info": "^8.0.0",
     "normalize-package-data": "^6.0.0",
     "read-pkg": "^9.0.0",
     "read-package-up": "^11.0.0"
