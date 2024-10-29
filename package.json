@@ -43,7 +43,7 @@
     "@commitlint/cz-commitlint": "^19.2.0",
     "@trigen/eslint-config": "8.0.0-alpha.32",
     "@trigen/scripts": "8.0.0-alpha.30",
-    "@types/node": "^20.5.9",
+    "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^2.0.0",
     "better-than-before": "^1.0.0",
     "clean-publish": "^4.4.0",
