@@ -228,8 +228,17 @@ export default async function mergeConfig (options, context, gitRawCommitsOpts, 
     semverTags = context.gitSemverTags = tagsObj.value
     fromTag = semverTags[options.releaseCount - 1]
     const lastTag = semverTags[0]
+    let compareTagTo = '';
 
-    if (lastTag === context.version || lastTag === 'v' + context.version) {
+    if (options.lernaPackage) {
+      compareTagTo = options.lernaPackage + '@' + context.version
+    } else if (options.tagPrefix) {
+      compareTagTo = options.tagPrefix + context.version
+    } else {
+      compareTagTo = 'v' + context.version
+    }
+
+    if (lastTag === context.version || lastTag === compareTagTo) {
       if (options.outputUnreleased) {
         context.version = 'Unreleased'
       } else {
