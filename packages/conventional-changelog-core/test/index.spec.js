@@ -1,7 +1,7 @@
-import { afterAll, describe, it, expect } from 'vitest'
+import { afterAll, beforeAll, describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import path from 'path'
-import { TestTools } from '../../../tools/index.ts'
+import { TestTools } from '../tools/index.ts'
 import conventionalChangelogCore from '../index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
@@ -119,6 +119,16 @@ setups([
 
 tearsWithJoy(() => {
   testTools?.cleanup()
+})
+
+beforeAll(() => {
+  process.env.GIT_CONFIG_GLOBAL = path.join(
+    import.meta.dirname,
+    'fixtures',
+    '.gitconfig'
+  );
+
+  process.env.GIT_CONFIG_SYSTEM = '/dev/null';
 })
 
 afterAll(() => {
@@ -1211,14 +1221,16 @@ describe('conventional-changelog-core', () => {
           config: (await import('conventional-changelog-angular')).default
         },
         {},
-        { path: './packages/foo' }
+        {},
+        {},
+        { headerPartial: '{{previousTag}}...{{currentTag}}' }
       )) {
         chunk = chunk.toString()
 
         // confirm that context.currentTag behaves differently when
         // tagPrefix is used
-        expect(chunk).toContain('foo@1.0.0...foo@2.0.0')
-      }
+          expect(chunk).toContain('foo@1.0.0...foo@2.0.0')
+        }
     })
   })
 
@@ -1359,7 +1371,9 @@ describe('conventional-changelog-core', () => {
           config: (await import('conventional-changelog-angular')).default
         },
         {},
-        { path: './packages/foo' }
+        { path: './packages/foo' },
+        {},
+        { headerPartial: '{{previousTag}}...{{currentTag}}' }
       )) {
         chunk = chunk.toString()
 
