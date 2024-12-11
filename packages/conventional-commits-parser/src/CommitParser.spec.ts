@@ -502,6 +502,43 @@ describe('conventional-commits-parser', () => {
           expect(commit.source).toBe('feature/feature-name')
         })
       })
+
+      describe('azure devops style', () => {
+        const parser = new CommitParser({
+          headerPattern: /^(\w*)(?:\(([\w$.\-* ]*)\))?: (.*)$/,
+          headerCorrespondence: [
+            'type',
+            'scope',
+            'subject'
+          ],
+          mergePattern: /^Merged PR (\d+): (.*)$/,
+          mergeCorrespondence: ['issueId', 'header']
+        })
+        const commit = parser.parse(
+          'Merged PR 1: feat(scope): broadcast $destroy event on scope destruction\r\n'
+          + '\r\n'
+          + 'perf testing shows that in chrome this change adds 5-15% overhead\r\n'
+          + 'when destroying 10k nested scopes where each scope has a $destroy listener\r\n'
+          + '\r\n'
+          + 'See merge request !1'
+        )
+
+        it('should parse header in Azure DevOps like merge request', () => {
+          expect(commit.header).toBe('feat(scope): broadcast $destroy event on scope destruction')
+        })
+
+        it('should understand header parts in Azure DevOps like merge request', () => {
+          expect(commit.type).toBe('feat')
+          expect(commit.scope).toBe('scope')
+          expect(commit.subject).toBe('broadcast $destroy event on scope destruction')
+        })
+
+        it('should understand merge parts in Azure DevOps like merge request', () => {
+          expect(commit.merge).toBe('Merged PR 1: feat(scope): broadcast $destroy event on scope destruction')
+          expect(commit.issueId).toBe('1')
+          expect(commit.header).toBe('feat(scope): broadcast $destroy event on scope destruction')
+        })
+      })
     })
 
     describe('header', () => {
