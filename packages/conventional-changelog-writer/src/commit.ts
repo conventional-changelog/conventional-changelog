@@ -12,6 +12,11 @@ function preventModifications<T extends AnyObject>(object: T): T {
     get(target, prop: string) {
       const value = target[prop] as unknown
 
+      // https://github.com/conventional-changelog/conventional-changelog/pull/1285
+      if (value instanceof Date) {
+        return value
+      }
+
       if (typeof value === 'object' && value !== null) {
         return preventModifications(value)
       }
