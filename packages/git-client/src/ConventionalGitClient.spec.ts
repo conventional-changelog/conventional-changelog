@@ -167,5 +167,11 @@ describe('git-client', () => {
         expect(tags).toEqual(['skip/9.0.0', 'skip/8.0.0'])
       })
     })
+
+    describe('getLastSemverTag', () => {
+      it('should get last semver tag', async () => {
+        expect(await client.getLastSemverTag()).toBe('19.0.0-pre')
+      })
+    })
   })
 })

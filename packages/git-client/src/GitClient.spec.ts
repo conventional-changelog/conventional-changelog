@@ -129,5 +129,11 @@ describe('git-client', () => {
         expect(await client.getCurrentBranch()).toBe('master')
       })
     })
+
+    describe('getLastTag', () => {
+      it('should get last tag', async () => {
+        expect(await client.getLastTag()).toBe('v18.0.0')
+      })
+    })
   })
 })
