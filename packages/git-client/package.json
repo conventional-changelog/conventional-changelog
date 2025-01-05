@@ -61,10 +61,10 @@
     }
   },
   "dependencies": {
-    "@types/semver": "^7.5.5",
     "semver": "^7.5.2"
   },
   "devDependencies": {
+    "@types/semver": "^7.5.8",
     "conventional-commits-filter": "workspace:^",
     "conventional-commits-parser": "workspace:^"
   }
