@@ -148,6 +148,15 @@ describe('git-client', () => {
         testTools.writeFileSync('test10', '')
         testTools.exec('git add --all && git commit -m"chore: 9.0.0"')
         testTools.exec('git tag skip/9.0.0')
+        testTools.writeFileSync('test11', '')
+        testTools.exec('git add --all && git commit -m"chore: 9.0.0-1.0.0"')
+        testTools.exec('git tag skip/9.0.0-1.0.0')
+        testTools.writeFileSync('test12', '')
+        testTools.exec('git add --all && git commit -m"chore: 9.0.0-alpha"')
+        testTools.exec('git tag skip/9.0.0-alpha')
+        testTools.writeFileSync('test13', '')
+        testTools.exec('git add --all && git commit -m"chore: 9.0.0-1.0.0-x-y-z.--"')
+        testTools.exec('git tag skip/9.0.0-1.0.0-x-y-z.--')
 
         const tagsStream = client.getSemverTags({
           prefix: 'skip/',
