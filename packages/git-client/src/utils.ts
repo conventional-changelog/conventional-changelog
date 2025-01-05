@@ -108,7 +108,7 @@ export async function* splitStream(stream: AsyncIterable<string | Buffer>, separ
  * @param stream
  * @returns First element or null if empty
  */
-export async function firstElementStream<A>(stream: AsyncIterable<A>) {
+export async function getFirstFromStream<T>(stream: AsyncIterable<T>) {
   // eslint-disable-next-line no-unreachable-loop
   for await (const tag of stream) {
     return tag

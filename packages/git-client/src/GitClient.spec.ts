@@ -131,7 +131,7 @@ describe('git-client', () => {
     })
 
     describe('getLastTag', () => {
-      it('should get last tag  of the', async () => {
+      it('should get last tag', async () => {
         expect(await client.getLastTag()).toBe('v18.0.0')
       })
     })

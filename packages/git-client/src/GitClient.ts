@@ -2,7 +2,7 @@ import {
   spawn,
   stdoutSpawn,
   splitStream,
-  firstElementStream,
+  getFirstFromStream,
   formatArgs
 } from './utils.js'
 import type {
@@ -111,7 +111,7 @@ export class GitClient {
    * @returns Last tag, `null` if not found.
    */
   async getLastTag(params: Params = {}) {
-    return firstElementStream(this.getTags(params))
+    return getFirstFromStream(this.getTags(params))
   }
 
   /**

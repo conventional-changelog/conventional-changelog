@@ -11,7 +11,7 @@ import type {
   Params
 } from './types.js'
 import { GitClient } from './GitClient.js'
-import { firstElementStream } from './utils.js'
+import { getFirstFromStream } from './utils.js'
 
 /**
  * Helper to get package tag prefix.
@@ -136,7 +136,7 @@ export class ConventionalGitClient extends GitClient {
    * @returns Last semver tag, `null` if not found.
    */
   async getLastSemverTag(params: GetSemverTagsParams & Params = {}) {
-    return firstElementStream(this.getSemverTags(params))
+    return getFirstFromStream(this.getSemverTags(params))
   }
 
   /**
