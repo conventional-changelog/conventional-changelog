@@ -91,7 +91,7 @@ export class ConventionalGitClient extends GitClient {
       ...restParams
     } = params
     const tagsStream = this.getTags(restParams)
-    const unstableTagRegex = /(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-/
+    const unstableTagRegex = /\d+\.\d+\.\d+-.+/
     const cleanTag = clean
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
       : (tag: string) => tag
