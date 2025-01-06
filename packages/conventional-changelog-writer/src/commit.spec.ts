@@ -62,6 +62,18 @@ describe('conventional-changelog-writer', () => {
           return commit
         }, options, context)).rejects.toThrow('Cannot modify immutable object.')
       })
+
+      it('should correctly handle Date object', async () => {
+        const commitWithDate = {
+          ...commit,
+          date: new Date()
+        }
+
+        await expect(transformCommit(commitWithDate, commit => ({
+          ...commit,
+          dateString: commit.date.toISOString()
+        }), options, context)).resolves.not.toThrow()
+      })
     })
   })
 })

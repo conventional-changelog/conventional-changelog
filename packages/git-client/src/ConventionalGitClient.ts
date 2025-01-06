@@ -11,6 +11,7 @@ import type {
   Params
 } from './types.js'
 import { GitClient } from './GitClient.js'
+import { getFirstFromStream } from './utils.js'
 
 /**
  * Helper to get package tag prefix.
@@ -91,7 +92,7 @@ export class ConventionalGitClient extends GitClient {
       ...restParams
     } = params
     const tagsStream = this.getTags(restParams)
-    const unstableTagRegex = /.+-\w+\.\d+$/
+    const unstableTagRegex = /\d+\.\d+\.\d+-.+/
     const cleanTag = clean
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
       : (tag: string) => tag
@@ -135,7 +136,7 @@ export class ConventionalGitClient extends GitClient {
    * @returns Last semver tag, `null` if not found.
    */
   async getLastSemverTag(params: GetSemverTagsParams & Params = {}) {
-    return (await this.getSemverTags(params).next()).value || null
+    return getFirstFromStream(this.getSemverTags(params))
   }
 
   /**

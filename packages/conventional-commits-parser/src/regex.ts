@@ -71,6 +71,7 @@ export function getParserRegexes(
     notes,
     referenceParts,
     references,
-    mentions: /@([\w-]+)/g
+    mentions: /@([\w-]+)/g,
+    url: /\b(?:https?):\/\/(?:www\.)?([-a-zA-Z0-9@:%_+.~#?&//=])+\b/
   }
 }

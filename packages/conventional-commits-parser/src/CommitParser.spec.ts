@@ -90,6 +90,15 @@ describe('conventional-commits-parser', () => {
         expect(result.scope).toBe('hello/world')
         expect(result.subject).toBe('message')
       })
+
+      it('should parse @ in the header with default headerPattern option', () => {
+        const commit = 'feat(@org/hello-world): message'
+        const result = parser.parse(commit)
+
+        expect(result.type).toBe('feat')
+        expect(result.scope).toBe('@org/hello-world')
+        expect(result.subject).toBe('message')
+      })
     })
 
     describe('custom options', () => {
@@ -865,6 +874,27 @@ describe('conventional-commits-parser', () => {
         )
 
         expect(commit.references).toEqual([])
+      })
+
+      it('should ignore URL references', () => {
+        const commit = customParser.parse(
+          'feat(scope): broadcast $destroy event on scope destruction\n'
+          + 'relates to #1 \n'
+          + 'according to https://github.com/org/repo#my-readme-section, \n'
+          + 'perf testing shows that in chrome this change adds 5-15% overhead\n'
+          + 'see https://github.com/org/repo/issues/123#issuecomment-44453102 for more details.'
+        )
+
+        expect(commit.references).toEqual([
+          {
+            action: null,
+            owner: null,
+            repository: null,
+            issue: '1',
+            raw: 'relates to #1',
+            prefix: '#'
+          }
+        ])
       })
 
       it('should parse references', () => {
