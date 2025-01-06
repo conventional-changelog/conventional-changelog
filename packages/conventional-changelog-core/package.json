@@ -44,12 +44,11 @@
     "add-stream": "^1.0.0",
     "conventional-changelog-writer": "workspace:^",
     "conventional-commits-parser": "workspace:^",
+    "fd-package-json": "^1.2.0",
     "git-raw-commits": "workspace:^",
     "git-semver-tags": "workspace:^",
     "hosted-git-info": "^7.0.0",
-    "normalize-package-data": "^6.0.0",
-    "read-pkg": "^9.0.0",
-    "read-package-up": "^11.0.0"
+    "normalize-package-data": "^6.0.0"
   },
   "devDependencies": {
     "conventional-changelog-angular": "workspace:^"
