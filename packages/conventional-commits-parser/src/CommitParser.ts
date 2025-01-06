@@ -185,7 +185,7 @@ export class CommitParser {
 
     const { commit, options } = this
     const correspondence = options.headerCorrespondence || []
-    const header = this.nextLine()
+    const header = commit.header ?? this.nextLine()
     let matches: RegExpMatchArray | null = null
 
     if (header) {
