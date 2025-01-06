@@ -46,7 +46,7 @@
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^2.0.0",
     "better-than-before": "^1.0.0",
-    "clean-publish": "^4.4.0",
+    "clean-publish": "^5.0.0",
     "commitizen": "^4.3.0",
     "conventional-changelog-core": "workspace:^",
     "del-cli": "^6.0.0",
