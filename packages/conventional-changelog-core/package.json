@@ -47,7 +47,7 @@
     "fd-package-json": "^1.2.0",
     "git-raw-commits": "workspace:^",
     "git-semver-tags": "workspace:^",
-    "hosted-git-info": "^7.0.0",
+    "hosted-git-info": "^8.0.0",
     "normalize-package-data": "^6.0.0"
   },
   "devDependencies": {
