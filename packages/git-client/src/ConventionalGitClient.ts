@@ -7,8 +7,7 @@ import type { filterRevertedCommits } from 'conventional-commits-filter'
 import semver from 'semver'
 import type {
   GetCommitsParams,
-  GetSemverTagsParams,
-  Params
+  GetSemverTagsParams
 } from './types.js'
 import { GitClient } from './GitClient.js'
 import { getFirstFromStream } from './utils.js'
@@ -59,7 +58,7 @@ export class ConventionalGitClient extends GitClient {
    * @yields Raw commits data.
    */
   async* getCommits(
-    params: GetCommitsParams & Params = {},
+    params: GetCommitsParams = {},
     parserOptions: ParserStreamOptions = {}
   ): AsyncIterable<Commit> {
     const { filterReverts, ...gitLogParams } = params
@@ -84,14 +83,13 @@ export class ConventionalGitClient extends GitClient {
    * @param params.clean - Clean version from prefix and trash.
    * @yields Semver tags.
    */
-  async* getSemverTags(params: GetSemverTagsParams & Params = {}) {
+  async* getSemverTags(params: GetSemverTagsParams = {}) {
     const {
       prefix,
       skipUnstable,
-      clean,
-      ...restParams
+      clean
     } = params
-    const tagsStream = this.getTags(restParams)
+    const tagsStream = this.getTags()
     const unstableTagRegex = /\d+\.\d+\.\d+-.+/
     const cleanTag = clean
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
@@ -135,7 +133,7 @@ export class ConventionalGitClient extends GitClient {
    * @param params - getSemverTags params.
    * @returns Last semver tag, `null` if not found.
    */
-  async getLastSemverTag(params: GetSemverTagsParams & Params = {}) {
+  async getLastSemverTag(params: GetSemverTagsParams = {}) {
     return getFirstFromStream(this.getSemverTags(params))
   }
 
@@ -144,7 +142,7 @@ export class ConventionalGitClient extends GitClient {
    * @param params - Additional git params.
    * @returns Current sematic version, `null` if not found.
    */
-  async getVersionFromTags(params: GetSemverTagsParams & Params = {}) {
+  async getVersionFromTags(params: GetSemverTagsParams = {}) {
     const semverTagsStream = this.getSemverTags({
       clean: true,
       ...params

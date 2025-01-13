@@ -1,13 +1,13 @@
 import type { ParserStreamOptions } from 'conventional-commits-parser'
-import type { GetCommitsParams, GetSemverTagsParams, Params } from '@conventional-changelog/git-client'
+import type { GetCommitsParams, GetSemverTagsParams } from '@conventional-changelog/git-client'
 import { packagePrefix } from '@conventional-changelog/git-client'
 
 function trim(str: string) {
   return str.trim()
 }
 
-export function parseTagsOptions(options: Record<string, unknown>): GetSemverTagsParams & Params | null {
-  const result: GetSemverTagsParams & Params = {}
+export function parseTagsOptions(options: Record<string, unknown>): GetSemverTagsParams | null {
+  const result: GetSemverTagsParams = {}
 
   if (typeof options.tagPrefix === 'string') {
     result.prefix = options.tagPrefix
@@ -28,8 +28,8 @@ export function parseTagsOptions(options: Record<string, unknown>): GetSemverTag
   return result
 }
 
-export function parseCommitsOptions(options: Record<string, unknown>): GetCommitsParams & Params | null {
-  const result: GetCommitsParams & Params = {}
+export function parseCommitsOptions(options: Record<string, unknown>): GetCommitsParams | null {
+  const result: GetCommitsParams = {}
 
   if (typeof options.commitPath === 'string') {
     result.path = options.commitPath

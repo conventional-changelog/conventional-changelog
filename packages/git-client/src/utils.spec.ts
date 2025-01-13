@@ -99,21 +99,6 @@ describe('git-client', () => {
         expect(formatArgs('git', 'log', '')).toEqual(['git', 'log'])
         expect(formatArgs('git', 'log', null)).toEqual(['git', 'log'])
       })
-
-      it('should format arrays', () => {
-        expect(formatArgs('git', ['log', ['']])).toEqual(['git', 'log'])
-        expect(formatArgs('git', ['log', [null]])).toEqual(['git', 'log'])
-      })
-
-      it('should format params object', () => {
-        const date = new Date().toISOString()
-
-        expect(formatArgs('git', [
-          {
-            since: date
-          }
-        ])).toEqual(['git', `--since=${date}`])
-      })
     })
   })
 })
