@@ -101,7 +101,7 @@ describe('git-client', () => {
       it('should pass raw args', async () => {
         await delay(1000)
 
-        const now = new Date().toISOString()
+        const now = new Date()
 
         testTools.writeFileSync('test2', 'hello')
         testTools.exec('git add --all && git commit -m"chore: hello"')

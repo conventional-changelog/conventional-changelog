@@ -4,8 +4,7 @@ import type {
 } from 'conventional-commits-parser'
 import type {
   GetSemverTagsParams,
-  GetCommitsParams,
-  Params
+  GetCommitsParams
 } from '@conventional-changelog/git-client'
 import type {
   UnknownPresetCreatorParams,
@@ -48,12 +47,12 @@ export class Bumper {
     this.commitsGetter = () => this.getCommits()
   }
 
-  private getLastSemverTag(params?: GetSemverTagsParams & Params) {
+  private getLastSemverTag(params?: GetSemverTagsParams) {
     return this.gitClient.getLastSemverTag(params)
   }
 
   private async* getCommits(
-    params?: GetCommitsParams & Params,
+    params?: GetCommitsParams,
     parserOptions?: ParserStreamOptions
   ) {
     yield* this.gitClient.getCommits({
@@ -110,7 +109,7 @@ export class Bumper {
    * @param paramsOrTag - Params to get the last semver tag or a tag name
    * @returns this
    */
-  tag(paramsOrTag: GetSemverTagsParams & Params | string) {
+  tag(paramsOrTag: GetSemverTagsParams | string) {
     if (typeof paramsOrTag === 'string') {
       this.tagGetter = () => paramsOrTag
     } else {
@@ -126,7 +125,7 @@ export class Bumper {
    * @param parserOptions - Parser options
    * @returns this
    */
-  commits(params: GetCommitsParams & Params, parserOptions?: ParserStreamOptions): this
+  commits(params: GetCommitsParams, parserOptions?: ParserStreamOptions): this
   /**
    * Set commits since last release
    * @param commits - Iterable or async iterable of commits
@@ -134,7 +133,7 @@ export class Bumper {
    */
   commits(commits: Iterable<Commit> | AsyncIterable<Commit>): this
   commits(
-    paramsOrCommits: GetCommitsParams & Params | Iterable<Commit> | AsyncIterable<Commit>,
+    paramsOrCommits: GetCommitsParams | Iterable<Commit> | AsyncIterable<Commit>,
     parserOptions?: ParserStreamOptions
   ) {
     if (isIterable(paramsOrCommits)) {

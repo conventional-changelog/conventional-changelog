@@ -3,13 +3,13 @@ import {
   stdoutSpawn,
   splitStream,
   getFirstFromStream,
-  formatArgs
+  formatArgs,
+  toArray
 } from './utils.js'
 import type {
   GitLogParams,
   GitCommitParams,
   GitTagParams,
-  Params,
   Arg
 } from './types.js'
 
@@ -43,14 +43,16 @@ export class GitClient {
    * @param params.format - Commits format.
    * @yields Raw commits data.
    */
-  async* getRawCommits(params: GitLogParams & Params = {}) {
+  async* getRawCommits(params: GitLogParams = {}) {
     const {
       path,
       from = '',
       to = 'HEAD',
       format = '%B',
       ignore,
-      ...restParams
+      reverse,
+      merges,
+      since
     } = params
     const shouldNotIgnore = ignore
       ? (chunk: string) => !ignore.test(chunk)
@@ -58,9 +60,12 @@ export class GitClient {
     const args = this.formatArgs(
       'log',
       `--format=${format}%n${SCISSOR}`,
+      since && `--since=${since instanceof Date ? since.toISOString() : since}`,
+      reverse && '--reverse',
+      merges && '--merges',
+      merges === false && '--no-merges',
       [from, to].filter(Boolean).join('..'),
-      restParams,
-      path && ['--', path]
+      ...path ? ['--', ...toArray(path)] : []
     )
     const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
@@ -77,17 +82,15 @@ export class GitClient {
 
   /**
    * Get tags stream.
-   * @param params - Additional git params.
    * @yields Tags
    */
-  async* getTags(params: Params = {}) {
+  async* getTags() {
     const tagRegex = /tag:\s*(.+?)[,)]/gi
     const args = this.formatArgs(
       'log',
       '--decorate',
       '--no-color',
-      '--date-order',
-      params
+      '--date-order'
     )
     const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
@@ -107,24 +110,22 @@ export class GitClient {
 
   /**
    * Get last tag.
-   * @param params - Additional git params.
    * @returns Last tag, `null` if not found.
    */
-  async getLastTag(params: Params = {}) {
-    return getFirstFromStream(this.getTags(params))
+  async getLastTag() {
+    return getFirstFromStream(this.getTags())
   }
 
   /**
    * Check file is ignored via .gitignore.
    * @param file - Path to target file.
-   * @param params - Additional git params.
    * @returns Boolean value.
    */
-  async checkIgnore(file: string, params: Params = {}) {
+  async checkIgnore(file: string) {
     const args = this.formatArgs(
       'check-ignore',
-      file,
-      params
+      '--',
+      file
     )
 
     try {
@@ -141,13 +142,12 @@ export class GitClient {
   /**
    * Add files to git index.
    * @param files - Files to stage.
-   * @param params - Additional git params.
    */
-  async add(files: string | string[], params: Params = {}) {
+  async add(files: string | string[]) {
     const args = this.formatArgs(
       'add',
-      files,
-      params
+      '--',
+      ...toArray(files)
     )
 
     await spawn('git', args, {
@@ -163,22 +163,21 @@ export class GitClient {
    * @param params.files
    * @param params.message
    */
-  async commit(params: GitCommitParams & Params) {
+  async commit(params: GitCommitParams) {
     const {
       verify = true,
       sign = false,
       files = [],
-      message,
-      ...restParams
+      message
     } = params
     const args = this.formatArgs(
       'commit',
       !verify && '--no-verify',
       sign && '-S',
-      files,
       '-m',
       message,
-      restParams
+      '--',
+      ...files
     )
 
     await spawn('git', args, {
@@ -193,12 +192,11 @@ export class GitClient {
    * @param params.name
    * @param params.message
    */
-  async tag(params: GitTagParams & Params) {
+  async tag(params: GitTagParams) {
     let {
       sign = false,
       name,
-      message,
-      ...restParams
+      message
     } = params
 
     if (sign) {
@@ -209,9 +207,9 @@ export class GitClient {
       'tag',
       sign && '-s',
       message && '-a',
-      name,
-      message && ['-m', message],
-      restParams
+      ...message ? ['-m', message] : [],
+      '--',
+      name
     )
 
     await spawn('git', args, {
@@ -221,15 +219,13 @@ export class GitClient {
 
   /**
    * Get current branch name.
-   * @param params - Additional git params.
    * @returns Current branch name.
    */
-  async getCurrentBranch(params: Params = {}) {
+  async getCurrentBranch() {
     const args = this.formatArgs(
       'rev-parse',
       '--abbrev-ref',
-      'HEAD',
-      params
+      'HEAD'
     )
     const branch = (
       await spawn('git', args, {
@@ -243,15 +239,14 @@ export class GitClient {
   /**
    * Push changes to remote.
    * @param branch
-   * @param params - Additional git params.
    */
-  async push(branch: string, params: Params = {}) {
+  async push(branch: string) {
     const args = this.formatArgs(
       'push',
       '--follow-tags',
       'origin',
-      branch,
-      params
+      '--',
+      branch
     )
 
     await spawn('git', args, {

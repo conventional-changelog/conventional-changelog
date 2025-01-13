@@ -4,8 +4,7 @@ import type {
 } from 'conventional-commits-parser'
 import type {
   GetSemverTagsParams,
-  GetCommitsParams,
-  Params
+  GetCommitsParams
 } from '@conventional-changelog/git-client'
 
 export interface BumperRecommendation {
@@ -16,7 +15,7 @@ export interface BumperRecommendation {
 
 export interface Preset {
   whatBump(commits: Commit[]): Promise<BumperRecommendation | null | undefined>
-  tags?: GetSemverTagsParams & Params
-  commits?: GetCommitsParams & Params
+  tags?: GetSemverTagsParams
+  commits?: GetCommitsParams
   parser?: ParserStreamOptions
 }

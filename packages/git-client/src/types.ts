@@ -19,6 +19,18 @@ export interface GitLogParams {
    * Pattern to filter commits.
    */
   ignore?: RegExp
+  /**
+   * Get commits since specific date.
+   */
+  since?: Date | string
+  /**
+   * Get commits in reverse order.
+   */
+  reverse?: boolean
+  /**
+   * Get merge commits or not.
+   */
+  merges?: boolean
 }
 
 export interface GetCommitsParams extends GitLogParams {
@@ -56,10 +68,4 @@ export interface GetSemverTagsParams {
   clean?: boolean
 }
 
-export type Value = string | number | boolean | RegExp | null | undefined
-
-export type Param = Value | Value[]
-
-export type Params = Record<string, Param>
-
-export type Arg = Value | Params | Arg[]
+export type Arg = string | false | null | undefined

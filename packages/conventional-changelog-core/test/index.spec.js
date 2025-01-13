@@ -730,7 +730,9 @@ describe('conventional-changelog-core', () => {
 
     await expect(async () => {
       for await (let chunk of conventionalChangelogCore({}, {}, {
-        unknowOptions: false
+        get since () {
+          throw new Error('Error in git-raw-commits:')
+        }
       })) {
         chunk = chunk.toString()
       }
