@@ -24,8 +24,8 @@ importers:
         specifier: 8.0.0-alpha.33
         version: 8.0.0-alpha.33(eslint@8.50.0)(typescript@5.2.2)
       '@trigen/scripts':
-        specifier: 8.0.0-alpha.30
-        version: 8.0.0-alpha.30
+        specifier: 8.0.0-alpha.33
+        version: 8.0.0-alpha.33
       '@types/node':
         specifier: ^22.0.0
         version: 22.8.3
@@ -1677,9 +1677,9 @@ packages:
       - typescript
     dev: true
 
-  /@trigen/scripts@8.0.0-alpha.30:
-    resolution: {integrity: sha512-WM6npRXrGrsoeDL6b1HnRpWa0yGraQ+1Kwdtfas72DFJf9UdVWf4w7jhETE41JzIzcpDysTO1PpmLAZqwuZu8A==}
-    engines: {node: '>=14'}
+  /@trigen/scripts@8.0.0-alpha.33:
+    resolution: {integrity: sha512-CNeDTiiM7Kxkb9+U5dFWKA8QxVhxVY9t2DVYslux2fpp3dImXPG7gU/OYFgJwjKXzj6TZnLQ774NWl1YTOIY/Q==}
+    engines: {node: '>=20'}
     hasBin: true
     dependencies:
       argue-cli: 2.1.0

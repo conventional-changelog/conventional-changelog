@@ -42,7 +42,7 @@
     "@commitlint/config-pnpm-scopes": "^19.1.0",
     "@commitlint/cz-commitlint": "^19.2.0",
     "@trigen/eslint-config": "8.0.0-alpha.33",
-    "@trigen/scripts": "8.0.0-alpha.30",
+    "@trigen/scripts": "8.0.0-alpha.33",
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^2.0.0",
     "better-than-before": "^1.0.0",
