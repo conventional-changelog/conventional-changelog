@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.1...git-client-v2.0.0) (2025-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **git-client:** ability to pass additional git params is removed
+
+### Bug Fixes
+
+* **conventional-changelog-writer,git-client:** move `@types/semver` to dev dependencies ([#1268](https://github.com/conventional-changelog/conventional-changelog/issues/1268)) ([4ca2b86](https://github.com/conventional-changelog/conventional-changelog/commit/4ca2b86ebe22f312ebc492eead0ad859e519f43b))
+* **git-client:** ability to pass additional git params is removed by security reasons ([#1325](https://github.com/conventional-changelog/conventional-changelog/issues/1325)) ([d95c9ff](https://github.com/conventional-changelog/conventional-changelog/commit/d95c9ffac05af58228bd89fa0ba37ad65741c6a2))
+* **git-client:** close the generator used by getLastSemverTag ([#1281](https://github.com/conventional-changelog/conventional-changelog/issues/1281)) ([a1764d6](https://github.com/conventional-changelog/conventional-changelog/commit/a1764d61ef85244563b3a46215007fdae8083f8b))
+* **git-client:** match semver better in unstable tag regex ([#1277](https://github.com/conventional-changelog/conventional-changelog/issues/1277)) ([9f0895b](https://github.com/conventional-changelog/conventional-changelog/commit/9f0895bed4c4eab6d3788f9843ed087ceb219adf))
+
 ## [1.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.0...git-client-v1.0.1) (2024-05-06)
 
 
