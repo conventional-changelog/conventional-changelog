@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v8.0.0...conventional-changelog-core-v9.0.0) (2025-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **git-client:** ability to pass additional git params is removed
+
+### Bug Fixes
+
+* **conventional-changelog-core:** replace `read-package-up` ([#1289](https://github.com/conventional-changelog/conventional-changelog/issues/1289)) ([2f9aa21](https://github.com/conventional-changelog/conventional-changelog/commit/2f9aa212c54e23d761a59755610313a37006cd53))
+* **deps:** update dependency hosted-git-info to v8 ([#1299](https://github.com/conventional-changelog/conventional-changelog/issues/1299)) ([c86bd93](https://github.com/conventional-changelog/conventional-changelog/commit/c86bd93d949de41a662f8a397b1e796b2ce9a54d))
+* **deps:** update dependency normalize-package-data to v7 ([#1303](https://github.com/conventional-changelog/conventional-changelog/issues/1303)) ([f8df2ef](https://github.com/conventional-changelog/conventional-changelog/commit/f8df2ef713fac42866001d3c71049ec15de43c17))
+* **git-client:** ability to pass additional git params is removed by security reasons ([#1325](https://github.com/conventional-changelog/conventional-changelog/issues/1325)) ([d95c9ff](https://github.com/conventional-changelog/conventional-changelog/commit/d95c9ffac05af58228bd89fa0ba37ad65741c6a2))
+
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-core-v7.0.0...conventional-changelog-core-v8.0.0) (2024-04-26)
 
 
