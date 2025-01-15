@@ -50,7 +50,7 @@
     "commitizen": "^4.3.0",
     "conventional-changelog-core": "workspace:^",
     "del-cli": "^6.0.0",
-    "eslint": "^8.0.0",
+    "eslint": "^9.0.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^16.0.1",
