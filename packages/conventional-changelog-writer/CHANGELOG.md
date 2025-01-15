@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.0...conventional-changelog-writer-v8.0.1) (2025-01-15)
+
+
+### Bug Fixes
+
+* **conventional-changelog-writer,git-client:** move `@types/semver` to dev dependencies ([#1268](https://github.com/conventional-changelog/conventional-changelog/issues/1268)) ([4ca2b86](https://github.com/conventional-changelog/conventional-changelog/commit/4ca2b86ebe22f312ebc492eead0ad859e519f43b))
+* **conventional-changelog-writer:** fix modification prevention for Date objects ([#1285](https://github.com/conventional-changelog/conventional-changelog/issues/1285)) ([56a5f3c](https://github.com/conventional-changelog/conventional-changelog/commit/56a5f3cbbab72d8bb1f19aa697927a8f24490812))
+
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v7.0.1...conventional-changelog-writer-v8.0.0) (2024-04-26)
 
 
