@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v10.0.0...conventional-recommended-bump-v11.0.0) (2025-01-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* **git-client:** ability to pass additional git params is removed
+
+### Bug Fixes
+
+* **git-client:** ability to pass additional git params is removed by security reasons ([#1325](https://github.com/conventional-changelog/conventional-changelog/issues/1325)) ([d95c9ff](https://github.com/conventional-changelog/conventional-changelog/commit/d95c9ffac05af58228bd89fa0ba37ad65741c6a2))
+
 ## [10.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v9.0.0...conventional-recommended-bump-v10.0.0) (2024-04-26)
 
 
