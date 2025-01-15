@@ -37,6 +37,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.0.0...conventional-commits-parser-v6.1.0) (2025-01-15)
+
+
+### Features
+
+* **conventional-commits-parser:** allow @ in scope part of the header ([#1283](https://github.com/conventional-changelog/conventional-changelog/issues/1283)) ([d48c660](https://github.com/conventional-changelog/conventional-changelog/commit/d48c660e849868e0f014cb0634bc37b7b4086d49))
+
+
+### Bug Fixes
+
+* **conventional-commits-parser:** give a possible 'header' merge pattern correspondence a priority over the next line ([#1311](https://github.com/conventional-changelog/conventional-changelog/issues/1311)) ([373d330](https://github.com/conventional-changelog/conventional-changelog/commit/373d330c76c54de7b6214a27e5b1577b243ed029))
+* **conventional-commits-parser:** ignore irrelevant references ([#1288](https://github.com/conventional-changelog/conventional-changelog/issues/1288)) ([115d5d0](https://github.com/conventional-changelog/conventional-changelog/commit/115d5d0bcc10df793c6156d041fb9957314b4ccb))
+
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v5.0.0...conventional-commits-parser-v6.0.0) (2024-04-26)
 
 
