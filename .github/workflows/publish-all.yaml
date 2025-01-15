@@ -1,5 +1,5 @@
 on: workflow_dispatch
-name: manual-release-submodule
+name: Publish all packages
 jobs:
   release:
     runs-on: ubuntu-latest
