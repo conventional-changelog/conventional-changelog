@@ -30,21 +30,29 @@
   "engines": {
     "node": ">=18"
   },
-  "bin": {
-    "git-raw-commits": "./src/cli.js"
-  },
-  "exports": "./src/index.js",
+  "exports": "./src/index.ts",
   "publishConfig": {
+    "bin": {
+      "git-raw-commits": "./dist/cli/index.js"
+    },
+    "exports": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "directory": "package",
     "linkDirectory": false
   },
   "files": [
-    "src"
+    "dist"
   ],
   "scripts": {
-    "clear": "del ./package",
-    "prepublishOnly": "run clear clean-publish",
-    "postpublish": "pnpm clear"
+    "clear:package": "del ./package",
+    "clear:dist": "del ./dist",
+    "clear": "del ./package ./dist",
+    "prepublishOnly": "run build clear:package clean-publish",
+    "postpublish": "pnpm clear:package",
+    "build": "tsc",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
