@@ -6,6 +6,7 @@ import {
   writeChangelogStream,
   writeChangelogString
 } from './writers.js'
+import { Commit } from './types/commit.js'
 
 const todayUtc = formatDate(new Date())
 const commits = [
@@ -408,6 +409,26 @@ describe('conventional-changelog-writer', () => {
 
         expect(i).toBe(5)
       })
+
+      describe('when a commit should be skipped', () => {
+        const skippedCommit = {
+          header: 'fix(scope): remove duplicate emission of $destroy',
+          body: '[skip changelog]',
+          footer: null,
+          notes: [],
+          references: [],
+          committerDate: '2015-04-09 09:43:59 +1000'
+        }
+
+        it('should not appear in the generated changelog', async () => {
+          const changelogWithoutSkipCommit = await writeChangelogString(commits)
+          const skip = (commit: Commit) => {
+            return (commit.header + commit.body).includes('[skip changelog]')
+          }
+          const changelogWithSkip = await writeChangelogString([...commits, skippedCommit], undefined, {skip});
+          expect(changelogWithSkip).toEqual(changelogWithoutSkipCommit)
+        });
+      });
 
       describe('when commits are not reversed', () => {
         it('should generate on `\'version\'` if it\'s a valid semver', async () => {
