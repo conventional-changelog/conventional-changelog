@@ -167,8 +167,15 @@ export class Bumper {
 
     if (result && typeof result.level === 'number') {
       result.releaseType = VERSIONS[result.level]
+      result.commits = commits
     } else if (!result) {
-      result = {}
+      result = {
+        commits
+      }
+    } else {
+      // In case a custom result is returned that does not include a level,
+      // we still want to append commits.
+      result.commits = commits
     }
 
     return result

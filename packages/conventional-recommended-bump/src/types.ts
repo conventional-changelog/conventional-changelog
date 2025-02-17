@@ -11,6 +11,7 @@ export interface BumperRecommendation {
   level?: 0 | 1 | 2
   reason?: string
   releaseType?: string
+  commits: Commit[]
 }
 
 export interface Preset {

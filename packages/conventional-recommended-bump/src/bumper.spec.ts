@@ -61,6 +61,7 @@ describe('conventional-recommended-bump', () => {
 
       expect(recommendation.reason).toContain('1 BREAKING')
       expect(recommendation.releaseType).toBe('major')
+      expect(recommendation.commits.length).toBe(1)
     })
   })
 
@@ -74,12 +75,15 @@ describe('conventional-recommended-bump', () => {
     })
 
     it('should return \'{}\' if \'whatBump\' returns nothing', async () => {
-      preparing(2)
+      preparing(3)
 
       const bumper = new Bumper(testTools.cwd)
       const recommendation = await bumper.bump((() => {}) as any)
 
-      expect(recommendation).toEqual({})
+      expect(recommendation).toEqual({
+        commits: []
+      })
+      expect(recommendation.commits.length).toBe(0)
     })
 
     it('should return what is returned by \'whatBump\'', async () => {
@@ -89,10 +93,13 @@ describe('conventional-recommended-bump', () => {
       const recommendation = await bumper.bump(() => ({
         test: 'test'
       } as any))
+      const commits = recommendation.commits
 
       expect(recommendation).toEqual({
-        test: 'test'
+        test: 'test',
+        commits
       })
+      expect(recommendation.commits.length).toBe(1)
     })
 
     it('should return \'releaseType\' as undefined if \'level\' is not valid', async () => {
@@ -102,11 +109,16 @@ describe('conventional-recommended-bump', () => {
       const recommendation = await bumper.bump(() => ({
         level: undefined
       } as any))
+      const commits = recommendation.commits
 
       expect(recommendation).toEqual({
         level: undefined,
-        releaseType: undefined
+        releaseType: undefined,
+        // We can't easily determine what the mocked commits are, so we add this
+        // to ensure the tests pass.  We validate the commits length next.
+        commits
       })
+      expect(commits.length).toBe(1)
     })
   })
 
@@ -122,6 +134,7 @@ describe('conventional-recommended-bump', () => {
 
       expect(recommendation.reason).toContain('1 features')
       expect(recommendation.releaseType).toBe('patch')
+      expect(recommendation.commits.length).toBe(1)
     })
 
     it('recommends a minor release for a feature when preMajor=false', async () => {
@@ -132,6 +145,7 @@ describe('conventional-recommended-bump', () => {
 
       expect(recommendation.reason).toContain('1 features')
       expect(recommendation.releaseType).toBe('minor')
+      expect(recommendation.commits.length).toBe(1)
     })
 
     it('should ignore reverted commits', async () => {
@@ -171,6 +185,7 @@ describe('conventional-recommended-bump', () => {
 
       expect(recommendation.reason).toContain('1 BREAKING')
       expect(recommendation.releaseType).toBe('minor')
+      expect(recommendation.commits.length).toBe(2)
     })
 
     it('recommends a major release for a breaking change when preMajor=false', async () => {
@@ -181,6 +196,7 @@ describe('conventional-recommended-bump', () => {
 
       expect(recommendation.reason).toContain('1 BREAKING')
       expect(recommendation.releaseType).toBe('major')
+      expect(recommendation.commits.length).toBe(2)
     })
   })
 
