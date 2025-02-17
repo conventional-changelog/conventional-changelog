@@ -85,7 +85,8 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
     const {
       transform,
       reverse,
-      doFlush
+      doFlush,
+      skip
     } = finalOptions
     let chunk: Commit
     let commit: TransformedCommit<Commit> | null
@@ -99,6 +100,10 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
     for await (chunk of commits) {
       commit = await transformCommit(chunk, transform, finalContext, finalOptions)
       keyCommit = commit || chunk
+
+      if (skip && skip(keyCommit)) {
+        continue
+      }
 
       // previous blocks of logs
       if (reverse) {
