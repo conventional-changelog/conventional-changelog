@@ -1,3 +1,5 @@
 export * from './types/index.js'
+export { transformCommit } from './commit.js'
 export { defaultCommitTransform } from './options.js'
+export * from './utils.js'
 export * from './writers.js'

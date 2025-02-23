@@ -1,9 +1,5 @@
 import type {
   AnyObject,
-  CommitKnownProps,
-  CommitTransformFunction,
-  FinalContext,
-  FinalOptions,
   TransformedCommit
 } from './types/index.js'
 
@@ -36,29 +32,27 @@ function preventModifications<T extends AnyObject>(object: T): T {
  * Apply transformation to commit.
  * @param commit
  * @param transform
- * @param context
- * @param options
+ * @param args - Additional arguments for transformation function.
  * @returns Transformed commit.
  */
-export async function transformCommit<Commit extends CommitKnownProps = CommitKnownProps>(
+export async function transformCommit<Commit extends AnyObject, Args extends unknown[]>(
   commit: Commit,
-  transform: CommitTransformFunction<Commit> | null | undefined,
-  context: FinalContext<Commit>,
-  options: FinalOptions<Commit>
+  transform: ((commit: Commit, ...args: Args) => Partial<Commit> | null | Promise<Partial<Commit> | null>) | null | undefined,
+  ...args: Args
 ): Promise<TransformedCommit<Commit> | null> {
-  let patch: Partial<Commit> | null = {}
-
   if (typeof transform === 'function') {
-    patch = await transform(preventModifications(commit), context, options)
+    const patch = await transform(preventModifications(commit), ...args)
 
-    if (!patch) {
-      return null
+    if (patch) {
+      return {
+        ...commit,
+        ...patch,
+        raw: commit
+      }
     }
+
+    return null
   }
 
-  return {
-    ...commit,
-    ...patch,
-    raw: commit
-  }
+  return commit
 }

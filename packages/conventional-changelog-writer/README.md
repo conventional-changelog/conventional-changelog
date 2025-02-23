@@ -262,6 +262,12 @@ When the upstream finishes pouring the commits it will generate a block of logs 
 
 If this value is a `string`, it checks the existence of the field. Set to `null` to disable it.
 
+##### linkCompare
+
+Type: `boolean` Default: `true` if `previousTag` and `currentTag` are truthy.
+
+Should link to the page that compares current tag with previous tag?
+
 ###### generateOn(keyCommit: Commit, commitsGroup: Commit[], context: FinalContext, options: FinalOptions): boolean
 
 **NOTE**: It checks on the transformed commit chunk instead of the original one (you can check on the original by access the `raw` object on the `commit`). However, if the transformed commit is ignored it falls back to the original commit.
