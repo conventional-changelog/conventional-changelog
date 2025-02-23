@@ -81,51 +81,67 @@ console.log(await conventionalClient.getVersionFromTags()) // v1.0.0
 
 Create a wrapper around `git` CLI instance.
 
-#### `getRawCommits(params?: GitLogParams, restRawArgs?: string[]): AsyncIterable<string>`
+#### `getRawCommits(params?: GitLogParams): AsyncIterable<string>`
 
 Get raw commits stream.
 
-#### `getTags(restRawArgs?: string[]): AsyncIterable<string>`
+#### `getTags(): AsyncIterable<string>`
 
 Get tags stream.
 
-#### `checkIgnore(file: string, restRawArgs?: string[]): Promise<boolean>`
+#### `getLastTag(): Promise<string>`
+
+Get last tag.
+
+#### `checkIgnore(file: string): Promise<boolean>`
 
 Check file is ignored via .gitignore.
 
-#### `add(files: string | string[], restRawArgs?: string[]): Promise<void>`
+#### `add(files: string | string[]): Promise<void>`
 
 Add files to git index.
 
-#### `commit(params: GitCommitParams, restRawArgs?: string[]): Promise<void>`
+#### `commit(params: GitCommitParams): Promise<void>`
 
 Commit changes.
 
-#### `tag(params: GitTagParams, restRawArgs?: string[]): Promise<void>`
+#### `tag(params: GitTagParams): Promise<void>`
 
 Create a tag for the current commit.
 
-#### `getCurrentBranch(restRawArgs?: string[]): Promise<string>`
+#### `getCurrentBranch(): Promise<string>`
 
 Get current branch name.
 
-#### `push(branch: string, restRawArgs?: string[]): Promise<void>`
+#### `push(branch: string): Promise<void>`
 
 Push changes to remote.
+
+#### `verify(rev: string): Promise<string>`
+
+Verify rev exists.
+
+#### `getConfig(key: string): Promise<string>`
+
+Get config value by key.
 
 ### `new ConventionalGitClient(cwd: string)`
 
 Wrapper around Git CLI with conventional commits support.
 
-#### `getCommits(params?: ConventionalGitLogParams, parserOptions?: ParserStreamOptions, restRawArgs?: string[]): AsyncIterable<Commit>`
+#### `getCommits(params?: ConventionalGitLogParams, parserOptions?: ParserStreamOptions): AsyncIterable<Commit>`
 
 Get parsed commits stream.
 
-#### `getSemverTags(params?: GitTagsLogParams, restRawArgs?: string[]): AsyncIterable<string>`
+#### `getSemverTags(params?: GitTagsLogParams): AsyncIterable<string>`
 
 Get semver tags stream.
 
-#### `getVersionFromTags(prefix?: string, restRawArgs?: string[]): Promise<string | null>`
+#### `getLastSemverTag(params?: GetSemverTagsParam): Promise<string>`
+
+Get last semver tag.
+
+#### `getVersionFromTags(params?: GetSemverTagsParams): Promise<string | null>`
 
 Get current sematic version from git tags.
 
