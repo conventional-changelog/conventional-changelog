@@ -19,6 +19,5 @@
   "packages/conventional-recommended-bump": "11.0.0",
   "packages/conventional-changelog-core": "9.0.0",
   "packages/standard-changelog": "6.0.0",
-  "packages/gulp-conventional-changelog": "5.0.0",
   "packages/git-client": "2.0.0"
 }
