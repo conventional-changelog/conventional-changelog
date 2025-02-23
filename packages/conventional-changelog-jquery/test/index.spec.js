@@ -1,6 +1,9 @@
 import { describe, beforeEach, afterEach, it, expect } from 'vitest'
-import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/index.ts'
+import { ConventionalChangelog } from 'conventional-changelog'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.ts'
 import preset from '../src/index.js'
 
 let testTools
@@ -11,7 +14,7 @@ describe('conventional-changelog-jquery', () => {
 
     testTools.gitInit()
     testTools.writeFileSync('package.json', JSON.stringify({
-      name: 'conventional-changelog-core',
+      name: 'conventional-changelog',
       repository: {
         type: 'git',
         url: 'https://github.com/conventional-changelog/conventional-changelog.git'
@@ -36,23 +39,20 @@ describe('conventional-changelog-jquery', () => {
   })
 
   it('should generate a changelog', async () => {
-    for await (let chunk of conventionalChangelogCore(
-      {
-        cwd: testTools.cwd,
-        config: preset
-      }
-    )) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('Create jQuery.ajax')
-      expect(chunk).toContain(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog/issues/100)')
-      expect(chunk).toContain(')\n* Make jQuery objects iterable')
-      expect(chunk).toContain('### CSS')
-      expect(chunk).toContain('Remove an internal argument to the on method')
-      expect(chunk).toContain(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog/issues/200)')
-      expect(chunk).toContain('### Manipulation')
+    expect(chunks[0]).toContain('Create jQuery.ajax')
+    expect(chunks[0]).toContain(', closes [gh-100](https://github.com/conventional-changelog/conventional-changelog/issues/100)')
+    expect(chunks[0]).toContain(')\n* Make jQuery objects iterable')
+    expect(chunks[0]).toContain('### CSS')
+    expect(chunks[0]).toContain('Remove an internal argument to the on method')
+    expect(chunks[0]).toContain(', closes [#2](https://bugs.jquery.com/ticket/2) [#4](https://bugs.jquery.com/ticket/4) [gh-200](https://github.com/conventional-changelog/conventional-changelog/issues/200)')
+    expect(chunks[0]).toContain('### Manipulation')
 
-      expect(chunk).not.toContain('Bad')
-    }
+    expect(chunks[0]).not.toContain('Bad')
   })
 })

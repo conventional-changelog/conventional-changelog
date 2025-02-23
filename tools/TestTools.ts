@@ -128,7 +128,7 @@ export class TestTools {
     }
   }
 
-  gitCommit(msg: string | string[]) {
+  gitCommit(msg: string | string[] = '') {
     const args = formatMessageArgs(msg)
 
     args.push(

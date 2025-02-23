@@ -25,26 +25,34 @@
     "node": ">=18"
   },
   "bin": "cli.js",
-  "exports": "./index.js",
+  "exports": "./src/index.ts",
   "publishConfig": {
+    "bin": {
+      "standard-changelog": "./dist/cli.js"
+    },
+    "exports": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "directory": "package",
     "linkDirectory": false
   },
   "files": [
-    "index.js",
-    "figures.js",
-    "cli.js"
+    "dist"
   ],
   "scripts": {
     "clear:package": "del ./package",
-    "clear": "del ./package",
+    "clear:dist": "del ./dist",
+    "clear": "del ./package ./dist",
     "prepublishOnly": "run clear:package clean-publish",
-    "postpublish": "pnpm clear:package"
+    "postpublish": "pnpm clear:package",
+    "build": "tsc",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
+    "@conventional-changelog/git-client": "workspace:^",
     "conventional-changelog-angular": "workspace:^",
-    "conventional-changelog-core": "workspace:^",
-    "meow": "^13.0.0",
-    "picocolors": "^1.0.0"
+    "conventional-changelog": "workspace:^",
+    "meow": "^13.0.0"
   }
 }
