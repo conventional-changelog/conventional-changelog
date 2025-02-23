@@ -10,8 +10,8 @@ export interface CommitKnownProps {
   revert?: AnyObject | null
 }
 
-export type TransformedCommit<Commit extends CommitKnownProps = CommitKnownProps> = Commit & {
-  raw: Commit
+export type TransformedCommit<Commit> = Commit & {
+  raw?: Commit
 }
 
 export interface CommitNote {

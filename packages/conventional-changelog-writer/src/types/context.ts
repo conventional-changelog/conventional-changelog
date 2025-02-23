@@ -63,6 +63,10 @@ export interface Context<Commit extends CommitKnownProps = CommitKnownProps> {
    * Note groups.
    */
   noteGroups?: NoteGroup[]
+  /**
+   * Add a link to compare changes.
+   */
+  linkCompare?: boolean
 }
 
 type RequiredContext<Commit extends CommitKnownProps = CommitKnownProps> = Required<Context<Commit>>

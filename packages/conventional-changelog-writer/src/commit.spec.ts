@@ -22,14 +22,7 @@ describe('conventional-changelog-writer', () => {
           subject: 'my subject!!!',
           replaceThis: 'bad',
           doNothing: 'nothing',
-          notes: [],
-          raw: {
-            hash: '456789uhghi',
-            subject: 'my subject!!!',
-            replaceThis: 'bad',
-            doNothing: 'nothing',
-            notes: []
-          }
+          notes: []
         })
       })
 
