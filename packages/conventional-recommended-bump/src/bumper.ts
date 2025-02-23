@@ -2,21 +2,26 @@ import type {
   ParserStreamOptions,
   Commit
 } from 'conventional-commits-parser'
-import type {
-  GetSemverTagsParams,
-  GetCommitsParams
-} from '@conventional-changelog/git-client'
-import type {
-  UnknownPresetCreatorParams,
-  PresetParams
-} from 'conventional-changelog-preset-loader'
 import {
+  type GetSemverTagsParams,
+  type GetCommitsParams,
   ConventionalGitClient,
   packagePrefix
 } from '@conventional-changelog/git-client'
-import { loadPreset } from 'conventional-changelog-preset-loader'
-import type { Preset } from './types.js'
-import { isIterable } from './utils.js'
+import {
+  type UnknownPresetCreatorParams,
+  type PresetParams,
+  loadPreset
+} from 'conventional-changelog-preset-loader'
+import type {
+  Options,
+  Preset,
+  Params
+} from './types.js'
+import {
+  isIterable,
+  bindLogNamespace
+} from './utils.js'
 
 export { packagePrefix }
 
@@ -31,7 +36,7 @@ const VERSIONS = [
  */
 export class Bumper {
   private readonly gitClient: ConventionalGitClient
-  private preset: Promise<Preset> | null
+  private params: Promise<Params>
   private whatBump: Preset['whatBump'] | null
   private tagGetter: () => Promise<string | null> | string
   private commitsGetter: () => Iterable<Commit> | AsyncIterable<Commit>
@@ -41,36 +46,62 @@ export class Bumper {
       ? new ConventionalGitClient(cwdOrGitClient)
       : cwdOrGitClient
 
-    this.preset = null
     this.whatBump = null
+    this.params = Promise.resolve({
+      commits: {
+        format: '%B%n-hash-%n%H',
+        filterReverts: true
+      }
+    })
     this.tagGetter = () => this.getLastSemverTag()
     this.commitsGetter = () => this.getCommits()
   }
 
-  private getLastSemverTag(params?: GetSemverTagsParams) {
-    return this.gitClient.getLastSemverTag(params)
+  private composeParams(params: Params | Promise<Params>) {
+    this.params = Promise.all([params, this.params]).then(([params, prevParams]) => ({
+      options: {
+        ...prevParams.options,
+        ...params.options
+      },
+      tags: {
+        ...prevParams.tags,
+        ...params.tags
+      },
+      commits: {
+        ...prevParams.commits,
+        ...params.commits
+      },
+      parser: {
+        ...prevParams.parser,
+        ...params.parser
+      }
+    }))
   }
 
-  private async* getCommits(
-    params?: GetCommitsParams,
-    parserOptions?: ParserStreamOptions
-  ) {
-    yield* this.gitClient.getCommits({
-      format: '%B%n-hash-%n%H',
-      from: await this.tagGetter() || '',
-      filterReverts: true,
-      ...params
-    }, parserOptions)
+  private async getLastSemverTag() {
+    const { tags } = await this.params
+
+    return await this.gitClient.getLastSemverTag(tags)
   }
 
-  private async getPreset() {
-    const result = await this.preset
-
-    if (!result) {
-      throw Error('Preset is not loaded or have incorrect exports')
+  private async* getCommits() {
+    const {
+      options,
+      commits,
+      parser
+    } = await this.params
+    const parserParams = {
+      ...parser
     }
 
-    return result
+    if (!parserParams.warn && options?.warn) {
+      parserParams.warn = bindLogNamespace('parser', options.warn)
+    }
+
+    yield* this.gitClient.getCommits({
+      from: await this.tagGetter() || '',
+      ...commits
+    }, parserParams)
   }
 
   /**
@@ -81,25 +112,45 @@ export class Bumper {
   loadPreset<PresetCreatorParams extends UnknownPresetCreatorParams = UnknownPresetCreatorParams>(
     preset: PresetParams<PresetCreatorParams>
   ) {
-    this.preset = loadPreset<Preset, PresetCreatorParams>(preset)
+    const config = loadPreset<Preset, PresetCreatorParams>(preset).then((config) => {
+      if (!config) {
+        throw Error('Preset is not loaded or have incorrect exports')
+      }
+
+      return config
+    })
 
     this.whatBump = async (commits) => {
-      const { whatBump } = await this.getPreset()
+      const { whatBump } = await config
 
       return whatBump(commits)
     }
 
-    this.tagGetter = async () => {
-      const { tags } = await this.getPreset()
+    this.composeParams(config)
 
-      return this.getLastSemverTag(tags)
-    }
+    return this
+  }
 
-    this.commitsGetter = async function* commitsGetter() {
-      const { commits, parser } = await this.getPreset()
+  /**
+   * Set config directly
+   * @param config - Config object
+   * @returns this
+   */
+  config(config: Preset | Promise<Preset>) {
+    this.composeParams(config)
 
-      yield* this.getCommits(commits, parser)
-    }
+    return this
+  }
+
+  /**
+   * Set bumper options
+   * @param options - Bumper options
+   * @returns this
+   */
+  options(options: Options) {
+    this.composeParams({
+      options
+    })
 
     return this
   }
@@ -113,7 +164,11 @@ export class Bumper {
     if (typeof paramsOrTag === 'string') {
       this.tagGetter = () => paramsOrTag
     } else {
-      this.tagGetter = () => this.getLastSemverTag(paramsOrTag)
+      this.tagGetter = () => this.getLastSemverTag()
+
+      this.composeParams({
+        tags: paramsOrTag
+      })
     }
 
     return this
@@ -139,7 +194,12 @@ export class Bumper {
     if (isIterable(paramsOrCommits)) {
       this.commitsGetter = () => paramsOrCommits
     } else {
-      this.commitsGetter = () => this.getCommits(paramsOrCommits, parserOptions)
+      this.commitsGetter = () => this.getCommits()
+
+      this.composeParams({
+        commits: paramsOrCommits,
+        parser: parserOptions
+      })
     }
 
     return this
@@ -153,6 +213,13 @@ export class Bumper {
   async bump(whatBump = this.whatBump) {
     if (typeof whatBump !== 'function') {
       throw Error('`whatBump` must be a function')
+    }
+
+    const { gitClient } = this
+    const { options } = await this.params
+
+    if (!gitClient.debug && options?.debug) {
+      gitClient.debug = bindLogNamespace('git-client', options.debug)
     }
 
     const commitsStream = this.commitsGetter()

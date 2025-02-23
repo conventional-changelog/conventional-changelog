@@ -100,45 +100,39 @@ const cli = meow(`
   }
 })
 const { flags } = cli
-let tagsOptions = parseTagsOptions(flags)
-let commitsOptions = parseCommitsOptions(flags)
-let parserOptions = parseParserOptions(flags)
-let whatBump: Preset['whatBump'] | undefined
-const { preset, config } = flags
+const {
+  preset,
+  config
+} = flags
 const bumper = new Bumper(process.cwd())
+let whatBump: Preset['whatBump'] | undefined
 
 if (preset) {
   bumper.loadPreset(preset)
-} else if (config) {
+}
+
+if (config) {
   const configOptions = await loadDataFile(config) as Preset
 
   if (configOptions.tags) {
-    tagsOptions = {
-      ...configOptions.tags,
-      ...tagsOptions
-    }
+    bumper.tag(configOptions.tags)
   }
 
-  if (configOptions.commits) {
-    commitsOptions = {
-      ...configOptions.commits,
-      ...commitsOptions
-    }
-  }
-
-  if (configOptions.parser) {
-    parserOptions = {
-      ...configOptions.parser,
-      ...parserOptions
-    }
+  if (configOptions.commits || configOptions.parser) {
+    bumper.commits(configOptions.commits || {}, configOptions.parser)
   }
 
   whatBump ||= configOptions.whatBump
 }
 
+const tagsOptions = parseTagsOptions(flags)
+
 if (tagsOptions) {
   bumper.tag(tagsOptions)
 }
+
+const commitsOptions = parseCommitsOptions(flags)
+const parserOptions = parseParserOptions(flags)
 
 if (commitsOptions) {
   bumper.commits(commitsOptions, parserOptions || undefined)

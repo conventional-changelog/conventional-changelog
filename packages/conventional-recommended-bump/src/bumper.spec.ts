@@ -3,7 +3,15 @@ import BetterThanBefore from 'better-than-before'
 import { TestTools } from '../../../tools/index.js'
 import { Bumper, packagePrefix } from './bumper.js'
 
-const { setups, preparing, tearsWithJoy } = BetterThanBefore()
+const {
+  setups,
+  preparing,
+  tearsWithJoy
+} = BetterThanBefore() as {
+  setups(steps: (() => void)[]): void
+  preparing(step: number): void
+  tearsWithJoy(fn: () => void): void
+}
 let testTools: TestTools
 
 setups([

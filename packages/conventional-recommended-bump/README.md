@@ -60,7 +60,7 @@ npm i conventional-recommended-bump
 ```js
 import { Bumper } from 'conventional-recommended-bump'
 
-const bumper = new Bumper(process.cwd()).loadPreset('angular')
+const bumper = new Bumper().loadPreset('angular')
 const recommendation = await bumper.bump()
 
 console.log(recommendation.releaseType) // 'major'
@@ -72,30 +72,34 @@ console.log(recommendation.releaseType) // 'major'
 
 Create a new Bumper instance. `cwdOrGitClient` is the current working directory or a `ConventionalGitClient` instance.
 
-### `bumper.tag(paramsOrTag: GetSemverTagsParams & Params | string): this`
+#### `bumper.tag(paramsOrTag: GetSemverTagsParams | string): this`
 
 Set params to get the last semver tag or set the tag directly.
 
-### `bumper.commits(params: GetCommitsParams & Params, parserOptions?: ParserStreamOptions): this`
+#### `bumper.commits(params: GetCommitsParams, parserOptions?: ParserStreamOptions): this`
 
 Set params to get the commits.
 
-### `bumper.commits(commits: Iterable<Commit> | AsyncIterable<Commit>): this`
+#### `bumper.commits(commits: Iterable<Commit> | AsyncIterable<Commit>): this`
 
 Set the commits directly.
 
-### `bumper.loadPreset(preset: PresetParams): this`
+#### `bumper.loadPreset(preset: PresetParams): this`
 
 Load and set necessary params from a preset.
 
-### `bumper.bump(whatBump?: (commits: Commit[]) => Promise<BumperRecommendation | null | undefined>): Promise<BumperRecommendation>`
+#### `generator.config(config: Preset | Promise<Preset>): this`
+
+Set the config directly.
+
+#### `bumper.bump(whatBump?: (commits: Commit[]) => Promise<BumperRecommendation | null | undefined>): Promise<BumperRecommendation>`
 
 Get a recommended version bump based on conventional commits. `whatBump` function is required if preset is not loaded.
 
 ## CLI
 
 ```sh
-$ conventional-recommended-bump --help
+conventional-recommended-bump --help
 ```
 
 ## License
