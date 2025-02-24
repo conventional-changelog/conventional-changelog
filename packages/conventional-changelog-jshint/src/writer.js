@@ -4,9 +4,15 @@ import { fileURLToPath } from 'url'
 import compareFunc from 'compare-func'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
+const COMMIT_HASH_LENGTH = 7
 
-export async function createWriterOpts () {
-  const [template, header, commit, footer] = await Promise.all([
+export async function createWriterOpts() {
+  const [
+    template,
+    header,
+    commit,
+    footer
+  ] = await Promise.all([
     readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8'),
@@ -22,7 +28,7 @@ export async function createWriterOpts () {
   return writerOpts
 }
 
-function getWriterOpts () {
+function getWriterOpts() {
   return {
     transform: (commit) => {
       let type = commit.type ? commit.type.toUpperCase() : ''
@@ -32,20 +38,18 @@ function getWriterOpts () {
       } else if (type === 'FIX') {
         type = 'Bug Fixes'
       } else {
-        return
+        return undefined
       }
 
       const hash = typeof commit.hash === 'string'
-        ? commit.hash.substring(0, 7)
+        ? commit.hash.substring(0, COMMIT_HASH_LENGTH)
         : commit.hash
-      const notes = commit.notes.map(note => {
-        return {
-          ...note,
-          title: note.title === 'BREAKING CHANGE'
-            ? 'BREAKING CHANGES'
-            : note.title
-        }
-      })
+      const notes = commit.notes.map(note => ({
+        ...note,
+        title: note.title === 'BREAKING CHANGE'
+          ? 'BREAKING CHANGES'
+          : note.title
+      }))
 
       return {
         type,

@@ -1,7 +1,7 @@
 import { Readable } from 'stream'
 import { GitClient } from '@conventional-changelog/git-client'
 
-function getFinalOptions (options = {}) {
+function getFinalOptions(options = {}) {
   const finalOptions = {
     cwd: process.cwd(),
     ...options
@@ -9,7 +9,7 @@ function getFinalOptions (options = {}) {
 
   if (options.debug) {
     finalOptions.debug = (args) => {
-      options.debug('Your git-log command is:\ngit ' + args.join(' '))
+      options.debug(`Your git-log command is:\ngit ${args.join(' ')}`)
     }
   }
 
@@ -19,16 +19,16 @@ function getFinalOptions (options = {}) {
 /**
  * Get raw commits from git-log.
  * @param {*} options
- * @param {string} [options.cwd=process.cwd()] - Current working directory to run git.
- * @param {false | ((log: string) => void)} [options.debug=false] - A function to get debug information.
+ * @param {string} [options.cwd] - Current working directory to run git.
+ * @param {false | ((log: string) => void)} [options.debug] - A function to get debug information.
  * @param {string | RegExp} [options.ignore] - Ignore commits that match provided string or RegExp.
  * @param {string | string[]} [options.path] - Only commits that are modifying this path.
- * @param {string} [options.from=''] - Starting commit reference or hash.
- * @param {string} [options.to='HEAD'] - Ending commit reference or hash.
- * @param {string} [options.format='%B'] - Format of the commit.
+ * @param {string} [options.from] - Starting commit reference or hash.
+ * @param {string} [options.to] - Ending commit reference or hash.
+ * @param {string} [options.format] - Format of the commit.
  * @yields {string} - Raw commit.
  */
-export async function * getRawCommits (options) {
+export async function* getRawCommits(options) {
   const { cwd, debug, ...finalOptions } = getFinalOptions(options)
   const client = new GitClient(cwd, debug)
   let commit
@@ -45,15 +45,15 @@ export async function * getRawCommits (options) {
 /**
  * Get raw commits stream from git-log.
  * @param {*} options
- * @param {string} [options.cwd=process.cwd()] - Current working directory to run git.
- * @param {false | ((log: string) => void)} [options.debug=false] - A function to get debug information.
+ * @param {string} [options.cwd] - Current working directory to run git.
+ * @param {false | ((log: string) => void)} [options.debug] - A function to get debug information.
  * @param {string | RegExp} [options.ignore] - Ignore commits that match provided string or RegExp.
  * @param {string | string[]} [options.path] - Only commits that are modifying this path.
- * @param {string} [options.from=''] - Starting commit reference or hash.
- * @param {string} [options.to='HEAD'] - Ending commit reference or hash.
- * @param {string} [options.format='%B'] - Format of the commit.
+ * @param {string} [options.from] - Starting commit reference or hash.
+ * @param {string} [options.to] - Ending commit reference or hash.
+ * @param {string} [options.format] - Format of the commit.
  * @returns {Readable} - Raw commits stream.
  */
-export function getRawCommitsStream (options) {
+export function getRawCommitsStream(options) {
   return Readable.from(getRawCommits(options))
 }

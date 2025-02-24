@@ -1,9 +1,11 @@
 export const breakingHeaderPattern = /^(\w*)(?:\((.*)\))?!: (.*)$/
 
 // todo: drop, CommitParser currently handles this case
-export function addBangNotes (commit) {
+export function addBangNotes(commit) {
   const match = commit.header.match(breakingHeaderPattern)
+
   if (match && commit.notes.length === 0) {
+    // eslint-disable-next-line prefer-destructuring
     const noteText = match[3] // the description of the change.
 
     return [

@@ -20,7 +20,11 @@ describe('conventional-changelog-express', () => {
       ' - perf: reduce try block size',
       ' - perf: remove bitwise operations'
     ])
-    testTools.gitCommit(['perf: use saved reference to http.STATUS_CODES', '', 'closes #2602'])
+    testTools.gitCommit([
+      'perf: use saved reference to http.STATUS_CODES',
+      '',
+      'closes #2602'
+    ])
     testTools.gitCommit(['docs: add license comments'])
     testTools.gitCommit(['deps: path-to-regexp@0.1.4'])
     testTools.gitCommit('Bad commit')

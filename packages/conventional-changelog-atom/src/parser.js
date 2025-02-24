@@ -1,9 +1,6 @@
-export function createParserOpts () {
+export function createParserOpts() {
   return {
     headerPattern: /^(:.*?:) (.*)$/,
-    headerCorrespondence: [
-      'emoji',
-      'shortDesc'
-    ]
+    headerCorrespondence: ['emoji', 'shortDesc']
   }
 }

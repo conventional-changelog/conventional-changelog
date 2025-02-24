@@ -1,10 +1,7 @@
-export function createParserOpts () {
+export function createParserOpts() {
   return {
     headerPattern: /^\[\[(.*)]] (.*)$/,
-    headerCorrespondence: [
-      'type',
-      'shortDesc'
-    ],
+    headerCorrespondence: ['type', 'shortDesc'],
     noteKeywords: ['BREAKING CHANGE']
   }
 }

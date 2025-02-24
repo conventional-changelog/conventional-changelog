@@ -3,21 +3,23 @@ import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
+const COMMIT_HASH_LENGTH = 7
+const EMOJI_LENGTH = 72
 
-function getWriterOpts () {
+function getWriterOpts() {
   return {
     transform: (commit) => {
       if (!commit.emoji || typeof commit.emoji !== 'string') {
-        return
+        return undefined
       }
 
-      const emoji = commit.emoji.substring(0, 72)
+      const emoji = commit.emoji.substring(0, EMOJI_LENGTH)
       const emojiLength = emoji.length
       const shortHash = typeof commit.hash === 'string'
-        ? commit.hash.substring(0, 7)
+        ? commit.hash.substring(0, COMMIT_HASH_LENGTH)
         : commit.shortHash
       const shortDesc = typeof commit.shortDesc === 'string'
-        ? commit.shortDesc.substring(0, 72 - emojiLength)
+        ? commit.shortDesc.substring(0, EMOJI_LENGTH - emojiLength)
         : undefined
 
       return {
@@ -32,8 +34,12 @@ function getWriterOpts () {
   }
 }
 
-export async function createWriterOpts () {
-  const [template, header, commit] = await Promise.all([
+export async function createWriterOpts() {
+  const [
+    template,
+    header,
+    commit
+  ] = await Promise.all([
     readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8')

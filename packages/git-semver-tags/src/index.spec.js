@@ -64,7 +64,11 @@ describe('git-semver-tags', () => {
       cwd: testTools.cwd
     })
 
-    expect(tags).toEqual(['v4.0.0', 'v3.0.0', 'v2.0.0'])
+    expect(tags).toEqual([
+      'v4.0.0',
+      'v3.0.0',
+      'v2.0.0'
+    ])
   })
 
   it('should still work if I run it again', async () => {
@@ -72,7 +76,11 @@ describe('git-semver-tags', () => {
       cwd: testTools.cwd
     })
 
-    expect(tags).toEqual(['v4.0.0', 'v3.0.0', 'v2.0.0'])
+    expect(tags).toEqual([
+      'v4.0.0',
+      'v3.0.0',
+      'v2.0.0'
+    ])
   })
 
   it('should be in reverse chronological order', async () => {
@@ -84,7 +92,12 @@ describe('git-semver-tags', () => {
       cwd: testTools.cwd
     })
 
-    expect(tags).toEqual(['v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
+    expect(tags).toEqual([
+      'v1.0.0',
+      'v4.0.0',
+      'v3.0.0',
+      'v2.0.0'
+    ])
   })
 
   it('should work with prerelease', async () => {
@@ -96,7 +109,13 @@ describe('git-semver-tags', () => {
       cwd: testTools.cwd
     })
 
-    expect(tags).toEqual(['5.0.0-pre', 'v1.0.0', 'v4.0.0', 'v3.0.0', 'v2.0.0'])
+    expect(tags).toEqual([
+      '5.0.0-pre',
+      'v1.0.0',
+      'v4.0.0',
+      'v3.0.0',
+      'v2.0.0'
+    ])
   })
 
   it('should work with empty commit', async () => {
@@ -130,7 +149,11 @@ describe('git-semver-tags', () => {
       lernaTags: true
     })
 
-    expect(tags).toEqual(['foo-project@5.0.0', 'foo-project@4.0.0', 'blarg-project@1.0.0'])
+    expect(tags).toEqual([
+      'foo-project@5.0.0',
+      'foo-project@4.0.0',
+      'blarg-project@1.0.0'
+    ])
   })
 
   it('should work with lerna style tags with multiple digits', async () => {
