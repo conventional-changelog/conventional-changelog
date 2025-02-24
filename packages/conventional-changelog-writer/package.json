@@ -53,7 +53,7 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "test:types": "tsc --noEmit"
   },
   "dependencies": {

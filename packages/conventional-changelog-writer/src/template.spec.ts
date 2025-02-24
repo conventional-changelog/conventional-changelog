@@ -283,7 +283,7 @@ describe('conventional-changelog-writer', () => {
 
       it('should finalize context', async () => {
         const finalOptions = getFinalOptions({
-          finalizeContext: (context, options, commits, keyCommit) => {
+          finalizeContext: (context, _options, commits, keyCommit) => {
             context.title = 'oh'
             context.date = String(commits.length)
             context.version = keyCommit?.version || ''
@@ -306,7 +306,7 @@ describe('conventional-changelog-writer', () => {
       it('should pass the correct arguments', async () => {
         const finalOptions = getFinalOptions({
           ignoreReverted: true,
-          finalizeContext: (context, options, filteredCommits, keyCommit, originalCommits) => {
+          finalizeContext: (context, _options, filteredCommits, _keyCommit, originalCommits) => {
             expect(filteredCommits.length).toBe(2)
             expect(originalCommits.length).toBe(4)
 

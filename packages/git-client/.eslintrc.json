@@ -6,6 +6,6 @@
   ],
   "parserOptions": {
     "tsconfigRootDir": "./packages/git-client",
-    "project": ["./tsconfig.json", "./test/tsconfig.json"]
+    "project": ["./tsconfig.json"]
   }
 }

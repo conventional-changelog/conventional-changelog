@@ -12,7 +12,8 @@
   "ignorePatterns": [
     "packages/*/dist/**/*",
     "packages/*/package/**/*",
-    "packages/*/test/fixtures/**/*"
+    "packages/*/test/fixtures/**/*",
+    "packages/*/src/**/*.d.ts"
   ],
   "overrides": [
     {

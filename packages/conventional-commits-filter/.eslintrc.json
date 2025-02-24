@@ -6,6 +6,6 @@
   ],
   "parserOptions": {
     "tsconfigRootDir": "./packages/conventional-commits-filter",
-    "project": ["./tsconfig.json", "./test/tsconfig.json"]
+    "project": ["./tsconfig.json"]
   }
 }
