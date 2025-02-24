@@ -31,7 +31,7 @@ describe('conventional-changelog-writer', () => {
           hash: commit.hash.substring(0, 4),
           subject: commit.subject.substring(0, 5),
           replaceThis: 'replaced'
-        }), options, context)
+        }))
 
         expect(processed).toEqual({
           hash: '4567',
@@ -53,7 +53,7 @@ describe('conventional-changelog-writer', () => {
         await expect(() => transformCommit(commit, (commit) => {
           commit.hash = commit.hash.substring(0, 4)
           return commit
-        }, options, context)).rejects.toThrow('Cannot modify immutable object.')
+        })).rejects.toThrow('Cannot modify immutable object.')
       })
 
       it('should correctly handle Date object', async () => {
@@ -65,7 +65,7 @@ describe('conventional-changelog-writer', () => {
         await expect(transformCommit(commitWithDate, commit => ({
           ...commit,
           dateString: commit.date.toISOString()
-        }), options, context)).resolves.not.toThrow()
+        }))).resolves.not.toThrow()
       })
     })
   })

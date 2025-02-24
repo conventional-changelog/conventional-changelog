@@ -16,11 +16,7 @@ const {
   setups,
   preparing,
   tearsWithJoy
-} = BetterThanBefore() as {
-  setups(steps: ((context: Record<string, string>) => void)[]): void
-  preparing(step: number): Record<string, string>
-  tearsWithJoy(fn: () => void): void
-}
+} = BetterThanBefore()
 let testTools: TestTools
 
 setups([
@@ -253,7 +249,7 @@ describe('conventional-changelog', () => {
           from: 'HEAD~2'
         })
         .writer({
-          commitsSort: null
+          commitsSort: undefined
         })
         .readPackage()
         .write()

@@ -6,6 +6,6 @@
   ],
   "parserOptions": {
     "tsconfigRootDir": "./packages/conventional-changelog-writer",
-    "project": ["./tsconfig.json", "./test/tsconfig.json"]
+    "project": ["./tsconfig.json"]
   }
 }
