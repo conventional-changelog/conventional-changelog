@@ -83,10 +83,7 @@ setups([
     testTools.gitCommit(['revert: feat: custom revert format', 'This reverts commit 5678.'])
   },
   () => {
-    testTools.gitCommit([
-      'chore: release at different version',
-      'Release-As: v3.0.2'
-    ])
+    testTools.gitCommit(['chore: release at different version', 'Release-As: v3.0.2'])
   }
 ])
 
@@ -137,10 +134,10 @@ describe('conventional-changelog-conventionalcommits', () => {
 
     // CHANGELOG should group sections in order of importance:
     expect(
-      chunks[0].indexOf('BREAKING CHANGE') < chunks[0].indexOf('Features') &&
-        chunks[0].indexOf('Features') < chunks[0].indexOf('Bug Fixes') &&
-        chunks[0].indexOf('Bug Fixes') < chunks[0].indexOf('Performance Improvements') &&
-        chunks[0].indexOf('Performance Improvements') < chunks[0].indexOf('Reverts')
+      chunks[0].indexOf('BREAKING CHANGE') < chunks[0].indexOf('Features')
+        && chunks[0].indexOf('Features') < chunks[0].indexOf('Bug Fixes')
+        && chunks[0].indexOf('Bug Fixes') < chunks[0].indexOf('Performance Improvements')
+        && chunks[0].indexOf('Performance Improvements') < chunks[0].indexOf('Reverts')
     ).toBe(true)
   })
 
@@ -185,7 +182,11 @@ describe('conventional-changelog-conventionalcommits', () => {
       .readPackage()
       .config(preset({
         types: [
-          { type: 'chore', scope: 'deps', section: 'Dependencies' }
+          {
+            type: 'chore',
+            scope: 'deps',
+            section: 'Dependencies'
+          }
         ]
       }))
       .write()
@@ -203,9 +204,12 @@ describe('conventional-changelog-conventionalcommits', () => {
     const log = new ConventionalChangelog(testTools.cwd)
       .readPackage()
       .config(preset({
-        types: DEFAULT_COMMIT_TYPES.map((commitType) => (
+        types: DEFAULT_COMMIT_TYPES.map(commitType => (
           commitType.type === 'chore'
-            ? { ...commitType, hidden: false }
+            ? {
+              ...commitType,
+              hidden: false
+            }
             : commitType
         ))
       }))

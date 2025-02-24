@@ -4,8 +4,12 @@ import { fileURLToPath } from 'url'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
 
-export async function createWriterOpts () {
-  const [template, header, commit] = await Promise.all([
+export async function createWriterOpts() {
+  const [
+    template,
+    header,
+    commit
+  ] = await Promise.all([
     readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8')
@@ -19,17 +23,17 @@ export async function createWriterOpts () {
   return writerOpts
 }
 
-function getWriterOpts () {
+function getWriterOpts() {
   return {
     transform: (commit) => {
-      let component = commit.component
+      let { component } = commit
 
       if (commit.component === 'perf') {
         component = 'Performance'
       } else if (commit.component === 'deps') {
         component = 'Dependencies'
       } else {
-        return
+        return undefined
       }
 
       return {

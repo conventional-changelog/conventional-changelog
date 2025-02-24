@@ -17,7 +17,11 @@ describe('conventional-changelog-jshint', () => {
     testTools.gitCommit(['[[Test]] Add test for gh-985. Fixes #985'])
     testTools.gitCommit(['[[FIX]] catch params are scoped to the catch only'])
     testTools.gitCommit(['[[Fix]] accidentally use lower-case'])
-    testTools.gitCommit(['[[FEAT]] Option to assume strict mode', '', 'BREAKING CHANGE: Not backward compatible.'])
+    testTools.gitCommit([
+      '[[FEAT]] Option to assume strict mode',
+      '',
+      'BREAKING CHANGE: Not backward compatible.'
+    ])
   })
 
   afterAll(() => {

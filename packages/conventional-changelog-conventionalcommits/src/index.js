@@ -5,7 +5,7 @@ import { createWhatBump } from './whatBump.js'
 
 export { DEFAULT_COMMIT_TYPES }
 
-export default async function createPreset (config) {
+export default async function createPreset(config) {
   return {
     commits: {
       ignore: config?.ignoreCommits,

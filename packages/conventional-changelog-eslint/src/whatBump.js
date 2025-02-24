@@ -1,16 +1,19 @@
-export function whatBump (commits) {
+export function whatBump(commits) {
   let level = 2
   let breakings = 0
   let features = 0
 
-  commits.forEach(commit => {
-    if (!commit.tag) return
+  commits.forEach((commit) => {
+    if (!commit.tag) {
+      return
+    }
 
     if (commit.tag.toLowerCase() === 'breaking') {
       breakings += 1
       level = 0
     } else if (commit.tag.toLowerCase() === 'new') {
       features += 1
+
       if (level === 2) {
         level = 1
       }

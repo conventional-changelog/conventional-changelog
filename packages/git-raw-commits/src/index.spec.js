@@ -25,7 +25,9 @@ describe('git-raw-commits', () => {
   })
 
   it('should execute the command without error', async () => {
-    testTools.mkdirSync('./packages/foo', { recursive: true })
+    testTools.mkdirSync('./packages/foo', {
+      recursive: true
+    })
     testTools.writeFileSync('./packages/foo/test1', '')
     testTools.exec('git add --all && git commit -m"First commit"')
     testTools.writeFileSync('test2', '')
@@ -188,7 +190,7 @@ describe('git-raw-commits', () => {
 
     for await (let chunk of getRawCommits({
       format: 'what%n%B',
-      debug (message) {
+      debug(message) {
         cmd = message
       },
       cwd: testTools.cwd

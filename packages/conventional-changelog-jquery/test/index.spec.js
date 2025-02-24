@@ -22,14 +22,8 @@ describe('conventional-changelog-jquery', () => {
     }))
     testTools.gitCommit(['Core: Make jQuery objects iterable'])
     testTools.gitCommit(["CSS: Don't name the anonymous swap function"])
-    testTools.gitCommit([
-      'Event: Remove an internal argument to the on method',
-      'Fixes #2, #4, gh-200'
-    ])
-    testTools.gitCommit([
-      'Manipulation: Remove an internal argument to the remove method',
-      'Closes #22'
-    ])
+    testTools.gitCommit(['Event: Remove an internal argument to the on method', 'Fixes #2, #4, gh-200'])
+    testTools.gitCommit(['Manipulation: Remove an internal argument to the remove method', 'Closes #22'])
     testTools.gitCommit('Bad commit')
     testTools.gitCommit(['Core: Create jQuery.ajax', 'Closes gh-100'])
   })

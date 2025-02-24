@@ -1,4 +1,4 @@
-export function createParserOpts () {
+export function createParserOpts() {
   return {
     mergePattern: /^Merge pull request #(.*) from .*$/,
     mergeCorrespondence: ['pr'],

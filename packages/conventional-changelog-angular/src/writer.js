@@ -4,9 +4,15 @@ import { fileURLToPath } from 'url'
 import compareFunc from 'compare-func'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
+const COMMIT_HASH_LENGTH = 7
 
-export async function createWriterOpts () {
-  const [template, header, commit, footer] = await Promise.all([
+export async function createWriterOpts() {
+  const [
+    template,
+    header,
+    commit,
+    footer
+  ] = await Promise.all([
     readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
     readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8'),
@@ -22,11 +28,11 @@ export async function createWriterOpts () {
   return writerOpts
 }
 
-function getWriterOpts () {
+function getWriterOpts() {
   return {
     transform: (commit, context) => {
       let discard = true
-      const notes = commit.notes.map(note => {
+      const notes = commit.notes.map((note) => {
         discard = false
 
         return {
@@ -34,8 +40,7 @@ function getWriterOpts () {
           title: 'BREAKING CHANGES'
         }
       })
-
-      let type = commit.type
+      let { type } = commit
 
       if (commit.type === 'feat') {
         type = 'Features'
@@ -46,7 +51,7 @@ function getWriterOpts () {
       } else if (commit.type === 'revert' || commit.revert) {
         type = 'Reverts'
       } else if (discard) {
-        return
+        return undefined
       } else if (commit.type === 'docs') {
         type = 'Documentation'
       } else if (commit.type === 'style') {
@@ -63,16 +68,16 @@ function getWriterOpts () {
 
       const scope = commit.scope === '*' ? '' : commit.scope
       const shortHash = typeof commit.hash === 'string'
-        ? commit.hash.substring(0, 7)
+        ? commit.hash.substring(0, COMMIT_HASH_LENGTH)
         : commit.shortHash
-
       const issues = []
-      let subject = commit.subject
+      let { subject } = commit
 
       if (typeof subject === 'string') {
         let url = context.repository
           ? `${context.host}/${context.owner}/${context.repository}`
           : context.repoUrl
+
         if (url) {
           url = `${url}/issues/`
           // Issue URLs.
@@ -81,6 +86,7 @@ function getWriterOpts () {
             return `[#${issue}](${url}${issue})`
           })
         }
+
         if (context.host) {
           // User URLs.
           subject = subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, username) => {
