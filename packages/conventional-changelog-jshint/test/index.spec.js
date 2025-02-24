@@ -1,6 +1,9 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/index.ts'
+import { ConventionalChangelog } from 'conventional-changelog'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.ts'
 import preset from '../src/index.js'
 
 let testTools
@@ -22,25 +25,22 @@ describe('conventional-changelog-jshint', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    for await (let chunk of conventionalChangelogCore(
-      {
-        cwd: testTools.cwd,
-        config: preset
-      }
-    )) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('catch params are scoped to the catch only')
-      expect(chunk).toContain('### Bug Fixes')
-      expect(chunk).toContain('Option to assume strict mode')
-      expect(chunk).toContain('accidentally use lower-case')
-      expect(chunk).toContain('### Features')
-      expect(chunk).toContain('BREAKING CHANGES')
+    expect(chunks[0]).toContain('catch params are scoped to the catch only')
+    expect(chunks[0]).toContain('### Bug Fixes')
+    expect(chunks[0]).toContain('Option to assume strict mode')
+    expect(chunks[0]).toContain('accidentally use lower-case')
+    expect(chunks[0]).toContain('### Features')
+    expect(chunks[0]).toContain('BREAKING CHANGES')
 
-      expect(chunk).not.toContain('Chore')
-      expect(chunk).not.toContain('Move scope-manager to external file')
-      expect(chunk).not.toContain('Add test for gh-985.')
-      expect(chunk).not.toContain('Bad')
-    }
+    expect(chunks[0]).not.toContain('Chore')
+    expect(chunks[0]).not.toContain('Move scope-manager to external file')
+    expect(chunks[0]).not.toContain('Add test for gh-985.')
+    expect(chunks[0]).not.toContain('Bad')
   })
 })

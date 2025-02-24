@@ -1,6 +1,9 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/index.ts'
+import { ConventionalChangelog } from 'conventional-changelog'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.ts'
 import preset from '../src/index.js'
 
 let testTools
@@ -27,19 +30,18 @@ describe('conventional-changelog-codemirror', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    for await (let chunk of conventionalChangelogCore({
-      config: preset,
-      cwd: testTools.cwd
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('### tern')
-      expect(chunk).toContain('Use correct primary when selecting variables')
-      expect(chunk).toContain('**addon**')
-      expect(chunk).toContain('Add values for property flex-direction')
-      expect(chunk).toContain('### stylus')
+    expect(chunks[0]).toContain('### tern')
+    expect(chunks[0]).toContain('Use correct primary when selecting variables')
+    expect(chunks[0]).toContain('**addon**')
+    expect(chunks[0]).toContain('Add values for property flex-direction')
+    expect(chunks[0]).toContain('### stylus')
 
-      expect(chunk).not.toContain('Bad')
-    }
+    expect(chunks[0]).not.toContain('Bad')
   })
 })
