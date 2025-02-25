@@ -3,7 +3,11 @@
   "type": "module",
   "version": "6.0.0",
   "description": "Generate a changelog from git metadata.",
-  "author": "Steve Mao",
+  "author": {
+    "name": "Steve Mao",
+    "email": "maochenyan@gmail.com",
+    "url": "https://github.com/stevemao"
+  },
   "contributors": [
     {
       "name": "Brian Ford"
@@ -29,36 +33,47 @@
     "conventional-changelog",
     "conventional",
     "changelog",
-    "log"
+    "log",
+    "cli"
   ],
   "engines": {
     "node": ">=18"
   },
-  "exports": "./index.js",
+  "exports": "./src/index.ts",
   "publishConfig": {
+    "bin": {
+      "conventional-changelog": "./dist/cli/index.js"
+    },
+    "exports": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "directory": "package",
     "linkDirectory": false
   },
   "files": [
-    "index.js"
+    "dist"
   ],
   "scripts": {
     "clear:package": "del ./package",
-    "clear": "del ./package",
+    "clear:dist": "del ./dist",
+    "clear": "del ./package ./dist",
     "prepublishOnly": "run clear:package clean-publish",
-    "postpublish": "pnpm clear:package"
+    "postpublish": "pnpm clear:package",
+    "build": "tsc -p tsconfig.build.json",
+    "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "conventional-changelog-angular": "workspace:^",
-    "conventional-changelog-atom": "workspace:^",
-    "conventional-changelog-codemirror": "workspace:^",
-    "conventional-changelog-conventionalcommits": "workspace:^",
-    "conventional-changelog-core": "workspace:^",
-    "conventional-changelog-ember": "workspace:^",
-    "conventional-changelog-eslint": "workspace:^",
-    "conventional-changelog-express": "workspace:^",
-    "conventional-changelog-jquery": "workspace:^",
-    "conventional-changelog-jshint": "workspace:^",
-    "conventional-changelog-preset-loader": "workspace:^"
+    "@conventional-changelog/git-client": "workspace:^",
+    "@types/normalize-package-data": "^2.4.4",
+    "conventional-changelog-preset-loader": "workspace:^",
+    "conventional-changelog-writer": "workspace:^",
+    "conventional-commits-parser": "workspace:^",
+    "fd-package-json": "^1.2.0",
+    "meow": "^13.0.0",
+    "normalize-package-data": "^7.0.0"
+  },
+  "devDependencies": {
+    "conventional-changelog-angular": "workspace:^"
   }
 }

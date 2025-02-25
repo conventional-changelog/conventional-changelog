@@ -1,9 +1,17 @@
 import { afterAll, describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import { TestTools } from '../../../tools/index.js'
-import { Bumper, packagePrefix } from './bumper.js'
+import type { Commit } from 'conventional-commits-parser'
+import {
+  Bumper,
+  packagePrefix
+} from './bumper.js'
 
-const { setups, preparing, tearsWithJoy } = BetterThanBefore()
+const {
+  setups,
+  preparing,
+  tearsWithJoy
+} = BetterThanBefore()
 let testTools: TestTools
 
 setups([
@@ -151,19 +159,31 @@ describe('conventional-recommended-bump', () => {
     it('should ignore reverted commits', async () => {
       preparing(5)
 
-      await new Bumper(testTools.cwd).bump(((commits) => {
-        expect(commits.length).toBe(0)
-      }) as any)
+      let commits: Commit[] = []
+
+      await new Bumper(testTools.cwd).bump((cmts) => {
+        commits = cmts
+
+        return Promise.resolve(null)
+      })
+
+      expect(commits.length).toBe(0)
     })
 
     it('should include reverted commits', async () => {
       preparing(5)
 
+      let commits: Commit[] = []
+
       await new Bumper(testTools.cwd).commits({
         filterReverts: false
-      }).bump(((commits) => {
-        expect(commits.length).toBe(2)
-      }) as any)
+      }).bump((cmts) => {
+        commits = cmts
+
+        return Promise.resolve(null)
+      })
+
+      expect(commits.length).toBe(2)
     })
 
     it('throws an error if unable to load a preset package', async () => {
@@ -204,12 +224,18 @@ describe('conventional-recommended-bump', () => {
     it('should recommends a minor release if appropriate', async () => {
       preparing(6)
 
+      let commits: Commit[] = []
+
       await new Bumper(testTools.cwd).tag({
         prefix: 'ms/'
-      }).bump(((commits) => {
-        expect(commits.length).toBe(1)
-        expect(commits[0].type).toBe('feat')
-      }) as any)
+      }).bump((cmts) => {
+        commits = cmts
+
+        return Promise.resolve(null)
+      })
+
+      expect(commits.length).toBe(1)
+      expect(commits[0].type).toBe('feat')
     })
   })
 
@@ -217,20 +243,32 @@ describe('conventional-recommended-bump', () => {
     it('should recommend \'major\' version bump when not using lerna tags', async () => {
       preparing(7)
 
-      await new Bumper(testTools.cwd).bump(((commits) => {
-        expect(commits.length).toBe(3)
-      }) as any)
+      let commits: Commit[] = []
+
+      await new Bumper(testTools.cwd).bump((cmts) => {
+        commits = cmts
+
+        return Promise.resolve(null)
+      })
+
+      expect(commits.length).toBe(3)
     })
 
     it('should recommend \'minor\' version bump when lerna tag option is enabled', async () => {
       preparing(7)
 
+      let commits: Commit[] = []
+
       await new Bumper(testTools.cwd).tag({
         prefix: packagePrefix('my-package')
-      }).bump(((commits) => {
-        expect(commits.length).toBe(1)
-        expect(commits[0].type).toBe('feat')
-      }) as any)
+      }).bump((cmts) => {
+        commits = cmts
+
+        return Promise.resolve(null)
+      })
+
+      expect(commits.length).toBe(1)
+      expect(commits[0].type).toBe('feat')
     })
   })
 })

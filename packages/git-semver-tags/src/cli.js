@@ -32,7 +32,6 @@ const args = meow(`
     }
   }
 })
-
 const tags = await getSemverTags({
   lernaTags: args.flags.lerna,
   package: args.flags.package,
@@ -40,4 +39,5 @@ const tags = await getSemverTags({
   skipUnstable: args.flags.skipUnstable
 })
 
+// eslint-disable-next-line no-console
 console.log(tags.join('\n'))

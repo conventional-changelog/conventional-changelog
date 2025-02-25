@@ -1,8 +1,11 @@
 import path from 'path'
 import { afterAll, describe, it, expect } from 'vitest'
 import BetterThanBefore from 'better-than-before'
-import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/index.ts'
+import { ConventionalChangelog } from 'conventional-changelog'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.ts'
 import preset from '../src/index.js'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
@@ -14,7 +17,7 @@ setups([
 
     testTools.gitInit()
     testTools.writeFileSync('./package.json', JSON.stringify({
-      name: 'conventional-changelog-core',
+      name: 'conventional-changelog',
       repository: {
         type: 'git',
         url: 'https://github.com/conventional-changelog/conventional-changelog.git'
@@ -74,261 +77,218 @@ afterAll(() => {
 describe('conventional-changelog-angular', () => {
   it('should work if there is no semver tag', async () => {
     preparing(1)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('first build setup')
-      expect(chunk).toContain('**travis:** add TravisCI pipeline')
-      expect(chunk).toContain('**travis:** Continuously integrated.')
-      expect(chunk).toContain('amazing new module')
-      expect(chunk).toContain('**compile:** avoid a bug')
-      expect(chunk).toContain('make it faster')
-      expect(chunk).toContain(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
-      expect(chunk).toContain('New build system.')
-      expect(chunk).toContain('Not backward compatible.')
-      expect(chunk).toContain('**compile:** The Change is huge.')
-      expect(chunk).toContain('Build System')
-      expect(chunk).toContain('Continuous Integration')
-      expect(chunk).toContain('Features')
-      expect(chunk).toContain('Bug Fixes')
-      expect(chunk).toContain('Performance Improvements')
-      expect(chunk).toContain('Reverts')
-      expect(chunk).toContain('bad commit')
-      expect(chunk).toContain('BREAKING CHANGE')
+    expect(chunks[0]).toContain('first build setup')
+    expect(chunks[0]).toContain('**travis:** add TravisCI pipeline')
+    expect(chunks[0]).toContain('**travis:** Continuously integrated.')
+    expect(chunks[0]).toContain('amazing new module')
+    expect(chunks[0]).toContain('**compile:** avoid a bug')
+    expect(chunks[0]).toContain('make it faster')
+    expect(chunks[0]).toContain(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
+    expect(chunks[0]).toContain('New build system.')
+    expect(chunks[0]).toContain('Not backward compatible.')
+    expect(chunks[0]).toContain('**compile:** The Change is huge.')
+    expect(chunks[0]).toContain('Build System')
+    expect(chunks[0]).toContain('Continuous Integration')
+    expect(chunks[0]).toContain('Features')
+    expect(chunks[0]).toContain('Bug Fixes')
+    expect(chunks[0]).toContain('Performance Improvements')
+    expect(chunks[0]).toContain('Reverts')
+    expect(chunks[0]).toContain('bad commit')
+    expect(chunks[0]).toContain('BREAKING CHANGE')
 
-      expect(chunk).not.toContain('ci')
-      expect(chunk).not.toContain('feat')
-      expect(chunk).not.toContain('fix')
-      expect(chunk).not.toContain('perf')
-      expect(chunk).not.toContain('revert')
-      expect(chunk).not.toContain('***:**')
-      expect(chunk).not.toContain(': Not backward compatible.')
-      i++
-    }
+    expect(chunks[0]).not.toContain('ci')
+    expect(chunks[0]).not.toContain('feat')
+    expect(chunks[0]).not.toContain('fix')
+    expect(chunks[0]).not.toContain('perf')
+    expect(chunks[0]).not.toContain('revert')
+    expect(chunks[0]).not.toContain('***:**')
+    expect(chunks[0]).not.toContain(': Not backward compatible.')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should replace #[0-9]+ with GitHub issue URL', async () => {
     preparing(2)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('[#133](https://github.com/conventional-changelog/conventional-changelog/issues/133)')
-      i++
-    }
+    expect(chunks[0]).toContain('[#133](https://github.com/conventional-changelog/conventional-changelog/issues/133)')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should remove the issues that already appear in the subject', async () => {
     preparing(3)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('[#88](https://github.com/conventional-changelog/conventional-changelog/issues/88)')
-      expect(chunk).not.toContain('closes [#88](https://github.com/conventional-changelog/conventional-changelog/issues/88)')
-      i++
-    }
+    expect(chunks[0]).toContain('[#88](https://github.com/conventional-changelog/conventional-changelog/issues/88)')
+    expect(chunks[0]).not.toContain('closes [#88](https://github.com/conventional-changelog/conventional-changelog/issues/88)')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should replace @username with GitHub user URL', async () => {
     preparing(4)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('[@bcoe](https://github.com/bcoe)')
-      i++
-    }
+    expect(chunks[0]).toContain('[@bcoe](https://github.com/bcoe)')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should not discard commit if there is BREAKING CHANGE', async () => {
     preparing(5)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('Continuous Integration')
-      expect(chunk).toContain('Build System')
-      expect(chunk).toContain('Documentation')
-      expect(chunk).toContain('Styles')
-      expect(chunk).toContain('Code Refactoring')
-      expect(chunk).toContain('Tests')
-      i++
-    }
+    expect(chunks[0]).toContain('Continuous Integration')
+    expect(chunks[0]).toContain('Build System')
+    expect(chunks[0]).toContain('Documentation')
+    expect(chunks[0]).toContain('Styles')
+    expect(chunks[0]).toContain('Code Refactoring')
+    expect(chunks[0]).toContain('Tests')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should work if there is a semver tag', async () => {
     preparing(6)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset,
-      outputUnreleased: true
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .options({
+        outputUnreleased: true
+      })
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('some more features')
-      expect(chunk).not.toContain('BREAKING')
-      i++
-    }
+    expect(chunks[0]).toContain('some more features')
+    expect(chunks[0]).not.toContain('BREAKING')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should work with unknown host', async () => {
     preparing(6)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset,
-      pkg: {
-        path: path.join(__dirname, 'fixtures/_unknown-host.json')
-      }
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage(path.join(__dirname, 'fixtures/_unknown-host.json'))
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('(http://unknown/compare')
-      expect(chunk).toContain('](http://unknown/commits/')
-      i++
-    }
+    expect(chunks[0]).toContain('(http://unknown/compare')
+    expect(chunks[0]).toContain('](http://unknown/commits/')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
-  it('should work specifying where to find a package.json using conventional-changelog-core', async () => {
+  it('should work specifying where to find a package.json using conventional-changelog', async () => {
     preparing(7)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset,
-      pkg: {
-        path: path.join(__dirname, 'fixtures/_known-host.json')
-      }
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage(path.join(__dirname, 'fixtures/_known-host.json'))
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('(https://github.com/conventional-changelog/example/compare')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/example/commit/')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/example/issues/')
-      i++
-    }
+    expect(chunks[0]).toContain('(https://github.com/conventional-changelog/example/compare')
+    expect(chunks[0]).toContain('](https://github.com/conventional-changelog/example/commit/')
+    expect(chunks[0]).toContain('](https://github.com/conventional-changelog/example/issues/')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should fallback to the closest package.json when not providing a location for a package.json', async () => {
     preparing(7)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('(https://github.com/conventional-changelog/conventional-changelog/compare')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/conventional-changelog/commit/')
-      expect(chunk).toContain('](https://github.com/conventional-changelog/conventional-changelog/issues/')
-      i++
-    }
+    expect(chunks[0]).toContain('(https://github.com/conventional-changelog/conventional-changelog/compare')
+    expect(chunks[0]).toContain('](https://github.com/conventional-changelog/conventional-changelog/commit/')
+    expect(chunks[0]).toContain('](https://github.com/conventional-changelog/conventional-changelog/issues/')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should support non public GitHub repository locations', async () => {
     preparing(7)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset,
-      pkg: {
-        path: path.join(__dirname, 'fixtures/_ghe-host.json')
-      }
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage(path.join(__dirname, 'fixtures/_ghe-host.json'))
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('(https://github.internal.example.com/dlmr')
-      expect(chunk).toContain('(https://github.internal.example.com/conventional-changelog/internal/compare')
-      expect(chunk).toContain('](https://github.internal.example.com/conventional-changelog/internal/commit/')
-      expect(chunk).toContain('5](https://github.internal.example.com/conventional-changelog/internal/issues/5')
-      expect(chunk).toContain(' closes [#10](https://github.internal.example.com/conventional-changelog/internal/issues/10)')
-      i++
-    }
+    expect(chunks[0]).toContain('(https://github.internal.example.com/dlmr')
+    expect(chunks[0]).toContain('(https://github.internal.example.com/conventional-changelog/internal/compare')
+    expect(chunks[0]).toContain('](https://github.internal.example.com/conventional-changelog/internal/commit/')
+    expect(chunks[0]).toContain('5](https://github.internal.example.com/conventional-changelog/internal/issues/5')
+    expect(chunks[0]).toContain(' closes [#10](https://github.internal.example.com/conventional-changelog/internal/issues/10)')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should only replace with link to user if it is a username', async () => {
     preparing(8)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).not.toContain('(https://github.com/5')
-      expect(chunk).toContain('(https://github.com/username')
+    expect(chunks[0]).not.toContain('(https://github.com/5')
+    expect(chunks[0]).toContain('(https://github.com/username')
 
-      expect(chunk).not.toContain('[@dummy](https://github.com/dummy)/package')
-      expect(chunk).toContain('bump @dummy/package from')
-      i++
-    }
+    expect(chunks[0]).not.toContain('[@dummy](https://github.com/dummy)/package')
+    expect(chunks[0]).toContain('bump @dummy/package from')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 
   it('should parse both default (Revert "<subject>") and custom (revert: <subject>) revert commits', async () => {
     preparing(9)
-    let i = 0
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toMatch('custom revert format')
-      expect(chunk).toMatch('default revert format')
-      i++
-    }
+    expect(chunks[0]).toMatch('custom revert format')
+    expect(chunks[0]).toMatch('default revert format')
 
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 })

@@ -1,6 +1,5 @@
 {
   "packages/conventional-changelog-conventionalcommits": "8.0.0",
-  "packages/conventional-changelog-cli": "5.0.0",
   "packages/conventional-changelog": "6.0.0",
   "packages/conventional-commits-parser": "6.1.0",
   "packages/git-raw-commits": "5.0.0",
@@ -17,8 +16,6 @@
   "packages/conventional-commits-filter": "5.0.0",
   "packages/conventional-changelog-preset-loader": "5.0.0",
   "packages/conventional-recommended-bump": "11.0.0",
-  "packages/conventional-changelog-core": "9.0.0",
   "packages/standard-changelog": "6.0.0",
-  "packages/gulp-conventional-changelog": "5.0.0",
   "packages/git-client": "2.0.0"
 }

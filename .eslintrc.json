@@ -1,35 +1,26 @@
 {
   "root": true,
-  "extends": "standard",
+  "extends": [
+    "@trigen/eslint-config",
+    "@trigen/eslint-config/tsm",
+    "@trigen/eslint-config/esm",
+    "@trigen/eslint-config/jest"
+  ],
   "env": {
     "node": true
   },
+  "ignorePatterns": [
+    "packages/*/dist/**/*",
+    "packages/*/package/**/*",
+    "packages/*/test/fixtures/**/*",
+    "packages/*/src/**/*.d.ts"
+  ],
   "overrides": [
     {
-      "files": [
-        "packages/*/test{,/*}.js"
-      ],
-      "env": {
-        "mocha": true
-      }
-    },
-    {
-      "files": [
-        "tools/**/*.ts",
-        "packages/**/*.ts"
-      ],
-      "extends": [
-        "@trigen/eslint-config",
-        "@trigen/eslint-config/tsm",
-        "@trigen/eslint-config/esm",
-        "@trigen/eslint-config/jest"
-      ],
-      "env": {
-        "node": true
+      "files": ["index.js"],
+      "rules": {
+        "import/no-default-export": "off"
       }
     }
-  ],
-  "ignorePatterns": [
-    "packages/*/dist/**/*"
   ]
 }

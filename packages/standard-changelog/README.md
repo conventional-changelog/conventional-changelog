@@ -1,15 +1,60 @@
-# Standard CHANGELOG
+# standard-changelog
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
+[![ESM-only package][package]][package-url]
+[![NPM version][npm]][npm-url]
+[![Node version][node]][node-url]
+[![Dependencies status][deps]][deps-url]
+[![Install size][size]][size-url]
+[![Build status][build]][build-url]
+[![Coverage status][coverage]][coverage-url]
 
-> An opinionated approach to CHANGELOG generation using angular commit conventions.
+[package]: https://img.shields.io/badge/package-ESM--only-ffe536.svg
+[package-url]: https://nodejs.org/api/esm.html
 
-## Quick Start
+[npm]: https://img.shields.io/npm/v/standard-changelog.svg
+[npm-url]: https://npmjs.com/package/standard-changelog
+
+[node]: https://img.shields.io/node/v/standard-changelog.svg
+[node-url]: https://nodejs.org
+
+[deps]: https://img.shields.io/librariesio/release/npm/standard-changelog
+[deps-url]: https://libraries.io/npm/standard-changelog/tree
+
+[size]: https://packagephobia.com/badge?p=standard-changelog
+[size-url]: https://packagephobia.com/result?p=standard-changelog
+
+[build]: https://img.shields.io/github/actions/workflow/status/conventional-changelog/conventional-changelog/tests.yaml?branch=master
+[build-url]: https://github.com/conventional-changelog/conventional-changelog/actions
+
+[coverage]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master
+
+An opinionated approach to CHANGELOG generation using angular commit conventions.
+
+<hr />
+<a href="#install">Install</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#usage">Usage</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="#js-api">JS API</a>
+<br />
+<hr />
+
+## Install
+
+```bash
+# pnpm
+pnpm add standard-changelog
+# yarn
+yarn add standard-changelog
+# npm
+npm i standard-changelog
+```
+
+## Usage
 
 ```sh
-$ npm install -g standard-changelog
-$ cd my-project
-$ standard-changelog
+standard-changelog
 ```
 
 The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
@@ -19,46 +64,36 @@ The above generates a changelog based on commits since the last semver tag that 
 If you're using this tool for the first time and want to generate new content in CHANGELOG.md, you can run:
 
 ```sh
-$ standard-changelog --first-release
+standard-changelog --first-release
 ```
 
 **advanced topics:**
 
-All available command line parameters can be listed using [CLI](#cli) : `standard-changelog --help`.
+All available command line parameters can be listed using CLI: `standard-changelog --help`.
 
-## Programmatic Usage
-
-```sh
-$ npm install --save standard-changelog
-```
+## JS API
 
 ```js
-import standardChangelog from 'standard-changelog';
+import { StandardChangelog } from 'standard-changelog'
 
-standardChangelog()
-  .pipe(process.stdout); // or any writable stream
+const generator = new StandardChangelog()
+  .readPackage()
+
+generator
+  .writeStream()
+  .pipe(process.stdout)
+
+// or
+
+for await (const chunk of generator.write()) {
+  console.log(chunk)
+}
 ```
 
-## CLI
+StandardChangelog is a class based on ConventionalChangelog and with preloaded angular preset.
 
-```sh
-$ npm install -g standard-changelog
-$ standard-changelog --help
-```
-
-## API
-
-See the [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog) docs with the angular preset.
+See the [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog/README.md#js-api) JS API docs.
 
 ## License
 
 MIT
-
-[npm-image]: https://badge.fury.io/js/standard-changelog.svg
-[npm-url]: https://npmjs.org/package/standard-changelog
-[travis-image]: https://travis-ci.org/conventional-changelog/standard-changelog.svg?branch=master
-[travis-url]: https://travis-ci.org/conventional-changelog/standard-changelog
-[daviddm-image]: https://david-dm.org/conventional-changelog/standard-changelog.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/conventional-changelog/standard-changelog
-[coverage-image]: https://coveralls.io/repos/github/conventional-changelog/conventional-changelog/badge.svg?branch=master
-[coverage-url]: https://coveralls.io/github/conventional-changelog/conventional-changelog?branch=master

@@ -3,8 +3,8 @@ import fs from 'fs/promises'
 import path from 'path'
 import Handlebars from 'handlebars'
 
-let template
-let templateContext
+let template: any
+let templateContext: any
 
 describe('conventional-changelog-writer', () => {
   describe('templates', () => {

@@ -3,7 +3,7 @@ import {
   packagePrefix
 } from '@conventional-changelog/git-client'
 
-function getFinalOptions (options = {}) {
+function getFinalOptions(options = {}) {
   if (options.package && !options.lernaTags) {
     throw new Error('opts.package should only be used when running in lerna mode')
   }
@@ -20,13 +20,13 @@ function getFinalOptions (options = {}) {
 /**
  * Get semver tags from git.
  * @param {*} options
- * @param {string} [options.cwd=process.cwd()] - Current working directory to run git.
- * @param {boolean} [options.lernaTags=false] - Extract lerna style tags.
+ * @param {string} [options.cwd] - Current working directory to run git.
+ * @param {boolean} [options.lernaTags] - Extract lerna style tags.
  * @param {string} [options.package] - Filter lerna style tags by package.
  * @param {string} [options.tagPrefix] - Filter semver tags by prefix.
  * @returns Semver tags.
  */
-export async function getSemverTags (options = {}) {
+export async function getSemverTags(options = {}) {
   const {
     cwd,
     ...finalOptions

@@ -1,9 +1,6 @@
-export function createParserOpts () {
+export function createParserOpts() {
   return {
     headerPattern: /^(\w*): (.*)$/,
-    headerCorrespondence: [
-      'component',
-      'shortDesc'
-    ]
+    headerCorrespondence: ['component', 'shortDesc']
   }
 }

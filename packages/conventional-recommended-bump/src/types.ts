@@ -20,3 +20,14 @@ export interface Preset {
   commits?: GetCommitsParams
   parser?: ParserStreamOptions
 }
+
+export type Logger = (source: string, messages: string | string[]) => void
+
+export interface Options {
+  warn?: Logger
+  debug?: Logger
+}
+
+export interface Params extends Omit<Preset, 'whatBump'> {
+  options?: Options
+}

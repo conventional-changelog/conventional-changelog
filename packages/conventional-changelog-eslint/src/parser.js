@@ -1,9 +1,6 @@
-export function createParserOpts () {
+export function createParserOpts() {
   return {
     headerPattern: /^(\w*):\s*(.*)$/,
-    headerCorrespondence: [
-      'tag',
-      'message'
-    ]
+    headerCorrespondence: ['tag', 'message']
   }
 }

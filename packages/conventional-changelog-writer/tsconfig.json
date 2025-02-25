@@ -1,12 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
+  "extends": "./tsconfig.build.json",
   "include": [
-    "src"
+    "src",
+    "templates"
   ],
-  "exclude": [
-    "**/*.spec.ts"
-  ]
+  "exclude": []
 }

@@ -21,7 +21,7 @@ const SCISSOR = '------------------------ >8 ------------------------'
 export class GitClient {
   constructor(
     readonly cwd: string,
-    private readonly debug: ((log: string[]) => void) | false = false
+    public debug?: ((log: string[]) => void) | undefined
   ) {}
 
   private formatArgs(...args: Arg[]) {
@@ -252,5 +252,44 @@ export class GitClient {
     await spawn('git', args, {
       cwd: this.cwd
     })
+  }
+
+  /**
+   * Verify rev exists.
+   * @param rev
+   * @returns Target hash.
+   */
+  async verify(rev: string) {
+    const args = this.formatArgs(
+      'rev-parse',
+      '--verify',
+      rev
+    )
+
+    return (
+      await spawn('git', args, {
+        cwd: this.cwd
+      })
+    ).toString().trim()
+  }
+
+  /**
+   * Get config value by key.
+   * @param key - Config key.
+   * @returns Config value.
+   */
+  async getConfig(key: string) {
+    const args = this.formatArgs(
+      'config',
+      '--get',
+      '--',
+      key
+    )
+
+    return (
+      await spawn('git', args, {
+        cwd: this.cwd
+      })
+    ).toString().trim()
   }
 }

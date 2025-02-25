@@ -6,6 +6,6 @@
   ],
   "parserOptions": {
     "tsconfigRootDir": "./packages/conventional-recommended-bump",
-    "project": ["./tsconfig.json", "./test/tsconfig.json"]
+    "project": ["./tsconfig.json"]
   }
 }

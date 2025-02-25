@@ -1,6 +1,9 @@
 import { describe, beforeEach, afterEach, it, expect } from 'vitest'
-import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/index.ts'
+import { ConventionalChangelog } from 'conventional-changelog'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.ts'
 import preset from '../src/index.js'
 
 let testTools
@@ -26,26 +29,23 @@ describe('conventional-changelog-ember', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    for await (let chunk of conventionalChangelogCore(
-      {
-        cwd: testTools.cwd,
-        config: preset
-      }
-    )) {
-      chunk = chunk.toString()
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-      expect(chunk).toContain('[12001]')
-      expect(chunk).toContain('Remove {{with}} keyword\'s controller option.')
-      expect(chunk).toContain('Release')
-      expect(chunk).toContain('### Bug Fixes')
-      expect(chunk).toContain('### Cleanup')
-      expect(chunk).toContain('### Features')
-      expect(chunk).toContain('### Documentation')
-      expect(chunk).toContain('### Security')
+    expect(chunks[0]).toContain('[12001]')
+    expect(chunks[0]).toContain('Remove {{with}} keyword\'s controller option.')
+    expect(chunks[0]).toContain('Release')
+    expect(chunks[0]).toContain('### Bug Fixes')
+    expect(chunks[0]).toContain('### Cleanup')
+    expect(chunks[0]).toContain('### Features')
+    expect(chunks[0]).toContain('### Documentation')
+    expect(chunks[0]).toContain('### Security')
 
-      expect(chunk).not.toContain('CLEANUP')
-      expect(chunk).not.toContain('FEATURE')
-      expect(chunk).not.toContain('Bad')
-    }
+    expect(chunks[0]).not.toContain('CLEANUP')
+    expect(chunks[0]).not.toContain('FEATURE')
+    expect(chunks[0]).not.toContain('Bad')
   })
 })

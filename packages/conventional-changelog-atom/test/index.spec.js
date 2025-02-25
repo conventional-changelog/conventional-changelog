@@ -1,6 +1,9 @@
 import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import conventionalChangelogCore from 'conventional-changelog-core'
-import { TestTools } from '../../../tools/index.ts'
+import { ConventionalChangelog } from 'conventional-changelog'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.ts'
 import preset from '../src/index.js'
 
 let testTools
@@ -22,22 +25,17 @@ describe('conventional-changelog-atom', () => {
   })
 
   it('should work if there is no semver tag', async () => {
-    let i = 0
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
 
-    for await (let chunk of conventionalChangelogCore({
-      cwd: testTools.cwd,
-      config: preset
-    })) {
-      chunk = chunk.toString()
+    expect(chunks[0]).toContain(':arrow_down:')
+    expect(chunks[0]).toContain('`updateContentDimensions` when model changes')
+    expect(chunks[0]).toContain(':arrow_up:')
+    expect(chunks[0]).toContain('one-dark/light-ui@v1.0.1')
 
-      expect(chunk).toContain(':arrow_down:')
-      expect(chunk).toContain('`updateContentDimensions` when model changes')
-      expect(chunk).toContain(':arrow_up:')
-      expect(chunk).toContain('one-dark/light-ui@v1.0.1')
-
-      i++
-    }
-
-    expect(i).toBe(1)
+    expect(chunks.length).toBe(1)
   })
 })
