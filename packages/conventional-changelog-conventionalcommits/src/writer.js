@@ -3,7 +3,6 @@ import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 import compareFunc from 'compare-func'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
-import { addBangNotes } from './utils.js'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
 const COMMIT_HASH_LENGTH = 7
@@ -74,10 +73,6 @@ function getWriterOpts(config) {
       let discard = true
       const issues = []
       const entry = findTypeEntry(config.types, commit)
-      // adds additional breaking change notes
-      // for the special case, test(system)!: hello world, where there is
-      // a '!' but no 'BREAKING CHANGE' in body:
-      let notes = addBangNotes(commit)
 
       // Add an entry in the CHANGELOG if special Release-As footer
       // is used:
@@ -86,7 +81,7 @@ function getWriterOpts(config) {
         discard = false
       }
 
-      notes = notes.map((note) => {
+      const notes = commit.notes.map((note) => {
         discard = false
 
         return {

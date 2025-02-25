@@ -1,5 +1,3 @@
-import { addBangNotes } from './utils.js'
-
 export function createWhatBump(config) {
   return function whatBump(commits) {
     let level = 2
@@ -7,11 +5,6 @@ export function createWhatBump(config) {
     let features = 0
 
     commits.forEach((commit) => {
-      // adds additional breaking change notes
-      // for the special case, test(system)!: hello world, where there is
-      // a '!' but no 'BREAKING CHANGE' in body:
-      commit.notes = addBangNotes(commit)
-
       if (commit.notes.length > 0) {
         breakings += commit.notes.length
         level = 0

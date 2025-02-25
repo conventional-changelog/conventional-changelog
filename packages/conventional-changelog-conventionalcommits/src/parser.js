@@ -1,9 +1,7 @@
-import { breakingHeaderPattern } from './utils.js'
-
 export function createParserOpts(config) {
   return {
     headerPattern: /^(\w*)(?:\((.*)\))?!?: (.*)$/,
-    breakingHeaderPattern,
+    breakingHeaderPattern: /^(\w*)(?:\((.*)\))?!: (.*)$/,
     headerCorrespondence: [
       'type',
       'scope',
