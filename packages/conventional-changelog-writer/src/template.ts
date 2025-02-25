@@ -2,7 +2,6 @@ import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { readFile } from 'fs/promises'
 import Handlebars from 'handlebars'
-// @todo Drop import and ignoreReverted option
 import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import type {
   TemplatesOptions,
