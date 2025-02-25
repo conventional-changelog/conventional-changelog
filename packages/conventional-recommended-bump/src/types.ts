@@ -7,14 +7,26 @@ import type {
   GetCommitsParams
 } from '@conventional-changelog/git-client'
 
-export interface BumperRecommendation {
-  level?: 0 | 1 | 2
-  reason?: string
-  releaseType?: string
+export interface WhatBump {
+  level: 0 | 1 | 2
+  reason: string
 }
 
+export type WhatBumpResult = WhatBump | null | undefined
+
+export interface BumperRecommendation extends WhatBump {
+  releaseType: string
+  commits: Commit[]
+}
+
+export interface EmptyBumperRecommendation {
+  commits: Commit[]
+}
+
+export type BumperRecommendationResult = BumperRecommendation | EmptyBumperRecommendation
+
 export interface Preset {
-  whatBump(commits: Commit[]): Promise<BumperRecommendation | null | undefined>
+  whatBump(commits: Commit[]): Promise<WhatBumpResult> | WhatBumpResult
   tags?: GetSemverTagsParams
   commits?: GetCommitsParams
   parser?: ParserStreamOptions

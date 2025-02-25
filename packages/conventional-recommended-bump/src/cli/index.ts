@@ -140,10 +140,10 @@ if (commitsOptions) {
 
 const data = await bumper.bump(whatBump)
 
-if (data.releaseType) {
+if ('releaseType' in data) {
   console.log(data.releaseType)
 }
 
-if (flags.verbose && data.reason) {
+if (flags.verbose && 'reason' in data) {
   console.log(`Reason: ${data.reason}`)
 }

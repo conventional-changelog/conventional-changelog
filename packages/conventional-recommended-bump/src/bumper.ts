@@ -16,7 +16,8 @@ import {
 import type {
   Options,
   Preset,
-  Params
+  Params,
+  BumperRecommendationResult
 } from './types.js'
 import {
   isIterable,
@@ -210,7 +211,7 @@ export class Bumper {
    * @param whatBump - Function to recommend a bump from commits
    * @returns Bump recommendation
    */
-  async bump(whatBump = this.whatBump) {
+  async bump(whatBump = this.whatBump): Promise<BumperRecommendationResult> {
     if (typeof whatBump !== 'function') {
       throw Error('`whatBump` must be a function')
     }
@@ -230,14 +231,18 @@ export class Bumper {
       commits.push(commit)
     }
 
-    let result = await whatBump(commits)
+    const result = await whatBump(commits)
 
-    if (result && typeof result.level === 'number') {
-      result.releaseType = VERSIONS[result.level]
-    } else if (!result) {
-      result = {}
+    if (result && 'level' in result) {
+      return {
+        ...result,
+        releaseType: VERSIONS[result.level],
+        commits
+      }
     }
 
-    return result
+    return {
+      commits
+    }
   }
 }

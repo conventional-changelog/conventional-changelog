@@ -67,8 +67,11 @@ describe('conventional-recommended-bump', () => {
       const bumper = new Bumper(testTools.cwd).loadPreset('conventionalcommits')
       const recommendation = await bumper.bump()
 
-      expect(recommendation.reason).toContain('1 BREAKING')
-      expect(recommendation.releaseType).toBe('major')
+      expect(recommendation).toMatchObject({
+        reason: expect.stringContaining('1 BREAKING'),
+        releaseType: 'major',
+        commits: [expect.any(Object)]
+      })
     })
   })
 
@@ -85,9 +88,11 @@ describe('conventional-recommended-bump', () => {
       preparing(2)
 
       const bumper = new Bumper(testTools.cwd)
-      const recommendation = await bumper.bump((() => {}) as any)
+      const recommendation = await bumper.bump(() => null)
 
-      expect(recommendation).toEqual({})
+      expect(recommendation).toMatchObject({
+        commits: [expect.any(Object)]
+      })
     })
 
     it('should return what is returned by \'whatBump\'', async () => {
@@ -95,11 +100,14 @@ describe('conventional-recommended-bump', () => {
 
       const bumper = new Bumper(testTools.cwd)
       const recommendation = await bumper.bump(() => ({
-        test: 'test'
-      } as any))
+        level: 2,
+        reason: 'test'
+      }))
 
-      expect(recommendation).toEqual({
-        test: 'test'
+      expect(recommendation).toMatchObject({
+        level: 2,
+        reason: 'test',
+        commits: [expect.any(Object)]
       })
     })
 
@@ -111,9 +119,10 @@ describe('conventional-recommended-bump', () => {
         level: undefined
       } as any))
 
-      expect(recommendation).toEqual({
+      expect(recommendation).toMatchObject({
         level: undefined,
-        releaseType: undefined
+        releaseType: undefined,
+        commits: [expect.any(Object)]
       })
     })
   })
@@ -128,8 +137,11 @@ describe('conventional-recommended-bump', () => {
       })
       const recommendation = await bumper.bump()
 
-      expect(recommendation.reason).toContain('1 features')
-      expect(recommendation.releaseType).toBe('patch')
+      expect(recommendation).toMatchObject({
+        reason: expect.stringContaining('1 features'),
+        releaseType: 'patch',
+        commits: [expect.any(Object)]
+      })
     })
 
     it('recommends a minor release for a feature when preMajor=false', async () => {
@@ -138,8 +150,11 @@ describe('conventional-recommended-bump', () => {
       const bumper = new Bumper(testTools.cwd).loadPreset('conventionalcommits')
       const recommendation = await bumper.bump()
 
-      expect(recommendation.reason).toContain('1 features')
-      expect(recommendation.releaseType).toBe('minor')
+      expect(recommendation).toMatchObject({
+        reason: expect.stringContaining('1 features'),
+        releaseType: 'minor',
+        commits: [expect.any(Object)]
+      })
     })
 
     it('should ignore reverted commits', async () => {
@@ -150,7 +165,7 @@ describe('conventional-recommended-bump', () => {
       await new Bumper(testTools.cwd).bump((cmts) => {
         commits = cmts
 
-        return Promise.resolve(null)
+        return null
       })
 
       expect(commits.length).toBe(0)
@@ -166,7 +181,7 @@ describe('conventional-recommended-bump', () => {
       }).bump((cmts) => {
         commits = cmts
 
-        return Promise.resolve(null)
+        return null
       })
 
       expect(commits.length).toBe(2)
@@ -189,8 +204,11 @@ describe('conventional-recommended-bump', () => {
       })
       const recommendation = await bumper.bump()
 
-      expect(recommendation.reason).toContain('1 BREAKING')
-      expect(recommendation.releaseType).toBe('minor')
+      expect(recommendation).toMatchObject({
+        reason: expect.stringContaining('1 BREAKING'),
+        releaseType: 'minor',
+        commits: [expect.any(Object), expect.any(Object)]
+      })
     })
 
     it('recommends a major release for a breaking change when preMajor=false', async () => {
@@ -199,8 +217,11 @@ describe('conventional-recommended-bump', () => {
       const bumper = new Bumper(testTools.cwd).loadPreset('conventionalcommits')
       const recommendation = await bumper.bump()
 
-      expect(recommendation.reason).toContain('1 BREAKING')
-      expect(recommendation.releaseType).toBe('major')
+      expect(recommendation).toMatchObject({
+        reason: expect.stringContaining('1 BREAKING'),
+        releaseType: 'major',
+        commits: [expect.any(Object), expect.any(Object)]
+      })
     })
   })
 
@@ -215,7 +236,7 @@ describe('conventional-recommended-bump', () => {
       }).bump((cmts) => {
         commits = cmts
 
-        return Promise.resolve(null)
+        return null
       })
 
       expect(commits.length).toBe(1)
@@ -232,7 +253,7 @@ describe('conventional-recommended-bump', () => {
       await new Bumper(testTools.cwd).bump((cmts) => {
         commits = cmts
 
-        return Promise.resolve(null)
+        return null
       })
 
       expect(commits.length).toBe(3)
@@ -248,7 +269,7 @@ describe('conventional-recommended-bump', () => {
       }).bump((cmts) => {
         commits = cmts
 
-        return Promise.resolve(null)
+        return null
       })
 
       expect(commits.length).toBe(1)
