@@ -6,7 +6,6 @@ import {
   writeChangelogStream,
   writeChangelogString
 } from './writers.js'
-import { Commit } from './types/commit.js'
 
 const todayUtc = formatDate(new Date())
 const commits = [
@@ -422,7 +421,7 @@ describe('conventional-changelog-writer', () => {
 
         it('should not appear in the generated changelog', async () => {
           const changelogWithoutSkipCommit = await writeChangelogString(commits)
-          const skip = (commit: Commit) => {
+          const skip = (commit: any) => {
             return (commit.header + commit.body).includes('[skip changelog]')
           }
           const changelogWithSkip = await writeChangelogString([...commits, skippedCommit], undefined, {skip});
