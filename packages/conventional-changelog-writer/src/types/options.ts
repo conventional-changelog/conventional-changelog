@@ -113,13 +113,13 @@ export interface Options<Commit extends CommitKnownProps = CommitKnownProps> ext
    * @param date - Date string or Date object.
    * @returns Final date string.
    */
-  formatDate?(date: string | Date): string,
+  formatDate?(date: string | Date): string
   /**
-  * A function that will determine if a commit should be skipped by the writer
-  * @param commit - The commit in question
-  * @returns boolean. If true, don't write the current commit
-  */
-  skip?: (commit: Commit) => boolean
+   * A function that will determine if a commit should be skipped by the writer
+   * @param commit - The commit in question
+   * @returns boolean. If true, don't write the current commit
+   */
+  skip?(commit: Commit): boolean
 }
 
 type RequiredOptions<Commit extends CommitKnownProps = CommitKnownProps> = Required<Options<Commit>>

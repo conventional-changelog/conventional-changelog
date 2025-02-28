@@ -421,13 +421,14 @@ describe('conventional-changelog-writer', () => {
 
         it('should not appear in the generated changelog', async () => {
           const changelogWithoutSkipCommit = await writeChangelogString(commits)
-          const skip = (commit: any) => {
-            return (commit.header + commit.body).includes('[skip changelog]')
-          }
-          const changelogWithSkip = await writeChangelogString([...commits, skippedCommit], undefined, {skip});
+          const skip = (commit: any) => (commit.header + commit.body).includes('[skip changelog]')
+          const changelogWithSkip = await writeChangelogString([...commits, skippedCommit], undefined, {
+            skip
+          })
+
           expect(changelogWithSkip).toEqual(changelogWithoutSkipCommit)
-        });
-      });
+        })
+      })
 
       describe('when commits are not reversed', () => {
         it('should generate on `\'version\'` if it\'s a valid semver', async () => {
