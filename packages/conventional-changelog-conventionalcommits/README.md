@@ -67,7 +67,7 @@ or json config like that:
 {
   "options": {
     "preset": {
-      "name": "conventional-changelog-conventionalcommits",
+      "name": "conventionalcommits",
       "issuePrefixes": ["TEST-"],
       "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
     }
