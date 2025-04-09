@@ -56,7 +56,7 @@ jobs:
           command: github-release
       - uses: actions/checkout@v4
         if: ${{ steps.tag-release.outputs.releases_created }}
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
       - uses: actions/setup-node@v4
