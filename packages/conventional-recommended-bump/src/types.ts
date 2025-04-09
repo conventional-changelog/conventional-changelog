@@ -15,7 +15,7 @@ export interface WhatBump {
 export type WhatBumpResult = WhatBump | null | undefined
 
 export interface BumperRecommendation extends WhatBump {
-  releaseType: ['major', 'minor', 'patch']
+  releaseType: 'major' | 'minor' | 'patch'
   commits: Commit[]
 }
 

@@ -17,7 +17,6 @@ import type {
   Options,
   Preset,
   Params,
-  BumperRecommendation,
   BumperRecommendationResult
 } from './types.js'
 import {
@@ -31,7 +30,7 @@ const VERSIONS = [
   'major',
   'minor',
   'patch'
-] as BumperRecommendation['releaseType']
+] as const
 
 /**
  * Bump suggester for conventional commits
