@@ -114,6 +114,12 @@ export interface Options<Commit extends CommitKnownProps = CommitKnownProps> ext
    * @returns Final date string.
    */
   formatDate?(date: string | Date): string
+  /**
+   * A function that will determine if a commit should be skipped by the writer
+   * @param commit - The commit in question
+   * @returns boolean. If true, don't write the current commit
+   */
+  skip?(commit: Commit): boolean
 }
 
 type RequiredOptions<Commit extends CommitKnownProps = CommitKnownProps> = Required<Options<Commit>>
@@ -129,6 +135,7 @@ export interface FinalOptions<Commit extends CommitKnownProps = CommitKnownProps
   commitGroupsSort?: Comparator<CommitGroup<Commit>>
   notesSort?: Comparator<CommitNote>
   noteGroupsSort?: Comparator<NoteGroup>
+  skip?: Options<Commit>['skip']
   mainTemplate: FinalTemplatesOptions['mainTemplate']
   headerPartial: FinalTemplatesOptions['headerPartial']
   commitPartial: FinalTemplatesOptions['commitPartial']
