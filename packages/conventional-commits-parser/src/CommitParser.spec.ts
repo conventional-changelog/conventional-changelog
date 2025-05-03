@@ -266,6 +266,125 @@ describe('conventional-commits-parser', () => {
 
         expect(commit.body).toBe('this is some body before a scissors-line')
       })
+
+      describe('grouping', () => {
+        const parser = new CommitParser({
+          headerPattern: /^:(?<type>.+):(\((?<scope>.+)\))?:\s*(?<subject>.+)$/,
+          headerCorrespondence: [
+            'type',
+            'scope',
+            'subject'
+          ]
+        })
+
+        function positiveUtil(commit, tokens) {
+          tokens.forEach((token) => {
+            expect(commit[token]).toEqual(token)
+          })
+        }
+
+        function negativeUtil(commit, tokens) {
+          tokens.forEach((token) => {
+            expect(commit[token]).toBeUndefined(token)
+          })
+        }
+
+        function util(commit) {
+          return {
+            positiveUtil: tokens => positiveUtil(commit, tokens),
+            negativeUtil: tokens => negativeUtil(commit, tokens)
+          }
+        }
+
+        describe('positive', () => {
+          it('normal usecase', () => {
+            const commit = parser.parse(':type:(scope):subject')
+
+            util(commit).positiveUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+          it('missing scope', () => {
+            const commit = parser.parse(':type::subject')
+
+            util(commit).positiveUtil(['type', 'subject'])
+          })
+        })
+        describe('negative', () => {
+          it('missing initial colon', () => {
+            const commit = parser.parse('type:(scope):subject')
+
+            util(commit).negativeUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+          it('missing colon after scope', () => {
+            const commit = parser.parse(':type:(scope)subject')
+
+            util(commit).negativeUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+          it('missing parentheses around scope', () => {
+            const commit = parser.parse(':type:scope: subject')
+
+            util(commit).negativeUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+          it('empty scope with parentheses', () => {
+            const commit = parser.parse(':type:(): subject')
+
+            util(commit).negativeUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+          it('empty type', () => {
+            const commit = parser.parse(': subject')
+
+            util(commit).negativeUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+          it('empty subject', () => {
+            const commit = parser.parse(':type:(scope):')
+
+            util(commit).negativeUtil([
+              'type',
+              'scope',
+              'subject'
+            ])
+          })
+        })
+        describe('positive but not suitable for production environment', () => {
+          it('triple colon', () => {
+            const commit = parser.parse(':type:::subject')
+
+            expect(commit.type).toEqual('type:')
+            expect(commit.type).toEqual('type:')
+            expect(commit.subject).toEqual('subject')
+          })
+          it('two initial colons', () => {
+            const commit = parser.parse('::type:(scope): subject')
+
+            expect(commit.type).toEqual(':type')
+            expect(commit.scope).toEqual('scope')
+            expect(commit.subject).toEqual('subject')
+          })
+        })
+      })
     })
 
     describe('comments', () => {
