@@ -204,7 +204,7 @@ export class CommitParser {
 
     if (matches) {
       correspondence.forEach((key, index) => {
-        commit[key] = matches![index + 1] || null
+        commit[key] = (matches?.groups?.[key] ?? matches[index + 1]) || null
       })
     }
   }
