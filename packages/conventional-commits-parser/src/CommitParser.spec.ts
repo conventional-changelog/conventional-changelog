@@ -246,6 +246,21 @@ describe('conventional-commits-parser', () => {
         expect(commit.body).toBe(null)
       })
 
+      it('should truncate from scissors line even with a custom comment char', () => {
+        const parser = new CommitParser({
+          ...customOptions,
+          commentChar: ';'
+        })
+
+        const commit = parser.parse(
+          'this is some header before a scissors-line\n'
+          + '; ------------------------ >8 ------------------------\n'
+          + 'this is a line that should be truncated\n'
+        )
+
+        expect(commit.body).toBe(null)
+      })
+
       it('should keep header before scissor line', () => {
         const commit = customParser.parse(
           'this is some header before a scissors-line\n'
