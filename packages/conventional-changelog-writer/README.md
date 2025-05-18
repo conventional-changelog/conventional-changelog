@@ -115,12 +115,10 @@ The output log might look something like this:
 ```js
 ## 0.0.1 "this is a title" (2015-05-29)
 
-
 ### Features
 
 * **ng-list:** Allow custom separator ([13f3160](https://github.com/a/b/commits/13f3160))
 * **scope:** broadcast $destroy event on scope destruction ([9b1aff9](https://github.com/a/b/commits/9b1aff9)), closes [#1](https://github.com/a/b/issues/1)
-
 
 ### BREAKING CHANGES
 
@@ -371,11 +369,9 @@ The output might look something like this
 ```md
 # 1.0.0 (2015-04-09)
 
-
 ### Features
 
 * **ngMessages:** provide support for dynamic message resolution 9b1aff9, closes #10036 #9338
-
 
 ### BREAKING CHANGES
 

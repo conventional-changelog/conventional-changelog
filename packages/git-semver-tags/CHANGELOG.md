@@ -1,10 +1,9 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v7.0.1...git-semver-tags-v8.0.0) (2024-04-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -18,20 +17,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **git-semver-tags:** refactored to use @conventional-changelog/git-client ([#1203](https://github.com/conventional-changelog/conventional-changelog/issues/1203)) ([7ac1860](https://github.com/conventional-changelog/conventional-changelog/commit/7ac186060b16ea66847c401d57ca78157329d778))
 * move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
 
-
 ### Bug Fixes
 
 * **deps:** update dependency meow to v13 ([#1190](https://github.com/conventional-changelog/conventional-changelog/issues/1190)) ([862f66b](https://github.com/conventional-changelog/conventional-changelog/commit/862f66ba99989af2d44a524b11bc3a873426b00b))
 
 ## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v7.0.0...git-semver-tags-v7.0.1) (2023-09-10)
 
-
 ### Bug Fixes
 
 * **git-semver-tags:** make sure that tags are sorted by date ([#1145](https://github.com/conventional-changelog/conventional-changelog/issues/1145)) ([e170b47](https://github.com/conventional-changelog/conventional-changelog/commit/e170b47cbb21e059d9fec41c6adc25a4a242d9c0))
 
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v6.0.0...git-semver-tags-v7.0.0) (2023-09-08)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -45,7 +41,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v5.0.1...git-semver-tags-v6.0.0) (2023-08-26)
 
-
 ### ⚠ BREAKING CHANGES
 
 * Node >= 16 is required
@@ -57,7 +52,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **git-semver-tags,conventional-recommended-bump:** define `skip-unstable` option in cli ([#1066](https://github.com/conventional-changelog/conventional-changelog/issues/1066)) ([0ffec3f](https://github.com/conventional-changelog/conventional-changelog/commit/0ffec3f60a1119e180e244b5500f9a8c35671a98))
 * unified presets interface ([#1045](https://github.com/conventional-changelog/conventional-changelog/issues/1045)) ([8d0ffbe](https://github.com/conventional-changelog/conventional-changelog/commit/8d0ffbe6c59b861b560cea0e3594c7b32e978cc3))
 
-
 ### Bug Fixes
 
 * fix semver vulnerability ([#1071](https://github.com/conventional-changelog/conventional-changelog/issues/1071)) ([3f5c99d](https://github.com/conventional-changelog/conventional-changelog/commit/3f5c99d503ea1bf01df679f4180c39516e190b21)), closes [#1019](https://github.com/conventional-changelog/conventional-changelog/issues/1019)
@@ -65,13 +59,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v5.0.0...git-semver-tags-v5.0.1) (2023-07-09)
 
-
 ### Bug Fixes
 
 * **deps:** update dependency semver to v7 [security] ([#1021](https://github.com/conventional-changelog/conventional-changelog/issues/1021)) ([31fa409](https://github.com/conventional-changelog/conventional-changelog/commit/31fa409e446a51a5a23e2217997d04364b89c1dd))
 
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v4.1.1...git-semver-tags-v5.0.0) (2023-06-06)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -103,109 +95,65 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [4.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.1.0...git-semver-tags@4.1.1) (2020-11-05)
 
-
 ### Bug Fixes
 
 * bug in unstableTagTest causing a mismatch on beta release higher then beta-9 ([#679](https://github.com/conventional-changelog/conventional-changelog/issues/679)) ([cd4c726](https://github.com/conventional-changelog/conventional-changelog/commit/cd4c726b1ca227a132ec2eadac5d0cfdd75d9e81))
 
-
-
-
-
 # [4.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@4.0.0...git-semver-tags@4.1.0) (2020-08-12)
-
 
 ### Features
 
 * add support for '--skip-unstable' option ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([#656](https://github.com/conventional-changelog/conventional-changelog/issues/656)) ([0679d7a](https://github.com/conventional-changelog/conventional-changelog/commit/0679d7a1d7a8715918326f31ec3f6168c2341fd6))
 
-
-
-
-
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@3.0.1...git-semver-tags@4.0.0) (2020-05-08)
-
 
 ### Bug Fixes
 
 * **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
 * **git-semver-tags:** change --tagPrefix flag to --tag-prefix ([#566](https://github.com/conventional-changelog/conventional-changelog/issues/566)) ([490cda6](https://github.com/conventional-changelog/conventional-changelog/commit/490cda6cff74abe63617f982765b63aebdf3b4b6)), closes [#553](https://github.com/conventional-changelog/conventional-changelog/issues/553)
 
-
 ### BREAKING CHANGES
 
 * **git-semver-tags:** --tagPrefix flag was changed to --tag-prefix
 
-
-
-
-
 ## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@3.0.0...git-semver-tags@3.0.1) (2019-11-14)
-
 
 ### Bug Fixes
 
 * add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
 
-
-
-
-
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.3...git-semver-tags@3.0.0) (2019-07-29)
 
-
 * refactor!: modify gitSemverTags to take options first (#390) ([dc8aeda](https://github.com/conventional-changelog/conventional-changelog/commit/dc8aeda)), closes [#390](https://github.com/conventional-changelog/conventional-changelog/issues/390)
-
 
 ### BREAKING CHANGES
 
 * gitSemverTags now takes options followed by callback.
 
-
-
-
-
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.2...git-semver-tags@2.0.3) (2019-05-18)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency semver to v6 ([#458](https://github.com/conventional-changelog/conventional-changelog/issues/458)) ([efaa7bb](https://github.com/conventional-changelog/conventional-changelog/commit/efaa7bb))
 
-
-
-
-
 ## [2.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.1...git-semver-tags@2.0.2) (2018-11-01)
-
 
 ### Bug Fixes
 
 * bad release of git-semver-tags ([8827ae4](https://github.com/conventional-changelog/conventional-changelog/commit/8827ae4))
 
-
-
-
-
 ## [2.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@2.0.0...git-semver-tags@2.0.1) (2018-11-01)
-
 
 ### Bug Fixes
 
 * Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
 
-
-
-
-
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.3.6...git-semver-tags@2.0.0) (2018-05-29)
-
 
 ### Chores
 
 * **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
-
 
 ### BREAKING CHANGES
 
@@ -213,79 +161,50 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 currently supported by the Node Release working group. At this time,
 that is Node 6 (which is in its Maintenance LTS phase).
 
-
-
-
 <a name="1.3.6"></a>
 ## [1.3.6](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.3.5...git-semver-tags@1.3.6) (2018-03-27)
-
-
-
 
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.3.5"></a>
 ## [1.3.5](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.3.4...git-semver-tags@1.3.5) (2018-03-22)
 
-
-
-
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.3.4"></a>
 ## [1.3.4](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.3.3...git-semver-tags@1.3.4) (2018-02-24)
-
-
-
 
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.3.3"></a>
 ## [1.3.3](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.3.2...git-semver-tags@1.3.3) (2018-02-20)
 
-
-
-
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.3.2"></a>
 ## [1.3.2](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.3.1...git-semver-tags@1.3.2) (2018-02-13)
-
-
-
 
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.3.0...git-semver-tags@1.3.1) (2018-02-13)
 
-
-
-
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.2.3...git-semver-tags@1.3.0) (2018-01-29)
 
-
 ### Features
 
 * allow to specify a tagPrefix in conventional-recommended-bump ([f60f86f](https://github.com/stevemao/git-semver-tags/commit/f60f86f))
 
-
-
-
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.2.2...git-semver-tags@1.2.3) (2017-11-13)
-
-
-
 
 **Note:** Version bump only for package git-semver-tags
 
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/stevemao/git-semver-tags/compare/git-semver-tags@1.2.1...git-semver-tags@1.2.2) (2017-10-01)
-
 
 ### Bug Fixes
 
@@ -296,7 +215,6 @@ that is Node 6 (which is in its Maintenance LTS phase).
 
 <a name="1.2.0"></a>
 # [1.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags@1.1.2...v1.2.0) (2017-03-10)
-
 
 ### Features
 
