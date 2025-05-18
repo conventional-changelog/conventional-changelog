@@ -284,19 +284,25 @@ export class GitClient {
   /**
    * Verify rev exists.
    * @param rev
+   * @param safe - If `true`, will not throw error if rev not found.
    * @returns Target hash.
    */
-  async verify(rev: string) {
+  async verify(rev: string, safe?: boolean) {
     const args = this.formatArgs(
       'rev-parse',
       '--verify',
       rev
     )
+    let git = spawn('git', args, {
+      cwd: this.cwd
+    })
+
+    if (safe) {
+      git = git.catch(() => Buffer.from(''))
+    }
 
     return (
-      await spawn('git', args, {
-        cwd: this.cwd
-      })
+      await git
     ).toString().trim()
   }
 
