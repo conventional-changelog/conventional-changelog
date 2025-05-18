@@ -53,6 +53,10 @@ export interface GitTagParams {
   message?: string
 }
 
+export interface GitPushParams {
+  verify?: boolean
+}
+
 export interface GetSemverTagsParams {
   /**
    * Get semver tags with specific prefix.

@@ -10,6 +10,7 @@ import type {
   GitLogParams,
   GitCommitParams,
   GitTagParams,
+  GitPushParams,
   Arg
 } from './types.js'
 
@@ -237,13 +238,39 @@ export class GitClient {
   }
 
   /**
+   * Get default branch name.
+   * @returns Default branch name.
+   */
+  async getDefaultBranch() {
+    const args = this.formatArgs(
+      'rev-parse',
+      '--abbrev-ref',
+      'origin/HEAD'
+    )
+    const branch = (
+      await spawn('git', args, {
+        cwd: this.cwd
+      })
+    ).toString().trim()
+
+    return branch
+  }
+
+  /**
    * Push changes to remote.
    * @param branch
+   * @param params
+   * @param params.verify
    */
-  async push(branch: string) {
+  async push(
+    branch: string,
+    params: GitPushParams = {}
+  ) {
+    const { verify = true } = params
     const args = this.formatArgs(
       'push',
       '--follow-tags',
+      !verify && '--no-verify',
       'origin',
       '--',
       branch
