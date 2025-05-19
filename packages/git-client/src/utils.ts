@@ -22,12 +22,12 @@ function catchProcessError(child: ChildProcessWithoutNullStreams) {
     child.on('error', (err: Error) => {
       error = err
     })
-    child.on('close', () => {
+    child.on('close', (code) => {
       if (stderr) {
         error = new Error(stderr)
       }
 
-      resolve(error)
+      resolve(code ? error : null)
     })
   })
 }
