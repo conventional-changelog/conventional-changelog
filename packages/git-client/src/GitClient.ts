@@ -251,7 +251,7 @@ export class GitClient {
       await spawn('git', args, {
         cwd: this.cwd
       })
-    ).toString().trim()
+    ).toString().trim().replace(/^origin\//, '')
 
     return branch
   }
