@@ -266,10 +266,15 @@ export class GitClient {
     branch: string,
     params: GitPushParams = {}
   ) {
-    const { verify = true } = params
+    const {
+      verify = true,
+      tags = false,
+      followTags = false
+    } = params
     const args = this.formatArgs(
       'push',
-      '--follow-tags',
+      followTags && '--follow-tags',
+      tags && '--tags',
       !verify && '--no-verify',
       'origin',
       '--',

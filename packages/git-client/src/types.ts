@@ -55,6 +55,8 @@ export interface GitTagParams {
 
 export interface GitPushParams {
   verify?: boolean
+  tags?: boolean
+  followTags?: boolean
 }
 
 export interface GetSemverTagsParams {
