@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.1.0...git-client-v2.2.0) (2025-05-19)
+
+### Features
+
+* tags and followTags params are added to push method ([61a1e34](https://github.com/conventional-changelog/conventional-changelog/commit/61a1e34))
+
 ## [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.0.0...git-client-v2.1.0) (2025-05-19)
 
 ### Features

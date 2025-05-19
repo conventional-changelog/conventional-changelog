@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog-v7.0.0...standard-changelog-v7.0.1) (2025-05-19)
+
+### Bug Fixes
+
+* package build fix ([a7a0adb](https://github.com/conventional-changelog/conventional-changelog/commit/a7a0adb))
+
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog-v6.0.0...standard-changelog-v7.0.0) (2025-05-19)
 
 ### ⚠ BREAKING CHANGES
