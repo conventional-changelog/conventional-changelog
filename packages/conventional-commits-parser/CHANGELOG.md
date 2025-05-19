@@ -3,28 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.1.0...conventional-commits-parser@3.2.0) (2020-11-05)
-
-### Bug Fixes
-
-* ignore gpg lines ([#685](https://github.com/conventional-changelog/conventional-changelog/issues/685)) ([f8fcbc2](https://github.com/conventional-changelog/conventional-changelog/commit/f8fcbc2e8b0834c29178ace6382b438a020ad828))
-* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
-
-### Features
-
-* allows notes pattern to be customized ([#586](https://github.com/conventional-changelog/conventional-changelog/issues/586)) ([9c00f32](https://github.com/conventional-changelog/conventional-changelog/commit/9c00f3242d916be1774a618d943f908f8d9699a6))
-
-# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
-
-### Bug Fixes
-
-* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
-
-### Features
-
-* **conventional-commits-parser:** add issuePrefixesCaseSensitive parser option ([#580](https://github.com/conventional-changelog/conventional-changelog/issues/580)) ([526b282](https://github.com/conventional-changelog/conventional-changelog/commit/526b28214d12c55158eb2e4d44408378587ceb97))
-* support slash in headerPattern default options ([93a547d](https://github.com/conventional-changelog/conventional-changelog/commit/93a547d742634d8676f499cfa2a274bc3792d020))
-
 ## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.0.0...conventional-commits-parser-v6.1.0) (2025-01-15)
 
 ### Features
@@ -113,6 +91,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * handle missing header in merge commit ([#757](https://www.github.com/conventional-changelog/conventional-changelog/issues/757)) ([d189d3e](https://www.github.com/conventional-changelog/conventional-changelog/commit/d189d3e45b82e7141115ce8eccd95c8cf2d7db77))
+
+## [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.1.0...conventional-commits-parser@3.2.0) (2020-11-05)
+
+### Bug Fixes
+
+* ignore gpg lines ([#685](https://github.com/conventional-changelog/conventional-changelog/issues/685)) ([f8fcbc2](https://github.com/conventional-changelog/conventional-changelog/commit/f8fcbc2e8b0834c29178ace6382b438a020ad828))
+* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
+
+### Features
+
+* allows notes pattern to be customized ([#586](https://github.com/conventional-changelog/conventional-changelog/issues/586)) ([9c00f32](https://github.com/conventional-changelog/conventional-changelog/commit/9c00f3242d916be1774a618d943f908f8d9699a6))
+
+## [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+### Features
+
+* **conventional-commits-parser:** add issuePrefixesCaseSensitive parser option ([#580](https://github.com/conventional-changelog/conventional-changelog/issues/580)) ([526b282](https://github.com/conventional-changelog/conventional-changelog/commit/526b28214d12c55158eb2e4d44408378587ceb97))
+* support slash in headerPattern default options ([93a547d](https://github.com/conventional-changelog/conventional-changelog/commit/93a547d742634d8676f499cfa2a274bc3792d020))
 
 ## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.7...conventional-commits-parser@3.0.8) (2019-11-14)
 
