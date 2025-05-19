@@ -44,7 +44,7 @@
     "clear:package": "del ./package",
     "clear:dist": "del ./dist",
     "clear": "del ./package ./dist",
-    "prepublishOnly": "run clear:package clean-publish",
+    "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
     "build": "tsc -p tsconfig.build.json",
     "test:types": "tsc --noEmit"
