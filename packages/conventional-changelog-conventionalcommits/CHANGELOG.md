@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v8.0.0...conventional-changelog-conventionalcommits-v9.0.0) (2025-05-19)
+
+### ⚠ BREAKING CHANGES
+
+* bang notes handling is removed, it already being handled in
+conventional-commits-parser
+
+### Features
+
+* bang notes handling is removed ([#1355](https://github.com/conventional-changelog/conventional-changelog/issues/1355)) ([5150f47](https://github.com/conventional-changelog/conventional-changelog/commit/5150f47))
+* scope, scopeOnly and bumpStrict options were added ([e2973e2](https://github.com/conventional-changelog/conventional-changelog/commit/e2973e2))
+
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v7.0.2...conventional-changelog-conventionalcommits-v8.0.0) (2024-04-26)
 
 ### ⚠ BREAKING CHANGES

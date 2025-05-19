@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog-v6.0.0...standard-changelog-v7.0.0) (2025-05-19)
+
+### ⚠ BREAKING CHANGES
+
+* conventional-changelog-core and conventional-changelog-cli packages are merged to conventional-changelog; new builder API and updated CLI flags - see docs for updates
+
+### Features
+
+* new builder API and cli flags ([#1352](https://github.com/conventional-changelog/conventional-changelog/issues/1352)) ([42556a1](https://github.com/conventional-changelog/conventional-changelog/commit/42556a1))
+
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/standard-changelog-v5.0.0...standard-changelog-v6.0.0) (2024-04-26)
 
 ### ⚠ BREAKING CHANGES

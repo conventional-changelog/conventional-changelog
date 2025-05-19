@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.0.0...git-client-v2.1.0) (2025-05-19)
+
+### Features
+
+* getDefaultBranch was added ([1518d81](https://github.com/conventional-changelog/conventional-changelog/commit/1518d81))
+* safe parameter for verify method ([2f07b29](https://github.com/conventional-changelog/conventional-changelog/commit/2f07b29))
+* verify and getConfig methods are added to GitClient ([#1348](https://github.com/conventional-changelog/conventional-changelog/issues/1348)) ([3ba2198](https://github.com/conventional-changelog/conventional-changelog/commit/3ba2198))
+
+### Bug Fixes
+
+* cleanup branch name in getDefaultBranch ([7c80d81](https://github.com/conventional-changelog/conventional-changelog/commit/7c80d81))
+* throw error only when spawned child exits with non-zero result ([0253545](https://github.com/conventional-changelog/conventional-changelog/commit/0253545))
+
 ## [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.1...git-client-v2.0.0) (2025-01-15)
 
 ### ⚠ BREAKING CHANGES

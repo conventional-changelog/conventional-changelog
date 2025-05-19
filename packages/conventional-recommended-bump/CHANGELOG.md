@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v11.0.0...conventional-recommended-bump-v11.1.0) (2025-05-19)
+
+### Features
+
+* params composing and `config` method to set preset params directly ([#1349](https://github.com/conventional-changelog/conventional-changelog/issues/1349)) ([2cc8509](https://github.com/conventional-changelog/conventional-changelog/commit/2cc8509))
+* return parsed commits in result ([#1344](https://github.com/conventional-changelog/conventional-changelog/issues/1344)) ([893546e](https://github.com/conventional-changelog/conventional-changelog/commit/893546e))
+
 ## [11.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v10.0.0...conventional-recommended-bump-v11.0.0) (2025-01-15)
 
 ### ⚠ BREAKING CHANGES

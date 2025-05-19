@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.1...conventional-changelog-writer-v8.1.0) (2025-05-19)
+
+### Features
+
+* `transformCommit` method and utils are added to exports ([#1350](https://github.com/conventional-changelog/conventional-changelog/issues/1350)) ([6a05bad](https://github.com/conventional-changelog/conventional-changelog/commit/6a05bad))
+
 ## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.0...conventional-changelog-writer-v8.0.1) (2025-01-15)
 
 ### Bug Fixes
