@@ -277,23 +277,10 @@ describe('conventional-commits-parser', () => {
           ]
         })
 
-        function positiveUtil(commit, tokens) {
+        function negativeUtil<T>(commit: T, tokens: (keyof T)[]) {
           tokens.forEach((token) => {
-            expect(commit[token]).toEqual(token)
+            expect(commit[token]).toBeUndefined()
           })
-        }
-
-        function negativeUtil(commit, tokens) {
-          tokens.forEach((token) => {
-            expect(commit[token]).toBeUndefined(token)
-          })
-        }
-
-        function util(commit) {
-          return {
-            positiveUtil: tokens => positiveUtil(commit, tokens),
-            negativeUtil: tokens => negativeUtil(commit, tokens)
-          }
         }
 
         describe('positive test', () => {
@@ -301,26 +288,28 @@ describe('conventional-commits-parser', () => {
           it('should be parsed for normal use cases', () => {
             const commit = parser.parse(':type:(scope):subject')
 
-            util(commit).positiveUtil([
-              'type',
-              'scope',
-              'subject'
-            ])
+            expect(commit).toMatchObject({
+              type: 'type',
+              scope: 'scope',
+              subject: 'subject'
+            })
           })
 
           it('should be parsed even missing scope', () => {
             const commit = parser.parse(':type::subject')
 
-            util(commit).positiveUtil(['type', 'subject'])
+            expect(commit).toMatchObject({
+              type: 'type',
+              subject: 'subject'
+            })
           })
         })
 
         describe('negative test', () => {
-
           it('should not be parsed if the first colon is missing', () => {
             const commit = parser.parse('type:(scope):subject')
 
-            util(commit).negativeUtil([
+            negativeUtil(commit, [
               'type',
               'scope',
               'subject'
@@ -330,7 +319,7 @@ describe('conventional-commits-parser', () => {
           it('should not be parsed if a colon is missing after scope', () => {
             const commit = parser.parse(':type:(scope)subject')
 
-            util(commit).negativeUtil([
+            negativeUtil(commit, [
               'type',
               'scope',
               'subject'
@@ -340,7 +329,7 @@ describe('conventional-commits-parser', () => {
           it('should not be parsed if parentheses are missing before or after a scope.', () => {
             const commit = parser.parse(':type:scope: subject')
 
-            util(commit).negativeUtil([
+            negativeUtil(commit, [
               'type',
               'scope',
               'subject'
@@ -350,7 +339,7 @@ describe('conventional-commits-parser', () => {
           it('should not be parsed if the parentheses are empty', () => {
             const commit = parser.parse(':type:(): subject')
 
-            util(commit).negativeUtil([
+            negativeUtil(commit, [
               'type',
               'scope',
               'subject'
@@ -360,7 +349,7 @@ describe('conventional-commits-parser', () => {
           it('should not be parsed if missing type', () => {
             const commit = parser.parse(': subject')
 
-            util(commit).negativeUtil([
+            negativeUtil(commit, [
               'type',
               'scope',
               'subject'
@@ -370,7 +359,7 @@ describe('conventional-commits-parser', () => {
           it('should not be parsed if missing subject', () => {
             const commit = parser.parse(':type:(scope):')
 
-            util(commit).negativeUtil([
+            negativeUtil(commit, [
               'type',
               'scope',
               'subject'
