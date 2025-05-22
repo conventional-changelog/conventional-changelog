@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.0.1...conventional-changelog-v7.0.2) (2025-05-22)
+
+### Bug Fixes
+
+* do not cut commit hash in conventional changelog generator ([2270624](https://github.com/conventional-changelog/conventional-changelog/commit/2270624d58a5fd16203af41d79002cc6df905097)), closes [#1375](https://github.com/conventional-changelog/conventional-changelog/issues/1375)
+
 ## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.0.0...conventional-changelog-v7.0.1) (2025-05-19)
 
 ### Bug Fixes
