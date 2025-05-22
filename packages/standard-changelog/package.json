@@ -24,7 +24,6 @@
   "engines": {
     "node": ">=18"
   },
-  "bin": "cli.js",
   "exports": "./src/index.ts",
   "publishConfig": {
     "bin": {
