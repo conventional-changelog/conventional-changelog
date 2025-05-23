@@ -8,6 +8,8 @@ export interface CommitKnownProps {
   committerDate?: string | null
   notes: CommitNote[]
   revert?: AnyObject | null
+  body?: string | null
+  footer?: string | null
 }
 
 export type TransformedCommit<Commit> = Commit & {
