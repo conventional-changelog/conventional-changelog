@@ -36,6 +36,22 @@ export class GitClient {
   }
 
   /**
+   * Initialize a new git repository.
+   * @returns Boolean result.
+   */
+  async init() {
+    try {
+      await spawn('git', ['init'], {
+        cwd: this.cwd
+      })
+
+      return true
+    } catch (err) {
+      return false
+    }
+  }
+
+  /**
    * Get raw commits stream.
    * @param params
    * @param params.path - Read commits from specific path.
@@ -162,6 +178,7 @@ export class GitClient {
    * @param params.verify
    * @param params.sign
    * @param params.files
+   * @param params.allowEmpty
    * @param params.message
    */
   async commit(params: GitCommitParams) {
@@ -169,12 +186,14 @@ export class GitClient {
       verify = true,
       sign = false,
       files = [],
+      allowEmpty = false,
       message
     } = params
     const args = this.formatArgs(
       'commit',
       !verify && '--no-verify',
       sign && '-S',
+      allowEmpty && '--allow-empty',
       '-m',
       message,
       '--',

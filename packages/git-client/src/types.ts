@@ -44,6 +44,7 @@ export interface GitCommitParams {
   verify?: boolean
   sign?: boolean
   files?: string[]
+  allowEmpty?: boolean
   message: string
 }
 
