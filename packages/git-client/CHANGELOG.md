@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.2.0...git-client-v2.3.0) (2025-05-23)
+
+### Features
+
+* `init` method was added, `allowEmpty` param was added to `commit` method ([5724d53](https://github.com/conventional-changelog/conventional-changelog/commit/5724d5337f9f234f948eb1d5a1f2681d74467048))
+
 ## [2.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.1.0...git-client-v2.2.0) (2025-05-19)
 
 ### Features
