@@ -8,6 +8,7 @@ import {
 } from './utils.js'
 import type {
   GitLogParams,
+  GitLogTagsParams,
   GitCommitParams,
   GitTagParams,
   GitPushParams,
@@ -99,15 +100,25 @@ export class GitClient {
 
   /**
    * Get tags stream.
+   * @param params
    * @yields Tags
    */
-  async* getTags() {
+  async* getTags(params: GitLogTagsParams = {}) {
+    const {
+      path,
+      from = '',
+      to = 'HEAD',
+      since
+    } = params
     const tagRegex = /tag:\s*(.+?)[,)]/gi
     const args = this.formatArgs(
       'log',
       '--decorate',
       '--no-color',
-      '--date-order'
+      '--date-order',
+      since && `--since=${since instanceof Date ? since.toISOString() : since}`,
+      [from, to].filter(Boolean).join('..'),
+      ...path ? ['--', ...toArray(path)] : []
     )
     const stdout = stdoutSpawn('git', args, {
       cwd: this.cwd
@@ -127,10 +138,11 @@ export class GitClient {
 
   /**
    * Get last tag.
+   * @param params
    * @returns Last tag, `null` if not found.
    */
-  async getLastTag() {
-    return getFirstFromStream(this.getTags())
+  async getLastTag(params?: GitLogTagsParams) {
+    return getFirstFromStream(this.getTags(params))
   }
 
   /**

@@ -33,6 +33,8 @@ export interface GitLogParams {
   merges?: boolean
 }
 
+export interface GitLogTagsParams extends Pick<GitLogParams, 'path' | 'from' | 'to' | 'since'> {}
+
 export interface GetCommitsParams extends GitLogParams {
   /**
    * Enable revert commits filter.
