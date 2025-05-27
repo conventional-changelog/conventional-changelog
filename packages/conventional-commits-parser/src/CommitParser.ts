@@ -405,10 +405,19 @@ export class CommitParser {
 
     const commentFilter = getCommentFilter(this.options.commentChar)
     const rawLines = trimNewLines(input).split(/\r?\n/)
-    const lines = truncateToScissor(rawLines).filter(line => commentFilter(line) && gpgFilter(line))
+
+    // When the user doesn't specify the comment char, it means we're not parsing
+    // raw .git/COMMIT_EDITMSG output, so we can't (and won't) filter comment lines
+    let linesNoComments = this.options.commentChar ?
+      truncateToScissor(rawLines, this.options.commentChar).filter(line => commentFilter(line)) :
+      rawLines;
+
+    // TODO: Remove gpg filter regardless of presence of commentChar?
+    let linesNoGpg = linesNoComments.filter(line => gpgFilter(line));
+
     const commit = createCommitObject()
 
-    this.lines = lines
+    this.lines = linesNoGpg
     this.lineIndex = 0
     this.commit = commit
 

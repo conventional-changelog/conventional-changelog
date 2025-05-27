@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { CommitParser } from './CommitParser.js'
 
 const customOptions = {
+  commentChar: '#',
   revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (.*)\.$/,
   revertCorrespondence: ['header', 'hash'],
   fieldPattern: /^-(.*?)-$/,
@@ -244,6 +245,37 @@ describe('conventional-commits-parser', () => {
         )
 
         expect(commit.body).toBe(null)
+      })
+
+      it('should truncate from scissors line even with a custom comment char', () => {
+        const parser = new CommitParser({
+          ...customOptions,
+          commentChar: ';'
+        })
+
+        const commit = parser.parse(
+          'this is some header before a scissors-line\n'
+          + '; ------------------------ >8 ------------------------\n'
+          + 'this is a line that should be truncated\n'
+        )
+
+        expect(commit.body).toBe(null)
+      })
+
+      it('it should ignore scissor line when no commentChar is given', () => {
+        const parser = new CommitParser({
+          ...customOptions,
+          commentChar: ''
+        })
+
+        const commit = parser.parse(
+          'this is some header before a scissors-line\n'
+          + '# ------------------------ >8 ------------------------\n'
+          + 'this is a line that should not be truncated\n'
+        )
+
+        expect(commit.header).toBe("this is some header before a scissors-line")
+        expect(commit.body).toBe('# ------------------------ >8 ------------------------\nthis is a line that should not be truncated')
       })
 
       it('should keep header before scissor line', () => {
