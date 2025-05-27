@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.3.0...git-client-v2.4.0) (2025-05-27)
+
+### Features
+
+* git tags params were added ([f7e4f68](https://github.com/conventional-changelog/conventional-changelog/commit/f7e4f68d802416743299ee246eeab52262524c01))
+
 ## [2.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.2.0...git-client-v2.3.0) (2025-05-23)
 
 ### Features
