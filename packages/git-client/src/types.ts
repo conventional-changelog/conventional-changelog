@@ -60,6 +60,16 @@ export interface GitPushParams {
   verify?: boolean
   tags?: boolean
   followTags?: boolean
+  force?: boolean
+}
+
+export interface GitFetchParams {
+  prune?: boolean
+  unshallow?: boolean
+  tags?: boolean
+  all?: boolean
+  remote?: string
+  branch?: string
 }
 
 export interface GetSemverTagsParams {

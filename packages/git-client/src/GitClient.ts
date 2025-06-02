@@ -1,8 +1,13 @@
+import { spawn } from 'child_process'
 import {
-  spawn,
-  stdoutSpawn,
-  splitStream,
-  getFirstFromStream,
+  firstFromStream,
+  splitStream
+} from '@simple-libs/stream-utils'
+import {
+  output,
+  outputStream
+} from '@simple-libs/child-process-utils'
+import {
   formatArgs,
   toArray
 } from './utils.js'
@@ -12,6 +17,7 @@ import type {
   GitCommitParams,
   GitTagParams,
   GitPushParams,
+  GitFetchParams,
   Arg
 } from './types.js'
 
@@ -37,14 +43,36 @@ export class GitClient {
   }
 
   /**
+   * Raw exec method to run git commands.
+   * @param args
+   * @returns Stdout string output of the command.
+   */
+  async exec(...args: Arg[]) {
+    return (
+      await output(spawn('git', this.formatArgs(...args), {
+        cwd: this.cwd
+      }))
+    ).toString().trim()
+  }
+
+  /**
+   * Raw exec method to run git commands with stream output.
+   * @param args
+   * @returns Stdout stream of the command.
+   */
+  execStream(...args: Arg[]) {
+    return outputStream(spawn('git', this.formatArgs(...args), {
+      cwd: this.cwd
+    }))
+  }
+
+  /**
    * Initialize a new git repository.
    * @returns Boolean result.
    */
   async init() {
     try {
-      await spawn('git', ['init'], {
-        cwd: this.cwd
-      })
+      await this.exec('init')
 
       return true
     } catch (err) {
@@ -75,7 +103,7 @@ export class GitClient {
     const shouldNotIgnore = ignore
       ? (chunk: string) => !ignore.test(chunk)
       : () => true
-    const args = this.formatArgs(
+    const stdout = this.execStream(
       'log',
       `--format=${format}%n${SCISSOR}`,
       since && `--since=${since instanceof Date ? since.toISOString() : since}`,
@@ -85,9 +113,6 @@ export class GitClient {
       [from, to].filter(Boolean).join('..'),
       ...path ? ['--', ...toArray(path)] : []
     )
-    const stdout = stdoutSpawn('git', args, {
-      cwd: this.cwd
-    })
     const commitsStream = splitStream(stdout, `${SCISSOR}\n`)
     let chunk: string
 
@@ -111,7 +136,7 @@ export class GitClient {
       since
     } = params
     const tagRegex = /tag:\s*(.+?)[,)]/gi
-    const args = this.formatArgs(
+    const stdout = this.execStream(
       'log',
       '--decorate',
       '--no-color',
@@ -120,9 +145,6 @@ export class GitClient {
       [from, to].filter(Boolean).join('..'),
       ...path ? ['--', ...toArray(path)] : []
     )
-    const stdout = stdoutSpawn('git', args, {
-      cwd: this.cwd
-    })
     let chunk: Buffer
     let matches: IterableIterator<RegExpMatchArray>
     let tag: string
@@ -142,7 +164,7 @@ export class GitClient {
    * @returns Last tag, `null` if not found.
    */
   async getLastTag(params?: GitLogTagsParams) {
-    return getFirstFromStream(this.getTags(params))
+    return firstFromStream(this.getTags(params))
   }
 
   /**
@@ -151,16 +173,12 @@ export class GitClient {
    * @returns Boolean value.
    */
   async checkIgnore(file: string) {
-    const args = this.formatArgs(
-      'check-ignore',
-      '--',
-      file
-    )
-
     try {
-      await spawn('git', args, {
-        cwd: this.cwd
-      })
+      await this.exec(
+        'check-ignore',
+        '--',
+        file
+      )
 
       return true
     } catch (err) {
@@ -173,15 +191,11 @@ export class GitClient {
    * @param files - Files to stage.
    */
   async add(files: string | string[]) {
-    const args = this.formatArgs(
+    await this.exec(
       'add',
       '--',
       ...toArray(files)
     )
-
-    await spawn('git', args, {
-      cwd: this.cwd
-    })
   }
 
   /**
@@ -201,7 +215,8 @@ export class GitClient {
       allowEmpty = false,
       message
     } = params
-    const args = this.formatArgs(
+
+    await this.exec(
       'commit',
       !verify && '--no-verify',
       sign && '-S',
@@ -211,10 +226,6 @@ export class GitClient {
       '--',
       ...files
     )
-
-    await spawn('git', args, {
-      cwd: this.cwd
-    })
   }
 
   /**
@@ -235,7 +246,7 @@ export class GitClient {
       message = ''
     }
 
-    const args = this.formatArgs(
+    await this.exec(
       'tag',
       sign && '-s',
       message && '-a',
@@ -243,10 +254,6 @@ export class GitClient {
       '--',
       name
     )
-
-    await spawn('git', args, {
-      cwd: this.cwd
-    })
   }
 
   /**
@@ -254,16 +261,11 @@ export class GitClient {
    * @returns Current branch name.
    */
   async getCurrentBranch() {
-    const args = this.formatArgs(
+    const branch = await this.exec(
       'rev-parse',
       '--abbrev-ref',
       'HEAD'
     )
-    const branch = (
-      await spawn('git', args, {
-        cwd: this.cwd
-      })
-    ).toString().trim()
 
     return branch
   }
@@ -273,16 +275,13 @@ export class GitClient {
    * @returns Default branch name.
    */
   async getDefaultBranch() {
-    const args = this.formatArgs(
-      'rev-parse',
-      '--abbrev-ref',
-      'origin/HEAD'
-    )
     const branch = (
-      await spawn('git', args, {
-        cwd: this.cwd
-      })
-    ).toString().trim().replace(/^origin\//, '')
+      await this.exec(
+        'rev-parse',
+        '--abbrev-ref',
+        'origin/HEAD'
+      )
+    ).replace(/^origin\//, '')
 
     return branch
   }
@@ -300,21 +299,20 @@ export class GitClient {
     const {
       verify = true,
       tags = false,
-      followTags = false
+      followTags = false,
+      force = false
     } = params
-    const args = this.formatArgs(
+
+    await this.exec(
       'push',
       followTags && '--follow-tags',
       tags && '--tags',
       !verify && '--no-verify',
+      force && '--force',
       'origin',
       '--',
       branch
     )
-
-    await spawn('git', args, {
-      cwd: this.cwd
-    })
   }
 
   /**
@@ -324,22 +322,17 @@ export class GitClient {
    * @returns Target hash.
    */
   async verify(rev: string, safe?: boolean) {
-    const args = this.formatArgs(
+    let git = this.exec(
       'rev-parse',
       '--verify',
       rev
     )
-    let git = spawn('git', args, {
-      cwd: this.cwd
-    })
 
     if (safe) {
-      git = git.catch(() => Buffer.from(''))
+      git = git.catch(() => '')
     }
 
-    return (
-      await git
-    ).toString().trim()
+    return await git
   }
 
   /**
@@ -348,17 +341,91 @@ export class GitClient {
    * @returns Config value.
    */
   async getConfig(key: string) {
-    const args = this.formatArgs(
+    return await this.exec(
       'config',
       '--get',
       '--',
       key
     )
+  }
 
-    return (
-      await spawn('git', args, {
-        cwd: this.cwd
-      })
-    ).toString().trim()
+  /**
+   * Set config value by key.
+   * @param key - Config key.
+   * @param value - Config value.
+   */
+  async setConfig(key: string, value: string) {
+    await this.exec(
+      'config',
+      '--',
+      key,
+      value
+    )
+  }
+
+  /**
+   * Fetch changes from remote.
+   * @param params
+   */
+  async fetch(params: GitFetchParams = {}) {
+    const {
+      prune = false,
+      unshallow = false,
+      tags = false,
+      all = false,
+      remote,
+      branch
+    } = params
+
+    await this.exec(
+      'fetch',
+      prune && '--prune',
+      unshallow && '--unshallow',
+      tags && '--tags',
+      all && '--all',
+      ...remote && branch ? [
+        '--',
+        remote,
+        branch
+      ] : []
+    )
+  }
+
+  /**
+   * Create a new branch.
+   * @param branch - Branch name.
+   */
+  async createBranch(branch: string) {
+    await this.exec(
+      'checkout',
+      '-b',
+      '--',
+      branch
+    )
+  }
+
+  /**
+   * Delete a branch.
+   * @param branch - Branch name.
+   */
+  async deleteBranch(branch: string) {
+    await this.exec(
+      'branch',
+      '-D',
+      '--',
+      branch
+    )
+  }
+
+  /**
+   * Checkout a branch.
+   * @param branch - Branch name.
+   */
+  async checkout(branch: string) {
+    await this.exec(
+      'checkout',
+      '--',
+      branch
+    )
   }
 }
