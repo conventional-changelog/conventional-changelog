@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.5.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.5.0...git-client-v2.5.1) (2025-06-02)
+
+### Bug Fixes
+
+* checkout methods format fix ([993c1fd](https://github.com/conventional-changelog/conventional-changelog/commit/993c1fdde78f6064f2f97bc002471bbd28722e49))
+
 ## [2.5.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.4.0...git-client-v2.5.0) (2025-06-02)
 
 ### Features
