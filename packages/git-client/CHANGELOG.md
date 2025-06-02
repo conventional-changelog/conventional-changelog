@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.5.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.4.0...git-client-v2.5.0) (2025-06-02)
+
+### Features
+
+* new git methods and migration to @simple-libs/child-process-utils ([#1378](https://github.com/conventional-changelog/conventional-changelog/issues/1378)) ([abad2f2](https://github.com/conventional-changelog/conventional-changelog/commit/abad2f2ca2b44fe12265bea17fb485c63ecb84f7))
+
 ## [2.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.3.0...git-client-v2.4.0) (2025-05-27)
 
 ### Features
