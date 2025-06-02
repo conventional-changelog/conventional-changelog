@@ -399,7 +399,6 @@ export class GitClient {
     await this.exec(
       'checkout',
       '-b',
-      '--',
       branch
     )
   }
@@ -424,7 +423,6 @@ export class GitClient {
   async checkout(branch: string) {
     await this.exec(
       'checkout',
-      '--',
       branch
     )
   }
