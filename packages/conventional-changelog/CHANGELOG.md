@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.0.2...conventional-changelog-v7.1.0) (2025-06-07)
+
+### Features
+
+* add `loader` optional argument to `loadPreset` method ([f3fcf2e](https://github.com/conventional-changelog/conventional-changelog/commit/f3fcf2e8d7e50e2d53a8046417e369e38de54700))
+
 ## [7.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.0.1...conventional-changelog-v7.0.2) (2025-05-22)
 
 ### Bug Fixes

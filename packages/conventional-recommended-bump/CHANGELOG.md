@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [11.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v11.1.0...conventional-recommended-bump-v11.2.0) (2025-06-07)
+
+### Features
+
+* add `loader` optional argument to `loadPreset` method ([f3fcf2e](https://github.com/conventional-changelog/conventional-changelog/commit/f3fcf2e8d7e50e2d53a8046417e369e38de54700))
+
 ## [11.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v11.0.0...conventional-recommended-bump-v11.1.0) (2025-05-19)
 
 ### Features
