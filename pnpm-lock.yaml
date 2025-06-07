@@ -1456,8 +1456,8 @@ packages:
     dependencies:
       '@types/node': 22.8.3
 
-  /@simple-release/core@2.0.2:
-    resolution: {integrity: sha512-JZdHKpah4TVbf6ZMPuDseYpJfjP0oXQRu4UK1Hy35pB3ht6BFn4dgBwkEF/sO0A9DlCucKy3WqbI0llHyrnM5A==}
+  /@simple-release/core@2.0.3:
+    resolution: {integrity: sha512-NsXD+ROFmdHIqCJl9RdjzAEmhmQ63Uw43zbhcXzPNoLFXj3amOANGMpcxXP/bcA+V6wT7y7btZKTbUsxQcPe4g==}
     engines: {node: '>=18'}
     dependencies:
       '@conventional-changelog/git-client': 2.5.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.1.0)
@@ -1479,7 +1479,7 @@ packages:
     engines: {node: '>=18'}
     dependencies:
       '@simple-libs/child-process-utils': 1.0.0
-      '@simple-release/core': 2.0.2
+      '@simple-release/core': 2.0.3
       fast-glob: 3.3.3
       read-yaml-file: 2.1.0
     transitivePeerDependencies:
