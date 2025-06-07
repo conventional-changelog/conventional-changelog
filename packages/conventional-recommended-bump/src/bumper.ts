@@ -11,7 +11,9 @@ import {
 import {
   type UnknownPresetCreatorParams,
   type PresetParams,
-  loadPreset
+  type PresetModuleLoader,
+  createPresetLoader,
+  loadPreset as defaultLoadPreset
 } from 'conventional-changelog-preset-loader'
 import type {
   Options,
@@ -108,11 +110,14 @@ export class Bumper {
   /**
    * Load configs from a preset
    * @param preset
+   * @param loader - Preset module loader, if not provided, will use default loader
    * @returns this
    */
   loadPreset<PresetCreatorParams extends UnknownPresetCreatorParams = UnknownPresetCreatorParams>(
-    preset: PresetParams<PresetCreatorParams>
+    preset: PresetParams<PresetCreatorParams>,
+    loader?: PresetModuleLoader
   ) {
+    const loadPreset = loader ? createPresetLoader(loader) : defaultLoadPreset
     const config = loadPreset<Preset, PresetCreatorParams>(preset).then((config) => {
       if (!config) {
         throw Error('Preset is not loaded or have incorrect exports')
