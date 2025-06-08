@@ -48,9 +48,13 @@ export function getCommentFilter(char: string | undefined) {
 /**
  * Select lines before the scissor.
  * @param lines
+ * @param commentChar
  * @returns Lines before the scissor.
  */
-export function truncateToScissor(lines: string[], commentChar: string) {
+export function truncateToScissor(
+  lines: string[],
+  commentChar: string
+) {
   const scissorIndex = lines.indexOf(`${commentChar} ${SCISSOR}`)
 
   if (scissorIndex === -1) {
