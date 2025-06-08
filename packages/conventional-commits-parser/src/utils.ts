@@ -1,4 +1,4 @@
-const SCISSOR = '# ------------------------ >8 ------------------------'
+const SCISSOR = '------------------------ >8 ------------------------'
 
 /**
  * Remove leading and trailing newlines.
@@ -48,10 +48,14 @@ export function getCommentFilter(char: string | undefined) {
 /**
  * Select lines before the scissor.
  * @param lines
+ * @param commentChar
  * @returns Lines before the scissor.
  */
-export function truncateToScissor(lines: string[]) {
-  const scissorIndex = lines.indexOf(SCISSOR)
+export function truncateToScissor(
+  lines: string[],
+  commentChar: string
+) {
+  const scissorIndex = lines.indexOf(`${commentChar} ${SCISSOR}`)
 
   if (scissorIndex === -1) {
     return lines

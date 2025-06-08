@@ -403,9 +403,12 @@ export class CommitParser {
       throw new TypeError('Expected a raw commit')
     }
 
-    const commentFilter = getCommentFilter(this.options.commentChar)
+    const { commentChar } = this.options
+    const commentFilter = getCommentFilter(commentChar)
     const rawLines = trimNewLines(input).split(/\r?\n/)
-    const lines = truncateToScissor(rawLines).filter(line => commentFilter(line) && gpgFilter(line))
+    const lines = commentChar
+      ? truncateToScissor(rawLines, commentChar).filter(line => commentFilter(line) && gpgFilter(line))
+      : rawLines.filter(line => gpgFilter(line))
     const commit = createCommitObject()
 
     this.lines = lines
