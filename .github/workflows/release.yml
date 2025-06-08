@@ -8,20 +8,37 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-    name: Check if release job should run
+    name: Context check
     outputs:
       continue: ${{ steps.check.outputs.continue }}
+      workflow: ${{ steps.check.outputs.workflow }}
     steps:
-      - name: Check context
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Context check
         id: check
         uses: trigensoftware/simple-release-action@latest
         with:
           workflow: check
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  pull-request:
+    runs-on: ubuntu-latest
+    name: Pull request
+    needs: check
+    if: needs.check.outputs.workflow == 'pull-request'
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Create or update pull request
+        uses: trigensoftware/simple-release-action@latest
+        with:
+          workflow: pull-request
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   release:
     runs-on: ubuntu-latest
     name: Release
     needs: check
-    if: needs.check.outputs.continue == 'true'
+    if: needs.check.outputs.workflow == 'release'
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -37,8 +54,9 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: pnpm install
-      - name: Simple release
+      - name: Release
         uses: trigensoftware/simple-release-action@latest
         with:
+          workflow: release
           github-token: ${{ secrets.GITHUB_TOKEN }}
           npm-token: ${{ secrets.NPM_TOKEN }}

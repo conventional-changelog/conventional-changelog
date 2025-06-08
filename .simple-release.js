@@ -1,11 +1,9 @@
-import { PnpmWorkspacesProject } from '@simple-release/pnpm'
-
-export const project = new PnpmWorkspacesProject({
+export const project = ['@simple-release/pnpm#PnpmWorkspacesProject', {
   mode: 'independent',
   tagPrefix(scope) {
     return `${scope}-v`
   }
-})
+}]
 
 export const releaser = {
   verbose: true
