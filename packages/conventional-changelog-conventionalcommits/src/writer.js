@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 import compareFunc from 'compare-func'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
+import { matchScope } from './utils.js'
 
 const dirname = fileURLToPath(new URL('.', import.meta.url))
 const COMMIT_HASH_LENGTH = 7
@@ -90,16 +91,18 @@ function getWriterOpts(config) {
         }
       })
 
-      // breaking changes attached to any type are still displayed.
-      if (discard && (entry === undefined
-          || entry.hidden)) {
+      if (
+        // breaking changes attached to any type are still displayed.
+        discard && (entry === undefined || entry.hidden)
+        || !matchScope(config, commit)
+      ) {
         return undefined
       }
 
       const type = entry
         ? entry.section
         : commit.type
-      const scope = commit.scope === '*'
+      const scope = commit.scope === '*' || config.scope
         ? ''
         : commit.scope
       const shortHash = typeof commit.hash === 'string'

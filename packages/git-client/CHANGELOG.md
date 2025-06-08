@@ -1,7 +1,49 @@
 # Changelog
 
-## [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.1...git-client-v2.0.0) (2025-01-15)
+## [2.5.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.5.0...git-client-v2.5.1) (2025-06-02)
 
+### Bug Fixes
+
+* checkout methods format fix ([993c1fd](https://github.com/conventional-changelog/conventional-changelog/commit/993c1fdde78f6064f2f97bc002471bbd28722e49))
+
+## [2.5.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.4.0...git-client-v2.5.0) (2025-06-02)
+
+### Features
+
+* new git methods and migration to @simple-libs/child-process-utils ([#1378](https://github.com/conventional-changelog/conventional-changelog/issues/1378)) ([abad2f2](https://github.com/conventional-changelog/conventional-changelog/commit/abad2f2ca2b44fe12265bea17fb485c63ecb84f7))
+
+## [2.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.3.0...git-client-v2.4.0) (2025-05-27)
+
+### Features
+
+* git tags params were added ([f7e4f68](https://github.com/conventional-changelog/conventional-changelog/commit/f7e4f68d802416743299ee246eeab52262524c01))
+
+## [2.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.2.0...git-client-v2.3.0) (2025-05-23)
+
+### Features
+
+* `init` method was added, `allowEmpty` param was added to `commit` method ([5724d53](https://github.com/conventional-changelog/conventional-changelog/commit/5724d5337f9f234f948eb1d5a1f2681d74467048))
+
+## [2.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.1.0...git-client-v2.2.0) (2025-05-19)
+
+### Features
+
+* tags and followTags params are added to push method ([61a1e34](https://github.com/conventional-changelog/conventional-changelog/commit/61a1e34))
+
+## [2.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.0.0...git-client-v2.1.0) (2025-05-19)
+
+### Features
+
+* getDefaultBranch was added ([1518d81](https://github.com/conventional-changelog/conventional-changelog/commit/1518d81))
+* safe parameter for verify method ([2f07b29](https://github.com/conventional-changelog/conventional-changelog/commit/2f07b29))
+* verify and getConfig methods are added to GitClient ([#1348](https://github.com/conventional-changelog/conventional-changelog/issues/1348)) ([3ba2198](https://github.com/conventional-changelog/conventional-changelog/commit/3ba2198))
+
+### Bug Fixes
+
+* cleanup branch name in getDefaultBranch ([7c80d81](https://github.com/conventional-changelog/conventional-changelog/commit/7c80d81))
+* throw error only when spawned child exits with non-zero result ([0253545](https://github.com/conventional-changelog/conventional-changelog/commit/0253545))
+
+## [2.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.1...git-client-v2.0.0) (2025-01-15)
 
 ### ⚠ BREAKING CHANGES
 
@@ -16,13 +58,11 @@
 
 ## [1.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v1.0.0...git-client-v1.0.1) (2024-05-06)
 
-
 ### Bug Fixes
 
 * **git-client:** trigger update peer dependencies versions ([79eda8b](https://github.com/conventional-changelog/conventional-changelog/commit/79eda8b2ef17a11b8d6a44a587cdbb27e273e479))
 
 ## 1.0.0 (2024-04-26)
-
 
 ### ⚠ BREAKING CHANGES
 

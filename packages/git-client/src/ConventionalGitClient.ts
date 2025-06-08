@@ -5,12 +5,12 @@ import type {
 } from 'conventional-commits-parser'
 import type { filterRevertedCommits } from 'conventional-commits-filter'
 import semver from 'semver'
+import { firstFromStream } from '@simple-libs/stream-utils'
 import type {
   GetCommitsParams,
   GetSemverTagsParams
 } from './types.js'
 import { GitClient } from './GitClient.js'
-import { getFirstFromStream } from './utils.js'
 
 /**
  * Helper to get package tag prefix.
@@ -134,7 +134,7 @@ export class ConventionalGitClient extends GitClient {
    * @returns Last semver tag, `null` if not found.
    */
   async getLastSemverTag(params: GetSemverTagsParams = {}) {
-    return getFirstFromStream(this.getSemverTags(params))
+    return firstFromStream(this.getSemverTags(params))
   }
 
   /**

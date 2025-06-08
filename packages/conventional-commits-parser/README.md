@@ -365,7 +365,6 @@ You will enter an interactive shell. To show your parsed output enter "return" t
 ```sh
 > fix(title): a title is fixed
 
-
 {"type":"fix","scope":"title","subject":"a title is fixed","header":"fix(title): a title is fixed","body":null,"footer":null,"notes":[],"references":[],"revert":null}
 ```
 

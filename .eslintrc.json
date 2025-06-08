@@ -21,6 +21,12 @@
       "rules": {
         "import/no-default-export": "off"
       }
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@typescript-eslint/consistent-type-imports": "error"
+      }
     }
   ]
 }

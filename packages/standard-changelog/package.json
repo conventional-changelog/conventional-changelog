@@ -1,7 +1,7 @@
 {
   "name": "standard-changelog",
   "type": "module",
-  "version": "6.0.0",
+  "version": "7.0.1",
   "description": "Generate a changelog from git metadata with Angular commit convention.",
   "author": "Steve Mao",
   "license": "MIT",
@@ -24,7 +24,6 @@
   "engines": {
     "node": ">=18"
   },
-  "bin": "cli.js",
   "exports": "./src/index.ts",
   "publishConfig": {
     "bin": {
@@ -44,7 +43,7 @@
     "clear:package": "del ./package",
     "clear:dist": "del ./dist",
     "clear": "del ./package ./dist",
-    "prepublishOnly": "run clear:package clean-publish",
+    "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
     "build": "tsc -p tsconfig.build.json",
     "test:types": "tsc --noEmit"

@@ -1,49 +1,13 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.1.0...conventional-commits-parser@3.2.0) (2020-11-05)
-
-
-### Bug Fixes
-
-* ignore gpg lines ([#685](https://github.com/conventional-changelog/conventional-changelog/issues/685)) ([f8fcbc2](https://github.com/conventional-changelog/conventional-changelog/commit/f8fcbc2e8b0834c29178ace6382b438a020ad828))
-* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
-
-
-### Features
-
-* allows notes pattern to be customized ([#586](https://github.com/conventional-changelog/conventional-changelog/issues/586)) ([9c00f32](https://github.com/conventional-changelog/conventional-changelog/commit/9c00f3242d916be1774a618d943f908f8d9699a6))
-
-
-
-
-
-# [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
-
-
-### Bug Fixes
-
-* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
-
-
-### Features
-
-* **conventional-commits-parser:** add issuePrefixesCaseSensitive parser option ([#580](https://github.com/conventional-changelog/conventional-changelog/issues/580)) ([526b282](https://github.com/conventional-changelog/conventional-changelog/commit/526b28214d12c55158eb2e4d44408378587ceb97))
-* support slash in headerPattern default options ([93a547d](https://github.com/conventional-changelog/conventional-changelog/commit/93a547d742634d8676f499cfa2a274bc3792d020))
-
-
-
-
-
 ## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.0.0...conventional-commits-parser-v6.1.0) (2025-01-15)
-
 
 ### Features
 
 * **conventional-commits-parser:** allow @ in scope part of the header ([#1283](https://github.com/conventional-changelog/conventional-changelog/issues/1283)) ([d48c660](https://github.com/conventional-changelog/conventional-changelog/commit/d48c660e849868e0f014cb0634bc37b7b4086d49))
-
 
 ### Bug Fixes
 
@@ -51,7 +15,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **conventional-commits-parser:** ignore irrelevant references ([#1288](https://github.com/conventional-changelog/conventional-changelog/issues/1288)) ([115d5d0](https://github.com/conventional-changelog/conventional-changelog/commit/115d5d0bcc10df793c6156d041fb9957314b4ccb))
 
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v5.0.0...conventional-commits-parser-v6.0.0) (2024-04-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -74,14 +37,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
 * **standard-changelog:** use promises ([#1111](https://github.com/conventional-changelog/conventional-changelog/issues/1111)) ([5015ab7](https://github.com/conventional-changelog/conventional-changelog/commit/5015ab71de7a3db9cbcbbabd0cc25502f1cd0109))
 
-
 ### Bug Fixes
 
 * **conventional-commits-parser:** parse header if subject includes ! to indicate breaking change ([#1213](https://github.com/conventional-changelog/conventional-changelog/issues/1213)) ([30cfa82](https://github.com/conventional-changelog/conventional-changelog/commit/30cfa8276436415b994599ab55db3a723d136e03))
 * **deps:** update dependency meow to v13 ([#1190](https://github.com/conventional-changelog/conventional-changelog/issues/1190)) ([862f66b](https://github.com/conventional-changelog/conventional-changelog/commit/862f66ba99989af2d44a524b11bc3a873426b00b))
 
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v4.0.0...conventional-commits-parser-v5.0.0) (2023-08-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -91,7 +52,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * drop node 14 support ([#1085](https://github.com/conventional-changelog/conventional-changelog/issues/1085)) ([1bce036](https://github.com/conventional-changelog/conventional-changelog/commit/1bce0362dbb624a869eb01fd7724ab7f81d337e6))
 
-
 ### Bug Fixes
 
 * **deps:** update dependency is-text-path to v2 ([#903](https://github.com/conventional-changelog/conventional-changelog/issues/903)) ([8568ee4](https://github.com/conventional-changelog/conventional-changelog/commit/8568ee4bcd66ceeb85444dc71342bcb2b11db9ca))
@@ -99,7 +59,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * fix semver vulnerability ([#1071](https://github.com/conventional-changelog/conventional-changelog/issues/1071)) ([3f5c99d](https://github.com/conventional-changelog/conventional-changelog/commit/3f5c99d503ea1bf01df679f4180c39516e190b21)), closes [#1019](https://github.com/conventional-changelog/conventional-changelog/issues/1019)
 
 ## [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.4...conventional-commits-parser-v4.0.0) (2023-06-06)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -111,13 +70,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### [3.2.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.3...conventional-commits-parser-v3.2.4) (2021-12-29)
 
-
 ### Bug Fixes
 
 * support BREAKING-CHANGE alongside BREAKING CHANGE ([#882](https://github.com/conventional-changelog/conventional-changelog/issues/882)) ([e6f44ad](https://github.com/conventional-changelog/conventional-changelog/commit/e6f44adcf1ac5abbb85bdac73237c331c6594177))
 
 ### [3.2.3](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.2...conventional-commits-parser-v3.2.3) (2021-10-23)
-
 
 ### Bug Fixes
 
@@ -125,102 +82,86 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### [3.2.2](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v3.2.1...conventional-commits-parser-v3.2.2) (2021-09-09)
 
-
 ### Bug Fixes
 
 * **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
 
 ### [3.2.1](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.2.0...v3.2.1) (2021-02-15)
 
-
 ### Bug Fixes
 
 * handle missing header in merge commit ([#757](https://www.github.com/conventional-changelog/conventional-changelog/issues/757)) ([d189d3e](https://www.github.com/conventional-changelog/conventional-changelog/commit/d189d3e45b82e7141115ce8eccd95c8cf2d7db77))
 
-## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.7...conventional-commits-parser@3.0.8) (2019-11-14)
+## [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.1.0...conventional-commits-parser@3.2.0) (2020-11-05)
 
+### Bug Fixes
+
+* ignore gpg lines ([#685](https://github.com/conventional-changelog/conventional-changelog/issues/685)) ([f8fcbc2](https://github.com/conventional-changelog/conventional-changelog/commit/f8fcbc2e8b0834c29178ace6382b438a020ad828))
+* **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
+
+### Features
+
+* allows notes pattern to be customized ([#586](https://github.com/conventional-changelog/conventional-changelog/issues/586)) ([9c00f32](https://github.com/conventional-changelog/conventional-changelog/commit/9c00f3242d916be1774a618d943f908f8d9699a6))
+
+## [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.8...conventional-commits-parser@3.1.0) (2020-05-08)
+
+### Bug Fixes
+
+* **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
+
+### Features
+
+* **conventional-commits-parser:** add issuePrefixesCaseSensitive parser option ([#580](https://github.com/conventional-changelog/conventional-changelog/issues/580)) ([526b282](https://github.com/conventional-changelog/conventional-changelog/commit/526b28214d12c55158eb2e4d44408378587ceb97))
+* support slash in headerPattern default options ([93a547d](https://github.com/conventional-changelog/conventional-changelog/commit/93a547d742634d8676f499cfa2a274bc3792d020))
+
+## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.7...conventional-commits-parser@3.0.8) (2019-11-14)
 
 ### Bug Fixes
 
 * add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
 
-
-
-
-
 ## [3.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.6...conventional-commits-parser@3.0.7) (2019-11-07)
-
 
 ### Bug Fixes
 
 * **conventional-commits-parser:** add breaking change notes if header match `breakingHeaderPattern` ([#544](https://github.com/conventional-changelog/conventional-changelog/issues/544)) ([efdf3cb](https://github.com/conventional-changelog/conventional-changelog/commit/efdf3cbc9de3278b180a48beebb74e596e3c5f94))
 * **conventional-commits-parser:** add missing separator pipe to non tty parser ([#546](https://github.com/conventional-changelog/conventional-changelog/issues/546)) ([c522743](https://github.com/conventional-changelog/conventional-changelog/commit/c5227437b0b300f30a57e8ba5df2a8ab8d163af0))
 
-
-
-
-
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.5...conventional-commits-parser@3.0.6) (2019-10-24)
-
 
 ### Bug Fixes
 
 * **conventional-commits-parser:** downgrade is-text-path due to node 6 incompatibility ([#536](https://github.com/conventional-changelog/conventional-changelog/issues/536)) ([3aa2637](https://github.com/conventional-changelog/conventional-changelog/commit/3aa2637a1c65bb4db3d8bf2c6ce17e6f5abe1ca1))
 * **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
 
-
-
-
-
 ## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.3...conventional-commits-parser@3.0.4) (2019-10-02)
 
 **Note:** Version bump only for package conventional-commits-parser
 
-
-
-
-
 ## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.2...conventional-commits-parser@3.0.3) (2019-05-18)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency is-text-path to v2 ([#455](https://github.com/conventional-changelog/conventional-changelog/issues/455)) ([0f40ec3](https://github.com/conventional-changelog/conventional-changelog/commit/0f40ec3))
 
-
-
-
-
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.1...conventional-commits-parser@3.0.2) (2019-04-10)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
 
-
-
-
-
 ## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@3.0.0...conventional-commits-parser@3.0.1) (2018-11-01)
-
 
 ### Bug Fixes
 
 * Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
 
-
-
-
-
       <a name="3.0.0"></a>
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.7...conventional-commits-parser@3.0.0) (2018-05-29)
-
 
 ### Chores
 
 * **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
-
 
 ### BREAKING CHANGES
 
@@ -228,98 +169,63 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 currently supported by the Node Release working group. At this time,
 that is Node 6 (which is in its Maintenance LTS phase).
 
-
-
-
       <a name="2.1.7"></a>
 ## [2.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.6...conventional-commits-parser@2.1.7) (2018-03-27)
-
-
-
 
 **Note:** Version bump only for package conventional-commits-parser
 
 <a name="2.1.6"></a>
 ## [2.1.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.5...conventional-commits-parser@2.1.6) (2018-03-22)
 
-
-
-
 **Note:** Version bump only for package conventional-commits-parser
 
 <a name="2.1.5"></a>
 ## [2.1.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.4...conventional-commits-parser@2.1.5) (2018-02-24)
-
-
-
 
 **Note:** Version bump only for package conventional-commits-parser
 
 <a name="2.1.4"></a>
 ## [2.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.3...conventional-commits-parser@2.1.4) (2018-02-20)
 
-
-
-
 **Note:** Version bump only for package conventional-commits-parser
 
 <a name="2.1.3"></a>
 ## [2.1.3](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.1.2...conventional-commits-parser@2.1.3) (2018-02-13)
-
-
-
 
 **Note:** Version bump only for package conventional-commits-parser
 
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.1.1...conventional-commits-parser@2.1.2) (2018-02-13)
 
-
-
-
 **Note:** Version bump only for package conventional-commits-parser
 
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.1.0...conventional-commits-parser@2.1.1) (2018-02-05)
 
-
 ### Bug Fixes
 
 * truncate after scissors line ([#267](https://github.com/conventional-changelog/conventional-commits-parser/issues/267)) ([e09df10](https://github.com/conventional-changelog/conventional-commits-parser/commit/e09df10))
 
-
-
-
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.0.1...conventional-commits-parser@2.1.0) (2017-12-08)
-
 
 ### Bug Fixes
 
 * always parse references ([e84a9ae](https://github.com/conventional-changelog/conventional-commits-parser/commit/e84a9ae)), closes [#248](https://github.com/conventional-changelog/conventional-commits-parser/issues/248)
 
-
 ### Features
 
 * make comment stripping optional ([db5b711](https://github.com/conventional-changelog/conventional-commits-parser/commit/db5b711)), closes [#251](https://github.com/conventional-changelog/conventional-commits-parser/issues/251)
 
-
-
-
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/conventional-commits-parser@2.0.0...conventional-commits-parser@2.0.1) (2017-11-13)
-
 
 ### Bug Fixes
 
 * **conventional-commits-parser:** ignore comments  ([#231](https://github.com/conventional-changelog/conventional-commits-parser/issues/231)) ([9db53e3](https://github.com/conventional-changelog/conventional-commits-parser/commit/9db53e3)), closes [#224](https://github.com/conventional-changelog/conventional-commits-parser/issues/224)
 
-
-
-
 <a name="2.0.0"></a>
 # 2.0.0 (2017-07-17)
-
 
 ### Bug Fixes
 
@@ -344,18 +250,15 @@ that is Node 6 (which is in its Maintenance LTS phase).
 * **util:** remove an accidentally commited file ([3710a8c](https://github.com/conventional-changelog/conventional-commits-parser/commit/3710a8c))
 * **warn:** should tell which commit cannot be parsed ([04b0a9b](https://github.com/conventional-changelog/conventional-commits-parser/commit/04b0a9b))
 
-
 ### Chores
 
 * init ([a529841](https://github.com/conventional-changelog/conventional-commits-parser/commit/a529841))
-
 
 ### Code Refactoring
 
 * **breaks:** change `breaks` to `notes` ([5189a61](https://github.com/conventional-changelog/conventional-commits-parser/commit/5189a61)), closes [#2](https://github.com/conventional-changelog/conventional-commits-parser/issues/2)
 * **merge:** pull-request should be merge ([4e7c61c](https://github.com/conventional-changelog/conventional-commits-parser/commit/4e7c61c))
 * **regex:** regex now takes `options` ([eea319a](https://github.com/conventional-changelog/conventional-commits-parser/commit/eea319a))
-
 
 ### Features
 
@@ -391,11 +294,9 @@ that is Node 6 (which is in its Maintenance LTS phase).
 * **sync:** add the sync function ([82071c6](https://github.com/conventional-changelog/conventional-commits-parser/commit/82071c6)), closes [#13](https://github.com/conventional-changelog/conventional-commits-parser/issues/13)
 * **warn:** optionally warn user what is wrong when commit cannot be parsed ([32b3cda](https://github.com/conventional-changelog/conventional-commits-parser/commit/32b3cda))
 
-
 ### Performance Improvements
 
 * **regex:** regex should be constructed in index.html ([15afd26](https://github.com/conventional-changelog/conventional-commits-parser/commit/15afd26))
-
 
 ### BREAKING CHANGES
 
@@ -423,56 +324,40 @@ The detection of notes, closes, continueNote and isBody are mutually exclusive.
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.3...v1.3.0) (2016-10-15)
 
-
 ### Features
 
 * support squash commits (#31) ([860c7a1](https://github.com/conventional-changelog/conventional-commits-parser/commit/860c7a1))
 
-
-
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.2...v1.2.3) (2016-08-06)
-
 
 ### Bug Fixes
 
 * **regex:** do not treat it as note if there are texts after keywords ([9cb56bc](https://github.com/conventional-changelog/conventional-commits-parser/commit/9cb56bc))
 
-
-
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.1...v1.2.2) (2016-05-04)
-
 
 ### Bug Fixes
 
 * **regex:** make getReferencePartsRegex stricter ([b8a9fda](https://github.com/conventional-changelog/conventional-commits-parser/commit/b8a9fda)), closes [#27](https://github.com/conventional-changelog/conventional-commits-parser/issues/27) [(#30](https://github.com/(/issues/30) [#27](https://github.com/conventional-changelog/conventional-commits-parser/issues/27) [#28](https://github.com/conventional-changelog/conventional-commits-parser/issues/28)
 
-
-
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.2.0...v1.2.1) (2016-04-24)
-
 
 ### Bug Fixes
 
 * **mention:** fix mention matching ([43b32e7](https://github.com/conventional-changelog/conventional-commits-parser/commit/43b32e7)), closes [#26](https://github.com/conventional-changelog/conventional-commits-parser/issues/26)
 
-
-
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.1.0...v1.2.0) (2016-04-15)
-
 
 ### Features
 
 * **mentions:** @someone in commit ([b2eabbf](https://github.com/conventional-changelog/conventional-commits-parser/commit/b2eabbf)), closes [#24](https://github.com/conventional-changelog/conventional-commits-parser/issues/24)
 
-
-
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/conventional-changelog/conventional-commits-parser/compare/v1.0.1...v1.1.0) (2016-04-10)
-
 
 ### Bug Fixes
 
@@ -482,27 +367,18 @@ The detection of notes, closes, continueNote and isBody are mutually exclusive.
 
 * **reference:** able to reference an issue without an action ([cf847b1](https://github.com/conventional-changelog/conventional-commits-parser/commit/cf847b1)), closes [#22](https://github.com/conventional-changelog/conventional-commits-parser/issues/22)
 
-
-
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/stevemao/conventional-commits-parser/compare/v1.0.0...v1.0.1) (2016-02-05)
-
 
 ### Bug Fixes
 
 * **deps:** require split2 ([ad55810](https://github.com/stevemao/conventional-commits-parser/commit/ad55810))
 
-
-
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-commits-parser/compare/v0.2.0...v1.0.0) (2016-02-05)
 
-
-
-
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/stevemao/conventional-commits-parser/compare/v0.1.2...v0.2.0) (2016-02-04)
-
 
 ### Features
 
@@ -510,21 +386,15 @@ The detection of notes, closes, continueNote and isBody are mutually exclusive.
 * **pullRequest:** Allow to skip and parse pull request header ([aa85033](https://github.com/stevemao/conventional-commits-parser/commit/aa85033)), closes [#20](https://github.com/stevemao/conventional-commits-parser/issues/20)
 * **regex:** matching JIRA-123 like references ([5342f45](https://github.com/stevemao/conventional-commits-parser/commit/5342f45)), closes [#19](https://github.com/stevemao/conventional-commits-parser/issues/19)
 
-
-
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/stevemao/conventional-commits-parser/compare/v0.1.1...v0.1.2) (2015-09-18)
-
 
 ### Bug Fixes
 
 * **parser:** do not trim spaces but newlines ([62e7bf5](https://github.com/stevemao/conventional-commits-parser/commit/62e7bf5))
 
-
-
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/stevemao/conventional-commits-parser/compare/v0.1.0...v0.1.1) (2015-09-12)
-
 
 ### Bug Fixes
 

@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "type": "module",
-  "version": "6.0.0",
+  "version": "7.1.0",
   "description": "Generate a changelog from git metadata.",
   "author": {
     "name": "Steve Mao",
@@ -58,7 +58,7 @@
     "clear:package": "del ./package",
     "clear:dist": "del ./dist",
     "clear": "del ./package ./dist",
-    "prepublishOnly": "run clear:package clean-publish",
+    "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
     "build": "tsc -p tsconfig.build.json",
     "test:types": "tsc --noEmit"

@@ -78,3 +78,13 @@ or json config like that:
 This last json config way passes the `preset` object to the `conventional-changelog-preset-loader` package, that in turn, passes this same `preset` object as the config for the `conventional-changelog-conventionalcommits`.
 
 See [conventional-changelog-config-spec](https://github.com/conventional-changelog/conventional-changelog-config-spec) for available configuration options.
+
+## Specific Options
+
+| Option | Description |
+|--------|-------------|
+| ignoreCommits | Ignore commits that match the provided regex. |
+| types | An array of types to include in the changelog. Default value can be accessed from `DEFAULT_COMMIT_TYPES` export. |
+| bumpStrict | If set to `true`, the version will be bumped only if there are breaking changes or if the commit type is in the `types` array. Default value is `false`. |
+| scope | Scope name to filter commits. By default, commits without scope are included. |
+| scopeOnly | If set to `true`, only commits with the specified scope will be included. Default value is `false`. |

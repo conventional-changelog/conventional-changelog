@@ -81,17 +81,19 @@ export interface Options {
    */
   transformCommit?: CommitTransformFunction
   /**
-   * Logger for warnings
+   * Logger for warnings.
    */
   warn?: Logger
   /**
-   * Logger for debug messages
+   * Logger for debug messages.
    */
   debug?: Logger
   /**
-   * Custom date formatter function
+   * A function to format date.
+   * @param date - Date string or Date object.
+   * @returns Final date string.
    */
-  formatDate?(date: Date): string
+  formatDate?(date: string | Date): string
 }
 
 export interface Params extends Preset {

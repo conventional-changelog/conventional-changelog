@@ -1,10 +1,9 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v7.0.0...conventional-changelog-angular-v8.0.0) (2024-04-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -24,13 +23,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
 * **standard-changelog:** use promises ([#1111](https://github.com/conventional-changelog/conventional-changelog/issues/1111)) ([5015ab7](https://github.com/conventional-changelog/conventional-changelog/commit/5015ab71de7a3db9cbcbbabd0cc25502f1cd0109))
 
-
 ### Bug Fixes
 
 * **conventional-changelog-angular:** revert pattern to not require a period ([#1169](https://github.com/conventional-changelog/conventional-changelog/issues/1169)) ([e5786cd](https://github.com/conventional-changelog/conventional-changelog/commit/e5786cdb01eb571fe85973a0cec0bc82efe3f65f))
 
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v6.0.0...conventional-changelog-angular-v7.0.0) (2023-08-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -44,7 +41,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v5.0.13...conventional-changelog-angular-v6.0.0) (2023-06-05)
 
-
 ### ⚠ BREAKING CHANGES
 
 * now all promises are native
@@ -57,7 +53,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### [5.0.13](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-vconventional-changelog-angular@5.0.12...conventional-changelog-angular-v5.0.13) (2021-09-09)
 
-
 ### Bug Fixes
 
 * **conventional-commits-parser:** address CVE-2021-23425 ([#841](https://www.github.com/conventional-changelog/conventional-changelog/issues/841)) ([02b3d53](https://www.github.com/conventional-changelog/conventional-changelog/commit/02b3d53a0c142f0c28ee7d190d210c76a62887c2))
@@ -66,89 +61,51 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package conventional-changelog-angular
 
-
-
-
-
 ## [5.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.10...conventional-changelog-angular@5.0.11) (2020-06-20)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
 
-
-
-
-
 ## [5.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.6...conventional-changelog-angular@5.0.10) (2020-05-08)
 
 **Note:** Version bump only for package conventional-changelog-angular
 
-
-
-
-
 ## [5.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.5...conventional-changelog-angular@5.0.6) (2019-11-07)
-
 
 ### Bug Fixes
 
 * revertPattern match default git revert format ([#545](https://github.com/conventional-changelog/conventional-changelog/issues/545)) ([fe449f8](https://github.com/conventional-changelog/conventional-changelog/commit/fe449f899567574a36d1819b313e2caa899052ff))
 
-
-
-
-
 ## [5.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.3...conventional-changelog-angular@5.0.4) (2019-10-02)
-
 
 ### Bug Fixes
 
 * use full commit hash in commit link ([7a60dec](https://github.com/conventional-changelog/conventional-changelog/commit/7a60dec)), closes [#476](https://github.com/conventional-changelog/conventional-changelog/issues/476)
 
-
-
-
-
 ## [5.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.2...conventional-changelog-angular@5.0.3) (2019-02-14)
-
 
 ### Bug Fixes
 
 * **preset:angular:** scoped npm packages should not be seen as GitHub username ([#394](https://github.com/conventional-changelog/conventional-changelog/issues/394)) ([e332ef0](https://github.com/conventional-changelog/conventional-changelog/commit/e332ef0))
 
-
-
-
-
 ## [5.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.1...conventional-changelog-angular@5.0.2) (2018-11-01)
-
 
 ### Bug Fixes
 
 * Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
 
-
-
-
-
 <a name="5.0.1"></a>
 ## [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@5.0.0...conventional-changelog-angular@5.0.1) (2018-08-21)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@4.0.1...conventional-changelog-angular@5.0.0) (2018-06-06)
 
-
 ### Features
 
 * re-use parser options within each preset ([#335](https://github.com/conventional-changelog/conventional-changelog/issues/335)) ([d3eaacf](https://github.com/conventional-changelog/conventional-changelog/commit/d3eaacf)), closes [#241](https://github.com/conventional-changelog/conventional-changelog/issues/241)
-
 
 ### BREAKING CHANGES
 
@@ -161,33 +118,23 @@ within a preset were different than the parser options object for the
 If you are not using `conventional-recommended-bump`, then this is
 **not** a breaking change for you.
 
-
-
-
 <a name="4.0.1"></a>
 ## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@4.0.0...conventional-changelog-angular@4.0.1) (2018-06-02)
-
 
 ### Bug Fixes
 
 * Fix plurality of "are" vs. "is" ([#331](https://github.com/conventional-changelog/conventional-changelog/issues/331)) ([027e778](https://github.com/conventional-changelog/conventional-changelog/commit/027e778))
 
-
-
-
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.7...conventional-changelog-angular@4.0.0) (2018-05-29)
-
 
 ### Chores
 
 * **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
 
-
 ### Code Refactoring
 
 * remove anchor from header templates ([#301](https://github.com/conventional-changelog/conventional-changelog/issues/301)) ([346f24f](https://github.com/conventional-changelog/conventional-changelog/commit/346f24f)), closes [#186](https://github.com/conventional-changelog/conventional-changelog/issues/186)
-
 
 ### BREAKING CHANGES
 
@@ -210,65 +157,40 @@ As an example, for version `2.0.0` of a GitHub project, the following
 URL should be used:
 - https://github.com/conventional-changelog/releaser-tools/releases/tag/v2.0.0
 
-
-
-
 <a name="3.0.7"></a>
 ## [3.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.6...conventional-changelog-angular@3.0.7) (2018-04-16)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="3.0.6"></a>
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.5...conventional-changelog-angular@3.0.6) (2018-03-28)
 
-
 ### Bug Fixes
 
 * revert previous change ([2f4530f](https://github.com/conventional-changelog/conventional-changelog/commit/2f4530f))
 
-
-
-
 <a name="3.0.5"></a>
 ## [3.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.4...conventional-changelog-angular@3.0.5) (2018-03-27)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="3.0.4"></a>
 ## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.3...conventional-changelog-angular@3.0.4) (2018-03-27)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.2...conventional-changelog-angular@3.0.3) (2018-03-27)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="3.0.2"></a>
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.1...conventional-changelog-angular@3.0.2) (2018-03-22)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@3.0.0...conventional-changelog-angular@3.0.1) (2018-03-22)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
@@ -288,75 +210,47 @@ Former "chore" type has been replaced by a type "build" for commits on the build
 <a name="1.6.6"></a>
 ## [1.6.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@1.6.5...conventional-changelog-angular@1.6.6) (2018-02-24)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.6.5"></a>
 ## [1.6.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular@1.6.4...conventional-changelog-angular@1.6.5) (2018-02-20)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.6.4"></a>
 ## [1.6.4](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.6.3...conventional-changelog-angular@1.6.4) (2018-02-13)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.6.3"></a>
 ## [1.6.3](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.6.2...conventional-changelog-angular@1.6.3) (2018-02-13)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.6.2"></a>
 ## [1.6.2](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.6.1...conventional-changelog-angular@1.6.2) (2018-02-05)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.6.1"></a>
 ## [1.6.1](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.6.0...conventional-changelog-angular@1.6.1) (2018-01-29)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.5.3...conventional-changelog-angular@1.6.0) (2017-12-18)
 
-
 ### Features
 
 * **preset:** add recommended-bump opts into presets ([60815b5](https://github.com/conventional-changelog/conventional-changelog-angular/commit/60815b5)), closes [#241](https://github.com/conventional-changelog/conventional-changelog-angular/issues/241)
 
-
-
-
 <a name="1.5.3"></a>
 ## [1.5.3](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.5.2...conventional-changelog-angular@1.5.3) (2017-12-08)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
 <a name="1.5.2"></a>
 ## [1.5.2](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.5.1...conventional-changelog-angular@1.5.2) (2017-11-13)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-angular
 
@@ -366,11 +260,9 @@ Former "chore" type has been replaced by a type "build" for commits on the build
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.4.0...conventional-changelog-angular@1.5.0) (2017-09-01)
 
-
 ### Bug Fixes
 
 * **angular:** smarter username detection ([#219](https://github.com/conventional-changelog/conventional-changelog/issues/219)) ([f1b4847](https://github.com/conventional-changelog/conventional-changelog-angular/commit/f1b4847)), closes [#218](https://github.com/conventional-changelog/conventional-changelog-angular/issues/218)
-
 
 ### Features
 
@@ -378,7 +270,6 @@ Former "chore" type has been replaced by a type "build" for commits on the build
 
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/conventional-changelog-angular@1.3.3...conventional-changelog-angular@1.4.0) (2017-07-17)
-
 
 ### Features
 
@@ -390,27 +281,20 @@ Former "chore" type has been replaced by a type "build" for commits on the build
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.2.0...v1.3.0) (2016-08-06)
 
-
 ### Features
 
 * **noteKeywords:** make BREAKING CHANGE more forgiving ([7dce559](https://github.com/conventional-changelog/conventional-changelog-angular/commit/7dce559))
 * **references:** remove references that already appear in the subject ([aa765c2](https://github.com/conventional-changelog/conventional-changelog-angular/commit/aa765c2))
 
-
-
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.1.0...v1.2.0) (2016-05-10)
-
 
 ### Features
 
 * **template:** use context.repoUrl([2b5818b](https://github.com/conventional-changelog/conventional-changelog-angular/commit/2b5818b))
 
-
-
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/conventional-changelog/conventional-changelog-angular/compare/v1.0.0...v1.1.0) (2016-04-26)
-
 
 ### Bug Fixes
 
@@ -423,37 +307,25 @@ Former "chore" type has been replaced by a type "build" for commits on the build
 * remove commit length restriction ([6aebb75](https://github.com/conventional-changelog/conventional-changelog-angular/commit/6aebb75)), closes [#12](https://github.com/conventional-changelog/conventional-changelog-angular/issues/12)
 * **github:** adds github-specific replacements for issues and users ([2633f73](https://github.com/conventional-changelog/conventional-changelog-angular/commit/2633f73)), closes [#12](https://github.com/conventional-changelog/conventional-changelog-angular/issues/12)
 
-
-
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-changelog-angular/compare/v0.1.0...v1.0.0) (2016-02-05)
-
 
 ### Features
 
 * **writerOpts.transform:** do not discard commit if there is BREAKING CHANGE ([e67c4a1](https://github.com/stevemao/conventional-changelog-angular/commit/e67c4a1)), closes [ajoslin/conventional-changelog#127](https://github.com/ajoslin/conventional-changelog/issues/127) [angular/angular#5672](https://github.com/angular/angular/issues/5672)
 
-
-
 <a name="0.1.0"></a>
 # [0.1.0](https://github.com/stevemao/conventional-changelog-angular/compare/v0.0.2...v0.1.0) (2016-01-30)
 
-
-
-
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/stevemao/conventional-changelog-angular/compare/v0.0.1...v0.0.2) (2016-01-30)
-
 
 ### Features
 
 * **exports:** export the promise ([60def39](https://github.com/stevemao/conventional-changelog-angular/commit/60def39))
 
-
-
 <a name="0.0.1"></a>
 ## 0.0.1 (2015-12-26)
-
 
 ### Features
 

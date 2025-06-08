@@ -33,6 +33,8 @@ export interface GitLogParams {
   merges?: boolean
 }
 
+export interface GitLogTagsParams extends Pick<GitLogParams, 'path' | 'from' | 'to' | 'since'> {}
+
 export interface GetCommitsParams extends GitLogParams {
   /**
    * Enable revert commits filter.
@@ -44,6 +46,7 @@ export interface GitCommitParams {
   verify?: boolean
   sign?: boolean
   files?: string[]
+  allowEmpty?: boolean
   message: string
 }
 
@@ -51,6 +54,22 @@ export interface GitTagParams {
   sign?: boolean
   name: string
   message?: string
+}
+
+export interface GitPushParams {
+  verify?: boolean
+  tags?: boolean
+  followTags?: boolean
+  force?: boolean
+}
+
+export interface GitFetchParams {
+  prune?: boolean
+  unshallow?: boolean
+  tags?: boolean
+  all?: boolean
+  remote?: string
+  branch?: string
 }
 
 export interface GetSemverTagsParams {

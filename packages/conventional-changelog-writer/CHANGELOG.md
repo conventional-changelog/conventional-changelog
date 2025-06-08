@@ -1,10 +1,15 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.0...conventional-changelog-writer-v8.0.1) (2025-01-15)
+## [8.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.1...conventional-changelog-writer-v8.1.0) (2025-05-19)
 
+### Features
+
+* `transformCommit` method and utils are added to exports ([#1350](https://github.com/conventional-changelog/conventional-changelog/issues/1350)) ([6a05bad](https://github.com/conventional-changelog/conventional-changelog/commit/6a05bad))
+
+## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.0...conventional-changelog-writer-v8.0.1) (2025-01-15)
 
 ### Bug Fixes
 
@@ -12,7 +17,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **conventional-changelog-writer:** fix modification prevention for Date objects ([#1285](https://github.com/conventional-changelog/conventional-changelog/issues/1285)) ([56a5f3c](https://github.com/conventional-changelog/conventional-changelog/commit/56a5f3cbbab72d8bb1f19aa697927a8f24490812))
 
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v7.0.1...conventional-changelog-writer-v8.0.0) (2024-04-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -33,20 +37,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * drop node 16 support ([#1226](https://github.com/conventional-changelog/conventional-changelog/issues/1226)) ([ec69cfd](https://github.com/conventional-changelog/conventional-changelog/commit/ec69cfdf0040f73ec0eadc4779c37874e71f3dff))
 * move from CommonJS to ESM ([#1144](https://github.com/conventional-changelog/conventional-changelog/issues/1144)) ([c5b859d](https://github.com/conventional-changelog/conventional-changelog/commit/c5b859d201e124822002eb54574f003f074216e2))
 
-
 ### Bug Fixes
 
 * **deps:** update dependency meow to v13 ([#1190](https://github.com/conventional-changelog/conventional-changelog/issues/1190)) ([862f66b](https://github.com/conventional-changelog/conventional-changelog/commit/862f66ba99989af2d44a524b11bc3a873426b00b))
 
 ## [7.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v7.0.0...conventional-changelog-writer-v7.0.1) (2023-09-10)
 
-
 ### Bug Fixes
 
 * **conventional-changelog-writer:** fix transform async handlers ([#1146](https://github.com/conventional-changelog/conventional-changelog/issues/1146)) ([be3901b](https://github.com/conventional-changelog/conventional-changelog/commit/be3901bc66e44f938c4a9634b697a0c79841635a))
 
 ## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v6.0.1...conventional-changelog-writer-v7.0.0) (2023-08-26)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -59,7 +60,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * unified presets interface ([#1045](https://github.com/conventional-changelog/conventional-changelog/issues/1045)) ([8d0ffbe](https://github.com/conventional-changelog/conventional-changelog/commit/8d0ffbe6c59b861b560cea0e3594c7b32e978cc3))
 * use Intl.DateTimeFormat instead of dateformat ([#1075](https://github.com/conventional-changelog/conventional-changelog/issues/1075)) ([77c41e9](https://github.com/conventional-changelog/conventional-changelog/commit/77c41e93fe66c2287aad2c266dda91ebf978882a))
 
-
 ### Bug Fixes
 
 * align split2 package between packages ([#1084](https://github.com/conventional-changelog/conventional-changelog/issues/1084)) ([bf28e5f](https://github.com/conventional-changelog/conventional-changelog/commit/bf28e5f9e1678833356e6b58ddebfb7d6ceb6f1d))
@@ -67,14 +67,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [6.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v6.0.0...conventional-changelog-writer-v6.0.1) (2023-07-09)
 
-
 ### Bug Fixes
 
 * **conventional-changelog-writer:** pass commit deep copy to writer transformer ([#1044](https://github.com/conventional-changelog/conventional-changelog/issues/1044)) ([208ffdb](https://github.com/conventional-changelog/conventional-changelog/commit/208ffdb246b6acf4f016c6ca6e02b2e347c6bd67))
 * **deps:** update dependency semver to v7 [security] ([#1021](https://github.com/conventional-changelog/conventional-changelog/issues/1021)) ([31fa409](https://github.com/conventional-changelog/conventional-changelog/commit/31fa409e446a51a5a23e2217997d04364b89c1dd))
 
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v5.0.1...conventional-changelog-writer-v6.0.0) (2023-06-06)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -86,13 +84,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### [5.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v5.0.0...conventional-changelog-writer-v5.0.1) (2021-12-29)
 
-
 ### Bug Fixes
 
 * **deps:** patch the handlebars package for CVE-2021-23369 ([1cfc3a1](https://github.com/conventional-changelog/conventional-changelog/commit/1cfc3a1600a11a61d1a9e8d3051d1101cfaa36f1))
 
 ## [5.0.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/v4.1.0...v5.0.0) (2020-12-30)
-
 
 ### ⚠ BREAKING CHANGES
 
@@ -104,166 +100,96 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [4.1.0](https://www.github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.18...v4.1.0) (2020-12-29)
 
-
 ### Features
 
 * add helper for parsing array of commits ([#711](https://www.github.com/conventional-changelog/conventional-changelog/issues/711)) ([e869fe6](https://www.github.com/conventional-changelog/conventional-changelog/commit/e869fe67548b210508a9df0ce99180164b740e65))
 
 ## [4.0.18](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.17...conventional-changelog-writer@4.0.18) (2020-11-05)
 
-
 ### Bug Fixes
 
 * **deps:** update dependency through2 to v4 ([#657](https://github.com/conventional-changelog/conventional-changelog/issues/657)) ([7ae618c](https://github.com/conventional-changelog/conventional-changelog/commit/7ae618c81491841e5b1d796d3933aac0c54bc312))
 
-
-
-
-
 ## [4.0.17](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.16...conventional-changelog-writer@4.0.17) (2020-06-20)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency compare-func to v2 ([#647](https://github.com/conventional-changelog/conventional-changelog/issues/647)) ([de4f630](https://github.com/conventional-changelog/conventional-changelog/commit/de4f6309403ca0d46b7c6235052f4dca61ea15bc))
 
-
-
-
-
 ## [4.0.16](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.15...conventional-changelog-writer@4.0.16) (2020-05-08)
-
 
 ### Bug Fixes
 
 * **deps:** address CVE in meow ([#642](https://github.com/conventional-changelog/conventional-changelog/issues/642)) ([46311d2](https://github.com/conventional-changelog/conventional-changelog/commit/46311d2932b367f370d06c4e447b8dcf4bc4e83f))
 
-
-
-
-
 ## [4.0.15](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.11...conventional-changelog-writer@4.0.15) (2020-05-08)
-
 
 ### Bug Fixes
 
 * **deps:** update yargs-parser to move off a flagged-vulnerable version. ([#635](https://github.com/conventional-changelog/conventional-changelog/issues/635)) ([aafc0f0](https://github.com/conventional-changelog/conventional-changelog/commit/aafc0f00412c3e4b23b8418300e5a570a48fe24d))
 
-
-
-
-
 ## [4.0.11](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.10...conventional-changelog-writer@4.0.11) (2019-11-14)
-
 
 ### Bug Fixes
 
 * add types for cli flags ([#551](https://github.com/conventional-changelog/conventional-changelog/issues/551)) ([bf1d64a](https://github.com/conventional-changelog/conventional-changelog/commit/bf1d64aeaf8f262d4b2beec02d2aebb78df7343b))
 
-
-
-
-
 ## [4.0.10](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.9...conventional-changelog-writer@4.0.10) (2019-10-24)
-
 
 ### Bug Fixes
 
 * **deps:** update lodash to fix security issues ([#535](https://github.com/conventional-changelog/conventional-changelog/issues/535)) ([ac43f51](https://github.com/conventional-changelog/conventional-changelog/commit/ac43f51de1f3b597c32f7f8442917a2d06199018))
 
-
-
-
-
 ## [4.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.7...conventional-changelog-writer@4.0.8) (2019-10-02)
 
 **Note:** Version bump only for package conventional-changelog-writer
-
-
-
-
 
 ## [4.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.6...conventional-changelog-writer@4.0.7) (2019-07-29)
 
 **Note:** Version bump only for package conventional-changelog-writer
 
-
-
-
-
 ## [4.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.5...conventional-changelog-writer@4.0.6) (2019-05-18)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency semver to v6 ([#458](https://github.com/conventional-changelog/conventional-changelog/issues/458)) ([efaa7bb](https://github.com/conventional-changelog/conventional-changelog/commit/efaa7bb))
 
-
-
-
-
 ## [4.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.4...conventional-changelog-writer@4.0.5) (2019-04-11)
 
 **Note:** Version bump only for package conventional-changelog-writer
 
-
-
-
-
 ## [4.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.3...conventional-changelog-writer@4.0.4) (2019-04-10)
-
 
 ### Bug Fixes
 
 * **deps:** update dependency through2 to v3 ([#392](https://github.com/conventional-changelog/conventional-changelog/issues/392)) ([26fe91f](https://github.com/conventional-changelog/conventional-changelog/commit/26fe91f))
 
-
-
-
-
 ## [4.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.2...conventional-changelog-writer@4.0.3) (2019-02-14)
 
 **Note:** Version bump only for package conventional-changelog-writer
 
-
-
-
-
 ## [4.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.1...conventional-changelog-writer@4.0.2) (2018-11-01)
-
 
 ### Bug Fixes
 
 * bad release of conventional-changelog-writer ([b5da9af](https://github.com/conventional-changelog/conventional-changelog/commit/b5da9af))
 
-
-
-
-
 ## [4.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@4.0.0...conventional-changelog-writer@4.0.1) (2018-11-01)
-
 
 ### Bug Fixes
 
 * Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
 
-
-
-
-
       <a name="4.0.0"></a>
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.9...conventional-changelog-writer@4.0.0) (2018-05-29)
-
 
 ### Chores
 
 * **package:** set Node requirement to oldest supported LTS ([#329](https://github.com/conventional-changelog/conventional-changelog/issues/329)) ([cae2fe0](https://github.com/conventional-changelog/conventional-changelog/commit/cae2fe0))
 
-
 ### Code Refactoring
 
 * remove anchor from header templates ([#301](https://github.com/conventional-changelog/conventional-changelog/issues/301)) ([346f24f](https://github.com/conventional-changelog/conventional-changelog/commit/346f24f)), closes [#186](https://github.com/conventional-changelog/conventional-changelog/issues/186)
-
 
 ### BREAKING CHANGES
 
@@ -286,92 +212,59 @@ As an example, for version `2.0.0` of a GitHub project, the following
 URL should be used:
 - https://github.com/conventional-changelog/releaser-tools/releases/tag/v2.0.0
 
-
-
-
       <a name="3.0.9"></a>
 ## [3.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.8...conventional-changelog-writer@3.0.9) (2018-03-28)
-
 
 ### Bug Fixes
 
 * revert previous change ([2f4530f](https://github.com/conventional-changelog/conventional-changelog/commit/2f4530f))
 
-
-
-
 <a name="3.0.8"></a>
 ## [3.0.8](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.7...conventional-changelog-writer@3.0.8) (2018-03-27)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.7"></a>
 ## [3.0.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.6...conventional-changelog-writer@3.0.7) (2018-03-27)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.6"></a>
 ## [3.0.6](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.5...conventional-changelog-writer@3.0.6) (2018-03-27)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.5"></a>
 ## [3.0.5](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.4...conventional-changelog-writer@3.0.5) (2018-03-22)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.4"></a>
 ## [3.0.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.3...conventional-changelog-writer@3.0.4) (2018-02-24)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.3"></a>
 ## [3.0.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.2...conventional-changelog-writer@3.0.3) (2018-02-20)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.2"></a>
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@3.0.1...conventional-changelog-writer@3.0.2) (2018-02-13)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@3.0.0...conventional-changelog-writer@3.0.1) (2018-02-13)
 
-
-
-
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.3...conventional-changelog-writer@3.0.0) (2018-01-29)
 
-
 ### Bug Fixes
 
 * **writer:** normalize release headings ([#237](https://github.com/conventional-changelog/conventional-changelog-writer/issues/237)) ([9e87dc3](https://github.com/conventional-changelog/conventional-changelog-writer/commit/9e87dc3)), closes [/github.com/conventional-changelog/conventional-changelog/issues/214#issuecomment-326681934](https://github.com//github.com/conventional-changelog/conventional-changelog/issues/214/issues/issuecomment-326681934)
-
 
 ### BREAKING CHANGES
 
@@ -383,22 +276,13 @@ visual hierarchy of the previous style.
 
 Fixes https://github.com/conventional-changelog/conventional-changelog/issues/214
 
-
-
-
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.2...conventional-changelog-writer@2.0.3) (2017-12-08)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-writer
 
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/conventional-changelog/conventional-changelog-writer/compare/conventional-changelog-writer@2.0.1...conventional-changelog-writer@2.0.2) (2017-11-13)
-
-
-
 
 **Note:** Version bump only for package conventional-changelog-writer
 
@@ -407,7 +291,6 @@ Fixes https://github.com/conventional-changelog/conventional-changelog/issues/21
 
 <a name="2.0.0"></a>
 # 2.0.0 (2017-07-17)
-
 
 ### Bug Fixes
 
@@ -446,7 +329,6 @@ Fixes https://github.com/conventional-changelog/conventional-changelog/issues/21
 * **transform:** do not strip leading v ([8e2da57](https://github.com/conventional-changelog/conventional-changelog-writer/commit/8e2da57))
 * **transform:** should work if any field is missing ([fd413ed](https://github.com/conventional-changelog/conventional-changelog-writer/commit/fd413ed))
 
-
 ### Features
 
 * **defaults:** merge default options and make it less angular ([8e29f96](https://github.com/conventional-changelog/conventional-changelog-writer/commit/8e29f96)), closes [#3](https://github.com/conventional-changelog/conventional-changelog-writer/issues/3) [#4](https://github.com/conventional-changelog/conventional-changelog-writer/issues/4)
@@ -483,11 +365,9 @@ Fixes https://github.com/conventional-changelog/conventional-changelog/issues/21
 * **version:** is not a required field any more ([3790d8f](https://github.com/conventional-changelog/conventional-changelog-writer/commit/3790d8f))
 * **version:** strip leading v by default ([43c2c7e](https://github.com/conventional-changelog/conventional-changelog-writer/commit/43c2c7e))
 
-
 ### Performance Improvements
 
 * **get/set:** drop dot-prop and just use lodash ([601e580](https://github.com/conventional-changelog/conventional-changelog-writer/commit/601e580))
-
 
 ### BREAKING CHANGES
 
@@ -517,138 +397,95 @@ text: 'some breaking change'
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.4.0...v1.4.1) (2016-05-10)
 
-
 ### Bug Fixes
 
 * **context:** auto link references if repoUrl([30bb234](https://github.com/conventional-changelog/conventional-changelog-writer/commit/30bb234))
 
-
-
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.3.0...v1.4.0) (2016-05-10)
-
 
 ### Features
 
 * **context:** fallback to repoUrl([e504682](https://github.com/conventional-changelog/conventional-changelog-writer/commit/e504682))
 
-
-
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.2.1...v1.3.0) (2016-05-08)
-
 
 ### Features
 
 * **debug:** convient function for debugging([3b6233f](https://github.com/conventional-changelog/conventional-changelog-writer/commit/3b6233f))
 
-
-
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.2.0...v1.2.1) (2016-04-19)
-
 
 ### Bug Fixes
 
 * **templates:** generate correct url if only host exists ([bda0328](https://github.com/conventional-changelog/conventional-changelog-writer/commit/bda0328))
 
-
-
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/conventional-changelog/conventional-changelog-writer/compare/v1.1.1...v1.2.0) (2016-04-17)
-
 
 ### Features
 
 * **transform:** also pass context as an arg ([9bd984c](https://github.com/conventional-changelog/conventional-changelog-writer/commit/9bd984c))
 
-
-
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/stevemao/conventional-changelog-writer/compare/v1.1.0...v1.1.1) (2016-02-29)
 
-
-
-
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.3...v1.1.0) (2016-02-08)
-
 
 ### Features
 
 * **generate:** originalCommits as last argument ([186bfb9](https://github.com/stevemao/conventional-changelog-writer/commit/186bfb9))
 
-
-
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.2...v1.0.3) (2016-02-06)
-
 
 ### Bug Fixes
 
 * **firstRelease:** correct logic ([43552a2](https://github.com/stevemao/conventional-changelog-writer/commit/43552a2))
 
-
-
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.1...v1.0.2) (2016-02-06)
-
 
 ### Bug Fixes
 
 * **doFlush:** one it is the only potential release ([cc3b5db](https://github.com/stevemao/conventional-changelog-writer/commit/cc3b5db))
 
-
-
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/stevemao/conventional-changelog-writer/compare/v1.0.0...v1.0.1) (2016-02-06)
-
 
 ### Bug Fixes
 
 * **doFlush:** correct logic ([54d96cc](https://github.com/stevemao/conventional-changelog-writer/commit/54d96cc)), closes [#19](https://github.com/stevemao/conventional-changelog-writer/issues/19)
 
-
-
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.5.1...v1.0.0) (2016-02-05)
 
-
-
-
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/stevemao/conventional-changelog-writer/compare/v0.5.0...v0.5.1) (2016-02-03)
-
 
 ### Bug Fixes
 
 * **context.version:** only valid a semver can decide `context.isPatch` ([59ed325](https://github.com/stevemao/conventional-changelog-writer/commit/59ed325))
 
-
-
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.2...v0.5.0) (2016-02-02)
-
 
 ### Features
 
 * **flush:** add `options.doFlush` to make it possible not to flush ([7850589](https://github.com/stevemao/conventional-changelog-writer/commit/7850589))
 
-
-
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.1...v0.4.2) (2016-01-18)
-
 
 ### Features
 
 * **generateOn:** also pass commits, context and options to the function ([3146f66](https://github.com/stevemao/conventional-changelog-writer/commit/3146f66)), closes [ajoslin/conventional-changelog#135](https://github.com/ajoslin/conventional-changelog/issues/135)
 
-
-
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/stevemao/conventional-changelog-writer/compare/v0.4.0...v0.4.1) (2015-09-30)
-
 
 ### Bug Fixes
 
@@ -658,16 +495,12 @@ text: 'some breaking change'
 
 * **context:** linkReferences has nothing to do with context.host ([f5883a6](https://github.com/stevemao/conventional-changelog-writer/commit/f5883a6))
 
-
 ### BREAKING CHANGES
 
 * `context.host` cannot change the default of `context.linkReferences` because if the host is unknown, `context.host` is `undefined` and all links will just use `context.repository`.
 
-
-
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/stevemao/conventional-changelog-writer/compare/v0.3.2...v0.4.0) (2015-09-23)
-
 
 ### Bug Fixes
 
@@ -677,7 +510,6 @@ text: 'some breaking change'
 ### Features
 
 * **notes:** attach the commit to the note ([2977336](https://github.com/stevemao/conventional-changelog-writer/commit/2977336)), closes [#12](https://github.com/stevemao/conventional-changelog-writer/issues/12)
-
 
 ### BREAKING CHANGES
 

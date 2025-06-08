@@ -1,14 +1,10 @@
-import {
-  type Context,
-  defaultCommitTransform as defaultWriterCommitTransform
-} from 'conventional-changelog-writer'
+import { type Context } from 'conventional-changelog-writer'
 import { hostsOptions } from './hosts/index.js'
 import type {
   Logger,
   HostedGitInfo,
   Params,
-  Commit,
-  Options
+  Commit
 } from './types.js'
 
 export function getHostOptions(
@@ -70,15 +66,23 @@ export const versionTagRegex = /tag:\s*(.*)[,)]/i
 export const defaultVersionRegex = /tag:\s*[v=]?(.*)[,)]/i
 
 export function defaultCommitTransform(commit: Commit, params: Params) {
-  const { tags, options } = params
+  const { tags, options: { formatDate } } = params
   const prefix = tags?.prefix
   const versionRegex = prefix
     ? new RegExp(`tag:\\s*[v=]?${prefix}(.*)[,)]`, 'i')
     : defaultVersionRegex
-  const patch = defaultWriterCommitTransform(commit, null, options as Required<Options>)
+  const {
+    committerDate,
+    gitTags
+  } = commit
+  const patch: Partial<Commit> = {
+    committerDate: committerDate
+      ? formatDate!(committerDate)
+      : committerDate
+  }
 
-  if (typeof commit.gitTags === 'string') {
-    const matches = commit.gitTags.match(versionRegex)
+  if (typeof gitTags === 'string') {
+    const matches = gitTags.match(versionRegex)
 
     if (matches) {
       // eslint-disable-next-line prefer-destructuring

@@ -880,6 +880,29 @@ describe('conventional-changelog', () => {
       expect(chunks[6]).toContain('merged, unreleased')
     })
 
+    it('should generate hosted git commit url with short hash', async () => {
+      preparing(2)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks[0]).toMatch(/\/commit\/\w{7}\)\)/)
+    })
+
+    it('should generate hosted git commit url with long hash', async () => {
+      preparing(16)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .loadPreset('angular')
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks[0]).toMatch(/\/commit\/\w{40}\)\)/)
+    })
+
     describe('finalizeContext', () => {
       it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', async () => {
         const { tail } = preparing(11)
