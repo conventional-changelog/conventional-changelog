@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.1.0...conventional-commits-parser-v6.2.0) (2025-06-09)
+
+### Features
+
+* named capturing groups support for regex patterns ([#1372](https://github.com/conventional-changelog/conventional-changelog/issues/1372)) ([a63c3f3](https://github.com/conventional-changelog/conventional-changelog/commit/a63c3f3102893d03b90e767bee220d72c1cefdcb))
+
+### Bug Fixes
+
+* respect comment char while truncate to scissors ([#1373](https://github.com/conventional-changelog/conventional-changelog/issues/1373)) ([a964ccc](https://github.com/conventional-changelog/conventional-changelog/commit/a964ccc23440805baa17c731fea707a10059d15a))
+
 ## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.0.0...conventional-commits-parser-v6.1.0) (2025-01-15)
 
 ### Features
