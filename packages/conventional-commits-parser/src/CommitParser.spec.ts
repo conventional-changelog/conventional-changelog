@@ -296,6 +296,19 @@ describe('conventional-commits-parser', () => {
 
         expect(commit.body).toBe('this is some body before a scissors-line')
       })
+
+      it('should parse correspondence using regex named groups', () => {
+        const parser = new CommitParser({
+          headerPattern: /^(?<type>[^(]+)(\((?<scope>.+)\))?: /,
+          headerCorrespondence: ['scope', 'type']
+        })
+        const commit = parser.parse('feat(core): subj')
+
+        expect(commit).toMatchObject({
+          type: 'feat',
+          scope: 'core'
+        })
+      })
     })
 
     describe('comments', () => {

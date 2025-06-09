@@ -3,7 +3,6 @@ import type {
   ParserRegexes,
   CommitReference,
   CommitNote,
-  CommitMeta,
   Commit
 } from './types.js'
 import { getParserRegexes } from './regex.js'
@@ -12,7 +11,8 @@ import {
   appendLine,
   getCommentFilter,
   gpgFilter,
-  truncateToScissor
+  truncateToScissor,
+  assignMatchedCorrespondence
 } from './utils.js'
 import { defaultOptions } from './options.js'
 
@@ -168,9 +168,7 @@ export class CommitParser {
 
       commit.merge = matches[0] || null
 
-      correspondence.forEach((key, index) => {
-        commit[key] = matches[index + 1] || null
-      })
+      assignMatchedCorrespondence(commit, matches, correspondence)
 
       return true
     }
@@ -203,9 +201,7 @@ export class CommitParser {
     }
 
     if (matches) {
-      correspondence.forEach((key, index) => {
-        commit[key] = matches![index + 1] || null
-      })
+      assignMatchedCorrespondence(commit, matches, correspondence)
     }
   }
 
@@ -369,11 +365,7 @@ export class CommitParser {
       : null
 
     if (matches) {
-      commit.revert = correspondence.reduce<CommitMeta>((meta, key, index) => {
-        meta[key] = matches[index + 1] || null
-
-        return meta
-      }, {})
+      commit.revert = assignMatchedCorrespondence({}, matches, correspondence)
     }
   }
 
