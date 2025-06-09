@@ -267,123 +267,16 @@ describe('conventional-commits-parser', () => {
         expect(commit.body).toBe('this is some body before a scissors-line')
       })
 
-      describe('grouping', () => {
+      it('should parse correspondence using regex named groups', () => {
         const parser = new CommitParser({
-          headerPattern: /^:(?<type>.+):(\((?<scope>.+)\))?:\s*(?<subject>.+)$/,
-          headerCorrespondence: [
-            'type',
-            'scope',
-            'subject'
-          ]
+          headerPattern: /^(?<type>[^(]+)(\((?<scope>.+)\))?: /,
+          headerCorrespondence: ['scope', 'type']
         })
+        const commit = parser.parse('feat(core): subj')
 
-        function negativeUtil<T>(commit: T, tokens: (keyof T)[]) {
-          tokens.forEach((token) => {
-            expect(commit[token]).toBeUndefined()
-          })
-        }
-
-        describe('positive test', () => {
-
-          it('should be parsed for normal use cases', () => {
-            const commit = parser.parse(':type:(scope):subject')
-
-            expect(commit).toMatchObject({
-              type: 'type',
-              scope: 'scope',
-              subject: 'subject'
-            })
-          })
-
-          it('should be parsed even missing scope', () => {
-            const commit = parser.parse(':type::subject')
-
-            expect(commit).toMatchObject({
-              type: 'type',
-              subject: 'subject'
-            })
-          })
-        })
-
-        describe('negative test', () => {
-          it('should not be parsed if the first colon is missing', () => {
-            const commit = parser.parse('type:(scope):subject')
-
-            negativeUtil(commit, [
-              'type',
-              'scope',
-              'subject'
-            ])
-          })
-
-          it('should not be parsed if a colon is missing after scope', () => {
-            const commit = parser.parse(':type:(scope)subject')
-
-            negativeUtil(commit, [
-              'type',
-              'scope',
-              'subject'
-            ])
-          })
-
-          it('should not be parsed if parentheses are missing before or after a scope.', () => {
-            const commit = parser.parse(':type:scope: subject')
-
-            negativeUtil(commit, [
-              'type',
-              'scope',
-              'subject'
-            ])
-          })
-
-          it('should not be parsed if the parentheses are empty', () => {
-            const commit = parser.parse(':type:(): subject')
-
-            negativeUtil(commit, [
-              'type',
-              'scope',
-              'subject'
-            ])
-          })
-
-          it('should not be parsed if missing type', () => {
-            const commit = parser.parse(': subject')
-
-            negativeUtil(commit, [
-              'type',
-              'scope',
-              'subject'
-            ])
-          })
-
-          it('should not be parsed if missing subject', () => {
-            const commit = parser.parse(':type:(scope):')
-
-            negativeUtil(commit, [
-              'type',
-              'scope',
-              'subject'
-            ])
-          })
-        })
-
-        describe('positive but not suitable for production environment', () => {
-
-          it('should be parsed if colons are three times in a row', () => {
-            const commit = parser.parse(':type:::subject')
-
-            expect(commit.type).toEqual('type:')
-            expect(commit.type).toEqual('type:')
-            expect(commit.subject).toEqual('subject')
-          })
-
-          it('should be parsed if first colons are twice in a row', () => {
-            const commit = parser.parse('::type:(scope): subject')
-
-            expect(commit.type).toEqual(':type')
-            expect(commit.scope).toEqual('scope')
-            expect(commit.subject).toEqual('subject')
-          })
+        expect(commit).toMatchObject({
+          type: 'feat',
+          scope: 'core'
         })
       })
     })

@@ -68,3 +68,25 @@ export function truncateToScissor(lines: string[]) {
 export function gpgFilter(line: string) {
   return !line.match(/^\s*gpg:/)
 }
+
+/**
+ * Assign matched correspondence to the target object.
+ * @param target - The target object to assign values to.
+ * @param matches - The RegExp match array containing the matched groups.
+ * @param correspondence - An array of keys that correspond to the matched groups.
+ * @returns The target object with assigned values.
+ */
+export function assignMatchedCorrespondence(
+  target: Record<string, string | null>,
+  matches: RegExpMatchArray,
+  correspondence: string[]
+) {
+  const { groups } = matches
+
+  for (let i = 0, len = correspondence.length, key; i < len; i++) {
+    key = correspondence[i]
+    target[key] = (groups ? groups[key] : matches[i + 1]) || null
+  }
+
+  return target
+}
