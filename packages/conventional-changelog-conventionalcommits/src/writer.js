@@ -174,7 +174,7 @@ function getWriterOpts(config) {
 }
 
 function findTypeEntry(types, commit) {
-  const typeKey = (commit.revert ? 'revert' : commit.type || '')
+  const typeKey = commit.revert ? 'revert' : commit.type || ''
 
   return types.find((entry) => {
     if (entry.type !== typeKey) {
