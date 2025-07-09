@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.1.0...conventional-changelog-writer-v8.2.0) (2025-07-09)
+
+### Features
+
+* add skip option for skipping commits when writing changelog ([#1346](https://github.com/conventional-changelog/conventional-changelog/issues/1346)) ([b3e3042](https://github.com/conventional-changelog/conventional-changelog/commit/b3e3042a2a9fc9877f279e36dead38af51c233a2)), closes [#1179](https://github.com/conventional-changelog/conventional-changelog/issues/1179) [#342](https://github.com/conventional-changelog/conventional-changelog/issues/342)
+
 ## [8.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.0.1...conventional-changelog-writer-v8.1.0) (2025-05-19)
 
 ### Features
