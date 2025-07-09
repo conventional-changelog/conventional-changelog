@@ -221,9 +221,7 @@ describe('conventional-changelog', () => {
         testTools.rmSync('.git/refs/HEAD', {
           recursive: true
         })
-      } catch (err) {
-      // ignore
-      }
+      } catch {}
 
       const log = new ConventionalChangelog(testTools.cwd)
         .options({

@@ -78,7 +78,7 @@ function getWriterOpts(config) {
       // Add an entry in the CHANGELOG if special Release-As footer
       // is used:
       if ((commit.footer && releaseAsRegex.test(commit.footer))
-          || (commit.body && releaseAsRegex.test(commit.body))) {
+        || (commit.body && releaseAsRegex.test(commit.body))) {
         discard = false
       }
 

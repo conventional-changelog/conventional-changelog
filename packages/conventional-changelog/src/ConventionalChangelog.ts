@@ -320,7 +320,7 @@ export class ConventionalChangelog {
       for (const stream of streams) {
         yield* stream
       }
-    } catch (err) {
+    } catch {
       yield* gitClient.getCommits(params, parserParams)
     }
   }
@@ -361,9 +361,7 @@ export class ConventionalChangelog {
             url: repoUrl
           }
         }
-      } catch (err) {
-        // Do nothing
-      }
+      } catch {}
     }
 
     if (transform) {

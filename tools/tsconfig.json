@@ -1,6 +1,11 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true
+  },
   "include": [
-    "."
+    ".",
+    "*.js"
   ]
 }

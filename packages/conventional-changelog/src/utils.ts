@@ -85,7 +85,6 @@ export function defaultCommitTransform(commit: Commit, params: Params) {
     const matches = gitTags.match(versionRegex)
 
     if (matches) {
-      // eslint-disable-next-line prefer-destructuring
       patch.version = matches[1]
     }
   }

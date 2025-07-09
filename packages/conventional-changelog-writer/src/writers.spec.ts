@@ -718,7 +718,6 @@ describe('conventional-changelog-writer', () => {
           })
           upstream.end()
 
-          // eslint-disable-next-line no-unreachable-loop
           for await (const chunk of upstream.pipe(writeChangelogStream({
             version: 'v2.0.0'
           }, {
@@ -976,7 +975,6 @@ describe('conventional-changelog-writer', () => {
         })
         upstream.end()
 
-        // eslint-disable-next-line no-unreachable-loop
         for await (const chunk of upstream.pipe(writeChangelogStream({
           version: 'v2.0.0'
         }, {
