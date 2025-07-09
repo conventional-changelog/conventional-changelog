@@ -24,8 +24,8 @@ importers:
         specifier: 8.0.0-alpha.33
         version: 8.0.0-alpha.33(eslint@8.57.1)(typescript@5.8.3)
       '@trigen/scripts':
-        specifier: 8.0.0-alpha.33
-        version: 8.0.0-alpha.33
+        specifier: 8.0.0
+        version: 8.0.0
       '@types/node':
         specifier: ^22.0.0
         version: 22.16.2
@@ -938,8 +938,8 @@ packages:
       '@testing-library/dom':
         optional: true
 
-  '@trigen/scripts@8.0.0-alpha.33':
-    resolution: {integrity: sha512-CNeDTiiM7Kxkb9+U5dFWKA8QxVhxVY9t2DVYslux2fpp3dImXPG7gU/OYFgJwjKXzj6TZnLQ774NWl1YTOIY/Q==}
+  '@trigen/scripts@8.0.0':
+    resolution: {integrity: sha512-GsZlxLB5pqEx028TZtiKjfyh/LLA4oGHArp9sQS0oYBPgOs6m13fTGyRcmL7MFzcIXlWR6V7WfnRdV79mrq/RA==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -2550,8 +2550,8 @@ packages:
     resolution: {integrity: sha512-5b0R4txpzjPWVw/cXXUResoD4hb6U/x9BH08L7nw+GN1sezDzPdxeRvpc9c433fZhBan/wusjbCsqwqm4EIBIQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  p-limit@5.0.0:
-    resolution: {integrity: sha512-/Eaoq+QyLSiXQ4lyYV23f14mZRQcXnxfHrN0vCai+ak9G0pp9iEQukIIZq5NccEvwRB8PUnZT0KsOoDCINS1qQ==}
+  p-limit@6.2.0:
+    resolution: {integrity: sha512-kuUqqHNUqoIWp/c467RI4X6mmyuojY5jGutNU0wVTmEOOfcuwLqyMVoAi9MKi2Ak+5i9+nhmrK4ufZE8069kHA==}
     engines: {node: '>=18'}
 
   p-locate@5.0.0:
@@ -3837,11 +3837,13 @@ snapshots:
       - supports-color
       - typescript
 
-  '@trigen/scripts@8.0.0-alpha.33':
+  '@trigen/scripts@8.0.0':
     dependencies:
+      '@simple-libs/child-process-utils': 1.0.1
+      '@simple-libs/stream-utils': 1.1.0
       argue-cli: 2.1.0
       dotenv: 16.6.1
-      p-limit: 5.0.0
+      p-limit: 6.2.0
 
   '@types/chai@5.2.2':
     dependencies:
@@ -5698,7 +5700,7 @@ snapshots:
     dependencies:
       yocto-queue: 1.2.1
 
-  p-limit@5.0.0:
+  p-limit@6.2.0:
     dependencies:
       yocto-queue: 1.2.1
 
