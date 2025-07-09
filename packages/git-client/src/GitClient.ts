@@ -75,7 +75,7 @@ export class GitClient {
       await this.exec('init')
 
       return true
-    } catch (err) {
+    } catch {
       return false
     }
   }
@@ -181,7 +181,7 @@ export class GitClient {
       )
 
       return true
-    } catch (err) {
+    } catch {
       return false
     }
   }
@@ -383,11 +383,13 @@ export class GitClient {
       unshallow && '--unshallow',
       tags && '--tags',
       all && '--all',
-      ...remote && branch ? [
-        '--',
-        remote,
-        branch
-      ] : []
+      ...remote && branch
+        ? [
+          '--',
+          remote,
+          branch
+        ]
+        : []
     )
   }
 

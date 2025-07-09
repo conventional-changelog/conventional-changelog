@@ -39,9 +39,7 @@ export class TestTools {
       if (!otherDirs.length) {
         fs.rmdirSync(tmpDir)
       }
-    } catch (err) {
-      // ignore
-    }
+    } catch {}
   }
 
   mkdirSync(dir: string, options?: Parameters<typeof fs.mkdirSync>[1]) {
@@ -69,7 +67,11 @@ export class TestTools {
   }
 
   fork(script: string, args: string[] = [], options: Parameters<typeof spawn>[2] = {}) {
-    return new Promise<{stdout: string, stderr: string, exitCode: number | null}>((resolve, reject) => {
+    return new Promise<{
+      stdout: string
+      stderr: string
+      exitCode: number | null
+    }>((resolve, reject) => {
       const finalOptions = {
         cwd: this.cwd,
         stdio: [

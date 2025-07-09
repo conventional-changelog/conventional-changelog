@@ -32,7 +32,6 @@ export class ConventionalGitClient extends GitClient {
   private deps: Promise<[typeof parseCommits, typeof filterRevertedCommits]> | null = null
 
   private loadDeps() {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     if (this.deps) {
       return this.deps
     }

@@ -864,19 +864,19 @@ describe('conventional-commits-parser', () => {
           + 'nesting elements or using `<template>` tags explicitly.'
         const text = `${expectedText
         }\n`
-            + `Closes #9462`
+        + `Closes #9462`
         const parser = new CommitParser({
           ...customOptions,
           noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE']
         })
         const commit = parser.parse(
           `fix(core): report duplicate template bindings in templates\n`
-            + `\n`
-            + `Fixes #7315\n`
-            + `\n`
-            + `* BREAKING CHANGE:\n`
-            + `\n${
-              text}`
+          + `\n`
+          + `Fixes #7315\n`
+          + `\n`
+          + `* BREAKING CHANGE:\n`
+          + `\n${
+            text}`
         )
         const expected = {
           title: 'BREAKING CHANGE',

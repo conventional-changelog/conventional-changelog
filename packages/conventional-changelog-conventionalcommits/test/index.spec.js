@@ -135,9 +135,9 @@ describe('conventional-changelog-conventionalcommits', () => {
     // CHANGELOG should group sections in order of importance:
     expect(
       chunks[0].indexOf('BREAKING CHANGE') < chunks[0].indexOf('Features')
-        && chunks[0].indexOf('Features') < chunks[0].indexOf('Bug Fixes')
-        && chunks[0].indexOf('Bug Fixes') < chunks[0].indexOf('Performance Improvements')
-        && chunks[0].indexOf('Performance Improvements') < chunks[0].indexOf('Reverts')
+      && chunks[0].indexOf('Features') < chunks[0].indexOf('Bug Fixes')
+      && chunks[0].indexOf('Bug Fixes') < chunks[0].indexOf('Performance Improvements')
+      && chunks[0].indexOf('Performance Improvements') < chunks[0].indexOf('Reverts')
     ).toBe(true)
   })
 
