@@ -4,9 +4,7 @@ import type {
   FinalTemplatesOptions,
   FinalOptions,
   FinalContext,
-  CommitKnownProps,
-  SortBy,
-  PickStrings
+  CommitKnownProps
 } from './types/index.js'
 import {
   formatDate,
@@ -77,7 +75,7 @@ export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownPro
   const finalOptions = {
     ...prefinalOptions,
     commitGroupsSort: createComparator(prefinalOptions.commitGroupsSort),
-    commitsSort: createComparator(prefinalOptions.commitsSort as SortBy<PickStrings<Commit>>),
+    commitsSort: createComparator(prefinalOptions.commitsSort as string[]),
     noteGroupsSort: createComparator(prefinalOptions.noteGroupsSort),
     notesSort: createComparator(prefinalOptions.notesSort)
   } as FinalOptions<Commit>
