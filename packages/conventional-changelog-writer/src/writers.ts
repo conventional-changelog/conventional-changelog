@@ -101,7 +101,7 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
       commit = await transformCommit(chunk, transform, finalContext, finalOptions)
       keyCommit = commit || chunk
 
-      if (skip && skip(keyCommit)) {
+      if (skip?.(keyCommit)) {
         continue
       }
 
