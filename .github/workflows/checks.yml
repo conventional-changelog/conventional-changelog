@@ -21,11 +21,11 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Check package.json files
         run: pnpm --package=@trigen/lint-package-json dlx lint-package-json --monorepo

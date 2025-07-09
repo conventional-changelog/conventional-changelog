@@ -2,8 +2,5 @@
   "extends": [
     "config:recommended",
     ":preserveSemverRanges"
-  ],
-  "constraints": {
-    "pnpm": "^8.7.5"
-  }
+  ]
 }
