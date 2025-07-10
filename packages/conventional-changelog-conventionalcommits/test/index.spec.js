@@ -518,4 +518,157 @@ describe('conventional-changelog-conventionalcommits', () => {
 
     expect(chunks[0]).toMatch(/release at different version/)
   })
+
+  describe('bumpStrict parameter', () => {
+    it('should not bump version when bumpStrict is true and only hidden types are present', async () => {
+      const config = await preset({
+        bumpStrict: true,
+        types: [
+          {
+            type: 'feat',
+            section: 'Features'
+          },
+          {
+            type: 'fix',
+            section: 'Bug Fixes'
+          },
+          {
+            type: 'chore',
+            section: 'Chores',
+            hidden: true
+          }
+        ]
+      })
+      const whatBump = config.whatBump
+      const commits = [
+        {
+          type: 'chore',
+          scope: 'deps',
+          notes: []
+        },
+        {
+          type: 'chore',
+          scope: 'release',
+          notes: []
+        }
+      ]
+      const result = whatBump(commits)
+
+      expect(result).toBe(null)
+    })
+
+    it('should bump version when bumpStrict is true and non-hidden types are present', async () => {
+      const config = await preset({
+        bumpStrict: true,
+        types: [
+          {
+            type: 'feat',
+            section: 'Features'
+          },
+          {
+            type: 'fix',
+            section: 'Bug Fixes'
+          },
+          {
+            type: 'chore',
+            section: 'Chores',
+            hidden: true
+          }
+        ]
+      })
+      const whatBump = config.whatBump
+      const commits = [
+        {
+          type: 'fix',
+          scope: 'core',
+          notes: []
+        },
+        {
+          type: 'chore',
+          scope: 'deps',
+          notes: []
+        }
+      ]
+      const result = whatBump(commits)
+
+      expect(result).not.toBe(null)
+      expect(result.level).toBe(2)
+    })
+  })
+
+  describe('scope and scopeOnly parameters', () => {
+    it('should filter changelog generation by scope (includes commits without scope)', async () => {
+      preparing(1)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .config(preset({
+          scope: 'compile'
+        }))
+        .write()
+      const changelog = (await toArray(log)).join('')
+
+      expect(changelog).toContain('avoid a bug')
+      expect(changelog).not.toContain('add TravisCI pipeline')
+      expect(changelog).toContain('amazing new module')
+      expect(changelog).toContain('first build setup')
+    })
+
+    it('should filter changelog generation by scopeOnly (excludes commits without scope)', async () => {
+      preparing(1)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .config(preset({
+          scope: 'compile',
+          scopeOnly: true
+        }))
+        .write()
+      const changelog = (await toArray(log)).join('')
+
+      expect(changelog).toContain('avoid a bug')
+      expect(changelog).not.toContain('add TravisCI pipeline')
+      expect(changelog).not.toContain('amazing new module')
+      expect(changelog).not.toContain('first build setup')
+    })
+
+    it('should filter changelog generation by scope array (includes commits without scope)', async () => {
+      preparing(1)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .config(preset({
+          scope: ['compile', 'travis']
+        }))
+        .write()
+      const changelog = (await toArray(log)).join('')
+
+      expect(changelog).toContain('avoid a bug')
+      expect(changelog).toContain('add TravisCI pipeline')
+      expect(changelog).toContain('amazing new module')
+      expect(changelog).toContain('first build setup')
+      expect(changelog).not.toContain('make it faster')
+      expect(changelog).not.toContain('upgrade example from 1 to 2')
+    })
+
+    it('should filter changelog generation by scope array with scopeOnly (excludes commits without scope)', async () => {
+      preparing(1)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .config(preset({
+          scope: ['compile', 'travis'],
+          scopeOnly: true
+        }))
+        .write()
+      const changelog = (await toArray(log)).join('')
+
+      expect(changelog).toContain('avoid a bug')
+      expect(changelog).toContain('add TravisCI pipeline')
+      expect(changelog).not.toContain('amazing new module')
+      expect(changelog).not.toContain('first build setup')
+      expect(changelog).not.toContain('make it faster')
+      expect(changelog).not.toContain('upgrade example from 1 to 2')
+    })
+  })
 })
