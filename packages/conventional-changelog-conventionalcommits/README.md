@@ -83,8 +83,8 @@ See [conventional-changelog-config-spec](https://github.com/conventional-changel
 
 | Option | Description |
 |--------|-------------|
-| ignoreCommits | Ignore commits that match the provided regex. |
-| types | An array of types to include in the changelog. Default value can be accessed from `DEFAULT_COMMIT_TYPES` export. |
-| bumpStrict | If set to `true`, the version will be bumped only if there are breaking changes or if the commit type is in the `types` array. Default value is `false`. |
-| scope | Scope name to filter commits. By default, commits without scope are included. |
-| scopeOnly | If set to `true`, only commits with the specified scope will be included. Default value is `false`. |
+| ignoreCommits | Regular expression to match and exclude commits from the changelog. Commits matching this pattern will be ignored. |
+| types | Array of commit type objects defining which types to include in the changelog. Hidden types are excluded from the changelog but may still trigger version bumps. Default value accessible via `DEFAULT_COMMIT_TYPES` export. |
+| bumpStrict | When `true`, version bumps occur only for breaking changes or non-hidden commit types. When `false` (default), any commit can trigger a version bump. |
+| scope | String or array of scope names to filter commits. Only commits with matching scopes will be included. When `scopeOnly` is `false` (default), commits without any scope are also included. |
+| scopeOnly | When `true` and `scope` is specified, excludes commits that have no scope. When `false` (default), includes both scoped and unscooped commits when filtering by scope. |
