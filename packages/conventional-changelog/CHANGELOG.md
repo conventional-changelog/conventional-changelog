@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.1.0...conventional-changelog-v7.1.1) (2025-07-10)
+
+### Bug Fixes
+
+* update dependency fd-package-json to v2 ([#1376](https://github.com/conventional-changelog/conventional-changelog/issues/1376)) ([932c87d](https://github.com/conventional-changelog/conventional-changelog/commit/932c87d03298fc0a166774d5a5b52cf6de795b3b))
+
 ## [7.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.0.2...conventional-changelog-v7.1.0) (2025-06-07)
 
 ### Features
