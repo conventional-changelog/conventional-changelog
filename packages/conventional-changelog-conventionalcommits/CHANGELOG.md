@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v9.0.0...conventional-changelog-conventionalcommits-v9.1.0) (2025-07-10)
+
+### Features
+
+* scope option can be an array of strings ([#1391](https://github.com/conventional-changelog/conventional-changelog/issues/1391)) ([81da809](https://github.com/conventional-changelog/conventional-changelog/commit/81da80996888efb0277f7c6f76f2dd39164d81bd))
+
 ## [9.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v8.0.0...conventional-changelog-conventionalcommits-v9.0.0) (2025-05-19)
 
 ### ⚠ BREAKING CHANGES
