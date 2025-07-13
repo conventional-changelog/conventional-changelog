@@ -15,6 +15,8 @@ Generate a CHANGELOG from git metadata.
 
 The original `conventional-changelog` package repo can be found in [packages/conventional-changelog](packages/conventional-changelog).
 
+If you are new to Conventional Commits, we recommend to read [The Complete Guide](https://github.com/TrigenSoftware/simple-release/blob/main/GUIDE.md).
+
 We recommend considering the following high level tools for automating versioning, tagging, and CHANGELOG generation:
 
 - [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) — a drop-in replacement for npm's `version` command, handles automated version bumping, tagging, and CHANGELOG generation.
