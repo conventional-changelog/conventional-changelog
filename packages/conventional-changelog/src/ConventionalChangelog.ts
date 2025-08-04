@@ -26,7 +26,7 @@ import {
   loadPreset as defaultLoadPreset
 } from 'conventional-changelog-preset-loader'
 import normalizePackageData from 'normalize-package-data'
-import { findPackage } from 'fd-package-json'
+import { up } from 'empathic/package'
 import { parseHostedGitUrl } from './hostedGitInfo.js'
 import type {
   HostedGitInfo,
@@ -339,15 +339,11 @@ export class ConventionalChangelog {
     }
   }
 
-  private async getPackageJson(pkgPath?: string, transform?: PackageTransform) {
+  private async getPackageJson(pkgPath: string | undefined = up({
+    cwd: this.gitClient.cwd
+  }), transform?: PackageTransform) {
     const { gitClient } = this
-    let pkg: Package
-
-    if (pkgPath) {
-      pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8')) as Package
-    } else {
-      pkg = (await findPackage(gitClient.cwd) || {}) as Package
-    }
+    let pkg = (pkgPath ? JSON.parse(await fs.readFile(pkgPath, 'utf-8')) : {}) as Package
 
     normalizePackageData(pkg)
 

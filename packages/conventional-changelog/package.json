@@ -69,7 +69,7 @@
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-changelog-writer": "workspace:^",
     "conventional-commits-parser": "workspace:^",
-    "fd-package-json": "^2.0.0",
+    "empathic": "^2.0.0",
     "meow": "^13.0.0",
     "normalize-package-data": "^7.0.0"
   },
