@@ -211,7 +211,7 @@ Set conventional-changelog options.
 | transformCommit | `(commit: Commit, params: Params) => Partial<Commit> \| Promise<Partial<Commit> \| null> \| null` |  | A transform function that applies after the parser and before the writer. |
 | warn | `function` |  | Logger for warnings |
 | debug | `function` |  | Logger for debug messages |
-| fromatDate | `(date: Date) => string` |  | Custom date formatter function. |
+| formatDate | `(date: Date) => string` |  | Custom date formatter function. |
 
 #### `generator.context(context: Context): this`
 
