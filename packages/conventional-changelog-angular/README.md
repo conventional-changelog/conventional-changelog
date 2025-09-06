@@ -132,3 +132,9 @@ reference GitHub issues that this commit **Closes**.
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
 A detailed explanation can be found in this [document](#commit-message-format).
+
+## Specific Options
+
+| Option | Description |
+|--------|-------------|
+| ignoreCommits | Regular expression to match and exclude commits from the changelog. Commits matching this pattern will be ignored. |
