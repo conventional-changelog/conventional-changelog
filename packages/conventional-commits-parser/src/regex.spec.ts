@@ -259,6 +259,15 @@ describe('conventional-commits-parser', () => {
           expect(match?.[3]).toBe('JIRA-123')
         })
 
+        it('should match ClickUp-style reference parts ending with letters', () => {
+          const match = referenceParts.exec('#CU-123abc')
+
+          expect(match?.[0]).toBe('#CU-123abc')
+          expect(match?.[1]).toBe(undefined)
+          expect(match?.[2]).toBe('#')
+          expect(match?.[3]).toBe('CU-123abc')
+        })
+
         it('should not match MY-€#%#&-123 mixed symbol reference parts', () => {
           const match = referenceParts.exec('#MY-€#%#&-123')
 
