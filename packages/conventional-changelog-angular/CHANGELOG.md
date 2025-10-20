@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v8.0.0...conventional-changelog-angular-v8.1.0) (2025-10-20)
+
+### Features
+
+* support ignoreCommits option ([#1401](https://github.com/conventional-changelog/conventional-changelog/issues/1401)) ([54a77fb](https://github.com/conventional-changelog/conventional-changelog/commit/54a77fb97659463c1c1890d85c4f17ac864a1138))
+
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v7.0.0...conventional-changelog-angular-v8.0.0) (2024-04-26)
 
 ### ⚠ BREAKING CHANGES
