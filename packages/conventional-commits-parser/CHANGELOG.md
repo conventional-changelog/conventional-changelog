@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.2.0...conventional-commits-parser-v6.2.1) (2025-10-20)
+
+### Bug Fixes
+
+* support ClickUp-style issue IDs ending with letters ([#1407](https://github.com/conventional-changelog/conventional-changelog/issues/1407)) ([557450b](https://github.com/conventional-changelog/conventional-changelog/commit/557450b85425f43cfc62176e85976eb98a752317))
+
 ## [6.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.1.0...conventional-commits-parser-v6.2.0) (2025-06-09)
 
 ### Features
