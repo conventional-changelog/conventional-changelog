@@ -39,7 +39,7 @@ function getReferencePartsRegex(
 
   const flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
 
-  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${join(issuePrefixes, '|')})([\\w-]*\\d+)`, flags)
+  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${join(issuePrefixes, '|')})([\\w-]+)(?=\\s|$|[,;)\\]])`, flags)
 }
 
 function getReferencesRegex(
