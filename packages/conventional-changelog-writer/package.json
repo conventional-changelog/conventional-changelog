@@ -59,7 +59,7 @@
   "dependencies": {
     "conventional-commits-filter": "workspace:^",
     "handlebars": "^4.7.7",
-    "meow": "^13.0.0",
+    "meow": "^14.0.0",
     "semver": "^7.5.2"
   },
   "devDependencies": {
