@@ -52,6 +52,6 @@
     "@conventional-changelog/git-client": "workspace:^",
     "conventional-changelog-angular": "workspace:^",
     "conventional-changelog": "workspace:^",
-    "meow": "^13.0.0"
+    "meow": "^14.0.0"
   }
 }
