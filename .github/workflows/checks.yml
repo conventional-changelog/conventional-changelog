@@ -25,7 +25,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
       - name: Check package.json files
         run: pnpm --package=@trigen/lint-package-json dlx lint-package-json --monorepo
