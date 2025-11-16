@@ -1,7 +1,7 @@
 {
   "name": "git-semver-tags",
   "type": "module",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Get all git semver tags of your repository in reverse chronological order.",
   "author": {
     "name": "Steve Mao",
@@ -46,7 +46,7 @@
     "postpublish": "pnpm clear"
   },
   "dependencies": {
-    "@conventional-changelog/git-client": "workspace:^",
+    "@conventional-changelog/git-client": "workspace:^2.5.1",
     "meow": "^13.0.0"
   }
 }

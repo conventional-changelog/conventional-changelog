@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v8.0.0...git-semver-tags-v8.0.1) (2025-11-16)
+
+### Security
+
+* **deps:** update @conventional-changelog/git-client to ^2.5.1 to fix CVE-2025-59433 ([#1414](https://github.com/conventional-changelog/conventional-changelog/issues/1414))
+
 ## [8.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-semver-tags-v7.0.1...git-semver-tags-v8.0.0) (2024-04-26)
 
 ### ⚠ BREAKING CHANGES
