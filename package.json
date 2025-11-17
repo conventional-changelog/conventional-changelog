@@ -51,7 +51,7 @@
     "conventional-changelog": "workspace:^",
     "del-cli": "^7.0.0",
     "eslint": "^9.30.1",
-    "inquirer": "^12.0.0",
+    "inquirer": "^13.0.0",
     "nano-staged": "^0.8.0",
     "simple-git-hooks": "^2.11.1",
     "tsm": "^2.3.0",
