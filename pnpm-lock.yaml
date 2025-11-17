@@ -242,7 +242,7 @@ importers:
   packages/git-semver-tags:
     dependencies:
       '@conventional-changelog/git-client':
-        specifier: workspace:^
+        specifier: workspace:^2.5.1
         version: link:../git-client
       meow:
         specifier: ^13.0.0
