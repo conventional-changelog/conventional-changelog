@@ -71,7 +71,7 @@
     "conventional-commits-parser": "workspace:^",
     "fd-package-json": "^2.0.0",
     "meow": "^13.0.0",
-    "normalize-package-data": "^7.0.0"
+    "normalize-package-data": "^8.0.0"
   },
   "devDependencies": {
     "conventional-changelog-angular": "workspace:^"
