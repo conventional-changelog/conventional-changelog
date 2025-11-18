@@ -93,8 +93,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
       normalize-package-data:
         specifier: ^7.0.0
         version: 7.0.0
@@ -162,8 +162,8 @@ importers:
         specifier: ^4.7.7
         version: 4.7.8
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
       semver:
         specifier: ^7.5.2
         version: 7.7.2
@@ -179,8 +179,8 @@ importers:
   packages/conventional-commits-parser:
     dependencies:
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/conventional-recommended-bump:
@@ -198,8 +198,8 @@ importers:
         specifier: workspace:^
         version: link:../conventional-commits-parser
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
     devDependencies:
       conventional-changelog-conventionalcommits:
         specifier: workspace:^
@@ -235,8 +235,8 @@ importers:
         specifier: workspace:^
         version: link:../git-client
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/git-semver-tags:
@@ -245,8 +245,8 @@ importers:
         specifier: workspace:^
         version: link:../git-client
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/standard-changelog:
@@ -261,8 +261,8 @@ importers:
         specifier: workspace:^
         version: link:../conventional-changelog-angular
       meow:
-        specifier: ^13.0.0
-        version: 13.2.0
+        specifier: ^14.0.0
+        version: 14.0.0
     publishDirectory: package
 
 packages:
@@ -2385,10 +2385,6 @@ packages:
   meow@12.1.1:
     resolution: {integrity: sha512-BhXM0Au22RwUneMPwSCnyhTOizdWoIEPU9sp0Aqa1PnDMR5Wv2FGXYDjuzJEIX+Eo2Rb8xuYe5jrnm5QowQFkw==}
     engines: {node: '>=16.10'}
-
-  meow@13.2.0:
-    resolution: {integrity: sha512-pxQJQzB6djGPXh08dacEloMFopsOqGVRKFPYvPOt9XDZ1HasbgDZA74CJGreSU4G3Ak7EFJGoiH2auq+yXISgA==}
-    engines: {node: '>=18'}
 
   meow@14.0.0:
     resolution: {integrity: sha512-JhC3R1f6dbspVtmF3vKjAWz1EVIvwFrGGPLSdU6rK79xBwHWTuHoLnRX/t1/zHS1Ch1Y2UtIrih7DAHuH9JFJA==}
@@ -5435,8 +5431,6 @@ snapshots:
   math-intrinsics@1.1.0: {}
 
   meow@12.1.1: {}
-
-  meow@13.2.0: {}
 
   meow@14.0.0: {}
 
