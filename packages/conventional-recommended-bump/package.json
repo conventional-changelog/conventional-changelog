@@ -56,7 +56,7 @@
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-commits-filter": "workspace:^",
     "conventional-commits-parser": "workspace:^",
-    "meow": "^13.0.0"
+    "meow": "^14.0.0"
   },
   "devDependencies": {
     "conventional-changelog-conventionalcommits": "workspace:^"
