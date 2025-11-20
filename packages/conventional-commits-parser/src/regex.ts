@@ -12,6 +12,12 @@ function join(parts: string[], joiner: string) {
     .join(joiner)
 }
 
+// escapes the following RegEx special chars: `. * + ? ^ $ { } ( )` so that
+// they may form part of footer tokens
+function escapeRegExpSpecialChars(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function getNotesRegex(
   noteKeywords: string[] | undefined,
   notesPattern: ((text: string) => RegExp) | undefined
@@ -20,7 +26,8 @@ function getNotesRegex(
     return nomatchRegex
   }
 
-  const noteKeywordsSelection = join(noteKeywords, '|')
+  const regexSafeKeywords = noteKeywords.map(escapeRegExpSpecialChars)
+  const noteKeywordsSelection = join(regexSafeKeywords, '|')
 
   if (!notesPattern) {
     return new RegExp(`^[\\s|*]*(${noteKeywordsSelection})[:\\s]+(.*)`, 'i')
