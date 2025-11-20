@@ -77,6 +77,32 @@ describe('conventional-commits-parser', () => {
 
           expect(match).toBe(null)
         })
+
+        it('should match RegEx special chars when used inside `noteKeywords`', () => {
+          const noteKeywordsSpecialChars = [
+            '[1]',
+            '(2)',
+            '{3}',
+            '.4',
+            '*5',
+            '+6',
+            '?7',
+            '^8',
+            '$9'
+          ]
+          const { notes } = getParserRegexes({
+            noteKeywords: noteKeywordsSpecialChars,
+            issuePrefixes: ['#']
+          })
+
+          noteKeywordsSpecialChars.forEach((keyword) => {
+            const textToMatch = `${keyword}: footer`
+            const match = textToMatch.match(notes)
+
+            expect(Array.isArray(match)).toBe(true)
+            expect(match?.[1]).toBe(keyword)
+          })
+        })
       })
 
       describe('references', () => {
