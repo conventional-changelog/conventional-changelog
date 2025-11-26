@@ -12,6 +12,16 @@ function join(parts: string[], joiner: string) {
     .join(joiner)
 }
 
+/**
+ * Escapes all RegEx special characters: `.*+?^$ {} () [] | \` by
+ * prefixing them with a backslash.
+ * @param string
+ * @returns string
+ */
+function escapeRegExpSpecialChars(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function getNotesRegex(
   noteKeywords: string[] | undefined,
   notesPattern: ((text: string) => RegExp) | undefined
@@ -20,7 +30,8 @@ function getNotesRegex(
     return nomatchRegex
   }
 
-  const noteKeywordsSelection = join(noteKeywords, '|')
+  const regexSafeKeywords = noteKeywords.map(escapeRegExpSpecialChars)
+  const noteKeywordsSelection = join(regexSafeKeywords, '|')
 
   if (!notesPattern) {
     return new RegExp(`^[\\s|*]*(${noteKeywordsSelection})[:\\s]+(.*)`, 'i')
