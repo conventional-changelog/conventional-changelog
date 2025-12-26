@@ -100,6 +100,7 @@ export interface CommitBase {
   notes: CommitNote[]
   mentions: string[]
   references: CommitReference[]
+  breaking: boolean | null
 }
 
 export type Commit = CommitBase & CommitMeta

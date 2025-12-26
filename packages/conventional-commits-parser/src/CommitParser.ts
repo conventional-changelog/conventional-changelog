@@ -333,6 +333,7 @@ export class CommitParser {
         title: 'BREAKING CHANGE',
         text: matches[3]
       })
+      commit.breaking = true
     }
   }
 
