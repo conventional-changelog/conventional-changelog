@@ -20,7 +20,7 @@ export const defaultOptions: ParserOptions = {
     'scope',
     'subject'
   ],
-  revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./,
+  revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\.?/,
   revertCorrespondence: ['header', 'hash'],
   fieldPattern: /^-(.*?)-$/
 }

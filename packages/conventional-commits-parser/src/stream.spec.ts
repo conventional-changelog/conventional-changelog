@@ -221,7 +221,7 @@ describe('conventional-commits-parser', () => {
           issuePrefixes: ['#'],
           noteKeywords: ['BREAKING CHANGES'],
           referenceActions: ['fix'],
-          revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./,
+          revertPattern: /^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\.?/,
           mergePattern: /^Merge pull request #(\d+) from (.*)$/,
           revertCorrespondence: ['header']
         }))) {

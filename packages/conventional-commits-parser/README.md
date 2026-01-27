@@ -301,7 +301,7 @@ Pattern to match other fields.
 #### revertPattern
 
 Type: `RegExp`,
-Default: `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\./`
+Default: `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\.?/`
 
 Pattern to match what this commit reverts.
 
