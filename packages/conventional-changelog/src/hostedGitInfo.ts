@@ -101,7 +101,7 @@ export function parseHostedGitUrl(input: string): HostedGitInfo | null {
   }
 
   // git+https and https urls
-  matches = input.match(/^(?:(?:git\+)?https|git):\/\/(?:[^@]+@)?(?:www\.)?([^@/]+)\/([^/]+(?:\/[^/]+)?)\/([^/.#]+)(?:\.git)?(?:#(.+))?/)
+  matches = input.match(/^(?:(?:git\+)?https|git):\/\/(?:[^@]+@)?(?:www\.)?([^@/]+)\/([^/]+(?:\/[^/]+)*)\/([^/.#]+)(?:\.git)?(?:#(.+))?$/)
 
   if (matches) {
     type = getType(matches[1])
