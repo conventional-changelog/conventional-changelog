@@ -41,7 +41,7 @@
     "src"
   ],
   "scripts": {
-    "clear": "del ./package",
+    "clear": "node ../../tools/del.mjs ./package",
     "prepublishOnly": "run clear clean-publish",
     "postpublish": "pnpm clear"
   },

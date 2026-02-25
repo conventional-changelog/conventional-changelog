@@ -40,9 +40,9 @@
     "dist"
   ],
   "scripts": {
-    "clear:package": "del ./package",
-    "clear:dist": "del ./dist",
-    "clear": "del ./package ./dist",
+    "clear:package": "node ../../tools/del.mjs ./package",
+    "clear:dist": "node ../../tools/del.mjs ./dist",
+    "clear": "node ../../tools/del.mjs ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
     "build": "tsc -p tsconfig.build.json",
