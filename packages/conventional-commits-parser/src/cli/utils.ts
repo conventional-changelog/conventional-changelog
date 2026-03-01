@@ -1,27 +1,6 @@
-import type { Readable } from 'stream'
 import fs from 'fs'
 import readline from 'readline'
-
-export async function* splitStream(stream: Readable, separator: string) {
-  let chunk: Buffer
-  let payload: string[]
-  let buffer = ''
-
-  for await (chunk of stream) {
-    buffer += chunk.toString()
-
-    if (buffer.includes(separator)) {
-      payload = buffer.split(separator)
-      buffer = payload.pop() || ''
-
-      yield* payload
-    }
-  }
-
-  if (buffer) {
-    yield buffer
-  }
-}
+import { splitStream } from '@simple-libs/stream-utils'
 
 export async function* readRawCommitsFromFiles(files: string[], separator: string) {
   for (const file of files) {

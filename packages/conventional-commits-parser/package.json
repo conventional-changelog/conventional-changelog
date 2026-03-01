@@ -54,6 +54,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
+    "@simple-libs/stream-utils": "^1.2.0",
     "meow": "^13.0.0"
   }
 }

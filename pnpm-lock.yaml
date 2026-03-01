@@ -77,6 +77,9 @@ importers:
       '@conventional-changelog/git-client':
         specifier: workspace:^
         version: link:../git-client
+      '@simple-libs/hosted-git-info':
+        specifier: ^1.0.2
+        version: 1.0.2
       '@types/normalize-package-data':
         specifier: ^2.4.4
         version: 2.4.4
@@ -155,6 +158,9 @@ importers:
 
   packages/conventional-changelog-writer:
     dependencies:
+      '@simple-libs/stream-utils':
+        specifier: ^1.2.0
+        version: 1.2.0
       conventional-commits-filter:
         specifier: workspace:^
         version: link:../conventional-commits-filter
@@ -178,6 +184,9 @@ importers:
 
   packages/conventional-commits-parser:
     dependencies:
+      '@simple-libs/stream-utils':
+        specifier: ^1.2.0
+        version: 1.2.0
       meow:
         specifier: ^13.0.0
         version: 13.2.0
@@ -212,8 +221,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.1
       '@simple-libs/stream-utils':
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.2.0
+        version: 1.2.0
       semver:
         specifier: ^7.5.2
         version: 7.7.2
@@ -972,8 +981,12 @@ packages:
     resolution: {integrity: sha512-3nWd8irxvDI6v856wpPCHZ+08iQR0oHTZfzAZmnbsLzf+Sf1odraP6uKOHDZToXq3RPRV/LbqGVlSCogm9cJjg==}
     engines: {node: '>=18'}
 
-  '@simple-libs/stream-utils@1.1.0':
-    resolution: {integrity: sha512-6rsHTjodIn/t90lv5snQjRPVtOosM7Vp0AKdrObymq45ojlgVwnpAqdc+0OBBrpEiy31zZ6/TKeIVqV1HwvnuQ==}
+  '@simple-libs/hosted-git-info@1.0.2':
+    resolution: {integrity: sha512-aAmGQdMH+ZinytKuA2832u0ATeOFNYNk4meBEXtB5xaPotUgggYNhq5tYU/v17wEbmTW5P9iHNqNrFyrhnqBAg==}
+    engines: {node: '>=18'}
+
+  '@simple-libs/stream-utils@1.2.0':
+    resolution: {integrity: sha512-KxXvfapcixpz6rVEB6HPjOUZT22yN6v0vI0urQSk1L8MlEWPDFCZkhw2xmkyoTGYeFw7tWTZd7e3lVzRZRN/EA==}
     engines: {node: '>=18'}
 
   '@sindresorhus/merge-streams@2.3.0':
@@ -3792,12 +3805,12 @@ snapshots:
 
   '@simple-libs/child-process-utils@1.0.1':
     dependencies:
-      '@simple-libs/stream-utils': 1.1.0
+      '@simple-libs/stream-utils': 1.2.0
       '@types/node': 22.16.2
 
-  '@simple-libs/stream-utils@1.1.0':
-    dependencies:
-      '@types/node': 22.16.2
+  '@simple-libs/hosted-git-info@1.0.2': {}
+
+  '@simple-libs/stream-utils@1.2.0': {}
 
   '@sindresorhus/merge-streams@2.3.0': {}
 
@@ -3839,7 +3852,7 @@ snapshots:
   '@trigen/scripts@8.0.0':
     dependencies:
       '@simple-libs/child-process-utils': 1.0.1
-      '@simple-libs/stream-utils': 1.1.0
+      '@simple-libs/stream-utils': 1.2.0
       argue-cli: 2.1.0
       dotenv: 16.6.1
       p-limit: 6.2.0

@@ -1,45 +1,7 @@
-import type { Readable } from 'stream'
 import { resolve, extname } from 'path'
 import { pathToFileURL } from 'url'
 import { readFile } from 'fs/promises'
-
-const NEWLINE = /\r?\n/
-
-export async function* parseJsonStream<T>(stream: Readable) {
-  let chunk: Buffer
-  let payload: string[]
-  let buffer = ''
-  let json: string
-
-  for await (chunk of stream) {
-    buffer += chunk.toString()
-
-    if (NEWLINE.test(buffer)) {
-      payload = buffer.split(NEWLINE)
-      buffer = payload.pop() || ''
-
-      for (json of payload) {
-        try {
-          yield JSON.parse(json) as T
-        } catch (err) {
-          throw new Error('Failed to split commits', {
-            cause: err
-          })
-        }
-      }
-    }
-  }
-
-  if (buffer) {
-    try {
-      yield JSON.parse(buffer) as T
-    } catch (err) {
-      throw new Error('Failed to split commits', {
-        cause: err
-      })
-    }
-  }
-}
+import { parseJsonStream } from '@simple-libs/stream-utils'
 
 export async function* readCommitsFromFiles<T>(files: string[]) {
   for (const file of files) {

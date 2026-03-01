@@ -27,9 +27,11 @@ import {
 } from 'conventional-changelog-preset-loader'
 import normalizePackageData from 'normalize-package-data'
 import { findPackage } from 'fd-package-json'
-import { parseHostedGitUrl } from './hostedGitInfo.js'
+import {
+  type HostedGitInfo,
+  parseHostedGitUrl
+} from '@simple-libs/hosted-git-info'
 import type {
-  HostedGitInfo,
   HostOptions,
   Package,
   PackageTransform,

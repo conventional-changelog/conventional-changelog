@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
+    "@simple-libs/hosted-git-info": "^1.0.2",
     "@types/normalize-package-data": "^2.4.4",
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-changelog-writer": "workspace:^",

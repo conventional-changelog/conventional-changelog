@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@simple-libs/child-process-utils": "^1.0.0",
-    "@simple-libs/stream-utils": "^1.1.0",
+    "@simple-libs/stream-utils": "^1.2.0",
     "semver": "^7.5.2"
   },
   "devDependencies": {

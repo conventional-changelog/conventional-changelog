@@ -12,8 +12,16 @@ import type {
   Context,
   FinalContext
 } from 'conventional-changelog-writer'
+import type {
+  HostType,
+  HostedGitInfo
+} from '@simple-libs/hosted-git-info'
 
-export type { Commit }
+export type {
+  Commit,
+  HostType,
+  HostedGitInfo
+}
 
 export type Package = Partial<NormalizedPackage>
 
@@ -22,16 +30,6 @@ export type Logger = (source: string, messages: string | string[]) => void
 export type PackageTransform = (pkg: Package) => Package
 
 export type CommitTransformFunction = (commit: Commit, params: Params) => Partial<Commit> | null | Promise<Partial<Commit> | null>
-
-export type HostType = 'github' | 'gitlab' | 'bitbucket' | 'sourcehut' | ''
-
-export interface HostedGitInfo {
-  url: string
-  type: HostType
-  host: string
-  owner?: string
-  project?: string
-}
 
 export interface HostOptions {
   issue: string
