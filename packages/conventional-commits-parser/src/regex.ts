@@ -5,21 +5,15 @@ import type {
 
 const nomatchRegex = /(?!.*)/
 
-function join(parts: string[], joiner: string) {
-  return parts
-    .map(val => val.trim())
-    .filter(Boolean)
-    .join(joiner)
+function escape(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-/**
- * Escapes all RegEx special characters: `.*+?^$ {} () [] | \` by
- * prefixing them with a backslash.
- * @param string
- * @returns string
- */
-function escapeRegExpSpecialChars(string: string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+function join(parts: string[], joiner: string) {
+  return parts
+    .map(val => escape(val.trim()))
+    .filter(Boolean)
+    .join(joiner)
 }
 
 function getNotesRegex(
@@ -30,8 +24,7 @@ function getNotesRegex(
     return nomatchRegex
   }
 
-  const regexSafeKeywords = noteKeywords.map(escapeRegExpSpecialChars)
-  const noteKeywordsSelection = join(regexSafeKeywords, '|')
+  const noteKeywordsSelection = join(noteKeywords, '|')
 
   if (!notesPattern) {
     return new RegExp(`^[\\s|*]*(${noteKeywordsSelection})[:\\s]+(.*)`, 'i')

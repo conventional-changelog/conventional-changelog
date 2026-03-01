@@ -78,7 +78,7 @@ describe('conventional-commits-parser', () => {
           expect(match).toBe(null)
         })
 
-        it('should match RegEx special chars when used inside `noteKeywords`', () => {
+        it('should escape regex special chars when used inside `noteKeywords`', () => {
           const noteKeywordsSpecialChars = [
             '[1]',
             '(2)',
@@ -96,11 +96,13 @@ describe('conventional-commits-parser', () => {
           })
 
           noteKeywordsSpecialChars.forEach((keyword) => {
-            const textToMatch = `${keyword}: footer`
-            const match = textToMatch.match(notes)
+            const match = `${keyword}: footer`.match(notes)
 
-            expect(Array.isArray(match)).toBe(true)
-            expect(match?.[1]).toBe(keyword)
+            expect(match).toMatchObject({
+              0: `${keyword}: footer`,
+              1: keyword,
+              2: 'footer'
+            })
           })
         })
       })
@@ -223,6 +225,32 @@ describe('conventional-commits-parser', () => {
             'amends #2, ',
             'fixes #3'
           ])
+        })
+
+        it('should escape regex special chars when used inside `referenceActions`', () => {
+          const referenceActionsSpecialChars = [
+            '[close]',
+            '(fix)',
+            '{resolve}',
+            '.closes',
+            '*merge',
+            '+amend',
+            '?fix',
+            '^resolve',
+            '$close'
+          ]
+          const { references } = getParserRegexes({
+            referenceActions: referenceActionsSpecialChars,
+            issuePrefixes: ['#']
+          })
+
+          referenceActionsSpecialChars.forEach((action) => {
+            const match = `${action} #1`.match(references)
+
+            expect(match).toMatchObject({
+              0: `${action} #1`
+            })
+          })
         })
       })
 
@@ -369,6 +397,31 @@ describe('conventional-commits-parser', () => {
           const match = referenceParts.exec(body)
 
           expect(match).toBe(null)
+        })
+
+        it('should escape regex special chars when used inside `issuePrefixes`', () => {
+          const issuePrefixesSpecialChars = [
+            '[#]',
+            '(#)',
+            '{#}',
+            '.#',
+            '*#',
+            '+#',
+            '?#',
+            '^#',
+            '$'
+          ]
+          const { referenceParts } = getParserRegexes({
+            issuePrefixes: issuePrefixesSpecialChars
+          })
+
+          issuePrefixesSpecialChars.forEach((prefix) => {
+            const match = `${prefix}1`.match(referenceParts)
+
+            expect(match).toMatchObject({
+              0: `${prefix}1`
+            })
+          })
         })
       })
 
