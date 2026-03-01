@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.6.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.5.1...git-client-v2.6.0) (2026-03-01)
+
+### Features
+
+* use utils from simple-libs ([#1432](https://github.com/conventional-changelog/conventional-changelog/issues/1432)) ([7d27d06](https://github.com/conventional-changelog/conventional-changelog/commit/7d27d0673878b995e9c0c82641d9d70eb9561024))
+
 ## [2.5.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.5.0...git-client-v2.5.1) (2025-06-02)
 
 ### Bug Fixes

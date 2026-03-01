@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.2.1...conventional-commits-parser-v6.3.0) (2026-03-01)
+
+### Features
+
+* use utils from simple-libs ([#1432](https://github.com/conventional-changelog/conventional-changelog/issues/1432)) ([7d27d06](https://github.com/conventional-changelog/conventional-changelog/commit/7d27d0673878b995e9c0c82641d9d70eb9561024))
+
+### Bug Fixes
+
+* deduplicate references when the same issue appears multiple times ([#1425](https://github.com/conventional-changelog/conventional-changelog/issues/1425)) ([836ac77](https://github.com/conventional-changelog/conventional-changelog/commit/836ac77b4164e4c3708e709aea44ef62556fab99))
+* default gitlab revert message does not use a final dot in commit message. ([#1422](https://github.com/conventional-changelog/conventional-changelog/issues/1422)) ([7391edf](https://github.com/conventional-changelog/conventional-changelog/commit/7391edf52cc1edf04f8946410ddb382c0e590aeb))
+* escape special chars in tokens ([#1418](https://github.com/conventional-changelog/conventional-changelog/issues/1418)) ([2536e21](https://github.com/conventional-changelog/conventional-changelog/commit/2536e2125c575548e8dde41d7b6ffaf4944dcb99))
+
 ## [6.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.2.0...conventional-commits-parser-v6.2.1) (2025-10-20)
 
 ### Bug Fixes

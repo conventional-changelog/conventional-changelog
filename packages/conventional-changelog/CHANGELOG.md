@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.1.1...conventional-changelog-v7.2.0) (2026-03-01)
+
+### Features
+
+* align newline formatting across presets ([#1431](https://github.com/conventional-changelog/conventional-changelog/issues/1431)) ([b0721e1](https://github.com/conventional-changelog/conventional-changelog/commit/b0721e1d6c30b03e54d4fa5e271ecb67b5ae7ebe))
+* use utils from simple-libs ([#1432](https://github.com/conventional-changelog/conventional-changelog/issues/1432)) ([7d27d06](https://github.com/conventional-changelog/conventional-changelog/commit/7d27d0673878b995e9c0c82641d9d70eb9561024))
+
+### Bug Fixes
+
+* regex for git+https urls now supports multiple GitLab subgroups ([#1429](https://github.com/conventional-changelog/conventional-changelog/issues/1429)) ([4a7b763](https://github.com/conventional-changelog/conventional-changelog/commit/4a7b763143dfbcaf8c4bd434a4ef7f9cfca2bf8c))
+
 ## [7.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.1.0...conventional-changelog-v7.1.1) (2025-07-10)
 
 ### Bug Fixes

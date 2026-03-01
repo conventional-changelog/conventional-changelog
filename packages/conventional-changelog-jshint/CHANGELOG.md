@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jshint-v5.0.0...conventional-changelog-jshint-v5.1.0) (2026-03-01)
+
+### Features
+
+* align newline formatting across presets ([#1431](https://github.com/conventional-changelog/conventional-changelog/issues/1431)) ([b0721e1](https://github.com/conventional-changelog/conventional-changelog/commit/b0721e1d6c30b03e54d4fa5e271ecb67b5ae7ebe))
+
 ## [5.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-jshint-v4.0.0...conventional-changelog-jshint-v5.0.0) (2024-04-26)
 
 ### ⚠ BREAKING CHANGES
