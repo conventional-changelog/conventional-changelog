@@ -60,7 +60,7 @@ describe('conventional-changelog-writer', () => {
         COMMITS_RELATIVE_PATH
       ])
 
-      expect(stdout).toBe('template')
+      expect(stdout).toBe('template\n')
     })
 
     it('should take absolute options path', async () => {
@@ -70,7 +70,7 @@ describe('conventional-changelog-writer', () => {
         COMMITS_RELATIVE_PATH
       ])
 
-      expect(stdout).toBe('template')
+      expect(stdout).toBe('template\n')
     })
 
     it('should take both context and options', async () => {
@@ -82,7 +82,7 @@ describe('conventional-changelog-writer', () => {
         COMMITS_RELATIVE_PATH
       ])
 
-      expect(stdout).toBe('dodge date :D\ntemplate')
+      expect(stdout).toBe('dodge date :D\ntemplate\n')
     })
 
     it('should work if it is not tty', async () => {
@@ -100,7 +100,7 @@ describe('conventional-changelog-writer', () => {
         ]
       })
 
-      expect(stdout).toBe('dodge date :D\ntemplate')
+      expect(stdout).toBe('dodge date :D\ntemplate\n')
     })
 
     it('should error when options file doesnt exist', async () => {

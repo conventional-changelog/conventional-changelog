@@ -628,9 +628,9 @@ describe('conventional-changelog', () => {
       expect(chunks.length).toBe(3)
 
       expect(chunks).toEqual([
-        'v2.0.0,v0.1.0 or v2.0.0',
-        'v2.0.0,v0.1.0 or v2.0.0',
-        'v2.0.0,v0.1.0 or v2.0.0'
+        'v2.0.0,v0.1.0 or v2.0.0\n',
+        '\nv2.0.0,v0.1.0 or v2.0.0\n',
+        '\nv2.0.0,v0.1.0 or v2.0.0\n'
       ])
     })
 
@@ -657,9 +657,9 @@ describe('conventional-changelog', () => {
       expect(chunks.length).toBe(3)
 
       expect(chunks).toEqual([
-        'Not linked',
-        'Not linked',
-        'Not linked'
+        'Not linked\n',
+        '\nNot linked\n',
+        '\nNot linked\n'
       ])
     })
 
@@ -805,7 +805,7 @@ describe('conventional-changelog', () => {
 
       expect(chunks.length).toBe(1)
 
-      expect(chunks[0]).toBe('\n* test8\n* test8\n* test9\n\n\n\n')
+      expect(chunks[0]).toBe('* test8\n* test8\n* test9\n')
     })
 
     it('should recreate the changelog from scratch', async () => {
@@ -920,9 +920,9 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(2)
 
-        expect(chunks[0]).toBe('v2.0.0...v3.0.0')
+        expect(chunks[0]).toBe('v2.0.0...v3.0.0\n')
 
-        expect(chunks[1]).toBe(`${tail}...v2.0.0`)
+        expect(chunks[1]).toBe(`\n${tail}...v2.0.0\n`)
       })
 
       it('should make `context.previousTag` default to a previous semver version of generated log (append)', async () => {
@@ -944,9 +944,9 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(2)
 
-        expect(chunks[0]).toBe(`${tail}...v2.0.0`)
+        expect(chunks[0]).toBe(`${tail}...v2.0.0\n`)
 
-        expect(chunks[1]).toBe('v2.0.0...v3.0.0')
+        expect(chunks[1]).toBe('\nv2.0.0...v3.0.0\n')
       })
 
       it('`context.previousTag` and `context.currentTag` should be `null` if `keyCommit.gitTags` is not a semver', async () => {
@@ -969,11 +969,11 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(3)
 
-        expect(chunks[0]).toBe(`${tail}...v2.0.0`)
+        expect(chunks[0]).toBe(`${tail}...v2.0.0\n`)
 
-        expect(chunks[1]).toBe('...')
+        expect(chunks[1]).toBe('\n...\n')
 
-        expect(chunks[2]).toBe('v2.0.0...v3.0.0')
+        expect(chunks[2]).toBe('\nv2.0.0...v3.0.0\n')
       })
 
       it('should still work if first release has no commits (prepend)', async () => {
@@ -996,11 +996,11 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(3)
 
-        expect(chunks[0]).toBe('v2.0.0...v3.0.0')
+        expect(chunks[0]).toBe('v2.0.0...v3.0.0\n')
 
-        expect(chunks[1]).toBe('v0.0.1...v2.0.0')
+        expect(chunks[1]).toBe('\nv0.0.1...v2.0.0\n')
 
-        expect(chunks[2]).toBe('...v0.0.1')
+        expect(chunks[2]).toBe('\n...v0.0.1\n')
       })
 
       it('should still work if first release has no commits (append)', async () => {
@@ -1024,11 +1024,11 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(3)
 
-        expect(chunks[0]).toBe('...v0.0.1')
+        expect(chunks[0]).toBe('...v0.0.1\n')
 
-        expect(chunks[1]).toBe('v0.0.1...v2.0.0')
+        expect(chunks[1]).toBe('\nv0.0.1...v2.0.0\n')
 
-        expect(chunks[2]).toBe('v2.0.0...v3.0.0')
+        expect(chunks[2]).toBe('\nv2.0.0...v3.0.0\n')
       })
 
       it('should change `context.currentTag` to last commit hash if it is unreleased', async () => {
@@ -1049,7 +1049,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(1)
 
-        expect(chunks[0]).toBe(`v2.0.0...${head}`)
+        expect(chunks[0]).toBe(`v2.0.0...${head}\n`)
       })
 
       it('should not prefix with a "v"', async () => {
@@ -1071,7 +1071,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(5)
 
-        expect(chunks[0]).toBe('3.0.0...4.0.0')
+        expect(chunks[0]).toBe('3.0.0...4.0.0\n')
       })
 
       it('should remove the first "v"', async () => {
@@ -1093,7 +1093,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(5)
 
-        expect(chunks[0]).toBe('3.0.0...4.0.0')
+        expect(chunks[0]).toBe('3.0.0...4.0.0\n')
       })
 
       it('should prefix a leading v to version if no previous tags found', async () => {
@@ -1112,7 +1112,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(1)
 
-        expect(chunks[0]).toBe('...v1.0.0')
+        expect(chunks[0]).toBe('...v1.0.0\n')
       })
 
       it('should not prefix a leading v to version if there is already a leading v', async () => {
@@ -1131,7 +1131,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(1)
 
-        expect(chunks[0]).toBe('...v1.0.0')
+        expect(chunks[0]).toBe('...v1.0.0\n')
       })
 
       it('should not link compare if previousTag is not truthy', async () => {
@@ -1155,11 +1155,11 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(3)
 
-        expect(chunks[0]).toBe('Not linked')
+        expect(chunks[0]).toBe('Not linked\n')
 
-        expect(chunks[1]).toBe('v0.0.1...v2.0.0')
+        expect(chunks[1]).toBe('\nv0.0.1...v2.0.0\n')
 
-        expect(chunks[2]).toBe('v2.0.0...v3.0.0')
+        expect(chunks[2]).toBe('\nv2.0.0...v3.0.0\n')
       })
 
       it('takes into account tagPrefix option', async () => {

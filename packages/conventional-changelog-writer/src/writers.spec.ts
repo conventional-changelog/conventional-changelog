@@ -94,7 +94,7 @@ describe('conventional-changelog-writer', () => {
 
         for await (let chunk of upstream.pipe(writeChangelogStream())) {
           chunk = chunk.toString()
-          expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
+          expect(chunk).toBe(`##  (${todayUtc})\n`)
           i++
         }
 
@@ -289,7 +289,7 @@ describe('conventional-changelog-writer', () => {
           }
         })
 
-        expect(changelog).toBe(`##  (${todayUtc})\n\n\n\n\n`)
+        expect(changelog).toBe(`##  (${todayUtc})\n`)
 
         for await (let chunk of getStream().pipe(writeChangelogStream({}, {
           transform() {
@@ -297,7 +297,7 @@ describe('conventional-changelog-writer', () => {
           }
         }))) {
           chunk = chunk.toString()
-          expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
+          expect(chunk).toBe(`##  (${todayUtc})\n`)
 
           i++
         }
@@ -632,9 +632,9 @@ describe('conventional-changelog-writer', () => {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
+              expect(chunk).toBe(`##  (${todayUtc})\n`)
             } else {
-              expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
+              expect(chunk).toBe('\n## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n')
             }
 
             i++
@@ -806,20 +806,14 @@ describe('conventional-changelog-writer', () => {
 
 * feat(scope): broadcast $destroy event on scope destruction
 
-
-
 ## <small>2.0.1 (2015-04-07)</small>
 
 * fix(ng-list): Allow custom separator
-
-
 
 ## <small>4.0.1 (2015-04-07)</small>
 
 * perf(template): tweak
 * refactor(name): rename this module to conventional-changelog-writer
-
-
 
 ##  (${todayUtc})`)
 
@@ -865,9 +859,9 @@ describe('conventional-changelog-writer', () => {
             chunk = chunk.toString()
 
             if (i === 0) {
-              expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n\n\n\n\n')
+              expect(chunk).toBe('## <small>1.0.1 (2015-04-07 15:00:44 +1000)</small>\n')
             } else {
-              expect(chunk).toBe(`##  (${todayUtc})\n\n\n\n\n`)
+              expect(chunk).toBe(`\n##  (${todayUtc})\n`)
             }
 
             i++
@@ -888,7 +882,7 @@ describe('conventional-changelog-writer', () => {
             }
           }))) {
             if (i === 0) {
-              expect(chunk).toBe(`##  (formatted date)\n\n\n\n\n`)
+              expect(chunk).toBe(`##  (formatted date)\n`)
             }
 
             i++
@@ -1021,7 +1015,7 @@ describe('conventional-changelog-writer', () => {
       upstream.end()
 
       for await (const chunk of upstream.pipe(writeChangelogStream())) {
-        expect(chunk.toString()).toBe(`##  (${todayUtc})\n\n* bla\n\n\n\n`)
+        expect(chunk.toString()).toBe(`##  (${todayUtc})\n\n* bla\n`)
         i++
       }
 

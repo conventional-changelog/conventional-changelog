@@ -83,7 +83,7 @@ describe('conventional-changelog-writer', () => {
           notes: []
         })
 
-        expect(log).toBe('b')
+        expect(log).toBe('b\n')
       })
 
       it('should attach a copy of the commit to note', async () => {
@@ -150,7 +150,7 @@ describe('conventional-changelog-writer', () => {
           notes: []
         })
 
-        expect(log).toBe('`a`')
+        expect(log).toBe('`a`\n')
       })
 
       it('should ignore a reverted commit', async () => {
@@ -257,7 +257,7 @@ describe('conventional-changelog-writer', () => {
           notes: []
         })
 
-        expect(log).toBe('`a` oh')
+        expect(log).toBe('`a` oh\n')
       })
 
       it('should support finalize the context async', async () => {
@@ -277,7 +277,7 @@ describe('conventional-changelog-writer', () => {
           notes: []
         })
 
-        expect(log).toBe('`a` oh')
+        expect(log).toBe('`a` oh\n')
       })
 
       it('should finalize context', async () => {
@@ -299,7 +299,7 @@ describe('conventional-changelog-writer', () => {
           notes: []
         })
 
-        expect(log).toBe('`a` oh 0 `a`')
+        expect(log).toBe('`a` oh 0 `a`\n')
       })
 
       it('should pass the correct arguments', async () => {

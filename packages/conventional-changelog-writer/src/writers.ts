@@ -93,7 +93,7 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
     let keyCommit: Commit | null
     let commitsGroup: TransformedCommit<Commit>[] = []
     let neverGenerated = true
-    let result: string
+    let result = ''
     let savedKeyCommit: Commit | null = null
     let firstRelease = true
 
@@ -113,7 +113,7 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
 
         if (generateOn(keyCommit, commitsGroup)) {
           neverGenerated = false
-          result = await renderTemplate(commitsGroup, keyCommit)
+          result = await renderTemplate(commitsGroup, keyCommit, result.length > 0)
           commitsGroup = []
 
           yield prepResult(result, keyCommit)
@@ -121,7 +121,7 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
       } else {
         if (generateOn(keyCommit, commitsGroup)) {
           neverGenerated = false
-          result = await renderTemplate(commitsGroup, savedKeyCommit)
+          result = await renderTemplate(commitsGroup, savedKeyCommit, result.length > 0)
           commitsGroup = []
 
           if (!firstRelease || doFlush) {
@@ -142,7 +142,7 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
       return
     }
 
-    result = await renderTemplate(commitsGroup, savedKeyCommit)
+    result = await renderTemplate(commitsGroup, savedKeyCommit, result.length > 0)
 
     yield prepResult(result, savedKeyCommit)
   }

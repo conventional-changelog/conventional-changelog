@@ -29,7 +29,33 @@ describe('conventional-changelog-writer', () => {
 
         const log = Handlebars.compile(template)(templateContext)
 
-        expect(log).toBe('my header\n\nmy commit\nmy commit\n\nmy footer\n\n\n')
+        expect(log).toBe('my header\n\nmy commit\nmy commit\nmy footer\n')
+      })
+
+      it('should not produce double blank line before noteGroups when footer has content', async () => {
+        const footerWithNotes = await fs.readFile(path.resolve(__dirname, './footer.hbs'), 'utf8')
+
+        Handlebars.registerPartial('footer', footerWithNotes)
+
+        templateContext.commitGroups = [
+          {
+            commits: [1]
+          }
+        ]
+        templateContext.noteGroups = [
+          {
+            title: 'BREAKING CHANGES',
+            notes: [
+              {
+                text: 'some breaking change'
+              }
+            ]
+          }
+        ]
+
+        const log = Handlebars.compile(template)(templateContext)
+
+        expect(log).toBe('my header\n\nmy commit\n\n### BREAKING CHANGES\n\n* some breaking change\n')
       })
     })
   })

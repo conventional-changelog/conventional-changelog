@@ -198,7 +198,17 @@ export async function runProgram(
           buffer.push(chunk)
         }
 
+        let newline = true
+
         for await (const chunk of input) {
+          if (newline) {
+            newline = false
+
+            if (!String(chunk).startsWith('\n')) {
+              buffer.push('\n')
+            }
+          }
+
           buffer.push(chunk)
         }
 
@@ -222,8 +232,19 @@ export async function runProgram(
       : process.stdout
   ) as WriteStream
 
-  for (const stream of streams) {
+  for (let i = 0, stream, newline; i < streams.length; i++) {
+    stream = streams[i]
+    newline = i > 0
+
     for await (const chunk of stream) {
+      if (newline) {
+        newline = false
+
+        if (!String(chunk).startsWith('\n')) {
+          output.write('\n')
+        }
+      }
+
       output.write(chunk)
     }
   }

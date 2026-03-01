@@ -88,7 +88,8 @@ export function createTemplateRenderer<Commit extends CommitKnownProps = CommitK
 
   return async (
     commits: TransformedCommit<Commit>[],
-    keyCommit: Commit | null
+    keyCommit: Commit | null,
+    subsequent?: boolean
   ) => {
     const notes: CommitNote[] = []
     const commitsForTemplate = (
@@ -109,7 +110,10 @@ export function createTemplateRenderer<Commit extends CommitKnownProps = CommitK
       })
     }))
     const templateContext = await getTemplateContext(keyCommit, commits, commitsForTemplate, notes, context, options)
+    const rendered = template(templateContext).trim()
 
-    return template(templateContext)
+    return rendered.length > 0
+      ? `${subsequent ? '\n' : ''}${rendered}\n`
+      : ''
   }
 }
