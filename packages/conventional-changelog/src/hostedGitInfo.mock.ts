@@ -4156,5 +4156,45 @@ export const samples = [
       owner: 'conventional-changelog',
       project: 'internal'
     }
+  ],
+  [
+    'https://gitlab.domain.local/group/project.git',
+    {
+      type: 'gitlab',
+      url: 'https://gitlab.domain.local/group/project',
+      host: 'https://gitlab.domain.local',
+      owner: 'group',
+      project: 'project'
+    }
+  ],
+  [
+    'https://gitlab.domain.local/group/subgroup1/project.git',
+    {
+      type: 'gitlab',
+      url: 'https://gitlab.domain.local/group/subgroup1/project',
+      host: 'https://gitlab.domain.local',
+      owner: 'group/subgroup1',
+      project: 'project'
+    }
+  ],
+  [
+    'https://gitlab.domain.local/group/subgroup1/subgroup2/project.git',
+    {
+      type: 'gitlab',
+      url: 'https://gitlab.domain.local/group/subgroup1/subgroup2/project',
+      host: 'https://gitlab.domain.local',
+      owner: 'group/subgroup1/subgroup2',
+      project: 'project'
+    }
+  ],
+  [
+    'https://gitlab.domain.local/group/subgroup1/subgroup2/subgroup3/project.git',
+    {
+      type: 'gitlab',
+      url: 'https://gitlab.domain.local/group/subgroup1/subgroup2/subgroup3/project',
+      host: 'https://gitlab.domain.local',
+      owner: 'group/subgroup1/subgroup2/subgroup3',
+      project: 'project'
+    }
   ]
 ] as const
