@@ -383,6 +383,19 @@ export class CommitParser {
     commit.notes.forEach((note) => {
       note.text = trimNewLines(note.text)
     })
+
+    const referencesSet = new Set<string>()
+
+    commit.references = commit.references.filter((reference) => {
+      const uid = `${reference.action} ${reference.raw}`.toLocaleLowerCase()
+      const ok = !referencesSet.has(uid)
+
+      if (ok) {
+        referencesSet.add(uid)
+      }
+
+      return ok
+    })
   }
 
   /**

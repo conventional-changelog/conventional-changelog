@@ -83,6 +83,31 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should deduplicate references when the same issue appears multiple times', () => {
+        const commit = 'feat(ng-list): Allow custom separator\n'
+          + 'Closes #123\nCloses #123\nFixes #123\n'
+        const result = parser.parse(commit)
+
+        expect(result.references).toEqual([
+          {
+            action: 'Closes',
+            issue: '123',
+            owner: null,
+            prefix: '#',
+            raw: '#123',
+            repository: null
+          },
+          {
+            action: 'Fixes',
+            issue: '123',
+            owner: null,
+            prefix: '#',
+            raw: '#123',
+            repository: null
+          }
+        ])
+      })
+
       it('should parse slash in the header with default headerPattern option', () => {
         const commit = 'feat(hello/world): message'
         const result = parser.parse(commit)

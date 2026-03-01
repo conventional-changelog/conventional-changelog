@@ -147,9 +147,7 @@ function getWriterOpts(config) {
       }
 
       // remove references that already appear in the subject
-      const references = commit.references
-        .filter(reference => !issues.includes(reference.prefix + reference.issue))
-        .filter((item, pos, arr) => arr.indexOf(item) === pos)
+      const references = commit.references.filter(reference => !issues.includes(reference.prefix + reference.issue))
 
       return {
         notes,
