@@ -1,11 +1,7 @@
-import { readFile } from 'fs/promises'
-import { resolve } from 'path'
-import { fileURLToPath } from 'url'
 import compareFunc from 'compare-func'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import { matchScope } from './utils.js'
 
-const dirname = fileURLToPath(new URL('.', import.meta.url))
 const COMMIT_HASH_LENGTH = 7
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 /**
@@ -14,8 +10,73 @@ const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]
 const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
 const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
+const mainTemplate = `{{> header}}
+{{#if noteGroups}}
+{{#each noteGroups}}
 
-export async function createWriterOpts(config) {
+### ⚠ {{title}}
+
+{{#each notes}}
+* {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}
+{{/each}}
+{{/each}}
+{{/if}}
+{{#each commitGroups}}
+
+{{#if title}}
+### {{title}}
+
+{{/if}}
+{{#each commits}}
+{{> commit root=@root}}
+{{/each}}
+{{/each}}
+{{> footer}}
+`
+const headerPartialTemplate = `## {{#if @root.linkCompare~}}
+  [{{version}}]({{compareUrlFormat}})
+{{~else}}
+  {{~version}}
+{{~/if}}
+{{~#if title}} "{{title}}"
+{{~/if}}
+{{~#if date}} ({{date}})
+{{/if}}
+`
+const commitPartialTemplate = `*{{#if scope}} **{{scope}}:**
+{{~/if}} {{#if subject}}
+  {{~subject}}
+{{~else}}
+  {{~header}}
+{{~/if}}
+
+{{~!-- commit link --}}{{~#if hash}} {{#if @root.linkReferences~}}
+  ([{{shortHash}}]({{commitUrlFormat}}))
+{{~else}}
+  {{~shortHash}}
+{{~/if}}{{~/if}}
+
+{{~!-- commit references --}}
+{{~#if references~}}
+  , closes
+  {{~#each references}} {{#if @root.linkReferences~}}
+    [
+    {{~#if this.owner}}
+      {{~this.owner}}/
+    {{~/if}}
+    {{~this.repository}}{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
+  {{~else}}
+    {{~#if this.owner}}
+      {{~this.owner}}/
+    {{~/if}}
+    {{~this.repository}}{{this.prefix}}{{this.issue}}
+  {{~/if}}{{/each}}
+{{~/if}}
+
+`
+const footerPartial = ``
+
+export function createWriterOpts(config) {
   const finalConfig = {
     types: DEFAULT_COMMIT_TYPES,
     issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
@@ -42,26 +103,15 @@ export async function createWriterOpts(config) {
     id: '{{this.issue}}',
     prefix: '{{this.prefix}}'
   })
-  const [
-    template,
-    header,
-    commit,
-    footer
-  ] = await Promise.all([
-    readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/footer.hbs'), 'utf-8')
-  ])
   const writerOpts = getWriterOpts(finalConfig)
 
-  writerOpts.mainTemplate = template
-  writerOpts.headerPartial = header
+  writerOpts.mainTemplate = mainTemplate
+  writerOpts.headerPartial = headerPartialTemplate
     .replace(/{{compareUrlFormat}}/g, compareUrlFormat)
-  writerOpts.commitPartial = commit
+  writerOpts.commitPartial = commitPartialTemplate
     .replace(/{{commitUrlFormat}}/g, commitUrlFormat)
     .replace(/{{issueUrlFormat}}/g, issueUrlFormat)
-  writerOpts.footerPartial = footer
+  writerOpts.footerPartial = footerPartial
 
   return writerOpts
 }
