@@ -1,18 +1,12 @@
-import { describe, beforeAll, beforeEach, it, expect } from 'vitest'
-import fs from 'fs/promises'
-import path from 'path'
+import { describe, beforeEach, it, expect } from 'vitest'
 import Handlebars from 'handlebars'
+import { mainTemplate as template, footerPartial } from '../src/templates.js'
 
-let template: any
 let templateContext: any
 
 describe('conventional-changelog-writer', () => {
   describe('templates', () => {
     describe('template', () => {
-      beforeAll(async () => {
-        template = await fs.readFile(path.resolve(__dirname, './template.hbs'), 'utf8')
-      })
-
       beforeEach(() => {
         Handlebars.registerPartial('header', 'my header\n')
         Handlebars.registerPartial('commit', 'my commit\n')
@@ -32,10 +26,8 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('my header\n\nmy commit\nmy commit\nmy footer\n')
       })
 
-      it('should not produce double blank line before noteGroups when footer has content', async () => {
-        const footerWithNotes = await fs.readFile(path.resolve(__dirname, './footer.hbs'), 'utf8')
-
-        Handlebars.registerPartial('footer', footerWithNotes)
+      it('should not produce double blank line before noteGroups when footer has content', () => {
+        Handlebars.registerPartial('footer', footerPartial)
 
         templateContext.commitGroups = [
           {

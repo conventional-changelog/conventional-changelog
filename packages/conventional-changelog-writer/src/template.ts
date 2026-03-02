@@ -1,6 +1,3 @@
-import { join } from 'path'
-import { fileURLToPath } from 'url'
-import { readFile } from 'fs/promises'
 import Handlebars from 'handlebars'
 import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import type {
@@ -13,32 +10,19 @@ import type {
   CommitNote
 } from './types/index.js'
 import { getTemplateContext } from './context.js'
-
-const dirname = fileURLToPath(new URL('.', import.meta.url))
+import { mainTemplate, headerPartial, commitPartial, footerPartial } from './templates.js'
 
 /**
- * Load templates from files.
+ * Load templates from options or fall back to built-in defaults.
  * @param options
  * @returns Templates strings object.
  */
-export async function loadTemplates(options: TemplatesOptions = {}): Promise<FinalTemplatesOptions> {
-  const [
-    mainTemplate,
-    headerPartial,
-    commitPartial,
-    footerPartial
-  ] = await Promise.all([
-    options.mainTemplate || readFile(join(dirname, '..', 'templates', 'template.hbs'), 'utf-8'),
-    options.headerPartial || readFile(join(dirname, '..', 'templates', 'header.hbs'), 'utf-8'),
-    options.commitPartial || readFile(join(dirname, '..', 'templates', 'commit.hbs'), 'utf-8'),
-    options.footerPartial || readFile(join(dirname, '..', 'templates', 'footer.hbs'), 'utf-8')
-  ])
-
+export function loadTemplates(options: TemplatesOptions = {}): FinalTemplatesOptions {
   return {
-    mainTemplate,
-    headerPartial,
-    commitPartial,
-    footerPartial
+    mainTemplate: options.mainTemplate || mainTemplate,
+    headerPartial: options.headerPartial || headerPartial,
+    commitPartial: options.commitPartial || commitPartial,
+    footerPartial: options.footerPartial || footerPartial
   }
 }
 
