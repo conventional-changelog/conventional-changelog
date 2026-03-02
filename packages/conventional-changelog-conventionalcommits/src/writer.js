@@ -1,6 +1,7 @@
 import compareFunc from 'compare-func'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import { matchScope } from './utils.js'
+import { mainTemplate, headerPartialTemplate, commitPartialTemplate, footerPartial } from './templates.js'
 
 const COMMIT_HASH_LENGTH = 7
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
@@ -10,71 +11,6 @@ const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]
 const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
 const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
-const mainTemplate = `{{> header}}
-{{#if noteGroups}}
-{{#each noteGroups}}
-
-### ⚠ {{title}}
-
-{{#each notes}}
-* {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}
-{{/each}}
-{{/each}}
-{{/if}}
-{{#each commitGroups}}
-
-{{#if title}}
-### {{title}}
-
-{{/if}}
-{{#each commits}}
-{{> commit root=@root}}
-{{/each}}
-{{/each}}
-{{> footer}}
-`
-const headerPartialTemplate = `## {{#if @root.linkCompare~}}
-  [{{version}}]({{compareUrlFormat}})
-{{~else}}
-  {{~version}}
-{{~/if}}
-{{~#if title}} "{{title}}"
-{{~/if}}
-{{~#if date}} ({{date}})
-{{/if}}
-`
-const commitPartialTemplate = `*{{#if scope}} **{{scope}}:**
-{{~/if}} {{#if subject}}
-  {{~subject}}
-{{~else}}
-  {{~header}}
-{{~/if}}
-
-{{~!-- commit link --}}{{~#if hash}} {{#if @root.linkReferences~}}
-  ([{{shortHash}}]({{commitUrlFormat}}))
-{{~else}}
-  {{~shortHash}}
-{{~/if}}{{~/if}}
-
-{{~!-- commit references --}}
-{{~#if references~}}
-  , closes
-  {{~#each references}} {{#if @root.linkReferences~}}
-    [
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
-  {{~else}}
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}
-  {{~/if}}{{/each}}
-{{~/if}}
-
-`
-const footerPartial = ``
 
 export function createWriterOpts(config) {
   const finalConfig = {
