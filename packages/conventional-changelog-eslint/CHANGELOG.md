@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint-v6.0.0...conventional-changelog-eslint-v6.1.0) (2026-03-04)
+
+### Features
+
+* inline hbs templates in code as strings ([#1434](https://github.com/conventional-changelog/conventional-changelog/issues/1434)) ([0d5a4a6](https://github.com/conventional-changelog/conventional-changelog/commit/0d5a4a68b0ba79a3c97793395c6549af02272325))
+
 ## [6.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-eslint-v5.0.0...conventional-changelog-eslint-v6.0.0) (2024-04-26)
 
 ### ⚠ BREAKING CHANGES
