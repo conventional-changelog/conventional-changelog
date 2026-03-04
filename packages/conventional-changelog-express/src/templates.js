@@ -9,15 +9,13 @@ export const mainTemplate = `{{> header}}
 {{#each commits}}
 {{> commit root=@root}}
 {{/each}}
-
 {{/each}}
-
-
-
 `
+
 export const headerPartial = `{{#if version}}{{#if @root.linkCompare}}[{{version}}]({{@root.host}}/{{#if @root.owner}}{{@root.owner}}/{{/if}}{{@root.repository}}/compare/{{previousTag}}...{{currentTag}}){{else}}{{version}}{{/if}} / {{/if}}{{date}}
 ===================
 `
+
 export const commitPartial = `* {{#if shortDesc}}{{shortDesc}}{{else}}{{header}}{{/if}}
 {{#if body}}
 

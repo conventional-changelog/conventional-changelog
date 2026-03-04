@@ -13,6 +13,7 @@ export const mainTemplate = `{{> header}}
 {{/each}}
 {{> footer}}
 `
+
 export const headerPartial = `{{#if isPatch~}}
   ##
 {{~else~}}
@@ -39,6 +40,7 @@ export const headerPartial = `{{#if isPatch~}}
 {{~#if date}} ({{date}})
 {{/if}}
 `
+
 export const commitPartial = `*{{#if scope}} **{{scope}}:**
 {{~/if}} {{#if subject}}
   {{~subject}}
@@ -101,6 +103,7 @@ export const commitPartial = `*{{#if scope}} **{{scope}}:**
 {{~/if}}
 
 `
+
 export const footerPartial = `{{#if noteGroups}}
 {{#each noteGroups}}
 

@@ -9,11 +9,10 @@ export const mainTemplate = `{{> header}}
 {{#each commits}}
 {{> commit root=@root}}
 {{/each}}
+
 {{/each}}
-
-
-
 `
+
 export const headerPartial = `{{#if isPatch~}}
   ##
 {{~else~}}
@@ -32,6 +31,7 @@ export const headerPartial = `{{#if isPatch~}}
 {{~#if date}} ({{date}})
 {{/if}}
 `
+
 export const commitPartial = `* {{#if shortDesc}}
   {{~shortDesc}}
 {{~else}}
@@ -76,8 +76,7 @@ export const commitPartial = `* {{#if shortDesc}}
           {{~@root.owner}}/
         {{~/if}}
         {{~@root.repository}}
-      {{~/if~}}
-      /{{@root.issue}}/
+      {{~/if}}/{{@root.issue}}/
     {{~/if}}
     {{~this.issue}})
   {{~else}}

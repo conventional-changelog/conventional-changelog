@@ -1,21 +1,19 @@
 import compareFunc from 'compare-func'
-import { mainTemplate, headerPartial, commitPartial, footerPartial } from './templates.js'
+import {
+  mainTemplate,
+  headerPartial,
+  commitPartial,
+  footerPartial
+} from './templates.js'
 
 const COMMIT_HASH_LENGTH = 7
 
 export function createWriterOpts() {
-  const writerOpts = getWriterOpts()
-
-  writerOpts.mainTemplate = mainTemplate
-  writerOpts.headerPartial = headerPartial
-  writerOpts.commitPartial = commitPartial
-  writerOpts.footerPartial = footerPartial
-
-  return writerOpts
-}
-
-function getWriterOpts() {
   return {
+    mainTemplate,
+    headerPartial,
+    commitPartial,
+    footerPartial,
     transform: (commit, context) => {
       let discard = true
       const notes = commit.notes.map((note) => {

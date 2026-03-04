@@ -7,6 +7,7 @@ export const mainTemplate = `{{> header}}
 {{/each}}
 {{> footer}}
 `
+
 export const headerPartial = `## {{#if isPatch~}} <small>
   {{~/if~}} {{version}}
   {{~#if title}} "{{title}}"
@@ -17,6 +18,7 @@ export const headerPartial = `## {{#if isPatch~}} <small>
   {{~/if}}
 
 `
+
 export const commitPartial = `* {{header}}
 
 {{~!-- commit link --}}
@@ -72,6 +74,7 @@ export const commitPartial = `* {{header}}
 {{~/if}}
 
 `
+
 export const footerPartial = `{{#if noteGroups}}
 {{#each noteGroups}}
 

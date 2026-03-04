@@ -1,17 +1,14 @@
-import { mainTemplate, headerPartial, commitPartial } from './templates.js'
+import {
+  mainTemplate,
+  headerPartial,
+  commitPartial
+} from './templates.js'
 
 export function createWriterOpts() {
-  const writerOpts = getWriterOpts()
-
-  writerOpts.mainTemplate = mainTemplate
-  writerOpts.headerPartial = headerPartial
-  writerOpts.commitPartial = commitPartial
-
-  return writerOpts
-}
-
-function getWriterOpts() {
   return {
+    mainTemplate,
+    headerPartial,
+    commitPartial,
     transform: (commit) => {
       let { component } = commit
 

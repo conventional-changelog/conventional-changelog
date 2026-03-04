@@ -1,19 +1,16 @@
-import { mainTemplate, headerPartial, commitPartial } from './templates.js'
+import {
+  mainTemplate,
+  headerPartial,
+  commitPartial
+} from './templates.js'
 
 const COMMIT_HASH_LENGTH = 7
 
 export function createWriterOpts() {
-  const writerOpts = getWriterOpts()
-
-  writerOpts.mainTemplate = mainTemplate
-  writerOpts.headerPartial = headerPartial
-  writerOpts.commitPartial = commitPartial
-
-  return writerOpts
-}
-
-function getWriterOpts() {
   return {
+    mainTemplate,
+    headerPartial,
+    commitPartial,
     transform: (commit) => {
       if (!commit.pr) {
         return undefined

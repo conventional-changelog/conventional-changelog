@@ -21,7 +21,8 @@ export const mainTemplate = `{{> header}}
 {{/each}}
 {{> footer}}
 `
-export const headerPartialTemplate = `## {{#if @root.linkCompare~}}
+
+export const headerPartial = `## {{#if @root.linkCompare~}}
   [{{version}}]({{compareUrlFormat}})
 {{~else}}
   {{~version}}
@@ -31,7 +32,8 @@ export const headerPartialTemplate = `## {{#if @root.linkCompare~}}
 {{~#if date}} ({{date}})
 {{/if}}
 `
-export const commitPartialTemplate = `*{{#if scope}} **{{scope}}:**
+
+export const commitPartial = `*{{#if scope}} **{{scope}}:**
 {{~/if}} {{#if subject}}
   {{~subject}}
 {{~else}}
@@ -62,4 +64,5 @@ export const commitPartialTemplate = `*{{#if scope}} **{{scope}}:**
 {{~/if}}
 
 `
+
 export const footerPartial = ``

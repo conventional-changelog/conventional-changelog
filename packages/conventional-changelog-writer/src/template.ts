@@ -10,7 +10,12 @@ import type {
   CommitNote
 } from './types/index.js'
 import { getTemplateContext } from './context.js'
-import { mainTemplate, headerPartial, commitPartial, footerPartial } from './templates.js'
+import {
+  mainTemplate,
+  headerPartial,
+  commitPartial,
+  footerPartial
+} from './templates.js'
 
 /**
  * Load templates from options or fall back to built-in defaults.
