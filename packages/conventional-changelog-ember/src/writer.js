@@ -1,31 +1,16 @@
-import { readFile } from 'fs/promises'
-import { resolve } from 'path'
-import { fileURLToPath } from 'url'
+import {
+  mainTemplate,
+  headerPartial,
+  commitPartial
+} from './templates.js'
 
-const dirname = fileURLToPath(new URL('.', import.meta.url))
 const COMMIT_HASH_LENGTH = 7
 
-export async function createWriterOpts() {
-  const [
-    template,
-    header,
-    commit
-  ] = await Promise.all([
-    readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8')
-  ])
-  const writerOpts = getWriterOpts()
-
-  writerOpts.mainTemplate = template
-  writerOpts.headerPartial = header
-  writerOpts.commitPartial = commit
-
-  return writerOpts
-}
-
-function getWriterOpts() {
+export function createWriterOpts() {
   return {
+    mainTemplate,
+    headerPartial,
+    commitPartial,
     transform: (commit) => {
       if (!commit.pr) {
         return undefined

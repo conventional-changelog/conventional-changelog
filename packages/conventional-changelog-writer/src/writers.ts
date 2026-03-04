@@ -17,13 +17,13 @@ import {
 } from './options.js'
 import { transformCommit } from './commit.js'
 
-async function getRequirements<
+function getRequirements<
   Commit extends CommitKnownProps = CommitKnownProps
 >(
   context: Context<Commit> = {},
   options: Options<Commit> = {}
 ) {
-  const templates = await loadTemplates(options)
+  const templates = loadTemplates(options)
   const finalOptions = getFinalOptions(options, templates)
   const finalContext = getFinalContext(context, finalOptions)
   const generateOn = getGenerateOnFunction(finalContext, finalOptions)

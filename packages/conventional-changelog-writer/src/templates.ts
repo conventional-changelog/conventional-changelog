@@ -1,4 +1,25 @@
-* {{header}}
+export const mainTemplate = `{{> header}}
+
+{{#each commitGroups}}
+{{#each commits}}
+{{> commit root=@root}}
+{{/each}}
+{{/each}}
+{{> footer}}
+`
+
+export const headerPartial = `## {{#if isPatch~}} <small>
+  {{~/if~}} {{version}}
+  {{~#if title}} "{{title}}"
+  {{~/if~}}
+  {{~#if date}} ({{date}})
+  {{~/if~}}
+  {{~#if isPatch~}} </small>
+  {{~/if}}
+
+`
+
+export const commitPartial = `* {{header}}
 
 {{~!-- commit link --}}
 {{~#if @root.linkReferences}} ([{{hash}}](
@@ -52,3 +73,16 @@
   {{~/if}}{{/each}}
 {{~/if}}
 
+`
+
+export const footerPartial = `{{#if noteGroups}}
+{{#each noteGroups}}
+
+### {{title}}
+
+{{#each notes}}
+* {{text}}
+{{/each}}
+{{/each}}
+{{/if}}
+`

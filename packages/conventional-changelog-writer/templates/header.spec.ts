@@ -1,18 +1,12 @@
-import { describe, beforeAll, beforeEach, it, expect } from 'vitest'
-import fs from 'fs/promises'
-import path from 'path'
+import { describe, beforeEach, it, expect } from 'vitest'
 import Handlebars from 'handlebars'
+import { headerPartial as template } from '../src/templates.js'
 
-let template: any
 let templateContext: any
 
 describe('conventional-changelog-writer', () => {
   describe('templates', () => {
     describe('header', () => {
-      beforeAll(async () => {
-        template = await fs.readFile(path.resolve(__dirname, './header.hbs'), 'utf8')
-      })
-
       beforeEach(() => {
         templateContext = {
           version: 'my version'

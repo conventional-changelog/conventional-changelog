@@ -5,14 +5,14 @@ import { createWhatBump } from './whatBump.js'
 
 export { DEFAULT_COMMIT_TYPES }
 
-export default async function createPreset(config) {
+export default function createPreset(config) {
   return {
     commits: {
       ignore: config?.ignoreCommits,
       merges: false
     },
     parser: createParserOpts(config),
-    writer: await createWriterOpts(config),
+    writer: createWriterOpts(config),
     whatBump: createWhatBump(config)
   }
 }

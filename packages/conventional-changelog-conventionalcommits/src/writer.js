@@ -1,11 +1,13 @@
-import { readFile } from 'fs/promises'
-import { resolve } from 'path'
-import { fileURLToPath } from 'url'
 import compareFunc from 'compare-func'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import { matchScope } from './utils.js'
+import {
+  mainTemplate,
+  headerPartial,
+  commitPartial,
+  footerPartial
+} from './templates.js'
 
-const dirname = fileURLToPath(new URL('.', import.meta.url))
 const COMMIT_HASH_LENGTH = 7
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
 /**
@@ -15,7 +17,7 @@ const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
 const host = '{{~@root.host}}'
 const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
-export async function createWriterOpts(config) {
+export function createWriterOpts(config) {
   const finalConfig = {
     types: DEFAULT_COMMIT_TYPES,
     issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
@@ -42,38 +44,20 @@ export async function createWriterOpts(config) {
     id: '{{this.issue}}',
     prefix: '{{this.prefix}}'
   })
-  const [
-    template,
-    header,
-    commit,
-    footer
-  ] = await Promise.all([
-    readFile(resolve(dirname, './templates/template.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/header.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/commit.hbs'), 'utf-8'),
-    readFile(resolve(dirname, './templates/footer.hbs'), 'utf-8')
-  ])
-  const writerOpts = getWriterOpts(finalConfig)
-
-  writerOpts.mainTemplate = template
-  writerOpts.headerPartial = header
-    .replace(/{{compareUrlFormat}}/g, compareUrlFormat)
-  writerOpts.commitPartial = commit
-    .replace(/{{commitUrlFormat}}/g, commitUrlFormat)
-    .replace(/{{issueUrlFormat}}/g, issueUrlFormat)
-  writerOpts.footerPartial = footer
-
-  return writerOpts
-}
-
-function getWriterOpts(config) {
-  const commitGroupOrder = config.types.flatMap(t => t.section).filter(t => t)
+  const commitGroupOrder = finalConfig.types.flatMap(t => t.section).filter(t => t)
 
   return {
+    mainTemplate,
+    headerPartial: headerPartial
+      .replace(/{{compareUrlFormat}}/g, compareUrlFormat),
+    commitPartial: commitPartial
+      .replace(/{{commitUrlFormat}}/g, commitUrlFormat)
+      .replace(/{{issueUrlFormat}}/g, issueUrlFormat),
+    footerPartial,
     transform: (commit, context) => {
       let discard = true
       const issues = []
-      const entry = findTypeEntry(config.types, commit)
+      const entry = findTypeEntry(finalConfig.types, commit)
 
       // Add an entry in the CHANGELOG if special Release-As footer
       // is used:
@@ -94,7 +78,7 @@ function getWriterOpts(config) {
       if (
         // breaking changes attached to any type are still displayed.
         discard && (entry === undefined || entry.hidden)
-        || !matchScope(config, commit)
+        || !matchScope(finalConfig, commit)
       ) {
         return undefined
       }
@@ -102,7 +86,7 @@ function getWriterOpts(config) {
       const type = entry
         ? entry.section
         : commit.type
-      const scope = commit.scope === '*' || config.scope
+      const scope = commit.scope === '*' || finalConfig.scope
         ? ''
         : commit.scope
       const shortHash = typeof commit.hash === 'string'
@@ -112,13 +96,13 @@ function getWriterOpts(config) {
 
       if (typeof subject === 'string') {
         // Issue URLs.
-        const issueRegEx = `(${config.issuePrefixes.join('|')})([a-z0-9]+)`
+        const issueRegEx = `(${finalConfig.issuePrefixes.join('|')})([a-z0-9]+)`
         const re = new RegExp(issueRegEx, 'g')
 
         subject = subject.replace(re, (_, prefix, issue) => {
           issues.push(prefix + issue)
 
-          const url = expandTemplate(config.issueUrlFormat, {
+          const url = expandTemplate(finalConfig.issueUrlFormat, {
             host: context.host,
             owner: context.owner,
             repository: context.repository,
@@ -135,7 +119,7 @@ function getWriterOpts(config) {
             return `@${user}`
           }
 
-          const usernameUrl = expandTemplate(config.userUrlFormat, {
+          const usernameUrl = expandTemplate(finalConfig.userUrlFormat, {
             host: context.host,
             owner: context.owner,
             repository: context.repository,
@@ -197,5 +181,6 @@ function expandTemplate(template, context) {
   Object.keys(context).forEach((key) => {
     expanded = expanded.replace(new RegExp(`{{${key}}}`, 'g'), context[key])
   })
+
   return expanded
 }
