@@ -179,7 +179,7 @@ We recommend considering the following high level tools for automating versionin
 [git-client-npm-url]: https://www.npmjs.com/package/@conventional-changelog/git-client
 
 [git-client-deps]: https://img.shields.io/librariesio/release/npm/@conventional-changelog/git-client
-[git-client-deps-url]: https://libraries.io/npm/@conventional-changelog/git-client/tree
+[git-client-deps-url]: https://libraries.io/npm/@conventional-changelog/git-client
 
 <!-- standard-changelog -->
 
