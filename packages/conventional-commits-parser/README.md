@@ -256,19 +256,19 @@ Used to define what capturing group of `headerPattern` captures what header part
 
 #### referenceActions
 
-Type: `string[]`,
+Type: `(string | RegExp)[]`,
 Default: `['close', 'closes', 'closed', 'fix', 'fixes', 'fixed', 'resolve', 'resolves', 'resolved']`
 
-Keywords to reference an issue. This value is case **insensitive**.
+Keywords to reference an issue. This value is case **insensitive**. String values are escaped for use in a regex, while `RegExp` values are used as-is.
 
 Set it to `null` to reference an issue without any action.
 
 #### issuePrefixes
 
-Type: `string[]`,
+Type: `(string | RegExp)[]`,
 Default: `['#']`
 
-The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
+The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix. String values are escaped for use in a regex, while `RegExp` values are used as-is.
 
 #### issuePrefixesCaseSensitive
 
@@ -279,10 +279,10 @@ Used to define if `issuePrefixes` should be considered case sensitive.
 
 #### noteKeywords
 
-Type: `string[]`,
+Type: `(string | RegExp)[]`,
 Default: `['BREAKING CHANGE', 'BREAKING-CHANGE']`
 
-Keywords for important notes. This value is case **insensitive**.
+Keywords for important notes. This value is case **insensitive**. String values are escaped for use in a regex, while `RegExp` values are used as-is.
 
 #### notesPattern
 
