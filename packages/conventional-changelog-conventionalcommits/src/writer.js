@@ -113,7 +113,11 @@ export function createWriterOpts(config) {
           return `[${prefix}${issue}](${url})`
         })
         // User URLs.
-        subject = subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, user) => {
+        subject = subject.replace(/`[^`]*`|\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (match, user) => {
+          if (!user) {
+            return match
+          }
+
           // TODO: investigate why this code exists.
           if (user.includes('/')) {
             return `@${user}`

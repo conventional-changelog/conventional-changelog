@@ -84,6 +84,9 @@ setups([
   },
   () => {
     testTools.gitCommit(['chore: release at different version', 'Release-As: v3.0.2'])
+  },
+  () => {
+    testTools.gitCommit(['fix: replace `@nano_kit/router` with `@nano_kit/router2`'])
   }
 ])
 
@@ -517,6 +520,19 @@ describe('conventional-changelog-conventionalcommits', () => {
     const chunks = await toArray(log)
 
     expect(chunks[0]).toMatch(/release at different version/)
+  })
+
+  it('should not replace @mention inside backtick-wrapped code', async () => {
+    preparing(12)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('`@nano_kit/router`')
+    expect(chunks[0]).not.toContain('[@nano')
   })
 
   describe('bumpStrict parameter', () => {
