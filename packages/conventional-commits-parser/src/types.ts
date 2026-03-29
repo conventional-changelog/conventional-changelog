@@ -41,7 +41,7 @@ export interface ParserOptions {
   /**
    * Keywords for important notes. This value is case **insensitive**.
    */
-  noteKeywords?: string[]
+  noteKeywords?: (string | RegExp)[]
   /**
    * A function that takes `noteKeywordsSelection` and returns a `RegExp` to be matched against the notes.
    */
@@ -49,7 +49,7 @@ export interface ParserOptions {
   /**
    * The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
    */
-  issuePrefixes?: string[]
+  issuePrefixes?: (string | RegExp)[]
   /**
    * Used to define if `issuePrefixes` should be considered case sensitive.
    */
@@ -57,7 +57,7 @@ export interface ParserOptions {
   /**
    * Keywords to reference an issue. This value is case **insensitive**.
    */
-  referenceActions?: string[]
+  referenceActions?: (string | RegExp)[]
 }
 
 export interface ParserStreamOptions extends ParserOptions {

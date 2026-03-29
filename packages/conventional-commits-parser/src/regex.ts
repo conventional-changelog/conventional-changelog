@@ -9,22 +9,22 @@ function escape(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
-function join(parts: string[], joiner: string) {
+function joinOr(parts: (string | RegExp)[]) {
   return parts
-    .map(val => escape(val.trim()))
+    .map(val => (typeof val === 'string' ? escape(val.trim()) : val.source))
     .filter(Boolean)
-    .join(joiner)
+    .join('|')
 }
 
 function getNotesRegex(
-  noteKeywords: string[] | undefined,
+  noteKeywords: (string | RegExp)[] | undefined,
   notesPattern: ((text: string) => RegExp) | undefined
 ) {
   if (!noteKeywords) {
     return nomatchRegex
   }
 
-  const noteKeywordsSelection = join(noteKeywords, '|')
+  const noteKeywordsSelection = joinOr(noteKeywords)
 
   if (!notesPattern) {
     return new RegExp(`^[\\s|*]*(${noteKeywordsSelection})[:\\s]+(.*)`, 'i')
@@ -34,7 +34,7 @@ function getNotesRegex(
 }
 
 function getReferencePartsRegex(
-  issuePrefixes: string[] | undefined,
+  issuePrefixes: (string | RegExp)[] | undefined,
   issuePrefixesCaseSensitive: boolean | undefined
 ) {
   if (!issuePrefixes) {
@@ -43,18 +43,18 @@ function getReferencePartsRegex(
 
   const flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
 
-  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${join(issuePrefixes, '|')})([\\w-]+)(?=\\s|$|[,;)\\]])`, flags)
+  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${joinOr(issuePrefixes)})([\\w-]+)(?=\\s|$|[,;)\\]])`, flags)
 }
 
 function getReferencesRegex(
-  referenceActions: string[] | undefined
+  referenceActions: (string | RegExp)[] | undefined
 ) {
   if (!referenceActions) {
     // matches everything
     return /()(.+)/gi
   }
 
-  const joinedKeywords = join(referenceActions, '|')
+  const joinedKeywords = joinOr(referenceActions)
 
   return new RegExp(`(${joinedKeywords})(?:\\s+(.*?))(?=(?:${joinedKeywords})|$)`, 'gi')
 }
