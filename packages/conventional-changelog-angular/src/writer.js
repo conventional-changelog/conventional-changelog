@@ -73,7 +73,11 @@ export function createWriterOpts() {
 
         if (context.host) {
           // User URLs.
-          subject = subject.replace(/\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (_, username) => {
+          subject = subject.replace(/`[^`]*`|\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (match, username) => {
+            if (!username) {
+              return match
+            }
+
             if (username.includes('/')) {
               return `@${username}`
             }

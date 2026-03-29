@@ -63,6 +63,9 @@ setups([
   () => {
     testTools.gitCommit(['Revert \\"feat: default revert format\\"', 'This reverts commit 1234567.'])
     testTools.gitCommit(['revert: feat: custom revert format', 'This reverts commit 5678910.'])
+  },
+  () => {
+    testTools.gitCommit(['fix: replace `@nano_kit/router` with `@nano_kit/router2`'])
   }
 ])
 
@@ -290,5 +293,18 @@ describe('conventional-changelog-angular', () => {
     expect(chunks[0]).toMatch('default revert format')
 
     expect(chunks.length).toBe(1)
+  })
+
+  it('should not replace @mention inside backtick-wrapped code', async () => {
+    preparing(10)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('`@nano_kit/router`')
+    expect(chunks[0]).not.toContain('[@nano')
   })
 })
