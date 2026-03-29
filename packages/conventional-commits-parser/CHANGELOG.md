@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.3.0...conventional-commits-parser-v6.4.0) (2026-03-29)
+
+### Features
+
+* support RegExp in noteKeywords, issuePrefixes, and referenceActions ([#1441](https://github.com/conventional-changelog/conventional-changelog/issues/1441)) ([f84bfc4](https://github.com/conventional-changelog/conventional-changelog/commit/f84bfc4cc8656d6c70d40ba3a4f35161ba9a2cf9)), closes [#1436](https://github.com/conventional-changelog/conventional-changelog/issues/1436)
+
 ## [6.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.2.1...conventional-commits-parser-v6.3.0) (2026-03-01)
 
 ### Features
