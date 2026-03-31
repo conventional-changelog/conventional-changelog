@@ -165,7 +165,7 @@ importers:
         specifier: workspace:^
         version: link:../conventional-commits-filter
       handlebars:
-        specifier: ^4.7.7
+        specifier: ^4.7.9
         version: 4.7.9
       meow:
         specifier: ^13.0.0
