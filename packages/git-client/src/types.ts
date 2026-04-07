@@ -31,6 +31,10 @@ export interface GitLogParams {
    * Get merge commits or not.
    */
   merges?: boolean
+  /**
+   * Only follow the first parent of merge commits.
+   */
+  firstParent?: boolean
 }
 
 export interface GitLogTagsParams extends Pick<GitLogParams, 'path' | 'from' | 'to' | 'since'> {}

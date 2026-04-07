@@ -98,6 +98,35 @@ describe('git-client', () => {
         ))
       })
 
+      it('should honour `options.firstParent`', async () => {
+        // Create a side branch with a commit, then merge it in
+        testTools.exec('git checkout -b side-branch')
+        testTools.writeFileSync('side-file', '')
+        testTools.exec('git add --all && git commit -m"feat: side branch commit"')
+        testTools.exec('git checkout master')
+        testTools.exec('git merge side-branch --no-ff -m"Merge branch side-branch"')
+
+        const allCommits = await toArray(client.getRawCommits({
+          from: 'HEAD~2'
+        }))
+        const firstParentCommits = await toArray(client.getRawCommits({
+          from: 'HEAD~2',
+          firstParent: true
+        }))
+
+        // Without firstParent, the side branch commit is included
+        expect(allCommits).toMatchObject(expect.arrayContaining(
+          [expect.stringContaining('side branch commit')]
+        ))
+        // With firstParent, only the merge commit is returned
+        expect(firstParentCommits).not.toMatchObject(expect.arrayContaining(
+          [expect.stringContaining('side branch commit')]
+        ))
+        expect(firstParentCommits).toMatchObject(expect.arrayContaining(
+          [expect.stringContaining('Merge branch side-branch')]
+        ))
+      })
+
       it('should pass raw args', async () => {
         await delay(1000)
 
