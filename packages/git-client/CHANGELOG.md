@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.7.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.6.0...git-client-v2.7.0) (2026-04-07)
+
+### Features
+
+* add firstParent option to getRawCommits ([#1450](https://github.com/conventional-changelog/conventional-changelog/issues/1450)) ([edb8f21](https://github.com/conventional-changelog/conventional-changelog/commit/edb8f2122327704a9db6bf5fdf3003b330e6ed47))
+
 ## [2.6.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.5.1...git-client-v2.6.0) (2026-03-01)
 
 ### Features
