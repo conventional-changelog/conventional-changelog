@@ -98,7 +98,8 @@ export class GitClient {
       ignore,
       reverse,
       merges,
-      since
+      since,
+      firstParent
     } = params
     const shouldNotIgnore = ignore
       ? (chunk: string) => !ignore.test(chunk)
@@ -110,6 +111,7 @@ export class GitClient {
       reverse && '--reverse',
       merges && '--merges',
       merges === false && '--no-merges',
+      firstParent && '--first-parent',
       [from, to].filter(Boolean).join('..'),
       ...path ? ['--', ...toArray(path)] : []
     )
