@@ -536,8 +536,8 @@ describe('conventional-changelog-conventionalcommits', () => {
   })
 
   describe('bumpStrict parameter', () => {
-    it('should not bump version when bumpStrict is true and only hidden types are present', async () => {
-      const config = await preset({
+    it('should not bump version when bumpStrict is true and only hidden types are present', () => {
+      const config = preset({
         bumpStrict: true,
         types: [
           {
@@ -573,8 +573,8 @@ describe('conventional-changelog-conventionalcommits', () => {
       expect(result).toBe(null)
     })
 
-    it('should bump version when bumpStrict is true and non-hidden types are present', async () => {
-      const config = await preset({
+    it('should bump version when bumpStrict is true and non-hidden types are present', () => {
+      const config = preset({
         bumpStrict: true,
         types: [
           {
