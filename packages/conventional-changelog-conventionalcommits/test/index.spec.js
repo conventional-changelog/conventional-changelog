@@ -239,6 +239,24 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).toContain('[conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
   })
 
+  it('should only render "closes" for references with a closing action keyword', async () => {
+    preparing(1)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    // "closes #1, #2" carries a closing action -> rendered under "closes".
+    expect(chunks[0]).toContain(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
+    // "see #1, ...#358" are bare mentions (no closing action) -> rendered under
+    // "refs", never "closes" (otherwise reusing the changelog as a PR body would
+    // make GitHub auto-close issues the commit never closed).
+    expect(chunks[0]).toContain(', refs [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
+    expect(chunks[0]).not.toContain(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [conventional-changelog/standard-version#358]')
+  })
+
   it('should properly format external repository issues given an `issueUrlFormat`', async () => {
     preparing(1)
 
@@ -468,8 +486,12 @@ describe('conventional-changelog-conventionalcommits', () => {
       .write()
     const chunks = await toArray(log)
 
-    expect(chunks[0]).toContain('closes [#99]')
+    // "Fixes: #99" / "Refs: #100" are token-style footers, not closing-action
+    // references (the parser reports action === null), so they are listed under
+    // "refs" rather than "closes".
+    expect(chunks[0]).toContain('refs [#99]')
     expect(chunks[0]).toContain('[#100]')
+    expect(chunks[0]).not.toContain('closes [#99]')
     expect(chunks[0]).toContain('this completely changes the API')
   })
 
