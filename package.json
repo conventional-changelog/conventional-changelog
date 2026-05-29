@@ -44,7 +44,7 @@
     "@typescript/native-preview": "latest",
     "@trigen/eslint-config": "^8.0.3",
     "@trigen/scripts": "^8.0.0",
-    "@types/node": "^22.0.0",
+    "@types/node": "^24.0.0",
     "@vitest/coverage-v8": "^4.0.0",
     "better-than-before": "^1.0.0",
     "clean-publish": "^5.0.0",
