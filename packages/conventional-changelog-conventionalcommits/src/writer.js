@@ -5,6 +5,7 @@ import {
   mainTemplate,
   headerPartial,
   commitPartial,
+  referencePartial,
   footerPartial
 } from './templates.js'
 
@@ -53,6 +54,10 @@ export function createWriterOpts(config) {
     commitPartial: commitPartial
       .replace(/{{commitUrlFormat}}/g, commitUrlFormat)
       .replace(/{{issueUrlFormat}}/g, issueUrlFormat),
+    partials: {
+      reference: referencePartial
+        .replace(/{{issueUrlFormat}}/g, issueUrlFormat)
+    },
     footerPartial,
     transform: (commit, context) => {
       let discard = true
@@ -136,6 +141,12 @@ export function createWriterOpts(config) {
 
       // remove references that already appear in the subject
       const references = commit.references.filter(reference => !issues.includes(reference.prefix + reference.issue))
+      // Only references carrying a closing action keyword (closes/fixes/resolves, …)
+      // are rendered under "closes"; bare mentions (action === null) are rendered under
+      // "refs". Printing "closes" for a plain mention is incorrect and, when the changelog
+      // is reused as a PR body, makes GitHub auto-close issues the commit never closed.
+      const closingReferences = references.filter(reference => reference.action)
+      const otherReferences = references.filter(reference => !reference.action)
 
       return {
         notes,
@@ -143,7 +154,9 @@ export function createWriterOpts(config) {
         scope,
         shortHash,
         subject,
-        references
+        references,
+        closingReferences,
+        otherReferences
       }
     },
     groupBy: 'type',

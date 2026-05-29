@@ -47,22 +47,28 @@ export const commitPartial = `*{{#if scope}} **{{scope}}:**
 {{~/if}}{{~/if}}
 
 {{~!-- commit references --}}
-{{~#if references~}}
+{{~#if closingReferences~}}
   , closes
-  {{~#each references}} {{#if @root.linkReferences~}}
-    [
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
-  {{~else}}
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}
-  {{~/if}}{{/each}}
+  {{~#each closingReferences}} {{> reference}}{{/each}}
+{{~/if}}
+{{~#if otherReferences~}}
+  , refs
+  {{~#each otherReferences}} {{> reference}}{{/each}}
 {{~/if}}
 
 `
+
+export const referencePartial = `{{#if @root.linkReferences~}}
+  [
+  {{~#if this.owner}}
+    {{~this.owner}}/
+  {{~/if}}
+  {{~this.repository}}{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
+{{~else}}
+  {{~#if this.owner}}
+    {{~this.owner}}/
+  {{~/if}}
+  {{~this.repository}}{{this.prefix}}{{this.issue}}
+{{~/if}}`
 
 export const footerPartial = ``
