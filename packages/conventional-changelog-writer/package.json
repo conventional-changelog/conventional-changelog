@@ -53,17 +53,17 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsc -p tsconfig.build.json",
-    "test:types": "tsc --noEmit"
+    "build": "tsgo -p tsconfig.build.json",
+    "test:types": "tsgo --noEmit"
   },
   "dependencies": {
-    "@simple-libs/stream-utils": "^1.2.0",
+    "@simple-libs/stream-utils": "catalog:",
     "conventional-commits-filter": "workspace:^",
     "handlebars": "^4.7.7",
-    "meow": "^13.0.0",
-    "semver": "^7.5.2"
+    "meow": "catalog:",
+    "semver": "catalog:"
   },
   "devDependencies": {
-    "@types/semver": "^7.5.8"
+    "@types/semver": "catalog:"
   }
 }

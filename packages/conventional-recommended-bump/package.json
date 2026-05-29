@@ -48,15 +48,15 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsc -p tsconfig.build.json",
-    "test:types": "tsc --noEmit"
+    "build": "tsgo -p tsconfig.build.json",
+    "test:types": "tsgo --noEmit"
   },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-commits-filter": "workspace:^",
     "conventional-commits-parser": "workspace:^",
-    "meow": "^13.0.0"
+    "meow": "catalog:"
   },
   "devDependencies": {
     "conventional-changelog-conventionalcommits": "workspace:^"

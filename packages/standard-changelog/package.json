@@ -45,13 +45,13 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsc -p tsconfig.build.json",
-    "test:types": "tsc --noEmit"
+    "build": "tsgo -p tsconfig.build.json",
+    "test:types": "tsgo --noEmit"
   },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
     "conventional-changelog-angular": "workspace:^",
     "conventional-changelog": "workspace:^",
-    "meow": "^13.0.0"
+    "meow": "catalog:"
   }
 }

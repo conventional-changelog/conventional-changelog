@@ -29,7 +29,6 @@ build
 
 # IDE files
 .idea
-.vscode
 
 # Temporary files
 tmp
