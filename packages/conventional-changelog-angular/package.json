@@ -36,6 +36,6 @@
     "postpublish": "pnpm clear"
   },
   "dependencies": {
-    "compare-func": "^2.0.0"
+    "compare-func": "catalog:"
   }
 }

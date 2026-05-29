@@ -50,11 +50,11 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsc -p tsconfig.build.json",
-    "test:types": "tsc --noEmit"
+    "build": "tsgo -p tsconfig.build.json",
+    "test:types": "tsgo --noEmit"
   },
   "dependencies": {
-    "@simple-libs/stream-utils": "^1.2.0",
-    "meow": "^13.0.0"
+    "@simple-libs/stream-utils": "catalog:",
+    "meow": "catalog:"
   }
 }

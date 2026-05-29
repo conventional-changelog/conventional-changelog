@@ -45,8 +45,8 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsc -p tsconfig.build.json",
-    "test:types": "tsc --noEmit"
+    "build": "tsgo -p tsconfig.build.json",
+    "test:types": "tsgo --noEmit"
   },
   "peerDependencies": {
     "conventional-commits-filter": "workspace:^",
@@ -62,11 +62,11 @@
   },
   "dependencies": {
     "@simple-libs/child-process-utils": "^1.0.0",
-    "@simple-libs/stream-utils": "^1.2.0",
-    "semver": "^7.5.2"
+    "@simple-libs/stream-utils": "catalog:",
+    "semver": "catalog:"
   },
   "devDependencies": {
-    "@types/semver": "^7.5.8",
+    "@types/semver": "catalog:",
     "conventional-commits-filter": "workspace:^",
     "conventional-commits-parser": "workspace:^"
   }

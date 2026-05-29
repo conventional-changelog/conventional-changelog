@@ -41,6 +41,7 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@commitlint/config-pnpm-scopes": "^20.0.0",
     "@commitlint/cz-commitlint": "^20.0.0",
+    "@typescript/native-preview": "latest",
     "@trigen/eslint-config": "^8.0.3",
     "@trigen/scripts": "^8.0.0",
     "@types/node": "^22.0.0",
@@ -55,7 +56,7 @@
     "nano-staged": "^0.9.0",
     "simple-git-hooks": "^2.11.1",
     "tsm": "^2.3.0",
-    "typescript": "^5.2.2",
+    "typescript": "^6.0.0",
     "vite": "^8.0.0",
     "vitest": "^4.0.0"
   }
