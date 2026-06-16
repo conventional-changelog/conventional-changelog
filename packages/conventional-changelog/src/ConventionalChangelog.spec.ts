@@ -142,6 +142,112 @@ setups([
     testTools.exec('git add --all && git commit -m"5.0.0"')
     testTools.exec('git tag v5.0.0')
     testTools.exec('git merge feature2 -m"Merge branch \'feature2\'"')
+  },
+  () => { // 20
+    testTools = new TestTools()
+    // mock remote
+    testTools.exec('git init --bare ../origin20.git')
+
+    testTools.gitInit()
+    testTools.exec('git remote add origin ../origin20.git')
+
+    testTools.writeFileSync('package.json', JSON.stringify({
+      name: 'conventional-changelog',
+      repository: {
+        type: 'git',
+        url: 'https://github.com/conventional-changelog/conventional-changelog.git'
+      }
+    }))
+    testTools.writeFileSync('test.txt', 'first')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: first commit')
+
+    // v1.0.1
+    testTools.writeFileSync('./package.json', '{"version": "1.0.1"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.1')
+    testTools.exec('git tag v1.0.1')
+
+    testTools.writeFileSync('test.txt', 'second')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: second commit')
+
+    // v1.0.2
+    testTools.writeFileSync('./package.json', '{"version": "1.0.2"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.2')
+    testTools.exec('git tag v1.0.2')
+
+    testTools.writeFileSync('test.txt', 'third')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: third commit')
+
+    // v1.0.3
+    testTools.writeFileSync('./package.json', '{"version": "1.0.3"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.3')
+    testTools.exec('git tag v1.0.3')
+
+    // push
+    testTools.exec('git push -f origin master --tags')
+  },
+  () => { // 21
+    testTools = new TestTools()
+    // mock remote
+    testTools.exec('git init --bare ../origin21.git')
+
+    testTools.gitInit()
+    testTools.exec('git remote add origin ../origin21.git')
+
+    testTools.writeFileSync('package.json', JSON.stringify({
+      name: 'conventional-changelog',
+      repository: {
+        type: 'git',
+        url: 'https://github.com/conventional-changelog/conventional-changelog.git'
+      }
+    }))
+    testTools.writeFileSync('test.txt', 'first')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: first commit')
+
+    // v1.0.1
+    testTools.writeFileSync('./package.json', '{"version": "1.0.1"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.1')
+    testTools.exec('git tag v1.0.1')
+
+    testTools.writeFileSync('test.txt', 'second')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: second commit')
+
+    // v1.0.2
+    testTools.writeFileSync('./package.json', '{"version": "1.0.2"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.2')
+    testTools.exec('git tag v1.0.2')
+
+    testTools.writeFileSync('test.txt', 'third')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: third commit')
+
+    // v1.0.3
+    testTools.writeFileSync('./package.json', '{"version": "1.0.3"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.3')
+    testTools.exec('git tag v1.0.3')
+
+    // push
+    testTools.exec('git push -f origin master --tags')
+
+    testTools.writeFileSync('test.txt', 'fourth')
+    testTools.exec('git add --all')
+    testTools.gitCommit('feat: fourth commit')
+
+    // v1.0.4
+    testTools.writeFileSync('./package.json', '{"version": "1.0.4"}')
+    testTools.exec('git add --all')
+    testTools.gitCommit('chore(release): v1.0.4')
+    testTools.exec('git tag v1.0.4')
   }
 ])
 
@@ -1291,6 +1397,59 @@ describe('conventional-changelog', () => {
         expect(chunks[0]).toContain('second lerna style commit woo')
         expect(chunks[0]).not.toContain('another lerna package, this should be skipped')
         expect(chunks[0]).not.toContain('something unreleased yet :)')
+      })
+    })
+
+    describe('releaseCount 0', () => {
+      it('should generate changelog when all releases are pushed and HEAD is at latest tag', async () => {
+        preparing(20)
+
+        const log = new ConventionalChangelog(testTools.cwd)
+          .readPackage()
+          .loadPreset('angular')
+          .tags({
+            prefix: undefined
+          })
+          .options({
+            releaseCount: 0
+          })
+          .commits({
+            path: '.'
+          })
+          .write()
+        const chunks = await toArray(log)
+
+        expect(chunks.length).toBe(3)
+
+        expect(chunks[0]).toContain('## [1.0.3]')
+        expect(chunks[1]).toContain('## [1.0.2]')
+        expect(chunks[2]).toContain('## [1.0.1]')
+      })
+
+      it('should generate changelog including new HEAD release after remote push', async () => {
+        preparing(21)
+
+        const log = new ConventionalChangelog(testTools.cwd)
+          .readPackage()
+          .loadPreset('angular')
+          .tags({
+            prefix: undefined
+          })
+          .options({
+            releaseCount: 0
+          })
+          .commits({
+            path: '.'
+          })
+          .write()
+        const chunks = await toArray(log)
+
+        expect(chunks.length).toBe(4)
+
+        expect(chunks[0]).toContain('## [1.0.4]')
+        expect(chunks[1]).toContain('## [1.0.3]')
+        expect(chunks[2]).toContain('## [1.0.2]')
+        expect(chunks[3]).toContain('## [1.0.1]')
       })
     })
   })
