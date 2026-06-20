@@ -24,7 +24,6 @@ const {
   tearsWithJoy
 } = BetterThanBefore()
 let testTools: TestTools
-const BARE_REPO = '../bare-origin.git'
 
 setups([
   () => { // 1
@@ -145,54 +144,15 @@ setups([
     testTools.exec('git merge feature2 -m"Merge branch \'feature2\'"')
   },
   () => { // 20
-    testTools?.cleanup()
-    testTools = new TestTools()
-    // mock remote
-    testTools.exec(`git init --bare ${BARE_REPO}`)
-
-    testTools.gitInit()
-    testTools.exec(`git remote add origin ${BARE_REPO}`)
-
-    testTools.writeFileSync('package.json', JSON.stringify({
-      name: 'conventional-changelog',
-      repository: {
-        type: 'git',
-        url: 'https://github.com/conventional-changelog/conventional-changelog.git'
-      }
-    }))
-    testTools.writeFileSync('test.txt', 'first')
-    testTools.exec('git add --all')
-    testTools.gitCommit('feat: first commit')
-
-    // v1.0.1
-    testTools.writeFileSync('./package.json', '{"version": "1.0.1"}')
-    testTools.exec('git add --all')
-    testTools.gitCommit('chore(release): v1.0.1')
-    testTools.exec('git tag v1.0.1')
-
-    testTools.writeFileSync('test.txt', 'second')
-    testTools.exec('git add --all')
-    testTools.gitCommit('feat: second commit')
-
-    // v1.0.2
-    testTools.writeFileSync('./package.json', '{"version": "1.0.2"}')
-    testTools.exec('git add --all')
-    testTools.gitCommit('chore(release): v1.0.2')
-    testTools.exec('git tag v1.0.2')
-
-    // push
-    testTools.exec('git push -f origin master --tags')
-  },
-  () => { // 21
-    testTools.writeFileSync('test.txt', 'third')
-    testTools.exec('git add --all')
-    testTools.gitCommit('feat: third commit')
-
-    // v1.0.3
-    testTools.writeFileSync('./package.json', '{"version": "1.0.3"}')
-    testTools.exec('git add --all')
-    testTools.gitCommit('chore(release): v1.0.3')
-    testTools.exec('git tag v1.0.3')
+    testTools.exec('git checkout -b feature3')
+    testTools.writeFileSync('./package.json', '{"version": "6.0.0"}')
+    testTools.exec('git add --all && git commit -m"feat: sixth commit"')
+    testTools.exec('git tag v6.0.0')
+    testTools.writeFileSync('./package.json', '{"version": "7.0.0"}')
+    testTools.exec('git add --all && git commit -m"feat: seventh commit"')
+    testTools.exec('git tag v7.0.0')
+    testTools.exec('git checkout master')
+    testTools.exec('git merge feature3 -m"Merge branch \'feature3\'"')
   }
 ])
 
@@ -202,9 +162,6 @@ tearsWithJoy(() => {
 
 afterAll(() => {
   testTools?.cleanup()
-  testTools?.rmSync(BARE_REPO, {
-    recursive: true
-  })
 })
 
 describe('conventional-changelog', () => {
@@ -961,6 +918,30 @@ describe('conventional-changelog', () => {
       expect(chunks[0]).toMatch(/\/commit\/\w{40}\)\)/)
     })
 
+    it('should generate changelog when HEAD is at latest tag', async () => {
+      preparing(20)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .loadPreset('angular')
+        .tags({
+          prefix: undefined
+        })
+        .options({
+          releaseCount: 0
+        })
+        .commits({
+          path: '.'
+        })
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks[0]).toContain('# [7.0.0]')
+      expect(chunks[0]).toContain('seventh commit')
+      expect(chunks[1]).toContain('# [6.0.0]')
+      expect(chunks[1]).toContain('sixth commit')
+    })
+
     describe('finalizeContext', () => {
       it('should make `context.previousTag` default to a previous semver version of generated log (prepend)', async () => {
         const { tail } = preparing(11)
@@ -1345,62 +1326,6 @@ describe('conventional-changelog', () => {
         expect(chunks[0]).toContain('second lerna style commit woo')
         expect(chunks[0]).not.toContain('another lerna package, this should be skipped')
         expect(chunks[0]).not.toContain('something unreleased yet :)')
-      })
-    })
-
-    describe('releaseCount 0', () => {
-      it('should generate changelog when all releases are pushed and HEAD is at latest tag', async () => {
-        preparing(20)
-
-        const log = new ConventionalChangelog(testTools.cwd)
-          .readPackage()
-          .loadPreset('angular')
-          .tags({
-            prefix: undefined
-          })
-          .options({
-            releaseCount: 0
-          })
-          .commits({
-            path: '.'
-          })
-          .write()
-        const chunks = await toArray(log)
-
-        expect(chunks.length).toBe(2)
-
-        expect(chunks[0]).toContain('## [1.0.2]')
-        expect(chunks[0]).toContain('second commit')
-        expect(chunks[1]).toContain('## [1.0.1]')
-        expect(chunks[1]).toContain('first commit')
-      })
-
-      it('should generate changelog including new HEAD release after remote push', async () => {
-        preparing(21)
-
-        const log = new ConventionalChangelog(testTools.cwd)
-          .readPackage()
-          .loadPreset('angular')
-          .tags({
-            prefix: undefined
-          })
-          .options({
-            releaseCount: 0
-          })
-          .commits({
-            path: '.'
-          })
-          .write()
-        const chunks = await toArray(log)
-
-        expect(chunks.length).toBe(3)
-
-        expect(chunks[0]).toContain('## [1.0.3]')
-        expect(chunks[0]).toContain('third commit')
-        expect(chunks[1]).toContain('## [1.0.2]')
-        expect(chunks[1]).toContain('second commit')
-        expect(chunks[2]).toContain('## [1.0.1]')
-        expect(chunks[2]).toContain('first commit')
       })
     })
   })
