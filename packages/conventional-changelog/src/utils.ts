@@ -1,11 +1,11 @@
-import { type Context } from 'conventional-changelog-writer'
-import { hostsOptions } from './hosts/index.js'
+import type { Context } from 'conventional-changelog-writer'
 import type {
   Logger,
   HostedGitInfo,
   Params,
   Commit
 } from './types.js'
+import { hostsOptions } from './hosts/index.js'
 
 export function getHostOptions(
   repository: Partial<HostedGitInfo> | null | undefined,

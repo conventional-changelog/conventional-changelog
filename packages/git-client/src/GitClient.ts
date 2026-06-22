@@ -7,10 +7,6 @@ import {
   output,
   outputStream
 } from '@simple-libs/child-process-utils'
-import {
-  formatArgs,
-  toArray
-} from './utils.js'
 import type {
   GitLogParams,
   GitLogTagsParams,
@@ -20,6 +16,10 @@ import type {
   GitFetchParams,
   Arg
 } from './types.js'
+import {
+  formatArgs,
+  toArray
+} from './utils.js'
 
 const SCISSOR = '------------------------ >8 ------------------------'
 
@@ -29,7 +29,7 @@ const SCISSOR = '------------------------ >8 ------------------------'
 export class GitClient {
   constructor(
     readonly cwd: string,
-    public debug?: ((log: string[]) => void) | undefined
+    public debug?: (log: string[]) => void
   ) {}
 
   private formatArgs(...args: Arg[]) {

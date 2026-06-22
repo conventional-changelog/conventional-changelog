@@ -10,7 +10,7 @@ export function createWriterOpts() {
     headerPartial,
     commitPartial,
     transform: (commit) => {
-      let { component } = commit
+      let component
 
       if (commit.component === 'perf') {
         component = 'Performance'

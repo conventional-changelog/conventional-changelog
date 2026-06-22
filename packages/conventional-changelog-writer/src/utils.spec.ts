@@ -1,4 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import {
+  describe,
+  it,
+  expect
+} from 'vitest'
 import { createComparator } from './utils.js'
 
 describe('conventional-changelog-writer', () => {

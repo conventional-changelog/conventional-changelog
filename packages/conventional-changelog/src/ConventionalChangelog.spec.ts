@@ -1,4 +1,10 @@
-import { vi, afterAll, describe, it, expect } from 'vitest'
+import {
+  vi,
+  afterAll,
+  describe,
+  it,
+  expect
+} from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import path from 'path'
 import {

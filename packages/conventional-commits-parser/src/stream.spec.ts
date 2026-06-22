@@ -1,4 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import {
+  describe,
+  it,
+  expect
+} from 'vitest'
 import { through } from '../../../tools/index.js'
 import { parseCommitsStream } from './stream.js'
 

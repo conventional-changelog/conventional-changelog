@@ -1,4 +1,7 @@
-import { resolve, extname } from 'path'
+import {
+  resolve,
+  extname
+} from 'path'
 import { pathToFileURL } from 'url'
 import { readFile } from 'fs/promises'
 import { parseJsonStream } from '@simple-libs/stream-utils'
@@ -30,6 +33,6 @@ export async function loadDataFile(filePath: string): Promise<object> {
   }
 
   // @ts-expect-error Dynamic import actually works with file URLs
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  // oxlint-disable-next-line typescript/no-unsafe-member-access
   return (await import(resolvedFilePath)).default as object
 }

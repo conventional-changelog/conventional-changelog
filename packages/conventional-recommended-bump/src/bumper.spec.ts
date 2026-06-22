@@ -1,4 +1,9 @@
-import { afterAll, describe, it, expect } from 'vitest'
+import {
+  afterAll,
+  describe,
+  it,
+  expect
+} from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import { TestTools } from '../../../tools/index.js'
 import type { Commit } from 'conventional-commits-parser'

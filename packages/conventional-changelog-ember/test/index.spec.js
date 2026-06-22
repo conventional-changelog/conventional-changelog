@@ -1,4 +1,10 @@
-import { describe, beforeEach, afterEach, it, expect } from 'vitest'
+import {
+  describe,
+  beforeEach,
+  afterEach,
+  it,
+  expect
+} from 'vitest'
 import { ConventionalChangelog } from 'conventional-changelog'
 import {
   TestTools,

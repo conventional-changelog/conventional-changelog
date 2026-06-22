@@ -8,6 +8,7 @@
     "src",
     "templates",
     "test",
+    "*.ts",
     "*.js"
   ],
   "exclude": []

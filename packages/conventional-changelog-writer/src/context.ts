@@ -163,7 +163,7 @@ export async function getTemplateContext<Commit extends CommitKnownProps = Commi
   }
 
   if (templateContext.version && semver.valid(templateContext.version)) {
-    templateContext.isPatch = templateContext.isPatch || semver.patch(templateContext.version) !== 0
+    templateContext.isPatch ||= semver.patch(templateContext.version) !== 0
   }
 
   templateContext = await options.finalizeContext(templateContext, options, filteredCommits, keyCommit, commits)

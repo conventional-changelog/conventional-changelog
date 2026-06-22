@@ -18,7 +18,7 @@ export async function* readRawCommitsFromLine(separator: string) {
     output: process.stdout,
     terminal: true
   })
-  let line = ''
+  let line: string
   let commit = ''
 
   for await (line of rl) {

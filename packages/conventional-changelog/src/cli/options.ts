@@ -1,8 +1,8 @@
-import type {
-  GetCommitsParams,
-  GetSemverTagsParams
+import {
+  type GetCommitsParams,
+  type GetSemverTagsParams,
+  packagePrefix
 } from '@conventional-changelog/git-client'
-import { packagePrefix } from '@conventional-changelog/git-client'
 import type { Options } from '../types.js'
 
 export function parseOptions(options: Record<string, unknown>): Options | null {

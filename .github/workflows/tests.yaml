@@ -19,7 +19,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
@@ -38,7 +38,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
@@ -46,12 +46,7 @@ jobs:
         run: pnpm lint
   unit:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 20
-          - 22
-    name: Node.js ${{ matrix.node-version }} / unit
+    name: unit
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v6
@@ -59,10 +54,10 @@ jobs:
         uses: pnpm/action-setup@v5
         with:
           version: 10
-      - name: Install Node.js ${{ matrix.node-version }}
+      - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
@@ -73,7 +68,7 @@ jobs:
       - name: Collect coverage
         uses: coverallsapp/github-action@main
         with:
-          flag-name: actions ${{ matrix.node-version }}
+          flag-name: actions linux
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel: true
           fail-on-error: false
@@ -90,7 +85,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install

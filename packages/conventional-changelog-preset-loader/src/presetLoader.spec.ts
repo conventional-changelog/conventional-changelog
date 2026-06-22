@@ -1,4 +1,9 @@
-import { vitest, describe, it, expect } from 'vitest'
+import {
+  vitest,
+  describe,
+  it,
+  expect
+} from 'vitest'
 import { createPresetLoader } from './index.js'
 
 const mockModuleLoader = () => () => ({})

@@ -1,4 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import {
+  describe,
+  it,
+  expect
+} from 'vitest'
 import { toArray } from '../../../tools/index.js'
 import { filterRevertedCommits } from './index.js'
 

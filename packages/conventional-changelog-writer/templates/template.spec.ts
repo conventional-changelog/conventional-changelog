@@ -1,6 +1,14 @@
-import { describe, beforeEach, it, expect } from 'vitest'
+import {
+  describe,
+  beforeEach,
+  it,
+  expect
+} from 'vitest'
 import Handlebars from 'handlebars'
-import { mainTemplate as template, footerPartial } from '../src/templates.js'
+import {
+  mainTemplate as template,
+  footerPartial
+} from '../src/templates.js'
 
 let templateContext: any
 

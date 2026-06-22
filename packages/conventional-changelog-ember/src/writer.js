@@ -16,7 +16,7 @@ export function createWriterOpts() {
         return undefined
       }
 
-      let { tag } = commit
+      let tag
 
       if (commit.tag === 'BUGFIX') {
         tag = 'Bug Fixes'

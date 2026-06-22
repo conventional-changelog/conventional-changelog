@@ -1,5 +1,15 @@
-import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools, toArray, delay } from '../../../tools/index.js'
+import {
+  describe,
+  beforeAll,
+  afterAll,
+  it,
+  expect
+} from 'vitest'
+import {
+  TestTools,
+  toArray,
+  delay
+} from '../../../tools/index.js'
 import { GitClient } from './GitClient.js'
 
 describe('git-client', () => {

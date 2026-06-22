@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import { pipeline } from 'stream/promises'
 import meow from 'meow'
-import type {
-  Context,
-  Options,
-  CommitKnownProps
+import {
+  type Context,
+  type Options,
+  type CommitKnownProps,
+  writeChangelog
 } from '../index.js'
-import { writeChangelog } from '../index.js'
 import {
   loadDataFile,
   readCommitsFromFiles,

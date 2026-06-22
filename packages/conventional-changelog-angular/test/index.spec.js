@@ -1,5 +1,10 @@
 import path from 'path'
-import { afterAll, describe, it, expect } from 'vitest'
+import {
+  afterAll,
+  describe,
+  it,
+  expect
+} from 'vitest'
 import BetterThanBefore from 'better-than-before'
 import { ConventionalChangelog } from 'conventional-changelog'
 import {

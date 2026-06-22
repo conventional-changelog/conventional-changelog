@@ -1,5 +1,14 @@
-import { describe, beforeAll, afterAll, it, expect } from 'vitest'
-import { TestTools, toArray } from '../../../tools/index.js'
+import {
+  describe,
+  beforeAll,
+  afterAll,
+  it,
+  expect
+} from 'vitest'
+import {
+  TestTools,
+  toArray
+} from '../../../tools/index.js'
 import {
   ConventionalGitClient,
   packagePrefix

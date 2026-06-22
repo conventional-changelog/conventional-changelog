@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import meow from 'meow'
-import type { Preset } from '../index.js'
-import { Bumper } from '../index.js'
+import {
+  type Preset,
+  Bumper
+} from '../index.js'
 import {
   parseCommitsOptions,
   parseTagsOptions,

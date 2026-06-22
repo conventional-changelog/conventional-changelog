@@ -126,15 +126,15 @@ export class ConventionalChangelog {
     }
 
     if (repository) {
-      finalContext.repoUrl = finalContext.repoUrl || repository.url
-      finalContext.host = finalContext.host || repository.host
-      finalContext.owner = finalContext.owner || repository.owner
-      finalContext.repository = finalContext.repository || repository.project
+      finalContext.repoUrl ||= repository.url
+      finalContext.host ||= repository.host
+      finalContext.owner ||= repository.owner
+      finalContext.repository ||= repository.project
     }
 
     if (hostOptions) {
-      finalContext.issue = finalContext.issue || hostOptions.issue
-      finalContext.commit = finalContext.commit || hostOptions.commit
+      finalContext.issue ||= hostOptions.issue
+      finalContext.commit ||= hostOptions.commit
     }
 
     if (isUnreleasedVersion(semverTags, finalContext.version) && options.outputUnreleased) {
@@ -192,20 +192,20 @@ export class ConventionalChangelog {
 
             if (!previousTag) {
               if (options.append) {
-                context.previousTag = context.previousTag || firstCommitHash
+                context.previousTag ||= firstCommitHash
               } else {
-                context.previousTag = context.previousTag || lastCommitHash
+                context.previousTag ||= lastCommitHash
               }
             }
           }
         } else {
-          context.previousTag = context.previousTag || semverTags[0]
+          context.previousTag ||= semverTags[0]
 
           if (context.version === 'Unreleased') {
             if (options.append) {
-              context.currentTag = context.currentTag || lastCommitHash
+              context.currentTag ||= lastCommitHash
             } else {
-              context.currentTag = context.currentTag || firstCommitHash
+              context.currentTag ||= firstCommitHash
             }
           } else if (!context.currentTag) {
             if (tags?.prefix) {
