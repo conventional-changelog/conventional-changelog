@@ -1,5 +1,12 @@
 import path from 'path'
-import { describe, beforeAll, beforeEach, afterAll, it, expect } from 'vitest'
+import {
+  describe,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  it,
+  expect
+} from 'vitest'
 import { TestTools } from '../../../tools/index.js'
 
 const CLI_PATH = path.join(__dirname, './cli.ts')

@@ -1,6 +1,9 @@
 import type { ParserStreamOptions } from 'conventional-commits-parser'
-import type { GetCommitsParams, GetSemverTagsParams } from '@conventional-changelog/git-client'
-import { packagePrefix } from '@conventional-changelog/git-client'
+import {
+  type GetCommitsParams,
+  type GetSemverTagsParams,
+  packagePrefix
+} from '@conventional-changelog/git-client'
 
 function trim(str: string) {
   return str.trim()

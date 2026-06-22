@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// oxlint-disable-next-line typescript/no-explicit-any
 export type AnyObject = Record<string, any>
 
 export type Comparator<T> = (a: T, b: T) => number

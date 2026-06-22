@@ -251,7 +251,7 @@ export class CommitParser {
     }
 
     const matches = this.currentLine().match(regexes.notes)
-    let references: CommitReference[] = []
+    let references: CommitReference[]
 
     if (matches) {
       const note: CommitNote = {
@@ -372,13 +372,8 @@ export class CommitParser {
   private cleanupCommit() {
     const { commit } = this
 
-    if (commit.body) {
-      commit.body = trimNewLines(commit.body)
-    }
-
-    if (commit.footer) {
-      commit.footer = trimNewLines(commit.footer)
-    }
+    commit.body &&= trimNewLines(commit.body)
+    commit.footer &&= trimNewLines(commit.footer)
 
     commit.notes.forEach((note) => {
       note.text = trimNewLines(note.text)

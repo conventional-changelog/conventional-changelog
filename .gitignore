@@ -32,3 +32,9 @@ build
 
 # Temporary files
 tmp
+
+# Staff
+.vite*
+.codex
+.agents
+skills-lock.json

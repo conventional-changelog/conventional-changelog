@@ -73,9 +73,7 @@ async function loadWithFallbacks<T extends object>(moduleLoader: ModuleLoader<T>
     try {
       return getModuleDefaultExport(await moduleLoader(variant))
     } catch (err) {
-      if (!error) {
-        error = err
-      }
+      error ||= err
     }
   }
 
@@ -92,7 +90,7 @@ export function createPresetLoader(moduleLoader: PresetModuleLoader) {
     Preset = UnknownPreset,
     PresetCreatorParams extends UnknownPresetCreatorParams = UnknownPresetCreatorParams
   >(presetOrParams: PresetParams<PresetCreatorParams>) {
-    let preset = ''
+    let preset: string
     let params: PresetCreatorParams | null = null
 
     if (typeof presetOrParams === 'string') {
@@ -106,7 +104,7 @@ export function createPresetLoader(moduleLoader: PresetModuleLoader) {
       }
 
     const presetNameVariants = resolvePresetNameVariants(preset)
-    let createPreset: PresetCreator<Preset, PresetCreatorParams> | null = null
+    let createPreset: PresetCreator<Preset, PresetCreatorParams>
 
     try {
       createPreset = await loadWithFallbacks(moduleLoader, presetNameVariants) as PresetCreator<Preset, PresetCreatorParams>

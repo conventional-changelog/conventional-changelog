@@ -1,4 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import {
+  describe,
+  it,
+  expect
+} from 'vitest'
 import { transformCommit } from './commit.js'
 
 describe('conventional-changelog-writer', () => {

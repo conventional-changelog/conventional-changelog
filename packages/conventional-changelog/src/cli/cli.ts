@@ -4,9 +4,9 @@ import {
   createReadStream,
   createWriteStream
 } from 'fs'
-import {
-  type Preset,
-  type ConventionalChangelog
+import type {
+  Preset,
+  ConventionalChangelog
 } from '../index.js'
 import {
   parseOptions,

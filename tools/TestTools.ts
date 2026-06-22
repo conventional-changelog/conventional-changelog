@@ -1,4 +1,7 @@
-import { execSync, spawn } from 'child_process'
+import {
+  execSync,
+  spawn
+} from 'child_process'
 import { pathToFileURL } from 'url'
 import path from 'path'
 import fs from 'fs'

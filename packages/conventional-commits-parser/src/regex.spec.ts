@@ -1,4 +1,9 @@
-import { describe, afterEach, it, expect } from 'vitest'
+import {
+  describe,
+  afterEach,
+  it,
+  expect
+} from 'vitest'
 import { getParserRegexes } from './regex.js'
 
 describe('conventional-commits-parser', () => {

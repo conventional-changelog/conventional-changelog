@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-
 export interface ESModule<T> {
+  // oxlint-disable-next-line trigen/naming-convention
   __esModule?: boolean
   default: T
 }

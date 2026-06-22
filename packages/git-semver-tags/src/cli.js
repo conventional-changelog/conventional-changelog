@@ -39,5 +39,5 @@ const tags = await getSemverTags({
   skipUnstable: args.flags.skipUnstable
 })
 
-// eslint-disable-next-line no-console
+// oxlint-disable-next-line eslint/no-console
 console.log(tags.join('\n'))

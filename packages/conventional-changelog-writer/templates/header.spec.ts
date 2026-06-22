@@ -1,4 +1,9 @@
-import { describe, beforeEach, it, expect } from 'vitest'
+import {
+  describe,
+  beforeEach,
+  it,
+  expect
+} from 'vitest'
 import Handlebars from 'handlebars'
 import { headerPartial as template } from '../src/templates.js'
 
