@@ -62,14 +62,14 @@ export function isUnreleasedVersion(
     && (lastTag === version || lastTag === `v${version}`)
 }
 
-export const versionTagRegex = /tag:\s*(.*)[,)]/i
-export const defaultVersionRegex = /tag:\s*[v=]?(.*)[,)]/i
+export const versionTagRegex = /tag:\s*(.*?)[,)]/i
+export const defaultVersionRegex = /tag:\s*[v=]?(.*?)[,)]/i
 
 export function defaultCommitTransform(commit: Commit, params: Params) {
   const { tags, options: { formatDate } } = params
   const prefix = tags?.prefix
   const versionRegex = prefix
-    ? new RegExp(`tag:\\s*[v=]?${prefix}(.*)[,)]`, 'i')
+    ? new RegExp(`tag:\\s*[v=]?${prefix}(.*?)[,)]`, 'i')
     : defaultVersionRegex
   const {
     committerDate,

@@ -142,6 +142,17 @@ setups([
     testTools.exec('git add --all && git commit -m"5.0.0"')
     testTools.exec('git tag v5.0.0')
     testTools.exec('git merge feature2 -m"Merge branch \'feature2\'"')
+  },
+  () => { // 20
+    testTools.exec('git checkout -b feature3')
+    testTools.writeFileSync('./package.json', '{"version": "6.0.0"}')
+    testTools.exec('git add --all && git commit -m"feat: sixth commit"')
+    testTools.exec('git tag v6.0.0')
+    testTools.writeFileSync('./package.json', '{"version": "7.0.0"}')
+    testTools.exec('git add --all && git commit -m"feat: seventh commit"')
+    testTools.exec('git tag v7.0.0')
+    testTools.exec('git checkout master')
+    testTools.exec('git merge feature3 -m"Merge branch \'feature3\'"')
   }
 ])
 
@@ -905,6 +916,30 @@ describe('conventional-changelog', () => {
       const chunks = await toArray(log)
 
       expect(chunks[0]).toMatch(/\/commit\/\w{40}\)\)/)
+    })
+
+    it('should generate changelog when HEAD is at latest tag', async () => {
+      preparing(20)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .loadPreset('angular')
+        .tags({
+          prefix: undefined
+        })
+        .options({
+          releaseCount: 0
+        })
+        .commits({
+          path: '.'
+        })
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks[0]).toContain('# [7.0.0]')
+      expect(chunks[0]).toContain('seventh commit')
+      expect(chunks[1]).toContain('# [6.0.0]')
+      expect(chunks[1]).toContain('sixth commit')
     })
 
     describe('finalizeContext', () => {
