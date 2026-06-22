@@ -53,12 +53,11 @@ If you want to use this package directly and pass options, you can use the [Conv
 ```js
 import createPreset from 'conventional-changelog-conventionalcommits'
 
-createPreset({
+const config = createPreset({
   issuePrefixes: ['TEST-'],
   issueUrlFormat: 'https://myBugTracker.com/{{prefix}}{{id}}'
-}).then((config) => {
-  // do something with the config
 })
+// do something with the config
 ```
 
 or json config like that:
