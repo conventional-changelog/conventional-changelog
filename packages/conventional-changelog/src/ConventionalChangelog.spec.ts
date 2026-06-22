@@ -684,7 +684,7 @@ describe('conventional-changelog', () => {
 
       await toArray(log)
 
-      expect(warn).toBeCalledWith('core', 'Host is not supported: no')
+      expect(warn).toHaveBeenCalledWith('core', 'Host is not supported: no')
     })
 
     it('should error if package.json is not found', async () => {
