@@ -53,7 +53,7 @@
     "conventional-changelog": "workspace:^",
     "del-cli": "^7.0.0",
     "inquirer": "^12.0.0",
-    "nano-staged": "^0.9.0",
+    "nano-staged": "^1.0.0",
     "oxlint": "^1.70.0",
     "oxlint-tsgolint": "^0.23.0",
     "simple-git-hooks": "^2.11.1",
