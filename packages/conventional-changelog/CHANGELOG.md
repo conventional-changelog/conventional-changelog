@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.2.0...conventional-changelog-v7.2.1) (2026-06-22)
+
+### Bug Fixes
+
+* improve version tag parsing in changelog generation ([#1466](https://github.com/conventional-changelog/conventional-changelog/issues/1466)) ([268e0b5](https://github.com/conventional-changelog/conventional-changelog/commit/268e0b5d466e9f621e280f7a0db3c7c75e08c572))
+
 ## [7.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v7.1.1...conventional-changelog-v7.2.0) (2026-03-01)
 
 ### Features
