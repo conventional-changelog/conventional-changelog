@@ -20,7 +20,7 @@
     "preset"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "exports": "./src/index.js",
   "publishConfig": {

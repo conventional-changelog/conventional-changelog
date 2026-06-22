@@ -29,7 +29,7 @@
     "deprecated"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "bin": {
     "git-raw-commits": "./src/cli.js"
