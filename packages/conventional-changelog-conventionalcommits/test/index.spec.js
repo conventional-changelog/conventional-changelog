@@ -7,6 +7,9 @@ import {
   toArray
 } from '../../../tools/index.ts'
 import preset, { DEFAULT_COMMIT_TYPES } from '../src/index.js'
+import { createParserOpts } from '../src/parser.js'
+import { createWriterOpts } from '../src/writer.js'
+import { CommitParser } from '../../conventional-commits-parser/src/index.ts'
 
 const { setups, preparing, tearsWithJoy } = BetterThanBefore()
 let testTools
@@ -708,5 +711,103 @@ describe('conventional-changelog-conventionalcommits', () => {
       expect(changelog).not.toContain('make it faster')
       expect(changelog).not.toContain('upgrade example from 1 to 2')
     })
+  })
+})
+
+describe('reference grouping at the writer boundary', () => {
+  // Pin the contract directly on the writer transform, not just on the rendered
+  // string: a reference is rendered under "closes" only when the parser marked it
+  // with a closing action. Otherwise reusing the changelog as a PR body would let
+  // GitHub auto-close issues the commit never closed.
+  function transformRefs(references) {
+    const { transform } = createWriterOpts()
+    const commit = {
+      type: 'feat',
+      scope: '',
+      subject: 'some feature',
+      header: 'feat: some feature',
+      hash: 'abcdef0123456789',
+      notes: [],
+      references
+    }
+    const context = {
+      host: 'https://github.com',
+      owner: 'conventional-changelog',
+      repository: 'conventional-changelog'
+    }
+
+    return transform(commit, context)
+  }
+
+  const ref = (action, issue) => ({
+    raw: `#${issue}`,
+    action,
+    owner: null,
+    repository: null,
+    prefix: '#',
+    issue
+  })
+
+  it('renders a closing-action reference under closingReferences', () => {
+    // e.g. "Closes #1"
+    const { closingReferences, otherReferences } = transformRefs([ref('Closes', '1')])
+
+    expect(closingReferences.map(r => r.issue)).toEqual(['1'])
+    expect(otherReferences).toEqual([])
+  })
+
+  it('renders a bare mention under otherReferences', () => {
+    // e.g. "part of #2" -> parser reports action === null
+    const { closingReferences, otherReferences } = transformRefs([ref(null, '2')])
+
+    expect(closingReferences).toEqual([])
+    expect(otherReferences.map(r => r.issue)).toEqual(['2'])
+  })
+
+  it('renders token-footer references (Fixes:/Refs:) under otherReferences', () => {
+    // "Fixes: #3" / "Refs: #4" arrive from the parser with action === null,
+    // so they must not be treated as closing references.
+    const { closingReferences, otherReferences } = transformRefs([ref(null, '3'), ref(null, '4')])
+
+    expect(closingReferences).toEqual([])
+    expect(otherReferences.map(r => r.issue)).toEqual(['3', '4'])
+  })
+
+  it('splits a mix of closing and non-closing references', () => {
+    const { closingReferences, otherReferences } = transformRefs([
+      ref('Closes', '1'),
+      ref(null, '2'),
+      ref(null, '3'),
+      ref(null, '4')
+    ])
+
+    expect(closingReferences.map(r => r.issue)).toEqual(['1'])
+    expect(otherReferences.map(r => r.issue)).toEqual([
+      '2',
+      '3',
+      '4'
+    ])
+  })
+
+  it('grounds the token-footer contract on the real parser: "Fixes:"/"Refs:" yield action === null and group under refs', () => {
+    // The synthetic cases above assume the parser emits action === null for
+    // token-style footers. Pin that assumption against the actual parser so a
+    // future parser change (e.g. treating "Fixes:" as a closing action) fails
+    // here and the auto-close semantics are revisited intentionally. The matching
+    // rendered output is asserted by the "supports multiple lines of footer
+    // information" test (-> "refs [#99]", not "closes [#99]").
+    const parser = new CommitParser(createParserOpts())
+    const commit = parser.parse('feat: complex new feature\n\nFixes: #99\nRefs: #100')
+
+    expect(commit.references.map(r => r.action)).toEqual([null, null])
+
+    const { closingReferences, otherReferences } = createWriterOpts().transform(commit, {
+      host: 'https://github.com',
+      owner: 'conventional-changelog',
+      repository: 'conventional-changelog'
+    })
+
+    expect(closingReferences).toEqual([])
+    expect(otherReferences.map(r => r.issue)).toEqual(['99', '100'])
   })
 })
