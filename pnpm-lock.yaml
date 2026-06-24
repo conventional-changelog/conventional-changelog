@@ -16,8 +16,8 @@ catalogs:
       specifier: ^2.0.0
       version: 2.0.0
     meow:
-      specifier: ^13.0.0
-      version: 13.2.0
+      specifier: ^14.0.0
+      version: 14.0.0
     semver:
       specifier: ^7.5.2
       version: 7.7.2
@@ -124,7 +124,7 @@ importers:
         version: 2.0.0
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
       normalize-package-data:
         specifier: ^7.0.0
         version: 7.0.0
@@ -177,7 +177,7 @@ importers:
         version: link:../conventional-commits-filter
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
       semver:
         specifier: 'catalog:'
         version: 7.7.2
@@ -197,7 +197,7 @@ importers:
         version: 1.2.0
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/conventional-recommended-bump:
@@ -216,7 +216,7 @@ importers:
         version: link:../conventional-commits-parser
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
     devDependencies:
       conventional-changelog-conventionalcommits:
         specifier: workspace:^
@@ -253,7 +253,7 @@ importers:
         version: link:../git-client
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/git-semver-tags:
@@ -263,7 +263,7 @@ importers:
         version: link:../git-client
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/standard-changelog:
@@ -279,7 +279,7 @@ importers:
         version: link:../conventional-changelog-angular
       meow:
         specifier: 'catalog:'
-        version: 13.2.0
+        version: 14.0.0
     publishDirectory: package
 
   packages/template:
