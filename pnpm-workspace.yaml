@@ -10,3 +10,6 @@ onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
 autoInstallPeers: false
+allowBuilds:
+  esbuild: true
+  simple-git-hooks: true
