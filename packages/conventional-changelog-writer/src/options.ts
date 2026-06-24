@@ -1,10 +1,15 @@
+import {
+  type CommitKnownProps,
+  type FinalTemplateContext,
+  headerPartial,
+  commitPartial,
+  footerPartial,
+  template
+} from '@conventional-changelog/template'
 import { valid as semverValid } from 'semver'
 import type {
   Options,
-  FinalTemplatesOptions,
-  FinalOptions,
-  FinalContext,
-  CommitKnownProps
+  FinalOptions
 } from './types/index.js'
 import {
   formatDate,
@@ -49,12 +54,10 @@ export function defaultCommitTransform<Commit extends CommitKnownProps = CommitK
 /**
  * Get final options object.
  * @param options
- * @param templates
  * @returns Final options object.
  */
 export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownProps>(
-  options: Options<Commit>,
-  templates: FinalTemplatesOptions
+  options: Options<Commit>
 ) {
   const prefinalOptions = {
     groupBy: 'type' as const,
@@ -63,13 +66,16 @@ export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownPro
     notesSort: 'text' as const,
     transform: defaultCommitTransform,
     generateOn: (commit: Commit) => Boolean(semverValid(commit.version)),
-    finalizeContext: (context: FinalContext<Commit>) => context,
+    finalizeContext: (context: FinalTemplateContext<Commit>) => context,
     debug: () => { /* noop */ },
     formatDate,
+    template,
+    headerPartial,
+    commitPartial,
+    footerPartial,
     reverse: false,
     ignoreReverted: true,
     doFlush: true,
-    ...templates,
     ...options
   }
   const finalOptions = {
@@ -90,7 +96,7 @@ export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownPro
  * @returns Final context object.
  */
 export function getGenerateOnFunction<Commit extends CommitKnownProps = CommitKnownProps>(
-  context: FinalContext<Commit>,
+  context: FinalTemplateContext<Commit>,
   options: FinalOptions<Commit>
 ) {
   const { generateOn } = options

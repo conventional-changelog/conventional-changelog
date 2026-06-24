@@ -46,7 +46,7 @@ npm i -D conventional-changelog-angular
 
 ## Angular Convention
 
-Angular's [commit message guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit).
+Angular's [commit message guidelines](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md).
 
 ### Examples
 

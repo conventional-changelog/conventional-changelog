@@ -1,4 +1,4 @@
-import type { Context } from 'conventional-changelog-writer'
+import type { TemplateContext } from 'conventional-changelog-writer'
 import type {
   Logger,
   HostedGitInfo,
@@ -9,7 +9,7 @@ import { hostsOptions } from './hosts/index.js'
 
 export function getHostOptions(
   repository: Partial<HostedGitInfo> | null | undefined,
-  context: Context | null | undefined
+  context: TemplateContext | null | undefined
 ) {
   const host = context?.host
   let type

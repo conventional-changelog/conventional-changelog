@@ -1,3 +1,4 @@
+export * from '@conventional-changelog/template'
 export type * from './types/index.js'
 export { transformCommit } from './commit.js'
 export { defaultCommitTransform } from './options.js'

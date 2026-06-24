@@ -4,80 +4,37 @@ import {
   expect
 } from 'vitest'
 import { delay } from '../../../tools/index.js'
-import type { CommitNote } from './types/index.js'
+import type {
+  CommitKnownProps,
+  FinalTemplateContext
+} from '@conventional-changelog/template'
 import { getFinalContext } from './context.js'
 import { getFinalOptions } from './options.js'
-import {
-  compileTemplates,
-  createTemplateRenderer
-} from './template.js'
+import { createTemplateRenderer } from './template.js'
 
-interface Commit {
-  header?: string | null
-  body?: string | null
-  footer?: string | null
-  notes: CommitNote[]
-  revert?: Record<string, string> | null
-  hash?: string | null
-  raw?: Commit
+function renderNotesCommitHeaders({ noteGroups }: FinalTemplateContext) {
+  return noteGroups
+    ?.flatMap(group => group.notes)
+    .map(note => (note as typeof note & { commit: CommitKnownProps }).commit.header)
+    .join('') || ''
+}
+
+function renderContextDetails({ commitGroups, noteGroups }: FinalTemplateContext) {
+  return `${commitGroups?.map(group => `${group.commits.length}${
+    group.commits.map(commit => commit.header).join('')
+  }`).join('') || ''}${
+    noteGroups?.map(group => `${group.title}${
+      group.notes.map(note => note.text).join('')
+    }`).join('') || ''
+  }`
 }
 
 describe('conventional-changelog-writer', () => {
   describe('template', () => {
-    const emptyTemplates = {
-      mainTemplate: '',
-      headerPartial: '',
-      commitPartial: '',
-      footerPartial: ''
-    }
-
-    describe('compileTemplates', () => {
-      it('should compile templates with default partials', () => {
-        const templates = {
-          mainTemplate: '{{> header}}{{> commit}}{{> footer}}',
-          headerPartial: 'header\n',
-          commitPartial: 'commit\n',
-          footerPartial: 'footer\n'
-        }
-        const compiled = compileTemplates(templates)
-
-        expect(compiled({})).toBe('header\ncommit\nfooter\n')
-      })
-
-      it('should compile templates with default partials if one is an empty string', () => {
-        const templates = {
-          mainTemplate: '{{> header}}{{> commit}}{{> footer}}',
-          headerPartial: '',
-          commitPartial: 'commit\n',
-          footerPartial: 'footer\n'
-        }
-        const compiled = compileTemplates(templates)
-
-        expect(compiled({})).toBe('commit\nfooter\n')
-      })
-
-      it('should compile templates with customized partials', () => {
-        const templates = {
-          ...emptyTemplates,
-          mainTemplate: '{{> partial1}}{{> partial2}}{{> partial3}}',
-          partials: {
-            partial1: 'partial1\n',
-            partial2: 'partial2\n',
-            partial3: 'partial3\n',
-            partial4: null
-          }
-        }
-        const compiled = compileTemplates(templates)
-
-        expect(compiled({})).toBe('partial1\npartial2\npartial3\n')
-      })
-    })
-
     describe('createTemplateRenderer', () => {
       it('should merge with the key commit', async () => {
-        const finalOptions = getFinalOptions({}, {
-          ...emptyTemplates,
-          mainTemplate: '{{version}}'
+        const finalOptions = getFinalOptions({
+          template: context => context.version || ''
         })
         const finalContext = getFinalContext({
           version: 'a'
@@ -92,13 +49,11 @@ describe('conventional-changelog-writer', () => {
 
       it('should attach a copy of the commit to note', async () => {
         const finalOptions = getFinalOptions({
-          ignoreReverted: true
-        }, {
-          ...emptyTemplates,
-          mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}'
+          ignoreReverted: true,
+          template: renderNotesCommitHeaders
         })
         const finalContext = getFinalContext({}, finalOptions)
-        const log = await createTemplateRenderer<Commit>(finalContext, finalOptions)([
+        const log = await createTemplateRenderer(finalContext, finalOptions)([
           {
             header: 'feat(): new feature',
             body: null,
@@ -144,9 +99,8 @@ describe('conventional-changelog-writer', () => {
       })
 
       it('should not html escape any content', async () => {
-        const finalOptions = getFinalOptions({}, {
-          ...emptyTemplates,
-          mainTemplate: '{{version}}'
+        const finalOptions = getFinalOptions({
+          template: context => context.version || ''
         })
         const finalContext = getFinalContext({}, finalOptions)
         const log = await createTemplateRenderer(finalContext, finalOptions)([], {
@@ -159,13 +113,11 @@ describe('conventional-changelog-writer', () => {
 
       it('should ignore a reverted commit', async () => {
         const finalOptions = getFinalOptions({
-          ignoreReverted: true
-        }, {
-          ...emptyTemplates,
-          mainTemplate: '{{#each commitGroups}}{{commits.length}}{{#each commits}}{{header}}{{/each}}{{/each}}{{#each noteGroups}}{{title}}{{#each notes}}{{text}}{{/each}}{{/each}}'
+          ignoreReverted: true,
+          template: renderContextDetails
         })
         const finalContext = getFinalContext({}, finalOptions)
-        const log = await createTemplateRenderer<Commit>(finalContext, finalOptions)([
+        const log = await createTemplateRenderer(finalContext, finalOptions)([
           {
             header: 'revert: feat(): amazing new module\n',
             body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',
@@ -250,10 +202,8 @@ describe('conventional-changelog-writer', () => {
           finalizeContext: (context) => {
             context.title = 'oh'
             return context
-          }
-        }, {
-          ...emptyTemplates,
-          mainTemplate: '{{version}} {{title}}'
+          },
+          template: context => `${context.version} ${context.title}`
         })
         const finalContext = getFinalContext({}, finalOptions)
         const log = await createTemplateRenderer(finalContext, finalOptions)([], {
@@ -270,10 +220,8 @@ describe('conventional-changelog-writer', () => {
             await delay(100)
             context.title = 'oh'
             return context
-          }
-        }, {
-          ...emptyTemplates,
-          mainTemplate: '{{version}} {{title}}'
+          },
+          template: context => `${context.version} ${context.title}`
         })
         const finalContext = getFinalContext({}, finalOptions)
         const log = await createTemplateRenderer(finalContext, finalOptions)([], {
@@ -284,7 +232,7 @@ describe('conventional-changelog-writer', () => {
         expect(log).toBe('`a` oh\n')
       })
 
-      it('should finalize context', async () => {
+      it('should finalize context with commits and key commit', async () => {
         const finalOptions = getFinalOptions({
           finalizeContext: (context, _options, commits, keyCommit) => {
             context.title = 'oh'
@@ -292,10 +240,8 @@ describe('conventional-changelog-writer', () => {
             context.version = keyCommit?.version || ''
 
             return context
-          }
-        }, {
-          ...emptyTemplates,
-          mainTemplate: '{{version}} {{title}} {{date}} {{version}}'
+          },
+          template: context => `${context.version} ${context.title} ${context.date} ${context.version}`
         })
         const finalContext = getFinalContext({}, finalOptions)
         const log = await createTemplateRenderer(finalContext, finalOptions)([], {
@@ -314,14 +260,12 @@ describe('conventional-changelog-writer', () => {
             expect(originalCommits.length).toBe(4)
 
             return context
-          }
-        }, {
-          ...emptyTemplates,
-          mainTemplate: '{{#each noteGroups}}{{#each notes}}{{commit.header}}{{/each}}{{/each}}'
+          },
+          template: renderNotesCommitHeaders
         })
         const finalContext = getFinalContext({}, finalOptions)
 
-        await createTemplateRenderer<Commit>(finalContext, finalOptions)([
+        await createTemplateRenderer(finalContext, finalOptions)([
           {
             header: 'revert: feat(): amazing new module\n',
             body: 'This reverts commit 56185b7356766d2b30cfa2406b257080272e0b7a.\n',

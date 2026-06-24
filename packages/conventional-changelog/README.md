@@ -206,7 +206,7 @@ Set conventional-changelog options.
 | debug | `function` |  | Logger for debug messages |
 | formatDate | `(date: Date) => string` |  | Custom date formatter function. |
 
-#### `generator.context(context: Context): this`
+#### `generator.context(context: TemplateContext): this`
 
 Set the [writer context](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-writer#context).
 

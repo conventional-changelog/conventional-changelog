@@ -44,8 +44,7 @@
     "linkDirectory": false
   },
   "files": [
-    "dist",
-    "templates/*.hbs"
+    "dist"
   ],
   "scripts": {
     "clear:package": "del ./package",
@@ -57,9 +56,9 @@
     "test:types": "tsgo --noEmit"
   },
   "dependencies": {
+    "@conventional-changelog/template": "workspace:^",
     "@simple-libs/stream-utils": "catalog:",
     "conventional-commits-filter": "workspace:^",
-    "handlebars": "^4.7.7",
     "meow": "catalog:",
     "semver": "catalog:"
   },

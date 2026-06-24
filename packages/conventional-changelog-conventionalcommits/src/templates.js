@@ -1,68 +1,117 @@
-export const mainTemplate = `{{> header}}
-{{#if noteGroups}}
-{{#each noteGroups}}
+import {
+  bold,
+  each,
+  link,
+  list,
+  reference,
+  heading,
+  newline,
+  segments,
+  strings,
+  words
+} from '@conventional-changelog/template'
 
-### ⚠ {{title}}
+export function headerPartial(context) {
+  const {
+    linkCompare,
+    version,
+    title,
+    date
+  } = context
+  const versionText = linkCompare
+    ? link(version, this.formatCompareUrl(context))
+    : version
 
-{{#each notes}}
-* {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}
-{{/each}}
-{{/each}}
-{{/if}}
-{{#each commitGroups}}
+  return heading(
+    2,
+    words(
+      versionText,
+      title && `"${title}"`,
+      date && `(${date})`
+    )
+  )
+}
 
-{{#if title}}
-### {{title}}
+export function commitPartial(context, commit) {
+  const { linkReferences } = context
+  const {
+    scope,
+    subject,
+    header,
+    shortHash,
+    hash,
+    references
+  } = commit
+  const commitLink = hash
+    ? linkReferences
+      ? `(${link(shortHash, this.formatCommitUrl(context, commit))})`
+      : shortHash
+    : ''
+  const renderedReferences = each(
+    references,
+    (linkReference) => {
+      if (linkReferences) {
+        return link(
+          reference(linkReference),
+          this.formatIssueUrl(context, linkReference)
+        )
+      }
 
-{{/if}}
-{{#each commits}}
-{{> commit root=@root}}
-{{/each}}
-{{/each}}
-{{> footer}}
-`
+      return reference(linkReference)
+    },
+    ' '
+  )
 
-export const headerPartial = `## {{#if @root.linkCompare~}}
-  [{{version}}]({{compareUrlFormat}})
-{{~else}}
-  {{~version}}
-{{~/if}}
-{{~#if title}} "{{title}}"
-{{~/if}}
-{{~#if date}} ({{date}})
-{{/if}}
-`
+  return strings(
+    words(
+      scope && bold(`${scope}:`),
+      subject || header || '',
+      commitLink
+    ),
+    renderedReferences && `, closes ${renderedReferences}`
+  )
+}
 
-export const commitPartial = `*{{#if scope}} **{{scope}}:**
-{{~/if}} {{#if subject}}
-  {{~subject}}
-{{~else}}
-  {{~header}}
-{{~/if}}
+export function footerPartial() {
+  return ''
+}
 
-{{~!-- commit link --}}{{~#if hash}} {{#if @root.linkReferences~}}
-  ([{{shortHash}}]({{commitUrlFormat}}))
-{{~else}}
-  {{~shortHash}}
-{{~/if}}{{~/if}}
+export function template(context) {
+  const {
+    headerPartial,
+    commitPartial,
+    footerPartial,
+    noteGroups,
+    commitGroups
+  } = context
 
-{{~!-- commit references --}}
-{{~#if references~}}
-  , closes
-  {{~#each references}} {{#if @root.linkReferences~}}
-    [
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}]({{issueUrlFormat}})
-  {{~else}}
-    {{~#if this.owner}}
-      {{~this.owner}}/
-    {{~/if}}
-    {{~this.repository}}{{this.prefix}}{{this.issue}}
-  {{~/if}}{{/each}}
-{{~/if}}
-
-`
-
-export const footerPartial = ``
+  return segments(
+    headerPartial(context),
+    each(
+      noteGroups,
+      group => segments(
+        heading(3, words('⚠', group.title)),
+        list(
+          group.notes,
+          note => words(
+            note.commit.scope && bold(`${note.commit.scope}:`),
+            note.text
+          )
+        )
+      ),
+      newline(2)
+    ),
+    each(
+      commitGroups,
+      group => segments(
+        group.title && heading(3, group.title),
+        list(
+          group.commits,
+          commit => commitPartial(context, commit)
+        )
+      ),
+      newline(2)
+    ),
+    footerPartial(context)
+  )
+}

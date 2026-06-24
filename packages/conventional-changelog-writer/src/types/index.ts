@@ -1,7 +1,5 @@
-import type { CommitKnownProps } from './commit.js'
+import type { CommitKnownProps } from '@conventional-changelog/template'
 
-export type * from './commit.js'
-export type * from './context.js'
 export type * from './options.js'
 export type * from './utils.js'
 

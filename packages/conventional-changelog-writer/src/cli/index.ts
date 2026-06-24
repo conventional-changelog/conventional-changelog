@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { pipeline } from 'stream/promises'
+import type { TemplateContext } from '@conventional-changelog/template'
 import meow from 'meow'
 import {
-  type Context,
   type Options,
   type CommitKnownProps,
   writeChangelog
@@ -42,7 +42,7 @@ const {
   context: contextPath,
   options: optionsPath
 } = cli.flags
-let context: Context | undefined
+let context: TemplateContext | undefined
 let options: Options | undefined
 
 if (contextPath) {

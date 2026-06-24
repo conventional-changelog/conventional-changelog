@@ -1,7 +1,7 @@
 import type {
   AnyObject,
   TransformedCommit
-} from './types/index.js'
+} from '@conventional-changelog/template'
 
 function preventModifications<T extends AnyObject>(object: T): T {
   return new Proxy(object, {

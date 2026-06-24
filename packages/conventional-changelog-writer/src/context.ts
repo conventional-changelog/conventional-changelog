@@ -1,13 +1,15 @@
-import semver from 'semver'
 import type {
   CommitKnownProps,
   CommitGroup,
   CommitNote,
   NoteGroup,
-  FinalOptions,
-  Context,
-  FinalContext
-} from './types/index.js'
+  FinalTemplateContext,
+  TemplateContext,
+  TransformedCommit
+} from '@conventional-changelog/template'
+import semver from 'semver'
+import { filterRevertedCommitsSync } from 'conventional-commits-filter'
+import type { FinalOptions } from './types/index.js'
 import { stringify } from './utils.js'
 
 export function getCommitGroups<Commit extends CommitKnownProps = CommitKnownProps>(
@@ -112,13 +114,16 @@ export function getExtraContext<Commit extends CommitKnownProps = CommitKnownPro
  * @returns Final context with default values.
  */
 export function getFinalContext<Commit extends CommitKnownProps = CommitKnownProps>(
-  context: Context<Commit>,
-  options: Pick<FinalOptions<Commit>, 'formatDate'>
+  context: TemplateContext<Commit>,
+  options: Pick<FinalOptions<Commit>, 'formatDate' | 'headerPartial' | 'commitPartial' | 'footerPartial'>
 ) {
-  const finalContext: FinalContext<Commit> = {
+  const finalContext: FinalTemplateContext<Commit> = {
     commit: 'commits',
     issue: 'issues',
     date: options.formatDate(new Date()),
+    headerPartial: options.headerPartial,
+    commitPartial: options.commitPartial,
+    footerPartial: options.footerPartial,
     ...context
   }
 
@@ -142,17 +147,33 @@ export function getFinalContext<Commit extends CommitKnownProps = CommitKnownPro
  * @param notes
  * @param context
  * @param options
- * @returns Context prepared for template.
+ * @returns TemplateContext prepared for template.
  */
 export async function getTemplateContext<Commit extends CommitKnownProps = CommitKnownProps>(
   keyCommit: Commit | null,
-  commits: Commit[],
-  filteredCommits: Commit[],
-  notes: CommitNote[],
-  context: FinalContext<Commit>,
+  commits: TransformedCommit<Commit>[],
+  context: FinalTemplateContext<Commit>,
   options: FinalOptions<Commit>
 ) {
-  let templateContext: FinalContext<Commit> = {
+  const notes: CommitNote[] = []
+  const filteredCommits = (
+    options.ignoreReverted
+      ? Array.from(filterRevertedCommitsSync(commits))
+      : commits
+  ).map(commit => ({
+    ...commit,
+    notes: commit.notes.map((note) => {
+      const commitNote = {
+        ...note,
+        commit
+      }
+
+      notes.push(commitNote)
+
+      return commitNote
+    })
+  }))
+  let templateContext: FinalTemplateContext<Commit> = {
     ...context,
     ...keyCommit as Commit,
     ...getExtraContext(filteredCommits, notes, options)

@@ -1,5 +1,5 @@
 module.exports = Promise.resolve({
   writer: {
-    mainTemplate: '{{commitGroups.[0].commits.[0].type}}{{testContext}}template'
+    template: context => `${context.commitGroups?.[0]?.commits?.[0]?.type || ''}${context.testContext || ''}template`
   }
 })

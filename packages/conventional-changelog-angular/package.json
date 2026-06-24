@@ -22,7 +22,10 @@
   "engines": {
     "node": ">=22"
   },
-  "exports": "./src/index.js",
+  "exports": {
+    "types": "./src/index.d.ts",
+    "import": "./src/index.js"
+  },
   "publishConfig": {
     "directory": "package",
     "linkDirectory": false
@@ -36,6 +39,7 @@
     "postpublish": "pnpm clear"
   },
   "dependencies": {
+    "@conventional-changelog/template": "workspace:^",
     "compare-func": "catalog:"
   }
 }
