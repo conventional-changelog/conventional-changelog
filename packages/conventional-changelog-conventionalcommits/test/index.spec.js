@@ -244,14 +244,14 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).toContain('[conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
   })
 
-  it('should properly format external repository issues given an `issueUrlFormat`', async () => {
+  it('should properly format external repository issues given a `formatIssueUrl`', async () => {
     preparing(1)
 
     const log = new ConventionalChangelog(testTools.cwd)
       .readPackage()
       .config(preset({
         issuePrefixes: ['#', 'GH-'],
-        issueUrlFormat: 'issues://{{repository}}/issues/{{id}}'
+        formatIssueUrl: (context, reference) => `issues://${reference.repository || context.repository}/issues/${reference.issue}`
       }))
       .write()
     const chunks = await toArray(log)
@@ -261,13 +261,13 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).toContain('[GH-1](issues://conventional-changelog/issues/1)')
   })
 
-  it('should properly format issues in external issue tracker given an `issueUrlFormat` with `prefix`', async () => {
+  it('should properly format issues in external issue tracker given a `formatIssueUrl` with `prefix`', async () => {
     preparing(1)
 
     const log = new ConventionalChangelog(testTools.cwd)
       .readPackage()
       .config(preset({
-        issueUrlFormat: 'https://example.com/browse/{{prefix}}{{id}}',
+        formatIssueUrl: (_context, reference) => `https://example.com/browse/${reference.prefix}${reference.issue}`,
         issuePrefixes: ['EXAMPLE-']
       }))
       .write()
@@ -302,13 +302,13 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).not.toContain('closes [#88](https://github.com/conventional-changelog/conventional-changelog/issues/88)')
   })
 
-  it('should replace @user with configured userUrlFormat', async () => {
+  it('should replace @user with configured formatUserUrl', async () => {
     preparing(4)
 
     const log = new ConventionalChangelog(testTools.cwd)
       .readPackage()
       .config(preset({
-        userUrlFormat: 'https://foo/{{user}}'
+        formatUserUrl: (_context, user) => `https://foo/${user}`
       }))
       .write()
     const chunks = await toArray(log)
@@ -388,8 +388,8 @@ describe('conventional-changelog-conventionalcommits', () => {
     const log = new ConventionalChangelog(testTools.cwd)
       .readPackage(path.join(__dirname, 'fixtures/_unknown-host.json'))
       .config(preset({
-        commitUrlFormat: 'http://unknown/commit/{{hash}}',
-        compareUrlFormat: 'http://unknown/compare/{{previousTag}}...{{currentTag}}'
+        formatCommitUrl: (_context, commit) => `http://unknown/commit/${commit.hash}`,
+        formatCompareUrl: context => `http://unknown/compare/${context.previousTag}...${context.currentTag}`
       }))
       .write()
     const chunks = await toArray(log)

@@ -488,8 +488,8 @@ describe('conventional-changelog', () => {
       expect(chunks.length).toBe(1)
 
       expect(chunks[0]).toContain('](github/b/a/commit/')
-      expect(chunks[0]).toContain('closes [#42](github/b/a/issues/42)')
-      expect(chunks[0]).not.toContain('closes [#71](github/b/a/issues/71)')
+      expect(chunks[0]).toContain('closes [@42](github/b/a/issues/42)')
+      expect(chunks[0]).not.toContain('closes [@71](github/b/a/issues/71)')
     })
 
     it('should read host configs if only `parserOpts.referenceActions` is missing', async () => {
@@ -637,7 +637,7 @@ describe('conventional-changelog', () => {
           releaseCount: 0
         })
         .writer({
-          mainTemplate: '{{gitSemverTags}} or {{gitSemverTags.[0]}}'
+          template: (context: any) => `${context.gitSemverTags} or ${context.gitSemverTags[0]}`
         })
         .write()
       const chunks = await toArray(log)
@@ -665,7 +665,9 @@ describe('conventional-changelog', () => {
           linkCompare: false
         })
         .writer({
-          mainTemplate: '{{#if linkCompare}}{{previousTag}}...{{currentTag}}{{else}}Not linked{{/if}}',
+          template: context => (context.linkCompare
+            ? `${context.previousTag}...${context.currentTag}`
+            : 'Not linked'),
           transform: () => null
         })
         .write()
@@ -814,8 +816,8 @@ describe('conventional-changelog', () => {
       const log = new ConventionalChangelog(testTools.cwd)
         .readPackage()
         .writer({
-          headerPartial: '',
-          commitPartial: '* {{header}}\n'
+          headerPartial: () => '',
+          commitPartial: (_context, commit) => commit.header || ''
         })
         .write()
       const chunks = await toArray(log)
@@ -954,7 +956,7 @@ describe('conventional-changelog', () => {
             version: '3.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -978,7 +980,7 @@ describe('conventional-changelog', () => {
             version: '3.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -1002,7 +1004,7 @@ describe('conventional-changelog', () => {
             version: '3.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}',
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`,
             generateOn: 'version'
           })
           .write()
@@ -1029,7 +1031,7 @@ describe('conventional-changelog', () => {
             version: '3.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}',
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`,
             transform: () => null
           })
           .write()
@@ -1057,7 +1059,7 @@ describe('conventional-changelog', () => {
             version: '3.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}',
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`,
             transform: () => null
           })
           .write()
@@ -1083,7 +1085,7 @@ describe('conventional-changelog', () => {
             version: '2.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -1105,7 +1107,7 @@ describe('conventional-changelog', () => {
             version: '4.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -1127,7 +1129,7 @@ describe('conventional-changelog', () => {
             version: 'v4.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -1146,7 +1148,7 @@ describe('conventional-changelog', () => {
             version: '1.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -1165,7 +1167,7 @@ describe('conventional-changelog', () => {
             version: 'v1.0.0'
           })
           .writer({
-            mainTemplate: '{{previousTag}}...{{currentTag}}'
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
           })
           .write()
         const chunks = await toArray(log)
@@ -1188,7 +1190,9 @@ describe('conventional-changelog', () => {
             version: '3.0.0'
           })
           .writer({
-            mainTemplate: '{{#if linkCompare}}{{previousTag}}...{{currentTag}}{{else}}Not linked{{/if}}',
+            template: context => (context.linkCompare
+              ? `${context.previousTag || ''}...${context.currentTag || ''}`
+              : 'Not linked'),
             transform: () => null
           })
           .write()

@@ -1,6 +1,6 @@
 import compareFunc from 'compare-func'
 import {
-  mainTemplate,
+  template,
   headerPartial,
   commitPartial,
   footerPartial
@@ -10,7 +10,7 @@ const COMMIT_HASH_LENGTH = 7
 
 export function createWriterOpts() {
   return {
-    mainTemplate,
+    template,
     headerPartial,
     commitPartial,
     footerPartial,

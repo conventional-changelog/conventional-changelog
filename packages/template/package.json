@@ -1,0 +1,52 @@
+{
+  "name": "@conventional-changelog/template",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Template utilities for conventional changelog generation.",
+  "author": {
+    "name": "Dan Onoshko",
+    "email": "danon0404@gmail.com",
+    "url": "https://github.com/dangreen"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/template#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conventional-changelog/conventional-changelog.git",
+    "directory": "packages/template"
+  },
+  "bugs": {
+    "url": "https://github.com/conventional-changelog/conventional-changelog/issues"
+  },
+  "keywords": [
+    "conventional-changelog",
+    "changelog",
+    "template",
+    "render",
+    "helpers"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": "./src/index.ts",
+  "publishConfig": {
+    "exports": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "directory": "package",
+    "linkDirectory": false
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clear:package": "del ./package",
+    "clear:dist": "del ./dist",
+    "clear": "del ./package ./dist",
+    "prepublishOnly": "run build clear:package clean-publish",
+    "postpublish": "pnpm clear:package",
+    "build": "tsgo -p tsconfig.build.json",
+    "test:types": "tsgo --noEmit"
+  }
+}

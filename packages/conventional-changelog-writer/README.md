@@ -151,7 +151,7 @@ Variables that will be interpolated to the template. This object contains, but n
 
 Type: `string`
 
-Version number of the up-coming release. If `version` is found in the last commit before generating logs, it will be overwritten.
+Version number of the upcoming release. If `version` is found in the last commit before generating logs, it will be overwritten.
 
 ##### title
 

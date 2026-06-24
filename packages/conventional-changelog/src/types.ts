@@ -9,8 +9,8 @@ import type {
 } from 'conventional-commits-parser'
 import type {
   Options as WriterOptions,
-  Context,
-  FinalContext
+  TemplateContext,
+  FinalTemplateContext
 } from 'conventional-changelog-writer'
 import type {
   HostType,
@@ -38,7 +38,7 @@ export interface HostOptions {
   issuePrefixes: string[]
 }
 
-export interface FinalizedContext extends FinalContext {
+export interface FinalizedContext extends FinalTemplateContext {
   currentTag?: string | null
   previousTag?: string | null
   linkCompare?: boolean
@@ -97,7 +97,7 @@ export interface Options {
 export interface Params extends Preset {
   commits: GetCommitsParams
   options: Options
-  context?: Context
+  context?: TemplateContext
   repository?: Partial<HostedGitInfo> | null
   package?: Package
 }

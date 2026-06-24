@@ -55,7 +55,7 @@ import createPreset from 'conventional-changelog-conventionalcommits'
 
 const config = createPreset({
   issuePrefixes: ['TEST-'],
-  issueUrlFormat: 'https://myBugTracker.com/{{prefix}}{{id}}'
+  formatIssueUrl: (_context, reference) => `https://myBugTracker.com/${reference.prefix}${reference.issue}`
 })
 // do something with the config
 ```
@@ -67,8 +67,7 @@ or json config like that:
   "options": {
     "preset": {
       "name": "conventionalcommits",
-      "issuePrefixes": ["TEST-"],
-      "issueUrlFormat": "https://myBugTracker.com/{{prefix}}{{id}}"
+      "issuePrefixes": ["TEST-"]
     }
   }
 }
@@ -82,8 +81,14 @@ See [conventional-changelog-config-spec](https://github.com/conventional-changel
 
 | Option | Description |
 |--------|-------------|
-| ignoreCommits | Regular expression to match and exclude commits from the changelog. Commits matching this pattern will be ignored. |
-| types | Array of commit type objects defining which types to include in the changelog. Hidden types are excluded from the changelog but may still trigger version bumps. Default value accessible via `DEFAULT_COMMIT_TYPES` export. |
-| bumpStrict | When `true`, version bumps occur only for breaking changes or non-hidden commit types. When `false` (default), any commit can trigger a version bump. |
+| ignoreCommits | Regular expression to match and exclude raw commits before parsing. |
+| issuePrefixes | Array of issue prefixes parsed as issue references. Defaults to `['#']`. |
+| types | Array of commit type objects defining sections, hidden types, and optional scope-specific type handling. Default value is available via the `DEFAULT_COMMIT_TYPES` export. |
 | scope | String or array of scope names to filter commits. Only commits with matching scopes will be included. When `scopeOnly` is `false` (default), commits without any scope are also included. |
 | scopeOnly | When `true` and `scope` is specified, excludes commits that have no scope. When `false` (default), includes both scoped and unscooped commits when filtering by scope. |
+| preMajor | When `true`, breaking changes and features are downgraded by one semver level before the first major release. |
+| bumpStrict | When `true`, version bumps occur only for breaking changes or non-hidden commit types. When `false` (default), any commit can trigger a version bump. |
+| formatIssueUrl | Function that formats issue reference URLs. Receives `(context, reference)`. |
+| formatCommitUrl | Function that formats commit URLs. Receives `(context, commit)`. |
+| formatCompareUrl | Function that formats release comparison URLs. Receives `(context)`. |
+| formatUserUrl | Function that formats user mention URLs. Receives `(context, user)`. |

@@ -1,59 +1,32 @@
 import compareFunc from 'compare-func'
+import { link } from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import { matchScope } from './utils.js'
 import {
-  mainTemplate,
+  template,
   headerPartial,
   commitPartial,
   footerPartial
 } from './templates.js'
+import * as format from './format.js'
 
 const COMMIT_HASH_LENGTH = 7
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
-/**
- * Handlebar partials for various property substitutions based on commit context.
- */
-const owner = '{{#if this.owner}}{{~this.owner}}{{else}}{{~@root.owner}}{{/if}}'
-const host = '{{~@root.host}}'
-const repository = '{{#if this.repository}}{{~this.repository}}{{else}}{{~@root.repository}}{{/if}}'
 
 export function createWriterOpts(config) {
   const finalConfig = {
     types: DEFAULT_COMMIT_TYPES,
-    issueUrlFormat: '{{host}}/{{owner}}/{{repository}}/issues/{{id}}',
-    commitUrlFormat: '{{host}}/{{owner}}/{{repository}}/commit/{{hash}}',
-    compareUrlFormat: '{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}',
-    userUrlFormat: '{{host}}/{{user}}',
     issuePrefixes: ['#'],
+    ...format,
     ...config
   }
-  const commitUrlFormat = expandTemplate(finalConfig.commitUrlFormat, {
-    host,
-    owner,
-    repository
-  })
-  const compareUrlFormat = expandTemplate(finalConfig.compareUrlFormat, {
-    host,
-    owner,
-    repository
-  })
-  const issueUrlFormat = expandTemplate(finalConfig.issueUrlFormat, {
-    host,
-    owner,
-    repository,
-    id: '{{this.issue}}',
-    prefix: '{{this.prefix}}'
-  })
   const commitGroupOrder = finalConfig.types.flatMap(t => t.section).filter(t => t)
 
   return {
-    mainTemplate,
-    headerPartial: headerPartial
-      .replace(/{{compareUrlFormat}}/g, compareUrlFormat),
-    commitPartial: commitPartial
-      .replace(/{{commitUrlFormat}}/g, commitUrlFormat)
-      .replace(/{{issueUrlFormat}}/g, issueUrlFormat),
-    footerPartial,
+    template,
+    headerPartial: headerPartial.bind(finalConfig),
+    commitPartial: commitPartial.bind(finalConfig),
+    footerPartial: footerPartial.bind(finalConfig),
     transform: (commit, context) => {
       let discard = true
       const issues = []
@@ -102,15 +75,12 @@ export function createWriterOpts(config) {
         subject = subject.replace(re, (_, prefix, issue) => {
           issues.push(prefix + issue)
 
-          const url = expandTemplate(finalConfig.issueUrlFormat, {
-            host: context.host,
-            owner: context.owner,
-            repository: context.repository,
-            id: issue,
+          const issueUrl = finalConfig.formatIssueUrl(context, {
+            issue,
             prefix
           })
 
-          return `[${prefix}${issue}](${url})`
+          return link(`${prefix}${issue}`, issueUrl)
         })
         // User URLs.
         subject = subject.replace(/`[^`]*`|\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (match, user) => {
@@ -123,14 +93,9 @@ export function createWriterOpts(config) {
             return `@${user}`
           }
 
-          const usernameUrl = expandTemplate(finalConfig.userUrlFormat, {
-            host: context.host,
-            owner: context.owner,
-            repository: context.repository,
-            user
-          })
+          const usernameUrl = finalConfig.formatUserUrl(context, user)
 
-          return `[@${user}](${usernameUrl})`
+          return link(`@${user}`, usernameUrl)
         })
       }
 
@@ -175,16 +140,4 @@ function findTypeEntry(types, commit) {
 
     return true
   })
-}
-
-// expand on the simple mustache-style templates supported in
-// configuration (we may eventually want to use handlebars for this).
-function expandTemplate(template, context) {
-  let expanded = template
-
-  Object.keys(context).forEach((key) => {
-    expanded = expanded.replace(new RegExp(`{{${key}}}`, 'g'), context[key])
-  })
-
-  return expanded
 }

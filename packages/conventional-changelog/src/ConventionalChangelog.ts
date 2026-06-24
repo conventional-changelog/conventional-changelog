@@ -12,8 +12,8 @@ import {
 } from '@conventional-changelog/git-client'
 import {
   type Options as WriterOptions,
-  type Context,
   type Details,
+  type TemplateContext,
   transformCommit,
   formatDate,
   writeChangelog
@@ -507,7 +507,7 @@ export class ConventionalChangelog {
    * @param context - Writer context data
    * @returns this
    */
-  context(context: Context) {
+  context(context: TemplateContext) {
     this.composeParams({
       context
     })
