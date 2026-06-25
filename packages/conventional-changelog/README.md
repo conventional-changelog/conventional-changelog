@@ -64,6 +64,19 @@ npm i conventional-changelog
 
 ## Usage
 
+Install the preset you want to use alongside `conventional-changelog`, for example `angular`:
+
+```sh
+# pnpm
+pnpm add conventional-changelog-angular
+# yarn
+yarn add conventional-changelog-angular
+# npm
+npm i conventional-changelog-angular
+```
+
+Then pass the preset name with `-p`:
+
 ```sh
 conventional-changelog -p angular
 ```
