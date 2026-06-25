@@ -286,7 +286,7 @@ Monorepo package scopes:
 ```text
 fix(conventional-changelog-writer): preserve reference order
 refactor(conventional-commits-parser): split token normalization
-test(git-semver-tags): cover lightweight tags
+test(git-client): cover lightweight tags
 ```
 
 ## Output Style

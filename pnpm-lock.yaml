@@ -243,26 +243,6 @@ importers:
         version: link:../conventional-commits-parser
     publishDirectory: package
 
-  packages/git-raw-commits:
-    dependencies:
-      '@conventional-changelog/git-client':
-        specifier: workspace:^
-        version: link:../git-client
-      meow:
-        specifier: 'catalog:'
-        version: 14.0.0
-    publishDirectory: package
-
-  packages/git-semver-tags:
-    dependencies:
-      '@conventional-changelog/git-client':
-        specifier: workspace:^
-        version: link:../git-client
-      meow:
-        specifier: 'catalog:'
-        version: 14.0.0
-    publishDirectory: package
-
   packages/standard-changelog:
     dependencies:
       '@conventional-changelog/git-client':
