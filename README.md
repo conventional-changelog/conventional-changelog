@@ -44,6 +44,7 @@ We recommend considering the following high level tools for automating versionin
 | [`conventional-commits-parser`](packages/conventional-commits-parser#readme) | [![NPM version][conventional-commits-parser-npm]][conventional-commits-parser-npm-url] | [![Dependencies status][conventional-commits-parser-deps]][conventional-commits-parser-deps-url] |
 | [`conventional-recommended-bump`](packages/conventional-recommended-bump#readme) | [![NPM version][conventional-recommended-bump-npm]][conventional-recommended-bump-npm-url] | [![Dependencies status][conventional-recommended-bump-deps]][conventional-recommended-bump-deps-url] |
 | [`@conventional-changelog/git-client`](packages/git-client#readme) | [![NPM version][git-client-npm]][git-client-npm-url] | [![Dependencies status][git-client-deps]][git-client-deps-url] |
+| [`@conventional-changelog/template`](packages/template#readme) | [![NPM version][template-npm]][template-npm-url] | [![Dependencies status][template-deps]][template-deps-url] |
 | [`standard-changelog`](packages/standard-changelog#readme) | [![NPM version][standard-changelog-npm]][standard-changelog-npm-url] | [![Dependencies status][standard-changelog-deps]][standard-changelog-deps-url] |
 
 <!-- conventional-changelog -->
@@ -117,6 +118,14 @@ We recommend considering the following high level tools for automating versionin
 
 [git-client-deps]: https://img.shields.io/librariesio/release/npm/@conventional-changelog/git-client
 [git-client-deps-url]: https://libraries.io/npm/@conventional-changelog/git-client
+
+<!-- template -->
+
+[template-npm]: https://img.shields.io/npm/v/@conventional-changelog/template
+[template-npm-url]: https://www.npmjs.com/package/@conventional-changelog/template
+
+[template-deps]: https://img.shields.io/librariesio/release/npm/@conventional-changelog/template
+[template-deps-url]: https://libraries.io/npm/@conventional-changelog/template
 
 <!-- standard-changelog -->
 

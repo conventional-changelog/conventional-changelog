@@ -16,25 +16,6 @@ import {
 } from './options.js'
 import { transformCommit } from './commit.js'
 
-function getRequirements<
-  Commit extends CommitKnownProps = CommitKnownProps
->(
-  context: TemplateContext<Commit> = {},
-  options: Options<Commit> = {}
-) {
-  const finalOptions = getFinalOptions(options)
-  const finalContext = getFinalContext(context, finalOptions)
-  const generateOn = getGenerateOnFunction(finalContext, finalOptions)
-  const renderTemplate = createTemplateRenderer(finalContext, finalOptions)
-
-  return {
-    finalContext,
-    finalOptions,
-    generateOn,
-    renderTemplate
-  }
-}
-
 /**
  * Creates an async generator function to generate changelog entries from commits.
  * @param context - TemplateContext for changelog template.
@@ -63,7 +44,10 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
   options: Options<Commit> = {},
   includeDetails = false
 ): (commits: Iterable<Commit> | AsyncIterable<Commit>) => AsyncGenerator<string | Details<Commit>, void> {
-  const requirementsPromise = getRequirements(context, options)
+  const finalOptions = getFinalOptions(options)
+  const finalContext = getFinalContext(context, finalOptions)
+  const generateOn = getGenerateOnFunction(finalContext, finalOptions)
+  const renderTemplate = createTemplateRenderer(finalContext, finalOptions)
   const prepResult = includeDetails
     ? (log: string, keyCommit: Commit | null) => ({
       log,
@@ -74,12 +58,6 @@ export function writeChangelog<Commit extends CommitKnownProps = CommitKnownProp
   return async function* write(
     commits: Iterable<Commit> | AsyncIterable<Commit>
   ) {
-    const {
-      finalContext,
-      finalOptions,
-      generateOn,
-      renderTemplate
-    } = await requirementsPromise
     const {
       transform,
       reverse,
