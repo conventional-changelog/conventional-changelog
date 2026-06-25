@@ -1,4 +1,5 @@
 import {
+  compareUrl,
   referenceRepositoryUrl,
   repositoryUrl,
   url
@@ -17,11 +18,7 @@ export function formatCommitUrl(context, commit) {
 }
 
 export function formatCompareUrl(context) {
-  return url(
-    repositoryUrl(context),
-    'compare',
-    `${context.previousTag}...${context.currentTag}`
-  )
+  return compareUrl(context)
 }
 
 export function formatUserUrl(context, user) {

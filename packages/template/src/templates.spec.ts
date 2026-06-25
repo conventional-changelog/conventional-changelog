@@ -6,6 +6,7 @@ import {
 } from 'vitest'
 import {
   template,
+  compareUrl,
   headerPartial,
   commitPartial,
   footerPartial
@@ -19,6 +20,20 @@ function render(context: any) {
 
 describe('@conventional-changelog/template', () => {
   describe('templates', () => {
+    describe('compareUrl', () => {
+      it('should encode tag names as URL path segments', () => {
+        const log = compareUrl({
+          host: 'https://github.com',
+          owner: 'conventional-changelog',
+          repository: 'conventional-changelog',
+          previousTag: 'example#v1.0.0',
+          currentTag: 'example#v2.0.0'
+        } as any)
+
+        expect(log).toBe('https://github.com/conventional-changelog/conventional-changelog/compare/example%23v1.0.0...example%23v2.0.0')
+      })
+    })
+
     describe('header', () => {
       beforeEach(() => {
         templateContext = {

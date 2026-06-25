@@ -56,6 +56,7 @@ npm i @conventional-changelog/template
 ```js
 import {
   bold,
+  compareUrl,
   heading,
   link,
   list,
@@ -75,6 +76,8 @@ const context = {
   owner: 'example',
   repository: 'repo',
   linkReferences: true,
+  previousTag: 'v1.0.0',
+  currentTag: 'v2.0.0',
   headerPartial: context => heading(1, context.version),
   commitPartial: (_context, commit) => `${bold(`${commit.scope}:`)} ${commit.subject}`,
   footerPartial: () => '',
@@ -93,6 +96,7 @@ const context = {
 }
 
 console.log(repositoryUrl(context)) // https://github.com/example/repo
+console.log(compareUrl(context)) // https://github.com/example/repo/compare/v1.0.0...v2.0.0
 console.log(template(context))
 console.log(list(['a', 'b'], item => item))
 ```
@@ -150,6 +154,10 @@ Join URL path segments and trim extra slashes around each segment.
 ### `repositoryUrl(context): string`
 
 Build a repository URL from template context fields.
+
+### `compareUrl(context): string`
+
+Build a release comparison URL and encode tag names as URL path segments.
 
 ### `referenceRepositoryUrl(context, reference): string`
 

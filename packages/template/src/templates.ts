@@ -54,6 +54,24 @@ export function referenceRepositoryUrl<Commit extends CommitKnownProps = CommitK
 }
 
 /**
+ * Builds a release comparison URL and encodes tag names as URL path segments.
+ * @param context - Template context.
+ * @returns Release comparison URL.
+ */
+export function compareUrl<Commit extends CommitKnownProps = CommitKnownProps>(
+  context: FinalTemplateContext<Commit>
+) {
+  const previousTag = encodeURIComponent(context.previousTag || '')
+  const currentTag = encodeURIComponent(context.currentTag || '')
+
+  return url(
+    repositoryUrl(context),
+    'compare',
+    `${previousTag}...${currentTag}`
+  )
+}
+
+/**
  * Renders a commit reference label.
  * @param reference - Commit reference.
  * @returns Commit reference label.
