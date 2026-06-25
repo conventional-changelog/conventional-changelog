@@ -2,6 +2,8 @@
 import meow from 'meow'
 import {
   type Preset,
+  type BumperRecommendationResult,
+  WHAT_BUMP_ERROR_MESSAGE,
   Bumper
 } from '../index.js'
 import {
@@ -140,7 +142,22 @@ if (commitsOptions) {
   bumper.commits(commitsOptions, parserOptions || undefined)
 }
 
-const data = await bumper.bump(whatBump)
+let data: BumperRecommendationResult
+
+try {
+  data = await bumper.bump(whatBump)
+} catch (error) {
+  if (error instanceof Error && error.message === WHAT_BUMP_ERROR_MESSAGE) {
+    throw Error(
+      `${WHAT_BUMP_ERROR_MESSAGE}. Please specify a preset with --preset or a config file with --config.`,
+      {
+        cause: error
+      }
+    )
+  }
+
+  throw error
+}
 
 if ('releaseType' in data) {
   console.log(data.releaseType)

@@ -34,6 +34,8 @@ const VERSIONS = [
   'patch'
 ] as const
 
+export const WHAT_BUMP_ERROR_MESSAGE = '`whatBump` must be a function'
+
 /**
  * Bump suggester for conventional commits
  */
@@ -218,7 +220,7 @@ export class Bumper {
    */
   async bump(whatBump = this.whatBump): Promise<BumperRecommendationResult> {
     if (typeof whatBump !== 'function') {
-      throw Error('`whatBump` must be a function')
+      throw Error(WHAT_BUMP_ERROR_MESSAGE)
     }
 
     const { gitClient } = this
