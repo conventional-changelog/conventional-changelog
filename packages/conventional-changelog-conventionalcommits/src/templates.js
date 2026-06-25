@@ -32,6 +32,23 @@ export function headerPartial(context) {
   )
 }
 
+function renderReferences(context, references, filter) {
+  return each(
+    references?.filter(filter),
+    (commitReference) => {
+      if (context.linkReferences) {
+        return link(
+          reference(commitReference),
+          this.formatIssueUrl(context, commitReference)
+        )
+      }
+
+      return reference(commitReference)
+    },
+    ' '
+  )
+}
+
 export function commitPartial(context, commit) {
   const { linkReferences } = context
   const {
@@ -47,19 +64,17 @@ export function commitPartial(context, commit) {
       ? `(${link(shortHash, this.formatCommitUrl(context, commit))})`
       : shortHash
     : ''
-  const renderedReferences = each(
+  const closingReferences = renderReferences.call(
+    this,
+    context,
     references,
-    (linkReference) => {
-      if (linkReferences) {
-        return link(
-          reference(linkReference),
-          this.formatIssueUrl(context, linkReference)
-        )
-      }
-
-      return reference(linkReference)
-    },
-    ' '
+    commitReference => commitReference.action
+  )
+  const otherReferences = renderReferences.call(
+    this,
+    context,
+    references,
+    commitReference => !commitReference.action
   )
 
   return strings(
@@ -68,7 +83,8 @@ export function commitPartial(context, commit) {
       subject || header || '',
       commitLink
     ),
-    renderedReferences && `, closes ${renderedReferences}`
+    closingReferences && `, closes ${closingReferences}`,
+    otherReferences && `, references ${otherReferences}`
   )
 }
 
