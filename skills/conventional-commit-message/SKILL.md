@@ -182,6 +182,12 @@ Monorepos:
 - Prefer the affected package name as scope.
 - Derive package scopes from workspace package names, existing commitlint
   `scope-enum`, or recent commits.
+- If commitlint or local tooling supports multiple scopes and one coherent
+  release-visible change affects several published packages, use all affected
+  package scopes instead of collapsing the change to one package.
+- Prefer the repository's accepted multiple-scope separator. If local config
+  enables multiple scopes but does not make the separator obvious, validate a
+  comma-separated scope list with commitlint before using it.
 - If package names are npm-scoped, follow the repo's existing convention:
   either the full package name or the unscoped package segment.
 - If one package changed, use that package scope.
@@ -211,7 +217,12 @@ For dependency-only work:
    visible, or from the maintenance intent when hidden.
 6. Add body/footer only when needed for breaking changes, issue closure,
    release-as, or important context.
-7. If commitlint is configured and the CLI is available, validate the candidate
+7. If the work is explicitly tied to an issue, PR, bug report, or user-provided
+   tracker URL, include the relevant reference in the commit body/footer.
+   For fixes that should close the issue, use a closing footer such as
+   `Fixes #123.`. For non-closing context, use a non-closing reference such as
+   `Refs #123.`.
+8. If commitlint is configured and the CLI is available, validate the candidate
    before presenting it to the user.
 
 Validate with the local installed commitlint binary first when possible. Prefer
@@ -254,6 +265,15 @@ Use closing keywords only when the commit should close an issue:
 
 ```text
 fix(cli): preserve prerelease tag when appending changelog
+
+Fixes #123.
+```
+
+For coherent changes affecting multiple packages in a monorepo, use multiple
+scopes when supported by the repository:
+
+```text
+fix(package-a,package-b): preserve compare links
 
 Fixes #123.
 ```
