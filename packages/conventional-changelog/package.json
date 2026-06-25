@@ -65,14 +65,13 @@
   },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
-    "@simple-libs/hosted-git-info": "^1.0.2",
-    "@types/normalize-package-data": "^2.4.4",
+    "@simple-libs/hosted-git-info": "^2.0.0",
+    "@simple-libs/normalize-package-data": "^1.0.0",
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-changelog-writer": "workspace:^",
     "conventional-commits-parser": "workspace:^",
     "fd-package-json": "^2.0.0",
-    "meow": "catalog:",
-    "normalize-package-data": "^7.0.0"
+    "meow": "catalog:"
   },
   "devDependencies": {
     "conventional-changelog-angular": "workspace:^"

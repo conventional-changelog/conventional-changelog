@@ -1,4 +1,4 @@
-import type { Package as NormalizedPackage } from 'normalize-package-data'
+import type { NormalizedPackageData } from '@simple-libs/normalize-package-data'
 import type {
   GetSemverTagsParams,
   GetCommitsParams
@@ -23,7 +23,7 @@ export type {
   HostedGitInfo
 }
 
-export type Package = Partial<NormalizedPackage>
+export type Package = NormalizedPackageData
 
 export type Logger = (source: string, messages: string | string[]) => void
 
