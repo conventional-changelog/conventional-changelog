@@ -30,19 +30,25 @@ const commits = [
     references: [
       {
         action: 'Closes',
+        owner: null,
         repository: null,
+        prefix: '#',
         issue: '1',
         raw: '#1'
       },
       {
         action: 'Closes',
+        owner: null,
         repository: null,
+        prefix: '#',
         issue: '2',
         raw: '#2'
       },
       {
         action: 'Closes',
+        owner: null,
         repository: null,
+        prefix: '#',
         issue: '3',
         raw: '#3'
       }

@@ -244,6 +244,20 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).toContain('[conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
   })
 
+  it('should render only closing action references under closes', async () => {
+    preparing(1)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [#2](https://github.com/conventional-changelog/conventional-changelog/issues/2)')
+    expect(chunks[0]).toContain(', references [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [conventional-changelog/standard-version#358](https://github.com/conventional-changelog/standard-version/issues/358)')
+    expect(chunks[0]).not.toContain(', closes [#1](https://github.com/conventional-changelog/conventional-changelog/issues/1) [conventional-changelog/standard-version#358]')
+  })
+
   it('should properly format external repository issues given a `formatIssueUrl`', async () => {
     preparing(1)
 
@@ -473,8 +487,9 @@ describe('conventional-changelog-conventionalcommits', () => {
       .write()
     const chunks = await toArray(log)
 
-    expect(chunks[0]).toContain('closes [#99]')
+    expect(chunks[0]).toContain('references [#99]')
     expect(chunks[0]).toContain('[#100]')
+    expect(chunks[0]).not.toContain('closes [#99]')
     expect(chunks[0]).toContain('this completely changes the API')
   })
 

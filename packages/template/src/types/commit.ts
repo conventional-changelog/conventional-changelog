@@ -1,10 +1,12 @@
 import type { AnyObject } from './utils.js'
 
 export interface CommitReference {
-  owner?: string | null
-  repository?: string | null
-  prefix?: string | null
-  issue?: string | number | null
+  raw: string
+  action: string | null
+  owner: string | null
+  repository: string | null
+  issue: string
+  prefix: string
 }
 
 export interface CommitNote {
