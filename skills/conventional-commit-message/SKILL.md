@@ -214,7 +214,17 @@ For dependency-only work:
 7. If commitlint is configured and the CLI is available, validate the candidate
    before presenting it to the user.
 
-Validate with the repository package manager when possible:
+Validate with the local installed commitlint binary first when possible. Prefer
+`./node_modules/.bin/commitlint` over package-manager runners because it avoids
+package manager environment, sandbox, and registry behavior while still using
+the repository's installed version and config.
+
+```bash
+echo 'type(scope): subject' | ./node_modules/.bin/commitlint
+```
+
+Use package-manager runners only as fallback when the local binary is missing
+and running them is acceptable in the current environment:
 
 ```bash
 echo 'type(scope): subject' | pnpm commitlint
@@ -227,7 +237,7 @@ messages, use `printf` or another command that preserves the full message
 exactly:
 
 ```bash
-printf '%s\n\n%s\n' 'feat(parser)!: remove legacy token fallback' 'BREAKING CHANGE: custom token fallbacks are no longer applied.' | pnpm commitlint
+printf '%s\n\n%s\n' 'feat(parser)!: remove legacy token fallback' 'BREAKING CHANGE: custom token fallbacks are no longer applied.' | ./node_modules/.bin/commitlint
 ```
 
 If commitlint fails, adjust the type, scope, case, or subject length and
