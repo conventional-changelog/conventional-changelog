@@ -1224,7 +1224,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(1)
 
-        expect(chunks[0]).toContain('foo@1.0.0...foo@2.0.0')
+        expect(chunks[0]).toContain('foo%401.0.0...foo%402.0.0')
       })
     })
 
@@ -1304,7 +1304,7 @@ describe('conventional-changelog', () => {
 
         expect(chunks.length).toBe(1)
 
-        expect(chunks[0]).toContain('foo@1.0.0...foo@2.0.0')
+        expect(chunks[0]).toContain('foo%401.0.0...foo%402.0.0')
       })
 
       it('should generate the changelog of the last two releases', async () => {

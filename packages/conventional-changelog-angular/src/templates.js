@@ -1,5 +1,6 @@
 import {
   bold,
+  compareUrl,
   each,
   link,
   list,
@@ -18,14 +19,12 @@ export function headerPartial(context) {
   const {
     isPatch,
     linkCompare,
-    previousTag,
-    currentTag,
     version,
     title,
     date
   } = context
   const versionText = linkCompare
-    ? link(version, url(repositoryUrl(context), 'compare', `${previousTag}...${currentTag}`))
+    ? link(version, compareUrl(context))
     : version
 
   return heading(
