@@ -106,6 +106,24 @@ documentation; `refactor` for behavior-preserving code restructuring; and
 Do not add `!`, `BREAKING CHANGE`, or `Release-As` to a hidden commit unless the
 release impact is intentional. Those signals override the hidden/no-bump intent.
 
+Before choosing a hidden type, first ask whether the diff changes the public
+contract of any published package, even if the changed files are metadata,
+configuration, tests, generated files, or CI. Public contract includes supported
+runtime and platform versions, package exports, CLI behavior, config presets,
+peer dependency requirements, generated output, documented APIs, and default
+behavior. If the public contract becomes stricter, removes previously supported
+usage, or changes user-visible behavior, use a visible type. If previously
+supported usage no longer works, use `!` and a `BREAKING CHANGE` footer.
+
+Common red flags for release-visible or breaking impact:
+
+- Raising minimum runtime, platform, browser, or engine support.
+- Removing, renaming, or narrowing package exports, entry points, CLI flags,
+  options, config presets, or documented APIs.
+- Tightening peer dependency ranges or required external tools.
+- Changing generated output, defaults, validation rules, parsing behavior, or
+  lint/config rules that consumers receive.
+
 ## Impact Heuristics
 
 Choose the type by release impact, not by file path:
@@ -113,6 +131,9 @@ Choose the type by release impact, not by file path:
 - Public behavior added: `feat`.
 - Public behavior corrected: `fix`.
 - Runtime speed/memory improvement without behavior change: `perf`.
+- Public contract made stricter or previously supported usage removed:
+  `feat!` or `fix!` with a `BREAKING CHANGE` footer. Example: raising
+  `engines.node` to Node.js 22 should use a subject like `require Node.js 22`.
 - Internal rewrite with preserved behavior: `refactor`.
 - Dependency lockfile/package-manager maintenance, build tooling, generated
   build setup, or workspace package-manager configuration with no shipped
@@ -233,6 +254,7 @@ Visible release entries:
 
 ```text
 feat(writer): support scoped package links
+feat!: require Node.js 22
 fix(parser): keep issue references from multiline footers
 perf(git-client): avoid duplicate tag lookups
 revert: feat(writer): support scoped package links
