@@ -25,7 +25,7 @@ import {
   createPresetLoader,
   loadPreset as defaultLoadPreset
 } from 'conventional-changelog-preset-loader'
-import normalizePackageData from 'normalize-package-data'
+import { normalizePackageData } from '@simple-libs/normalize-package-data'
 import { findPackage } from 'fd-package-json'
 import {
   type HostedGitInfo,
@@ -351,7 +351,7 @@ export class ConventionalChangelog {
       pkg = (await findPackage(gitClient.cwd) || {}) as Package
     }
 
-    normalizePackageData(pkg)
+    pkg = normalizePackageData(pkg)
 
     if (!pkg.repository?.url) {
       try {

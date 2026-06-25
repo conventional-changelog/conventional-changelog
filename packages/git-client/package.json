@@ -61,7 +61,7 @@
     }
   },
   "dependencies": {
-    "@simple-libs/child-process-utils": "^1.0.0",
+    "@simple-libs/child-process-utils": "^2.0.0",
     "@simple-libs/stream-utils": "catalog:",
     "semver": "catalog:"
   },
