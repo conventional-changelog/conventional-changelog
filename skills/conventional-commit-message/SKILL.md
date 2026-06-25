@@ -85,7 +85,8 @@ Default hidden types:
 - `docs`: documentation-only change.
 - `style`: formatting, whitespace, punctuation, or style-only change with no
   behavior change.
-- `chore`: maintenance that should not be in changelog and should not bump.
+- `chore`: general maintenance that should not be in changelog and should not
+  bump, used only when no more specific hidden type fits.
 - `refactor`: code change that intentionally preserves behavior/API.
 - `test`: tests only.
 - `build`: build system, packaging, dependency metadata, generated build setup.
@@ -94,6 +95,13 @@ Default hidden types:
 Treat hidden types as no-changelog and no-bump intent. If a code change clearly
 must not affect released behavior or API, use a hidden type instead of `fix` or
 `feat`, even when source files changed.
+
+Do not use `chore` as a catch-all for every hidden change. Prefer the hidden
+type that describes the change most precisely: `build` for package manager,
+build tooling, dependency metadata, generated build setup, and workspace
+configuration; `ci` for CI-only automation; `test` for tests; `docs` for
+documentation; `refactor` for behavior-preserving code restructuring; and
+`style` for formatting-only changes.
 
 Do not add `!`, `BREAKING CHANGE`, or `Release-As` to a hidden commit unless the
 release impact is intentional. Those signals override the hidden/no-bump intent.
@@ -106,11 +114,15 @@ Choose the type by release impact, not by file path:
 - Public behavior corrected: `fix`.
 - Runtime speed/memory improvement without behavior change: `perf`.
 - Internal rewrite with preserved behavior: `refactor`.
-- Dependency lockfile/package-manager maintenance with no shipped behavior
-  change: `chore` or `build`, matching local style.
+- Dependency lockfile/package-manager maintenance, build tooling, generated
+  build setup, or workspace package-manager configuration with no shipped
+  behavior change: `build`, unless local style strongly prefers another hidden
+  type.
 - CI-only workflow edits: `ci`.
 - Tests added or adjusted without product code impact: `test`.
 - Docs/readme/examples prose only: `docs`.
+- General housekeeping that does not fit the more specific hidden types:
+  `chore`.
 
 When unsure whether a source-code change is user-visible, inspect tests and
 public API usage. If the change is defensive cleanup, migration plumbing,
