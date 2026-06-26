@@ -34,6 +34,8 @@ export interface Flags {
   firstRelease?: boolean
   lernaPackage?: string
   tagPrefix?: string
+  from?: string
+  to?: string
 }
 
 export const flags = {
@@ -94,6 +96,12 @@ export const flags = {
   },
   tagPrefix: {
     shortFlag: 't',
+    type: 'string'
+  },
+  from: {
+    type: 'string'
+  },
+  to: {
     type: 'string'
   }
 } as const

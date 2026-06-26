@@ -33,6 +33,8 @@ const cli = meow(`
       -l, --lerna-package            Recommend a bump for a specific lerna package (:pkg-name@1.0.0)
       -t, --tag-prefix               Tag prefix to consider when reading the tags
       --commit-path                  Recommend a bump scoped to a specific directory
+      --from                         Start commit range from a specific tag or sha
+      --to                           End commit range at a specific tag or sha
       --skip-unstable                If given, unstable tags will be skipped, e.g., x.x.x-alpha.1, x.x.x-rc.2
 `, {
   importMeta: import.meta,
@@ -65,6 +67,14 @@ const cli = meow(`
     },
     // commits `path` param
     commitPath: {
+      type: 'string'
+    },
+    // commits `from` param
+    from: {
+      type: 'string'
+    },
+    // commits `to` param
+    to: {
       type: 'string'
     },
     // parser options

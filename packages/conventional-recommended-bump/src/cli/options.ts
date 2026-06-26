@@ -38,6 +38,14 @@ export function parseCommitsOptions(options: Record<string, unknown>): GetCommit
     result.path = options.commitPath
   }
 
+  if (typeof options.from === 'string') {
+    result.from = options.from
+  }
+
+  if (typeof options.to === 'string') {
+    result.to = options.to
+  }
+
   if (!Object.keys(result).length) {
     return null
   }

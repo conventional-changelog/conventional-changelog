@@ -91,6 +91,12 @@ conventional-changelog -p angular -r 0
 
 This *will* overwrite any previous changelogs if they exist.
 
+To generate a changelog for a specific commit range, pass tags or SHAs with `--from` and `--to`:
+
+```sh
+conventional-changelog -p angular --from v1.0.0 --to HEAD
+```
+
 All available command line parameters can be listed using CLI: `conventional-changelog --help`.
 
 > [!TIP]
