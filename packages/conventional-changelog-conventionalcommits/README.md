@@ -83,12 +83,21 @@ See [conventional-changelog-config-spec](https://github.com/conventional-changel
 |--------|-------------|
 | ignoreCommits | Regular expression to match and exclude raw commits before parsing. |
 | issuePrefixes | Array of issue prefixes parsed as issue references. Defaults to `['#']`. |
-| types | Array of commit type objects defining sections, hidden types, and optional scope-specific type handling. Default value is available via the `DEFAULT_COMMIT_TYPES` export. |
+| types | Array of commit type objects defining sections, release effects, and optional scope-specific type handling. Default value is available via the `DEFAULT_COMMIT_TYPES` export. |
 | scope | String or array of scope names to filter commits. Only commits with matching scopes will be included. When `scopeOnly` is `false` (default), commits without any scope are also included. |
 | scopeOnly | When `true` and `scope` is specified, excludes commits that have no scope. When `false` (default), includes both scoped and unscooped commits when filtering by scope. |
 | preMajor | When `true`, breaking changes and features are downgraded by one semver level before the first major release. |
-| bumpStrict | When `true`, version bumps occur only for breaking changes or non-hidden commit types. When `false` (default), any commit can trigger a version bump. |
 | formatIssueUrl | Function that formats issue reference URLs. Receives `(context, reference)`. |
 | formatCommitUrl | Function that formats commit URLs. Receives `(context, commit)`. |
 | formatCompareUrl | Function that formats release comparison URLs. Receives `(context)`. |
 | formatUserUrl | Function that formats user mention URLs. Receives `(context, user)`. |
+
+Each item in `types` can define an `effect`:
+
+| Effect | Changelog | Version bump |
+|--------|-----------|--------------|
+| `bump` | Included | Included |
+| `changelog` | Included | Ignored |
+| `hidden` | Hidden | Ignored |
+
+`effect` defaults to `bump` when omitted. Breaking changes always trigger a major bump and are included in the changelog regardless of the type effect.

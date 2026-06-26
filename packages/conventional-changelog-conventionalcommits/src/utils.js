@@ -31,3 +31,23 @@ export function matchScope(config = {}, commit) {
     || (scopeOnly && includesScope)
     || (!scopeOnly && (!commit.scope || includesScope))
 }
+
+export function findTypeEntry(types, commit) {
+  const typeKey = (commit.revert ? 'revert' : commit.type || '').toLowerCase()
+
+  return types.find((entry) => {
+    if (entry.type !== typeKey) {
+      return false
+    }
+
+    if (entry.scope && entry.scope !== commit.scope) {
+      return false
+    }
+
+    return true
+  })
+}
+
+export function isTypeEffect(type, effect) {
+  return (type.effect || 'bump') === effect
+}

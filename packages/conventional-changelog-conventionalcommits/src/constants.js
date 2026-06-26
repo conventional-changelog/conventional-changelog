@@ -1,57 +1,62 @@
 export const DEFAULT_COMMIT_TYPES = Object.freeze([
   {
     type: 'feat',
-    section: 'Features'
+    section: 'Features',
+    effect: 'bump'
   },
   {
     type: 'feature',
-    section: 'Features'
+    section: 'Features',
+    effect: 'bump'
   },
   {
     type: 'fix',
-    section: 'Bug Fixes'
+    section: 'Bug Fixes',
+    effect: 'bump'
   },
   {
     type: 'perf',
-    section: 'Performance Improvements'
+    section: 'Performance Improvements',
+    effect: 'bump'
   },
   {
     type: 'revert',
-    section: 'Reverts'
+    section: 'Reverts',
+    effect: 'bump'
   },
   {
     type: 'docs',
     section: 'Documentation',
-    hidden: true
+    effect: 'hidden'
   },
   {
     type: 'style',
     section: 'Styles',
-    hidden: true
+    effect: 'hidden'
   },
   {
     type: 'chore',
     section: 'Miscellaneous Chores',
-    hidden: true
+    effect: 'hidden'
   },
   {
     type: 'refactor',
     section: 'Code Refactoring',
-    hidden: true
+    effect: 'hidden'
   },
   {
     type: 'test',
     section: 'Tests',
-    hidden: true
+    effect: 'hidden'
   },
   {
     type: 'build',
     section: 'Build System',
-    hidden: true
+    effect: 'hidden'
   },
   {
     type: 'ci',
     section: 'Continuous Integration',
-    hidden: true
+    effect: 'hidden'
   }
 ].map(Object.freeze))

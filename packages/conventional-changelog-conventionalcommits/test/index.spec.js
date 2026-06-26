@@ -216,7 +216,7 @@ describe('conventional-changelog-conventionalcommits', () => {
           commitType.type === 'chore'
             ? {
               ...commitType,
-              hidden: false
+              effect: 'changelog'
             }
             : commitType
         ))
@@ -555,23 +555,29 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).not.toContain('[@nano')
   })
 
-  describe('bumpStrict parameter', () => {
-    it('should not bump version when bumpStrict is true and only hidden types are present', () => {
+  describe('type effects', () => {
+    it('should not bump version when only changelog or hidden types are present', () => {
       const config = preset({
-        bumpStrict: true,
         types: [
           {
             type: 'feat',
-            section: 'Features'
+            section: 'Features',
+            effect: 'bump'
           },
           {
             type: 'fix',
-            section: 'Bug Fixes'
+            section: 'Bug Fixes',
+            effect: 'bump'
           },
           {
             type: 'chore',
             section: 'Chores',
-            hidden: true
+            effect: 'changelog'
+          },
+          {
+            type: 'docs',
+            section: 'Documentation',
+            effect: 'hidden'
           }
         ]
       })
@@ -586,6 +592,11 @@ describe('conventional-changelog-conventionalcommits', () => {
           type: 'chore',
           scope: 'release',
           notes: []
+        },
+        {
+          type: 'docs',
+          scope: 'readme',
+          notes: []
         }
       ]
       const result = whatBump(commits)
@@ -593,22 +604,23 @@ describe('conventional-changelog-conventionalcommits', () => {
       expect(result).toBe(null)
     })
 
-    it('should bump version when bumpStrict is true and non-hidden types are present', () => {
+    it('should bump version when bump effect types are present', () => {
       const config = preset({
-        bumpStrict: true,
         types: [
           {
             type: 'feat',
-            section: 'Features'
+            section: 'Features',
+            effect: 'bump'
           },
           {
             type: 'fix',
-            section: 'Bug Fixes'
+            section: 'Bug Fixes',
+            effect: 'bump'
           },
           {
             type: 'chore',
             section: 'Chores',
-            hidden: true
+            effect: 'changelog'
           }
         ]
       })
