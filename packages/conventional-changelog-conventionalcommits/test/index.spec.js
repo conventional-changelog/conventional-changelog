@@ -92,6 +92,13 @@ setups([
   },
   () => {
     testTools.gitCommit(['fix: replace `@nano_kit/router` with `@nano_kit/router2`'])
+  },
+  () => {
+    testTools.gitCommit([
+      'feat!: support commit type effects',
+      'BREAKING CHANGE: effect replaces hidden.',
+      'Fixes #1476.'
+    ])
   }
 ])
 
@@ -553,6 +560,20 @@ describe('conventional-changelog-conventionalcommits', () => {
 
     expect(chunks[0]).toContain('`@nano_kit/router`')
     expect(chunks[0]).not.toContain('[@nano')
+  })
+
+  it('should not include closing references in breaking change notes', async () => {
+    preparing(13)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('effect replaces hidden.')
+    expect(chunks[0]).toContain(', closes [#1476](https://github.com/conventional-changelog/conventional-changelog/issues/1476)')
+    expect(chunks[0]).not.toContain('Fixes #1476')
   })
 
   describe('type effects', () => {

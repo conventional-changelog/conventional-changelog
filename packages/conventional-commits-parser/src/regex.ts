@@ -43,7 +43,7 @@ function getReferencePartsRegex(
 
   const flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
 
-  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${joinOr(issuePrefixes)})([\\w-]+)(?=\\s|$|[,;)\\]])`, flags)
+  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${joinOr(issuePrefixes)})([\\w-]+)(?=\\s|$|[,;.)\\]])`, flags)
 }
 
 function getReferencesRegex(
@@ -59,6 +59,16 @@ function getReferencesRegex(
   return new RegExp(`(${joinedKeywords})(?:\\s+(.*?))(?=(?:${joinedKeywords})|$)`, 'gi')
 }
 
+function getFooterTokenRegex(
+  issuePrefixes: (string | RegExp)[] | undefined
+) {
+  const issuePrefixSeparator = issuePrefixes
+    ? `|\\s+(?:${joinOr(issuePrefixes)})`
+    : ''
+
+  return new RegExp(`^\\s*(?:BREAKING CHANGE|[\\w-]+)(?::\\s+${issuePrefixSeparator}).+`, 'i')
+}
+
 /**
  * Make the regexes used to parse a commit.
  * @param options
@@ -70,11 +80,13 @@ export function getParserRegexes(
   const notes = getNotesRegex(options.noteKeywords, options.notesPattern)
   const referenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)
   const references = getReferencesRegex(options.referenceActions)
+  const footerToken = getFooterTokenRegex(options.issuePrefixes)
 
   return {
     notes,
     referenceParts,
     references,
+    footerToken,
     mentions: /@([\w-]+)/g,
     url: /\b(?:https?):\/\/(?:www\.)?([-a-zA-Z0-9@:%_+.~#?&//=])+\b/
   }

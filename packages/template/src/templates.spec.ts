@@ -11,6 +11,7 @@ import {
   commitPartial,
   footerPartial
 } from './templates.js'
+import { list } from './elements.js'
 
 let templateContext: any
 
@@ -19,6 +20,18 @@ function render(context: any) {
 }
 
 describe('@conventional-changelog/template', () => {
+  describe('elements', () => {
+    describe('list', () => {
+      it('should render multiline items as a single list item', () => {
+        const log = list([
+          'first line\nsecond line\n\nthird line'
+        ], item => item)
+
+        expect(log).toBe('* first line\n  second line\n\n  third line')
+      })
+    })
+  })
+
   describe('templates', () => {
     describe('compareUrl', () => {
       it('should encode tag names as URL path segments', () => {

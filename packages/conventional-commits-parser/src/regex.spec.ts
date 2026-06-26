@@ -112,6 +112,48 @@ describe('conventional-commits-parser', () => {
         })
       })
 
+      describe('footerToken', () => {
+        it('should match footer tokens with colon separator', () => {
+          const { footerToken } = getParserRegexes()
+
+          expect('Reviewed-by: Z').toMatch(footerToken)
+          expect('BREAKING CHANGE: changed API').toMatch(footerToken)
+          expect('BREAKING-CHANGE: changed API').toMatch(footerToken)
+        })
+
+        it('should match footer tokens with issue separator', () => {
+          const { footerToken } = getParserRegexes({
+            issuePrefixes: ['#']
+          })
+
+          expect('Fixes #1476.').toMatch(footerToken)
+          expect('Kills   #1').toMatch(footerToken)
+          expect('Refs #123').toMatch(footerToken)
+        })
+
+        it('should not match footer tokens with issue separator if issue prefixes are not configured', () => {
+          const { footerToken } = getParserRegexes()
+
+          expect('Fixes #1476.').not.toMatch(footerToken)
+          expect('Refs: #1476.').toMatch(footerToken)
+        })
+
+        it('should match footer tokens with custom issue prefixes', () => {
+          const { footerToken } = getParserRegexes({
+            issuePrefixes: ['gh-']
+          })
+
+          expect('Kills gh-1').toMatch(footerToken)
+        })
+
+        it('should not match footer-like text inside sentences', () => {
+          const { footerToken } = getParserRegexes()
+
+          expect('This fixes #1476.').not.toMatch(footerToken)
+          expect('Reviewed by: Z').not.toMatch(footerToken)
+        })
+      })
+
       describe('references', () => {
         it('should match a simple reference', () => {
           const { references } = getParserRegexes({

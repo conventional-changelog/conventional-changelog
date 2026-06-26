@@ -87,6 +87,166 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should stop note text before reference footer ending with a period', () => {
+        const commit = 'feat!: support type effects\n'
+          + '\n'
+          + 'BREAKING CHANGE: effect replaces hidden.\n'
+          + '\n'
+          + 'Fixes #1476.'
+        const result = parser.parse(commit)
+
+        expect(result.notes).toEqual([
+          {
+            title: 'BREAKING CHANGE',
+            text: 'effect replaces hidden.'
+          }
+        ])
+        expect(result.references).toEqual([
+          {
+            action: 'Fixes',
+            issue: '1476',
+            owner: null,
+            prefix: '#',
+            raw: '#1476',
+            repository: null
+          }
+        ])
+      })
+
+      it('should keep reference-like sentences in note text', () => {
+        const commit = 'feat!: support type effects\n'
+          + '\n'
+          + 'BREAKING CHANGE: effect replaces hidden.\n'
+          + 'This fixes #1476.\n'
+          + 'Consumers need to update their config.'
+        const result = parser.parse(commit)
+
+        expect(result.notes).toEqual([
+          {
+            title: 'BREAKING CHANGE',
+            text: 'effect replaces hidden.\nThis fixes #1476.\nConsumers need to update their config.'
+          }
+        ])
+        expect(result.references).toEqual([
+          {
+            action: 'fixes',
+            issue: '1476',
+            owner: null,
+            prefix: '#',
+            raw: '#1476',
+            repository: null
+          }
+        ])
+      })
+
+      it('should stop note text before the next footer token', () => {
+        const commit = 'feat!: support type effects\n'
+          + '\n'
+          + 'BREAKING CHANGE: effect replaces hidden.\n'
+          + '\n'
+          + 'Reviewed-by: Z'
+        const result = parser.parse(commit)
+
+        expect(result.notes).toEqual([
+          {
+            title: 'BREAKING CHANGE',
+            text: 'effect replaces hidden.'
+          }
+        ])
+        expect(result.footer).toBe('BREAKING CHANGE: effect replaces hidden.\n\nReviewed-by: Z')
+      })
+
+      it('should parse next custom note before checking footer tokens', () => {
+        const parser = new CommitParser({
+          noteKeywords: ['SECURITY', 'DEPRECATION']
+        })
+        const result = parser.parse(
+          'feat: support custom notes\n'
+          + '\n'
+          + 'SECURITY: token validation was hardened.\n'
+          + '\n'
+          + 'DEPRECATION: legacy token fallback will be removed.'
+        )
+
+        expect(result.notes).toEqual([
+          {
+            title: 'SECURITY',
+            text: 'token validation was hardened.'
+          },
+          {
+            title: 'DEPRECATION',
+            text: 'legacy token fallback will be removed.'
+          }
+        ])
+      })
+
+      it('should parse trailer footers without references (#773)', () => {
+        const result = parser.parse(
+          'test: this is a test\n'
+          + '\n'
+          + 'this is the body of the commit\n'
+          + '\n'
+          + 'Foo: Foo: this is a trailer\n'
+          + 'Bar: This is the footer of the commit'
+        )
+
+        expect(result.body).toBe('this is the body of the commit')
+        expect(result.footer).toBe('Foo: Foo: this is a trailer\nBar: This is the footer of the commit')
+      })
+
+      it('should not cut breaking change notes at inline references (#819)', () => {
+        const result = parser.parse(
+          'feat: add some cool new stuff\n'
+          + '\n'
+          + 'BREAKING CHANGE: We removed some boring old stuff in\n'
+          + 'order to make room for the new stuff. We went back and\n'
+          + 'forth on whether or not to do this in #4, so if you want\n'
+          + 'more information you should check out that discussion.'
+        )
+
+        expect(result.notes).toEqual([
+          {
+            title: 'BREAKING CHANGE',
+            text: 'We removed some boring old stuff in\n'
+              + 'order to make room for the new stuff. We went back and\n'
+              + 'forth on whether or not to do this in #4, so if you want\n'
+              + 'more information you should check out that discussion.'
+          }
+        ])
+        expect(result.references).toEqual([
+          {
+            action: null,
+            issue: '4',
+            owner: null,
+            prefix: '#',
+            raw: 'forth on whether or not to do this in #4',
+            repository: null
+          }
+        ])
+      })
+
+      it('should not include trailers after breaking change notes (#428)', () => {
+        const result = parser.parse(
+          'feat!: add some cool new stuff\n'
+          + '\n'
+          + 'BREAKING CHANGE: this changes the API.\n'
+          + '\n'
+          + 'Co-authored-by: Someone <someone@example.com>'
+        )
+
+        expect(result.notes).toEqual([
+          {
+            title: 'BREAKING CHANGE',
+            text: 'this changes the API.'
+          }
+        ])
+        expect(result.footer).toBe(
+          'BREAKING CHANGE: this changes the API.\n'
+          + '\n'
+          + 'Co-authored-by: Someone <someone@example.com>'
+        )
+      })
+
       it('should deduplicate references when the same issue appears multiple times', () => {
         const commit = 'feat(ng-list): Allow custom separator\n'
           + 'Closes #123\nCloses #123\nFixes #123\n'
