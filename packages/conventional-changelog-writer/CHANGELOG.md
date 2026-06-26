@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.4.0...conventional-changelog-writer-v9.0.0) (2026-06-26)
+
+### ⚠ BREAKING CHANGES
+
+* Handlebars template strings and partial files were replaced with render functions.
+* packages now require Node.js 22 or newer.
+
+### Features
+
+* replace handlebars templates with render functions ([#1477](https://github.com/conventional-changelog/conventional-changelog/issues/1477)) ([55e6716](https://github.com/conventional-changelog/conventional-changelog/commit/55e6716e8f40c2a705bcb0cd343e1dcacd2f9459))
+* require node 22 ([de5e136](https://github.com/conventional-changelog/conventional-changelog/commit/de5e1368096ea0805e51e20df587ce528ca0575b))
+
 ## [8.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v8.3.0...conventional-changelog-writer-v8.4.0) (2026-03-04)
 
 ### Features

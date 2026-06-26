@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.4.0...conventional-commits-parser-v7.0.0) (2026-06-26)
+
+### ⚠ BREAKING CHANGES
+
+* packages now require Node.js 22 or newer.
+
+### Features
+
+* require node 22 ([de5e136](https://github.com/conventional-changelog/conventional-changelog/commit/de5e1368096ea0805e51e20df587ce528ca0575b))
+
+### Bug Fixes
+
+* keep footers out of breaking notes ([#1485](https://github.com/conventional-changelog/conventional-changelog/issues/1485)) ([f9195d5](https://github.com/conventional-changelog/conventional-changelog/commit/f9195d5d27642599a7737d46f98fe5f8be57dc48))
+
 ## [6.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v6.3.0...conventional-commits-parser-v6.4.0) (2026-03-29)
 
 ### Features

@@ -1,7 +1,7 @@
 {
   "name": "standard-changelog",
   "type": "module",
-  "version": "7.0.1",
+  "version": "8.0.0",
   "description": "Generate a changelog from git metadata with Angular commit convention.",
   "author": "Steve Mao",
   "license": "MIT",

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v11.2.0...conventional-recommended-bump-v12.0.0) (2026-06-26)
+
+### ⚠ BREAKING CHANGES
+
+* packages now require Node.js 22 or newer.
+
+### Features
+
+* require node 22 ([de5e136](https://github.com/conventional-changelog/conventional-changelog/commit/de5e1368096ea0805e51e20df587ce528ca0575b))
+* support manual commit ranges ([#1486](https://github.com/conventional-changelog/conventional-changelog/issues/1486)) ([45e1a20](https://github.com/conventional-changelog/conventional-changelog/commit/45e1a20110226e7aebaea8dd3cec7ef5e3eaf4db))
+
+### Bug Fixes
+
+* explain missing bump config ([e3bd09f](https://github.com/conventional-changelog/conventional-changelog/commit/e3bd09f8ea2bedd7b85a562d1fa8cfa3649602c5))
+
 ## [11.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v11.1.0...conventional-recommended-bump-v11.2.0) (2025-06-07)
 
 ### Features

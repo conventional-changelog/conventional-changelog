@@ -1,7 +1,7 @@
 {
   "name": "conventional-commits-filter",
   "type": "module",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Filter out reverted commits parsed by conventional-commits-parser.",
   "author": {
     "name": "Steve Mao",
