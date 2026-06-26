@@ -197,6 +197,21 @@ describe('git-client', () => {
 
         expect(tags).toEqual(['skip/9.0.0', 'skip/8.0.0'])
       })
+
+      it('should skip unstable tags if a commit has stable and unstable tags', async () => {
+        testTools.writeFileSync('test14', '')
+        testTools.exec('git add --all && git commit -m"chore: same commit tags"')
+        testTools.exec('git tag same/3.1.0-alpha.1')
+        testTools.exec('git tag same/3.1.0')
+
+        const tagsStream = client.getSemverTags({
+          prefix: 'same/',
+          skipUnstable: true
+        })
+        const tags = await toArray(tagsStream)
+
+        expect(tags).toEqual(['same/3.1.0'])
+      })
     })
 
     describe('getLastSemverTag', () => {
