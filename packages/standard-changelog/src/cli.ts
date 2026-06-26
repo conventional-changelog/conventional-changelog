@@ -31,6 +31,8 @@ const cli = meow(`
     -l, --lerna-package       Generate a changelog for a specific lerna package (:pkg-name@1.0.0)
     -t, --tag-prefix          Tag prefix to consider when reading the tags
     --commit-path             Generate a changelog scoped to a specific directory
+    --from                    Start commit range from a specific tag or sha
+    --to                      End commit range at a specific tag or sha
 `, {
   importMeta: import.meta,
   booleanDefault: undefined,

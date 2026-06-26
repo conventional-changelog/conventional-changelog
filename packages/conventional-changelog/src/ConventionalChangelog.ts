@@ -260,8 +260,9 @@ export class ConventionalChangelog {
       reset,
       releaseCount
     } = options
+    const isManualRange = Boolean(commits.to && (commits.from || commits.to !== 'HEAD'))
     const params = {
-      from: reset
+      from: reset || isManualRange
         ? undefined
         : releaseCount
           ? semverTags[releaseCount - 1]
@@ -290,6 +291,11 @@ export class ConventionalChangelog {
 
     try {
       await gitClient.verify('HEAD')
+
+      if (isManualRange) {
+        yield* gitClient.getCommits(params, parserParams)
+        return
+      }
 
       let reverseTags = semverTags.slice().reverse()
 

@@ -278,6 +278,72 @@ describe('conventional-changelog', () => {
       expect(chunks[0]).not.toContain('First commit')
     })
 
+    it('should keep release windows when `gitRawCommitsOpts.from` is a semver tag', async () => {
+      preparing(7)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .context({
+          version: '3.0.0'
+        })
+        .commits({
+          from: 'v0.1.0'
+        })
+        .writer({
+          template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
+        })
+        .readPackage()
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks).toEqual([
+        'v2.0.0...v3.0.0\n',
+        '\nv0.1.0...v2.0.0\n'
+      ])
+    })
+
+    it('should keep release windows when `gitRawCommitsOpts.to` is HEAD', async () => {
+      preparing(7)
+
+      const render = (commits = {}) => toArray(
+        new ConventionalChangelog(testTools.cwd)
+          .options({
+            releaseCount: 100
+          })
+          .context({
+            version: '3.0.0'
+          })
+          .commits(commits)
+          .writer({
+            template: context => `${context.previousTag || ''}...${context.currentTag || ''}`
+          })
+          .readPackage()
+          .write()
+      )
+
+      expect(await render({
+        to: 'HEAD'
+      })).toEqual(await render())
+    })
+
+    it('should honour manual commit range', async () => {
+      preparing(2)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .commits({
+          from: 'v0.1.0',
+          to: 'HEAD~1'
+        })
+        .readPackage()
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks.length).toBe(1)
+
+      expect(chunks[0]).toContain('Second commit')
+      expect(chunks[0]).not.toContain('Third commit')
+      expect(chunks[0]).not.toContain('First commit')
+    })
+
     it('should ignore merge commits by default', async () => {
       preparing(3)
 
