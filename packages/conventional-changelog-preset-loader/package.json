@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-preset-loader",
   "type": "module",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "Configuration preset loader for `conventional-changelog`.",
   "author": "Hutson Betts",
   "license": "MIT",

@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.7.0...git-client-v3.0.0) (2026-06-26)
+
+### ⚠ BREAKING CHANGES
+
+* packages now require Node.js 22 or newer.
+
+### Features
+
+* require node 22 ([de5e136](https://github.com/conventional-changelog/conventional-changelog/commit/de5e1368096ea0805e51e20df587ce528ca0575b))
+
 ## [2.7.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.6.0...git-client-v2.7.0) (2026-04-07)
 
 ### Features

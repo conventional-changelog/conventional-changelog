@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog-angular",
   "type": "module",
-  "version": "8.3.1",
+  "version": "9.0.0",
   "description": "Angular preset for conventional-changelog.",
   "author": "Steve Mao",
   "license": "ISC",
