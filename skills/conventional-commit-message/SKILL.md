@@ -35,30 +35,46 @@ preset or compatible Conventional Commits release tooling.
 
 ## Commit Shape
 
-Use this header format:
+Use the Conventional Commits 1.0.0 message structure:
 
 ```text
-type(scope)!: subject
+<type>[optional scope][optional !]: <description>
+
+[optional body]
+
+[optional footer(s)]
 ```
 
 Rules:
 
-- `scope` is optional.
-- `!` means breaking change and must only be used intentionally.
-- Keep the subject concise, changelog-ready, and lower-case unless a proper noun
-  or identifier requires casing.
-- Do not end the subject with a period.
+- `type` is required and is followed by an optional parenthesized `scope`, an
+  optional `!`, and `: `.
+- `description` is required immediately after `: `. Keep it concise,
+  changelog-ready, and lower-case unless a proper noun or identifier requires
+  casing. Do not end it with a period.
+- `scope` is optional and should name a section of the codebase.
+- A longer body is optional, starts one blank line after the description, and is
+  free-form.
+- Footers are optional, start one blank line after the body or description, and
+  each use either `Token: value` or `Token #value`.
+- Footer tokens use hyphens instead of spaces, such as `Reviewed-by`, except
+  for `BREAKING CHANGE`. `BREAKING-CHANGE` is synonymous with `BREAKING CHANGE`.
+- Footer values may contain spaces and newlines. A footer value ends when the
+  next valid footer token and separator is observed.
+- Conventional Commit units are not case-sensitive, except `BREAKING CHANGE`,
+  which must be uppercase when used as that footer token.
 - Prefer one commit per coherent change. If one diff contains unrelated release
   visible changes, recommend splitting it.
-- Write the subject so it reads well as a bullet in a generated changelog. Avoid
-  vague implementation notes like `add some feature`, `update stuff`, or
+- Write the description so it reads well as a bullet in a generated changelog.
+  Avoid vague implementation notes like `add some feature`, `update stuff`, or
   `fix issue`. Prefer user-facing outcomes such as `support custom scopes`,
   `preserve prerelease tags`, or `require Node.js 22`.
 - Active verb phrases are usually better than passive sentences. Prefer
   `support custom scopes` over `custom scopes were added` unless passive voice
   is clearly more natural for the project.
 
-For breaking changes, include a footer when the impact is known:
+Breaking changes are indicated by `!` immediately before `:` in the header or by
+a breaking-change footer. Use the footer when the impact is known:
 
 ```text
 feat(parser)!: remove legacy token fallback
@@ -66,16 +82,19 @@ feat(parser)!: remove legacy token fallback
 BREAKING CHANGE: custom token fallbacks are no longer applied during parsing.
 ```
 
-The preset recognizes `BREAKING CHANGE` and `BREAKING-CHANGE`.
+If `!` is used and no breaking-change footer is provided, the description is
+used to describe the breaking change.
 
 ## Type Selection
 
 Default visible types:
 
-- `feat`: user-facing feature; appears under `Features`; bumps minor.
+- `feat`: user-facing feature; appears under `Features`; bumps minor. Use this
+  when a commit adds a new feature.
 - `feature`: accepted alias for `feat`; prefer `feat` unless matching existing
   project style.
 - `fix`: bug fix or correctness fix; appears under `Bug Fixes`; bumps patch.
+  Use this when a commit represents a bug fix.
 - `perf`: performance improvement; appears under `Performance Improvements`;
   bumps patch.
 - `revert`: revert commit; appears under `Reverts`; bumps patch.
@@ -95,6 +114,11 @@ Default hidden types:
 Treat hidden types as no-changelog and no-bump intent. If a code change clearly
 must not affect released behavior or API, use a hidden type instead of `fix` or
 `feat`, even when source files changed.
+
+Types other than `feat` and `fix` are allowed by the Conventional Commits
+specification, but the spec gives them no implicit SemVer effect unless they
+include a breaking-change marker. This repository's preset assigns additional
+visibility and bump behavior through its configured commit types.
 
 Do not use `chore` as a catch-all for every hidden change. Prefer the hidden
 type that describes the change most precisely: `build` for package manager,
