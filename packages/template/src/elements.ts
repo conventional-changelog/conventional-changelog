@@ -62,8 +62,16 @@ export function list<T>(
     array,
     (item) => {
       const rendered = toString(callback(item)).trim()
+      const itemText = rendered
+        .split(/\r?\n/)
+        .map((line, index) => (
+          index > 0 && line
+            ? `  ${line}`
+            : line
+        ))
+        .join('\n')
 
-      return rendered ? `* ${rendered}` : ''
+      return rendered ? `* ${itemText}` : ''
     }
   )
 }
