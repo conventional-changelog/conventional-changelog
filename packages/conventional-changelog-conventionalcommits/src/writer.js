@@ -1,4 +1,3 @@
-import compareFunc from 'compare-func'
 import { link } from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import {
@@ -16,6 +15,11 @@ import * as format from './format.js'
 
 const COMMIT_HASH_LENGTH = 7
 const releaseAsRegex = /release-as:\s*\w*@?([0-9]+\.[0-9]+\.[0-9a-z]+(-[0-9a-z.]+)?)\s*/i
+
+function compareNotes(a, b) {
+  return (a.title || '').localeCompare(b.title || '')
+    || (a.text || '').localeCompare(b.text || '')
+}
 
 export function createWriterOpts(config) {
   const finalConfig = {
@@ -126,6 +130,6 @@ export function createWriterOpts(config) {
     },
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
-    notesSort: compareFunc
+    notesSort: compareNotes
   }
 }

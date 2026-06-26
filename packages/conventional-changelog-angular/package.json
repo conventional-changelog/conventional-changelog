@@ -39,7 +39,6 @@
     "postpublish": "pnpm clear"
   },
   "dependencies": {
-    "@conventional-changelog/template": "workspace:^",
-    "compare-func": "catalog:"
+    "@conventional-changelog/template": "workspace:^"
   }
 }

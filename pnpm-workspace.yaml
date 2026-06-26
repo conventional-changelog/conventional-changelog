@@ -3,7 +3,6 @@ packages:
 catalog:
   '@simple-libs/stream-utils': ^2.0.0
   '@types/semver': ^7.5.8
-  compare-func: ^2.0.0
   meow: ^14.0.0
   semver: ^7.5.2
 autoInstallPeers: false

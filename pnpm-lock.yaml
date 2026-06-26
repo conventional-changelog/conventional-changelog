@@ -12,9 +12,6 @@ catalogs:
     '@types/semver':
       specifier: ^7.5.8
       version: 7.7.0
-    compare-func:
-      specifier: ^2.0.0
-      version: 2.0.0
     meow:
       specifier: ^14.0.0
       version: 14.0.0
@@ -136,9 +133,6 @@ importers:
       '@conventional-changelog/template':
         specifier: workspace:^
         version: link:../template
-      compare-func:
-        specifier: 'catalog:'
-        version: 2.0.0
     publishDirectory: package
 
   packages/conventional-changelog-conventionalcommits:
@@ -146,9 +140,6 @@ importers:
       '@conventional-changelog/template':
         specifier: workspace:^
         version: link:../template
-      compare-func:
-        specifier: 'catalog:'
-        version: 2.0.0
     publishDirectory: package
 
   packages/conventional-changelog-preset-loader:

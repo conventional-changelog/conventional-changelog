@@ -1,4 +1,3 @@
-import compareFunc from 'compare-func'
 import {
   template,
   headerPartial,
@@ -7,6 +6,11 @@ import {
 } from './templates.js'
 
 const COMMIT_HASH_LENGTH = 7
+
+function compareNotes(a, b) {
+  return (a.title || '').localeCompare(b.title || '')
+    || (a.text || '').localeCompare(b.text || '')
+}
 
 export function createWriterOpts() {
   return {
@@ -103,6 +107,6 @@ export function createWriterOpts() {
     commitGroupsSort: 'title',
     commitsSort: ['scope', 'subject'],
     noteGroupsSort: 'title',
-    notesSort: compareFunc
+    notesSort: compareNotes
   }
 }
