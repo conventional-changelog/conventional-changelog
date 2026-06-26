@@ -1,7 +1,7 @@
 export interface CommitType {
   type: string
   section?: string
-  hidden?: boolean
+  effect?: 'bump' | 'changelog' | 'hidden'
   scope?: string
 }
 
@@ -17,7 +17,6 @@ export interface PresetConfig {
   scope?: string | string[]
   scopeOnly?: boolean
   preMajor?: boolean
-  bumpStrict?: boolean
   formatIssueUrl?: (context: Context, reference: Reference) => string
   formatCommitUrl?: (context: Context, commit: Commit) => string
   formatCompareUrl?: (context: Context) => string

@@ -1,7 +1,11 @@
 import compareFunc from 'compare-func'
 import { link } from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
-import { matchScope } from './utils.js'
+import {
+  findTypeEntry,
+  isTypeEffect,
+  matchScope
+} from './utils.js'
 import {
   template,
   headerPartial,
@@ -20,7 +24,7 @@ export function createWriterOpts(config) {
     ...format,
     ...config
   }
-  const commitGroupOrder = finalConfig.types.flatMap(t => t.section).filter(t => t)
+  const commitGroupOrder = finalConfig.types.map(t => t.section).filter(Boolean)
 
   return {
     template,
@@ -50,7 +54,7 @@ export function createWriterOpts(config) {
 
       if (
         // breaking changes attached to any type are still displayed.
-        discard && (entry === undefined || entry.hidden)
+        discard && (entry === undefined || isTypeEffect(entry, 'hidden'))
         || !matchScope(finalConfig, commit)
       ) {
         return undefined
@@ -124,20 +128,4 @@ export function createWriterOpts(config) {
     noteGroupsSort: 'title',
     notesSort: compareFunc
   }
-}
-
-function findTypeEntry(types, commit) {
-  const typeKey = (commit.revert ? 'revert' : commit.type || '').toLowerCase()
-
-  return types.find((entry) => {
-    if (entry.type !== typeKey) {
-      return false
-    }
-
-    if (entry.scope && entry.scope !== commit.scope) {
-      return false
-    }
-
-    return true
-  })
 }
