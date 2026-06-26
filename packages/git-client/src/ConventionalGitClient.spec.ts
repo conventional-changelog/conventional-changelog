@@ -61,8 +61,29 @@ describe('git-client', () => {
         ])
       })
 
+      it('should get semver tag if a commit has a preceding non-semver tag', async () => {
+        testTools.writeFileSync('test5', '1')
+        testTools.exec('git add --all && git commit -m"chore: multiple tags"')
+        testTools.exec('git tag deployed-to-staging-1.15.0')
+        testTools.exec('git tag 1.15.0')
+
+        const tagsStream = client.getSemverTags()
+        const tags = await toArray(tagsStream)
+
+        expect(tags).toEqual([
+          '1.15.0',
+          'v18.0.0',
+          'v15.0.0',
+          'v12.0.0',
+          'v9.0.0',
+          'v6.0.0',
+          'v3.0.0',
+          'v0.0.0'
+        ])
+      })
+
       it('should work with prerelease', async () => {
-        testTools.writeFileSync('test5', '')
+        testTools.writeFileSync('test5', '2')
         testTools.exec('git add --all && git commit -m"chore: prerelease"')
         testTools.exec('git tag 19.0.0-pre')
 
@@ -71,6 +92,7 @@ describe('git-client', () => {
 
         expect(tags).toEqual([
           '19.0.0-pre',
+          '1.15.0',
           'v18.0.0',
           'v15.0.0',
           'v12.0.0',
@@ -82,10 +104,10 @@ describe('git-client', () => {
       })
 
       it('should work with lerna style tags', async () => {
-        testTools.writeFileSync('test5', '2')
+        testTools.writeFileSync('test5', '3')
         testTools.exec('git add --all && git commit -m"chore: foo-project@4.0.0"')
         testTools.exec('git tag foo-project@4.0.0')
-        testTools.writeFileSync('test5', '3')
+        testTools.writeFileSync('test5', '4')
         testTools.exec('git add --all && git commit -m"chore: bar-project@5.0.0"')
         testTools.exec('git tag bar-project@5.0.0')
 
