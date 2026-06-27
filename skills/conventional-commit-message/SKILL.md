@@ -155,6 +155,11 @@ Choose the type by release impact, not by file path:
 - Public behavior added: `feat`.
 - Public behavior corrected: `fix`.
 - Runtime speed/memory improvement without behavior change: `perf`.
+- Runtime dependency updates in `dependencies`: `fix`. They change the
+  published package dependency graph, can improve correctness/security/runtime
+  behavior, and should trigger a release even when source code is untouched.
+  Use `!` only if the dependency update changes or removes supported public
+  behavior.
 - Public contract made stricter or previously supported usage removed:
   `feat!` or `fix!` with a `BREAKING CHANGE` footer. Example: raising
   `engines.node` to Node.js 22 should use a subject like `require Node.js 22`.
@@ -227,7 +232,8 @@ Monorepos:
 
 For dependency-only work:
 
-- Use `deps` for runtime dependency updates when that is an accepted scope.
+- Use `fix(deps)` for runtime dependency updates in `dependencies` when `deps`
+  is an accepted scope.
 - Use `dev-deps` for development-only tooling dependency updates when that is an
   accepted scope.
 
