@@ -109,6 +109,7 @@ export function template(context) {
 
   return segments(
     headerPartial(context),
+    strings(context.preamble),
     each(
       commitGroups,
       group => segments(

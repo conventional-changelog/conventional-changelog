@@ -33,6 +33,10 @@ export interface TemplateContext<Commit extends CommitKnownProps = CommitKnownPr
    */
   date?: string
   /**
+   * Introductory text rendered after the release header.
+   */
+  preamble?: string
+  /**
    * Should all references be linked?
    */
   linkReferences?: boolean

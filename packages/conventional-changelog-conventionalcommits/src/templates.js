@@ -103,6 +103,7 @@ export function template(context) {
 
   return segments(
     headerPartial(context),
+    strings(context.preamble),
     each(
       noteGroups,
       group => segments(

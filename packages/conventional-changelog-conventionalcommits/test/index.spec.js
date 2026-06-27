@@ -111,6 +111,31 @@ afterAll(() => {
 })
 
 describe('conventional-changelog-conventionalcommits', () => {
+  it('should render preamble after release header', async () => {
+    preparing(1)
+
+    const preamble = 'Compatibility notes before the grouped changes.'
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .context({
+        version: '1.0.0',
+        date: '2024-01-02',
+        preamble
+      })
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+    const preambleIndex = chunks[0].indexOf(preamble)
+    const breakingChangesIndex = chunks[0].indexOf('BREAKING CHANGES')
+
+    expect(chunks[0]).toContain([
+      '## 1.0.0 (2024-01-02)',
+      '',
+      preamble
+    ].join('\n'))
+    expect(breakingChangesIndex).toBeGreaterThan(preambleIndex)
+  })
+
   it('should work if there is no semver tag', async () => {
     preparing(1)
 
