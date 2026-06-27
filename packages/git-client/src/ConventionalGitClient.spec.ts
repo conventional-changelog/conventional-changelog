@@ -61,6 +61,15 @@ describe('git-client', () => {
         ])
       })
 
+      it('should pass git tag log params', async () => {
+        const tagsStream = client.getSemverTags({
+          from: 'HEAD~2'
+        })
+        const tags = await toArray(tagsStream)
+
+        expect(tags).toEqual(['v18.0.0'])
+      })
+
       it('should get semver tag if a commit has a preceding non-semver tag', async () => {
         testTools.writeFileSync('test5', '1')
         testTools.exec('git add --all && git commit -m"chore: multiple tags"')

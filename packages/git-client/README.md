@@ -133,7 +133,7 @@ Wrapper around Git CLI with conventional commits support.
 
 Get parsed commits stream.
 
-#### `getSemverTags(params?: GitTagsLogParams): AsyncIterable<string>`
+#### `getSemverTags(params?: GetSemverTagsParams): AsyncIterable<string>`
 
 Get semver tags stream.
 

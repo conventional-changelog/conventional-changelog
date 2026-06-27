@@ -80,15 +80,20 @@ export class ConventionalGitClient extends GitClient {
    * @param params.prefix - Get semver tags with specific prefix.
    * @param params.skipUnstable - Skip semver tags with unstable versions.
    * @param params.clean - Clean version from prefix and trash.
+   * @param params.path - Read tags from specific path.
+   * @param params.from - Start tags range.
+   * @param params.to - End tags range.
+   * @param params.since - Get tags since specific date.
    * @yields Semver tags.
    */
   async* getSemverTags(params: GetSemverTagsParams = {}) {
     const {
       prefix,
       skipUnstable,
-      clean
+      clean,
+      ...getTagsParams
     } = params
-    const tagsStream = this.getTags()
+    const tagsStream = this.getTags(getTagsParams)
     const unstableTagRegex = /\d+\.\d+\.\d+-.+/
     const cleanTag = clean
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)

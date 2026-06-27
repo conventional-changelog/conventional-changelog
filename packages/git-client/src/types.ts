@@ -76,7 +76,7 @@ export interface GitFetchParams {
   branch?: string
 }
 
-export interface GetSemverTagsParams {
+export interface GetSemverTagsParams extends GitLogTagsParams {
   /**
    * Get semver tags with specific prefix.
    */
