@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.0.0...git-client-v3.0.1) (2026-06-27)
+
+### Bug Fixes
+
+* pass log params to semver tag lookup ([dd2ee41](https://github.com/conventional-changelog/conventional-changelog/commit/dd2ee4160478fd0bfb8a87e3ceaef40d31eb5a85))
+
 ## [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v2.7.0...git-client-v3.0.0) (2026-06-26)
 
 ### ⚠ BREAKING CHANGES
