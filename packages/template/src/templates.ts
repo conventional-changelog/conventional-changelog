@@ -105,6 +105,17 @@ export function headerPartial<Commit extends CommitKnownProps = CommitKnownProps
 }
 
 /**
+ * Renders the default changelog preamble.
+ * @param context - Template context.
+ * @returns Changelog preamble.
+ */
+export function preamblePartial<Commit extends CommitKnownProps = CommitKnownProps>(
+  { preamble }: FinalTemplateContext<Commit>
+) {
+  return strings(preamble)
+}
+
+/**
  * Renders the default changelog footer.
  * @param context - Template context.
  * @returns Changelog footer.
@@ -184,6 +195,7 @@ export function template<Commit extends CommitKnownProps = CommitKnownProps>(
 ) {
   const {
     headerPartial,
+    preamblePartial,
     commitPartial,
     footerPartial,
     commitGroups
@@ -191,6 +203,7 @@ export function template<Commit extends CommitKnownProps = CommitKnownProps>(
 
   return segments(
     headerPartial(context),
+    preamblePartial(context),
     each(
       commitGroups,
       group => list(

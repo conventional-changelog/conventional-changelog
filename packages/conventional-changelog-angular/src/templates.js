@@ -37,6 +37,10 @@ export function headerPartial(context) {
   )
 }
 
+export function preamblePartial(context) {
+  return strings(context.preamble)
+}
+
 export function commitPartial(context, commit) {
   const {
     linkReferences,
@@ -102,6 +106,7 @@ export function footerPartial({ noteGroups }) {
 export function template(context) {
   const {
     headerPartial,
+    preamblePartial,
     commitPartial,
     footerPartial,
     commitGroups
@@ -109,7 +114,7 @@ export function template(context) {
 
   return segments(
     headerPartial(context),
-    strings(context.preamble),
+    preamblePartial(context),
     each(
       commitGroups,
       group => segments(

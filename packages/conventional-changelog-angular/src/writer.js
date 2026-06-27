@@ -1,6 +1,7 @@
 import {
   template,
   headerPartial,
+  preamblePartial,
   commitPartial,
   footerPartial
 } from './templates.js'
@@ -16,6 +17,7 @@ export function createWriterOpts() {
   return {
     template,
     headerPartial,
+    preamblePartial,
     commitPartial,
     footerPartial,
     transform: (commit, context) => {
