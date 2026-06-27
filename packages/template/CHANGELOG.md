@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.0.0...template-v1.1.0) (2026-06-27)
+
+### Features
+
+* support changelog preamble ([#1489](https://github.com/conventional-changelog/conventional-changelog/issues/1489)) ([7d9794f](https://github.com/conventional-changelog/conventional-changelog/commit/7d9794ff7c4ca5e9bd916c400b7fb1e426319379))
+
 ## 1.0.0 (2026-06-26)
 
 ### ⚠ BREAKING CHANGES

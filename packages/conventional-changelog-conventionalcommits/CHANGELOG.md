@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v10.0.0...conventional-changelog-conventionalcommits-v10.1.0) (2026-06-27)
+
+### Features
+
+* support changelog preamble ([#1489](https://github.com/conventional-changelog/conventional-changelog/issues/1489)) ([7d9794f](https://github.com/conventional-changelog/conventional-changelog/commit/7d9794ff7c4ca5e9bd916c400b7fb1e426319379))
+
 ## [10.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v9.3.1...conventional-changelog-conventionalcommits-v10.0.0) (2026-06-26)
 
 ### ⚠ BREAKING CHANGES
