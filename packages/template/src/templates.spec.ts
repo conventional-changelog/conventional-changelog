@@ -8,6 +8,7 @@ import {
   template,
   compareUrl,
   headerPartial,
+  preamblePartial,
   commitPartial,
   footerPartial
 } from './templates.js'
@@ -314,6 +315,7 @@ describe('@conventional-changelog/template', () => {
         templateContext = {
           version: 'my version',
           headerPartial,
+          preamblePartial,
           commitPartial,
           footerPartial
         }
@@ -338,8 +340,26 @@ describe('@conventional-changelog/template', () => {
         expect(log).toBe('## my version\n\n* my commit\n* my other commit')
       })
 
+      it('should generate template with preamble', () => {
+        templateContext.preamble = 'my preamble'
+        templateContext.commitGroups = [
+          {
+            commits: [
+              {
+                header: 'my commit'
+              }
+            ]
+          }
+        ]
+
+        const log = template(templateContext)
+
+        expect(log).toBe('## my version\n\nmy preamble\n\n* my commit')
+      })
+
       it('should generate template with customized partials', () => {
         templateContext.headerPartial = () => 'my header'
+        templateContext.preamblePartial = () => 'my preamble'
         templateContext.commitPartial = (_context: any, commit: any) => commit.header
         templateContext.footerPartial = () => 'my footer'
         templateContext.commitGroups = [
@@ -357,7 +377,7 @@ describe('@conventional-changelog/template', () => {
 
         const log = template(templateContext)
 
-        expect(log).toBe('my header\n\n* my commit\n* my other commit\n\nmy footer')
+        expect(log).toBe('my header\n\nmy preamble\n\n* my commit\n* my other commit\n\nmy footer')
       })
 
       it('should not produce double blank line before noteGroups when footer has content', () => {

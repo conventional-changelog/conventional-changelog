@@ -5,6 +5,7 @@ import type {
   NoteGroup,
   FinalTemplateContext,
   HeaderPartialFunction,
+  PreamblePartialFunction,
   CommitPartialFunction,
   FooterPartialFunction
 } from '@conventional-changelog/template'
@@ -86,6 +87,10 @@ export interface Options<Commit extends CommitKnownProps = CommitKnownProps> {
    */
   headerPartial?: HeaderPartialFunction<Commit>
   /**
+   * Function that renders introductory text after the release header.
+   */
+  preamblePartial?: PreamblePartialFunction<Commit>
+  /**
    * Function that renders a single commit entry.
    */
   commitPartial?: CommitPartialFunction<Commit>
@@ -138,6 +143,7 @@ export interface FinalOptions<Commit extends CommitKnownProps = CommitKnownProps
   transform: RequiredOptions<Commit>['transform']
   template: RequiredOptions<Commit>['template']
   headerPartial: RequiredOptions<Commit>['headerPartial']
+  preamblePartial: RequiredOptions<Commit>['preamblePartial']
   commitPartial: RequiredOptions<Commit>['commitPartial']
   footerPartial: RequiredOptions<Commit>['footerPartial']
   commitsSort?: Comparator<Commit>

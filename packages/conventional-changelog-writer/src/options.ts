@@ -2,6 +2,7 @@ import {
   type CommitKnownProps,
   type FinalTemplateContext,
   headerPartial,
+  preamblePartial,
   commitPartial,
   footerPartial,
   template
@@ -71,6 +72,7 @@ export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownPro
     formatDate,
     template,
     headerPartial,
+    preamblePartial,
     commitPartial,
     footerPartial,
     reverse: false,

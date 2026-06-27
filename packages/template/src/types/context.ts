@@ -8,6 +8,9 @@ import type {
 export type HeaderPartialFunction<Commit extends CommitKnownProps = CommitKnownProps> =
   (context: FinalTemplateContext<Commit>) => string
 
+export type PreamblePartialFunction<Commit extends CommitKnownProps = CommitKnownProps> =
+  (context: FinalTemplateContext<Commit>) => string
+
 export type CommitPartialFunction<Commit extends CommitKnownProps = CommitKnownProps> =
   (context: FinalTemplateContext<Commit>, commit: TransformedCommit<Commit>) => string
 
@@ -94,6 +97,10 @@ export interface TemplateContext<Commit extends CommitKnownProps = CommitKnownPr
    */
   headerPartial?: HeaderPartialFunction<Commit>
   /**
+   * Function that renders introductory text after the release header.
+   */
+  preamblePartial?: PreamblePartialFunction<Commit>
+  /**
    * Function that renders a single commit entry.
    */
   commitPartial?: CommitPartialFunction<Commit>
@@ -110,6 +117,7 @@ export interface FinalTemplateContext<Commit extends CommitKnownProps = CommitKn
   issue: RequiredTemplateContext<Commit>['issue']
   date: RequiredTemplateContext<Commit>['date']
   headerPartial: RequiredTemplateContext<Commit>['headerPartial']
+  preamblePartial: RequiredTemplateContext<Commit>['preamblePartial']
   commitPartial: RequiredTemplateContext<Commit>['commitPartial']
   footerPartial: RequiredTemplateContext<Commit>['footerPartial']
 }

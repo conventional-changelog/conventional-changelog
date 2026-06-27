@@ -115,13 +115,14 @@ export function getExtraContext<Commit extends CommitKnownProps = CommitKnownPro
  */
 export function getFinalContext<Commit extends CommitKnownProps = CommitKnownProps>(
   context: TemplateContext<Commit>,
-  options: Pick<FinalOptions<Commit>, 'formatDate' | 'headerPartial' | 'commitPartial' | 'footerPartial'>
+  options: Pick<FinalOptions<Commit>, 'formatDate' | 'headerPartial' | 'preamblePartial' | 'commitPartial' | 'footerPartial'>
 ) {
   const finalContext: FinalTemplateContext<Commit> = {
     commit: 'commits',
     issue: 'issues',
     date: options.formatDate(new Date()),
     headerPartial: options.headerPartial,
+    preamblePartial: options.preamblePartial,
     commitPartial: options.commitPartial,
     footerPartial: options.footerPartial,
     ...context
