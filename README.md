@@ -23,6 +23,21 @@ We recommend considering the following high level tools for automating versionin
 - [semantic-release](https://github.com/semantic-release/semantic-release) — fully automates the release process from CI/CD, including version determination, changelog generation, and publishing.
 - [simple-release-action](https://github.com/TrigenSoftware/simple-release-action) — a simple GitHub Action to automate version bumps, changelogs, and releases. Supports monorepos and extensibility via addons.
 
+## Skills
+
+This repository includes universal agent skills in the [skills](skills) directory. The currently available skill is:
+
+- [`conventional-commit-message`](skills/conventional-commit-message) — helps write Conventional Commit messages
+
+Install it with either package runner:
+
+```sh
+# pnpm
+pnpx skills add conventional-changelog/conventional-changelog --skill conventional-commit-message
+# npm
+npx skills add conventional-changelog/conventional-changelog --skill conventional-commit-message
+```
+
 ## Modules Important to Conventional Changelog Ecosystem
 
 - [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog) - the full-featured command line interface
