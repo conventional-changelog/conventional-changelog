@@ -1,0 +1,87 @@
+---
+title: Introduction
+description: Load conventional-changelog presets by name with conventional-changelog-preset-loader.
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
+
+`conventional-changelog-preset-loader` resolves a preset by name — turning a shorthand like `angular` into the `conventional-changelog-angular` package — and loads its config. It's what powers [`.loadPreset()`](/conventional-changelog/api/#builder-methods) across the tooling; reach for it directly when building your own tools or when a bundler needs a custom module loader.
+
+## Quick start
+
+<Steps>
+
+1. **Install `conventional-changelog-preset-loader`:**
+
+   <Tabs syncKey="pkg">
+     <TabItem label="pnpm">
+       ```sh frame="none"
+       pnpm add conventional-changelog-preset-loader
+       ```
+     </TabItem>
+     <TabItem label="npm">
+       ```sh frame="none"
+       npm i conventional-changelog-preset-loader
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```sh frame="none"
+       yarn add conventional-changelog-preset-loader
+       ```
+     </TabItem>
+   </Tabs>
+
+2. **Load a preset by name.** `loadPreset` is async and imports the matching package:
+
+   ```js
+   import { loadPreset } from 'conventional-changelog-preset-loader'
+
+   const preset = await loadPreset('conventionalcommits')
+   ```
+
+3. **Get its config** — the object returned by the preset's `createPreset` factory:
+
+   ```js
+   console.log(Object.keys(preset))
+   // → ['commits', 'parser', 'writer', 'whatBump']
+   ```
+
+</Steps>
+
+## Shorthand names
+
+A bare name is expanded to the `conventional-changelog-` package, falling back to the name as-is:
+
+| Input | Resolved (in order) |
+| --- | --- |
+| `angular` | `conventional-changelog-angular`, then `angular` |
+| `@scope/foo` | `@scope/conventional-changelog-foo`, then `@scope/foo` |
+| `@conventional-changelog/preset` | used as-is |
+| `/abs/path/to/preset.js` | used as-is |
+
+## Passing preset options
+
+Pass an object with a `name` and the preset's options — everything is forwarded to `createPreset`:
+
+```js
+const preset = await loadPreset({
+  name: 'conventionalcommits',
+  preMajor: true
+})
+```
+
+## Custom module loader
+
+The default `loadPreset` imports modules with `import(name)`. When you need different resolution — for example inside a bundle — build a loader with `createPresetLoader`:
+
+```js
+import { createPresetLoader } from 'conventional-changelog-preset-loader'
+
+const loadPreset = createPresetLoader(name => import(name))
+
+const preset = await loadPreset('conventionalcommits')
+```
+
+This is also how [`conventional-changelog`](/conventional-changelog/api/#builder-methods) accepts a custom loader as the second argument to `.loadPreset()`.

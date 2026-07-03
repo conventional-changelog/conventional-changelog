@@ -1,0 +1,113 @@
+---
+title: Introduction
+description: Get a recommended semver bump from your commit history with conventional-recommended-bump.
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
+
+`conventional-recommended-bump` inspects the commits since your last release and recommends whether the next version should be a **major**, **minor**, or **patch** — following a [preset](/conventional-changelog/#available-presets)'s rules (a breaking change → major, a new feature → minor, otherwise patch). It decides *how much* to bump; pair it with [`conventional-changelog`](/conventional-changelog/) to write the notes.
+
+## Quick start
+
+<Steps>
+
+1. **Install `conventional-recommended-bump`** together with a preset:
+
+   <Tabs syncKey="pkg">
+     <TabItem label="pnpm">
+       ```sh frame="none"
+       pnpm add -D conventional-recommended-bump conventional-changelog-conventionalcommits
+       ```
+     </TabItem>
+     <TabItem label="npm">
+       ```sh frame="none"
+       npm i -D conventional-recommended-bump conventional-changelog-conventionalcommits
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```sh frame="none"
+       yarn add -D conventional-recommended-bump conventional-changelog-conventionalcommits
+       ```
+     </TabItem>
+   </Tabs>
+
+2. **Make commits** following the convention as you work:
+
+   ```
+   feat(api): add async write() generator
+   fix(cli): resolve config path relative to cwd
+   ```
+
+3. **Run it with your preset.** The recommended release type is printed to stdout:
+
+   <Tabs syncKey="pkg">
+     <TabItem label="pnpm">
+       ```sh frame="none"
+       pnpm conventional-recommended-bump -p conventionalcommits
+       ```
+     </TabItem>
+     <TabItem label="npm">
+       ```sh frame="none"
+       npx conventional-recommended-bump -p conventionalcommits
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```sh frame="none"
+       yarn conventional-recommended-bump -p conventionalcommits
+       ```
+     </TabItem>
+   </Tabs>
+
+4. **Get the recommended bump.** A `feat` is present, so the change is a **minor**:
+
+   ```
+   minor
+   ```
+
+   Add `--verbose` (`-v`) to also print the reasoning:
+
+   ```
+   minor
+   Reason: There are 0 BREAKING CHANGES and 1 features
+   ```
+
+</Steps>
+
+## How the bump is decided
+
+The rules come from the preset. For [Conventional Commits](/presets/conventional-commits/) (and [Angular](/presets/angular/)):
+
+| Commits since the last release | Recommended bump |
+| --- | --- |
+| Any breaking change (`!` or a `BREAKING CHANGE:` footer) | `major` |
+| At least one `feat` | `minor` |
+| Otherwise (`fix`, `perf`, …) | `patch` |
+
+If nothing warrants a release, no bump is printed. The [`preMajor`](/presets/conventional-commits/options/#premajor) option softens these rules for projects still on `0.x`.
+
+## Use it in a release script
+
+Feed the result straight into `npm version`:
+
+```sh frame="none"
+npm version "$(npx conventional-recommended-bump -p conventionalcommits)"
+```
+
+## Programmatic usage
+
+The same recommendation is available through the [`Bumper`](/version-bump/api/) class:
+
+```js
+import { Bumper } from 'conventional-recommended-bump'
+
+const bumper = new Bumper()
+  .loadPreset('conventionalcommits')
+
+const { releaseType, reason } = await bumper.bump()
+
+console.log(releaseType) // 'minor'
+```
+
+See the [JS API](/version-bump/api/) page for the full builder interface.

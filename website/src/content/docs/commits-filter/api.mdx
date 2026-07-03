@@ -1,0 +1,70 @@
+---
+title: JS API
+description: Programmatic API for conventional-commits-filter.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The package exports three filtering functions — sync, async, and stream — plus the low-level `RevertedCommitsFilter` class they're built on:
+
+```js
+import {
+  filterRevertedCommitsSync,
+  filterRevertedCommits,
+  filterRevertedCommitsStream,
+  RevertedCommitsFilter
+} from 'conventional-commits-filter'
+```
+
+See [Introduction](/commits-filter/) for a first example.
+
+## Functions
+
+| Function | Signature | Description |
+| --- | --- | --- |
+| `filterRevertedCommitsSync` | `(commits: Iterable) => Generator<Commit>` | Filter synchronously. |
+| `filterRevertedCommits` | `(commits: Iterable \| AsyncIterable) => AsyncGenerator<Commit>` | Async-generator function for `stream.pipeline`. |
+| `filterRevertedCommitsStream` | `() => Transform` | A Node.js `Transform` stream. |
+
+`filterRevertedCommits` is itself the transform step — pass it to `pipeline` directly. `filterRevertedCommitsStream` is called to create a stream:
+
+```js
+import { filterRevertedCommits, filterRevertedCommitsStream } from 'conventional-commits-filter'
+import { pipeline } from 'node:stream/promises'
+
+await pipeline(commits, filterRevertedCommits, collect)
+
+commitsStream.pipe(filterRevertedCommitsStream())
+```
+
+## What counts as a revert
+
+A commit is treated as a revert when it has a truthy `revert` object — set by [`conventional-commits-parser`](/commits-parser/) from its `revertPattern`. The filter holds each revert and drops a later commit when every field of the revert's `revert` object matches that commit (its `raw` form when present) — in practice the `header` and `hash`. When matched, **both** the revert and the reverted commit are removed.
+
+<Aside>
+  Commits are expected newest-first (the default git order), so a revert appears before the commit it reverts.
+</Aside>
+
+## `RevertedCommitsFilter`
+
+The stateful class behind the functions, for custom pipelines. Feed commits one at a time to `process()` — it yields the commits that survive so far — then call `flush()` at the end to emit any it was still holding:
+
+```js
+import { RevertedCommitsFilter } from 'conventional-commits-filter'
+
+const filter = new RevertedCommitsFilter()
+const kept = []
+
+for (const commit of commits) {
+  kept.push(...filter.process(commit))
+}
+
+kept.push(...filter.flush())
+```
+
+| Method | Description |
+| --- | --- |
+| `process(commit)` | Generator that yields the currently-surviving commits after taking `commit` into account. |
+| `flush()` | Generator that yields any commits still held once the input is exhausted. |

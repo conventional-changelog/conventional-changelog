@@ -1,0 +1,274 @@
+---
+title: CLI
+description: Command-line usage, flags, and examples for the standard-changelog CLI.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The `standard-changelog` binary is [`conventional-changelog`](/conventional-changelog/cli/) with the [Angular preset](/presets/angular/) built in. It reads commits from your git history and the version from your `package.json`, then writes a `CHANGELOG.md`. See [Introduction](/standard-changelog/) for installation.
+
+```sh frame="none"
+standard-changelog [options]
+```
+
+## Options
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-p, --preset <name>` | `angular` | Override the built-in Angular preset with another one. |
+| `-i, --infile <path>` | `CHANGELOG.md` | File to read the existing changelog from. |
+| `-o, --outfile <path>` | value of `--infile` | File to write the changelog to. |
+| `--stdout` | | Print the result to stdout instead of writing a file. |
+| `-k, --pkg <path>` | closest `package.json` | Path to the `package.json` to read the version and repository from. |
+| `-a, --append` | `false` | Append newer releases below older ones instead of prepending. |
+| `-r, --release-count <n>` | `1` | How many releases to generate, counting from the latest. `0` regenerates the whole history and **overwrites** the outfile. |
+| `-f, --first-release` | | Generate the changelog for the first time — equivalent to `--release-count 0`. |
+| `--skip-unstable` | `false` | Skip unstable tags, e.g. `x.x.x-alpha.1`, `x.x.x-rc.2`. |
+| `-u, --output-unreleased` | auto | Output unreleased commits under an `Unreleased` heading. |
+| `-t, --tag-prefix <prefix>` | | Tag prefix to consider when reading tags. |
+| `-l, --lerna-package <name>` | | Generate a changelog for a Lerna package, reading `name@1.0.0`-style tags. |
+| `--commit-path <path>` | | Only include commits that touch a specific directory. |
+| `--from <ref>` | last semver tag | Start of the commit range (tag or SHA). |
+| `--to <ref>` | `HEAD` | End of the commit range (tag or SHA). |
+| `-n, --config <path>` | | Path to a config script that returns preset options. |
+| `-c, --context <path>` | | Path to a JSON file with template context variables. |
+| `-v, --verbose` | `false` | Print debug and warning logs. |
+
+<Aside title="Print the list from the CLI">
+  Running `standard-changelog --help` prints the same option list.
+</Aside>
+
+## Examples
+
+<Aside title="Shared setup for the examples">
+  The repository below is hosted at `https://github.com/acme/app`, has tags `v1.0.0` and `v1.1.0`, a `package.json` at version `1.2.0`, and these commits since `v1.1.0`:
+
+  ```
+  feat(api): add async write() generator
+  fix(cli): resolve config path relative to cwd
+  perf(parser): cache compiled header regex
+  ```
+</Aside>
+
+### Generate the upcoming release
+
+The default run collects commits **since the last semver tag** and prepends a section for the current `package.json` version to `CHANGELOG.md`. Existing entries are kept:
+
+```sh frame="none"
+standard-changelog
+```
+
+```md title="CHANGELOG.md"
+# [1.2.0](https://github.com/acme/app/compare/v1.1.0...v1.2.0) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+
+### Performance Improvements
+
+* **parser:** cache compiled header regex ([c1d2e3f](https://github.com/acme/app/commit/c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0))
+
+# [1.1.0](https://github.com/acme/app/compare/v1.0.0...v1.1.0) (2026-05-12)
+… previous entries, untouched …
+```
+
+<Aside type="tip">
+  These links assume a `repository` field in your `package.json` — versions become comparison links and hashes link to commits on your git host. Without it, entries are plain text (`## 1.2.0 (2026-07-01)` and bare short hashes). Issue and PR references in commit messages (e.g. `(#123)`) are linked too.
+</Aside>
+
+### Preview without writing a file
+
+`--stdout` prints the generated section to the terminal, leaving `CHANGELOG.md` untouched:
+
+```sh frame="none"
+standard-changelog --stdout
+```
+
+```md title="CHANGELOG.md"
+# [1.2.0](https://github.com/acme/app/compare/v1.1.0...v1.2.0) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+
+### Performance Improvements
+
+* **parser:** cache compiled header regex ([c1d2e3f](https://github.com/acme/app/commit/c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0))
+```
+
+### Regenerate the whole changelog
+
+`--release-count 0` (or `-r 0`) rebuilds every release from the full history and **overwrites** the outfile. The oldest release has no earlier tag to compare against, so its heading is plain:
+
+```sh frame="none"
+standard-changelog -r 0
+```
+
+```md title="CHANGELOG.md"
+# [1.2.0](https://github.com/acme/app/compare/v1.1.0...v1.2.0) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+
+### Performance Improvements
+
+* **parser:** cache compiled header regex ([c1d2e3f](https://github.com/acme/app/commit/c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0))
+
+# [1.1.0](https://github.com/acme/app/compare/v1.0.0...v1.1.0) (2026-05-12)
+
+### Features
+
+* **writer:** support custom templates ([b2c3d4e](https://github.com/acme/app/commit/b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b))
+
+### Bug Fixes
+
+* **parser:** handle empty commit body ([e5f6a7b](https://github.com/acme/app/commit/e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4d5e))
+
+# 1.0.0 (2026-03-01)
+
+### Features
+
+* initial public release ([1a2b3c4](https://github.com/acme/app/commit/1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b))
+```
+
+<Aside>
+  `--first-release` (`-f`) is a shorthand for `--release-count 0`, meant for generating the changelog for the very first time.
+</Aside>
+
+### Generate only the last N releases
+
+Pass a positive count to limit how many releases are generated from the latest:
+
+```sh frame="none"
+standard-changelog -r 2 --stdout
+```
+
+```md title="CHANGELOG.md"
+# [1.2.0](https://github.com/acme/app/compare/v1.1.0...v1.2.0) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+…
+
+# [1.1.0](https://github.com/acme/app/compare/v1.0.0...v1.1.0) (2026-05-12)
+
+### Features
+
+* **writer:** support custom templates ([b2c3d4e](https://github.com/acme/app/commit/b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b))
+
+### Bug Fixes
+
+* **parser:** handle empty commit body ([e5f6a7b](https://github.com/acme/app/commit/e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4d5e))
+```
+
+### Generate for a specific range
+
+Restrict generation to a commit range with `--from` and `--to`. Each accepts a tag or a SHA:
+
+```sh frame="none"
+standard-changelog --from v1.0.0 --to v1.1.0 --stdout
+```
+
+```md title="CHANGELOG.md"
+# [1.1.0](https://github.com/acme/app/compare/v1.0.0...v1.1.0) (2026-05-12)
+
+### Features
+
+* **writer:** support custom templates ([b2c3d4e](https://github.com/acme/app/commit/b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b))
+
+### Bug Fixes
+
+* **parser:** handle empty commit body ([e5f6a7b](https://github.com/acme/app/commit/e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4d5e))
+```
+
+### Append instead of prepend
+
+By default a new release is written **above** existing entries. Use `--append` (`-a`) when your changelog is ordered oldest-first and new releases should go to the bottom:
+
+```sh frame="none"
+standard-changelog -a
+```
+
+### Include unreleased changes
+
+When there are commits after the latest tag but the `package.json` version still matches that tag, `--output-unreleased` (`-u`) emits them under an `Unreleased` heading that compares the last tag with the current commit:
+
+```sh frame="none"
+standard-changelog -u --stdout
+```
+
+```md title="CHANGELOG.md"
+# [Unreleased](https://github.com/acme/app/compare/v1.1.0...0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+
+### Performance Improvements
+
+* **parser:** cache compiled header regex ([c1d2e3f](https://github.com/acme/app/commit/c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0))
+```
+
+### Monorepos: tag prefixes and paths
+
+Read package-specific tags and scope the changelog to a single directory. Use `--tag-prefix` (`-t`) for custom prefixes, or `--lerna-package` (`-l`) for Lerna-style `name@version` tags:
+
+```sh frame="none"
+# Tags like "api-v1.2.0", commits touching packages/api
+standard-changelog -t "api-v" --commit-path packages/api --stdout
+
+# Lerna-style tags like "api@1.2.0"
+standard-changelog -l api --commit-path packages/api --stdout
+```
+
+### Custom input and output files
+
+`--outfile` defaults to `--infile`, so pointing `-i` at another file both reads from and writes back to it:
+
+```sh frame="none"
+standard-changelog -i HISTORY.md
+```
+
+Pass `-o` only when the output should go somewhere other than the input:
+
+```sh frame="none"
+standard-changelog -i HISTORY.md -o RELEASES.md
+```
+
+### Custom config and context
+
+Point `--config` (`-n`) at a script exporting preset options, and `--context` (`-c`) at a JSON file with extra [changelog writer context](/changelog-writer/api/#context) variables:
+
+```sh frame="none"
+standard-changelog -n ./changelog.config.js -c ./context.json --stdout
+```
+
+### Debugging
+
+`--verbose` (`-v`) prints debug and warning logs, useful when commits are missing from the output:
+
+```sh frame="none"
+standard-changelog -v --stdout
+```

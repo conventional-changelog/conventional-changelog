@@ -1,0 +1,126 @@
+---
+title: Introduction
+description: Filter parsed commits, including revert handling, with conventional-commits-filter.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components'
+
+`conventional-commits-filter` removes reverted commits from a list of parsed commits. A `revert` commit and the commit it reverts cancel each other out, so neither ends up in the changelog. It's the middle stage of the pipeline — [parser](/commits-parser/) → **filter** → [writer](/changelog-writer/) — and [`conventional-changelog`](/conventional-changelog/) applies it automatically.
+
+## Quick start
+
+<Steps>
+
+1. **Install `conventional-commits-filter`:**
+
+   <Tabs syncKey="pkg">
+     <TabItem label="pnpm">
+       ```sh frame="none"
+       pnpm add conventional-commits-filter
+       ```
+     </TabItem>
+     <TabItem label="npm">
+       ```sh frame="none"
+       npm i conventional-commits-filter
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```sh frame="none"
+       yarn add conventional-commits-filter
+       ```
+     </TabItem>
+   </Tabs>
+
+2. **Filter a list of parsed commits** — here a `revert` and the `feat` it reverts, plus an unrelated `fix`:
+
+   ```js
+   import { filterRevertedCommitsSync } from 'conventional-commits-filter'
+
+   const commits = [
+     {
+       type: 'revert',
+       header: 'revert: feat(api): add caching',
+       revert: { header: 'feat(api): add caching', hash: '9c1e2b3' },
+       hash: 'a1b2c3d',
+       notes: [],
+       references: []
+     },
+     {
+       type: 'feat',
+       scope: 'api',
+       subject: 'add caching',
+       header: 'feat(api): add caching',
+       revert: null,
+       hash: '9c1e2b3',
+       notes: [],
+       references: []
+     },
+     {
+       type: 'fix',
+       scope: 'cli',
+       subject: 'handle missing config',
+       header: 'fix(cli): handle missing config',
+       revert: null,
+       hash: 'e5f6a7b',
+       notes: [],
+       references: []
+     }
+   ]
+
+   const kept = Array.from(filterRevertedCommitsSync(commits))
+   ```
+
+3. **Get the surviving commits** — the revert and the `feat` it reverts are gone, so only the `fix` remains:
+
+   ```js
+   [
+     {
+       type: 'fix',
+       scope: 'cli',
+       subject: 'handle missing config',
+       header: 'fix(cli): handle missing config',
+       revert: null,
+       hash: 'e5f6a7b',
+       notes: [],
+       references: []
+     }
+   ]
+   ```
+
+</Steps>
+
+## Streaming
+
+`filterRevertedCommits` is an async-generator function for `stream.pipeline`, and `filterRevertedCommitsStream` returns a Node.js `Transform`:
+
+```js
+import { filterRevertedCommits, filterRevertedCommitsStream } from 'conventional-commits-filter'
+import { pipeline } from 'node:stream/promises'
+import { Readable } from 'node:stream'
+
+// Async iterable
+await pipeline(
+  commits,
+  filterRevertedCommits,
+  async function* (filtered) {
+    for await (const commit of filtered) {
+      console.log(commit)
+    }
+  }
+)
+
+// Node.js stream
+Readable.from(commits)
+  .pipe(filterRevertedCommitsStream())
+  .on('data', commit => console.log(commit))
+```
+
+## How reverts are matched
+
+A commit is recognized as a revert when it has a `revert` field — set by [`conventional-commits-parser`](/commits-parser/) from its `revertPattern`. A held revert cancels a later commit when the revert's `revert` object matches that commit's fields (its `header` and `hash`).
+
+<Aside>
+  Because `conventional-changelog` runs this filter for you (via the writer's `ignoreReverted` option), you usually only reach for this package when building a custom pipeline.
+</Aside>

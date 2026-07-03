@@ -26,13 +26,15 @@
   },
   "scripts": {
     "clear": "pnpm -r --parallel --if-present clear && del ./coverage",
-    "build": "pnpm -r --parallel --if-present build",
+    "build": "pnpm -r --parallel --if-present --filter './packages/*' build",
     "lint": "oxlint",
     "format": "oxlint --fix",
     "test:types": "pnpm -r --parallel --if-present test:types",
     "test:unit": "vitest run --coverage",
     "test:unit:watch": "vitest watch",
     "test": "run -p lint test:types test:unit",
+    "docs:dev": "pnpm --filter website dev",
+    "docs:build": "pnpm --filter website build",
     "commit": "cz",
     "updateGitHooks": "simple-git-hooks"
   },

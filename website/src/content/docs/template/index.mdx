@@ -1,0 +1,103 @@
+---
+title: Introduction
+description: Markdown helpers and default render functions for composing changelog templates.
+sidebar:
+  order: 1
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components'
+
+`@conventional-changelog/template` provides the low-level building blocks for changelog output: small Markdown helpers like `heading` and `link`, repository URL helpers, and the default render functions the [writer](/changelog-writer/) uses. Presets and custom templates compose their `template` / `*Partial` functions from these.
+
+## Installation
+
+<Tabs syncKey="pkg">
+  <TabItem label="pnpm">
+    ```sh frame="none"
+    pnpm add @conventional-changelog/template
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```sh frame="none"
+    npm i @conventional-changelog/template
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```sh frame="none"
+    yarn add @conventional-changelog/template
+    ```
+  </TabItem>
+</Tabs>
+
+## Markdown helpers
+
+Each helper returns a Markdown string; empty/falsy values are skipped so you can compose conditionally:
+
+```js
+import { heading, bold, link, list, url } from '@conventional-changelog/template'
+
+heading(2, 'Features')  // '## Features'
+bold('scope:')          // '**scope:**'
+
+link('0f7e2c1', url('https://github.com/acme/app', 'commit', '0f7e2c1'))
+// '[0f7e2c1](https://github.com/acme/app/commit/0f7e2c1)'
+
+list(['one', 'two'], item => item)
+// '* one\n* two'
+```
+
+| Helper | Renders |
+| --- | --- |
+| `heading(level, text)` | A Markdown heading (`## text`). |
+| `link(text, url)` | A Markdown link (`[text](url)`). |
+| `list(array, callback)` | A Markdown unordered list. |
+| `each(array, callback, separator?)` | The array's non-empty rendered items, joined. |
+| `bold(text)` · `italic(text)` · `small(text)` | `**text**` · `_text_` · `<small>text</small>`. |
+| `words(...values)` · `strings(...values)` · `segments(...values)` | Non-empty values joined by a space · nothing · a blank line. |
+| `newline(times?)` | Newline characters. |
+| `url(...parts)` | Path segments joined into a URL, trimming stray slashes. |
+
+## Repository and reference helpers
+
+These build links from a template context (`host`, `owner`, `repository`, `previousTag`, `currentTag`, …):
+
+```js
+import { repositoryUrl, compareUrl } from '@conventional-changelog/template'
+
+const context = {
+  host: 'https://github.com',
+  owner: 'acme',
+  repository: 'app',
+  previousTag: 'v1.0.0',
+  currentTag: 'v1.1.0'
+}
+
+repositoryUrl(context) // 'https://github.com/acme/app'
+compareUrl(context)    // 'https://github.com/acme/app/compare/v1.0.0...v1.1.0'
+```
+
+| Helper | Renders |
+| --- | --- |
+| `repositoryUrl(context)` | The repository's base URL. |
+| `compareUrl(context)` | The `previousTag...currentTag` comparison URL. |
+| `referenceRepositoryUrl(context, reference)` | The base URL for an issue reference (which may live in another repo). |
+| `reference(commitReference)` | The reference text, e.g. `#42`. |
+
+## Default template and partials
+
+`template`, `headerPartial`, `preamblePartial`, `commitPartial`, and `footerPartial` are the render functions the [writer](/changelog-writer/api/#options) uses by default. Import them to reuse or wrap, or compose your own partial from the helpers:
+
+```js
+import { words, bold, link, url } from '@conventional-changelog/template'
+
+// A commit line: "**scope:** subject ([hash](url))"
+function commitPartial(context, commit) {
+  return words(
+    commit.scope && bold(`${commit.scope}:`),
+    commit.subject,
+    commit.hash && `(${link(commit.hash, url(context.repoUrl, 'commit', commit.hash))})`
+  )
+}
+```
+
+Pass a partial like this as a [Changelog Writer option](/changelog-writer/api/#options), or through a preset's `writer` config.

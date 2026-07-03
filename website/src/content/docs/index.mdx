@@ -1,0 +1,44 @@
+---
+title: Conventional Changelog
+description: Generate a changelog from git metadata.
+template: splash
+editUrl: false
+hero:
+  tagline: Generate a changelog from your git history — automatically, following your commit convention.
+  image:
+    dark: ../../assets/changelog-dark.svg
+    light: ../../assets/changelog-light.svg
+  actions:
+    - text: Get Started
+      link: ./getting-started/
+      icon: right-arrow
+    - text: GitHub
+      link: https://github.com/conventional-changelog/conventional-changelog
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+## Features
+
+<CardGrid stagger>
+  <Card title="Automated changelogs" icon="add-document">
+    Turn your git history into a formatted `CHANGELOG.md` — grouped, linked, and ready to ship. No hand-editing.
+  </Card>
+  <Card title="Built on Conventional Commits" icon="pencil">
+    Write commits that follow a convention and the tool sorts them into Features, Bug Fixes, Performance Improvements, and Breaking Changes.
+  </Card>
+  <Card title="Configurable presets" icon="setting">
+    [Conventional Commits](/presets/conventional-commits/) and [Angular](/presets/angular/) presets are built in — customize commit types, sections, and links.
+  </Card>
+  <Card title="CLI and JS API" icon="laptop">
+    Run it from the [terminal](/conventional-changelog/cli/), or drive the chainable [`ConventionalChangelog`](/conventional-changelog/api/) builder in your own tooling.
+  </Card>
+  <Card title="Recommended version bumps" icon="rocket">
+    Let your commits decide the next release — [major, minor, or patch](/version-bump/).
+  </Card>
+  <Card title="Composable pipeline" icon="puzzle">
+    A [parser](/commits-parser/), [filter](/commits-filter/), and [writer](/changelog-writer/) you can use together or on their own.
+  </Card>
+</CardGrid>

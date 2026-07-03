@@ -1,0 +1,166 @@
+---
+title: JS API
+description: Programmatic API for writing changelogs with conventional-changelog-writer.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The writer takes an iterable of parsed commits plus a `context` and `options`, and renders changelog text. Three entry functions cover the common output shapes:
+
+```js
+import {
+  writeChangelogString,
+  writeChangelog,
+  writeChangelogStream
+} from 'conventional-changelog-writer'
+```
+
+See [Introduction](/changelog-writer/) for the input shape and a first example.
+
+## Rendering functions
+
+### `writeChangelogString(commits, context?, options?)`
+
+Buffers the whole changelog into a string. Simplest option for small histories:
+
+```js
+const changelog = await writeChangelogString(commits, context, options)
+```
+
+### `writeChangelog(context?, options?, includeDetails?)`
+
+Returns an async-generator function that takes commits and yields the changelog one release at a time — for use with `stream.pipeline`:
+
+```js
+import { pipeline } from 'node:stream/promises'
+
+await pipeline(
+  commitsStream,
+  writeChangelog(context, options),
+  async function* (releases) {
+    for await (const release of releases) {
+      process.stdout.write(release)
+    }
+  }
+)
+```
+
+### `writeChangelogStream(context?, options?, includeDetails?)`
+
+Returns a Node.js `Transform` you can pipe commits through:
+
+```js
+commitsStream
+  .pipe(writeChangelogStream(context, options))
+  .pipe(process.stdout)
+```
+
+<Aside title="includeDetails">
+  Pass `includeDetails: true` to `writeChangelog` / `writeChangelogStream` to emit [Details objects](#details-objects) instead of Markdown strings.
+</Aside>
+
+## Context
+
+The `context` holds release-wide template variables. Common fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `version` | `string` | Version of the upcoming release (overridden if a commit carries a `version`). |
+| `title` | `string` | Optional release title. |
+| `host` | `string` | Host, e.g. `https://github.com`. |
+| `owner` | `string` | Repository owner. |
+| `repository` | `string` | Repository name on the host. |
+| `repoUrl` | `string` | Full repository URL; used as a fallback when `host`/`owner`/`repository` are absent. |
+| `commit` | `string` | URL keyword for commits (default `commits`). |
+| `issue` | `string` | URL keyword for issues (default `issues`). |
+| `linkReferences` | `boolean` | Whether to render links. Auto-enabled when the repository, `commit`, and `issue` are known. |
+| `date` | `string` | Release date. Defaults to today (UTC), or the key commit's date. |
+| `previousTag`, `currentTag` | `string` | Tags used to build the comparison URL. |
+| `linkCompare` | `boolean` | Link the version to a comparison page. Auto-enabled when both tags are set. |
+
+## Options
+
+Writer options and their defaults, from the [`Options`](https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog-writer/src/types/options.ts) type:
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `transform` | `(commit, context, options) => Partial<Commit> \| null \| Promise<…>` | `defaultCommitTransform` | Transform each commit; the returned object is merged into it. Return `null` to drop it. |
+| `groupBy` | `keyof Commit` | `'type'` | Commit property to group by. Falsy disables grouping. |
+| `commitsSort` | `string \| string[] \| Comparator` | `'header'` | Sort commits within a group. |
+| `commitGroupsSort` | `string \| string[] \| Comparator` | | Sort the commit groups. |
+| `notesSort` | `string \| string[] \| Comparator` | `'text'` | Sort notes within a group. |
+| `noteGroupsSort` | `string \| string[] \| Comparator` | `'title'` | Sort the note groups. |
+| `generateOn` | `function \| keyof Commit \| null` | commit has a valid semver `version` | When to start a new release block. |
+| `reverse` | `boolean` | `false` | Treat upstream commits as chronological instead of reverse-chronological. |
+| `ignoreReverted` | `boolean` | `true` | Drop reverted commits. |
+| `doFlush` | `boolean` | `true` | Flush the remaining commits into a final release block. |
+| `skip` | `(commit) => boolean` | | Return `true` to skip a commit. |
+| `template` | `(context) => string \| Promise<string>` | default | Render a whole release. |
+| `headerPartial` | `function` | default | Render the release heading. |
+| `preamblePartial` | `function` | default | Render text after the heading. |
+| `commitPartial` | `function` | default | Render one commit entry. |
+| `footerPartial` | `function` | default | Render the release footer (notes). |
+| `finalizeContext` | `function` | pass-through | Last chance to mutate the context before rendering. |
+| `formatDate` | `(date) => string` | `yyyy-mm-dd` (UTC) | Format the release date. |
+| `debug` | `(message) => void` | noop | Debug logger. |
+
+<Aside type="note" title="Templates are functions">
+  The `template` and `*Partial` options are **render functions** that return a string. The defaults come from [`@conventional-changelog/template`](/template/), which the writer re-exports so you can compose your own.
+</Aside>
+
+## Customization
+
+Shape the output by overriding options. This maps commit types to friendly section titles and sorts the groups:
+
+```js
+import { writeChangelogString } from 'conventional-changelog-writer'
+
+const sections = {
+  feat: 'Features',
+  fix: 'Bug Fixes'
+}
+
+const changelog = await writeChangelogString(commits, context, {
+  transform: commit => ({
+    ...commit,
+    type: sections[commit.type] ?? commit.type
+  }),
+  commitGroupsSort: 'title'
+})
+```
+
+For deeper control, provide your own `template` / `*Partial` render functions, or import the defaults from [`@conventional-changelog/template`](/template/) and wrap them.
+
+<Aside type="tip">
+  A [preset](/conventional-changelog/#available-presets)'s `writer` object is just a ready-made bundle of these options — pass it as the third argument to skip writing them yourself.
+</Aside>
+
+## Details objects
+
+Passing `includeDetails: true` yields structured objects instead of Markdown strings — one per release:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `log` | `string` | Rendered Markdown for the release. |
+| `keyCommit` | `Commit \| null` | The commit that started the release, or `null`. |
+
+```js
+for await (const { log, keyCommit } of getStream().pipe(writeChangelogStream(context, options, true))) {
+  console.log(keyCommit?.version, log.length)
+}
+```
+
+## Exports
+
+| Export | Description |
+| --- | --- |
+| `writeChangelogString` | Render commits to a string. |
+| `writeChangelog` | Async-generator function for `pipeline`. |
+| `writeChangelogStream` | Node.js `Transform` stream. |
+| `defaultCommitTransform` | The default `transform` (shortens hash and header, formats the date). |
+| `transformCommit` | Lower-level helper that applies a transform to a single commit. |
+| `formatDate` | The default date formatter. |
+
+The package also re-exports the building blocks from [`@conventional-changelog/template`](/template/) — the default `template`, partial functions, and helpers like `heading`, `link`, and `list`.

@@ -24,6 +24,9 @@ dist
 package
 build
 
+# Astro
+.astro
+
 # Env files
 .env
 
@@ -36,5 +39,6 @@ tmp
 # Staff
 .vite*
 .codex
+.claude
 .agents
 skills-lock.json

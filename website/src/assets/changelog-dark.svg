@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Conventional Changelog">
+  <mask id="doc">
+    <path d="M44 38 Q44 30 52 30 H128 L156 58 V162 Q156 170 148 170 H52 Q44 170 44 162 Z" fill="#fff"/>
+    <text x="58" y="82" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="38" fill="#000">CC</text>
+    <rect x="58" y="100" width="84" height="9" rx="4.5" fill="#000"/>
+    <rect x="58" y="120" width="84" height="9" rx="4.5" fill="#000"/>
+    <rect x="58" y="140" width="54" height="9" rx="4.5" fill="#000"/>
+  </mask>
+  <path d="M44 38 Q44 30 52 30 H128 L156 58 V162 Q156 170 148 170 H52 Q44 170 44 162 Z" fill="#e8eaed" mask="url(#doc)"/>
+</svg>

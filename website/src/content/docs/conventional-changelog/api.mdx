@@ -1,0 +1,241 @@
+---
+title: JS API
+description: Programmatic API for generating changelogs with conventional-changelog in Node.js.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+`ConventionalChangelog` is a chainable builder: you configure where commits, tags, the version and repository come from, then generate the changelog with `write()` or `writeStream()`. It powers the [CLI](/conventional-changelog/cli/) and is what you reach for when building your own release tooling.
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+```
+
+## Quick example
+
+Read the version from `package.json`, load a [preset](/conventional-changelog/#available-presets), and print the changelog:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset('conventionalcommits')
+
+for await (const chunk of generator.write()) {
+  process.stdout.write(chunk)
+}
+```
+
+This prints the same Markdown as the CLI — see the [CLI examples](/conventional-changelog/cli/#examples) for what the output looks like.
+
+<Aside title="The builder is lazy">
+  Configuration methods only queue settings and return `this`, so they are cheap to chain in any order. Nothing touches git until you iterate `write()` or read from `writeStream()`.
+</Aside>
+
+## Constructor
+
+```ts
+new ConventionalChangelog(cwdOrGitClient?: string | ConventionalGitClient)
+```
+
+Pass a working directory (defaults to `process.cwd()`), or a [`ConventionalGitClient`](/git-client/api/#conventionalgitclient) instance to reuse an existing client or point at another repository:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+import { ConventionalGitClient } from '@conventional-changelog/git-client'
+
+const generator = new ConventionalChangelog(new ConventionalGitClient('/path/to/repo'))
+```
+
+## Builder methods
+
+All methods return `this` for chaining, except `write()` and `writeStream()`, which generate the output.
+
+| Method | Purpose |
+| --- | --- |
+| `loadPreset(preset, loader?)` | Load parsing and formatting rules from a [preset](/conventional-changelog/#available-presets). `preset` is a name string, or `{ name, ...options }` to configure it. |
+| `config(config)` | Set the preset config object (`{ tags, commits, parser, writer }`) directly. |
+| `readPackage(path?, transform?)` | Find and read `package.json` for the version and repository (falls back to `git remote origin` for the repository). |
+| `package(pkg)` | Set package data directly. |
+| `readRepository()` | Read the repository URL from `git remote origin`. |
+| `repository(infoOrGitUrl)` | Set repository info or a git URL directly. |
+| `tags(params)` | Configure how semver tags are read. |
+| `commits(params, parserOptions?)` | Configure the commit range and [parser options](/commits-parser/api/#options). |
+| `options(options)` | Generator options — release count, append, loggers, etc. |
+| `context(context)` | Extra [changelog writer context](/changelog-writer/api/#context) template variables. |
+| `writer(params)` | [Changelog Writer options](/changelog-writer/api/#options) — templates, grouping, sorting. |
+| `write(includeDetails?)` | Generate the changelog (async generator). |
+| `writeStream(includeDetails?)` | Generate the changelog as a Node.js stream. |
+
+### Presets and config
+
+`loadPreset(preset, loader?)` resolves a preset by name (`conventionalcommits`, `angular`, …) and imports it. Pass a string for the defaults, or an object `{ name, ...options }` to forward options to the preset. The optional second argument is a custom module loader — pass one when a bundler needs an explicit `import`:
+
+```js
+generator.loadPreset('conventionalcommits')
+
+// Configure the preset by passing its options alongside the name
+generator.loadPreset({ name: 'conventionalcommits', preMajor: true })
+
+// With a custom loader (e.g. inside a bundled tool)
+generator.loadPreset('conventionalcommits', name => import(name))
+```
+
+Use `config()` to skip the package lookup and provide the preset config yourself:
+
+```js
+generator.config({
+  writer: {
+    // writer options…
+  }
+})
+```
+
+### Package and repository
+
+`readPackage()` provides **both** the version and the repository. It reads the nearest `package.json` (walking up from the working directory, or from an explicit path), taking the version from its `version` field and the commit/version links from its `repository` field. When `package.json` has no `repository`, it falls back to the `git remote origin` URL:
+
+```js
+generator.readPackage()                 // nearest package.json
+generator.readPackage('./package.json') // or an explicit path
+```
+
+Use `readRepository()` or `repository()` only when you set the package data yourself (which skips that fallback), or want to force reading the URL from git:
+
+```js
+generator
+  .package({ version: '1.2.0' }) // no repository field
+  .readRepository()              // read it from `git remote origin`
+
+generator.repository('https://github.com/acme/app.git') // or set it directly
+```
+
+<Aside type="tip">
+  Without repository info the changelog is still generated, but versions and hashes are plain text instead of links.
+</Aside>
+
+### Tags and commit range
+
+`tags()` controls which git tags count as releases; `commits()` controls the commit range and parsing:
+
+```js
+generator
+  .tags({
+    prefix: 'v',        // only tags like v1.2.0
+    skipUnstable: true  // ignore x.x.x-rc.1, etc.
+  })
+  .commits({
+    path: 'packages/api', // only commits touching this directory
+    from: 'v1.0.0',       // range start (tag or SHA)
+    to: 'HEAD'            // range end
+  })
+```
+
+See [`GetSemverTagsParams`](/git-client/api/#getsemvertagsparams) and [`GetCommitsParams`](/git-client/api/#getcommitsparams) for all fields.
+
+## Options
+
+Passed to `options()`:
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `reset` | `boolean` | `false` | Reset the changelog instead of extending it. |
+| `append` | `boolean` | `false` | Append newer releases below older ones. |
+| `releaseCount` | `number` | `1` | How many releases to generate, counting from the latest. `0` generates all. |
+| `outputUnreleased` | `boolean` | auto | Emit unreleased commits; the version becomes `Unreleased`. |
+| `transformCommit` | `(commit, params) => Partial<Commit> \| null \| Promise<…>` | | Transform each parsed commit before it is written. |
+| `warn` | `(source, messages) => void` | | Logger for warnings. |
+| `debug` | `(source, messages) => void` | | Logger for debug messages. |
+| `formatDate` | `(date) => string` | | Custom date formatter for release headings. |
+
+```js
+generator.options({
+  releaseCount: 0,
+  formatDate: date => new Date(date).toISOString().slice(0, 10)
+})
+```
+
+## Consuming the output
+
+`write()` returns an async generator that yields **one chunk per release**; `writeStream()` wraps the same output in a Node.js `Readable`:
+
+```js
+import { createWriteStream } from 'node:fs'
+
+// (1) Async iteration
+for await (const section of generator.write()) {
+  console.log(section)
+}
+
+// (2) Node.js stream
+generator
+  .writeStream()
+  .pipe(createWriteStream('CHANGELOG.md'))
+```
+
+## Real-world example
+
+Generating per-package release notes in a monorepo — the pattern used by release tooling such as [simple-release](https://github.com/TrigenSoftware/simple-release):
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+import { ConventionalGitClient } from '@conventional-changelog/git-client'
+
+const gitClient = new ConventionalGitClient(projectPath)
+
+const changelog = new ConventionalChangelog(gitClient)
+  .loadPreset('conventionalcommits')
+  .commits({ path: projectPath })     // only commits under this package
+  .tags({ prefix: tagPrefix })        // e.g. "my-pkg-v"
+  .readRepository()                   // link commits and versions to the host
+  .context({ version: nextVersion })  // the version about to be released
+  .writer({ preamblePartial })        // optional preamble for the release section
+
+for await (const section of changelog.write()) {
+  // append `section` to the package's CHANGELOG.md
+}
+```
+
+### Package-prefixed (Lerna-style) tags
+
+For monorepos that tag releases as `name@1.2.0`, build the prefix with the exported `packagePrefix` helper:
+
+```js
+import { ConventionalChangelog, packagePrefix } from 'conventional-changelog'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset('conventionalcommits')
+  .tags({
+    prefix: packagePrefix('my-package') // matches my-package@1.2.0 tags
+  })
+```
+
+## Details objects
+
+Passing `true` to `write()` (or `writeStream()`) yields structured objects instead of Markdown strings — useful for building custom output:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `log` | `string` | Rendered Markdown for one release. |
+| `keyCommit` | `Commit \| null` | The commit identifying the release, or `null`. |
+
+```js
+for await (const { log, keyCommit } of generator.write(true)) {
+  console.log(keyCommit?.version, log.length)
+}
+```
+
+## Exported helpers
+
+Alongside the class, the package exports a few utilities:
+
+| Export | Signature | Description |
+| --- | --- | --- |
+| `packagePrefix` | `(name: string) => RegExp` | Build a tag prefix matcher for Lerna-style `name@version` tags. |
+| `guessNextTag` | `(previousTag: string, version?: string) => string` | Guess the next tag name, preserving a `v` prefix. |
+| `isUnreleasedVersion` | `(semverTags: string[], version?: string) => boolean` | Whether the given version matches the latest tag (i.e. nothing new is released). |
+| `defaultCommitTransform` | `(commit, params) => Partial<Commit>` | The default commit transform (formats dates, extracts the version from tags). |

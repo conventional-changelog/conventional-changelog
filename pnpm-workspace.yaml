@@ -1,5 +1,6 @@
 packages:
   - packages/*
+  - website
 catalog:
   '@simple-libs/stream-utils': ^2.0.0
   '@types/semver': ^7.5.8
@@ -8,9 +9,11 @@ catalog:
 autoInstallPeers: false
 allowBuilds:
   esbuild: true
+  sharp: true
   simple-git-hooks: true
 minimumReleaseAgeExclude:
   - '@simple-libs/hosted-git-info@2.0.0'
   - '@simple-libs/normalize-package-data@1.0.0'
   - '@simple-libs/child-process-utils@2.0.0'
   - '@simple-libs/stream-utils@2.0.0'
+  - astro@7.0.4

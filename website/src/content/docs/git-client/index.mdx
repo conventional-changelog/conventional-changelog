@@ -1,0 +1,98 @@
+---
+title: Introduction
+description: Read commits, tags, and semver tags from a git repository with the git client.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components'
+
+`@conventional-changelog/git-client` is a small wrapper around the `git` CLI used across the tooling to read a repository's commits and tags — and to stage, commit, tag, and push during releases. `ConventionalGitClient` extends it with conventional-commits helpers: parsed commits and semver tags.
+
+## Quick start
+
+<Steps>
+
+1. **Install `@conventional-changelog/git-client`:**
+
+   <Tabs syncKey="pkg">
+     <TabItem label="pnpm">
+       ```sh frame="none"
+       pnpm add @conventional-changelog/git-client
+       ```
+     </TabItem>
+     <TabItem label="npm">
+       ```sh frame="none"
+       npm i @conventional-changelog/git-client
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```sh frame="none"
+       yarn add @conventional-changelog/git-client
+       ```
+     </TabItem>
+   </Tabs>
+
+   <Aside>
+     `ConventionalGitClient#getCommits` also needs `conventional-commits-parser` and `conventional-commits-filter` installed.
+   </Aside>
+
+2. **Create a client** pointed at a repository:
+
+   ```js
+   import { ConventionalGitClient } from '@conventional-changelog/git-client'
+
+   const client = new ConventionalGitClient(process.cwd())
+   ```
+
+3. **Read from the repo** — for example, the last semver tag:
+
+   ```js
+   console.log(await client.getLastSemverTag()) // 'v1.2.0'
+   ```
+
+</Steps>
+
+## Reading the history
+
+`ConventionalGitClient` streams **parsed** commits (via [`conventional-commits-parser`](/commits-parser/), with reverts filtered out):
+
+```js
+for await (const commit of client.getCommits({ from: 'v1.0.0' })) {
+  console.log(commit.type, commit.subject)
+}
+```
+
+And it reads semver tags in a few ways:
+
+```js
+await client.getLastSemverTag()   // 'v1.2.0' — newest semver tag
+await client.getVersionFromTags() // '1.2.0'  — current version (cleaned), or null
+
+for await (const tag of client.getSemverTags()) {
+  console.log(tag) // 'v1.2.0', 'v1.1.0', …
+}
+```
+
+The base `GitClient` exposes the raw plumbing too — `getRawCommits()`, `getTags()`, `getLastTag()`, `getConfig()`, `getCurrentBranch()`.
+
+## Staging and releasing
+
+`GitClient` (which `ConventionalGitClient` extends) wraps the write operations used by release tooling:
+
+```js
+import { GitClient } from '@conventional-changelog/git-client'
+
+const client = new GitClient(process.cwd())
+
+await client.add('CHANGELOG.md')
+await client.commit({ message: 'chore: release v1.2.0' })
+await client.tag({ name: 'v1.2.0' })
+await client.push('master')
+```
+
+<Aside title="Two clients">
+  Use `GitClient` for plain git operations, or `ConventionalGitClient` when you also need parsed commits and semver tags — it inherits every `GitClient` method.
+</Aside>
+
+See the [JS API](/git-client/api/) for the full list of methods and their parameters.

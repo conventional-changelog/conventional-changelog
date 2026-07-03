@@ -208,7 +208,7 @@ Issue or pull request keyword in the url if `context.linkReferences === true`.
 
 ##### date
 
-Type: `string` Default: formatted (`'yyyy-mm-dd'`) today's date in timezone set by [`timeZone`](#timeZone) option.
+Type: `string` Default: today's date, formatted as `yyyy-mm-dd` (UTC).
 
 If `version` is found in the last commit, `committerDate` will overwrite this.
 
@@ -300,49 +300,53 @@ Type: `boolean` Default: `true`
 
 If `true`, the stream will flush out the last bit of commits (could be empty) to changelog.
 
-##### mainTemplate
+##### skip
 
-Type: `string` Default: [template.hbs](templates/template.hbs)
+Type: `function`
 
-The main handlebars template.
+A function that receives a commit and returns `true` to skip it.
+
+##### template
+
+Type: `function` Default: exported `template` function.
+
+Renders a whole release from the prepared context.
 
 ##### headerPartial
 
-Type: `string` Default: [header.hbs](templates/header.hbs)
+Type: `function` Default: exported `headerPartial` function.
+
+Renders the release header.
+
+##### preamblePartial
+
+Type: `function` Default: exported `preamblePartial` function.
+
+Renders introductory text after the release header.
 
 ##### commitPartial
 
-Type: `string` Default: [commit.hbs](templates/commit.hbs)
+Type: `function` Default: exported `commitPartial` function.
+
+Renders a single commit entry.
 
 ##### footerPartial
 
-Type: `string` Default: [footer.hbs](templates/footer.hbs)
+Type: `function` Default: exported `footerPartial` function.
 
-##### partials
-
-Type: `object`
-
-Partials that used in the main template, if any. The key should be the partial name and the value should be handlebars template strings. If you are using handlebars template files, read files by yourself.
-
-##### timeZone
-
-Type: `string` Default: `'UTC'`
-
-The timezone to use. The date in the changelog is generated based on timezone.
+Renders the release footer (breaking-change notes).
 
 ## Customization Guide
 
-It is possible to customize this the changelog to suit your needs. Templates are written in [handlebars](http://handlebarsjs.com). You can customize all partials or the whole template. Template variables are from either `upstream` or `context`. The following are a suggested way of defining variables.
+You can customize the changelog by overriding options. The `template` and `*Partial` options are render functions that receive the prepared context and return a string; the defaults are exported from [`@conventional-changelog/template`](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/template), so you can import and compose them. Template variables come from either the commits (`upstream`) or the `context`.
 
 ### upstream
 
-Variables in upstream are commit specific and should be used per commit. Eg: *commit date* and *commit username*. You can think of them as "local" or "isolate" variables. A "raw" commit message (original commit poured from upstream) is attached to `commit`. `transform` can be used to modify a commit.
+Commit-specific variables, used per commit — eg. *commit date* and *commit username*. A "raw" copy of the original commit is attached to each `commit`; use `transform` to modify a commit before rendering.
 
 ### context
 
-context should be module specific and can be used across the whole log. Thus these variables should not be related to any single commit and should be generic information of the module or all commits. Eg: *repository url* and *author names*, etc. You can think of them as "global" or "root" variables.
-
-Basically you can make your own templates and define all your template context. Extra context are based on commits from upstream and `options`. For more details, please checkout [handlebars](http://handlebarsjs.com) and the source code of this module. `finalizeContext` can be used at last to modify context before generating a changelog.
+Module-wide variables shared across the whole log — eg. *repository url* and *author names*. Use `finalizeContext` as a last step to modify the context before a changelog block is generated.
 
 ## CLI
 

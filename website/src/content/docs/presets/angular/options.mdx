@@ -1,0 +1,49 @@
+---
+title: Options
+description: Configuration options for the Angular preset.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The Angular preset is almost entirely fixed — its commit types, sections, breaking-change handling, and links can't be reconfigured. The only option is `ignoreCommits`. Pass it inline via [`loadPreset`](/conventional-changelog/api/#builder-methods) alongside the preset `name`:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset({
+    name: 'angular',
+    ignoreCommits: /^chore: release/
+  })
+```
+
+Or import the preset factory and hand its result to [`.config()`](/conventional-changelog/api/#builder-methods):
+
+```js
+import createPreset from 'conventional-changelog-angular'
+
+generator.config(createPreset({ ignoreCommits: /^chore: release/ }))
+```
+
+## Reference
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `ignoreCommits` | `RegExp` | | Skip commits whose message matches this pattern. |
+
+## `ignoreCommits`
+
+Commits whose message matches the pattern are dropped before parsing — handy for excluding automated release commits from the changelog:
+
+```js
+createPreset({
+  ignoreCommits: /^chore\(release\):/
+})
+```
+
+<Aside title="Need to customize more?">
+  Types, sections, the breaking-change section, and link formats are hardcoded in this preset. For configurable commit types, scopes, and URLs, use the [Conventional Commits](/presets/conventional-commits/options/) preset instead.
+</Aside>
