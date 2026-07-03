@@ -1,0 +1,141 @@
+---
+title: Introduction
+description: Use the Conventional Commits preset to build changelogs from Conventional Commits.
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components'
+
+The **Conventional Commits** preset teaches [`conventional-changelog`](/conventional-changelog/) how to read commits that follow the [Conventional Commits](https://www.conventionalcommits.org/) specification and turn them into a changelog. It parses each commit's `type`, `scope`, and breaking-change markers, then groups the entries into sections like **Features** and **Bug Fixes**.
+
+## Installation
+
+Install the preset alongside `conventional-changelog`:
+
+<Tabs syncKey="pkg">
+  <TabItem label="pnpm">
+    ```sh frame="none"
+    pnpm add -D conventional-changelog conventional-changelog-conventionalcommits
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```sh frame="none"
+    npm i -D conventional-changelog conventional-changelog-conventionalcommits
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```sh frame="none"
+    yarn add -D conventional-changelog conventional-changelog-conventionalcommits
+    ```
+  </TabItem>
+</Tabs>
+
+## Use it with the CLI
+
+Pass the preset name to `--preset` (`-p`). The `conventionalcommits` alias resolves to the package you just installed:
+
+```sh frame="none"
+npx conventional-changelog -p conventionalcommits
+```
+
+Given these commits since the last release:
+
+```
+feat(api): add async write() generator
+fix(cli): resolve config path relative to cwd
+perf(parser): cache compiled header regex
+```
+
+the preset produces:
+
+```md title="CHANGELOG.md"
+## [1.2.0](https://github.com/acme/app/compare/v1.1.0...v1.2.0) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+
+### Performance Improvements
+
+* **parser:** cache compiled header regex ([c1d2e3f](https://github.com/acme/app/commit/c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0))
+```
+
+See the [`conventional-changelog` CLI](/conventional-changelog/cli/) page for the full list of flags.
+
+## Use it with the JS API
+
+Load the preset by name for its defaults:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset('conventionalcommits')
+```
+
+To configure it, pass an object with the preset `name` and its options — `loadPreset` forwards the extra properties to the preset:
+
+```js
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset({
+    name: 'conventionalcommits',
+    // preset options…
+  })
+```
+
+The package's default export is also a `createPreset(config?)` factory returning the preset config (`{ commits, parser, writer, whatBump }`), which you can hand to [`.config()`](/conventional-changelog/api/#builder-methods) directly:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+import createPreset from 'conventional-changelog-conventionalcommits'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .config(createPreset({
+    // preset options…
+  }))
+```
+
+See [Options](/presets/conventional-commits/options/) for everything the preset accepts.
+
+## Default commit types
+
+Out of the box the preset shows these commit types, each under its own section:
+
+| Type | Section |
+| --- | --- |
+| `feat` | Features |
+| `fix` | Bug Fixes |
+| `perf` | Performance Improvements |
+| `revert` | Reverts |
+
+Other standard types — `docs`, `style`, `chore`, `refactor`, `test`, `build`, `ci` — are parsed but **hidden** from the changelog by default. Use the `types` option to show them, rename sections, or add your own types; see [Options](/presets/conventional-commits/options/).
+
+## Breaking changes
+
+Commits marked breaking — with a `!` after the type/scope or a `BREAKING CHANGE:` footer — are collected into a dedicated section at the **top** of the release:
+
+```
+feat!: drop callback support
+
+BREAKING CHANGE: callbacks are replaced with async iterators.
+```
+
+```md title="CHANGELOG.md"
+## [2.0.0](https://github.com/acme/app/compare/v1.2.0...v2.0.0) (2026-07-01)
+
+### ⚠ BREAKING CHANGES
+
+* callbacks are replaced with async iterators.
+
+### Features
+
+* drop callback support ([9f8e7d6](https://github.com/acme/app/commit/9f8e7d6b5a4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e))
+```

@@ -1,0 +1,127 @@
+---
+title: JS API
+description: Programmatic API and options for conventional-commits-parser.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+Three entry points parse commits; all accept the same [options](#options):
+
+```js
+import {
+  CommitParser,
+  parseCommits,
+  parseCommitsStream
+} from 'conventional-commits-parser'
+```
+
+See [Introduction](/commits-parser/) for a first example.
+
+## Parsing functions
+
+### `new CommitParser(options?)` · `parser.parse(rawCommit)`
+
+Parse a single raw commit message synchronously. Throws if the message can't be parsed:
+
+```js
+const parser = new CommitParser(options)
+const commit = parser.parse('feat(api): add async write() generator')
+```
+
+### `parseCommits(options?)`
+
+Returns an async-generator function that parses an iterable of raw commits — for `stream.pipeline`:
+
+```js
+import { pipeline } from 'node:stream/promises'
+
+await pipeline(
+  rawCommits,
+  parseCommits(options),
+  async function* (commits) {
+    for await (const commit of commits) {
+      console.log(commit)
+    }
+  }
+)
+```
+
+### `parseCommitsStream(options?)`
+
+Returns a Node.js `Transform` that turns raw commits into parsed ones:
+
+```js
+rawCommitsStream
+  .pipe(parseCommitsStream(options))
+  .on('data', commit => console.log(commit))
+```
+
+## The parsed commit
+
+`parse()` produces an object with these fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type`, `scope`, `subject` | `string \| null` | Header parts, named by [`headerCorrespondence`](#options). |
+| `header` | `string \| null` | The first line of the message. |
+| `body` | `string \| null` | The commit body. |
+| `footer` | `string \| null` | The footer section. |
+| `merge` | `string \| null` | The matched merge header, if any. |
+| `notes` | `{ title, text }[]` | Notes such as breaking changes. |
+| `mentions` | `string[]` | `@`-mentions found in the message. |
+| `references` | `CommitReference[]` | Issue references (see below). |
+| `revert` | `Record<string, string \| null> \| null` | Reverted-commit fields, when the commit is a revert. |
+
+Each entry in `references` describes an issue reference:
+
+| Field | Description |
+| --- | --- |
+| `raw` | The raw reference text, e.g. `#42`. |
+| `action` | The keyword that referenced it, e.g. `Closes` (or `null`). |
+| `owner` | Referenced owner, or `null`. |
+| `repository` | Referenced repository, or `null`. |
+| `issue` | The issue number. |
+| `prefix` | The issue prefix, e.g. `#`. |
+
+## Options
+
+The same options configure all three functions. Defaults come from the [`defaultOptions`](https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-commits-parser/src/options.ts):
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `headerPattern` | `RegExp` | `/^(\w*)(?:\(([\w$@.\-*/ ]*)\))?: (.*)$/` | Matches the header into capture groups. |
+| `headerCorrespondence` | `string[]` | `['type', 'scope', 'subject']` | Names for the header pattern's capture groups. |
+| `breakingHeaderPattern` | `RegExp` | | Matches a breaking-change header (e.g. `feat!: …`). |
+| `mergePattern` | `RegExp` | | Matches merge / PR headers; the next line is used as the conventional header. |
+| `mergeCorrespondence` | `string[]` | | Names for the merge pattern's capture groups. |
+| `revertPattern` | `RegExp` | `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\.?/` | Detects revert commits. |
+| `revertCorrespondence` | `string[]` | `['header', 'hash']` | Names for the revert pattern's capture groups. |
+| `fieldPattern` | `RegExp` | `/^-(.*?)-$/` | Matches custom `-field-` blocks in the body. |
+| `noteKeywords` | `(string \| RegExp)[]` | `['BREAKING CHANGE', 'BREAKING-CHANGE']` | Keywords that start a note. Case-insensitive. |
+| `notesPattern` | `(text) => RegExp` | | Builds the note-matching regex from the note keywords. |
+| `issuePrefixes` | `(string \| RegExp)[]` | `['#']` | Prefixes that mark an issue reference. |
+| `issuePrefixesCaseSensitive` | `boolean` | `false` | Treat `issuePrefixes` as case-sensitive. |
+| `referenceActions` | `(string \| RegExp)[]` | `close`, `closes`, `closed`, `fix`, `fixes`, `fixed`, `resolve`, `resolves`, `resolved` | Keywords that reference an issue. Case-insensitive. |
+| `commentChar` | `string` | | Character that comments out a line. |
+| `warn` | `boolean \| (message) => void` | noop | **`parseCommits` / `parseCommitsStream` only.** Handles parse errors; `true` throws (strict mode). |
+
+<Aside title="The default header pattern has no !">
+  The default `headerPattern` doesn't capture the `!` breaking-change shorthand — mark breaking changes with a `BREAKING CHANGE:` footer, or pass a `breakingHeaderPattern`. Presets like [Conventional Commits](/presets/conventional-commits/) configure this for you.
+</Aside>
+
+## Customization
+
+Recognize a custom issue prefix and reference keyword:
+
+```js
+import { CommitParser } from 'conventional-commits-parser'
+
+const parser = new CommitParser({
+  issuePrefixes: ['#', 'GH-'],
+  referenceActions: ['closes', 'fixes', 'refs']
+})
+
+parser.parse('fix(api): handle timeouts\n\nrefs GH-17')
+```

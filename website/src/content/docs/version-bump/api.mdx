@@ -1,0 +1,138 @@
+---
+title: JS API
+description: Programmatic API for computing recommended version bumps.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+`Bumper` is a chainable builder: you configure where the tags and commits come from and which [preset](/conventional-changelog/#available-presets)'s rules to apply, then call `bump()` for a recommendation.
+
+```js
+import { Bumper } from 'conventional-recommended-bump'
+```
+
+## Quick example
+
+```js
+import { Bumper } from 'conventional-recommended-bump'
+
+const bumper = new Bumper()
+  .loadPreset('conventionalcommits')
+
+const { releaseType, reason } = await bumper.bump()
+
+console.log(releaseType) // 'minor'
+```
+
+## Constructor
+
+```ts
+new Bumper(cwdOrGitClient?: string | ConventionalGitClient)
+```
+
+Pass a working directory (defaults to `process.cwd()`) or a [`ConventionalGitClient`](/git-client/api/#conventionalgitclient) instance:
+
+```js
+new Bumper()
+new Bumper('/path/to/repo')
+new Bumper(new ConventionalGitClient('/path/to/repo'))
+```
+
+## Builder methods
+
+Every method returns `this` for chaining, except `bump()`.
+
+| Method | Purpose |
+| --- | --- |
+| `loadPreset(preset, loader?)` | Load the bump rules (`whatBump`) and read params from a [preset](/conventional-changelog/#available-presets). `preset` is a name string, or `{ name, ...options }` to configure it. |
+| `config(config)` | Set the tag/commit/parser params from a config object directly. |
+| `tag(paramsOrTag)` | Configure how the last semver tag is read, or pin the tag directly (string). |
+| `commits(params, parserOptions?)` | Configure the commit range and [parser options](/commits-parser/api/#options). |
+| `commits(commits)` | Provide the commits directly (an iterable or async iterable). |
+| `options(options)` | Set `warn` / `debug` loggers. |
+| `bump(whatBump?)` | Compute the recommendation. |
+
+### Presets and rules
+
+`loadPreset()` is what wires up the `whatBump` rules that decide the bump. Pass a name for the defaults, or an object to configure the preset:
+
+```js
+bumper.loadPreset('conventionalcommits')
+bumper.loadPreset({ name: 'conventionalcommits', preMajor: true })
+```
+
+<Aside type="caution" title="config() doesn't set the rules">
+  `config()` only sets the tag/commit/parser params — it does **not** apply a `whatBump`. Use `loadPreset()`, or pass a `whatBump` to [`bump()`](#custom-whatbump), when you configure the bumper this way.
+</Aside>
+
+### Tags and commits
+
+By default the bumper reads the last semver tag and the commits since it. Override either — pin a tag, narrow the range, or supply commits yourself:
+
+```js
+// Pin the base tag
+bumper.tag('v1.2.0')
+
+// Or configure how tags are read
+bumper.tag({ prefix: 'v', skipUnstable: true })
+
+// Narrow the commit range
+bumper.commits({ path: 'packages/api', from: 'v1.0.0', to: 'HEAD' })
+
+// Or provide commits directly, skipping git
+bumper.commits([
+  { type: 'feat', notes: [], references: [] }
+])
+```
+
+## `bump(whatBump?)`
+
+Reads the commits, runs the `whatBump` rules, and resolves to a recommendation:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `level` | `0 \| 1 \| 2` | Severity: `0` major, `1` minor, `2` patch. |
+| `releaseType` | `'major' \| 'minor' \| 'patch'` | The recommended bump, derived from `level`. |
+| `reason` | `string` | Human-readable explanation. |
+| `commits` | `Commit[]` | The parsed commits that were considered. |
+
+When the rules decide nothing should be released, only `{ commits }` is returned — with no `releaseType`. Guard for it:
+
+```js
+const result = await bumper.bump()
+
+if ('releaseType' in result) {
+  console.log(result.releaseType)
+} else {
+  console.log('No release needed')
+}
+```
+
+### Custom whatBump
+
+Without a preset, pass your own rules to `bump()`. It receives the commits and returns `{ level, reason }` (or nothing to skip the release):
+
+```js
+import { Bumper } from 'conventional-recommended-bump'
+
+const { releaseType } = await new Bumper().bump(commits => {
+  if (commits.some(commit => commit.notes.length)) {
+    return { level: 0, reason: 'Breaking changes' }
+  }
+
+  if (commits.some(commit => commit.type === 'feat')) {
+    return { level: 1, reason: 'New features' }
+  }
+
+  return { level: 2, reason: 'Patches' }
+})
+```
+
+## Exports
+
+| Export | Description |
+| --- | --- |
+| `Bumper` | The recommendation builder. |
+| `packagePrefix` | Build a tag prefix matcher for Lerna-style `name@version` tags — use with `tag()`. |

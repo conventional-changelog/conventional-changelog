@@ -1,0 +1,143 @@
+---
+title: Introduction
+description: Use the Angular preset to build changelogs following the Angular commit convention.
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components'
+
+The **Angular** preset teaches [`conventional-changelog`](/conventional-changelog/) how to read commits that follow the [Angular commit convention](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) and turn them into a changelog. It's the original conventional-changelog preset, with a fixed set of commit types and sections.
+
+<Aside title="Already using standard-changelog?">
+  [`standard-changelog`](/standard-changelog/) is `conventional-changelog` with this preset built in — there's nothing extra to install or configure. For customizable types, sections, and links, use the [Conventional Commits](/presets/conventional-commits/) preset instead.
+</Aside>
+
+## Installation
+
+Install the preset alongside `conventional-changelog`:
+
+<Tabs syncKey="pkg">
+  <TabItem label="pnpm">
+    ```sh frame="none"
+    pnpm add -D conventional-changelog conventional-changelog-angular
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```sh frame="none"
+    npm i -D conventional-changelog conventional-changelog-angular
+    ```
+  </TabItem>
+  <TabItem label="yarn">
+    ```sh frame="none"
+    yarn add -D conventional-changelog conventional-changelog-angular
+    ```
+  </TabItem>
+</Tabs>
+
+## Use it with the CLI
+
+Pass the preset name to `--preset` (`-p`). The `angular` alias resolves to the package you just installed:
+
+```sh frame="none"
+npx conventional-changelog -p angular
+```
+
+Given these commits since the last release:
+
+```
+feat(api): add async write() generator
+fix(cli): resolve config path relative to cwd
+perf(parser): cache compiled header regex
+```
+
+the preset produces:
+
+```md title="CHANGELOG.md"
+# [1.2.0](https://github.com/acme/app/compare/v1.1.0...v1.2.0) (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+
+### Performance Improvements
+
+* **parser:** cache compiled header regex ([c1d2e3f](https://github.com/acme/app/commit/c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0))
+```
+
+## Use it with the JS API
+
+Load the preset by name:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset('angular')
+```
+
+The only thing to configure is `ignoreCommits`; pass it as an object with the preset `name`, and `loadPreset` forwards it to the preset:
+
+```js
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset({
+    name: 'angular',
+    ignoreCommits: /^chore: release/
+  })
+```
+
+The package's default export is also a `createPreset(config?)` factory returning the preset config (`{ commits, parser, writer, whatBump }`), which you can hand to [`.config()`](/conventional-changelog/api/#builder-methods) directly:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+import createPreset from 'conventional-changelog-angular'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .config(createPreset({
+    ignoreCommits: /^chore: release/
+  }))
+```
+
+See [Options](/presets/angular/options/) for the full config.
+
+## Commit types and sections
+
+The Angular preset maps commit types to fixed sections. These always appear:
+
+| Type | Section |
+| --- | --- |
+| `feat` | Features |
+| `fix` | Bug Fixes |
+| `perf` | Performance Improvements |
+| `revert` | Reverts |
+
+`docs`, `style`, `refactor`, `test`, `build`, and `ci` are only listed when the commit also carries a breaking change; `chore` commits are omitted entirely. Unlike the [Conventional Commits](/presets/conventional-commits/options/#types) preset, this mapping is **fixed** — it can't be reconfigured.
+
+## Breaking changes
+
+The Angular convention marks breaking changes with a `BREAKING CHANGE:` footer (the `!` shorthand is **not** recognized by this preset). They are collected into a section at the **bottom** of the release:
+
+```
+feat: add streaming API
+
+BREAKING CHANGE: callbacks are replaced with async iterators.
+```
+
+```md title="CHANGELOG.md"
+# [2.0.0](https://github.com/acme/app/compare/v1.2.0...v2.0.0) (2026-07-01)
+
+### Features
+
+* add streaming API ([9f8e7d6](https://github.com/acme/app/commit/9f8e7d6b5a4c3d2e1f0a9b8c7d6e5f4a3b2c1d0e))
+
+### BREAKING CHANGES
+
+* callbacks are replaced with async iterators.
+```

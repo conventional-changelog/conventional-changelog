@@ -1,0 +1,42 @@
+---
+title: Agent Skills
+description: Universal agent skills shipped with Conventional Changelog, including the conventional-commit-message skill for AI coding agents.
+sidebar:
+  order: 2
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components'
+
+The repository ships **universal agent skills** — instructions that teach an AI coding agent how to work with Conventional Commits in your project. They are compatible with Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot, Windsurf, and other agents that support the [skills](https://github.com/vercel-labs/skills) format.
+
+## conventional-commit-message
+
+The currently available skill is [`conventional-commit-message`](https://github.com/conventional-changelog/conventional-changelog/tree/master/skills/conventional-commit-message). It helps an agent write, amend, and review commit messages for repositories using the [`conventionalcommits`](/presets/conventional-commits/) preset or compatible tooling.
+
+Rather than just formatting a string, the skill guides the agent to:
+
+- **Choose the type by release impact, not file path** — `feat` for new public behavior, `fix` for corrections, `perf` for speed-ups, and hidden types (`docs`, `chore`, `refactor`, …) for changes that should not appear in the changelog or trigger a release.
+- **Flag breaking changes** — using `!` and a `BREAKING CHANGE:` footer when the public contract becomes stricter or previously supported usage is removed.
+- **Pick the right scope** — omitting it in single-package repos, and deriving it from workspace names (or an existing Commitlint `scope-enum`) in monorepos, including multiple scopes for one change that spans packages.
+- **Validate before suggesting** — running the project's local [Commitlint](https://github.com/conventional-changelog/commitlint) binary when it is configured, so the message is checked against your actual rules.
+
+## Installation
+
+Install the skill into your project with either package runner:
+
+<Tabs syncKey="pkg">
+  <TabItem label="pnpm">
+    ```sh frame="none"
+    pnpx skills add conventional-changelog/conventional-changelog --skill conventional-commit-message
+    ```
+  </TabItem>
+  <TabItem label="npm">
+    ```sh frame="none"
+    npx skills add conventional-changelog/conventional-changelog --skill conventional-commit-message
+    ```
+  </TabItem>
+</Tabs>
+
+<Aside title="What gets installed">
+  The command copies the skill into your agent's skills directory. From then on, when you ask the agent for a commit message, it follows the rules above — inspecting the staged diff, choosing an appropriate type and scope, and validating against Commitlint when available.
+</Aside>

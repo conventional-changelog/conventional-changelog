@@ -1,0 +1,151 @@
+---
+title: Options
+description: Configuration options for the Conventional Commits preset.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The preset takes a config object that customizes which commits are recognized, how they're grouped, and how links are built. The simplest way to pass it is inline via [`loadPreset`](/conventional-changelog/api/#builder-methods), alongside the preset `name` — the extra properties are forwarded to the preset:
+
+```js
+import { ConventionalChangelog } from 'conventional-changelog'
+
+const generator = new ConventionalChangelog()
+  .readPackage()
+  .loadPreset({
+    name: 'conventionalcommits',
+    // options below
+  })
+```
+
+Alternatively, import the preset factory and hand its result to [`.config()`](/conventional-changelog/api/#builder-methods):
+
+```js
+import createPreset from 'conventional-changelog-conventionalcommits'
+
+generator.config(createPreset({ /* options */ }))
+```
+
+<Aside title="Configuring from the CLI">
+  The `-p` flag can't carry these options. Instead point [`--config`](/conventional-changelog/cli/) at a file that exports the preset:
+
+  ```js title="changelog.config.js"
+  import createPreset from 'conventional-changelog-conventionalcommits'
+
+  export default createPreset({ /* options */ })
+  ```
+
+  ```sh frame="none"
+  conventional-changelog -n ./changelog.config.js
+  ```
+</Aside>
+
+## Reference
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `types` | `CommitType[]` | [default types](#types) | Commit types to recognize, the section each appears under, and its visibility. |
+| `ignoreCommits` | `RegExp` | | Skip commits whose message matches this pattern. |
+| `issuePrefixes` | `string[]` | `['#']` | Prefixes recognized as issue references and linkified in subjects. |
+| `scope` | `string \| string[]` | | Only include commits for the given scope(s); the scope is stripped from the output. |
+| `scopeOnly` | `boolean` | `false` | With `scope`, also exclude commits that have no scope. |
+| `preMajor` | `boolean` | `false` | Treat the project as pre-1.0 when recommending a version bump. |
+| `formatIssueUrl` | `(context, reference) => string` | git-host style | Build the URL for an issue/PR reference. |
+| `formatCommitUrl` | `(context, commit) => string` | git-host style | Build the URL for a commit hash. |
+| `formatCompareUrl` | `(context) => string` | git-host style | Build the version comparison URL in the release heading. |
+| `formatUserUrl` | `(context, user) => string` | git-host style | Build the URL for an `@user` mention. |
+
+## `types`
+
+Controls which commit types show up and where. Each entry is:
+
+```ts
+interface CommitType {
+  type: string        // commit type, e.g. "feat"
+  section?: string    // heading the commits appear under
+  effect?: 'bump' | 'changelog' | 'hidden' // default: 'bump'
+  scope?: string      // restrict this entry to a single scope
+}
+```
+
+`effect` decides visibility and version impact:
+
+- **`bump`** (default) — shown in the changelog **and** counts toward the recommended version bump.
+- **`changelog`** — shown in the changelog, but does **not** affect the version bump.
+- **`hidden`** — parsed but omitted from the changelog.
+
+<Aside type="caution" title="types replaces the defaults">
+  Setting `types` overrides the [default list](#default-types) entirely, so include every type you want recognized. To tweak the defaults instead, map over the exported `DEFAULT_COMMIT_TYPES`.
+</Aside>
+
+Reveal the normally-hidden `docs` commits under their own section, without letting them drive a release:
+
+```js
+import createPreset, { DEFAULT_COMMIT_TYPES } from 'conventional-changelog-conventionalcommits'
+
+createPreset({
+  types: DEFAULT_COMMIT_TYPES.map(entry =>
+    entry.type === 'docs'
+      ? { ...entry, effect: 'changelog' }
+      : entry
+  )
+})
+```
+
+<Aside title="Breaking changes always show">
+  Commits with a breaking change (`!` or a `BREAKING CHANGE:` footer) always appear, even when their type is `hidden`.
+</Aside>
+
+### Default types
+
+Shown by default (`effect: 'bump'`):
+
+| Type | Section |
+| --- | --- |
+| `feat`, `feature` | Features |
+| `fix` | Bug Fixes |
+| `perf` | Performance Improvements |
+| `revert` | Reverts |
+
+Recognized but hidden (`effect: 'hidden'`): `docs` (Documentation), `style` (Styles), `chore` (Miscellaneous Chores), `refactor` (Code Refactoring), `test` (Tests), `build` (Build System), `ci` (Continuous Integration).
+
+## `scope` and `scopeOnly`
+
+Scope filtering is useful in monorepos where each package owns a commit scope. When `scope` is set, matching commits are included and the scope prefix is stripped from each entry (it's implied by the section):
+
+```js
+// Commits scoped to "api" — plus scopeless commits
+createPreset({ scope: 'api' })
+
+// Only commits explicitly scoped to "api"
+createPreset({ scope: 'api', scopeOnly: true })
+
+// Several scopes
+createPreset({ scope: ['api', 'core'] })
+```
+
+A commit may declare multiple comma-separated scopes (`feat(api,core): …`); it matches if any of them is in `scope`.
+
+## `preMajor`
+
+For projects still on `0.x`, `preMajor: true` softens the [recommended bump](/version-bump/): breaking changes bump the **minor** version and features bump the **patch** version. It affects version recommendations only, not the changelog text.
+
+## URL formatters
+
+Each formatter builds one kind of link; the defaults derive GitHub/GitLab/Bitbucket-style URLs from the repository info. Override them to target a custom host or URL scheme:
+
+```js
+createPreset({
+  formatCommitUrl: (context, commit) =>
+    `https://git.example.com/${context.owner}/${context.repository}/-/commit/${commit.hash}`
+})
+```
+
+| Formatter | Builds |
+| --- | --- |
+| `formatCompareUrl(context)` | The `previousTag...currentTag` comparison link in the release heading. |
+| `formatCommitUrl(context, commit)` | The link on each commit's short hash. |
+| `formatIssueUrl(context, reference)` | The link on each issue/PR reference. |
+| `formatUserUrl(context, user)` | The link on each `@user` mention. |

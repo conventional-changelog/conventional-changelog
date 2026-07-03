@@ -1,0 +1,98 @@
+---
+title: CLI
+description: Command-line usage and options for the conventional-changelog-writer CLI.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The `conventional-changelog-writer` binary renders a stream of already-parsed commits (as JSON) into a changelog on stdout. It's a thin wrapper over the [JS API](/changelog-writer/api/) — you supply the commits, a `context`, and `options`.
+
+```sh frame="none"
+conventional-changelog-writer <path> [<path> ...]
+cat commits.ldjson | conventional-changelog-writer
+```
+
+## Options
+
+| Flag | Description |
+| --- | --- |
+| `-c, --context <path>` | Path to a **JSON** file of [changelog writer context](/changelog-writer/api/#context) variables (version, repository, …). |
+| `-o, --options <path>` | Path to a file exporting the [Changelog Writer options](/changelog-writer/api/#options) object. `.json` is parsed; any other extension is imported and its default export is used. |
+
+## Providing commits
+
+Commits are read as JSON, either from **stdin** (a stream of newline-delimited JSON objects) or from **file arguments** (each file parsed as JSON):
+
+```sh frame="none"
+# From stdin
+cat commits.ldjson | conventional-changelog-writer
+
+# From files
+conventional-changelog-writer commit-1.json commit-2.json
+```
+
+Each commit is an object as produced by [`conventional-commits-parser`](/commits-parser/), so the usual shape is a pipeline that feeds parsed commits into the writer.
+
+## Example
+
+Given a file of parsed commits and a context:
+
+```json title="commits.ldjson"
+{ "type": "feat", "scope": "api", "subject": "add async write() generator", "header": "feat(api): add async write() generator", "hash": "0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab", "notes": [], "references": [] }
+{ "type": "fix", "scope": "cli", "subject": "resolve config path relative to cwd", "header": "fix(cli): resolve config path relative to cwd", "hash": "a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5", "notes": [], "references": [] }
+```
+
+```json title="context.json"
+{
+  "version": "1.2.0",
+  "repoUrl": "https://github.com/acme/app"
+}
+```
+
+Rendering with just the context groups commits by their **raw type** (the unstyled default):
+
+```sh frame="none"
+cat commits.ldjson | conventional-changelog-writer -c context.json
+```
+
+```md title="CHANGELOG.md"
+## 1.2.0 (2026-07-01)
+
+### feat
+
+* feat(api): add async write() generator ([0f7e2c1](https://github.com/acme/app/commits/0f7e2c1))
+
+### fix
+
+* fix(cli): resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commits/a3b9d84))
+```
+
+To get formatted sections, point `--options` at a file that exports a [preset](/conventional-changelog/#available-presets)'s `writer` options:
+
+```js title="writer.mjs"
+import createPreset from 'conventional-changelog-conventionalcommits'
+
+export default createPreset().writer
+```
+
+```sh frame="none"
+cat commits.ldjson | conventional-changelog-writer -c context.json -o writer.mjs
+```
+
+```md title="CHANGELOG.md"
+## 1.2.0 (2026-07-01)
+
+### Features
+
+* **api:** add async write() generator ([0f7e2c1](https://github.com/acme/app/commit/0f7e2c1a9d3e4b5c6f7089abcdef0123456789ab))
+
+### Bug Fixes
+
+* **cli:** resolve config path relative to cwd ([a3b9d84](https://github.com/acme/app/commit/a3b9d8472e1f0c9b8a7d6e5f4c3b2a1908f7e6d5))
+```
+
+<Aside title="Generating the whole changelog">
+  This CLI only renders commits you hand it. To build a changelog straight from a git repository — reading tags, commits, and the version for you — use the [`conventional-changelog`](/conventional-changelog/cli/) CLI, which wires the parser and writer together.
+</Aside>

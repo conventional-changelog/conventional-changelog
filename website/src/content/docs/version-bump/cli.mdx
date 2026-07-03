@@ -1,0 +1,130 @@
+---
+title: CLI
+description: Command-line usage and options for the conventional-recommended-bump CLI.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+The `conventional-recommended-bump` binary reads the commits since your last tag and prints the recommended release type — `major`, `minor`, or `patch` — to stdout. It needs a [preset](/conventional-changelog/#available-presets) (`--preset`) or a config file (`--config`) to know the rules. See [Introduction](/version-bump/) for installation.
+
+```sh frame="none"
+conventional-recommended-bump [options]
+```
+
+## Options
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-p, --preset <name>` | | Preset whose rules decide the bump. Required unless `--config` is given. |
+| `-g, --config <path>` | | Path to a config script exporting `whatBump` (and optionally `tags`, `commits`, `parser`). |
+| `-v, --verbose` | `false` | Also print the reasoning behind the recommendation. |
+| `-t, --tag-prefix <prefix>` | | Tag prefix to consider when reading tags. |
+| `-l, --lerna-package <name>` | | Recommend a bump for a Lerna package, reading `name@1.0.0`-style tags. |
+| `--skip-unstable` | `false` | Skip unstable tags, e.g. `x.x.x-alpha.1`, `x.x.x-rc.2`. |
+| `--commit-path <path>` | | Only consider commits that touch a specific directory. |
+| `--from <ref>` | last semver tag | Start of the commit range (tag or SHA). |
+| `--to <ref>` | `HEAD` | End of the commit range (tag or SHA). |
+
+### Parser options
+
+These override how commits are parsed (normally provided by the preset — rarely needed):
+
+| Flag | Description |
+| --- | --- |
+| `-h, --header-pattern <regex>` | Regex to match the commit header. |
+| `-c, --header-correspondence <list>` | Comma-separated names for the header pattern's capture groups. |
+| `-r, --reference-actions <list>` | Comma-separated keywords that reference issues. |
+| `-i, --issue-prefixes <list>` | Comma-separated issue prefixes. |
+| `-n, --note-keywords <list>` | Comma-separated keywords for notes (e.g. `BREAKING CHANGE`). |
+| `-f, --field-pattern <regex>` | Regex to match other commit fields. |
+| `--revert-pattern <regex>` | Regex to detect revert commits. |
+| `--revert-correspondence <list>` | Comma-separated names for the revert pattern's capture groups. |
+| `--merge-pattern <regex>` | Regex to detect merge commits. |
+
+## Examples
+
+<Aside title="Shared setup for the examples">
+  A repository with a `v1.1.0` tag and these commits since it:
+
+  ```
+  feat(api): add async write() generator
+  fix(cli): resolve config path relative to cwd
+  ```
+</Aside>
+
+### Recommend a bump
+
+```sh frame="none"
+conventional-recommended-bump -p conventionalcommits
+```
+
+A `feat` is present, so the next release is a minor:
+
+```
+minor
+```
+
+### Explain the recommendation
+
+`--verbose` (`-v`) prints why:
+
+```sh frame="none"
+conventional-recommended-bump -p conventionalcommits -v
+```
+
+```
+minor
+Reason: There are 0 BREAKING CHANGES and 1 features
+```
+
+### Different histories, different bumps
+
+The recommendation depends on the commits in range — a breaking change makes it a `major`, while only fixes or perf changes make it a `patch`:
+
+```sh frame="none"
+# History with a BREAKING CHANGE
+conventional-recommended-bump -p conventionalcommits
+# → major
+
+# History with only fixes / perf
+conventional-recommended-bump -p conventionalcommits
+# → patch
+```
+
+### Monorepos: tag prefixes and paths
+
+Read package-specific tags and scope the commits to one directory:
+
+```sh frame="none"
+# Tags like "api-v1.1.0", commits touching packages/api
+conventional-recommended-bump -p conventionalcommits -t "api-v" --commit-path packages/api
+
+# Lerna-style tags like "api@1.1.0"
+conventional-recommended-bump -p conventionalcommits -l api --commit-path packages/api
+```
+
+### A specific range
+
+```sh frame="none"
+conventional-recommended-bump -p conventionalcommits --from v1.0.0 --to v1.1.0
+```
+
+### Using a config file instead of a preset
+
+Point `--config` (`-g`) at a script that exports the rules. A preset factory already returns them:
+
+```js title="bump.config.js"
+import createPreset from 'conventional-changelog-conventionalcommits'
+
+export default createPreset()
+```
+
+```sh frame="none"
+conventional-recommended-bump -g ./bump.config.js
+```
+
+<Aside type="caution" title="A preset or config is required">
+  Without `--preset` or `--config` the tool has no rules to apply and exits with an error. Pass one of them.
+</Aside>

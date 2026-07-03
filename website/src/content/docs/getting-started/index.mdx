@@ -1,0 +1,63 @@
+---
+title: Introduction
+description: Conventional Changelog turns your git history into a CHANGELOG.md — an overview of the toolchain and every package in the ecosystem.
+sidebar:
+  order: 1
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components'
+
+**Conventional Changelog** generates a `CHANGELOG.md` from your git metadata. You write commit messages that follow a convention — most commonly [Conventional Commits](https://www.conventionalcommits.org/) — and the tooling parses that history, groups the commits into sections like **Features** and **Bug Fixes**, and links every entry back to its commit and release.
+
+It is not a single package but a family of them: a command-line tool and JS API for the common case, the presets that encode each commit convention, and the smaller building blocks (a parser, a filter, a writer, a git client) that everything else is composed from.
+
+<Aside type="tip" title="New to Conventional Commits?">
+  Start with [The Complete Guide](/getting-started/complete-guide/) — it walks through the commit format and how to wire up a fully automated release pipeline with [Commitlint](https://github.com/conventional-changelog/commitlint), [Commitizen](https://github.com/commitizen/cz-cli), and [simple-release](https://github.com/TrigenSoftware/simple-release).
+</Aside>
+
+## Where to start
+
+<CardGrid>
+  <Card title="Generate a changelog" icon="add-document">
+    Reach for [`conventional-changelog`](/conventional-changelog/) — the full-featured CLI and JS API. Following the Angular convention? [`standard-changelog`](/standard-changelog/) is the same tool with that preset built in.
+  </Card>
+  <Card title="Decide the next version" icon="rocket">
+    [`conventional-recommended-bump`](/version-bump/) reads the commits since your last tag and tells you whether the next release is a **major**, **minor**, or **patch**.
+  </Card>
+</CardGrid>
+
+## Automating releases
+
+Conventional Changelog handles the changelog and the version recommendation. To automate the whole release — bumping the version, tagging, and publishing — combine it with [simple-release](https://github.com/TrigenSoftware/simple-release), or its ready-made GitHub Action, [simple-release-action](https://github.com/TrigenSoftware/simple-release-action): version bumps, changelog generation, and releases with first-class monorepo support, built on this project.
+
+And to keep the commit history itself clean, [Commitlint](https://github.com/conventional-changelog/commitlint) lints messages against the convention, while [Commitizen](https://github.com/commitizen/cz-cli) offers an interactive prompt for writing them.
+
+## All packages
+
+### Tools
+
+| Package | What it does |
+| --- | --- |
+| [`conventional-changelog`](/conventional-changelog/) | Generate a changelog from git metadata — CLI and JS API. |
+| [`standard-changelog`](/standard-changelog/) | `conventional-changelog` with the Angular preset built in. |
+| [`conventional-recommended-bump`](/version-bump/) | Recommend the next semver bump from your commits. |
+
+### Presets
+
+| Package | What it does |
+| --- | --- |
+| [`conventional-changelog-conventionalcommits`](/presets/conventional-commits/) | The [Conventional Commits](https://www.conventionalcommits.org/) preset. |
+| [`conventional-changelog-angular`](/presets/angular/) | The [Angular commit convention](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) preset. |
+
+### Building blocks
+
+The lower-level packages the tools are composed from. You only need these when building custom release tooling.
+
+| Package | What it does |
+| --- | --- |
+| [`conventional-commits-parser`](/commits-parser/) | Parse raw commit messages into structured objects. |
+| [`conventional-commits-filter`](/commits-filter/) | Drop reverted (and reverting) commits. |
+| [`conventional-changelog-writer`](/changelog-writer/) | Render parsed commits into changelog Markdown. |
+| [`conventional-changelog-preset-loader`](/preset-loader/) | Resolve and load presets by name. |
+| [`@conventional-changelog/git-client`](/git-client/) | Promise- and stream-based git client. |
+| [`@conventional-changelog/template`](/template/) | Shared changelog template helpers. |

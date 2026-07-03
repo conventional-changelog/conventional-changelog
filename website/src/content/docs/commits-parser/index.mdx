@@ -1,0 +1,123 @@
+---
+title: Introduction
+description: Parse raw git commits into structured objects with conventional-commits-parser.
+sidebar:
+  order: 1
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
+
+`conventional-commits-parser` turns a raw commit message into a structured object — its `type`, `scope`, `subject`, breaking-change `notes`, issue `references`, and more. It's the first stage of the pipeline — **parser** → [filter](/commits-filter/) → [writer](/changelog-writer/) — and what [`conventional-changelog`](/conventional-changelog/) uses to read your history.
+
+## Quick start
+
+<Steps>
+
+1. **Install `conventional-commits-parser`:**
+
+   <Tabs syncKey="pkg">
+     <TabItem label="pnpm">
+       ```sh frame="none"
+       pnpm add conventional-commits-parser
+       ```
+     </TabItem>
+     <TabItem label="npm">
+       ```sh frame="none"
+       npm i conventional-commits-parser
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```sh frame="none"
+       yarn add conventional-commits-parser
+       ```
+     </TabItem>
+   </Tabs>
+
+2. **Parse a raw commit message** with `CommitParser`:
+
+   ```js
+   import { CommitParser } from 'conventional-commits-parser'
+
+   const parser = new CommitParser()
+   const commit = parser.parse('feat(api): add async write() generator\n\nCloses #42')
+   ```
+
+3. **Get a structured commit object:**
+
+   ```js
+   {
+     type: 'feat',
+     scope: 'api',
+     subject: 'add async write() generator',
+     merge: null,
+     header: 'feat(api): add async write() generator',
+     body: null,
+     footer: 'Closes #42',
+     notes: [],
+     references: [
+       { action: 'Closes', owner: null, repository: null, issue: '42', raw: '#42', prefix: '#' }
+     ],
+     mentions: [],
+     revert: null
+   }
+   ```
+
+</Steps>
+
+## Breaking changes and notes
+
+A `BREAKING CHANGE:` footer is extracted into `notes`, and `@mentions` are collected too:
+
+```js
+parser.parse('fix(api): correct retry logic\n\nBREAKING CHANGE: retries are now capped at 3.\nThanks @octocat')
+```
+
+```js
+{
+  type: 'fix',
+  scope: 'api',
+  subject: 'correct retry logic',
+  merge: null,
+  header: 'fix(api): correct retry logic',
+  body: null,
+  footer: 'BREAKING CHANGE: retries are now capped at 3.\nThanks @octocat',
+  notes: [
+    { title: 'BREAKING CHANGE', text: 'retries are now capped at 3.\nThanks @octocat' }
+  ],
+  references: [],
+  mentions: ['octocat'],
+  revert: null
+}
+```
+
+## Parsing many commits
+
+For a stream of commits, `parseCommits` returns an async-generator function for `stream.pipeline`, and `parseCommitsStream` a Node.js `Transform`:
+
+```js
+import { parseCommits, parseCommitsStream } from 'conventional-commits-parser'
+import { pipeline } from 'node:stream/promises'
+import { Readable } from 'node:stream'
+
+// Async iterable
+await pipeline(
+  rawCommits,
+  parseCommits(),
+  async function* (commits) {
+    for await (const commit of commits) {
+      console.log(commit)
+    }
+  }
+)
+
+// Node.js stream
+Readable.from(rawCommits)
+  .pipe(parseCommitsStream())
+  .on('data', commit => console.log(commit))
+```
+
+Raw commits usually come from git — for example [`@conventional-changelog/git-client`](/git-client/)'s `getRawCommits()`.
+
+## Options
+
+`CommitParser`, `parseCommits`, and `parseCommitsStream` all accept the same options — the header pattern, note keywords, issue prefixes, reference actions, and more. See the [JS API](/commits-parser/api/) for the full list and defaults.

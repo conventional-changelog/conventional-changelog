@@ -1,0 +1,110 @@
+---
+title: JS API
+description: Programmatic API for the git client.
+sidebar:
+  order: 3
+---
+
+The package exports two classes — `GitClient` (a thin wrapper over the `git` CLI) and `ConventionalGitClient` (which adds conventional-commits helpers):
+
+```js
+import { GitClient, ConventionalGitClient } from '@conventional-changelog/git-client'
+```
+
+See [Introduction](/git-client/) for a first example.
+
+## GitClient
+
+```ts
+new GitClient(cwd: string)
+```
+
+### Reading
+
+| Method | Returns | Description |
+| --- | --- | --- |
+| `getRawCommits(params?)` | `AsyncIterable<string>` | Raw commit messages. Accepts [`GitLogParams`](#gitlogparams). |
+| `getTags(params?)` | `AsyncIterable<string>` | All tags. |
+| `getLastTag(params?)` | `Promise<string>` | The most recent tag. |
+| `getConfig(key)` | `Promise<string>` | A git config value. |
+| `getCurrentBranch()` | `Promise<string>` | The current branch name. |
+| `getDefaultBranch()` | `Promise<string>` | The default branch name. |
+| `checkIgnore(file)` | `Promise<boolean>` | Whether a file is ignored by `.gitignore`. |
+| `verify(rev, safe?)` | `Promise<string>` | Verify that a revision exists. |
+
+### Repository operations
+
+| Method | Description |
+| --- | --- |
+| `init()` | Initialize a repository. |
+| `add(files)` | Stage one file or an array of files. |
+| `commit(params)` | Commit staged changes. Accepts [`GitCommitParams`](#write-parameters). |
+| `tag(params)` | Create a tag on the current commit. Accepts [`GitTagParams`](#write-parameters). |
+| `push(branch, params?)` | Push to a remote. Accepts [`GitPushParams`](#write-parameters). |
+| `fetch(params?)` | Fetch from a remote. |
+| `setConfig(key, value)` | Set a git config value. |
+| `createBranch(branch)` · `deleteBranch(branch)` · `checkout(branch)` | Branch operations. |
+
+For anything not covered, `exec(...args)` runs an arbitrary git command and resolves to its output, and `execStream(...args)` returns it as a stream.
+
+## ConventionalGitClient
+
+Extends `GitClient` — every method above is available — and adds conventional-commits helpers:
+
+```ts
+new ConventionalGitClient(cwd: string)
+```
+
+| Method | Returns | Description |
+| --- | --- | --- |
+| `getCommits(params?, parserOptions?)` | `AsyncIterable<Commit>` | Parsed commits (reverts filtered out). Accepts [`GetCommitsParams`](#getcommitsparams) and [parser options](/commits-parser/api/#options). |
+| `getSemverTags(params?)` | `AsyncIterable<string>` | Semver tags. Accepts [`GetSemverTagsParams`](#getsemvertagsparams). |
+| `getLastSemverTag(params?)` | `Promise<string>` | The newest semver tag. |
+| `getVersionFromTags(params?)` | `Promise<string \| null>` | The current version (cleaned of its prefix), or `null`. |
+
+<a id="write-parameters"></a>
+
+## Parameters
+
+### GitLogParams
+
+Used by `getRawCommits` (and, extended, by `getCommits`):
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `path` | `string \| string[]` | Only commits touching this path. |
+| `from` | `string` | Start of the commit range (tag or SHA). |
+| `to` | `string` | End of the commit range. |
+| `format` | `string` | Commit format string. |
+| `ignore` | `RegExp` | Skip commits matching this pattern. |
+| `since` | `Date \| string` | Only commits after this date. |
+| `reverse` | `boolean` | Return commits in reverse order. |
+| `merges` | `boolean` | Include merge commits. |
+| `firstParent` | `boolean` | Follow only the first parent of merges. |
+
+### GetCommitsParams
+
+Everything in [`GitLogParams`](#gitlogparams), plus:
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `filterReverts` | `boolean` | | Filter out reverted commits. |
+
+### GetSemverTagsParams
+
+The range fields `path`, `from`, `to`, and `since` from [`GitLogParams`](#gitlogparams), plus:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `prefix` | `string \| RegExp` | Only tags with this prefix (e.g. `packagePrefix('my-pkg')`). |
+| `skipUnstable` | `boolean` | Skip unstable versions, e.g. `x.x.x-rc.1`. |
+| `clean` | `boolean` | Strip the prefix and return a clean version. |
+
+### Write parameters
+
+| Type | Fields |
+| --- | --- |
+| `GitCommitParams` | `message` (required), `files`, `verify`, `sign`, `allowEmpty`. |
+| `GitTagParams` | `name` (required), `message`, `sign`. |
+| `GitPushParams` | `verify`, `tags`, `followTags`, `force`. |
+| `GitFetchParams` | `remote`, `branch`, `prune`, `unshallow`, `tags`, `all`. |
