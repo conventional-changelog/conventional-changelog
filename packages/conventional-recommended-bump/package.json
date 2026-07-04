@@ -9,7 +9,7 @@
     "url": "https://github.com/stevemao"
   },
   "license": "MIT",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump#readme",
+  "homepage": "https://conventional-changelog.js.org/version-bump/",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",

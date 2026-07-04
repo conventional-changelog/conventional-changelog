@@ -5,7 +5,7 @@
   "description": "Configuration preset loader for `conventional-changelog`.",
   "author": "Hutson Betts",
   "license": "MIT",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-preset-loader#readme",
+  "homepage": "https://conventional-changelog.js.org/preset-loader/",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",

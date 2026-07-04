@@ -5,7 +5,7 @@
   "description": "Angular preset for conventional-changelog.",
   "author": "Steve Mao",
   "license": "ISC",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#readme",
+  "homepage": "https://conventional-changelog.js.org/presets/angular/",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",

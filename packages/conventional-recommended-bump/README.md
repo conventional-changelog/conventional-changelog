@@ -31,19 +31,6 @@
 
 Get a recommended version bump based on conventional commits.
 
-> Got the idea from https://github.com/conventional-changelog/conventional-changelog/pull/29
-
-<hr />
-<a href="#install">Install</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="#usage">Usage</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="#api">API</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="#cli">CLI</a>
-<br />
-<hr />
-
 ## Install
 
 ```bash
@@ -66,41 +53,15 @@ const recommendation = await bumper.bump()
 console.log(recommendation.releaseType) // 'major'
 ```
 
-## API
-
-### `new Bumper(cwdOrGitClient: string | ConventionalGitClient = process.cwd())`
-
-Create a new Bumper instance. `cwdOrGitClient` is the current working directory or a `ConventionalGitClient` instance.
-
-#### `bumper.tag(paramsOrTag: GetSemverTagsParams | string): this`
-
-Set params to get the last semver tag or set the tag directly.
-
-#### `bumper.commits(params: GetCommitsParams, parserOptions?: ParserStreamOptions): this`
-
-Set params to get the commits.
-
-#### `bumper.commits(commits: Iterable<Commit> | AsyncIterable<Commit>): this`
-
-Set the commits directly.
-
-#### `bumper.loadPreset(preset: PresetParams): this`
-
-Load and set necessary params from a preset.
-
-#### `generator.config(config: Preset | Promise<Preset>): this`
-
-Set the config directly.
-
-#### `bumper.bump(whatBump?: (commits: Commit[]) => Promise<BumperRecommendation | null | undefined>): Promise<BumperRecommendation>`
-
-Get a recommended version bump based on conventional commits. `whatBump` function is required if preset is not loaded.
-
-## CLI
+CLI is also available:
 
 ```sh
 conventional-recommended-bump --help
 ```
+
+## Documentation
+
+For comprehensive guides, CLI options, and API reference, visit the [documentation website](https://conventional-changelog.js.org/version-bump/).
 
 ## License
 

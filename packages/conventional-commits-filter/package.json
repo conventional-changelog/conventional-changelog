@@ -9,7 +9,7 @@
     "url": "https://github.com/stevemao"
   },
   "license": "MIT",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-commits-filter#readme",
+  "homepage": "https://conventional-changelog.js.org/commits-filter/",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",

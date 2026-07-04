@@ -5,7 +5,7 @@
   "description": "Conventionalcommits.org preset for conventional-changelog.",
   "author": "Ben Coe",
   "license": "ISC",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-conventionalcommits#readme",
+  "homepage": "https://conventional-changelog.js.org/presets/conventional-commits/",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",

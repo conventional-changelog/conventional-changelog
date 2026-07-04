@@ -34,70 +34,33 @@ A concrete implementation of the specification described at [conventionalcommits
 ## Install
 
 ```bash
-# yarn
-yarn add -D conventional-changelog-conventionalcommits
 # pnpm
 pnpm add -D conventional-changelog-conventionalcommits
+# yarn
+yarn add -D conventional-changelog-conventionalcommits
 # npm
 npm i -D conventional-changelog-conventionalcommits
 ```
 
-## Indirect Usage (as preset)
+## Usage
 
-Use the [Conventional Changelog CLI Usage](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#usage) with the `-p conventionalcommits` option.
+Use with [conventional-changelog](https://conventional-changelog.js.org/conventional-changelog/) by passing the preset name with `-p`:
 
-## Direct Usage (as a base preset so you can customize it)
+```sh
+conventional-changelog -p conventionalcommits
+```
 
-If you want to use this package directly and pass options, you can use the [Conventional Changelog CLI Usage](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog#usage) and with the `--config` or `-n` parameter, pass a js config that looks like this:
+Or use it directly as a base preset to customize it:
 
 ```js
 import createPreset from 'conventional-changelog-conventionalcommits'
 
 const config = createPreset({
-  issuePrefixes: ['TEST-'],
-  formatIssueUrl: (_context, reference) => `https://myBugTracker.com/${reference.prefix}${reference.issue}`
+  issuePrefixes: ['TEST-']
 })
 // do something with the config
 ```
 
-or json config like that:
+## Documentation
 
-```json
-{
-  "options": {
-    "preset": {
-      "name": "conventionalcommits",
-      "issuePrefixes": ["TEST-"]
-    }
-  }
-}
-```
-
-This last json config way passes the `preset` object to the `conventional-changelog-preset-loader` package, that in turn, passes this same `preset` object as the config for the `conventional-changelog-conventionalcommits`.
-
-See [conventional-changelog-config-spec](https://github.com/conventional-changelog/conventional-changelog-config-spec) for available configuration options.
-
-## Specific Options
-
-| Option | Description |
-|--------|-------------|
-| ignoreCommits | Regular expression to match and exclude raw commits before parsing. |
-| issuePrefixes | Array of issue prefixes parsed as issue references. Defaults to `['#']`. |
-| types | Array of commit type objects defining sections, release effects, and optional scope-specific type handling. Default value is available via the `DEFAULT_COMMIT_TYPES` export. |
-| scope | String or array of scope names to filter commits. Only commits with matching scopes will be included. When `scopeOnly` is `false` (default), commits without any scope are also included. |
-| scopeOnly | When `true` and `scope` is specified, excludes commits that have no scope. When `false` (default), includes both scoped and unscooped commits when filtering by scope. |
-| preMajor | When `true`, breaking changes and features are downgraded by one semver level before the first major release. |
-| formatIssueUrl | Function that formats issue reference URLs. Receives `(context, reference)`. |
-| formatCommitUrl | Function that formats commit URLs. Receives `(context, commit)`. |
-| formatCompareUrl | Function that formats release comparison URLs. Receives `(context)`. |
-| formatUserUrl | Function that formats user mention URLs. Receives `(context, user)`. |
-
-Each item in `types` can define an `effect`:
-
-| Effect | Changelog | Version bump |
-|--------|-----------|--------------|
-| `bump` | Included | Included |
-| `changelog` | Included | Ignored |
-| `hidden` | Hidden | Ignored |
-
-`effect` defaults to `bump` when omitted. Breaking changes always trigger a major bump and are included in the changelog regardless of the type effect.
+For the commit convention details and preset options, visit the [documentation website](https://conventional-changelog.js.org/presets/conventional-commits/).

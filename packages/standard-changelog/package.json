@@ -5,7 +5,7 @@
   "description": "Generate a changelog from git metadata with Angular commit convention.",
   "author": "Steve Mao",
   "license": "MIT",
-  "homepage": "https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/standard-changelog#readme",
+  "homepage": "https://conventional-changelog.js.org/standard-changelog/",
   "repository": {
     "type": "git",
     "url": "https://github.com/conventional-changelog/conventional-changelog.git",

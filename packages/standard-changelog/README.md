@@ -31,15 +31,6 @@
 
 An opinionated approach to CHANGELOG generation using angular commit conventions.
 
-<hr />
-<a href="#install">Install</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="#usage">Usage</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="#js-api">JS API</a>
-<br />
-<hr />
-
 ## Install
 
 ```bash
@@ -59,19 +50,9 @@ standard-changelog
 
 The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
 
-**your first release:**
-
-If you're using this tool for the first time and want to generate new content in CHANGELOG.md, you can run:
-
-```sh
-standard-changelog --first-release
-```
-
-**advanced topics:**
-
 All available command line parameters can be listed using CLI: `standard-changelog --help`.
 
-## JS API
+JS API is also available:
 
 ```js
 import { StandardChangelog } from 'standard-changelog'
@@ -82,17 +63,11 @@ const generator = new StandardChangelog()
 generator
   .writeStream()
   .pipe(process.stdout)
-
-// or
-
-for await (const chunk of generator.write()) {
-  console.log(chunk)
-}
 ```
 
-StandardChangelog is a class based on ConventionalChangelog and with preloaded angular preset.
+## Documentation
 
-See the [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog/blob/master/packages/conventional-changelog/README.md#js-api) JS API docs.
+For comprehensive guides, CLI options, and API reference, visit the [documentation website](https://conventional-changelog.js.org/standard-changelog/).
 
 ## License
 
