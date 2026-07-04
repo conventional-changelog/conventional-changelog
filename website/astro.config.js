@@ -5,6 +5,8 @@ import llmsTxt from 'starlight-llms-txt'
 import { viewTransitions } from 'astro-vtbot/starlight-view-transitions'
 import { rehypeNormalizeContent } from './rehype.js'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 export default defineConfig({
   site: 'https://conventional-changelog.js.org',
   markdown: {
@@ -24,8 +26,23 @@ export default defineConfig({
             name: 'format-detection',
             content: 'telephone=no'
           }
+        },
+        isProduction && {
+          tag: 'script',
+          attrs: {
+            'src': 'https://cloud.umami.is/script.js',
+            'data-website-id': '22ee47a3-93bb-4233-a9c6-c2be27cacb0a',
+            'defer': true
+          }
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'google-site-verification',
+            content: 'JbpBLn9A_qAr4OqSunPoFWeahyME9dMplBMUsaOK_I4'
+          }
         }
-      ],
+      ].filter(Boolean),
       social: [
         {
           label: 'GitHub',
