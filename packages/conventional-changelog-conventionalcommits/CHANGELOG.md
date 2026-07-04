@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v10.2.0...conventional-changelog-conventionalcommits-v10.2.1) (2026-07-04)
+
+### Bug Fixes
+
+* point package homepages and docs to documentation website ([04796e2](https://github.com/conventional-changelog/conventional-changelog/commit/04796e22a649a14647feea99b445df2eb1c3acad))
+
 ## [10.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v10.1.0...conventional-changelog-conventionalcommits-v10.2.0) (2026-06-27)
 
 ### Features

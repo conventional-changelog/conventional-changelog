@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.0.1...git-client-v3.0.2) (2026-07-04)
+
+### Bug Fixes
+
+* point package homepages and docs to documentation website ([04796e2](https://github.com/conventional-changelog/conventional-changelog/commit/04796e22a649a14647feea99b445df2eb1c3acad))
+
 ## [3.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.0.0...git-client-v3.0.1) (2026-06-27)
 
 ### Bug Fixes
