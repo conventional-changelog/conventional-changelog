@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.0.2...git-client-v3.1.0) (2026-07-06)
+
+### Features
+
+* add all option to getTags to walk all refs ([#1501](https://github.com/conventional-changelog/conventional-changelog/issues/1501)) ([bc98da8](https://github.com/conventional-changelog/conventional-changelog/commit/bc98da8759d5d1d1510993e15e71f0baf5292112))
+
 ## [3.0.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.0.1...git-client-v3.0.2) (2026-07-04)
 
 ### Bug Fixes
