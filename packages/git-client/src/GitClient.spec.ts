@@ -161,6 +161,22 @@ describe('git-client', () => {
 
         expect(tags).toMatchObject(expect.arrayContaining([expect.stringMatching(/^v\d+\.\d+\.\d+$/)]))
       })
+
+      it('should honour `options.all`', async () => {
+        testTools.exec('git checkout -b all-tags-branch')
+        testTools.gitCommit('feat: commit for tag out of master history')
+        testTools.exec('git tag v19.0.0')
+        testTools.exec('git checkout master')
+        testTools.exec('git branch -D all-tags-branch')
+
+        const tags = await toArray(client.getTags())
+        const allTags = await toArray(client.getTags({
+          all: true
+        }))
+
+        expect(tags).not.toContain('v19.0.0')
+        expect(allTags).toContain('v19.0.0')
+      })
     })
 
     describe('getCurrentBranch', () => {

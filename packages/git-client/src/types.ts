@@ -37,7 +37,12 @@ export interface GitLogParams {
   firstParent?: boolean
 }
 
-export interface GitLogTagsParams extends Pick<GitLogParams, 'path' | 'from' | 'to' | 'since'> {}
+export interface GitLogTagsParams extends Pick<GitLogParams, 'path' | 'from' | 'to' | 'since'> {
+  /**
+   * Walk all refs (branches and tags) instead of the current branch history.
+   */
+  all?: boolean
+}
 
 export interface GetCommitsParams extends GitLogParams {
   /**
