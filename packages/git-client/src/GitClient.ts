@@ -135,7 +135,8 @@ export class GitClient {
       path,
       from = '',
       to = 'HEAD',
-      since
+      since,
+      all
     } = params
     const tagRegex = /tag:\s*(.+?)[,)]/gi
     const stdout = this.execStream(
@@ -143,6 +144,7 @@ export class GitClient {
       '--decorate',
       '--no-color',
       '--date-order',
+      all && '--all',
       since && `--since=${since instanceof Date ? since.toISOString() : since}`,
       [from, to].filter(Boolean).join('..'),
       ...path ? ['--', ...toArray(path)] : []
