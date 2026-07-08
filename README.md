@@ -15,13 +15,13 @@ Generate a CHANGELOG from git metadata.
 
 The original `conventional-changelog` package repo can be found in [packages/conventional-changelog](packages/conventional-changelog).
 
-If you are new to Conventional Commits, we recommend to read [The Complete Guide](https://github.com/TrigenSoftware/simple-release/blob/main/GUIDE.md).
+If you are new to Conventional Commits, we recommend to read [The Complete Guide](https://conventional-changelog.js.org/getting-started/complete-guide/).
 
 We recommend considering the following high level tools for automating versioning, tagging, and CHANGELOG generation:
 
 - [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) — a drop-in replacement for npm's `version` command, handles automated version bumping, tagging, and CHANGELOG generation.
 - [semantic-release](https://github.com/semantic-release/semantic-release) — fully automates the release process from CI/CD, including version determination, changelog generation, and publishing.
-- [simple-release-action](https://github.com/TrigenSoftware/simple-release-action) — a simple GitHub Action to automate version bumps, changelogs, and releases. Supports monorepos and extensibility via addons.
+- [simple-release-action](https://simple-release.js.org/github-action/) — a simple GitHub Action to automate version bumps, changelogs, and releases. Supports monorepos and extensibility via addons.
 
 For more details, guides and API references, check out the [documentation website](https://conventional-changelog.js.org).
 

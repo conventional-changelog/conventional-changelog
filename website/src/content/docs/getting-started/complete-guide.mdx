@@ -249,7 +249,7 @@ Add a script to `package.json`:
 
 Now you can use `npm run commit` instead of `git commit` for interactive commit creation.
 
-### 3. AI Agent Skill
+### 3. Conventional Commit Message Skill
 
 If your team writes commits with an AI coding agent, this project ships a universal [agent skill](/getting-started/agent-skills/), `conventional-commit-message`, that teaches the agent to produce correct Conventional Commit messages — choosing the type and scope by release impact, flagging breaking changes, and validating against your Commitlint config when it is available.
 
@@ -274,8 +274,8 @@ From then on, asking the agent for a commit message yields a changelog-ready mes
 
 The [simple-release-action](https://github.com/marketplace/actions/simple-release-action) is a comprehensive GitHub Action that automates version updates, changelog generation, and releases. The project is based on [simple-release](https://github.com/TrigenSoftware/simple-release) and [conventional-changelog](https://github.com/conventional-changelog/conventional-changelog).
 
-<Aside type="note">
-  If you are not using GitHub, you can write your own custom CI script using the [@simple-release/core](https://github.com/TrigenSoftware/simple-release/tree/main/packages/core) package.
+<Aside type="tip" title="Let an agent set it up">
+  The setup described below can also be done for you by an AI coding agent: the [setup-simple-release-action](https://simple-release.js.org/getting-started/agent-skills/#setup-simple-release-action) skill teaches the agent to detect your project type and toolchain, generate the config and workflow, and finish with a checklist of the repository settings only you can change.
 </Aside>
 
 Key Features:
@@ -286,9 +286,9 @@ Key Features:
 - **Git tagging and GitHub releases**
 - **Configuration through adapters** for different project types
 
-Currently npm and pnpm projects with workspaces are supported ([npm adapter](https://github.com/TrigenSoftware/simple-release/blob/main/packages/npm#readme), [pnpm adapter](https://github.com/TrigenSoftware/simple-release/blob/main/packages/pnpm#readme)).
+Currently [npm](https://simple-release.js.org/project-types/npm/), [pnpm](https://simple-release.js.org/project-types/pnpm/), and [GitHub Actions](https://simple-release.js.org/project-types/github-action/) projects are supported.
 
-Let's look at an example of configuring the action for a project with pnpm workspaces using [@simple-release/pnpm](https://github.com/TrigenSoftware/simple-release/blob/main/packages/pnpm#readme) addon:
+Let's look at an example of configuring the action for a project with pnpm workspaces using the [@simple-release/pnpm](https://simple-release.js.org/project-types/pnpm/) addon:
 
 Create `.simple-release.json` config file in repository root:
 
@@ -389,6 +389,10 @@ Every time you push to the main branch, the action will create or update a pull 
 When the pull request is merged, it will automatically release the project.
 
 ![GitHub release created by the action](../../../assets/guide/release.png)
+
+<Aside type="note">
+  If you are not using GitHub, you can write your own custom CI script using the [@simple-release/core](https://github.com/TrigenSoftware/simple-release/tree/main/packages/core) package.
+</Aside>
 
 ## Conclusion
 
