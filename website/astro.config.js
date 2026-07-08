@@ -27,6 +27,48 @@ export default defineConfig({
             content: 'telephone=no'
           }
         },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image',
+            content: 'https://conventional-changelog.js.org/og-image.jpg'
+          }
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image:width',
+            content: '1200'
+          }
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image:height',
+            content: '630'
+          }
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image:type',
+            content: 'image/jpeg'
+          }
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:card',
+            content: 'summary_large_image'
+          }
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://conventional-changelog.js.org/og-image.jpg'
+          }
+        },
         isProduction && {
           tag: 'script',
           attrs: {
