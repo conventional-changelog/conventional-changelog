@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v8.0.1...conventional-changelog-v8.1.0) (2026-07-09)
+
+### Features
+
+* replace `meow` with `argue-cli` ([#1505](https://github.com/conventional-changelog/conventional-changelog/issues/1505)) ([1ad6177](https://github.com/conventional-changelog/conventional-changelog/commit/1ad6177da0b9da2df4fffc41e0b6caf9b76bf200))
+
 ## [8.0.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v8.0.0...conventional-changelog-v8.0.1) (2026-07-04)
 
 ### Bug Fixes
