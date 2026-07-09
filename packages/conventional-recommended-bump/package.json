@@ -53,10 +53,10 @@
   },
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
+    "argue-cli": "catalog:",
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-commits-filter": "workspace:^",
-    "conventional-commits-parser": "workspace:^",
-    "meow": "catalog:"
+    "conventional-commits-parser": "workspace:^"
   },
   "devDependencies": {
     "conventional-changelog-conventionalcommits": "workspace:^"

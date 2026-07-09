@@ -4,6 +4,13 @@ import {
   createReadStream,
   createWriteStream
 } from 'fs'
+import {
+  readOptions,
+  option,
+  flag,
+  alias,
+  autocase
+} from 'argue-cli'
 import type {
   Preset,
   ConventionalChangelog
@@ -18,100 +25,39 @@ import {
   isFileExists
 } from './utils.js'
 
-export interface Flags {
-  infile?: string
-  outfile?: string
-  stdout?: boolean
-  preset?: string
-  pkg?: string
-  append?: boolean
-  releaseCount?: number
-  skipUnstable?: boolean
-  outputUnreleased?: boolean
-  verbose?: boolean
-  config?: string
-  context?: string
-  firstRelease?: boolean
-  lernaPackage?: string
-  tagPrefix?: string
-  from?: string
-  to?: string
+export function readFlags() {
+  return readOptions(
+    option(alias('infile', 'i'), String),
+    option(alias('outfile', 'o'), String),
+    flag('stdout'),
+    option(alias('preset', 'p'), String),
+    option(alias('pkg', 'k'), String),
+    flag(alias('append', 'a')),
+    option(autocase(alias('releaseCount', 'r')), Number),
+    flag(autocase('skipUnstable')),
+    flag(autocase(alias('outputUnreleased', 'u'))),
+    flag(alias('verbose', 'v')),
+    option(alias('config', 'n'), String),
+    option(alias('context', 'c'), String),
+    flag(autocase(alias('firstRelease', 'f'))),
+    option(autocase(alias('lernaPackage', 'l')), String),
+    option(autocase(alias('tagPrefix', 't')), String),
+    option(autocase('commitPath'), String),
+    option('from', String),
+    option('to', String),
+    flag('help'),
+    flag('version')
+  )
 }
 
-export const flags = {
-  infile: {
-    shortFlag: 'i',
-    default: 'CHANGELOG.md',
-    type: 'string'
-  },
-  outfile: {
-    shortFlag: 'o',
-    type: 'string'
-  },
-  stdout: {
-    type: 'boolean'
-  },
-  preset: {
-    shortFlag: 'p',
-    type: 'string'
-  },
-  pkg: {
-    shortFlag: 'k',
-    type: 'string'
-  },
-  append: {
-    shortFlag: 'a',
-    type: 'boolean'
-  },
-  releaseCount: {
-    shortFlag: 'r',
-    type: 'number'
-  },
-  skipUnstable: {
-    type: 'boolean'
-  },
-  outputUnreleased: {
-    shortFlag: 'u',
-    type: 'boolean'
-  },
-  verbose: {
-    shortFlag: 'v',
-    type: 'boolean'
-  },
-  config: {
-    shortFlag: 'n',
-    type: 'string'
-  },
-  context: {
-    shortFlag: 'c',
-    type: 'string'
-  },
-  firstRelease: {
-    shortFlag: 'f',
-    type: 'boolean'
-  },
-  lernaPackage: {
-    shortFlag: 'l',
-    type: 'string'
-  },
-  tagPrefix: {
-    shortFlag: 't',
-    type: 'string'
-  },
-  from: {
-    type: 'string'
-  },
-  to: {
-    type: 'string'
-  }
-} as const
+export type Flags = ReturnType<typeof readFlags>
 
 export async function runProgram(
   generator: ConventionalChangelog,
   flags: Flags
 ) {
   let {
-    infile,
+    infile = 'CHANGELOG.md',
     outfile,
     stdout,
     verbose,

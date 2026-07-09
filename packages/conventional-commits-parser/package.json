@@ -55,6 +55,6 @@
   },
   "dependencies": {
     "@simple-libs/stream-utils": "catalog:",
-    "meow": "catalog:"
+    "argue-cli": "catalog:"
   }
 }
