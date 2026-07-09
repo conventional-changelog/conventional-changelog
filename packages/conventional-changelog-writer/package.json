@@ -58,8 +58,8 @@
   "dependencies": {
     "@conventional-changelog/template": "workspace:^",
     "@simple-libs/stream-utils": "catalog:",
+    "argue-cli": "catalog:",
     "conventional-commits-filter": "workspace:^",
-    "meow": "catalog:",
     "semver": "catalog:"
   },
   "devDependencies": {

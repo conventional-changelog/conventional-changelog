@@ -51,7 +51,6 @@
   "dependencies": {
     "@conventional-changelog/git-client": "workspace:^",
     "conventional-changelog-angular": "workspace:^",
-    "conventional-changelog": "workspace:^",
-    "meow": "catalog:"
+    "conventional-changelog": "workspace:^"
   }
 }

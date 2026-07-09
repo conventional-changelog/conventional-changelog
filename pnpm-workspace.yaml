@@ -4,7 +4,7 @@ packages:
 catalog:
   '@simple-libs/stream-utils': ^2.0.0
   '@types/semver': ^7.5.8
-  meow: ^14.0.0
+  argue-cli: ^3.1.0
   semver: ^7.5.2
 autoInstallPeers: false
 allowBuilds:
@@ -38,3 +38,4 @@ minimumReleaseAgeExclude:
   - '@typescript/typescript-win32-arm64@7.0.2'
   - '@typescript/typescript-win32-x64@7.0.2'
   - typescript@7.0.2
+  - argue-cli@3.1.0

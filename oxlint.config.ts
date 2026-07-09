@@ -27,6 +27,12 @@ export default defineConfig({
       rules: {
         'import/no-default-export': 'off'
       }
+    },
+    {
+      files: ['**/cli/**/*', '**/cli.*'],
+      rules: {
+        'eslint/no-console': 'off'
+      }
     }
   ]
 })
