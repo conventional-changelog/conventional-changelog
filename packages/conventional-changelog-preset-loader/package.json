@@ -40,8 +40,8 @@
     "clear": "del ./package ./dist",
     "prepublishOnly": "run build clear:package clean-publish",
     "postpublish": "pnpm clear:package",
-    "build": "tsgo -p tsconfig.build.json",
-    "test:types": "tsgo --noEmit"
+    "build": "tsc -p tsconfig.build.json",
+    "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "conventional-changelog-angular": "workspace:^",

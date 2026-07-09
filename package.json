@@ -47,7 +47,6 @@
     "@trigen/oxlint-config": "^9.2.3",
     "@trigen/scripts": "^9.0.0",
     "@types/node": "^22.0.0",
-    "@typescript/native-preview": "latest",
     "@vitest/coverage-v8": "^4.0.0",
     "better-than-before": "^1.0.0",
     "clean-publish": "^5.0.0",
@@ -60,7 +59,7 @@
     "oxlint-tsgolint": "^0.23.0",
     "simple-git-hooks": "^2.11.1",
     "tsm": "^2.3.0",
-    "typescript": "^6.0.0",
+    "typescript": "^7.0.2",
     "vite": "^8.0.0",
     "vitest": "^4.0.0"
   }
