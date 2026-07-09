@@ -15,7 +15,8 @@ export default {
           ...scopeEnum[2],
           'deps',
           'dev-deps',
-          'release'
+          'release',
+          'conventional-commit-message'
         ]
       ]
     }
