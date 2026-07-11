@@ -56,6 +56,7 @@ Rules:
 - Prefer one commit per coherent change. If one diff contains unrelated release visible changes, recommend splitting it.
 - Write the description so it reads well as a bullet in a generated changelog. Avoid vague implementation notes like `add some feature`, `update stuff`, or `fix issue`. Prefer user-facing outcomes such as `support custom scopes`, `preserve prerelease tags`, or `require Node.js 22`.
 - Wrap code identifiers in the description in backticks — function, option, flag, type, or file names: `` add `autocase` to match camelCase and kebab-case forms ``, `` support `--no-*` negation ``. GitHub renders backticks in commit messages and generated changelogs preserve them, and they mark words like `flag` or `rest` as code where plain prose would be ambiguous.
+- Wrap any `@`-prefixed token that is not an intentional GitHub user mention in backticks — scoped package names (`@types/node`), decorators (`@Injectable`), JSDoc/annotation tags (`@deprecated`). GitHub parses a bare `@name` in commit messages and changelogs as a user mention, which can link and notify an unrelated GitHub account.
 - Active verb phrases are usually better than passive sentences. Prefer `support custom scopes` over `custom scopes were added` unless passive voice is clearly more natural for the project.
 
 Breaking changes are indicated by `!` immediately before `:` in the header or by a breaking-change footer. Use the footer when the impact is known:
