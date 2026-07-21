@@ -49,13 +49,13 @@ importers:
         version: 22.16.2
       '@vitest/coverage-v8':
         specifier: ^4.0.0
-        version: 4.0.9(vitest@4.1.0(@types/node@22.16.2)(vite@8.0.16(@types/node@22.16.2)(esbuild@0.28.1)(jiti@2.4.2)(yaml@2.9.0)))
+        version: 4.0.9(supports-color@7.2.0)(vitest@4.1.0(@types/node@22.16.2)(vite@8.0.16(@types/node@22.16.2)(esbuild@0.28.1)(jiti@2.4.2)(yaml@2.9.0)))
       better-than-before:
         specifier: ^1.0.0
         version: 1.0.0
       clean-publish:
-        specifier: ^5.0.0
-        version: 5.2.2
+        specifier: ^7.0.0
+        version: 7.1.0
       commitizen:
         specifier: ^4.3.0
         version: 4.3.1(@types/node@22.16.2)(typescript@7.0.2)
@@ -254,19 +254,19 @@ importers:
         version: 0.9.9(prettier@3.6.2)(typescript@6.0.3)
       '@astrojs/markdown-remark':
         specifier: ^7.2.0
-        version: 7.2.0
+        version: 7.2.0(supports-color@7.2.0)
       '@astrojs/starlight':
         specifier: ^0.41.1
-        version: 0.41.1(@astrojs/markdown-remark@7.2.0)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(typescript@6.0.3)
+        version: 0.41.1(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)
       astro:
         specifier: ^7.0.4
-        version: 7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
+        version: 7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
       astro-vtbot:
         specifier: ^3.0.0
         version: 3.0.0
       starlight-llms-txt:
         specifier: ^0.11.0
-        version: 0.11.0(@astrojs/markdown-satteri@0.3.2)(@astrojs/starlight@0.41.1(@astrojs/markdown-remark@7.2.0)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(typescript@6.0.3))(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))
+        version: 0.11.0(@astrojs/markdown-satteri@0.3.2)(@astrojs/starlight@0.41.1(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)
     devDependencies:
       sharp:
         specifier: ^0.35.0
@@ -2019,9 +2019,9 @@ packages:
     resolution: {integrity: sha512-77PSwercCZU2Fc4sX94eF8k8Pxte6JAwL4/ICZLFjJLqegs7kCuAsqqj/70NQF6TvDpgFjkubQB2FW2ZZddvQg==}
     engines: {node: '>=8'}
 
-  clean-publish@5.2.2:
-    resolution: {integrity: sha512-sqM9uAXG+K7QzEn0Ur00otEHfbQTsyle4enj/388ZZQhG6daXMJ15dfD/ALsFCQCJvMZPxYwDx/QrdcdzWVPyg==}
-    engines: {node: '>= 18.0.0'}
+  clean-publish@7.1.0:
+    resolution: {integrity: sha512-fnsFHW6fIq7Sr5Pf9YUsxB1up5pEA13DHg4Q/bZdphWssmIUuKV7G5Kaq2Q0X6UsCFm//uFbONOWTi7m4DvMTg==}
+    engines: {node: '>= 22.0.0'}
     hasBin: true
 
   cli-cursor@3.1.0:
@@ -2136,10 +2136,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  cross-spawn@7.0.6:
-    resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
-    engines: {node: '>= 8'}
 
   crossws@0.3.5:
     resolution: {integrity: sha512-ojKiDvcmByhwa8YYqbQI/hg7MEU0NC03+pSdEq4ZUnZR9xXpwk7E43SMNGkn+JxJGPFtNvQ48+vV2p+P1ml5PA==}
@@ -3385,10 +3381,6 @@ packages:
     resolution: {integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==}
     engines: {node: '>=0.10.0'}
 
-  path-key@3.1.1:
-    resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
-    engines: {node: '>=8'}
-
   path-type@6.0.0:
     resolution: {integrity: sha512-Vj7sf++t5pBD637NSfkxpHSMfWaeig5+DKWLhcqIYx6mWQz5hdJTGDVMQiJcw1ZYkhs7AazKDGpRVji1LJCZUQ==}
     engines: {node: '>=18'}
@@ -3636,14 +3628,6 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
-
-  shebang-command@2.0.0:
-    resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
-    engines: {node: '>=8'}
-
-  shebang-regex@3.0.0:
-    resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
-    engines: {node: '>=8'}
 
   shiki@4.3.0:
     resolution: {integrity: sha512-NKKjWzR6LIGL3sXBrWDw9sDS9cxx42/DkysaNqJEeOWE8Kix5gpak0bc00OfDVEO4oyXSyz8+aRaqKoBD1yo7A==}
@@ -4184,11 +4168,6 @@ packages:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
     hasBin: true
 
-  which@2.0.2:
-    resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
-    engines: {node: '>= 8'}
-    hasBin: true
-
   why-is-node-running@2.3.0:
     resolution: {integrity: sha512-hUrmaWBdVDcxvYqnyh09zunKzROWjbZTiNy8dBEjkS7ehEDQibXJ7XvlmtbwuTclUiIyN+CyXQD4Vmko8fNm8w==}
     engines: {node: '>=8'}
@@ -4377,7 +4356,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@7.2.0':
+  '@astrojs/markdown-remark@7.2.0(supports-color@7.2.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.10.0
       '@astrojs/prism': 4.0.2
@@ -4387,8 +4366,8 @@ snapshots:
       mdast-util-definitions: 6.0.0
       rehype-raw: 7.0.0
       rehype-stringify: 10.0.1
-      remark-gfm: 4.0.1
-      remark-parse: 11.0.0
+      remark-gfm: 4.0.1(supports-color@7.2.0)
+      remark-parse: 11.0.0(supports-color@7.2.0)
       remark-rehype: 11.1.2
       remark-smartypants: 3.0.2
       unified: 11.0.5
@@ -4406,19 +4385,19 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.9.4
 
-  '@astrojs/mdx@7.0.0(@astrojs/markdown-satteri@0.3.2)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))':
+  '@astrojs/mdx@7.0.0(@astrojs/markdown-satteri@0.3.2)(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.10.0
-      '@astrojs/markdown-remark': 7.2.0
-      '@mdx-js/mdx': 3.1.1
+      '@astrojs/markdown-remark': 7.2.0(supports-color@7.2.0)
+      '@mdx-js/mdx': 3.1.1(supports-color@7.2.0)
       acorn: 8.17.0
-      astro: 7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
+      astro: 7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
       es-module-lexer: 2.1.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
       piccolore: 0.1.3
       rehype-raw: 7.0.0
-      remark-gfm: 4.0.1
+      remark-gfm: 4.0.1(supports-color@7.2.0)
       remark-smartypants: 3.0.2
       source-map: 0.7.6
       unist-util-visit: 5.1.0
@@ -4438,17 +4417,17 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 4.4.3
 
-  '@astrojs/starlight@0.41.1(@astrojs/markdown-remark@7.2.0)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(typescript@6.0.3)':
+  '@astrojs/starlight@0.41.1(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)':
     dependencies:
       '@astrojs/markdown-satteri': 0.3.2
-      '@astrojs/mdx': 7.0.0(@astrojs/markdown-satteri@0.3.2)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))
+      '@astrojs/mdx': 7.0.0(@astrojs/markdown-satteri@0.3.2)(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)
       '@astrojs/sitemap': 3.7.3
       '@pagefind/default-ui': 1.5.2
       '@types/hast': 3.0.4
       '@types/js-yaml': 4.0.9
       '@types/mdast': 4.0.4
-      astro: 7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
-      astro-expressive-code: 0.44.0(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))
+      astro: 7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
+      astro-expressive-code: 0.44.0(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.3
       hast-util-select: 6.0.4
@@ -4458,20 +4437,20 @@ snapshots:
       js-yaml: 4.2.0
       klona: 2.0.6
       magic-string: 0.30.21
-      mdast-util-directive: 3.1.0
+      mdast-util-directive: 3.1.0(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
       mdast-util-to-string: 4.0.0
       pagefind: 1.5.2
       rehype: 13.0.2
       rehype-format: 5.0.1
-      remark-directive: 4.0.0
+      remark-directive: 4.0.0(supports-color@7.2.0)
       satteri: 0.9.4
       ultrahtml: 1.6.0
       unified: 11.0.5
       unist-util-visit: 5.1.0
       vfile: 6.0.3
     optionalDependencies:
-      '@astrojs/markdown-remark': 7.2.0
+      '@astrojs/markdown-remark': 7.2.0(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -5094,7 +5073,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@mdx-js/mdx@3.1.1':
+  '@mdx-js/mdx@3.1.1(supports-color@7.2.0)':
     dependencies:
       '@types/estree': 1.0.8
       '@types/estree-jsx': 1.0.5
@@ -5106,14 +5085,14 @@ snapshots:
       estree-util-is-identifier-name: 3.0.0
       estree-util-scope: 1.0.0
       estree-walker: 3.0.3
-      hast-util-to-jsx-runtime: 2.3.6
+      hast-util-to-jsx-runtime: 2.3.6(supports-color@7.2.0)
       markdown-extensions: 2.0.0
       recma-build-jsx: 1.0.0
       recma-jsx: 1.0.1(acorn@8.17.0)
       recma-stringify: 1.0.0
-      rehype-recma: 1.0.0
-      remark-mdx: 3.1.1
-      remark-parse: 11.0.0
+      rehype-recma: 1.0.0(supports-color@7.2.0)
+      remark-mdx: 3.1.1(supports-color@7.2.0)
+      remark-parse: 11.0.0(supports-color@7.2.0)
       remark-rehype: 11.1.2
       source-map: 0.7.6
       unified: 11.0.5
@@ -5569,15 +5548,15 @@ snapshots:
 
   '@ungap/structured-clone@1.3.2': {}
 
-  '@vitest/coverage-v8@4.0.9(vitest@4.1.0(@types/node@22.16.2)(vite@8.0.16(@types/node@22.16.2)(esbuild@0.28.1)(jiti@2.4.2)(yaml@2.9.0)))':
+  '@vitest/coverage-v8@4.0.9(supports-color@7.2.0)(vitest@4.1.0(@types/node@22.16.2)(vite@8.0.16(@types/node@22.16.2)(esbuild@0.28.1)(jiti@2.4.2)(yaml@2.9.0)))':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
       '@vitest/utils': 4.0.9
       ast-v8-to-istanbul: 0.3.8
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@7.2.0)
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 5.0.6
+      istanbul-lib-source-maps: 5.0.6(supports-color@7.2.0)
       istanbul-reports: 3.2.0
       magicast: 0.5.3
       std-env: 3.10.0
@@ -5764,9 +5743,9 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-expressive-code@0.44.0(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)):
+  astro-expressive-code@0.44.0(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)):
     dependencies:
-      astro: 7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
+      astro: 7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
       rehype-expressive-code: 0.44.0
       url-extras: 0.1.0
 
@@ -5778,7 +5757,7 @@ snapshots:
       '@vtbag/turn-signal': 1.3.1
       '@vtbag/utensil-drawer': 1.2.16
 
-  astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0):
+  astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0):
     dependencies:
       '@astrojs/compiler-rs': 0.3.0(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)
       '@astrojs/internal-helpers': 0.10.0
@@ -5837,7 +5816,7 @@ snapshots:
       yargs-parser: 22.0.0
       zod: 4.4.3
     optionalDependencies:
-      '@astrojs/markdown-remark': 7.2.0
+      '@astrojs/markdown-remark': 7.2.0(supports-color@7.2.0)
       sharp: 0.35.3(@types/node@24.13.2)
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -5957,12 +5936,12 @@ snapshots:
 
   ci-info@4.4.0: {}
 
-  clean-publish@5.2.2:
+  clean-publish@7.1.0:
     dependencies:
-      cross-spawn: 7.0.6
-      fast-glob: 3.3.3
       lilconfig: 3.1.3
-      micromatch: 4.0.8
+      picomatch: 4.0.4
+      tinyexec: 1.2.4
+      tinyglobby: 0.2.17
 
   cli-cursor@3.1.0:
     dependencies:
@@ -6074,12 +6053,6 @@ snapshots:
     optionalDependencies:
       typescript: 7.0.2
 
-  cross-spawn@7.0.6:
-    dependencies:
-      path-key: 3.1.1
-      shebang-command: 2.0.0
-      which: 2.0.2
-
   crossws@0.3.5:
     dependencies:
       uncrypto: 0.1.3
@@ -6126,9 +6099,11 @@ snapshots:
       - '@types/node'
       - typescript
 
-  debug@4.4.3:
+  debug@4.4.3(supports-color@7.2.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 7.2.0
 
   decode-named-character-reference@1.3.0:
     dependencies:
@@ -6684,7 +6659,7 @@ snapshots:
       unist-util-visit: 5.1.0
       zwitch: 2.0.4
 
-  hast-util-to-estree@3.1.3:
+  hast-util-to-estree@3.1.3(supports-color@7.2.0):
     dependencies:
       '@types/estree': 1.0.8
       '@types/estree-jsx': 1.0.5
@@ -6694,9 +6669,9 @@ snapshots:
       estree-util-attach-comments: 3.0.0
       estree-util-is-identifier-name: 3.0.0
       hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.1
-      mdast-util-mdx-jsx: 3.2.0
-      mdast-util-mdxjs-esm: 2.0.1
+      mdast-util-mdx-expression: 2.0.1(supports-color@7.2.0)
+      mdast-util-mdx-jsx: 3.2.0(supports-color@7.2.0)
+      mdast-util-mdxjs-esm: 2.0.1(supports-color@7.2.0)
       property-information: 7.2.0
       space-separated-tokens: 2.0.2
       style-to-js: 1.1.21
@@ -6719,7 +6694,7 @@ snapshots:
       stringify-entities: 4.0.4
       zwitch: 2.0.4
 
-  hast-util-to-jsx-runtime@2.3.6:
+  hast-util-to-jsx-runtime@2.3.6(supports-color@7.2.0):
     dependencies:
       '@types/estree': 1.0.8
       '@types/hast': 3.0.4
@@ -6728,9 +6703,9 @@ snapshots:
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
       hast-util-whitespace: 3.0.0
-      mdast-util-mdx-expression: 2.0.1
-      mdast-util-mdx-jsx: 3.2.0
-      mdast-util-mdxjs-esm: 2.0.1
+      mdast-util-mdx-expression: 2.0.1(supports-color@7.2.0)
+      mdast-util-mdx-jsx: 3.2.0(supports-color@7.2.0)
+      mdast-util-mdxjs-esm: 2.0.1(supports-color@7.2.0)
       property-information: 7.2.0
       space-separated-tokens: 2.0.2
       style-to-js: 1.1.21
@@ -6933,10 +6908,10 @@ snapshots:
       make-dir: 4.0.0
       supports-color: 7.2.0
 
-  istanbul-lib-source-maps@5.0.6:
+  istanbul-lib-source-maps@5.0.6(supports-color@7.2.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@7.2.0)
       istanbul-lib-coverage: 3.2.2
     transitivePeerDependencies:
       - supports-color
@@ -7070,13 +7045,13 @@ snapshots:
       '@types/unist': 3.0.3
       unist-util-visit: 5.1.0
 
-  mdast-util-directive@3.1.0:
+  mdast-util-directive@3.1.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
       ccount: 2.0.1
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
       parse-entities: 4.0.2
       stringify-entities: 4.0.4
@@ -7091,14 +7066,14 @@ snapshots:
       unist-util-is: 6.0.1
       unist-util-visit-parents: 6.0.2
 
-  mdast-util-from-markdown@2.0.3:
+  mdast-util-from-markdown@2.0.3(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
       decode-named-character-reference: 1.3.0
       devlop: 1.1.0
       mdast-util-to-string: 4.0.0
-      micromark: 4.0.2
+      micromark: 4.0.2(supports-color@7.2.0)
       micromark-util-decode-numeric-character-reference: 2.0.2
       micromark-util-decode-string: 2.0.1
       micromark-util-normalize-identifier: 2.0.1
@@ -7116,67 +7091,67 @@ snapshots:
       mdast-util-find-and-replace: 3.0.2
       micromark-util-character: 2.1.1
 
-  mdast-util-gfm-footnote@2.1.0:
+  mdast-util-gfm-footnote@2.1.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
       micromark-util-normalize-identifier: 2.0.1
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-gfm-strikethrough@2.0.0:
+  mdast-util-gfm-strikethrough@2.0.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-gfm-table@2.0.0:
+  mdast-util-gfm-table@2.0.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
       markdown-table: 3.0.4
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-gfm-task-list-item@2.0.0:
+  mdast-util-gfm-task-list-item@2.0.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-gfm@3.1.0:
+  mdast-util-gfm@3.1.0(supports-color@7.2.0):
     dependencies:
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-gfm-autolink-literal: 2.0.1
-      mdast-util-gfm-footnote: 2.1.0
-      mdast-util-gfm-strikethrough: 2.0.0
-      mdast-util-gfm-table: 2.0.0
-      mdast-util-gfm-task-list-item: 2.0.0
+      mdast-util-gfm-footnote: 2.1.0(supports-color@7.2.0)
+      mdast-util-gfm-strikethrough: 2.0.0(supports-color@7.2.0)
+      mdast-util-gfm-table: 2.0.0(supports-color@7.2.0)
+      mdast-util-gfm-task-list-item: 2.0.0(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx-expression@2.0.1:
+  mdast-util-mdx-expression@2.0.1(supports-color@7.2.0):
     dependencies:
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx-jsx@3.2.0:
+  mdast-util-mdx-jsx@3.2.0(supports-color@7.2.0):
     dependencies:
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
@@ -7184,7 +7159,7 @@ snapshots:
       '@types/unist': 3.0.3
       ccount: 2.0.1
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
       parse-entities: 4.0.2
       stringify-entities: 4.0.4
@@ -7193,23 +7168,23 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdx@3.0.0:
+  mdast-util-mdx@3.0.0(supports-color@7.2.0):
     dependencies:
-      mdast-util-from-markdown: 2.0.3
-      mdast-util-mdx-expression: 2.0.1
-      mdast-util-mdx-jsx: 3.2.0
-      mdast-util-mdxjs-esm: 2.0.1
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
+      mdast-util-mdx-expression: 2.0.1(supports-color@7.2.0)
+      mdast-util-mdx-jsx: 3.2.0(supports-color@7.2.0)
+      mdast-util-mdxjs-esm: 2.0.1(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
 
-  mdast-util-mdxjs-esm@2.0.1:
+  mdast-util-mdxjs-esm@2.0.1(supports-color@7.2.0):
     dependencies:
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
       devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       mdast-util-to-markdown: 2.1.2
     transitivePeerDependencies:
       - supports-color
@@ -7511,10 +7486,10 @@ snapshots:
 
   micromark-util-types@2.0.2: {}
 
-  micromark@4.0.2:
+  micromark@4.0.2(supports-color@7.2.0):
     dependencies:
       '@types/debug': 4.1.13
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@7.2.0)
       decode-named-character-reference: 1.3.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -7713,8 +7688,6 @@ snapshots:
 
   path-is-absolute@1.0.1: {}
 
-  path-key@3.1.1: {}
-
   path-type@6.0.0: {}
 
   pathe@2.0.3: {}
@@ -7842,11 +7815,11 @@ snapshots:
       hast-util-raw: 9.1.0
       vfile: 6.0.3
 
-  rehype-recma@1.0.0:
+  rehype-recma@1.0.0(supports-color@7.2.0):
     dependencies:
       '@types/estree': 1.0.8
       '@types/hast': 3.0.4
-      hast-util-to-estree: 3.1.3
+      hast-util-to-estree: 3.1.3(supports-color@7.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -7871,37 +7844,37 @@ snapshots:
       rehype-stringify: 10.0.1
       unified: 11.0.5
 
-  remark-directive@4.0.0:
+  remark-directive@4.0.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
-      mdast-util-directive: 3.1.0
+      mdast-util-directive: 3.1.0(supports-color@7.2.0)
       micromark-extension-directive: 4.0.0
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
 
-  remark-gfm@4.0.1:
+  remark-gfm@4.0.1(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
-      mdast-util-gfm: 3.1.0
+      mdast-util-gfm: 3.1.0(supports-color@7.2.0)
       micromark-extension-gfm: 3.0.0
-      remark-parse: 11.0.0
+      remark-parse: 11.0.0(supports-color@7.2.0)
       remark-stringify: 11.0.0
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
 
-  remark-mdx@3.1.1:
+  remark-mdx@3.1.1(supports-color@7.2.0):
     dependencies:
-      mdast-util-mdx: 3.0.0
+      mdast-util-mdx: 3.0.0(supports-color@7.2.0)
       micromark-extension-mdxjs: 3.0.0
     transitivePeerDependencies:
       - supports-color
 
-  remark-parse@11.0.0:
+  remark-parse@11.0.0(supports-color@7.2.0):
     dependencies:
       '@types/mdast': 4.0.4
-      mdast-util-from-markdown: 2.0.3
+      mdast-util-from-markdown: 2.0.3(supports-color@7.2.0)
       micromark-util-types: 2.0.2
       unified: 11.0.5
     transitivePeerDependencies:
@@ -8076,12 +8049,6 @@ snapshots:
       '@img/sharp-win32-x64': 0.35.3
       '@types/node': 24.13.2
 
-  shebang-command@2.0.0:
-    dependencies:
-      shebang-regex: 3.0.0
-
-  shebang-regex@3.0.0: {}
-
   shiki@4.3.0:
     dependencies:
       '@shikijs/core': 4.3.0
@@ -8126,19 +8093,19 @@ snapshots:
 
   stackback@0.0.2: {}
 
-  starlight-llms-txt@0.11.0(@astrojs/markdown-satteri@0.3.2)(@astrojs/starlight@0.41.1(@astrojs/markdown-remark@7.2.0)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(typescript@6.0.3))(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)):
+  starlight-llms-txt@0.11.0(@astrojs/markdown-satteri@0.3.2)(@astrojs/starlight@0.41.1(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0):
     dependencies:
-      '@astrojs/mdx': 7.0.0(@astrojs/markdown-satteri@0.3.2)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))
-      '@astrojs/starlight': 0.41.1(@astrojs/markdown-remark@7.2.0)(astro@7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(typescript@6.0.3)
+      '@astrojs/mdx': 7.0.0(@astrojs/markdown-satteri@0.3.2)(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)
+      '@astrojs/starlight': 0.41.1(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(astro@7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0))(supports-color@7.2.0)(typescript@6.0.3)
       '@types/hast': 3.0.4
       '@types/micromatch': 4.0.10
-      astro: 7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
+      astro: 7.0.4(@astrojs/markdown-remark@7.2.0(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.4.2)(yaml@2.9.0)
       github-slugger: 2.0.0
       hast-util-select: 6.0.4
       micromatch: 4.0.8
       rehype-parse: 9.0.1
       rehype-remark: 10.0.1
-      remark-gfm: 4.0.1
+      remark-gfm: 4.0.1(supports-color@7.2.0)
       remark-stringify: 11.0.0
       unified: 11.0.5
       unist-util-remove: 4.0.0
@@ -8573,10 +8540,6 @@ snapshots:
   which-pm-runs@1.1.0: {}
 
   which@1.3.1:
-    dependencies:
-      isexe: 2.0.0
-
-  which@2.0.2:
     dependencies:
       isexe: 2.0.0
 
