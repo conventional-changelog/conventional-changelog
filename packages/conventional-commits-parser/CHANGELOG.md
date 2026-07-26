@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.0...conventional-commits-parser-v7.1.1) (2026-07-26)
+
+### Bug Fixes
+
+* do not treat indented lines as footers ([#1513](https://github.com/conventional-changelog/conventional-changelog/issues/1513)) ([c01c3c4](https://github.com/conventional-changelog/conventional-changelog/commit/c01c3c477ea350cabb43eae13dab965a0dc54b29)), closes [#1512](https://github.com/conventional-changelog/conventional-changelog/issues/1512)
+
 ## [7.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.0.1...conventional-commits-parser-v7.1.0) (2026-07-09)
 
 ### Features
