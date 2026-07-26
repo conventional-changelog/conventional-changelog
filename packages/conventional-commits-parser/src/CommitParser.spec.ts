@@ -247,6 +247,48 @@ describe('conventional-commits-parser', () => {
         )
       })
 
+      it('should not treat indented `key: value` lines as footers (#1512)', () => {
+        const result = parser.parse(
+          'chore(deps): bump foo from 1.0.0 to 2.0.0\n'
+          + '\n'
+          + 'Bumps foo from 1.0.0 to 2.0.0.\n'
+          + '\n'
+          + '---\n'
+          + 'updated-dependencies:\n'
+          + '- dependency-name: "foo"\n'
+          + '  dependency-version: 2.0.0\n'
+          + '  dependency-type: direct:development\n'
+          + '...\n'
+          + '\n'
+          + 'Signed-off-by: dependabot[bot] <support@github.com>'
+        )
+
+        expect(result.body).toBe(
+          'Bumps foo from 1.0.0 to 2.0.0.\n'
+          + '\n'
+          + '---\n'
+          + 'updated-dependencies:\n'
+          + '- dependency-name: "foo"\n'
+          + '  dependency-version: 2.0.0\n'
+          + '  dependency-type: direct:development\n'
+          + '...'
+        )
+        expect(result.footer).toBe('Signed-off-by: dependabot[bot] <support@github.com>')
+      })
+
+      it('should parse `-field-` meta markers with the default field pattern', () => {
+        const result = parser.parse(
+          'My commit message\n'
+          + '-hash-\n'
+          + '9b1aff905b638aa274a5fc8f88662df446d374bd\n'
+          + '-git-tags-\n'
+          + 'v1.0.0'
+        )
+
+        expect(result.hash).toBe('9b1aff905b638aa274a5fc8f88662df446d374bd')
+        expect(result['git-tags']).toBe('v1.0.0')
+      })
+
       it('should deduplicate references when the same issue appears multiple times', () => {
         const commit = 'feat(ng-list): Allow custom separator\n'
           + 'Closes #123\nCloses #123\nFixes #123\n'
@@ -369,7 +411,7 @@ describe('conventional-commits-parser', () => {
             },
             {
               title: 'BREAKING AMEND',
-              text: 'An awesome breaking change\n\n\n```\ncode here\n```'
+              text: 'An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1'
             }
           ],
           references: [

@@ -98,7 +98,7 @@ The same options configure all three functions. Defaults come from the [`default
 | `mergeCorrespondence` | `string[]` | | Names for the merge pattern's capture groups. |
 | `revertPattern` | `RegExp` | `/^Revert\s"([\s\S]*)"\s*This reverts commit (\w*)\.?/` | Detects revert commits. |
 | `revertCorrespondence` | `string[]` | `['header', 'hash']` | Names for the revert pattern's capture groups. |
-| `fieldPattern` | `RegExp` | `/^-(.*?)-$/` | Matches custom `-field-` blocks in the body. |
+| `fieldPattern` | `RegExp` | `/^-(?=.*\w)(.*?)-$/` | Matches custom `-field-` blocks in the body. |
 | `noteKeywords` | `(string \| RegExp)[]` | `['BREAKING CHANGE', 'BREAKING-CHANGE']` | Keywords that start a note. Case-insensitive. |
 | `notesPattern` | `(text) => RegExp` | | Builds the note-matching regex from the note keywords. |
 | `issuePrefixes` | `(string \| RegExp)[]` | `['#']` | Prefixes that mark an issue reference. |
