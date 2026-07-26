@@ -152,6 +152,13 @@ describe('conventional-commits-parser', () => {
           expect('This fixes #1476.').not.toMatch(footerToken)
           expect('Reviewed by: Z').not.toMatch(footerToken)
         })
+
+        it('should not match indented `key: value` lines (#1512)', () => {
+          const { footerToken } = getParserRegexes()
+
+          expect('  dependency-version: 2.0.0').not.toMatch(footerToken)
+          expect('  dependency-type: direct:development').not.toMatch(footerToken)
+        })
       })
 
       describe('references', () => {

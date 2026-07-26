@@ -66,7 +66,9 @@ function getFooterTokenRegex(
     ? `|\\s+(?:${joinOr(issuePrefixes)})`
     : ''
 
-  return new RegExp(`^\\s*(?:BREAKING CHANGE|[\\w-]+)(?::\\s+${issuePrefixSeparator}).+`, 'i')
+  // Footers follow the git trailer convention: the token starts at the
+  // beginning of the line, indented `key: value` lines are not footers.
+  return new RegExp(`^(?:BREAKING CHANGE|[\\w-]+)(?::\\s+${issuePrefixSeparator}).+`, 'i')
 }
 
 /**
