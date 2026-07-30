@@ -39,8 +39,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0
       '@trigen/oxlint-config':
-        specifier: ^9.2.3
-        version: 9.2.3(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
+        specifier: ^10.0.0
+        version: 10.1.2(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
       '@trigen/scripts':
         specifier: ^9.0.0
         version: 9.0.0
@@ -1661,8 +1661,8 @@ packages:
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
-  '@trigen/oxlint-config@9.2.3':
-    resolution: {integrity: sha512-R2aSQXV3UBB7/B8yCnn+9jPQvfsdkdT3Wq8sSNW02xwMouH9dcZoytW3MiEcYZN16F2wR/t9una1vD3vpCgheg==}
+  '@trigen/oxlint-config@10.1.2':
+    resolution: {integrity: sha512-v5RsINtl8dYo7VJnfL0FiP13ITtWuY66Po89WX8N3+u1LkBGc9l5i64ZJUnfYP59zY3l3067cPJ7s+Feas7UzA==}
     engines: {node: '>=22'}
     peerDependencies:
       oxlint: '>=1.0.0'
@@ -4643,12 +4643,12 @@ snapshots:
 
   '@astrojs/internal-helpers@0.10.1':
     dependencies:
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
-      js-yaml: 4.2.0
-      picomatch: 4.0.4
+      js-yaml: 4.3.0
+      picomatch: 4.0.5
       retext-smartypants: 6.2.0
-      shiki: 4.3.0
+      shiki: 4.3.1
       smol-toml: 1.7.0
       unified: 11.0.5
 
@@ -5817,9 +5817,9 @@ snapshots:
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
-      picomatch: 4.0.4
+      picomatch: 4.0.5
 
-  '@trigen/oxlint-config@9.2.3(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
+  '@trigen/oxlint-config@10.1.2(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))':
     dependencies:
       '@stylistic/eslint-plugin': 5.10.0
       oxlint: 1.70.0(oxlint-tsgolint@0.23.0)
@@ -5857,7 +5857,7 @@ snapshots:
 
   '@types/estree-jsx@1.0.5':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   '@types/estree@1.0.8': {}
 
@@ -8510,7 +8510,7 @@ snapshots:
   satteri@0.9.4:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
     optionalDependencies:
