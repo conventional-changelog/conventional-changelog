@@ -36,8 +36,8 @@ importers:
         specifier: ^21.0.0
         version: 21.0.2(@types/node@22.16.2)(commitizen@4.3.1(@types/node@22.16.2)(typescript@7.0.2))(inquirer@12.7.0(@types/node@22.16.2)(oxlint-tsgolint@0.23.0))(typescript@7.0.2)
       '@trigen/oxlint':
-        specifier: ^9.1.0
-        version: 9.1.0
+        specifier: ^10.0.0
+        version: 10.1.1
       '@trigen/oxlint-config':
         specifier: ^9.2.3
         version: 9.2.3(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
@@ -1671,8 +1671,8 @@ packages:
       oxlint-tsgolint:
         optional: true
 
-  '@trigen/oxlint@9.1.0':
-    resolution: {integrity: sha512-oatwPW3/TiswgA03jE8bweFU3Z8c0zswuvjLMJOWM/xWD6cD7xMiHUJf06lkq1JfpSRdz+jTjaX6qSVbD2ICKw==}
+  '@trigen/oxlint@10.1.1':
+    resolution: {integrity: sha512-nEhnu68eJsfSw89FFRd2bP1LJuJpUuAXhT9srcTbq/hopQcOCZPc3cUEDspQeWaVpPm7ChO5Jb2fr2UeHHXMUA==}
     engines: {node: '>=22'}
 
   '@trigen/scripts@9.0.0':
@@ -4643,12 +4643,12 @@ snapshots:
 
   '@astrojs/internal-helpers@0.10.1':
     dependencies:
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
-      js-yaml: 4.2.0
-      picomatch: 4.0.4
+      js-yaml: 4.3.0
+      picomatch: 4.0.5
       retext-smartypants: 6.2.0
-      shiki: 4.3.0
+      shiki: 4.3.1
       smol-toml: 1.7.0
       unified: 11.0.5
 
@@ -5828,7 +5828,7 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  '@trigen/oxlint@9.1.0': {}
+  '@trigen/oxlint@10.1.1': {}
 
   '@trigen/scripts@9.0.0':
     dependencies:
@@ -5857,7 +5857,7 @@ snapshots:
 
   '@types/estree-jsx@1.0.5':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   '@types/estree@1.0.8': {}
 
@@ -8510,7 +8510,7 @@ snapshots:
   satteri@0.9.4:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
     optionalDependencies:
