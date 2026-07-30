@@ -42,8 +42,8 @@ importers:
         specifier: ^9.2.3
         version: 9.2.3(oxlint-tsgolint@0.23.0)(oxlint@1.70.0(oxlint-tsgolint@0.23.0))
       '@trigen/scripts':
-        specifier: ^9.0.0
-        version: 9.0.0
+        specifier: ^10.0.0
+        version: 10.1.1
       '@types/node':
         specifier: ^22.0.0
         version: 22.16.2
@@ -1675,8 +1675,8 @@ packages:
     resolution: {integrity: sha512-oatwPW3/TiswgA03jE8bweFU3Z8c0zswuvjLMJOWM/xWD6cD7xMiHUJf06lkq1JfpSRdz+jTjaX6qSVbD2ICKw==}
     engines: {node: '>=22'}
 
-  '@trigen/scripts@9.0.0':
-    resolution: {integrity: sha512-smerLGo2mzrvAZka5gwMa1c5m9zKJnt0qXxUOA3d6iOVdUuBD7fxRQhVWHyoNSFehuALLDwtNlnKACfCL6Fdrg==}
+  '@trigen/scripts@10.1.1':
+    resolution: {integrity: sha512-WbhrZPQAwnfuRVatVdSJ9Ea1zEQhRbcMZJrU1ZVwuBe1mSfXGZbTcPUCJNWQrj3fhoT73uV+ZRca11l6ziW4iQ==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -2016,10 +2016,6 @@ packages:
 
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-
-  argue-cli@2.1.0:
-    resolution: {integrity: sha512-dgojXfc4SiqmNwe38PnbT3zJasrz7g62dLAPD+VFT5RJb8W7LGRqw2IFd2ES+plnhsp4HYNJmFqMU1tCThdCww==}
-    engines: {node: '>=14.0.0'}
 
   argue-cli@3.1.0:
     resolution: {integrity: sha512-DhBpBfXL4SS2uC0N922MMajKR3CdrTG0u2or1PNYgXMsrSzViJrbtvT0nCLlLGUI0plam/ZZCs7aAauHtW9thw==}
@@ -3548,10 +3544,6 @@ packages:
       vite-plus:
         optional: true
 
-  p-limit@7.3.0:
-    resolution: {integrity: sha512-7cIXg/Z0M5WZRblrsOla88S4wAK+zOQQWeBYfV3qJuJXMr+LnbYjaadrFaS0JILfEDPVqHyKnZ1Z/1d6J9VVUw==}
-    engines: {node: '>=20'}
-
   p-limit@7.3.1:
     resolution: {integrity: sha512-0trZaiG7Y7kN/Egy9a8j47t9osC0Tch4PaIWd9yGF6bvmlk7muExRvGNYb8sXBwEKMoNKsbNN9P8EefuQekE4Q==}
     engines: {node: '>=20'}
@@ -4543,10 +4535,6 @@ packages:
     resolution: {integrity: sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=23}
 
-  yocto-queue@1.2.1:
-    resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
-    engines: {node: '>=12.20'}
-
   yocto-queue@1.2.2:
     resolution: {integrity: sha512-4LCcse/U2MHZ63HAJVE+v71o7yOdIe4cZ70Wpf8D/IyjDKYQLV5GD46B+hSTjJsvV5PztjvHoU580EftxjDZFQ==}
     engines: {node: '>=12.20'}
@@ -4643,12 +4631,12 @@ snapshots:
 
   '@astrojs/internal-helpers@0.10.1':
     dependencies:
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
-      js-yaml: 4.2.0
-      picomatch: 4.0.4
+      js-yaml: 4.3.0
+      picomatch: 4.0.5
       retext-smartypants: 6.2.0
-      shiki: 4.3.0
+      shiki: 4.3.1
       smol-toml: 1.7.0
       unified: 11.0.5
 
@@ -5830,12 +5818,12 @@ snapshots:
 
   '@trigen/oxlint@9.1.0': {}
 
-  '@trigen/scripts@9.0.0':
+  '@trigen/scripts@10.1.1':
     dependencies:
-      '@simple-libs/child-process-utils': 1.0.1
-      '@simple-libs/stream-utils': 1.2.0
-      argue-cli: 2.1.0
-      p-limit: 7.3.0
+      '@simple-libs/child-process-utils': 2.0.0
+      '@simple-libs/stream-utils': 2.0.0
+      argue-cli: 3.1.0
+      p-limit: 7.3.1
 
   '@tybys/wasm-util@0.10.3':
     dependencies:
@@ -5857,7 +5845,7 @@ snapshots:
 
   '@types/estree-jsx@1.0.5':
     dependencies:
-      '@types/estree': 1.0.8
+      '@types/estree': 1.0.9
 
   '@types/estree@1.0.8': {}
 
@@ -6145,8 +6133,6 @@ snapshots:
   arg@5.0.2: {}
 
   argparse@2.0.1: {}
-
-  argue-cli@2.1.0: {}
 
   argue-cli@3.1.0: {}
 
@@ -8098,10 +8084,6 @@ snapshots:
       '@oxlint/binding-win32-x64-msvc': 1.70.0
       oxlint-tsgolint: 0.23.0
 
-  p-limit@7.3.0:
-    dependencies:
-      yocto-queue: 1.2.1
-
   p-limit@7.3.1:
     dependencies:
       yocto-queue: 1.2.2
@@ -8510,7 +8492,7 @@ snapshots:
   satteri@0.9.4:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      '@types/hast': 3.0.4
+      '@types/hast': 3.0.5
       '@types/mdast': 4.0.4
       '@types/unist': 3.0.3
     optionalDependencies:
@@ -9159,8 +9141,6 @@ snapshots:
       string-width: 7.2.0
       y18n: 5.0.8
       yargs-parser: 22.0.0
-
-  yocto-queue@1.2.1: {}
 
   yocto-queue@1.2.2: {}
 
