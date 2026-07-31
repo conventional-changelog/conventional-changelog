@@ -276,6 +276,33 @@ describe('conventional-commits-parser', () => {
         expect(result.footer).toBe('Signed-off-by: dependabot[bot] <support@github.com>')
       })
 
+      it('should not treat note keywords stranded by word-wrap as notes (#1515)', () => {
+        const result = parser.parse(
+          'docs(repo): use commit subjects for 5.0.0 \n'
+          + 'breaking changes #DS-2683\n'
+          + '\n'
+          + '- rewrite the 5.0.0 breaking changes entries in the web, web-react, and\n'
+          + '  design-tokens changelogs to use the concise commit subject instead of\n'
+          + '  the verbose breaking-change footer taken from the commit body\n'
+          + '- remove leaked co-author trailers from the breaking-change notes\n'
+          + '- collapse duplicate entries produced by commits carrying multiple\n'
+          + '  breaking-change footers'
+        )
+
+        expect(result.notes).toEqual([])
+      })
+
+      it('should not treat note keywords without a colon as notes (#1515)', () => {
+        const result = parser.parse(
+          'feat: something\n'
+          + '\n'
+          + 'BREAKING CHANGE was discussed but this commit contains none.'
+        )
+
+        expect(result.notes).toEqual([])
+        expect(result.body).toBe('BREAKING CHANGE was discussed but this commit contains none.')
+      })
+
       it('should parse `-field-` meta markers with the default field pattern', () => {
         const result = parser.parse(
           'My commit message\n'
@@ -402,18 +429,23 @@ describe('conventional-commits-parser', () => {
         )).toEqual({
           merge: null,
           header: ' feat(scope): broadcast $destroy event on scope destruction ',
-          body: ' perf testing shows that in chrome this change adds 5-15% overhead \n\n when destroying 10k nested scopes where each scope has a $destroy listener ',
-          footer: '         BREAKING AMEND: some breaking change         \n\n   BREAKING AMEND: An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1',
-          notes: [
-            {
-              title: 'BREAKING AMEND',
-              text: 'some breaking change         '
-            },
-            {
-              title: 'BREAKING AMEND',
-              text: 'An awesome breaking change\n\n\n```\ncode here\n```\n\n    Kills   #1'
-            }
-          ],
+          // indented note keywords and footer tokens are not notes/footers,
+          // they stay in the body
+          body: ' perf testing shows that in chrome this change adds 5-15% overhead \n'
+            + '\n'
+            + ' when destroying 10k nested scopes where each scope has a $destroy listener \n'
+            + '         BREAKING AMEND: some breaking change         \n'
+            + '\n'
+            + '   BREAKING AMEND: An awesome breaking change\n'
+            + '\n'
+            + '\n'
+            + '```\n'
+            + 'code here\n'
+            + '```\n'
+            + '\n'
+            + '    Kills   #1',
+          footer: null,
+          notes: [],
           references: [
             {
               action: 'Kills',

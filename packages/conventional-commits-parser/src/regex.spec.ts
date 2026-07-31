@@ -83,6 +83,27 @@ describe('conventional-commits-parser', () => {
           expect(match).toBe(null)
         })
 
+        it('should not match keywords without a colon or with leading whitespace (#1515)', () => {
+          const { notes } = getParserRegexes({
+            noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE']
+          })
+
+          expect('breaking-change footers'.match(notes)).toBe(null)
+          expect('  breaking-change footers'.match(notes)).toBe(null)
+          expect('  BREAKING CHANGE: indented'.match(notes)).toBe(null)
+        })
+
+        it('should match keywords prefixed with a `* ` bullet (squash commits)', () => {
+          const { notes } = getParserRegexes({
+            noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE']
+          })
+          const match = '* BREAKING CHANGE: So important.'.match(notes)
+
+          expect(match?.[1]).toBe('BREAKING CHANGE')
+          expect(match?.[2]).toBe('So important.')
+          expect('* BREAKING CHANGE:'.match(notes)?.[2]).toBe('')
+        })
+
         it('should escape regex special chars when used inside `noteKeywords`', () => {
           const noteKeywordsSpecialChars = [
             '[1]',
