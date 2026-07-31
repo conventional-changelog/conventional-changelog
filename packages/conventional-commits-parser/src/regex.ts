@@ -27,7 +27,7 @@ function getNotesRegex(
   const noteKeywordsSelection = joinOr(noteKeywords)
 
   if (!notesPattern) {
-    return new RegExp(`^[\\s|*]*(${noteKeywordsSelection})[:\\s]+(.*)`, 'i')
+    return new RegExp(`^(?:\\*\\s+)?(${noteKeywordsSelection}):\\s*(.*)`, 'i')
   }
 
   return notesPattern(noteKeywordsSelection)
