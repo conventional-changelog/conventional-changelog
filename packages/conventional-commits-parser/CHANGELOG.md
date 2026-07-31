@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.1...conventional-commits-parser-v7.1.2) (2026-07-31)
+
+### Bug Fixes
+
+* require colon and line start for note keywords ([#1517](https://github.com/conventional-changelog/conventional-changelog/issues/1517)) ([92423a5](https://github.com/conventional-changelog/conventional-changelog/commit/92423a513920aff0b127b282af7cab7705ece374)), closes [#1515](https://github.com/conventional-changelog/conventional-changelog/issues/1515)
+
 ## [7.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.0...conventional-commits-parser-v7.1.1) (2026-07-26)
 
 ### Bug Fixes
