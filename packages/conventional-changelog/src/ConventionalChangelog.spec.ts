@@ -153,6 +153,17 @@ setups([
     testTools.exec('git tag v7.0.0')
     testTools.exec('git checkout master')
     testTools.exec('git merge feature3 -m"Merge branch \'feature3\'"')
+  },
+  () => { // 21
+    testTools.gitCommit('feat: prerelease commit')
+    testTools.exec('git tag v8.0.0-rc.1')
+    testTools.gitCommit('feat: stable release commit')
+    testTools.exec('git tag v8.0.0')
+  },
+  () => { // 22
+    testTools.gitCommit('feat: promoted to stable commit')
+    testTools.exec('git tag v9.0.0-rc.1')
+    testTools.exec('git tag v9.0.0')
   }
 ])
 
@@ -1008,6 +1019,50 @@ describe('conventional-changelog', () => {
       expect(chunks[0]).toContain('seventh commit')
       expect(chunks[1]).toContain('# [6.0.0]')
       expect(chunks[1]).toContain('sixth commit')
+    })
+
+    it('should not generate separate sections for unstable tags if `skipUnstable` is set', async () => {
+      preparing(21)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .loadPreset('angular')
+        .tags({
+          skipUnstable: true
+        })
+        .options({
+          releaseCount: 2
+        })
+        .write()
+      const chunks = await toArray(log)
+      const changelog = chunks.join('')
+
+      expect(changelog).not.toContain('8.0.0-rc.1')
+      expect(changelog).toContain('# [8.0.0]')
+      expect(changelog).toContain('prerelease commit')
+      expect(changelog).toContain('stable release commit')
+    })
+
+    it('should use stable tag for section if commit also has an unstable tag and `skipUnstable` is set', async () => {
+      preparing(22)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .loadPreset('angular')
+        .tags({
+          skipUnstable: true
+        })
+        .options({
+          releaseCount: 2
+        })
+        .write()
+      const chunks = await toArray(log)
+      const changelog = chunks.join('')
+
+      expect(changelog).not.toContain('9.0.0-rc.1')
+      expect(changelog).toContain('# [9.0.0]')
+      expect(changelog).toContain('compare/v8.0.0...v9.0.0')
+      expect(changelog).toContain('promoted to stable commit')
     })
 
     describe('finalizeContext', () => {

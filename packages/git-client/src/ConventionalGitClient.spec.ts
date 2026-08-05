@@ -221,6 +221,20 @@ describe('git-client', () => {
 
         expect(tags).toEqual(['same/3.1.0'])
       })
+
+      it('should not skip stable tags with build metadata', async () => {
+        testTools.writeFileSync('test15', '')
+        testTools.exec('git add --all && git commit -m"chore: build metadata"')
+        testTools.exec('git tag meta/1.0.0+build.1.2.3-foo')
+
+        const tagsStream = client.getSemverTags({
+          prefix: 'meta/',
+          skipUnstable: true
+        })
+        const tags = await toArray(tagsStream)
+
+        expect(tags).toEqual(['meta/1.0.0+build.1.2.3-foo'])
+      })
     })
 
     describe('getLastSemverTag', () => {

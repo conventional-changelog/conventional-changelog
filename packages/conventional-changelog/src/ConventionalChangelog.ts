@@ -45,6 +45,7 @@ import {
   guessNextTag,
   isUnreleasedVersion,
   versionTagRegex,
+  matchSemverTag,
   defaultCommitTransform,
   bindLogNamespace
 } from './utils.js'
@@ -173,10 +174,10 @@ export class ConventionalChangelog {
         const lastCommitHash = lastCommit ? lastCommit.hash : null
 
         if ((!context.currentTag || !context.previousTag) && keyCommit) {
-          const matches = keyCommit.gitTags?.match(versionTagRegex)
           const { currentTag } = context
 
-          context.currentTag = currentTag || matches?.[1] // currentTag || matches ? matches[1] : null
+          context.currentTag = currentTag
+            || matchSemverTag(keyCommit.gitTags, versionTagRegex, tag => semverTags.includes(tag))
 
           const index = context.currentTag
             ? semverTags.indexOf(context.currentTag)
