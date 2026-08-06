@@ -10,6 +10,7 @@ import type {
   GetCommitsParams,
   GetSemverTagsParams
 } from './types.js'
+import { isPrereleaseVersion } from './utils.js'
 import { GitClient } from './GitClient.js'
 
 /**
@@ -94,7 +95,6 @@ export class ConventionalGitClient extends GitClient {
       ...getTagsParams
     } = params
     const tagsStream = this.getTags(getTagsParams)
-    const unstableTagRegex = /\d+\.\d+\.\d+-.+/
     const cleanTag = clean
       ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
       : (tag: string) => tag
@@ -102,10 +102,6 @@ export class ConventionalGitClient extends GitClient {
     let tag: string | null
 
     for await (tag of tagsStream) {
-      if (skipUnstable && unstableTagRegex.test(tag)) {
-        continue
-      }
-
       if (prefix) {
         const isPrefixed = typeof prefix === 'string'
           ? tag.startsWith(prefix)
@@ -114,7 +110,7 @@ export class ConventionalGitClient extends GitClient {
         if (isPrefixed) {
           unprefixed = tag.replace(prefix, '')
 
-          if (semver.valid(unprefixed)) {
+          if (semver.valid(unprefixed) && !(skipUnstable && isPrereleaseVersion(unprefixed))) {
             tag = cleanTag(tag, unprefixed)
 
             if (tag) {
@@ -122,7 +118,7 @@ export class ConventionalGitClient extends GitClient {
             }
           }
         }
-      } else if (semver.valid(tag)) {
+      } else if (semver.valid(tag) && !(skipUnstable && isPrereleaseVersion(tag))) {
         tag = cleanTag(tag)
 
         if (tag) {
