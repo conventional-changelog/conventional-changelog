@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v8.1.0...conventional-changelog-v8.1.1) (2026-08-06)
+
+### Bug Fixes
+
+* do not generate sections for unstable tags when skipUnstable is set ([#1520](https://github.com/conventional-changelog/conventional-changelog/issues/1520)) ([41f708d](https://github.com/conventional-changelog/conventional-changelog/commit/41f708ddd02f6bf423f62f41999c30131975e046)), closes [#1519](https://github.com/conventional-changelog/conventional-changelog/issues/1519)
+
 ## [8.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v8.0.1...conventional-changelog-v8.1.0) (2026-07-09)
 
 ### Features
