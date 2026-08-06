@@ -26,10 +26,10 @@ export interface EmptyBumperRecommendation {
 export type BumperRecommendationResult = BumperRecommendation | EmptyBumperRecommendation
 
 export interface Preset {
-  whatBump(commits: Commit[]): Promise<WhatBumpResult> | WhatBumpResult
   tags?: GetSemverTagsParams
   commits?: GetCommitsParams
   parser?: ParserStreamOptions
+  whatBump(commits: Commit[]): Promise<WhatBumpResult> | WhatBumpResult
 }
 
 export type Logger = (source: string, messages: string | string[]) => void
