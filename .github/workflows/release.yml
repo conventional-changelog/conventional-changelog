@@ -1,5 +1,25 @@
 name: Release
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Force specific version
+        type: string
+      as:
+        description: Release type
+        type: choice
+        options:
+          - ''
+          - major
+          - minor
+          - patch
+          - prerelease
+      prerelease:
+        description: Pre-release identifier (e.g. alpha, beta)
+        type: string
+      by-project:
+        description: 'Per-package release options (JSON, e.g. {"pkg-name":{"as":"minor"}})'
+        type: string
   issue_comment:
     types: [created, deleted]
   push:
@@ -34,6 +54,10 @@ jobs:
         with:
           workflow: pull-request
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          bump-version: ${{ inputs.version }}
+          bump-as: ${{ inputs.as }}
+          bump-prerelease: ${{ inputs.prerelease }}
+          bump-by-project: ${{ inputs['by-project'] }}
   release:
     runs-on: ubuntu-latest
     name: Release
