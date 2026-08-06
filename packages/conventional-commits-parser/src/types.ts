@@ -43,10 +43,6 @@ export interface ParserOptions {
    */
   noteKeywords?: (string | RegExp)[]
   /**
-   * A function that takes `noteKeywordsSelection` and returns a `RegExp` to be matched against the notes.
-   */
-  notesPattern?(text: string): RegExp
-  /**
    * The prefixes of an issue. EG: In `gh-123` `gh-` is the prefix.
    */
   issuePrefixes?: (string | RegExp)[]
@@ -58,6 +54,10 @@ export interface ParserOptions {
    * Keywords to reference an issue. This value is case **insensitive**.
    */
   referenceActions?: (string | RegExp)[]
+  /**
+   * A function that takes `noteKeywordsSelection` and returns a `RegExp` to be matched against the notes.
+   */
+  notesPattern?(text: string): RegExp
 }
 
 export interface ParserStreamOptions extends ParserOptions {

@@ -25,8 +25,7 @@ export function stringify(obj: unknown) {
   const stack: unknown[] = []
   const keys: string[] = []
   let thisPos: number
-
-  function cycleReplacer(value: unknown) {
+  const cycleReplacer = (value: unknown) => {
     if (stack[0] === value) {
       return '[Circular ~]'
     }

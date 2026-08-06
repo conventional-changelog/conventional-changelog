@@ -411,7 +411,7 @@ describe('conventional-changelog-writer', () => {
             return {
               ...commit,
               version: '1.0.0'
-            } as typeof commit
+            }
           }
         }))) {
           chunk = chunk.toString()

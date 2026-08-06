@@ -97,19 +97,19 @@ export async function runProgram(
     }
   }
 
-  const options = parseOptions(flags as Record<string, unknown>)
+  const options = parseOptions(flags)
 
   if (options) {
     generator.options(options)
   }
 
-  const tagsOptions = parseTagsOptions(flags as Record<string, unknown>)
+  const tagsOptions = parseTagsOptions(flags)
 
   if (tagsOptions) {
     generator.tags(tagsOptions)
   }
 
-  const commitsOptions = parseCommitsOptions(flags as Record<string, unknown>)
+  const commitsOptions = parseCommitsOptions(flags)
 
   if (commitsOptions) {
     generator.commits(commitsOptions)
