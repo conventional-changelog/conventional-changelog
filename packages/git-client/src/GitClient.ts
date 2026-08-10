@@ -22,6 +22,9 @@ import {
 } from './utils.js'
 
 const SCISSOR = '------------------------ >8 ------------------------'
+// Marks the end of the options, so a value which starts with a dash
+// is never parsed as a git option. Unlike `--` it works for revisions too.
+const END_OF_OPTIONS = '--end-of-options'
 
 /**
  * Wrapper around Git CLI.
@@ -112,6 +115,7 @@ export class GitClient {
       merges && '--merges',
       merges === false && '--no-merges',
       firstParent && '--first-parent',
+      END_OF_OPTIONS,
       [from, to].filter(Boolean).join('..'),
       ...path ? ['--', ...toArray(path)] : []
     )
@@ -146,6 +150,7 @@ export class GitClient {
       '--date-order',
       all && '--all',
       since && `--since=${since instanceof Date ? since.toISOString() : since}`,
+      END_OF_OPTIONS,
       [from, to].filter(Boolean).join('..'),
       ...path ? ['--', ...toArray(path)] : []
     )
@@ -329,6 +334,7 @@ export class GitClient {
     let git = this.exec(
       'rev-parse',
       '--verify',
+      END_OF_OPTIONS,
       rev
     )
 
@@ -399,6 +405,7 @@ export class GitClient {
 
   /**
    * Create a new branch.
+   * Name is a value of the `-b` option, so it is never parsed as an option itself.
    * @param branch - Branch name.
    */
   async createBranch(branch: string) {
@@ -429,6 +436,7 @@ export class GitClient {
   async checkout(branch: string) {
     await this.exec(
       'checkout',
+      END_OF_OPTIONS,
       branch
     )
   }

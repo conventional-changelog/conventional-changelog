@@ -190,5 +190,41 @@ describe('git-client', () => {
         expect(await client.getLastTag()).toBe('v18.0.0')
       })
     })
+
+    describe('option-like arguments', () => {
+      const secretFile = 'secret.txt'
+      const secret = 'SUPER_SECRET_VALUE'
+      const pathspecFromFile = `--pathspec-from-file=${secretFile}`
+
+      beforeAll(() => {
+        testTools.writeFileSync(secretFile, secret)
+      })
+
+      it('should not let `checkout` read a file', async () => {
+        await expect(client.checkout(pathspecFromFile)).rejects.toThrow(
+          expect.objectContaining({
+            message: expect.not.stringContaining(secret)
+          })
+        )
+      })
+
+      it('should not let commits range become an option', async () => {
+        const commitsStream = client.getRawCommits({
+          from: '--max-count=1',
+          to: ''
+        })
+
+        await expect(toArray(commitsStream)).rejects.toThrow()
+      })
+
+      it('should not let tags range become an option', async () => {
+        const tagsStream = client.getTags({
+          from: '--max-count=1',
+          to: ''
+        })
+
+        await expect(toArray(tagsStream)).rejects.toThrow()
+      })
+    })
   })
 })
