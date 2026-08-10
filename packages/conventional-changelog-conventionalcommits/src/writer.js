@@ -1,4 +1,4 @@
-import { link } from '@conventional-changelog/template'
+import { createReferencesFormatter } from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import {
   findTypeEntry,
@@ -30,6 +30,7 @@ export function createWriterOpts(config) {
     ...config
   }
   const commitGroupOrder = finalConfig.types.map(t => t.section).filter(Boolean)
+  const formatReferences = createReferencesFormatter(finalConfig)
 
   return {
     template,
@@ -54,7 +55,8 @@ export function createWriterOpts(config) {
 
         return {
           ...note,
-          title: 'BREAKING CHANGES'
+          title: 'BREAKING CHANGES',
+          text: formatReferences(note.text, context)
         }
       })
 
@@ -78,35 +80,8 @@ export function createWriterOpts(config) {
       let { subject } = commit
 
       if (typeof subject === 'string') {
-        // Issue URLs.
-        const issueRegEx = `(${finalConfig.issuePrefixes.join('|')})([a-z0-9]+)`
-        const re = new RegExp(issueRegEx, 'g')
-
-        subject = subject.replace(re, (_, prefix, issue) => {
-          issues.push(prefix + issue)
-
-          const issueUrl = finalConfig.formatIssueUrl(context, {
-            issue,
-            prefix
-          })
-
-          return link(`${prefix}${issue}`, issueUrl)
-        })
-        // User URLs.
-        subject = subject.replace(/`[^`]*`|\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (match, user) => {
-          if (!user) {
-            return match
-          }
-
-          // TODO: investigate why this code exists.
-          if (user.includes('/')) {
-            return `@${user}`
-          }
-
-          const usernameUrl = finalConfig.formatUserUrl(context, user)
-
-          return link(`@${user}`, usernameUrl)
-        })
+        // Issue and user URLs.
+        subject = formatReferences(subject, context, issues)
       }
 
       // remove references that already appear in the subject

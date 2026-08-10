@@ -71,6 +71,14 @@ setups([
   },
   () => {
     testTools.gitCommit(['fix: replace `@nano_kit/router` with `@nano_kit/router2`'])
+  },
+  () => {
+    testTools.gitCommit([
+      'feat(api): drop legacy endpoints',
+      'BREAKING CHANGE: see #300 and ask @dlmr for details.',
+      'Already formatted: [#301](https://tracker.example/301).',
+      'Code span: `#302`.'
+    ])
   }
 ])
 
@@ -335,5 +343,33 @@ describe('conventional-changelog-angular', () => {
 
     expect(chunks[0]).toContain('`@nano_kit/router`')
     expect(chunks[0]).not.toContain('[@nano')
+  })
+
+  it('should format references in breaking change notes', async () => {
+    preparing(11)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('see [#300](https://github.com/conventional-changelog/conventional-changelog/issues/300)')
+    expect(chunks[0]).toContain('ask [@dlmr](https://github.com/dlmr) for details.')
+  })
+
+  it('should keep already formatted references in breaking change notes as is', async () => {
+    preparing(11)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('Already formatted: [#301](https://tracker.example/301).')
+    expect(chunks[0]).toContain('Code span: `#302`.')
+    expect(chunks[0]).not.toContain('https://github.com/conventional-changelog/conventional-changelog/issues/301')
+    expect(chunks[0]).not.toContain('https://github.com/conventional-changelog/conventional-changelog/issues/302')
   })
 })

@@ -48,7 +48,7 @@ generator.config(createPreset({ /* options */ }))
 | --- | --- | --- | --- |
 | `types` | `CommitType[]` | [default types](#types) | Commit types to recognize, the section each appears under, and its visibility. |
 | `ignoreCommits` | `RegExp` | | Skip commits whose message matches this pattern. |
-| `issuePrefixes` | `string[]` | `['#']` | Prefixes recognized as issue references and linkified in subjects. |
+| `issuePrefixes` | `string[]` | `['#']` | Prefixes recognized as issue references and linkified in subjects and breaking change notes. |
 | `scope` | `string \| string[]` | | Only include commits for the given scope(s) (or commits with no scope, unless `scopeOnly` is `true`); the scope is stripped from the output.|
 | `scopeOnly` | `boolean` | `false` | With `scope`, also exclude commits that have no scope. |
 | `preMajor` | `boolean` | `false` | Treat the project as pre-1.0 when recommending a version bump. |
