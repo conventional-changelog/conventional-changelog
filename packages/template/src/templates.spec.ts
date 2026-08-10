@@ -7,6 +7,7 @@ import {
 import {
   template,
   compareUrl,
+  noteTitle,
   headerPartial,
   preamblePartial,
   commitPartial,
@@ -34,6 +35,19 @@ describe('@conventional-changelog/template', () => {
   })
 
   describe('templates', () => {
+    describe('noteTitle', () => {
+      it('should merge breaking change keywords into a single title', () => {
+        expect(noteTitle('BREAKING CHANGE')).toBe('BREAKING CHANGES')
+        expect(noteTitle('BREAKING-CHANGE')).toBe('BREAKING CHANGES')
+        expect(noteTitle('breaking change')).toBe('BREAKING CHANGES')
+      })
+
+      it('should uppercase any other keyword', () => {
+        expect(noteTitle('Security')).toBe('SECURITY')
+        expect(noteTitle('SECURITY')).toBe('SECURITY')
+      })
+    })
+
     describe('compareUrl', () => {
       it('should encode tag names as URL path segments', () => {
         const log = compareUrl({

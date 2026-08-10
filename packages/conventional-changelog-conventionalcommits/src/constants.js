@@ -1,3 +1,5 @@
+export const BREAKING_HEADER_PATTERN = /^(\w*)(?:\((.*)\))?!: (.*)$/
+
 export const DEFAULT_COMMIT_TYPES = Object.freeze([
   {
     type: 'feat',

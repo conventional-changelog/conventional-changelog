@@ -1,6 +1,8 @@
+import { isBreakingNote } from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import {
   findTypeEntry,
+  getNotes,
   isTypeEffect,
   matchScope
 } from './utils.js'
@@ -19,9 +21,12 @@ export function createWhatBump(config = {}) {
       }
 
       const entry = findTypeEntry(types, commit)
+      // only breaking change notes affect the version,
+      // any other note keyword is just a changelog section
+      const breakingNotes = getNotes(commit).filter(isBreakingNote)
 
-      if (commit.notes.length > 0) {
-        breakings += commit.notes.length
+      if (breakingNotes.length > 0) {
+        breakings += breakingNotes.length
         level = 0
       } else
         if (entry && isTypeEffect(entry, 'bump')) {

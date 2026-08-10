@@ -2,6 +2,7 @@ import { createReferencesFormatter } from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import {
   findTypeEntry,
+  getNotes,
   isTypeEffect,
   matchScope
 } from './utils.js'
@@ -33,7 +34,7 @@ export function createWriterOpts(config) {
   const formatReferences = createReferencesFormatter(finalConfig)
 
   return {
-    template,
+    template: template.bind(finalConfig),
     headerPartial: headerPartial.bind(finalConfig),
     preamblePartial: preamblePartial.bind(finalConfig),
     commitPartial: commitPartial.bind(finalConfig),
@@ -50,18 +51,18 @@ export function createWriterOpts(config) {
         discard = false
       }
 
-      const notes = commit.notes.map((note) => {
+      const notes = getNotes(commit).map((note) => {
         discard = false
 
         return {
           ...note,
-          title: 'BREAKING CHANGES',
+          title: finalConfig.formatNoteTitle(context, note.title),
           text: formatReferences(note.text, context)
         }
       })
 
       if (
-        // breaking changes attached to any type are still displayed.
+        // notes attached to any type are still displayed.
         discard && (entry === undefined || isTypeEffect(entry, 'hidden'))
         || !matchScope(finalConfig, commit)
       ) {

@@ -1,6 +1,7 @@
 import type {
   FinalTemplateContext,
   CommitKnownProps,
+  CommitNote,
   CommitReference,
   TransformedCommit
 } from './types/index.js'
@@ -69,6 +70,33 @@ export function compareUrl<Commit extends CommitKnownProps = CommitKnownProps>(
     'compare',
     `${previousTag}...${currentTag}`
   )
+}
+
+export const BREAKING_CHANGE_KEYWORDS = ['BREAKING CHANGE', 'BREAKING-CHANGE']
+export const BREAKING_CHANGES_TITLE = 'BREAKING CHANGES'
+
+/**
+ * Renders a note group title.
+ * Breaking change keywords are merged into a single title,
+ * every other keyword is uppercased to group its spellings together.
+ * @param title - Note title as it was written in a commit.
+ * @returns Note group title.
+ */
+export function noteTitle(title: string) {
+  const upperCaseTitle = title.toUpperCase()
+
+  return BREAKING_CHANGE_KEYWORDS.includes(upperCaseTitle)
+    ? BREAKING_CHANGES_TITLE
+    : upperCaseTitle
+}
+
+/**
+ * Checks if a note is a breaking change note.
+ * @param note - Commit note.
+ * @returns Is it a breaking change note.
+ */
+export function isBreakingNote(note: CommitNote) {
+  return noteTitle(note.title) === BREAKING_CHANGES_TITLE
 }
 
 /**

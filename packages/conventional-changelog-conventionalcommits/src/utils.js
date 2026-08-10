@@ -1,3 +1,30 @@
+import {
+  BREAKING_CHANGE_KEYWORDS,
+  isBreakingNote
+} from '@conventional-changelog/template'
+import { BREAKING_HEADER_PATTERN } from './constants.js'
+
+/**
+ * Get commit notes with the breaking change declared by `!` in the header.
+ * The parser adds that note only if the commit has no notes at all,
+ * so a footer of any other keyword hides the breaking change.
+ * @param commit
+ * @returns Commit notes.
+ */
+export function getNotes(commit) {
+  if (commit.notes.some(isBreakingNote) || !BREAKING_HEADER_PATTERN.test(commit.header || '')) {
+    return commit.notes
+  }
+
+  return [
+    {
+      title: BREAKING_CHANGE_KEYWORDS[0],
+      text: commit.subject || ''
+    },
+    ...commit.notes
+  ]
+}
+
 function hasIntersection(a, b) {
   if (!a || !b) {
     return false

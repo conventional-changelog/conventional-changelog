@@ -1,5 +1,6 @@
 import {
   createReferencesFormatter,
+  noteTitle,
   referenceRepositoryUrl,
   url
 } from '@conventional-changelog/template'
@@ -47,7 +48,7 @@ export function createWriterOpts() {
 
         return {
           ...note,
-          title: 'BREAKING CHANGES',
+          title: noteTitle(note.title),
           text: formatReferences(note.text, context)
         }
       })
