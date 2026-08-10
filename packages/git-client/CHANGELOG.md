@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.1.1...git-client-v3.1.2) (2026-08-10)
+
+### Bug Fixes
+
+* end the options list before caller provided values ([#1535](https://github.com/conventional-changelog/conventional-changelog/issues/1535)) ([a44cd5a](https://github.com/conventional-changelog/conventional-changelog/commit/a44cd5aafa77298202d47bc7de07860418970088))
+
 ## [3.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.1.0...git-client-v3.1.1) (2026-08-07)
 
 ### Bug Fixes

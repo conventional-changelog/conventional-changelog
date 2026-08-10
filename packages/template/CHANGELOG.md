@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.2.1...template-v1.3.0) (2026-08-10)
+
+### Features
+
+* format references in breaking change notes ([#1529](https://github.com/conventional-changelog/conventional-changelog/issues/1529)) ([a8ef1ed](https://github.com/conventional-changelog/conventional-changelog/commit/a8ef1eda4526785460daa1f85a415eee326f291c)), closes [#631](https://github.com/conventional-changelog/conventional-changelog/issues/631)
+* group notes by their keyword ([#1533](https://github.com/conventional-changelog/conventional-changelog/issues/1533)) ([7be33d4](https://github.com/conventional-changelog/conventional-changelog/commit/7be33d4bac4917340063e2186477f3a121541734)), closes [#815](https://github.com/conventional-changelog/conventional-changelog/issues/815)
+
+### Bug Fixes
+
+* use current host url paths ([#1534](https://github.com/conventional-changelog/conventional-changelog/issues/1534)) ([612d368](https://github.com/conventional-changelog/conventional-changelog/commit/612d36822d3f0bf4c3041e85d19175faf55da7cf)), closes [#986](https://github.com/conventional-changelog/conventional-changelog/issues/986)
+
 ## [1.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.2.0...template-v1.2.1) (2026-07-04)
 
 ### Bug Fixes

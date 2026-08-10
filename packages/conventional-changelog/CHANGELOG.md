@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v8.1.1...conventional-changelog-v8.1.2) (2026-08-10)
+
+### Bug Fixes
+
+* use current host url paths ([#1534](https://github.com/conventional-changelog/conventional-changelog/issues/1534)) ([612d368](https://github.com/conventional-changelog/conventional-changelog/commit/612d36822d3f0bf4c3041e85d19175faf55da7cf)), closes [#986](https://github.com/conventional-changelog/conventional-changelog/issues/986)
+
 ## [8.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-v8.1.0...conventional-changelog-v8.1.1) (2026-08-06)
 
 ### Bug Fixes
