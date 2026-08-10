@@ -171,6 +171,24 @@ describe('conventional-changelog-angular', () => {
     expect(chunks.length).toBe(1)
   })
 
+  it('should use the host issue path for references in the subject', async () => {
+    preparing(2)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .context({
+        host: 'https://gitlab.com',
+        owner: 'b',
+        repository: 'a',
+        issue: '-/issues'
+      })
+      .config(preset())
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('[#133](https://gitlab.com/b/a/-/issues/133)')
+  })
+
   it('should remove the issues that already appear in the subject', async () => {
     preparing(3)
 

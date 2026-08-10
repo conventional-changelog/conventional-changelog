@@ -136,6 +136,7 @@ export class ConventionalChangelog {
     if (hostOptions) {
       finalContext.issue ||= hostOptions.issue
       finalContext.commit ||= hostOptions.commit
+      finalContext.compare ||= hostOptions.compare
     }
 
     if (isUnreleasedVersion(semverTags, finalContext.version) && options.outputUnreleased) {

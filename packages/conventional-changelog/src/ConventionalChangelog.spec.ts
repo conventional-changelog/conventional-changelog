@@ -625,7 +625,7 @@ describe('conventional-changelog', () => {
       expect(chunks.length).toBe(1)
 
       expect(chunks[0]).toContain('](bitbucket/b/a/commits/')
-      expect(chunks[0]).toContain('closes [#1](bitbucket/b/a/issue/1)')
+      expect(chunks[0]).toContain('closes [#1](bitbucket/b/a/issues/1)')
     })
 
     it('should read gitlab\'s host configs', async () => {
@@ -643,8 +643,29 @@ describe('conventional-changelog', () => {
 
       expect(chunks.length).toBe(1)
 
-      expect(chunks[0]).toContain('](gitlab/b/a/commit/')
-      expect(chunks[0]).toContain('closes [#1](gitlab/b/a/issues/1)')
+      expect(chunks[0]).toContain('](gitlab/b/a/-/commit/')
+      expect(chunks[0]).toContain('closes [#1](gitlab/b/a/-/issues/1)')
+    })
+
+    it('should use gitlab\'s comparison url', async () => {
+      preparing(5)
+
+      const log = new ConventionalChangelog(testTools.cwd)
+        .readPackage()
+        .loadPreset('angular')
+        .context({
+          host: 'gitlab',
+          owner: 'b',
+          repository: 'a',
+          version: '2.0.0',
+          linkCompare: true,
+          previousTag: 'v1.0.0',
+          currentTag: 'v2.0.0'
+        })
+        .write()
+      const chunks = await toArray(log)
+
+      expect(chunks[0]).toContain('(gitlab/b/a/-/compare/v1.0.0...v2.0.0)')
     })
 
     it('should transform the commit', async () => {

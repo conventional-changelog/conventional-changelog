@@ -52,6 +52,10 @@ export interface TemplateContext<Commit extends CommitKnownProps = CommitKnownPr
    */
   issue?: string
   /**
+   * Release comparison base url path.
+   */
+  compare?: string
+  /**
    * Repository name.
    * Eg: `'conventional-changelog-writer'`
    */

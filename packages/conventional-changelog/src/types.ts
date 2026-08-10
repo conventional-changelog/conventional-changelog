@@ -34,6 +34,7 @@ export type CommitTransformFunction = (commit: Commit, params: Params) => Partia
 export interface HostOptions {
   issue: string
   commit: string
+  compare: string
   referenceActions: string[]
   issuePrefixes: string[]
 }

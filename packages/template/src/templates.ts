@@ -67,7 +67,7 @@ export function compareUrl<Commit extends CommitKnownProps = CommitKnownProps>(
 
   return url(
     repositoryUrl(context),
-    'compare',
+    context.compare || 'compare',
     `${previousTag}...${currentTag}`
   )
 }

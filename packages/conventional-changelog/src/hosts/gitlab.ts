@@ -1,6 +1,8 @@
 export const gitlab = {
-  issue: 'issues',
-  commit: 'commit',
+  // GitLab removed the legacy urls without the `-/` separator in 16.0
+  issue: '-/issues',
+  commit: '-/commit',
+  compare: '-/compare',
   referenceActions: [
     'close',
     'closes',
