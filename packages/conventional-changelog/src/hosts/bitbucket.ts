@@ -1,6 +1,7 @@
 export const bitbucket = {
-  issue: 'issue',
+  issue: 'issues',
   commit: 'commits',
+  compare: 'compare',
   referenceActions: [
     'close',
     'closes',

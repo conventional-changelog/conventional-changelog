@@ -21,7 +21,7 @@ const formatReferences = createReferencesFormatter({
 
     // without a repository url there is nothing to link to
     return repositoryUrl
-      ? url(repositoryUrl, 'issues', reference.issue)
+      ? url(repositoryUrl, context.issue || 'issues', reference.issue)
       : ''
   },
   formatUserUrl: (context, user) => (context.host

@@ -18,7 +18,7 @@ export function formatNoteIcon(context, title) {
 export function formatIssueUrl(context, reference) {
   return url(
     referenceRepositoryUrl(context, reference),
-    'issues',
+    context.issue || 'issues',
     reference.issue
   )
 }

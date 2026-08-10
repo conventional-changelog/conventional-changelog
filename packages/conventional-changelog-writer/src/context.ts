@@ -120,6 +120,7 @@ export function getFinalContext<Commit extends CommitKnownProps = CommitKnownPro
   const finalContext: FinalTemplateContext<Commit> = {
     commit: 'commits',
     issue: 'issues',
+    compare: 'compare',
     date: options.formatDate(new Date()),
     headerPartial: options.headerPartial,
     preamblePartial: options.preamblePartial,
