@@ -99,6 +99,20 @@ setups([
       'BREAKING CHANGE: effect replaces hidden.',
       'Fixes #1476.'
     ])
+  },
+  () => {
+    testTools.gitCommit([
+      'feat(api): drop legacy endpoints',
+      'BREAKING CHANGE: EXAMPLE-100 describes the migration, ask @dlmr for details.',
+      'Already formatted: [EXAMPLE-101](https://tracker.example/EXAMPLE-101).',
+      'Plain url: https://tracker.example/EXAMPLE-102.',
+      'Code span: `EXAMPLE-103`.',
+      'Code block:',
+      '```js',
+      'migrate(\'EXAMPLE-104\')',
+      '```'
+    ])
+    testTools.gitCommit(['feat(api): keep `EXAMPLE-200` as is'])
   }
 ])
 
@@ -320,6 +334,60 @@ describe('conventional-changelog-conventionalcommits', () => {
     const chunks = await toArray(log)
 
     expect(chunks[0]).toContain('[EXAMPLE-1](https://example.com/browse/EXAMPLE-1)')
+  })
+
+  it('should format references in breaking change notes', async () => {
+    preparing(14)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset({
+        formatIssueUrl: (_context, reference) => `https://example.com/browse/${reference.prefix}${reference.issue}`,
+        issuePrefixes: ['EXAMPLE-']
+      }))
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('[EXAMPLE-100](https://example.com/browse/EXAMPLE-100) describes the migration')
+    expect(chunks[0]).toContain('ask [@dlmr](https://github.com/dlmr) for details.')
+  })
+
+  it('should keep already formatted references in breaking change notes as is', async () => {
+    preparing(14)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset({
+        formatIssueUrl: (_context, reference) => `https://example.com/browse/${reference.prefix}${reference.issue}`,
+        issuePrefixes: ['EXAMPLE-']
+      }))
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('Already formatted: [EXAMPLE-101](https://tracker.example/EXAMPLE-101).')
+    expect(chunks[0]).toContain('Plain url: https://tracker.example/EXAMPLE-102.')
+    expect(chunks[0]).toContain('Code span: `EXAMPLE-103`.')
+    expect(chunks[0]).toContain('migrate(\'EXAMPLE-104\')')
+    expect(chunks[0]).not.toContain('https://example.com/browse/EXAMPLE-101')
+    expect(chunks[0]).not.toContain('https://example.com/browse/EXAMPLE-102')
+    expect(chunks[0]).not.toContain('https://example.com/browse/EXAMPLE-103')
+    expect(chunks[0]).not.toContain('https://example.com/browse/EXAMPLE-104')
+  })
+
+  it('should keep references inside code spans in subject as is', async () => {
+    preparing(14)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset({
+        formatIssueUrl: (_context, reference) => `https://example.com/browse/${reference.prefix}${reference.issue}`,
+        issuePrefixes: ['EXAMPLE-']
+      }))
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('keep `EXAMPLE-200` as is')
+    expect(chunks[0]).not.toContain('https://example.com/browse/EXAMPLE-200')
   })
 
   it('should replace #[a-z0-9]+ with issue URL by default', async () => {
@@ -546,7 +614,7 @@ describe('conventional-changelog-conventionalcommits', () => {
       .write()
     const chunks = await toArray(log)
 
-    expect(chunks[0]).toMatch(/incredible new flag FIXES: #33\r?\n/)
+    expect(chunks[0]).toMatch(/incredible new flag FIXES: \[#33]\(https:\/\/github\.com\/conventional-changelog\/conventional-changelog\/issues\/33\)\r?\n/)
   })
 
   it('parses both default (Revert "<subject>") and custom (revert: <subject>) revert commits', async () => {

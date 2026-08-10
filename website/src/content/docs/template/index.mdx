@@ -83,6 +83,44 @@ compareUrl(context)    // 'https://github.com/acme/app/compare/v1.0.0...v1.1.0'
 | `referenceRepositoryUrl(context, reference)` | The base URL for an issue reference (which may live in another repo). |
 | `reference(commitReference)` | The reference text, e.g. `#42`. |
 
+## References formatter
+
+`createReferencesFormatter` builds a function which turns issue references and user mentions inside a free-form text — a commit subject or a breaking change note — into Markdown links. Already formatted Markdown is left untouched: inline and reference links, bare URLs, fenced code blocks and single-line code spans.
+
+```js
+import { createReferencesFormatter } from '@conventional-changelog/template'
+
+const formatReferences = createReferencesFormatter({
+  issuePrefixes: ['#'],
+  formatIssueUrl: (context, reference) => `https://tracker/${reference.prefix}${reference.issue}`,
+  formatUserUrl: (context, user) => `https://host/${user}`
+})
+
+formatReferences('see #1 by @dlmr', context)
+// 'see [#1](https://tracker/#1) by [@dlmr](https://host/dlmr)'
+
+formatReferences('`#1`', context)
+// '`#1`'
+```
+
+| Option | Description |
+| --- | --- |
+| `issuePrefixes` | Issue prefixes, strings or regexes. Strings are escaped. Prefixes are matched in the given order, so `['jira-', 'j']` — not the other way round. Without prefixes issue references are not formatted. |
+| `issuePattern` | Issue id pattern, `/[a-z0-9]+/` by default. |
+| `formatIssueUrl(context, reference)` | Issue URL. An empty result leaves the reference as is. |
+| `formatUserUrl(context, user)` | User URL. An empty result leaves the mention as is. |
+
+Regexes from the options are inlined into a single multiline regex, so their flags are ignored, `^` and `$` match line boundaries, and they should not contain capturing groups, backreferences or named groups.
+
+The formatter takes an optional third argument — an array to collect the formatted issue references into, which presets use to drop references already shown in the subject:
+
+```js
+const issues = []
+
+formatReferences('fix #1', context, issues)
+// issues: ['#1']
+```
+
 ## Default template and partials
 
 `template`, `headerPartial`, `preamblePartial`, `commitPartial`, and `footerPartial` are the render functions the [writer](/changelog-writer/api/#options) uses by default. Import them to reuse or wrap, or compose your own partial from the helpers:

@@ -1,4 +1,9 @@
 import {
+  createReferencesFormatter,
+  referenceRepositoryUrl,
+  url
+} from '@conventional-changelog/template'
+import {
   template,
   headerPartial,
   preamblePartial,
@@ -7,6 +12,21 @@ import {
 } from './templates.js'
 
 const COMMIT_HASH_LENGTH = 7
+const formatReferences = createReferencesFormatter({
+  issuePrefixes: ['#'],
+  issuePattern: /[0-9]+/,
+  formatIssueUrl: (context, reference) => {
+    const repositoryUrl = referenceRepositoryUrl(context, reference)
+
+    // without a repository url there is nothing to link to
+    return repositoryUrl
+      ? url(repositoryUrl, 'issues', reference.issue)
+      : ''
+  },
+  formatUserUrl: (context, user) => (context.host
+    ? url(context.host, user)
+    : '')
+})
 
 function compareNotes(a, b) {
   return (a.title || '').localeCompare(b.title || '')
@@ -27,7 +47,8 @@ export function createWriterOpts() {
 
         return {
           ...note,
-          title: 'BREAKING CHANGES'
+          title: 'BREAKING CHANGES',
+          text: formatReferences(note.text, context)
         }
       })
       let { type } = commit
@@ -64,37 +85,12 @@ export function createWriterOpts() {
       let { subject } = commit
 
       if (typeof subject === 'string') {
-        let url = context.repository
-          ? `${context.host}/${context.owner}/${context.repository}`
-          : context.repoUrl
-
-        if (url) {
-          url = `${url}/issues/`
-          // Issue URLs.
-          subject = subject.replace(/#([0-9]+)/g, (_, issue) => {
-            issues.push(issue)
-            return `[#${issue}](${url}${issue})`
-          })
-        }
-
-        if (context.host) {
-          // User URLs.
-          subject = subject.replace(/`[^`]*`|\B@([a-z0-9](?:-?[a-z0-9/]){0,38})/g, (match, username) => {
-            if (!username) {
-              return match
-            }
-
-            if (username.includes('/')) {
-              return `@${username}`
-            }
-
-            return `[@${username}](${context.host}/${username})`
-          })
-        }
+        // Issue and user URLs.
+        subject = formatReferences(subject, context, issues)
       }
 
       // remove references that already appear in the subject
-      const references = commit.references.filter(reference => !issues.includes(reference.issue))
+      const references = commit.references.filter(reference => !issues.includes(reference.prefix + reference.issue))
 
       return {
         notes,
