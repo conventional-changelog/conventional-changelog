@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v9.2.1...conventional-changelog-angular-v9.3.0) (2026-08-10)
+
+### Features
+
+* format references in breaking change notes ([#1529](https://github.com/conventional-changelog/conventional-changelog/issues/1529)) ([a8ef1ed](https://github.com/conventional-changelog/conventional-changelog/commit/a8ef1eda4526785460daa1f85a415eee326f291c)), closes [#631](https://github.com/conventional-changelog/conventional-changelog/issues/631)
+* group notes by their keyword ([#1533](https://github.com/conventional-changelog/conventional-changelog/issues/1533)) ([7be33d4](https://github.com/conventional-changelog/conventional-changelog/commit/7be33d4bac4917340063e2186477f3a121541734)), closes [#815](https://github.com/conventional-changelog/conventional-changelog/issues/815)
+
 ## [9.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-angular-v9.2.0...conventional-changelog-angular-v9.2.1) (2026-07-04)
 
 ### Bug Fixes
