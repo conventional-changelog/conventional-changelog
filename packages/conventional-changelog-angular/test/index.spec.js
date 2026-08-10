@@ -79,6 +79,9 @@ setups([
       'Already formatted: [#301](https://tracker.example/301).',
       'Code span: `#302`.'
     ])
+  },
+  () => {
+    testTools.gitCommit(['fix(api): patch a hole', 'SECURITY: fixed an XSS in the renderer'])
   }
 ])
 
@@ -358,6 +361,23 @@ describe('conventional-changelog-angular', () => {
     expect(chunks[0]).toContain('ask [@dlmr](https://github.com/dlmr) for details.')
   })
 
+  it('should group notes by their keyword', async () => {
+    preparing(12)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .commits({}, {
+        noteKeywords: ['BREAKING CHANGE', 'SECURITY']
+      })
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('### SECURITY')
+    expect(chunks[0]).toContain('### BREAKING CHANGES')
+    expect(chunks[0]).toContain('**api:** fixed an XSS in the renderer')
+  })
+
   it('should keep already formatted references in breaking change notes as is', async () => {
     preparing(11)
 
@@ -371,5 +391,46 @@ describe('conventional-changelog-angular', () => {
     expect(chunks[0]).toContain('Code span: `#302`.')
     expect(chunks[0]).not.toContain('https://github.com/conventional-changelog/conventional-changelog/issues/301')
     expect(chunks[0]).not.toContain('https://github.com/conventional-changelog/conventional-changelog/issues/302')
+  })
+
+  describe('whatBump', () => {
+    it('should bump major version for breaking change notes', () => {
+      const { whatBump } = preset()
+      const result = whatBump([
+        {
+          type: 'fix',
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'the config format has changed'
+          }]
+        }
+      ])
+
+      expect(result.level).toBe(0)
+      expect(result.reason).toBe('There is 1 BREAKING CHANGE and 0 features')
+    })
+
+    it('should not bump major version for other note keywords', () => {
+      const { whatBump } = preset()
+      const result = whatBump([
+        {
+          type: 'fix',
+          notes: [{
+            title: 'SECURITY',
+            text: 'fixed an XSS in the renderer'
+          }]
+        },
+        {
+          type: 'feat',
+          notes: [{
+            title: 'Security',
+            text: 'fixed a prototype pollution'
+          }]
+        }
+      ])
+
+      expect(result.level).toBe(1)
+      expect(result.reason).toBe('There are 0 BREAKING CHANGES and 1 features')
+    })
   })
 })

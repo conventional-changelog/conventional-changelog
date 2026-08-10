@@ -56,6 +56,8 @@ generator.config(createPreset({ /* options */ }))
 | `formatCommitUrl` | `(context, commit) => string` | git-host style | Build the URL for a commit hash. |
 | `formatCompareUrl` | `(context) => string` | git-host style | Build the version comparison URL in the release heading. |
 | `formatUserUrl` | `(context, user) => string` | git-host style | Build the URL for an `@user` mention. |
+| `formatNoteTitle` | `(context, title) => string` | see [note groups](#note-groups) | Build the heading for a note group. |
+| `formatNoteIcon` | `(context, title) => string` | `⚠` for breaking changes | Build the icon shown before a note group heading. |
 
 ## `types`
 
@@ -127,6 +129,45 @@ createPreset({ scope: ['api', 'core'] })
 ```
 
 A commit may declare multiple comma-separated scopes (`feat(api,core): …`); it matches if any of them is in `scope`.
+
+## Note groups
+
+Footers listed in the parser's [`noteKeywords`](/commits-parser/api/) become notes, and notes are grouped by their keyword above the commit sections. Out of the box the preset recognizes `BREAKING CHANGE` and `BREAKING-CHANGE`, but you can add your own:
+
+```js
+new ConventionalChangelog()
+  .config(createPreset())
+  .commits({}, { noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE', 'SECURITY'] })
+```
+
+```md
+### ⚠ BREAKING CHANGES
+
+* the config format has changed
+
+### SECURITY
+
+* fixed an XSS in the renderer
+```
+
+`BREAKING CHANGE` and `BREAKING-CHANGE` are merged into one group, and any other keyword becomes a group of its own, uppercased so that `SECURITY` and `Security` end up together. Groups are sorted by title.
+
+Both parts of the heading are configurable — the title and the icon before it:
+
+```js
+import { noteTitle } from '@conventional-changelog/template'
+
+createPreset({
+  formatNoteTitle: (context, title) => (title.toUpperCase() === 'SECURITY'
+    ? 'Security fixes'
+    : noteTitle(title)),
+  formatNoteIcon: (context, title) => (title === 'Security fixes' ? '🔒' : '⚠')
+})
+```
+
+`formatNoteTitle` receives the keyword as it was written in the commit and its result is what notes are grouped by, so returning the same title for two keywords merges them. `formatNoteIcon` receives that result. The default `formatNoteTitle` is exported as `noteTitle` from [`@conventional-changelog/template`](/template/).
+
+Only breaking changes affect the [recommended version bump](/version-bump/) — a `SECURITY` footer gets its own changelog section, but it does not make the release a major one.
 
 ## `preMajor`
 

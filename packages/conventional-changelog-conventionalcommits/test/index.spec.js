@@ -113,6 +113,11 @@ setups([
       '```'
     ])
     testTools.gitCommit(['feat(api): keep `EXAMPLE-200` as is'])
+  },
+  () => {
+    testTools.gitCommit(['fix(api): patch a hole', 'SECURITY: fixed an XSS in the renderer'])
+    testTools.gitCommit(['fix(api): patch another hole', 'Security: fixed a prototype pollution'])
+    testTools.gitCommit(['feat(api)!: remove the legacy client', 'SECURITY: dropped the vulnerable dependency'])
   }
 ])
 
@@ -388,6 +393,64 @@ describe('conventional-changelog-conventionalcommits', () => {
 
     expect(chunks[0]).toContain('keep `EXAMPLE-200` as is')
     expect(chunks[0]).not.toContain('https://example.com/browse/EXAMPLE-200')
+  })
+
+  it('should group notes by their keyword', async () => {
+    preparing(15)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .commits({}, {
+        noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE', 'SECURITY']
+      })
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('### SECURITY')
+    expect(chunks[0]).toContain('### ⚠ BREAKING CHANGES')
+    // both `SECURITY` and `Security` keywords are grouped together
+    expect(chunks[0]).toContain('**api:** fixed an XSS in the renderer')
+    expect(chunks[0]).toContain('**api:** fixed a prototype pollution')
+    expect(chunks[0]).not.toContain('### Security')
+  })
+
+  it('should keep the breaking change declared by `!` next to notes of other keywords', async () => {
+    preparing(15)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset())
+      .commits({}, {
+        noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE', 'SECURITY']
+      })
+      .write()
+    const chunks = await toArray(log)
+
+    // the breaking change is a note of its own, without a commit link
+    expect(chunks[0]).toMatch(/\* \*\*api:\*\* remove the legacy client\r?\n/)
+    expect(chunks[0]).toContain('**api:** dropped the vulnerable dependency')
+  })
+
+  it('should support custom note titles and icons', async () => {
+    preparing(15)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .config(preset({
+        formatNoteTitle: (_context, title) => (title.toUpperCase() === 'SECURITY'
+          ? 'Security fixes'
+          : 'BREAKING CHANGES'),
+        formatNoteIcon: (_context, title) => (title === 'Security fixes' ? '🔒' : '⚠')
+      }))
+      .commits({}, {
+        noteKeywords: ['BREAKING CHANGE', 'BREAKING-CHANGE', 'SECURITY']
+      })
+      .write()
+    const chunks = await toArray(log)
+
+    expect(chunks[0]).toContain('### 🔒 Security fixes')
+    expect(chunks[0]).toContain('### ⚠ BREAKING CHANGES')
   })
 
   it('should replace #[a-z0-9]+ with issue URL by default', async () => {
@@ -667,6 +730,65 @@ describe('conventional-changelog-conventionalcommits', () => {
     expect(chunks[0]).toContain('effect replaces hidden.')
     expect(chunks[0]).toContain(', closes [#1476](https://github.com/conventional-changelog/conventional-changelog/issues/1476)')
     expect(chunks[0]).not.toContain('Fixes #1476')
+  })
+
+  describe('whatBump', () => {
+    it('should bump major version for breaking change notes', () => {
+      const { whatBump } = preset()
+      const result = whatBump([
+        {
+          type: 'fix',
+          notes: [{
+            title: 'BREAKING CHANGE',
+            text: 'the config format has changed'
+          }]
+        }
+      ])
+
+      expect(result.level).toBe(0)
+      expect(result.reason).toBe('There is 1 BREAKING CHANGE and 0 features')
+    })
+
+    it('should not bump major version for other note keywords', () => {
+      const { whatBump } = preset()
+      const result = whatBump([
+        {
+          type: 'fix',
+          notes: [{
+            title: 'SECURITY',
+            text: 'fixed an XSS in the renderer'
+          }]
+        },
+        {
+          type: 'feat',
+          notes: [{
+            title: 'Security',
+            text: 'fixed a prototype pollution'
+          }]
+        }
+      ])
+
+      expect(result.level).toBe(1)
+      expect(result.reason).toBe('There are 0 BREAKING CHANGES and 1 features')
+    })
+
+    it('should bump major version for `!` next to notes of other keywords', () => {
+      const { whatBump } = preset()
+      const result = whatBump([
+        {
+          type: 'feat',
+          header: 'feat(api)!: remove the legacy client',
+          subject: 'remove the legacy client',
+          notes: [{
+            title: 'SECURITY',
+            text: 'dropped the vulnerable dependency'
+          }]
+        }
+      ])
+
+      expect(result.level).toBe(0)
+      expect(result.reason).toBe('There is 1 BREAKING CHANGE and 0 features')
+    })
   })
 
   describe('type effects', () => {

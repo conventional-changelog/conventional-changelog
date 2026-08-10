@@ -21,6 +21,8 @@ export interface PresetConfig {
   formatCommitUrl?: (context: Context, commit: Commit) => string
   formatCompareUrl?: (context: Context) => string
   formatUserUrl?: (context: Context, user: string) => string
+  formatNoteTitle?: (context: Context, title: string) => string
+  formatNoteIcon?: (context: Context, title: string) => string
 }
 
 export default function createPreset(config?: PresetConfig): {}

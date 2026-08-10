@@ -112,7 +112,7 @@ export function template(context) {
     each(
       noteGroups,
       group => segments(
-        heading(3, words('⚠', group.title)),
+        heading(3, words(this.formatNoteIcon(context, group.title), group.title)),
         list(
           group.notes,
           note => words(
