@@ -70,6 +70,7 @@
     "argue-cli": "catalog:",
     "conventional-changelog-preset-loader": "workspace:^",
     "conventional-changelog-writer": "workspace:^",
+    "conventional-commits-filter": "workspace:^",
     "conventional-commits-parser": "workspace:^",
     "fd-package-json": "^2.0.0"
   },

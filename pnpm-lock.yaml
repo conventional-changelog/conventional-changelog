@@ -113,6 +113,9 @@ importers:
       conventional-changelog-writer:
         specifier: workspace:^
         version: link:../conventional-changelog-writer
+      conventional-commits-filter:
+        specifier: workspace:^
+        version: link:../conventional-commits-filter
       conventional-commits-parser:
         specifier: workspace:^
         version: link:../conventional-commits-parser
