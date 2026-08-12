@@ -1,7 +1,7 @@
 {
   "name": "conventional-changelog",
   "type": "module",
-  "version": "8.1.2",
+  "version": "8.1.3",
   "description": "Generate a changelog from git metadata.",
   "author": {
     "name": "Steve Mao",
