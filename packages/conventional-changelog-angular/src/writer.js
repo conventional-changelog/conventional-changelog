@@ -1,4 +1,5 @@
 import {
+  createLegacyWriterGuard,
   createReferencesFormatter,
   noteTitle,
   referenceRepositoryUrl,
@@ -36,6 +37,7 @@ function compareNotes(a, b) {
 
 export function createWriterOpts() {
   return {
+    ...createLegacyWriterGuard('conventional-changelog-angular'),
     template,
     headerPartial,
     preamblePartial,

@@ -1,4 +1,7 @@
-import { createReferencesFormatter } from '@conventional-changelog/template'
+import {
+  createLegacyWriterGuard,
+  createReferencesFormatter
+} from '@conventional-changelog/template'
 import { DEFAULT_COMMIT_TYPES } from './constants.js'
 import {
   findTypeEntry,
@@ -34,6 +37,7 @@ export function createWriterOpts(config) {
   const formatReferences = createReferencesFormatter(finalConfig)
 
   return {
+    ...createLegacyWriterGuard('conventional-changelog-conventionalcommits'),
     template: template.bind(finalConfig),
     headerPartial: headerPartial.bind(finalConfig),
     preamblePartial: preamblePartial.bind(finalConfig),
