@@ -43,6 +43,6 @@
   },
   "devDependencies": {
     "conventional-changelog-writer": "workspace:^",
-    "conventional-changelog-writer-8": "npm:conventional-changelog-writer@^8.4.0"
+    "conventional-changelog-writer-8": "npm:conventional-changelog-writer@^9.0.0"
   }
 }
