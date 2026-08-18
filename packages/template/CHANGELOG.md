@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.3.0...template-v1.4.0) (2026-08-18)
+
+### Features
+
+* fail loudly when a preset is rendered by an old writer ([#1539](https://github.com/conventional-changelog/conventional-changelog/issues/1539)) ([341e3f0](https://github.com/conventional-changelog/conventional-changelog/commit/341e3f026b51c6913e5b217d6b9e1bffbddaac2f)), closes [#1495](https://github.com/conventional-changelog/conventional-changelog/issues/1495)
+
 ## [1.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.2.1...template-v1.3.0) (2026-08-10)
 
 ### Features
