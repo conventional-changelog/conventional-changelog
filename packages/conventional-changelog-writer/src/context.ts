@@ -22,6 +22,11 @@ export function getCommitGroups<Commit extends CommitKnownProps = CommitKnownPro
     commitsSort
   } = options
   const commitGroups: CommitGroup<Commit>[] = []
+  const initialGroups: Record<string, Commit[]> = {}
+
+  // Group keys come from commit messages, so they can be Object.prototype member names.
+  Object.setPrototypeOf(initialGroups, null)
+
   const commitGroupsObj = commits.reduce<Record<string, Commit[]>>((groups, commit) => {
     const key = commit[groupBy] as string || ''
 
@@ -32,7 +37,7 @@ export function getCommitGroups<Commit extends CommitKnownProps = CommitKnownPro
     }
 
     return groups
-  }, {})
+  }, initialGroups)
 
   Object.entries(commitGroupsObj).forEach(([title, commits]) => {
     if (commitsSort) {

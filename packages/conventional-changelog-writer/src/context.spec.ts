@@ -111,6 +111,57 @@ describe('conventional-changelog-writer', () => {
         ])
       })
 
+      it('should group by a value that is an `Object.prototype` member name', () => {
+        const commits = [
+          {
+            groupBy: '__proto__',
+            content: 'this is a __proto__',
+            notes: []
+          },
+          {
+            groupBy: '__proto__',
+            content: 'this is another __proto__',
+            notes: []
+          },
+          {
+            groupBy: 'constructor',
+            content: 'this is a constructor',
+            notes: []
+          }
+        ]
+        const commitGroups = getCommitGroups(commits, {
+          groupBy: 'groupBy'
+        })
+
+        expect(commitGroups).toEqual([
+          {
+            title: '__proto__',
+            commits: [
+              {
+                groupBy: '__proto__',
+                content: 'this is a __proto__',
+                notes: []
+              },
+              {
+                groupBy: '__proto__',
+                content: 'this is another __proto__',
+                notes: []
+              }
+            ]
+          },
+          {
+            title: 'constructor',
+            commits: [
+              {
+                groupBy: 'constructor',
+                content: 'this is a constructor',
+                notes: []
+              }
+            ]
+          }
+        ])
+      })
+
       it('should group and sort groups', () => {
         const commitGroups = getCommitGroups(commits, {
           groupBy: 'groupBy',
