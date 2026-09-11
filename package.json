@@ -47,7 +47,7 @@
     "@trigen/oxlint-config": "^10.1.2",
     "@trigen/scripts": "^10.1.1",
     "@types/node": "^22.0.0",
-    "@vitest/coverage-v8": "^4.0.0",
+    "@vitest/coverage-v8": "^5.0.0",
     "better-than-before": "^1.0.0",
     "clean-publish": "^5.0.0",
     "commitizen": "^4.3.0",
@@ -61,6 +61,6 @@
     "tsm": "^2.3.0",
     "typescript": "^7.0.2",
     "vite": "^8.0.0",
-    "vitest": "^4.0.0"
+    "vitest": "^5.0.0"
   }
 }
