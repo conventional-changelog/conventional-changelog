@@ -25,4 +25,13 @@ export interface PresetConfig {
   formatNoteIcon?: (context: Context, title: string) => string
 }
 
+export const DEFAULT_COMMIT_TYPES: readonly Readonly<CommitType>[]
+
+export function formatNoteTitle(context: Context, title: string): string
+export function formatNoteIcon(context: Context, title: string): string
+export function formatIssueUrl(context: Context, reference: Reference): string
+export function formatCommitUrl(context: Context, commit: Commit): string
+export function formatCompareUrl(context: Context): string
+export function formatUserUrl(context: Context, user: string): string
+
 export default function createPreset(config?: PresetConfig): {}
