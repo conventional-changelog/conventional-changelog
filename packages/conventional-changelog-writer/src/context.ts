@@ -35,7 +35,8 @@ export function getCommitGroups<Commit extends CommitKnownProps = CommitKnownPro
     }
 
     return groups
-  }, {})
+  // oxlint-disable-next-line typescript/no-unsafe-argument
+  }, Object.create(null))
 
   Object.entries(commitGroupsObj).forEach(([title, commits]) => {
     if (commitsSort) {
