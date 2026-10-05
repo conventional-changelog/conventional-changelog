@@ -12,10 +12,10 @@ allowBuilds:
   sharp: true
   simple-git-hooks: true
 minimumReleaseAgeExclude:
-  - '@simple-libs/hosted-git-info@2.0.0'
-  - '@simple-libs/normalize-package-data@1.0.0'
-  - '@simple-libs/child-process-utils@2.0.0'
-  - '@simple-libs/stream-utils@2.0.0'
+  # Own packages are taken right after they are published, younger than the day pnpm waits by default
+  - '@simple-libs/*'
+  - '@trigen/*'
+  - argue-cli
   - astro@7.0.4
   - '@typescript/typescript-aix-ppc64@7.0.2'
   - '@typescript/typescript-darwin-arm64@7.0.2'
@@ -38,4 +38,3 @@ minimumReleaseAgeExclude:
   - '@typescript/typescript-win32-arm64@7.0.2'
   - '@typescript/typescript-win32-x64@7.0.2'
   - typescript@7.0.2
-  - argue-cli@3.1.0

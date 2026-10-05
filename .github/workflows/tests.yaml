@@ -15,11 +15,11 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
+          version: 12
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: .tool-versions
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
@@ -34,11 +34,11 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
+          version: 12
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: .tool-versions
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
@@ -46,18 +46,25 @@ jobs:
         run: pnpm lint
   unit:
     runs-on: ubuntu-latest
-    name: unit
+    name: unit (${{ matrix.node-version || '.tool-versions' }})
+    strategy:
+      matrix:
+        # The least Node.js the packages declare, and the one the repository is developed on
+        include:
+          - node-version: 22
+          - node-version-file: .tool-versions
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
+          version: 12
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: ${{ matrix.node-version }}
+          node-version-file: ${{ matrix.node-version-file }}
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
@@ -65,8 +72,10 @@ jobs:
       - run: git config --global user.email 'dummy@example.org'
       - name: Run tests
         run: pnpm test:unit
+      # One upload per commit, from the leg of the version the repository is developed on
       - name: Collect coverage
         uses: coverallsapp/github-action@main
+        if: success() && matrix.node-version-file
         with:
           flag-name: actions linux
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -81,11 +90,11 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 11
+          version: 12
       - name: Install Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: .tool-versions
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install

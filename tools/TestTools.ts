@@ -69,20 +69,28 @@ export class TestTools {
     })
   }
 
-  fork(script: string, args: string[] = [], options: Parameters<typeof spawn>[2] = {}) {
+  fork(script: string, args: string[] = [], options: Parameters<typeof spawn>[2] & { stdinFile?: string } = {}) {
+    const {
+      stdinFile,
+      ...spawnOptions
+    } = options
+
     return new Promise<{
       stdout: string
       stderr: string
       exitCode: number | null
     }>((resolve, reject) => {
+      // A plain descriptor, closed as soon as the child has its own copy:
+      // Node.js 26 throws on a FileHandle that is left to the garbage collector
+      const stdin = stdinFile ? fs.openSync(stdinFile, 'r') : null
       const finalOptions = {
         cwd: this.cwd,
         stdio: [
-          null,
+          stdin,
           null,
           null
         ],
-        ...options
+        ...spawnOptions
       }
       const nodeArgs = [
         '--no-warnings',
@@ -94,6 +102,11 @@ export class TestTools {
         script,
         ...args
       ], finalOptions)
+
+      if (stdin !== null) {
+        fs.closeSync(stdin)
+      }
+
       let stdout = ''
       let stderr = ''
       let exitCode = null
