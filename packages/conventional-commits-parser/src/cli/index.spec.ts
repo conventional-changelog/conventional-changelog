@@ -1,4 +1,3 @@
-import fs from 'fs/promises'
 import path from 'path'
 import {
   describe,
@@ -123,12 +122,7 @@ describe('conventional-commits-parser', () => {
 
     it('should work if it is not a tty', async () => {
       const { stdout } = await testTools.fork(CLI_PATH, [], {
-        stdio: [
-          (await fs.open(path.join(FIXTURES_PATH, 'log1.txt'), 'r')).fd,
-          null,
-          null,
-          'ipc'
-        ]
+        stdinFile: path.join(FIXTURES_PATH, 'log1.txt')
       })
 
       expect(stdout).toContain('"type":"feat","scope":"ngMessages","subject":"provide support for dynamic message resolution"')
@@ -136,12 +130,7 @@ describe('conventional-commits-parser', () => {
 
     it('should separate if it is not a tty', async () => {
       const { stdout } = await testTools.fork(CLI_PATH, ['-s', '==='], {
-        stdio: [
-          (await fs.open(path.join(FIXTURES_PATH, 'log2.txt'), 'r')).fd,
-          null,
-          null,
-          'ipc'
-        ]
+        stdinFile: path.join(FIXTURES_PATH, 'log2.txt')
       })
 
       expect(stdout).toContain('"type":"docs","scope":"ngMessageExp","subject":"split ngMessage docs up to show its alias more clearly"')
@@ -150,12 +139,7 @@ describe('conventional-commits-parser', () => {
 
     it('should error if it is not a tty and commit cannot be parsed', async () => {
       const { stderr } = await testTools.fork(CLI_PATH, [], {
-        stdio: [
-          (await fs.open(path.join(FIXTURES_PATH, 'bad_commit.txt'), 'r')).fd,
-          null,
-          null,
-          'ipc'
-        ]
+        stdinFile: path.join(FIXTURES_PATH, 'bad_commit.txt')
       })
 
       expect(stderr).toContain('TypeError: Expected a raw commit\n')
