@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.0](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.1.2...git-client-v3.2.0) (2026-10-05)
+
+### Features
+
+* replace `semver` with `verkit` ([#1555](https://github.com/conventional-changelog/conventional-changelog/issues/1555)) ([96d685e](https://github.com/conventional-changelog/conventional-changelog/commit/96d685e482272237b00713fb7e9ce5f3fdc755fc))
+
 ## [3.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/git-client-v3.1.1...git-client-v3.1.2) (2026-08-10)
 
 ### Bug Fixes

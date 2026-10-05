@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.3.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v9.2.1...conventional-changelog-writer-v9.3.0) (2026-10-05)
+
+### Features
+
+* replace `semver` with `verkit` ([#1555](https://github.com/conventional-changelog/conventional-changelog/issues/1555)) ([96d685e](https://github.com/conventional-changelog/conventional-changelog/commit/96d685e482272237b00713fb7e9ce5f3fdc755fc))
+
+### Bug Fixes
+
+* don't crash on a commit type named after an Object.prototype member ([#1559](https://github.com/conventional-changelog/conventional-changelog/issues/1559)) ([f05b2ec](https://github.com/conventional-changelog/conventional-changelog/commit/f05b2ec620d294cc27b37b262379c86ecc9746ec)), closes [#1544](https://github.com/conventional-changelog/conventional-changelog/issues/1544)
+
 ## [9.2.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer-v9.2.0...conventional-changelog-writer-v9.2.1) (2026-08-10)
 
 ### Bug Fixes

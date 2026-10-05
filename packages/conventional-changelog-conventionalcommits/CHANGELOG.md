@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.4.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v10.4.0...conventional-changelog-conventionalcommits-v10.4.1) (2026-10-05)
+
+### Bug Fixes
+
+* declare DEFAULT_COMMIT_TYPES and format function exports ([#1552](https://github.com/conventional-changelog/conventional-changelog/issues/1552)) ([4ba1e91](https://github.com/conventional-changelog/conventional-changelog/commit/4ba1e91708fbbf6150d6bd8874ea3d08954fb0c9))
+
 ## [10.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-conventionalcommits-v10.3.0...conventional-changelog-conventionalcommits-v10.4.0) (2026-08-18)
 
 ### Features

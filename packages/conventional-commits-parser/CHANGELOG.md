@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.2...conventional-commits-parser-v7.1.3) (2026-10-05)
+
+### Bug Fixes
+
+* match reference actions as whole words ([#1557](https://github.com/conventional-changelog/conventional-changelog/issues/1557)) ([657c5dd](https://github.com/conventional-changelog/conventional-changelog/commit/657c5dd697283c337c4657dd96c1eeec9e35002f))
+* parse reference actions of footers followed by a colon ([#1558](https://github.com/conventional-changelog/conventional-changelog/issues/1558)) ([a06cee8](https://github.com/conventional-changelog/conventional-changelog/commit/a06cee83ef8498f55c002b80d22d54ea0a24aeb1))
+
 ## [7.1.2](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.1...conventional-commits-parser-v7.1.2) (2026-07-31)
 
 ### Bug Fixes
