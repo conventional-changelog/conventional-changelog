@@ -63,6 +63,9 @@ jobs:
     name: Release
     needs: check
     if: needs.check.outputs.workflow == 'release'
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
@@ -75,7 +78,6 @@ jobs:
         with:
           node-version-file: .tool-versions
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: pnpm install
       - name: Release
@@ -83,4 +85,3 @@ jobs:
         with:
           workflow: release
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          npm-token: ${{ secrets.NPM_TOKEN }}
