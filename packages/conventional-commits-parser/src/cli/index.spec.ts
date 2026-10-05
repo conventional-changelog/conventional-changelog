@@ -95,6 +95,14 @@ describe('conventional-commits-parser', () => {
           prefix: '#'
         },
         {
+          action: 'Close',
+          owner: null,
+          repository: null,
+          issue: '10000',
+          raw: ', Closes #10000',
+          prefix: '#'
+        },
+        {
           action: null,
           issue: '13233',
           owner: null,

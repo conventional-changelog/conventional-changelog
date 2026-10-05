@@ -87,6 +87,38 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should match reference actions as whole words', () => {
+        const commit = 'feat: add prefix #12 support\n\nCloses #1 and fixups #2'
+        const result = parser.parse(commit)
+
+        expect(result.references).toEqual([
+          {
+            action: null,
+            issue: '12',
+            owner: null,
+            prefix: '#',
+            raw: 'feat: add prefix #12',
+            repository: null
+          },
+          {
+            action: 'Closes',
+            issue: '1',
+            owner: null,
+            prefix: '#',
+            raw: '#1',
+            repository: null
+          },
+          {
+            action: 'Closes',
+            issue: '2',
+            owner: null,
+            prefix: '#',
+            raw: ' and fixups #2',
+            repository: null
+          }
+        ])
+      })
+
       it('should stop note text before reference footer ending with a period', () => {
         const commit = 'feat!: support type effects\n'
           + '\n'

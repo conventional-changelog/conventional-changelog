@@ -55,8 +55,11 @@ function getReferencesRegex(
   }
 
   const joinedKeywords = joinOr(referenceActions)
+  // Keywords are whole words: `prefix #1` has no `fix` action,
+  // and `fixups` does not end the references of the previous keyword.
+  const nextKeyword = `(?<!\\w)(?:${joinedKeywords})(?!\\w)`
 
-  return new RegExp(`(${joinedKeywords})(?:\\s+(.*?))(?=(?:${joinedKeywords})|$)`, 'gi')
+  return new RegExp(`(?<!\\w)(${joinedKeywords})(?:\\s+(.*?))(?=${nextKeyword}|$)`, 'gi')
 }
 
 function getFooterTokenRegex(
