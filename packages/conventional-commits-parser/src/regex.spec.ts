@@ -273,6 +273,23 @@ describe('conventional-commits-parser', () => {
           expect(match?.[2]).toBe('bug #4')
         })
 
+        it('should not match keywords inside words', () => {
+          const { references } = getParserRegexes({
+            referenceActions: ['fix', 'resolved']
+          })
+
+          expect('prefix #1'.match(references)).toBe(null)
+          expect('unresolved #2'.match(references)).toBe(null)
+        })
+
+        it('should not stop at words starting with a keyword', () => {
+          const { references } = getParserRegexes({
+            referenceActions: ['Closes', 'fix']
+          })
+
+          expect('Closes #1 and fixups #2'.match(references)).toEqual(['Closes #1 and fixups #2'])
+        })
+
         it('should reference an issue without an action', () => {
           const { references } = getParserRegexes()
           const body = 'gh-1, prefix-3, Closes gh-6'
