@@ -110,11 +110,15 @@ export class CommitParser {
   }
 
   private parseReferences(
-    input: string
+    input: string,
+    isFooterToken = false
   ) {
     const { regexes } = this
-    const regex = input.match(regexes.references)
-      ? regexes.references
+    const referencesRegex = isFooterToken
+      ? regexes.footerReferences
+      : regexes.references
+    const regex = input.match(referencesRegex)
+      ? referencesRegex
       : /()(.+)/gi
     const references: CommitReference[] = []
     let matches: RegExpExecArray | null
@@ -275,7 +279,7 @@ export class CommitParser {
         isFooterToken = regexes.footerToken.test(this.currentLine())
 
         commit.references.push(
-          ...this.parseReferences(this.currentLine())
+          ...this.parseReferences(this.currentLine(), isFooterToken)
         )
 
         if (!isFooterToken) {
@@ -310,7 +314,7 @@ export class CommitParser {
     const isStillBody = !isFooterToken && isBody
 
     commit.references.push(
-      ...this.parseReferences(this.currentLine())
+      ...this.parseReferences(this.currentLine(), isFooterToken)
     )
 
     if (isStillBody) {

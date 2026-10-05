@@ -119,6 +119,61 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should parse reference actions of footers followed by a colon (#1550)', () => {
+        const commit = 'feat: add Polish language\n\nCloses #123\nCloses: #456\nFixes: owner/repo#7\nRefs: #4'
+        const result = parser.parse(commit)
+
+        expect(result.references).toEqual([
+          {
+            action: 'Closes',
+            issue: '123',
+            owner: null,
+            prefix: '#',
+            raw: '#123',
+            repository: null
+          },
+          {
+            action: 'Closes',
+            issue: '456',
+            owner: null,
+            prefix: '#',
+            raw: '#456',
+            repository: null
+          },
+          {
+            action: 'Fixes',
+            issue: '7',
+            owner: 'owner',
+            prefix: '#',
+            raw: 'owner/repo#7',
+            repository: 'repo'
+          },
+          {
+            action: null,
+            issue: '4',
+            owner: null,
+            prefix: '#',
+            raw: 'Refs: #4',
+            repository: null
+          }
+        ])
+      })
+
+      it('should not take the type of a header for a reference action', () => {
+        const result = parser.parse('fix: crash in #123')
+
+        expect(result.references).toEqual([
+          {
+            action: null,
+            issue: '123',
+            owner: null,
+            prefix: '#',
+            raw: 'fix: crash in #123',
+            repository: null
+          }
+        ])
+      })
+
       it('should stop note text before reference footer ending with a period', () => {
         const commit = 'feat!: support type effects\n'
           + '\n'

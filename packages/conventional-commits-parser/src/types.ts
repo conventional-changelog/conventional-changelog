@@ -71,6 +71,7 @@ export interface ParserRegexes {
   notes: RegExp
   referenceParts: RegExp
   references: RegExp
+  footerReferences: RegExp
   footerToken: RegExp
   mentions: RegExp
   url: RegExp
