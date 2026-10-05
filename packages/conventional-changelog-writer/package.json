@@ -60,9 +60,6 @@
     "@simple-libs/stream-utils": "catalog:",
     "argue-cli": "catalog:",
     "conventional-commits-filter": "workspace:^",
-    "semver": "catalog:"
-  },
-  "devDependencies": {
-    "@types/semver": "catalog:"
+    "verkit": "catalog:"
   }
 }

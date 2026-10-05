@@ -4,7 +4,11 @@ import type {
   parseCommits
 } from 'conventional-commits-parser'
 import type { filterRevertedCommits } from 'conventional-commits-filter'
-import semver from 'semver'
+import {
+  clean as cleanVersion,
+  compareReversed,
+  isValid
+} from 'verkit'
 import { firstFromStream } from '@simple-libs/stream-utils'
 import type {
   GetCommitsParams,
@@ -96,7 +100,7 @@ export class ConventionalGitClient extends GitClient {
     } = params
     const tagsStream = this.getTags(getTagsParams)
     const cleanTag = clean
-      ? (tag: string, unprefixed?: string) => semver.clean(unprefixed || tag)
+      ? (tag: string, unprefixed?: string) => cleanVersion(unprefixed || tag)
       : (tag: string) => tag
     let unprefixed: string
     let tag: string | null
@@ -110,7 +114,7 @@ export class ConventionalGitClient extends GitClient {
         if (isPrefixed) {
           unprefixed = tag.replace(prefix, '')
 
-          if (semver.valid(unprefixed) && !(skipUnstable && isPrereleaseVersion(unprefixed))) {
+          if (isValid(unprefixed) && !(skipUnstable && isPrereleaseVersion(unprefixed))) {
             tag = cleanTag(tag, unprefixed)
 
             if (tag) {
@@ -118,7 +122,7 @@ export class ConventionalGitClient extends GitClient {
             }
           }
         }
-      } else if (semver.valid(tag) && !(skipUnstable && isPrereleaseVersion(tag))) {
+      } else if (isValid(tag) && !(skipUnstable && isPrereleaseVersion(tag))) {
         tag = cleanTag(tag)
 
         if (tag) {
@@ -157,6 +161,6 @@ export class ConventionalGitClient extends GitClient {
       return null
     }
 
-    return semverTags.sort(semver.rcompare)[0] || null
+    return semverTags.sort(compareReversed)[0] || null
   }
 }

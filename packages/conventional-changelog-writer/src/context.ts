@@ -7,7 +7,10 @@ import type {
   TemplateContext,
   TransformedCommit
 } from '@conventional-changelog/template'
-import semver from 'semver'
+import {
+  getPatch,
+  isValid
+} from 'verkit'
 import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 import type { FinalOptions } from './types/index.js'
 import { stringify } from './utils.js'
@@ -185,8 +188,8 @@ export async function getTemplateContext<Commit extends CommitKnownProps = Commi
     templateContext.date = keyCommit.committerDate
   }
 
-  if (templateContext.version && semver.valid(templateContext.version)) {
-    templateContext.isPatch ||= semver.patch(templateContext.version) !== 0
+  if (typeof templateContext.version === 'string' && isValid(templateContext.version)) {
+    templateContext.isPatch ||= getPatch(templateContext.version) !== 0
   }
 
   templateContext = await options.finalizeContext(templateContext, options, filteredCommits, keyCommit, commits)
