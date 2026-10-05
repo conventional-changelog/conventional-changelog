@@ -47,7 +47,8 @@ function getReferencePartsRegex(
 }
 
 function getReferencesRegex(
-  referenceActions: (string | RegExp)[] | undefined
+  referenceActions: (string | RegExp)[] | undefined,
+  separator = ''
 ) {
   if (!referenceActions) {
     // matches everything
@@ -59,7 +60,7 @@ function getReferencesRegex(
   // and `fixups` does not end the references of the previous keyword.
   const nextKeyword = `(?<!\\w)(?:${joinedKeywords})(?!\\w)`
 
-  return new RegExp(`(?<!\\w)(${joinedKeywords})(?:\\s+(.*?))(?=${nextKeyword}|$)`, 'gi')
+  return new RegExp(`(?<!\\w)(${joinedKeywords})${separator}(?:\\s+(.*?))(?=${nextKeyword}|$)`, 'gi')
 }
 
 function getFooterTokenRegex(
@@ -85,12 +86,15 @@ export function getParserRegexes(
   const notes = getNotesRegex(options.noteKeywords, options.notesPattern)
   const referenceParts = getReferencePartsRegex(options.issuePrefixes, options.issuePrefixesCaseSensitive)
   const references = getReferencesRegex(options.referenceActions)
+  // In a footer the keyword is a token, which may be followed by a colon: `Closes: #1`
+  const footerReferences = getReferencesRegex(options.referenceActions, ':?')
   const footerToken = getFooterTokenRegex(options.issuePrefixes)
 
   return {
     notes,
     referenceParts,
     references,
+    footerReferences,
     footerToken,
     mentions: /@([\w-]+)/g,
     url: /\b(?:https?):\/\/(?:www\.)?([-a-zA-Z0-9@:%_+.~#?&//=])+\b/

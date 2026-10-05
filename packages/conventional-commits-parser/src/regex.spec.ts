@@ -290,6 +290,14 @@ describe('conventional-commits-parser', () => {
           expect('Closes #1 and fixups #2'.match(references)).toEqual(['Closes #1 and fixups #2'])
         })
 
+        it('should not match a keyword followed by a colon', () => {
+          const { references } = getParserRegexes({
+            referenceActions: ['Closes']
+          })
+
+          expect('Closes: #1'.match(references)).toBe(null)
+        })
+
         it('should reference an issue without an action', () => {
           const { references } = getParserRegexes()
           const body = 'gh-1, prefix-3, Closes gh-6'
@@ -343,6 +351,30 @@ describe('conventional-commits-parser', () => {
               0: `${action} #1`
             })
           })
+        })
+      })
+
+      describe('footerReferences', () => {
+        it('should match a keyword followed by a colon', () => {
+          const { footerReferences } = getParserRegexes({
+            referenceActions: ['Closes', 'Fixes']
+          })
+          const match = footerReferences.exec('Closes: #1')
+
+          expect(match?.[0]).toBe('Closes: #1')
+          expect(match?.[1]).toBe('Closes')
+          expect(match?.[2]).toBe('#1')
+          expect('Closes: #1 Fixes: #2'.match(footerReferences)).toEqual(['Closes: #1 ', 'Fixes: #2'])
+        })
+
+        it('should match a keyword without a colon', () => {
+          const { footerReferences } = getParserRegexes({
+            referenceActions: ['Closes']
+          })
+          const match = footerReferences.exec('Closes #1')
+
+          expect(match?.[1]).toBe('Closes')
+          expect(match?.[2]).toBe('#1')
         })
       })
 

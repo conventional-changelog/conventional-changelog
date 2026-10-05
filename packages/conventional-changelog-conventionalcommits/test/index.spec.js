@@ -650,9 +650,9 @@ describe('conventional-changelog-conventionalcommits', () => {
       .write()
     const chunks = await toArray(log)
 
-    expect(chunks[0]).toContain('references [#99]')
-    expect(chunks[0]).toContain('[#100]')
-    expect(chunks[0]).not.toContain('closes [#99]')
+    expect(chunks[0]).toContain('closes [#99]')
+    expect(chunks[0]).toContain('references [#100]')
+    expect(chunks[0]).not.toContain('references [#99]')
     expect(chunks[0]).toContain('this completely changes the API')
   })
 
