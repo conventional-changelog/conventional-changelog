@@ -63,10 +63,9 @@
   "dependencies": {
     "@simple-libs/child-process-utils": "^2.0.0",
     "@simple-libs/stream-utils": "catalog:",
-    "semver": "catalog:"
+    "verkit": "catalog:"
   },
   "devDependencies": {
-    "@types/semver": "catalog:",
     "conventional-commits-filter": "workspace:^",
     "conventional-commits-parser": "workspace:^"
   }

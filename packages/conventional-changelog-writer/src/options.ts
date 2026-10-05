@@ -7,7 +7,7 @@ import {
   footerPartial,
   template
 } from '@conventional-changelog/template'
-import { valid as semverValid } from 'semver'
+import { isValid } from 'verkit'
 import type {
   Options,
   FinalOptions
@@ -66,7 +66,7 @@ export function getFinalOptions<Commit extends CommitKnownProps = CommitKnownPro
     noteGroupsSort: 'title' as const,
     notesSort: 'text' as const,
     transform: defaultCommitTransform,
-    generateOn: (commit: Commit) => Boolean(semverValid(commit.version)),
+    generateOn: (commit: Commit) => typeof commit.version === 'string' && isValid(commit.version),
     finalizeContext: (context: FinalTemplateContext<Commit>) => context,
     debug: () => { /* noop */ },
     formatDate,

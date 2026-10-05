@@ -3,9 +3,8 @@ packages:
   - website
 catalog:
   '@simple-libs/stream-utils': ^2.0.0
-  '@types/semver': ^7.5.8
   argue-cli: ^3.1.0
-  semver: ^7.5.2
+  verkit: ^0.5.0
 autoInstallPeers: false
 allowBuilds:
   esbuild: true

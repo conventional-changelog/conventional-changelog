@@ -1,4 +1,4 @@
-import semver from 'semver'
+import { isPrerelease } from 'verkit'
 import type { Arg } from './types.js'
 
 /**
@@ -31,5 +31,5 @@ export function toArray<T>(value: T | T[]) {
  * @returns True if version is a prerelease.
  */
 export function isPrereleaseVersion(version: string) {
-  return semver.prerelease(version) !== null
+  return isPrerelease(version) === true
 }
