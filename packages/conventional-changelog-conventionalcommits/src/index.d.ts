@@ -13,7 +13,7 @@ export type Reference = PresetRecord
 export interface PresetConfig {
   ignoreCommits?: RegExp
   issuePrefixes?: string[]
-  types?: CommitType[]
+  types?: readonly CommitType[]
   scope?: string | string[]
   scopeOnly?: boolean
   preMajor?: boolean
