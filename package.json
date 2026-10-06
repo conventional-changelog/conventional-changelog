@@ -25,11 +25,11 @@
     "node": ">=22"
   },
   "scripts": {
-    "clear": "pnpm -r --parallel --if-present clear && del ./coverage",
-    "build": "pnpm -r --parallel --if-present --filter './packages/*' build",
+    "clear": "pnpm -r --no-sort --if-present clear && del ./coverage",
+    "build": "pnpm -r --no-sort --if-present --filter './packages/*' build",
     "lint": "oxlint",
     "format": "oxlint --fix",
-    "test:types": "pnpm -r --parallel --if-present test:types",
+    "test:types": "pnpm -r --no-sort --if-present test:types",
     "test:unit": "vitest run --coverage",
     "test:unit:watch": "vitest watch",
     "test": "run -p lint test:types test:unit",
