@@ -16,6 +16,10 @@ import {
 } from './utils.js'
 import { defaultOptions } from './options.js'
 
+// Matches the whole input as a single sentence, used to find references
+// that do not follow a reference action keyword.
+const catchAllRegex = /()(.+)/gi
+
 /**
  * Helper to create commit object.
  * @param initialData - Initial commit data.
@@ -109,17 +113,10 @@ export class CommitParser {
     }
   }
 
-  private parseReferences(
+  private collectReferences(
     input: string,
-    isFooterToken = false
+    regex: RegExp
   ) {
-    const { regexes } = this
-    const referencesRegex = isFooterToken
-      ? regexes.footerReferences
-      : regexes.references
-    const regex = input.match(referencesRegex)
-      ? referencesRegex
-      : /()(.+)/gi
     const references: CommitReference[] = []
     let matches: RegExpExecArray | null
     let action: string | null
@@ -143,6 +140,37 @@ export class CommitParser {
           break
         }
 
+        references.push(reference)
+      }
+    }
+
+    return references
+  }
+
+  private parseReferences(
+    input: string,
+    isFooterToken = false
+  ) {
+    const { regexes } = this
+    const referencesRegex = isFooterToken
+      ? regexes.footerReferences
+      : regexes.references
+    const references = this.collectReferences(input, referencesRegex)
+
+    if (!references.length) {
+      return this.collectReferences(input, catchAllRegex)
+    }
+
+    // References may also appear outside the sentences following an action
+    // keyword, e.g. `foo#1 Fix something`. Scan the whole input and append
+    // any reference that was not already captured.
+    for (const reference of this.collectReferences(input, catchAllRegex)) {
+      const isNew = references.every(found => found.owner !== reference.owner
+        || found.repository !== reference.repository
+        || found.issue !== reference.issue
+        || found.prefix !== reference.prefix)
+
+      if (isNew) {
         references.push(reference)
       }
     }

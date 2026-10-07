@@ -119,6 +119,50 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should parse a reference before a reference action keyword (#925)', () => {
+        const result = parser.parse('#1 Fixes something')
+
+        expect(result.references).toEqual([
+          {
+            action: null,
+            issue: '1',
+            owner: null,
+            prefix: '#',
+            raw: '#1',
+            repository: null
+          }
+        ])
+      })
+
+      it('should parse references on both sides of a reference action keyword (#925)', () => {
+        const result = parser.parse('#1 Fixes #2')
+
+        expect(result.references).toEqual([
+          {
+            action: 'Fixes',
+            issue: '2',
+            owner: null,
+            prefix: '#',
+            raw: '#2',
+            repository: null
+          },
+          {
+            action: null,
+            issue: '1',
+            owner: null,
+            prefix: '#',
+            raw: '#1',
+            repository: null
+          }
+        ])
+      })
+
+      it('should preserve distinct raw references without an action keyword', () => {
+        const result = parser.parse('#1 and #1')
+
+        expect(result.references.map(ref => ref.raw)).toEqual(['#1', ' and #1'])
+      })
+
       it('should parse reference actions of footers followed by a colon (#1550)', () => {
         const commit = 'feat: add Polish language\n\nCloses #123\nCloses: #456\nFixes: owner/repo#7\nRefs: #4'
         const result = parser.parse(commit)
@@ -1102,6 +1146,23 @@ describe('conventional-commits-parser', () => {
             issue: '1',
             raw: 'This is gh-1',
             prefix: 'gh-'
+          }
+        ])
+      })
+
+      it('should reference an issue outside of an action sentence with a custom prefix (#925)', () => {
+        const parser = new CommitParser({
+          issuePrefixes: ['foo#']
+        })
+
+        expect(parser.parse('foo#1 Fix something').references).toEqual([
+          {
+            action: null,
+            issue: '1',
+            owner: null,
+            prefix: 'foo#',
+            raw: 'foo#1',
+            repository: null
           }
         ])
       })
