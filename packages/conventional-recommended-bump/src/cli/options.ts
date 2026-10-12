@@ -92,15 +92,15 @@ export function parseParserOptions(options: Record<string, unknown>): ParserStre
     result.mergePattern = new RegExp(options.mergePattern)
   }
 
+  if (!Object.keys(result).length) {
+    return null
+  }
+
   if (options.verbose) {
     result.warn = console.warn.bind(console)
   } else {
     result.warn = true
   }
 
-  if (!Object.keys(result).length) {
-    return null
-  }
-
-  return options
+  return result
 }
