@@ -10,8 +10,10 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
-      - name: Check editorconfig
+      - name: Install editorconfig-checker
         uses: editorconfig-checker/action-editorconfig-checker@main
+      - name: Check editorconfig
+        run: editorconfig-checker
   package-json:
     runs-on: ubuntu-latest
     name: package.json
