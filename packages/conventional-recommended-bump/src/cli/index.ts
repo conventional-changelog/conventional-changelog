@@ -124,8 +124,8 @@ if (tagsOptions) {
 const commitsOptions = parseCommitsOptions(flags)
 const parserOptions = parseParserOptions(flags)
 
-if (commitsOptions) {
-  bumper.commits(commitsOptions, parserOptions || undefined)
+if (commitsOptions || parserOptions) {
+  bumper.commits(commitsOptions || {}, parserOptions || undefined)
 }
 
 let data: BumperRecommendationResult
