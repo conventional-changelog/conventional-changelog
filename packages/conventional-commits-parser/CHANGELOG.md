@@ -235,7 +235,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
 
-      <a name="3.0.0"></a>
+<a name="3.0.0"></a>
 # [3.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.7...conventional-commits-parser@3.0.0) (2018-05-29)
 
 ### Chores
@@ -248,7 +248,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 currently supported by the Node Release working group. At this time,
 that is Node 6 (which is in its Maintenance LTS phase).
 
-      <a name="2.1.7"></a>
+<a name="2.1.7"></a>
 ## [2.1.7](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser@2.1.6...conventional-commits-parser@2.1.7) (2018-03-27)
 
 **Note:** Version bump only for package conventional-commits-parser
