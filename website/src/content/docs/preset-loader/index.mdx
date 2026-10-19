@@ -13,40 +13,40 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
 
 <Steps>
 
-1. **Install `conventional-changelog-preset-loader`:**
+1.  **Install `conventional-changelog-preset-loader`:**
 
-   <Tabs syncKey="pkg">
-     <TabItem label="pnpm">
-       ```sh frame="none"
-       pnpm add conventional-changelog-preset-loader
-       ```
-     </TabItem>
-     <TabItem label="npm">
-       ```sh frame="none"
-       npm i conventional-changelog-preset-loader
-       ```
-     </TabItem>
-     <TabItem label="yarn">
-       ```sh frame="none"
-       yarn add conventional-changelog-preset-loader
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs syncKey="pkg">
+      <TabItem label="pnpm">
+        ```sh frame="none"
+        pnpm add conventional-changelog-preset-loader
+        ```
+      </TabItem>
+      <TabItem label="npm">
+        ```sh frame="none"
+        npm i conventional-changelog-preset-loader
+        ```
+      </TabItem>
+      <TabItem label="yarn">
+        ```sh frame="none"
+        yarn add conventional-changelog-preset-loader
+        ```
+      </TabItem>
+    </Tabs>
 
-2. **Load a preset by name.** `loadPreset` is async and imports the matching package:
+2.  **Load a preset by name.** `loadPreset` is async and imports the matching package:
 
-   ```js
-   import { loadPreset } from 'conventional-changelog-preset-loader'
+    ```js
+    import { loadPreset } from 'conventional-changelog-preset-loader'
 
-   const preset = await loadPreset('conventionalcommits')
-   ```
+    const preset = await loadPreset('conventionalcommits')
+    ```
 
-3. **Get its config** — the object returned by the preset's `createPreset` factory:
+3.  **Get its config** — the object returned by the preset's `createPreset` factory:
 
-   ```js
-   console.log(Object.keys(preset))
-   // → ['commits', 'parser', 'writer', 'whatBump']
-   ```
+    ```js
+    console.log(Object.keys(preset))
+    // → ['commits', 'parser', 'writer', 'whatBump']
+    ```
 
 </Steps>
 

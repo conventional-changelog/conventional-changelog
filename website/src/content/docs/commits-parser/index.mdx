@@ -13,54 +13,54 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
 
 <Steps>
 
-1. **Install `conventional-commits-parser`:**
+1.  **Install `conventional-commits-parser`:**
 
-   <Tabs syncKey="pkg">
-     <TabItem label="pnpm">
-       ```sh frame="none"
-       pnpm add conventional-commits-parser
-       ```
-     </TabItem>
-     <TabItem label="npm">
-       ```sh frame="none"
-       npm i conventional-commits-parser
-       ```
-     </TabItem>
-     <TabItem label="yarn">
-       ```sh frame="none"
-       yarn add conventional-commits-parser
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs syncKey="pkg">
+      <TabItem label="pnpm">
+        ```sh frame="none"
+        pnpm add conventional-commits-parser
+        ```
+      </TabItem>
+      <TabItem label="npm">
+        ```sh frame="none"
+        npm i conventional-commits-parser
+        ```
+      </TabItem>
+      <TabItem label="yarn">
+        ```sh frame="none"
+        yarn add conventional-commits-parser
+        ```
+      </TabItem>
+    </Tabs>
 
-2. **Parse a raw commit message** with `CommitParser`:
+2.  **Parse a raw commit message** with `CommitParser`:
 
-   ```js
-   import { CommitParser } from 'conventional-commits-parser'
+    ```js
+    import { CommitParser } from 'conventional-commits-parser'
 
-   const parser = new CommitParser()
-   const commit = parser.parse('feat(api): add async write() generator\n\nCloses #42')
-   ```
+    const parser = new CommitParser()
+    const commit = parser.parse('feat(api): add async write() generator\n\nCloses #42')
+    ```
 
-3. **Get a structured commit object:**
+3.  **Get a structured commit object:**
 
-   ```js
-   {
-     type: 'feat',
-     scope: 'api',
-     subject: 'add async write() generator',
-     merge: null,
-     header: 'feat(api): add async write() generator',
-     body: null,
-     footer: 'Closes #42',
-     notes: [],
-     references: [
-       { action: 'Closes', owner: null, repository: null, issue: '42', raw: '#42', prefix: '#' }
-     ],
-     mentions: [],
-     revert: null
-   }
-   ```
+    ```js
+    {
+      type: 'feat',
+      scope: 'api',
+      subject: 'add async write() generator',
+      merge: null,
+      header: 'feat(api): add async write() generator',
+      body: null,
+      footer: 'Closes #42',
+      notes: [],
+      references: [
+        { action: 'Closes', owner: null, repository: null, issue: '42', raw: '#42', prefix: '#' }
+      ],
+      mentions: [],
+      revert: null
+    }
+    ```
 
 </Steps>
 

@@ -13,65 +13,65 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components'
 
 <Steps>
 
-1. **Install `conventional-recommended-bump`** together with a preset:
+1.  **Install `conventional-recommended-bump`** together with a preset:
 
-   <Tabs syncKey="pkg">
-     <TabItem label="pnpm">
-       ```sh frame="none"
-       pnpm add -D conventional-recommended-bump conventional-changelog-conventionalcommits
-       ```
-     </TabItem>
-     <TabItem label="npm">
-       ```sh frame="none"
-       npm i -D conventional-recommended-bump conventional-changelog-conventionalcommits
-       ```
-     </TabItem>
-     <TabItem label="yarn">
-       ```sh frame="none"
-       yarn add -D conventional-recommended-bump conventional-changelog-conventionalcommits
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs syncKey="pkg">
+      <TabItem label="pnpm">
+        ```sh frame="none"
+        pnpm add -D conventional-recommended-bump conventional-changelog-conventionalcommits
+        ```
+      </TabItem>
+      <TabItem label="npm">
+        ```sh frame="none"
+        npm i -D conventional-recommended-bump conventional-changelog-conventionalcommits
+        ```
+      </TabItem>
+      <TabItem label="yarn">
+        ```sh frame="none"
+        yarn add -D conventional-recommended-bump conventional-changelog-conventionalcommits
+        ```
+      </TabItem>
+    </Tabs>
 
-2. **Make commits** following the convention as you work:
+2.  **Make commits** following the convention as you work:
 
-   ```
-   feat(api): add async write() generator
-   fix(cli): resolve config path relative to cwd
-   ```
+    ```
+    feat(api): add async write() generator
+    fix(cli): resolve config path relative to cwd
+    ```
 
-3. **Run it with your preset.** The recommended release type is printed to stdout:
+3.  **Run it with your preset.** The recommended release type is printed to stdout:
 
-   <Tabs syncKey="pkg">
-     <TabItem label="pnpm">
-       ```sh frame="none"
-       pnpm conventional-recommended-bump -p conventionalcommits
-       ```
-     </TabItem>
-     <TabItem label="npm">
-       ```sh frame="none"
-       npx conventional-recommended-bump -p conventionalcommits
-       ```
-     </TabItem>
-     <TabItem label="yarn">
-       ```sh frame="none"
-       yarn conventional-recommended-bump -p conventionalcommits
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs syncKey="pkg">
+      <TabItem label="pnpm">
+        ```sh frame="none"
+        pnpm conventional-recommended-bump -p conventionalcommits
+        ```
+      </TabItem>
+      <TabItem label="npm">
+        ```sh frame="none"
+        npx conventional-recommended-bump -p conventionalcommits
+        ```
+      </TabItem>
+      <TabItem label="yarn">
+        ```sh frame="none"
+        yarn conventional-recommended-bump -p conventionalcommits
+        ```
+      </TabItem>
+    </Tabs>
 
-4. **Get the recommended bump.** A `feat` is present, so the change is a **minor**:
+4.  **Get the recommended bump.** A `feat` is present, so the change is a **minor**:
 
-   ```
-   minor
-   ```
+    ```
+    minor
+    ```
 
-   Add `--verbose` (`-v`) to also print the reasoning:
+    Add `--verbose` (`-v`) to also print the reasoning:
 
-   ```
-   minor
-   Reason: There are 0 BREAKING CHANGES and 1 features
-   ```
+    ```
+    minor
+    Reason: There are 0 BREAKING CHANGES and 1 features
+    ```
 
 </Steps>
 
