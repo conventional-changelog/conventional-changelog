@@ -52,9 +52,11 @@
 
   & .expressive-code .frame {
     --code-background: var(--sl-color-bg-nav);
-    /* Retint Expressive Code's frame chrome (tab, title bar) to the warm theme
-       so the title tab blends with the code background instead of the stock
-       near-black GitHub tab. References --code-background so light mode follows. */
+    /**
+     * Retint Expressive Code's frame chrome (tab, title bar) to the warm theme
+     * so the title tab blends with the code background instead of the stock
+     * near-black GitHub tab. References --code-background so light mode follows.
+     */
     --ec-frm-edBg: var(--code-background);
     --ec-frm-edActTabBg: var(--code-background);
     --ec-frm-trmTtbBg: var(--code-background);

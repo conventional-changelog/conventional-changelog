@@ -13,43 +13,43 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components'
 
 <Steps>
 
-1. **Install `@conventional-changelog/git-client`:**
+1.  **Install `@conventional-changelog/git-client`:**
 
-   <Tabs syncKey="pkg">
-     <TabItem label="pnpm">
-       ```sh frame="none"
-       pnpm add @conventional-changelog/git-client
-       ```
-     </TabItem>
-     <TabItem label="npm">
-       ```sh frame="none"
-       npm i @conventional-changelog/git-client
-       ```
-     </TabItem>
-     <TabItem label="yarn">
-       ```sh frame="none"
-       yarn add @conventional-changelog/git-client
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs syncKey="pkg">
+      <TabItem label="pnpm">
+        ```sh frame="none"
+        pnpm add @conventional-changelog/git-client
+        ```
+      </TabItem>
+      <TabItem label="npm">
+        ```sh frame="none"
+        npm i @conventional-changelog/git-client
+        ```
+      </TabItem>
+      <TabItem label="yarn">
+        ```sh frame="none"
+        yarn add @conventional-changelog/git-client
+        ```
+      </TabItem>
+    </Tabs>
 
-   <Aside>
-     `ConventionalGitClient#getCommits` also needs `conventional-commits-parser` and `conventional-commits-filter` installed.
-   </Aside>
+    <Aside>
+      `ConventionalGitClient#getCommits` also needs `conventional-commits-parser` and `conventional-commits-filter` installed.
+    </Aside>
 
-2. **Create a client** pointed at a repository:
+2.  **Create a client** pointed at a repository:
 
-   ```js
-   import { ConventionalGitClient } from '@conventional-changelog/git-client'
+    ```js
+    import { ConventionalGitClient } from '@conventional-changelog/git-client'
 
-   const client = new ConventionalGitClient(process.cwd())
-   ```
+    const client = new ConventionalGitClient(process.cwd())
+    ```
 
-3. **Read from the repo** — for example, the last semver tag:
+3.  **Read from the repo** — for example, the last semver tag:
 
-   ```js
-   console.log(await client.getLastSemverTag()) // 'v1.2.0'
-   ```
+    ```js
+    console.log(await client.getLastSemverTag()) // 'v1.2.0'
+    ```
 
 </Steps>
 

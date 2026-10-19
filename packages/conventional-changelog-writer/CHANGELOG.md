@@ -245,7 +245,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * Upgrade to Lerna 3, fix Node.js v11 error ([#385](https://github.com/conventional-changelog/conventional-changelog/issues/385)) ([cdef282](https://github.com/conventional-changelog/conventional-changelog/commit/cdef282))
 
-      <a name="4.0.0"></a>
+<a name="4.0.0"></a>
 # [4.0.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.9...conventional-changelog-writer@4.0.0) (2018-05-29)
 
 ### Chores
@@ -277,7 +277,7 @@ As an example, for version `2.0.0` of a GitHub project, the following
 URL should be used:
 - https://github.com/conventional-changelog/releaser-tools/releases/tag/v2.0.0
 
-      <a name="3.0.9"></a>
+<a name="3.0.9"></a>
 ## [3.0.9](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-changelog-writer@3.0.8...conventional-changelog-writer@3.0.9) (2018-03-28)
 
 ### Bug Fixes

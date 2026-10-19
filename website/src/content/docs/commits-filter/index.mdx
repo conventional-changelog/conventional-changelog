@@ -13,81 +13,81 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components'
 
 <Steps>
 
-1. **Install `conventional-commits-filter`:**
+1.  **Install `conventional-commits-filter`:**
 
-   <Tabs syncKey="pkg">
-     <TabItem label="pnpm">
-       ```sh frame="none"
-       pnpm add conventional-commits-filter
-       ```
-     </TabItem>
-     <TabItem label="npm">
-       ```sh frame="none"
-       npm i conventional-commits-filter
-       ```
-     </TabItem>
-     <TabItem label="yarn">
-       ```sh frame="none"
-       yarn add conventional-commits-filter
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs syncKey="pkg">
+      <TabItem label="pnpm">
+        ```sh frame="none"
+        pnpm add conventional-commits-filter
+        ```
+      </TabItem>
+      <TabItem label="npm">
+        ```sh frame="none"
+        npm i conventional-commits-filter
+        ```
+      </TabItem>
+      <TabItem label="yarn">
+        ```sh frame="none"
+        yarn add conventional-commits-filter
+        ```
+      </TabItem>
+    </Tabs>
 
-2. **Filter a list of parsed commits** — here a `revert` and the `feat` it reverts, plus an unrelated `fix`:
+2.  **Filter a list of parsed commits** — here a `revert` and the `feat` it reverts, plus an unrelated `fix`:
 
-   ```js
-   import { filterRevertedCommitsSync } from 'conventional-commits-filter'
+    ```js
+    import { filterRevertedCommitsSync } from 'conventional-commits-filter'
 
-   const commits = [
-     {
-       type: 'revert',
-       header: 'revert: feat(api): add caching',
-       revert: { header: 'feat(api): add caching', hash: '9c1e2b3' },
-       hash: 'a1b2c3d',
-       notes: [],
-       references: []
-     },
-     {
-       type: 'feat',
-       scope: 'api',
-       subject: 'add caching',
-       header: 'feat(api): add caching',
-       revert: null,
-       hash: '9c1e2b3',
-       notes: [],
-       references: []
-     },
-     {
-       type: 'fix',
-       scope: 'cli',
-       subject: 'handle missing config',
-       header: 'fix(cli): handle missing config',
-       revert: null,
-       hash: 'e5f6a7b',
-       notes: [],
-       references: []
-     }
-   ]
+    const commits = [
+      {
+        type: 'revert',
+        header: 'revert: feat(api): add caching',
+        revert: { header: 'feat(api): add caching', hash: '9c1e2b3' },
+        hash: 'a1b2c3d',
+        notes: [],
+        references: []
+      },
+      {
+        type: 'feat',
+        scope: 'api',
+        subject: 'add caching',
+        header: 'feat(api): add caching',
+        revert: null,
+        hash: '9c1e2b3',
+        notes: [],
+        references: []
+      },
+      {
+        type: 'fix',
+        scope: 'cli',
+        subject: 'handle missing config',
+        header: 'fix(cli): handle missing config',
+        revert: null,
+        hash: 'e5f6a7b',
+        notes: [],
+        references: []
+      }
+    ]
 
-   const kept = Array.from(filterRevertedCommitsSync(commits))
-   ```
+    const kept = Array.from(filterRevertedCommitsSync(commits))
+    ```
 
-3. **Get the surviving commits** — the revert and the `feat` it reverts are gone, so only the `fix` remains:
+3.  **Get the surviving commits** — the revert and the `feat` it reverts are gone, so only the `fix` remains:
 
-   ```js
-   [
-     {
-       type: 'fix',
-       scope: 'cli',
-       subject: 'handle missing config',
-       header: 'fix(cli): handle missing config',
-       revert: null,
-       hash: 'e5f6a7b',
-       notes: [],
-       references: []
-     }
-   ]
-   ```
+    ```js
+    [
+      {
+        type: 'fix',
+        scope: 'cli',
+        subject: 'handle missing config',
+        header: 'fix(cli): handle missing config',
+        revert: null,
+        hash: 'e5f6a7b',
+        notes: [],
+        references: []
+      }
+    ]
+    ```
 
 </Steps>
 
