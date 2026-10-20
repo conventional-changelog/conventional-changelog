@@ -36,8 +36,8 @@ importers:
         specifier: ^10.1.1
         version: 10.1.1
       '@trigen/oxlint-config':
-        specifier: ^10.1.2
-        version: 10.1.2(oxlint-tsgolint@7.0.2001)(oxlint@1.77.0(oxlint-tsgolint@7.0.2001))
+        specifier: ^11.0.0
+        version: 11.0.0(oxlint-tsgolint@7.0.2001)(oxlint@1.77.0(oxlint-tsgolint@7.0.2001))
       '@trigen/scripts':
         specifier: ^10.1.1
         version: 10.1.1
@@ -1658,8 +1658,8 @@ packages:
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
-  '@trigen/oxlint-config@10.1.2':
-    resolution: {integrity: sha512-v5RsINtl8dYo7VJnfL0FiP13ITtWuY66Po89WX8N3+u1LkBGc9l5i64ZJUnfYP59zY3l3067cPJ7s+Feas7UzA==}
+  '@trigen/oxlint-config@11.0.0':
+    resolution: {integrity: sha512-cAKE8rXUe3iWVIwUeqlFHmBbJ7spbw6m19ENQq7VQaRoRGFM9P/6kfWDs515aoUeWsOPEOIgu286Sqwt/YsKOQ==}
     engines: {node: '>=22'}
     peerDependencies:
       oxlint: '>=1.0.0'
@@ -3605,10 +3605,6 @@ packages:
 
   picomatch@4.0.4:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
-    engines: {node: '>=12'}
-
-  picomatch@4.0.5:
-    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
     engines: {node: '>=12'}
 
   picomatch@4.0.7:
@@ -5769,9 +5765,9 @@ snapshots:
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
-      picomatch: 4.0.5
+      picomatch: 4.0.7
 
-  '@trigen/oxlint-config@10.1.2(oxlint-tsgolint@7.0.2001)(oxlint@1.77.0(oxlint-tsgolint@7.0.2001))':
+  '@trigen/oxlint-config@11.0.0(oxlint-tsgolint@7.0.2001)(oxlint@1.77.0(oxlint-tsgolint@7.0.2001))':
     dependencies:
       '@stylistic/eslint-plugin': 5.10.0
       oxlint: 1.77.0(oxlint-tsgolint@7.0.2001)
@@ -8081,8 +8077,6 @@ snapshots:
   picomatch@2.3.2: {}
 
   picomatch@4.0.4: {}
-
-  picomatch@4.0.5: {}
 
   picomatch@4.0.7: {}
 
