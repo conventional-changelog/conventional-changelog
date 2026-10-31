@@ -72,9 +72,9 @@ export default defineConfig({
         isProduction && {
           tag: 'script',
           attrs: {
-            'src': 'https://cloud.umami.is/script.js',
+            src: 'https://cloud.umami.is/script.js',
             'data-website-id': '22ee47a3-93bb-4233-a9c6-c2be27cacb0a',
-            'defer': true
+            defer: true
           }
         },
         {

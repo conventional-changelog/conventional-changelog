@@ -44,7 +44,7 @@
     "@commitlint/config-pnpm-scopes": "^21.0.0",
     "@commitlint/cz-commitlint": "^21.0.0",
     "@trigen/oxlint": "^10.1.1",
-    "@trigen/oxlint-config": "^10.1.2",
+    "@trigen/oxlint-config": "^11.0.0",
     "@trigen/scripts": "^10.1.1",
     "@types/node": "^24.0.0",
     "@vitest/coverage-v8": "^5.0.0",
