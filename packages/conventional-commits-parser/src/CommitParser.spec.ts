@@ -1105,6 +1105,41 @@ describe('conventional-commits-parser', () => {
           }
         ])
       })
+
+      it('should not treat mid-word gh- or non-numeric hash tokens as references (#1570)', () => {
+        const parser = new CommitParser({
+          issuePrefixes: ['#', 'gh-']
+        })
+
+        for (const body of [
+          'Removes old copies of tough-cookie, qs, and diff',
+          'Fixes the high-contrast theme',
+          'Discussed in the #general channel'
+        ]) {
+          const commit = parser.parse(`fix: subject\n\n${body}`)
+
+          expect(commit.references).toEqual([])
+        }
+
+        const commit = parser.parse('fix: subject\n\nCloses #123 and GH-45')
+
+        expect(commit.references.map(({ repository, prefix, issue }) => ({
+          repository,
+          prefix: prefix.toLowerCase(),
+          issue
+        }))).toEqual([
+          {
+ repository: null,
+prefix: '#',
+issue: '123' 
+},
+          {
+ repository: null,
+prefix: 'gh-',
+issue: '45' 
+}
+        ])
+      })
     })
 
     describe('body', () => {
