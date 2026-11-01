@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [12.1.1](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v12.1.0...conventional-recommended-bump-v12.1.1) (2026-11-01)
+
+### Bug Fixes
+
+* parse and apply the parser flags of the cli ([#1566](https://github.com/conventional-changelog/conventional-changelog/issues/1566)) ([280319e](https://github.com/conventional-changelog/conventional-changelog/commit/280319e792ce4269cad4a4840c9a58bfd745c517))
+
 ## [12.1.0](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-recommended-bump-v12.0.1...conventional-recommended-bump-v12.1.0) (2026-07-09)
 
 ### Features

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.4.0...template-v1.4.1) (2026-11-01)
+
+### Bug Fixes
+
+* match protected Markdown segments in linear time ([#1575](https://github.com/conventional-changelog/conventional-changelog/issues/1575)) ([2fd73be](https://github.com/conventional-changelog/conventional-changelog/commit/2fd73bee7ff301d1541301065d3372e44da1a6c8))
+
 ## [1.4.0](https://github.com/conventional-changelog/conventional-changelog/compare/template-v1.3.0...template-v1.4.0) (2026-08-18)
 
 ### Features

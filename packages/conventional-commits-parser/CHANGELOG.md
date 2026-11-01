@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.4](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.3...conventional-commits-parser-v7.1.4) (2026-11-01)
+
+### Bug Fixes
+
+* avoid mid-word and non-numeric issue refs ([#1571](https://github.com/conventional-changelog/conventional-changelog/issues/1571)) ([dfa8b2d](https://github.com/conventional-changelog/conventional-changelog/commit/dfa8b2d3884180349c0222e1a42e82a5e6fa71b2)), closes [#1570](https://github.com/conventional-changelog/conventional-changelog/issues/1570)
+* parse references outside of reference action sentences ([#1573](https://github.com/conventional-changelog/conventional-changelog/issues/1573)) ([f952155](https://github.com/conventional-changelog/conventional-changelog/commit/f952155ec3cea5b272306e5a7d5d04fa257819b8)), closes [#1564](https://github.com/conventional-changelog/conventional-changelog/issues/1564)
+* scan lines for references in linear time ([#1574](https://github.com/conventional-changelog/conventional-changelog/issues/1574)) ([62769a4](https://github.com/conventional-changelog/conventional-changelog/commit/62769a499f72e0295b442552158f9da7a3660b96))
+
 ## [7.1.3](https://github.com/conventional-changelog/conventional-changelog/compare/conventional-commits-parser-v7.1.2...conventional-commits-parser-v7.1.3) (2026-10-05)
 
 ### Bug Fixes
