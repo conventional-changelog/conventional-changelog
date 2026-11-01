@@ -57,6 +57,9 @@ describe('@conventional-changelog/template', () => {
         expect(format('[see #1 [details]](https://tracker/1)', context)).toBe(
           '[see #1 [details]](https://tracker/1)'
         )
+        expect(format('[see #1 [details]][ticket]', context)).toBe(
+          '[see #1 [details]][ticket]'
+        )
         expect(format('https://tracker/a_(b)/issues/#1', context)).toBe(
           'https://tracker/a_(b)/issues/#1'
         )
@@ -84,6 +87,18 @@ describe('@conventional-changelog/template', () => {
         )
       })
 
+      it('should keep a code block without a closing fence as is', () => {
+        const format = createFormatter()
+
+        expect(format('```js\n// #1', context)).toBe('```js\n// #1')
+      })
+
+      it('should not open a code block by a fence with backticks in its info string', () => {
+        const format = createFormatter()
+
+        expect(format('```js``` #1\n```', context)).toBe('```js``` [#1](https://tracker/#1)\n```')
+      })
+
       it('should format a long text with backticks in a reasonable time', () => {
         const format = createFormatter()
         const text = '`'.repeat(8000) + 'a'.repeat(8000)
@@ -94,12 +109,30 @@ describe('@conventional-changelog/template', () => {
         expect(performance.now() - startedAt).toBeLessThan(1000)
       })
 
+      it('should format long runs of brackets, backticks and fences in a reasonable time', () => {
+        const format = createFormatter()
+        const startedAt = performance.now()
+
+        format('['.repeat(100000), context)
+        format('`'.repeat(100000), context)
+        format('```js\n'.repeat(20000), context)
+
+        expect(performance.now() - startedAt).toBeLessThan(1000)
+      })
+
       it('should keep an unbalanced backtick effect within its line', () => {
         const format = createFormatter()
 
         expect(format('unbalanced ` and #1\n#2 on the next line', context)).toBe(
           'unbalanced ` and [#1](https://tracker/#1)\n[#2](https://tracker/#2) on the next line'
         )
+      })
+
+      it('should open and close a code span by backtick runs of the same length', () => {
+        const format = createFormatter()
+
+        expect(format('``#1`', context)).toBe('``[#1](https://tracker/#1)`')
+        expect(format('`#1``', context)).toBe('`[#1](https://tracker/#1)``')
       })
 
       it('should keep a reference as is without an url', () => {
