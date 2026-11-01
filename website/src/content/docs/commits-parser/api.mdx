@@ -101,7 +101,7 @@ The same options configure all three functions. Defaults come from the [`default
 | `fieldPattern` | `RegExp` | `/^-(?=.*\w)(.*?)-$/` | Matches custom `-field-` blocks in the body. |
 | `noteKeywords` | `(string \| RegExp)[]` | `['BREAKING CHANGE', 'BREAKING-CHANGE']` | Keywords that start a note. Case-insensitive. |
 | `notesPattern` | `(text) => RegExp` | | Builds the note-matching regex from the note keywords. |
-| `issuePrefixes` | `(string \| RegExp)[]` | `['#']` | Prefixes that mark an issue reference. |
+| `issuePrefixes` | `(string \| RegExp)[]` | `['#']` | Prefixes that mark an issue reference. The issue after a prefix needs a digit, as in `#42` or `#JIRA-123`. |
 | `issuePrefixesCaseSensitive` | `boolean` | `false` | Treat `issuePrefixes` as case-sensitive. |
 | `referenceActions` | `(string \| RegExp)[]` | `close`, `closes`, `closed`, `fix`, `fixes`, `fixed`, `resolve`, `resolves`, `resolved` | Keywords that reference an issue. Case-insensitive. |
 | `commentChar` | `string` | | Character that comments out a line. |
@@ -124,4 +124,20 @@ const parser = new CommitParser({
 })
 
 parser.parse('fix(api): handle timeouts\n\nrefs GH-17')
+```
+
+Accept only numeric issues, as GitHub does, with a lookahead in the prefix, so a color like `#3b82f6` isn't taken for a reference:
+
+```js
+const parser = new CommitParser({
+  issuePrefixes: [/#(?=\d+\b)/]
+})
+
+parser.parse('style: use #3b82f6 for links\n\nCloses #12').references
+```
+
+```js
+[
+  { action: 'Closes', owner: null, repository: null, issue: '12', raw: '#12', prefix: '#' }
+]
 ```

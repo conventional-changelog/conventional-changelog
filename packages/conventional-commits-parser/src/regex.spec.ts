@@ -523,6 +523,24 @@ describe('conventional-commits-parser', () => {
           expect(match).toBe(null)
         })
 
+        it('should not match prefixes inside of words (#1570)', () => {
+          referenceParts = getParserRegexes({
+            issuePrefixes: ['#', 'gh-']
+          }).referenceParts
+
+          expect(referenceParts.exec('Removes old copies of tough-cookie, qs, and diff')).toBe(null)
+          expect(referenceParts.exec('Adds a high-5 animation')).toBe(null)
+        })
+
+        it('should not match issues without digits (#1570)', () => {
+          referenceParts = getParserRegexes({
+            issuePrefixes: ['#', 'gh-']
+          }).referenceParts
+
+          expect(referenceParts.exec('Discussed in the #general channel')).toBe(null)
+          expect(referenceParts.exec('Deploys the docs to gh-pages')).toBe(null)
+        })
+
         it('should escape regex special chars when used inside `issuePrefixes`', () => {
           const issuePrefixesSpecialChars = [
             '[#]',

@@ -1147,6 +1147,56 @@ describe('conventional-commits-parser', () => {
           }
         ])
       })
+
+      it('should not reference issues inside of words or without digits (#1570)', () => {
+        const parser = new CommitParser({
+          issuePrefixes: ['#', 'gh-']
+        })
+
+        for (const body of [
+          'Removes old copies of tough-cookie, qs, and diff',
+          'Fixes the high-contrast theme',
+          'Discussed in the #general channel'
+        ]) {
+          expect(parser.parse(`fix: subject\n\n${body}`).references).toEqual([])
+        }
+
+        expect(parser.parse('fix: subject\n\nCloses #123 and GH-45').references).toEqual([
+          {
+            action: 'Closes',
+            owner: null,
+            repository: null,
+            issue: '123',
+            raw: '#123',
+            prefix: '#'
+          },
+          {
+            action: 'Closes',
+            owner: null,
+            repository: null,
+            issue: '45',
+            raw: ' and GH-45',
+            prefix: 'GH-'
+          }
+        ])
+      })
+
+      it('should reference only numeric issues with a lookahead in the prefix', () => {
+        const parser = new CommitParser({
+          issuePrefixes: [/#(?=\d+\b)/]
+        })
+
+        expect(parser.parse('style: use #3b82f6 for links\n\nCloses #12').references).toEqual([
+          {
+            action: 'Closes',
+            owner: null,
+            repository: null,
+            issue: '12',
+            raw: '#12',
+            prefix: '#'
+          }
+        ])
+      })
     })
 
     describe('body', () => {

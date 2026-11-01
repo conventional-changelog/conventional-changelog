@@ -42,8 +42,12 @@ function getReferencePartsRegex(
   }
 
   const flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
+  const repositoryChar = '[\\w-\\.\\/]'
 
-  return new RegExp(`(?:.*?)??\\s*([\\w-\\.\\/]*?)??(${joinOr(issuePrefixes)})([\\w-]+)(?=\\s|$|[,;.)\\]])`, flags)
+  // A reference starts a word, and its repository is the whole word before the prefix,
+  // so `gh-` is not a prefix inside of `tough-cookie` or `high-5`.
+  // An issue has a digit, so `#general` is not a reference.
+  return new RegExp(`(?:.*?)??\\s*(?<!${repositoryChar})(?:(${repositoryChar}+)(?!${repositoryChar}))?(${joinOr(issuePrefixes)})((?=[\\w-]*\\d)[\\w-]+)(?=\\s|$|[,;.)\\]])`, flags)
 }
 
 function getReferencesRegex(
