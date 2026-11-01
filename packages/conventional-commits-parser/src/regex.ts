@@ -41,13 +41,15 @@ function getReferencePartsRegex(
     return nomatchRegex
   }
 
-  const flags = issuePrefixesCaseSensitive ? 'g' : 'gi'
+  // Sticky, so a search starts where the last reference ended and `.*?` takes the text
+  // up to the next one: a line is scanned once, not again from every position.
+  const flags = issuePrefixesCaseSensitive ? 'gy' : 'giy'
   const repositoryChar = '[\\w-\\.\\/]'
 
   // A reference starts a word, and its repository is the whole word before the prefix,
   // so `gh-` is not a prefix inside of `tough-cookie` or `high-5`.
   // An issue has a digit, so `#general` is not a reference.
-  return new RegExp(`(?:.*?)??\\s*(?<!${repositoryChar})(?:(${repositoryChar}+)(?!${repositoryChar}))?(${joinOr(issuePrefixes)})((?=[\\w-]*\\d)[\\w-]+)(?=\\s|$|[,;.)\\]])`, flags)
+  return new RegExp(`.*?(?<!${repositoryChar})(?:(${repositoryChar}+)(?!${repositoryChar}))?(${joinOr(issuePrefixes)})((?=[\\w-]*\\d)[\\w-]+)(?=\\s|$|[,;.)\\]])`, flags)
 }
 
 function getReferencesRegex(
