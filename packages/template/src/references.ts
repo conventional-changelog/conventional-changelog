@@ -10,11 +10,18 @@ import { link } from './elements.js'
  */
 const protectedSegments = [
   /\[(?:[^[\]]|\[[^[\]]*])*]\((?:[^()\n]|\([^()\n]*\))*\)/, // [text](url)
-  /\[[^\]]*]\[[^\]]*]/, // [text][ref]
+  // a text and a label end before the next not nested `[`,
+  // so a long run of brackets is not scanned to its end from every one of them
+  /\[(?:[^[\]]|\[[^[\]]*])*]\[[^[\]]*]/, // [text][ref]
   // the lookahead makes the delimiter length atomic, without it a long run
-  // of backticks makes the regex engine retry every possible delimiter length
-  /^[ \t]*(?=(?<fence>`{3,}|~{3,}))\k<fence>[\s\S]*?^[ \t]*\k<fence>[ \t]*\r?$/, // ```code block```
-  /(?=(?<code>`+))\k<code>[^\n]*?\k<code>/, // `code span`
+  // of backticks makes the regex engine retry every possible delimiter length;
+  // as in CommonMark, the info string of backticks has no backticks, and a block
+  // without a closing fence lasts to the end, so the next fences don't scan it again
+  /^[ \t]*(?=(?<fence>`{3,}|~{3,}))\k<fence>(?:(?<=`)[^`\n]*|(?<=~)[^\n]*)$[\s\S]*?(?:^[ \t]*\k<fence>[ \t]*\r?$|(?![\s\S]))/, // ```code block```
+  // as in CommonMark, whole runs of backticks of the same length open and close a span;
+  // only runs of up to 16 backticks open one, so at most 16 runs without a closing one
+  // scan the rest of a line
+  /(?<!`)(?=(?<code>`{1,16}(?!`)))\k<code>[^\n]*?(?<!`)\k<code>(?!`)/, // `code span`
   /https?:\/\/(?:[^\s()]|\([^\s()]*\))+/ // https://url
 ]
 const userMention = /\B@(?<user>[a-z0-9](?:-?[a-z0-9/]){0,38})/
