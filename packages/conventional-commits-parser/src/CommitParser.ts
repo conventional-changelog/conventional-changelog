@@ -114,17 +114,14 @@ export class CommitParser {
     isFooterToken = false
   ) {
     const { regexes } = this
-    const referencesRegex = isFooterToken
+    const regex = isFooterToken
       ? regexes.footerReferences
       : regexes.references
-    const regex = input.match(referencesRegex)
-      ? referencesRegex
-      : /()(.+)/gi
-    const references: CommitReference[] = []
+    // Text outside of action sentences, like `#1` in `#1 Fixes #2`,
+    // may also have references, but without an action
+    const sentences: [string | null, string][] = []
+    let lastIndex = 0
     let matches: RegExpExecArray | null
-    let action: string | null
-    let sentence: string
-    let reference: CommitReference | null
 
     while (true) {
       matches = regex.exec(input)
@@ -133,9 +130,19 @@ export class CommitParser {
         break
       }
 
-      action = matches[1] || null
-      sentence = matches[2] || ''
+      sentences.push(
+        [null, input.slice(lastIndex, matches.index)],
+        [matches[1] || null, matches[2] || '']
+      )
+      lastIndex = regex.lastIndex
+    }
 
+    sentences.push([null, input.slice(lastIndex)])
+
+    const references: CommitReference[] = []
+    let reference: CommitReference | null
+
+    for (const [action, sentence] of sentences) {
       while (true) {
         reference = this.parseReference(sentence, action)
 

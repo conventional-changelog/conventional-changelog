@@ -119,6 +119,30 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should parse references outside of reference action sentences (#925)', () => {
+        const commit = '#1 Fixes #2'
+        const result = parser.parse(commit)
+
+        expect(result.references).toEqual([
+          {
+            action: null,
+            issue: '1',
+            owner: null,
+            prefix: '#',
+            raw: '#1',
+            repository: null
+          },
+          {
+            action: 'Fixes',
+            issue: '2',
+            owner: null,
+            prefix: '#',
+            raw: '#2',
+            repository: null
+          }
+        ])
+      })
+
       it('should parse reference actions of footers followed by a colon (#1550)', () => {
         const commit = 'feat: add Polish language\n\nCloses #123\nCloses: #456\nFixes: owner/repo#7\nRefs: #4'
         const result = parser.parse(commit)
@@ -1102,6 +1126,24 @@ describe('conventional-commits-parser', () => {
             issue: '1',
             raw: 'This is gh-1',
             prefix: 'gh-'
+          }
+        ])
+      })
+
+      it('should reference an issue before an action without references (#925)', () => {
+        const parser = new CommitParser({
+          issuePrefixes: ['foo#']
+        })
+        const commit = parser.parse('foo#1 Fix something')
+
+        expect(commit.references).toEqual([
+          {
+            action: null,
+            owner: null,
+            repository: null,
+            issue: '1',
+            raw: 'foo#1',
+            prefix: 'foo#'
           }
         ])
       })
