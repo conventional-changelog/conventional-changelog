@@ -477,6 +477,14 @@ describe('conventional-commits-parser', () => {
         customParser.parse(`b${'\r\n'.repeat(1000000)}b`)
       })
 
+      it('should parse long lines without references in a reasonable time', () => {
+        const startedAt = performance.now()
+
+        customParser.parse(`fix: ${'a'.repeat(2000)}\n\n${' '.repeat(2000)}a`)
+
+        expect(performance.now() - startedAt).toBeLessThan(1000)
+      })
+
       it('should trim extra newlines', () => {
         const commit = customParser.parse(
           '\n\n\n\n\n\n\nfeat(scope): broadcast $destroy event on scope destruction\n\n\n'
