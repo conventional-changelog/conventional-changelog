@@ -445,10 +445,13 @@ export class CommitParser {
     let isBody = true
 
     while (this.isLineAvailable()) {
-      this.parseMeta()
+      if (this.parseMeta()) {
+        continue
+      }
 
       if (this.parseNotes()) {
         isBody = false
+        continue
       }
 
       if (!this.parseBodyAndFooter(isBody)) {
