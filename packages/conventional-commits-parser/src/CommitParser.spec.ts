@@ -291,6 +291,36 @@ describe('conventional-commits-parser', () => {
         ])
       })
 
+      it('should parse note following a footer that ended a previous note (#1577)', () => {
+        const commit = 'feat: x\n'
+          + '\n'
+          + 'BREAKING CHANGE: a\n'
+          + 'Refs: #1\n'
+          + 'BREAKING CHANGE: b'
+        const result = parser.parse(commit)
+
+        expect(result.notes).toEqual([
+          {
+            title: 'BREAKING CHANGE',
+            text: 'a'
+          },
+          {
+            title: 'BREAKING CHANGE',
+            text: 'b'
+          }
+        ])
+        expect(result.references).toEqual([
+          {
+            action: null,
+            issue: '1',
+            owner: null,
+            prefix: '#',
+            raw: 'Refs: #1',
+            repository: null
+          }
+        ])
+      })
+
       it('should parse trailer footers without references (#773)', () => {
         const result = parser.parse(
           'test: this is a test\n'
