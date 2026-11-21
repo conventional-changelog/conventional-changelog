@@ -61,20 +61,18 @@ export function commitPartial(context, commit) {
         ? `(${link(shortHash, url(repositoryUrl(context), commitUrlPath, hash))})`
         : shortHash
       : ''
-  const renderedReferences = each(
-    references,
-    (linkReference) => {
-      if (linkReferences) {
-        return link(
-          reference(linkReference),
-          url(referenceRepositoryUrl(context, linkReference), issue, linkReference.issue)
-        )
-      }
+  const renderReference = (linkReference) => {
+    if (linkReferences) {
+      return link(
+        reference(linkReference),
+        url(referenceRepositoryUrl(context, linkReference), issue, linkReference.issue)
+      )
+    }
 
-      return reference(linkReference)
-    },
-    ' '
-  )
+    return reference(linkReference)
+  }
+  const closingReferences = each(references?.filter(ref => ref.action), renderReference, ' ')
+  const otherReferences = each(references?.filter(ref => !ref.action), renderReference, ' ')
 
   return strings(
     words(
@@ -82,7 +80,8 @@ export function commitPartial(context, commit) {
       subject || header || '',
       commitLink
     ),
-    renderedReferences && `, closes ${renderedReferences}`
+    closingReferences && `, closes ${closingReferences}`,
+    otherReferences && `, references ${otherReferences}`
   )
 }
 

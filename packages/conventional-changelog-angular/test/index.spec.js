@@ -33,9 +33,9 @@ setups([
     testTools.gitCommit(['ci(travis): add TravisCI pipeline', 'BREAKING CHANGE: Continuously integrated.'])
     testTools.gitCommit(['feat: amazing new module', 'BREAKING CHANGE: Not backward compatible.'])
     testTools.gitCommit(['fix(compile): avoid a bug', 'BREAKING CHANGE: The Change is huge.'])
-    testTools.gitCommit(['perf(ngOptions): make it faster', ' closes #1, #2'])
+    testTools.gitCommit(['perf(ngOptions): make it faster', 'See other/project#3', 'closes #1, #2'])
     testTools.gitCommit('revert(ngOptions): bad commit')
-    testTools.gitCommit('fix(*): oops')
+    testTools.gitCommit(['fix(*): oops', 'Follow-up tracked in #4'])
   },
   () => {
     testTools.gitCommit(['feat(awesome): addresses the issue brought up in #133'])
@@ -155,6 +155,29 @@ describe('conventional-changelog-angular', () => {
     expect(chunks[0]).not.toContain(': Not backward compatible.')
 
     expect(chunks.length).toBe(1)
+  })
+
+  it.each([true, false])('should distinguish closing and other references with linkReferences=%s', async (linkReferences) => {
+    preparing(1)
+
+    const log = new ConventionalChangelog(testTools.cwd)
+      .readPackage()
+      .context({
+        linkReferences
+      })
+      .config(preset())
+      .write()
+    const [changelog] = await toArray(log)
+    const issuesUrl = 'https://github.com/conventional-changelog/conventional-changelog/issues'
+    const mixed = linkReferences
+      ? `, closes [#1](${issuesUrl}/1) [#2](${issuesUrl}/2), references [other/project#3](https://github.com/other/project/issues/3)`
+      : ', closes #1 #2, references other/project#3'
+    const bare = linkReferences
+      ? `, references [#4](${issuesUrl}/4)`
+      : ', references #4'
+
+    expect(changelog).toContain(mixed)
+    expect(changelog).toContain(bare)
   })
 
   it('should replace #[0-9]+ with GitHub issue URL', async () => {
