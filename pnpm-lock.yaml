@@ -33,8 +33,8 @@ importers:
         specifier: ^21.0.0
         version: 21.0.2(@types/node@24.13.2)(commitizen@4.3.1(@types/node@24.13.2)(typescript@7.0.2))(inquirer@12.7.0(@types/node@24.13.2)(oxlint-tsgolint@7.0.2001))(typescript@7.0.2)
       '@trigen/oxlint':
-        specifier: ^10.1.1
-        version: 10.1.1
+        specifier: ^12.0.0
+        version: 12.0.0
       '@trigen/oxlint-config':
         specifier: ^11.0.0
         version: 11.0.0(oxlint-tsgolint@7.0.2001)(oxlint@1.77.0(oxlint-tsgolint@7.0.2001))
@@ -1556,8 +1556,8 @@ packages:
       oxlint-tsgolint:
         optional: true
 
-  '@trigen/oxlint@10.1.1':
-    resolution: {integrity: sha512-nEhnu68eJsfSw89FFRd2bP1LJuJpUuAXhT9srcTbq/hopQcOCZPc3cUEDspQeWaVpPm7ChO5Jb2fr2UeHHXMUA==}
+  '@trigen/oxlint@12.0.0':
+    resolution: {integrity: sha512-nBdxwGX3+P8TKOX2mMph86XeYK+25stoIYryIqHOOmr8olycEyEY8OIEgQzJNM2S5uNCSV04mEZhYjchLfgSAQ==}
     engines: {node: '>=22'}
 
   '@trigen/scripts@10.1.1':
@@ -5451,7 +5451,7 @@ snapshots:
     transitivePeerDependencies:
       - eslint
 
-  '@trigen/oxlint@10.1.1': {}
+  '@trigen/oxlint@12.0.0': {}
 
   '@trigen/scripts@10.1.1':
     dependencies:
