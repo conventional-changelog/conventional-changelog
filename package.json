@@ -43,7 +43,7 @@
     "@commitlint/config-conventional": "^21.0.0",
     "@commitlint/config-pnpm-scopes": "^21.0.0",
     "@commitlint/cz-commitlint": "^21.0.0",
-    "@trigen/oxlint": "^10.1.1",
+    "@trigen/oxlint": "^12.0.0",
     "@trigen/oxlint-config": "^11.0.0",
     "@trigen/scripts": "^10.1.1",
     "@types/node": "^24.0.0",
