@@ -39,8 +39,8 @@ importers:
         specifier: ^11.0.0
         version: 11.0.0(oxlint-tsgolint@7.0.2001)(oxlint@1.77.0(oxlint-tsgolint@7.0.2001))
       '@trigen/scripts':
-        specifier: ^10.1.1
-        version: 10.1.1
+        specifier: ^12.0.0
+        version: 12.0.0
       '@types/node':
         specifier: ^24.0.0
         version: 24.13.2
@@ -1560,8 +1560,8 @@ packages:
     resolution: {integrity: sha512-nEhnu68eJsfSw89FFRd2bP1LJuJpUuAXhT9srcTbq/hopQcOCZPc3cUEDspQeWaVpPm7ChO5Jb2fr2UeHHXMUA==}
     engines: {node: '>=22'}
 
-  '@trigen/scripts@10.1.1':
-    resolution: {integrity: sha512-WbhrZPQAwnfuRVatVdSJ9Ea1zEQhRbcMZJrU1ZVwuBe1mSfXGZbTcPUCJNWQrj3fhoT73uV+ZRca11l6ziW4iQ==}
+  '@trigen/scripts@12.0.0':
+    resolution: {integrity: sha512-ts1wM//tP2+IHtk9HLwdGCyiOdqvTmqeErpkmUy8yTDpai2N//5wEL9ODHoCZdywInRvN/ePwUhxPEbibwiQHw==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -5453,7 +5453,7 @@ snapshots:
 
   '@trigen/oxlint@10.1.1': {}
 
-  '@trigen/scripts@10.1.1':
+  '@trigen/scripts@12.0.0':
     dependencies:
       '@simple-libs/child-process-utils': 2.0.0
       '@simple-libs/stream-utils': 2.0.0

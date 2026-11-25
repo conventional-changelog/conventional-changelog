@@ -45,7 +45,7 @@
     "@commitlint/cz-commitlint": "^21.0.0",
     "@trigen/oxlint": "^10.1.1",
     "@trigen/oxlint-config": "^11.0.0",
-    "@trigen/scripts": "^10.1.1",
+    "@trigen/scripts": "^12.0.0",
     "@types/node": "^24.0.0",
     "@vitest/coverage-v8": "^5.0.0",
     "better-than-before": "^1.0.0",
